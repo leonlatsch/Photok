@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -57,6 +58,25 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Dagger Core
+    implementation "com.google.dagger:dagger:2.28"
+    kapt "com.google.dagger:dagger-compiler:2.25.2"
+
+    // Dagger Android
+    api 'com.google.dagger:dagger-android:2.23.2'
+    api 'com.google.dagger:dagger-android-support:2.23.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.23.2'
+
+    // Activity KTX for viewModels()
+    implementation "androidx.activity:activity-ktx:1.1.0"
+
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-alpha02"
 
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
