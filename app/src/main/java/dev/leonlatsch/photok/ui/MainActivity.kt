@@ -16,10 +16,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        navHostFragment.findNavController()
+        mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener {_, destination, _ ->
                 when(destination.id) {
-                    R.id.galleryFragment -> appBarLayout.visibility = View.VISIBLE
+                    R.id.galleryFragment, R.id.settingsFragment -> appBarLayout.visibility = View.VISIBLE
                     else -> appBarLayout.visibility = View.GONE
                 }
             }

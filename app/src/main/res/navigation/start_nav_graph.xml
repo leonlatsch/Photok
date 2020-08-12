@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_nav_graph"
+    app:startDestination="@id/lockedFragment">
+
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="dev.leonlatsch.photok.ui.fragments.SetupFragment"
+        android:label="fragment_setup"
+        tools:layout="@layout/fragment_setup" />
+    <fragment
+        android:id="@+id/lockedFragment"
+        android:name="dev.leonlatsch.photok.ui.fragments.LockedFragment"
+        android:label="fragment_locked"
+        tools:layout="@layout/fragment_locked" >
+        <action
+            android:id="@+id/action_lockedFragment_to_setupFragment"
+            app:destination="@id/setupFragment" />
+    </fragment>
+</navigation>
