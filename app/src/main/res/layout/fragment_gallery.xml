@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.GalleryFragment">
+    tools:context=".ui.fragments.main.GalleryFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"

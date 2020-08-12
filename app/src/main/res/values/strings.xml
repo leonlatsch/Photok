@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Photok</string>
+
+    <string name="tut_next">NEXT</string>
 </resources>

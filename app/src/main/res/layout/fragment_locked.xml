@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.LockedFragment">
+    tools:context=".ui.fragments.start.LockedFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"

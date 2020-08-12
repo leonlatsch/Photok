@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.fragments
+package dev.leonlatsch.photok.ui.fragments.start
 
 import android.os.Bundle
 import android.view.View
@@ -9,8 +9,5 @@ class LockedFragment : Fragment(R.layout.fragment_locked) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // TODO: Determine if it's the first start and navigate to tutorial.
-        // TODO: Determine if a password is set and decide if navigate to LockedFragment or SetupFragment
     }
 }

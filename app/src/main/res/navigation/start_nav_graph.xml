@@ -7,16 +7,32 @@
 
     <fragment
         android:id="@+id/setupFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.SetupFragment"
+        android:name="dev.leonlatsch.photok.ui.fragments.start.SetupFragment"
         android:label="fragment_setup"
-        tools:layout="@layout/fragment_setup" />
+        tools:layout="@layout/fragment_setup" >
+        <action
+            android:id="@+id/action_setupFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+    </fragment>
     <fragment
         android:id="@+id/lockedFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.LockedFragment"
+        android:name="dev.leonlatsch.photok.ui.fragments.start.LockedFragment"
         android:label="fragment_locked"
         tools:layout="@layout/fragment_locked" >
         <action
             android:id="@+id/action_lockedFragment_to_setupFragment"
+            app:destination="@id/setupFragment" />
+        <action
+            android:id="@+id/action_lockedFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="dev.leonlatsch.photok.ui.fragments.start.IntroFragment"
+        android:label="fragment_tutorial"
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_tutorialFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
     </fragment>
 </navigation>
