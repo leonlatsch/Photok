@@ -6,8 +6,4 @@ import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 
 class LockedFragment : Fragment(R.layout.fragment_locked) {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }

@@ -6,10 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.FIRST_START
+import dev.leonlatsch.photok.other.PrefManager
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var prefManager: PrefManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,5 +30,7 @@ class MainActivity : AppCompatActivity() {
                     else -> appBarLayout.visibility = View.GONE
                 }
             }
+
+        prefManager.putBoolean(FIRST_START, true)
     }
 }

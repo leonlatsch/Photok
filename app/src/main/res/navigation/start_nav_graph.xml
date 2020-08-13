@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_setup" >
         <action
             android:id="@+id/action_setupFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
+            app:destination="@id/introFragment" />
     </fragment>
     <fragment
         android:id="@+id/lockedFragment"
@@ -23,16 +23,16 @@
             android:id="@+id/action_lockedFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
         <action
-            android:id="@+id/action_lockedFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
+            android:id="@+id/action_lockedFragment_to_introFragment"
+            app:destination="@id/introFragment" />
     </fragment>
     <fragment
-        android:id="@+id/tutorialFragment"
+        android:id="@+id/introFragment"
         android:name="dev.leonlatsch.photok.ui.fragments.start.IntroFragment"
-        android:label="fragment_tutorial"
-        tools:layout="@layout/fragment_intro" >
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_tutorialFragment_to_setupFragment"
+            android:id="@+id/action_introFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
     </fragment>
 </navigation>
