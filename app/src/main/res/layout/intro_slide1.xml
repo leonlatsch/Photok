@@ -16,13 +16,13 @@
             android:layout_height="300dp"
             android:layout_marginBottom="10dp"/>
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:text="Welcome"
             android:textSize="30sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:text="Welcome to Photok, bla bla bla. You can do this and this and bla bla bla Photo will be replaced"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
