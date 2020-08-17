@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.fragments
+package dev.leonlatsch.photok.ui
 
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/setupFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.start.SetupFragment"
+        android:name="dev.leonlatsch.photok.ui.setup.SetupFragment"
         android:label="fragment_setup"
         tools:layout="@layout/fragment_setup" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/lockedFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.start.LockedFragment"
+        android:name="dev.leonlatsch.photok.ui.locked.LockedFragment"
         android:label="fragment_locked"
         tools:layout="@layout/fragment_locked" >
         <action
@@ -28,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/introFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.start.IntroFragment"
+        android:name="dev.leonlatsch.photok.ui.onboarding.OnBoardingFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro">
+        tools:layout="@layout/fragment_onboarding">
         <action
             android:id="@+id/action_introFragment_to_setupFragment"
             app:destination="@id/setupFragment" />

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.start.IntroFragment">
+    tools:context=".ui.onboarding.OnBoardingFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/introViewPager"

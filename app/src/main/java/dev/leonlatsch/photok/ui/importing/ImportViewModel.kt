@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.viewmodels
+package dev.leonlatsch.photok.ui.importing
 
 import androidx.lifecycle.ViewModel
 

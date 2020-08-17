@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.fragments.main
+package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

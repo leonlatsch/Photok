@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.main.GalleryFragment"
+        android:name="dev.leonlatsch.photok.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.main.SettingsFragment"
+        android:name="dev.leonlatsch.photok.ui.settings.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_galleryFragment"
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/importFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.main.ImportFragment"
+        android:name="dev.leonlatsch.photok.ui.importing.ImportFragment"
         android:label="fragment_import"
         tools:layout="@layout/fragment_import" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="dev.leonlatsch.photok.ui.fragments.InfoFragment"
+        android:name="dev.leonlatsch.photok.ui.InfoFragment"
         android:label="InfoFragment" >
         <action
             android:id="@+id/action_infoFragment_to_galleryFragment"

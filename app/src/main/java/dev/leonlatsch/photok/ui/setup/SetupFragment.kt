@@ -1,10 +1,9 @@
-package dev.leonlatsch.photok.ui.fragments.start
+package dev.leonlatsch.photok.ui.setup
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.ui.viewmodels.SetupViewModel
 
 @AndroidEntryPoint
 class SetupFragment : Fragment(R.layout.fragment_setup) {

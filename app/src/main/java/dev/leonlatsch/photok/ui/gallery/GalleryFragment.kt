@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.fragments.main
+package dev.leonlatsch.photok.ui.gallery
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.ui.viewmodels.GalleryViewModel
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 @AndroidEntryPoint
