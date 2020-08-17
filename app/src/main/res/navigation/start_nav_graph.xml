@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_setup" >
         <action
             android:id="@+id/action_setupFragment_to_tutorialFragment"
-            app:destination="@id/introFragment" />
+            app:destination="@id/onBoardingFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/lockedFragment"
@@ -24,10 +26,10 @@
             app:destination="@id/setupFragment" />
         <action
             android:id="@+id/action_lockedFragment_to_introFragment"
-            app:destination="@id/introFragment" />
+            app:destination="@id/onBoardingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/introFragment"
+        android:id="@+id/onBoardingFragment"
         android:name="dev.leonlatsch.photok.ui.onboarding.OnBoardingFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_onboarding">
