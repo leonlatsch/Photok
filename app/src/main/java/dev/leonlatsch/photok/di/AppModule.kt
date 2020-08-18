@@ -15,5 +15,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun proviePrefManager(@ApplicationContext context: Context) = PrefManager(context)
+    fun providePrefManager(@ApplicationContext context: Context) = PrefManager(context)
 }

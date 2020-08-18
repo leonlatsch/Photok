@@ -34,7 +34,10 @@ class ImportFragment : Fragment() {
     }
 
     private val importClickListener = View.OnClickListener {
-
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        startActivityForResult(Intent.createChooser(intent, "Select Images"), SELECT_IMAGES)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
