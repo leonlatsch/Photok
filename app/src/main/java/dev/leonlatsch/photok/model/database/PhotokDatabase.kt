@@ -1,8 +1,8 @@
-package dev.leonlatsch.photok.database
+package dev.leonlatsch.photok.model.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import dev.leonlatsch.photok.database.PhotokDatabase.Companion.VERSION
+import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.VERSION
 
 @Database(
     entities = [Photo::class],

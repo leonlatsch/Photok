@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.database.PhotokDatabase
-import dev.leonlatsch.photok.database.PhotokDatabase.Companion.DATABASE_NAME
+import dev.leonlatsch.photok.model.database.PhotokDatabase
+import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.other.PrefManager
 import javax.inject.Singleton
 

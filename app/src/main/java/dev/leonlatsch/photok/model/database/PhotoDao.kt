@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.database
+package dev.leonlatsch.photok.model.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

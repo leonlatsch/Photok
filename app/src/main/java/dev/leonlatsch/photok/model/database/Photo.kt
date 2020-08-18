@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.database
+package dev.leonlatsch.photok.model.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
