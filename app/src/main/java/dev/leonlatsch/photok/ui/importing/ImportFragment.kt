@@ -13,13 +13,12 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImportBinding
-import dev.leonlatsch.photok.ui.gallery.GalleryFragment
 
 @AndroidEntryPoint
 class ImportFragment : Fragment() {
 
     private val viewModel: ImportViewModel by viewModels()
-    private val SELECT_IMAGES = 0
+    private val selectPhotos = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,12 +36,12 @@ class ImportFragment : Fragment() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Select Images"), SELECT_IMAGES)
+        startActivityForResult(Intent.createChooser(intent, "Select Images"), selectPhotos)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SELECT_IMAGES && resultCode == Activity.RESULT_OK) {
+        if (requestCode == selectPhotos && resultCode == Activity.RESULT_OK) {
             val images = mutableListOf<Uri>()
             if (data != null) {
                 if (data.clipData != null) {
