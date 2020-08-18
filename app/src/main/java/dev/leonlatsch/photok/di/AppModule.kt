@@ -30,5 +30,9 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providePasswordDao(database: PhotokDatabase) = database.getPasswordDao()
+
+    @Provides
+    @Singleton
     fun providePrefManager(@ApplicationContext app: Context) = PrefManager(app)
 }
