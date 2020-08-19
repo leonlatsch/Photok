@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "photo")
 data class Photo(
+    @PrimaryKey(autoGenerate = false) val id: String,
     val uri: String,
     val importedAt: Long,
-    @PrimaryKey(autoGenerate = true) val id: Int = 0
 )

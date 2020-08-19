@@ -55,7 +55,9 @@ class ImportFragment : Fragment() {
                     images.add(imageUri)
                 }
             }
-            viewModel.importImages(images)
+            if (images.size > 0) {
+                viewModel.importImages(requireContext(), images)
+            }
         }
     }
 }
