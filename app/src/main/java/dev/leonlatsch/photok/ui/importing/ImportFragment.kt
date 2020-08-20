@@ -25,6 +25,8 @@ class ImportFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.importState.postValue(ImportState.START)
+
         val binding: FragmentImportBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_import, container, false)
         binding.viewModel = viewModel
         binding.importClickListener = importClickListener
@@ -56,7 +58,7 @@ class ImportFragment : Fragment() {
                 }
             }
             if (images.size > 0) {
-                viewModel.importImages(requireContext(), images)
+                viewModel.importImages(requireContext().contentResolver, images)
             }
         }
     }

@@ -2,14 +2,16 @@ package dev.leonlatsch.photok.ui.importing
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Environment
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -19,57 +21,47 @@ class ImportViewModel @ViewModelInject constructor(
 
     var importState: MutableLiveData<ImportState> = MutableLiveData()
 
-    fun importImages(context: Context, uris: List<Uri>) = viewModelScope.launch {
+    fun importImages(contentResolver: ContentResolver, uris: List<Uri>) = viewModelScope.launch {
         importState.postValue(ImportState.IMPORTING)
 
         for (image in uris) {
 
             // Load Bytes
-            val imgBytes = load(context.contentResolver, image)
-            if (imgBytes == null) {
-                importState.postValue(ImportState.FAILED)
-                return@launch
-            }
+            val photo = load(contentResolver, image) ?: continue
 
             // Encrypt Bytes
-            val encryptedImgBytes = encrypt(imgBytes)
+            encrypt(photo)
 
             //SAVE
-            //INSERT
+            save(photo)
         }
 
         importState.postValue(ImportState.FINISHED)
     }
 
-    private fun load(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
-        return contentResolver.openInputStream(imageUri)?.readBytes()
-    }
+    private fun load(contentResolver: ContentResolver, imageUri: Uri): Photo? {
+        val id = UUID.randomUUID().toString() // TODO: Get Filename from Uri
 
-    private fun encrypt(imgBytes: ByteArray): ByteArray {
-        // TODO
-        return imgBytes
-    }
-
-    private fun save(context: Context, encryptedImgBytes: ByteArray): Photo? {
-        val id = UUID.randomUUID().toString()
-
-        val files = context.getExternalFilesDir(null)?.absolutePath
-        // SAVE
-
-        return Photo(id, "PLACE URI", System.currentTimeMillis())
-    }
-/*
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
-            if (data == null) {
-                //Display an error
-                return;
-            }
-            InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
-            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        val type = when(contentResolver.getType(imageUri)) {
+            "image/png" -> PhotoType.PNG
+            "image/jpeg" -> PhotoType.JPEG
+            "image/gif" -> PhotoType.GIF
+            else -> PhotoType.UNDEFINED
         }
-    }*/
+        if (type == PhotoType.UNDEFINED) return null
+
+        val bytes = contentResolver.openInputStream(imageUri)?.readBytes()
+        bytes ?: return null
+        val data = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+        return Photo(id, data, System.currentTimeMillis(), type)
+    }
+
+    private fun encrypt(image: Photo) {
+        // TODO: Encrypt bytes
+    }
+
+    private fun save(photo: Photo) = viewModelScope.launch {
+        photoRepository.insert(photo)
+    }
 }

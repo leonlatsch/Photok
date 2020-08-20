@@ -2,6 +2,7 @@ package dev.leonlatsch.photok.model.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.VERSION
 import dev.leonlatsch.photok.model.database.dao.PasswordDao
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -16,6 +17,7 @@ import dev.leonlatsch.photok.model.database.entity.Password
     version = VERSION,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class PhotokDatabase : RoomDatabase() {
 
     companion object {
