@@ -24,7 +24,6 @@ class ImportViewModel @ViewModelInject constructor(
         importState.postValue(ImportState.IMPORTING)
 
         for (image in uris) {
-
             // Load Bytes
             val photo = load(contentResolver, image) ?: continue
 
@@ -60,7 +59,5 @@ class ImportViewModel @ViewModelInject constructor(
         // TODO: Encrypt bytes
     }
 
-    private fun save(photo: Photo) = viewModelScope.launch {
-        photoRepository.insert(photo)
-    }
+    private suspend fun save(photo: Photo) = photoRepository.insert(photo)
 }
