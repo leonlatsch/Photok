@@ -1,7 +1,6 @@
 package dev.leonlatsch.photok.ui.importing
 
 import android.content.ContentResolver
-import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
@@ -11,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -40,7 +38,7 @@ class ImportViewModel @ViewModelInject constructor(
     }
 
     private fun load(contentResolver: ContentResolver, imageUri: Uri): Photo? {
-        val id = UUID.randomUUID().toString() // TODO: Get Filename from Uri
+        val fileName = UUID.randomUUID().toString() // TODO: Get Filename from Uri
 
         val type = when(contentResolver.getType(imageUri)) {
             "image/png" -> PhotoType.PNG
@@ -54,7 +52,7 @@ class ImportViewModel @ViewModelInject constructor(
         bytes ?: return null
         val data = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-        return Photo(id, data, System.currentTimeMillis(), type)
+        return Photo(fileName, data, System.currentTimeMillis(), type)
     }
 
     private fun encrypt(image: Photo) {

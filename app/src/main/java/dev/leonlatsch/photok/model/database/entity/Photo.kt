@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "photo")
 data class Photo(
-    @PrimaryKey(autoGenerate = false) val id: String,
+    val fileName: String,
     var data: Bitmap,
     val importedAt: Long,
-    val type: PhotoType
+    val type: PhotoType,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null
 )
