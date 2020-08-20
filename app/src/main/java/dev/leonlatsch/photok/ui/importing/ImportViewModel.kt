@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.getFileName
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -38,7 +39,7 @@ class ImportViewModel @ViewModelInject constructor(
     }
 
     private fun load(contentResolver: ContentResolver, imageUri: Uri): Photo? {
-        val fileName = UUID.randomUUID().toString() // TODO: Get Filename from Uri
+        val fileName = getFileName(contentResolver, imageUri) ?: UUID.randomUUID().toString()
 
         val type = when(contentResolver.getType(imageUri)) {
             "image/png" -> PhotoType.PNG
