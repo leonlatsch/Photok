@@ -35,6 +35,9 @@ class ImportFragment : Fragment() {
     }
 
     private val importClickListener = View.OnClickListener {
+        viewModel.importProgress.postValue(ImportProgress())
+        viewModel.importState.postValue(ImportState.START)
+
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

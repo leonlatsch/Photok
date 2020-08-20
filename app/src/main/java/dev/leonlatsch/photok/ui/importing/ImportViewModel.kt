@@ -19,8 +19,10 @@ class ImportViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     var importState: MutableLiveData<ImportState> = MutableLiveData()
+    var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
 
     fun importImages(contentResolver: ContentResolver, uris: List<Uri>) = viewModelScope.launch {
+        var current = 1
         importState.postValue(ImportState.IMPORTING)
 
         for (image in uris) {
@@ -32,6 +34,8 @@ class ImportViewModel @ViewModelInject constructor(
 
             //SAVE
             save(photo)
+            importProgress.value?.update(current, uris.size)
+            current++
         }
 
         importState.postValue(ImportState.FINISHED)

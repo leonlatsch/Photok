@@ -31,6 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.importState.toString()}"
@@ -40,6 +41,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.578" />
+
+        <ProgressBar
+            android:id="@+id/importProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="@{viewModel.importProgress.max}"
+            android:progress="@{viewModel.importProgress.progress}"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.648" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
