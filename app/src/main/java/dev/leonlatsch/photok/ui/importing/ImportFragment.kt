@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImportBinding
+import kotlinx.android.synthetic.main.fragment_import.*
 
 @AndroidEntryPoint
 class ImportFragment : Fragment() {
@@ -26,6 +28,34 @@ class ImportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewModel.importState.postValue(ImportState.START)
+
+        viewModel.importState.observe(viewLifecycleOwner, {
+            when(it) {
+                ImportState.START -> {
+                    importTestButton.visibility = View.VISIBLE
+                    importStartImageView.visibility = View.VISIBLE
+                    importProgressBar.visibility = View.GONE
+                    importProgressTitleTextView.visibility = View.GONE
+                    importInfoText.visibility = View.GONE
+                    importFinishedTextView.visibility = View.GONE
+                }
+                ImportState.IMPORTING -> {
+                    importProgressTitleTextView.visibility = View.VISIBLE
+                    importProgressBar.visibility = View.VISIBLE
+                    importInfoText.visibility = View.VISIBLE
+                    importTestButton.visibility = View.GONE
+                    importStartImageView.visibility = View.GONE
+                    importFinishedTextView.visibility = View.GONE
+                }
+                ImportState.FINISHED -> {
+                    importFinishedTextView.visibility = View.VISIBLE
+                    importProgressTitleTextView.visibility = View.GONE
+                    importProgressBar.visibility = View.GONE
+                    importInfoText.visibility = View.GONE
+                }
+                else -> return@observe
+            }
+        })
 
         val binding: FragmentImportBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_import, container, false)
         binding.viewModel = viewModel

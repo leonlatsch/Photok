@@ -13,49 +13,78 @@
             type="android.view.View.OnClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/importStartImageView"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_width="220dp"
+            android:layout_height="220dp"/>
 
         <Button
             android:id="@+id/importTestButton"
-            android:text="IMPORT"
-            android:onClick="@{importClickListener}"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="@{importClickListener}"
+            android:text="Import Photos"
+            style="@style/ThinButtonStyle"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/importProgressTitleTextView"
+            android:text="Importing ..."
+            android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.importState.toString()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.578" />
+            android:layout_height="wrap_content"/>
 
         <ProgressBar
             android:id="@+id/importProgressBar"
+            android:visibility="gone"
             style="?android:attr/progressBarStyleHorizontal"
-            android:max="@{viewModel.importProgress.max}"
-            android:progress="@{viewModel.importProgress.progress}"
+            android:max="@{viewModel.importProgress.maxPercent}"
+            android:progress="@{viewModel.importProgress.progressPercent}"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.648" />
+            android:layout_height="wrap_content" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/importInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:text="@{viewModel.importProgress.current.toString()}"
+                android:id="@+id/importInfoTextViewCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="/"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/importInfoTextViewMax"
+                android:text="@{viewModel.importProgress.max.toString()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/importFinishedTextView"
+            android:text="Finished"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </layout>

@@ -24,6 +24,7 @@ class ImportViewModel @ViewModelInject constructor(
     fun importImages(contentResolver: ContentResolver, uris: List<Uri>) = viewModelScope.launch {
         var current = 1
         importState.postValue(ImportState.IMPORTING)
+        importProgress.value?.update(0, uris.size)
 
         for (image in uris) {
             // Load Bytes

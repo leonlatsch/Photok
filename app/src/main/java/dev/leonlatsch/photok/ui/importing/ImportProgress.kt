@@ -4,10 +4,20 @@ import androidx.lifecycle.MutableLiveData
 
 class ImportProgress {
 
-    val max: Int = 100
-    val progress: MutableLiveData<Int> = MutableLiveData()
+    val maxPercent: Int = 100
+    val progressPercent: MutableLiveData<Int> = MutableLiveData()
+
+    val max: MutableLiveData<Int> = MutableLiveData()
+    val current: MutableLiveData<Int> = MutableLiveData()
+
+    init {
+        max.postValue(0)
+        current.postValue(0)
+    }
 
     fun update(current: Int, from: Int) {
-        progress.postValue((current * max) / from)
+        this.max.postValue(from)
+        this.current.postValue(current)
+        progressPercent.postValue((current * maxPercent) / from)
     }
 }

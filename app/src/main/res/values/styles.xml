@@ -5,6 +5,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="buttonStyle">@style/DefaultButtonStyle</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="DefaultButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="background">@drawable/round_button</item>
+    </style>
+
+    <style name="ThinButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/round_button</item>
     </style>
 
 </resources>
