@@ -40,7 +40,7 @@
                 android:layout_height="@dimen/wide_button_height"
                 android:layout_marginTop="20dp"
                 android:onClick="@{importClickListener}"
-                android:text="@string/import_import_photos" />
+                android:text="@string/import_importing_photos" />
 
         </LinearLayout>
         <!-- END START -->
@@ -56,26 +56,51 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity=""
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/importImportingTextView"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/import_importing"
-                    android:textSize="30sp" />
+                    android:orientation="vertical"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/importImportingTextView"
+                        android:text="@string/import_importing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:id="@+id/importPercentageLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@{viewModel.importProgress.progressPercent.toString()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="@string/percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/importFinishedTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/import_finished"
-                    android:textSize="30sp"
+                    android:textSize="18sp"
                     android:visibility="gone" />
 
                 <ProgressBar
@@ -88,7 +113,8 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
 
                     <TextView
                         android:layout_width="wrap_content"

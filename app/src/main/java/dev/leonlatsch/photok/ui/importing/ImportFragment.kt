@@ -37,9 +37,11 @@ class ImportFragment : Fragment() {
                 ImportState.IMPORTING -> {
                     importStartLayout.visibility = View.GONE
                     importImportingAndFinishedLayout.visibility = View.VISIBLE
+                    importPercentageLayout.visibility = View.VISIBLE
                 }
                 ImportState.FINISHED -> {
                     importImportingTextView.visibility = View.GONE
+                    importPercentageLayout.visibility = View.GONE
                     importFinishedTextView.visibility = View.VISIBLE
                     importBackToGalleryButton.visibility = View.VISIBLE
                 }

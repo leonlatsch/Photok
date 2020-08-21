@@ -2,10 +2,11 @@
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="slash">/</string>
+    <string name="percent">%</string>
 
     <!-- IMPORT -->
-    <string name="import_import_photos">Import Photos</string>
-    <string name="import_importing">Importing …</string>
+    <string name="import_importing_photos">Import Photos</string>
+    <string name="import_importing">Importing Photo(s)</string>
     <string name="import_finished">Import Finished</string>
     <string name="import_back_to_gallery">Back to Gallery</string>
 
