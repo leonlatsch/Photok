@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,6 +45,8 @@ class ImportFragment : Fragment() {
                     importPercentageLayout.visibility = View.GONE
                     importFinishedTextView.visibility = View.VISIBLE
                     importBackToGalleryButton.visibility = View.VISIBLE
+                    importingImageView.visibility = View.VISIBLE
+                    importingImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.import_finished))
                 }
                 else -> return@observe
             }

@@ -9,5 +9,6 @@
     <string name="import_importing">Importing Photo(s)</string>
     <string name="import_finished">Import Finished</string>
     <string name="import_back_to_gallery">Back to Gallery</string>
+    <string name="import_text_hint">Import photos from your device and save them secured in Photok!</string>
 
 </resources>

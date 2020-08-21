@@ -10,4 +10,5 @@
     <string name="import_importing">Importiere Foto(s)</string>
     <string name="import_finished">Import Abgeschlossen</string>
     <string name="import_back_to_gallery">Zurück zur Gallerie</string>
+    <string name="import_text_hint">Importiere Fotos von deinem Gerät und speichere sie gesichert in Photok!</string>
 </resources>

@@ -31,9 +31,17 @@
             android:gravity="center">
 
             <ImageView
-                android:src="@drawable/ic_launcher_background"
-                android:layout_width="220dp"
-                android:layout_height="220dp"/>
+                android:contentDescription="@string/import_importing_photos"
+                android:src="@drawable/add_photos"
+                android:layout_width="260dp"
+                android:layout_height="260dp"/>
+
+            <TextView
+                android:text="@string/import_text_hint"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"/>
 
             <Button
                 android:layout_width="@dimen/wide_button_width"
@@ -52,28 +60,41 @@
             android:layout_height="match_parent"
             android:visibility="gone">
 
+            <ImageView
+                android:id="@+id/importingImageView"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:src="@drawable/importing"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.364" />
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity=""
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/importingImageView"
+                app:layout_constraintVertical_bias="0.0">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="start">
+                    android:gravity="start"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/importImportingTextView"
-                        android:text="@string/import_importing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/import_importing"
                         android:textSize="15sp" />
 
                     <LinearLayout
@@ -82,19 +103,20 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:text="@{viewModel.importProgress.progressPercent.toString()}"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.importProgress.progressPercent.toString()}" />
 
                         <TextView
-                            android:text="@string/percent"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@string/percent" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
+                <!-- FINISHED -->
                 <TextView
                     android:id="@+id/importFinishedTextView"
                     android:layout_width="wrap_content"
@@ -146,10 +168,10 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintVertical_bias="0.9" />
+                app:layout_constraintVertical_bias="0.887" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- END IMPORTING -->
