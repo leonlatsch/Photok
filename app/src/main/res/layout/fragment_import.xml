@@ -46,77 +46,87 @@
         <!-- END START -->
 
         <!-- IMPORTING -->
-        <LinearLayout
-            android:id="@+id/importImportingLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/importImportingAndFinishedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone">
 
-            <TextView
-                android:text="@string/import_importing"
-                android:textSize="30sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <ProgressBar
-                style="@style/ProgressBarHorizontalStyle"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:max="@{viewModel.importProgress.maxPercent}"
-                android:progress="@{viewModel.importProgress.progressPercent}"/>
-
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:text="@{viewModel.importProgress.current.toString()}"
+                    android:id="@+id/importImportingTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_importing"
+                    android:textSize="30sp" />
 
                 <TextView
-                    android:text="@string/slash"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
+                    android:id="@+id/importFinishedTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_finished"
+                    android:textSize="30sp"
+                    android:visibility="gone" />
 
-                <TextView
-                    android:text="@{viewModel.importProgress.max.toString()}"
+                <ProgressBar
+                    style="@style/ProgressBarHorizontalStyle"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:max="@{viewModel.importProgress.maxPercent}"
+                    android:progress="@{viewModel.importProgress.progressPercent}" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.importProgress.current.toString()}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/slash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.importProgress.max.toString()}" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-        <!-- END IMPORTING -->
-
-        <!-- FINISHED -->
-        <LinearLayout
-            android:id="@+id/importFinishedLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone">
-
-            <TextView
-                android:text="@string/import_finished"
-                android:textSize="30sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <Button
-                android:text="@string/import_back_to_gallery"
+                android:id="@+id/importBackToGalleryButton"
+                android:layout_width="@dimen/extra_wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
                 android:onClick="@{backToGalleryClickListener}"
-                android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height" />
+                android:text="@string/import_back_to_gallery"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="0.9" />
 
-        </LinearLayout>
-
-        <!-- END FINISHED -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- END IMPORTING -->
 
     </LinearLayout>
 

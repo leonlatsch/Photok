@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,11 +36,12 @@ class ImportFragment : Fragment() {
                 }
                 ImportState.IMPORTING -> {
                     importStartLayout.visibility = View.GONE
-                    importImportingLayout.visibility = View.VISIBLE
+                    importImportingAndFinishedLayout.visibility = View.VISIBLE
                 }
                 ImportState.FINISHED -> {
-                    importImportingLayout.visibility = View.GONE
-                    importFinishedLayout.visibility = View.VISIBLE
+                    importImportingTextView.visibility = View.GONE
+                    importFinishedTextView.visibility = View.VISIBLE
+                    importBackToGalleryButton.visibility = View.VISIBLE
                 }
                 else -> return@observe
             }
