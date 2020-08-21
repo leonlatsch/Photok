@@ -6,14 +6,18 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="buttonStyle">@style/DefaultButtonStyle</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="buttonStyle">@style/ThinButtonStyle</item>
+        <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">sans-serif-medium</item>
+    <!-- TEXT VIEW -->
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="DefaultButtonStyle" parent="android:Widget.Holo.Button">
+    <!-- BUTTON -->
+    <style name="ThickButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/roboto_black</item>
         <item name="android:textSize">18sp</item>
         <item name="background">@drawable/round_button</item>
@@ -23,6 +27,13 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/round_button</item>
+    </style>
+
+    <!-- PROGRESS BAR -->
+    <style name="ProgressBarHorizontalStyle" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/thick_progress_bar</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:maxHeight">20dip</item>
     </style>
 
 </resources>

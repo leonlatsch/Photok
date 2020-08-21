@@ -18,7 +18,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         super.onViewCreated(view, savedInstanceState)
 
         fabImport.setOnClickListener {
-            findNavController().navigate(R.id.action_galleryFragment_to_importFragment2)
+            findNavController().navigate(R.id.action_galleryFragment_to_importFragment)
         }
     }
 }

@@ -11,7 +11,7 @@
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" >
         <action
-            android:id="@+id/action_galleryFragment_to_importFragment2"
+            android:id="@+id/action_galleryFragment_to_importFragment"
             app:destination="@id/importFragment"
             app:exitAnim="@anim/slide_to_bottom"
             app:enterAnim="@anim/slide_to_top" />
@@ -40,7 +40,7 @@
         android:label="fragment_import"
         tools:layout="@layout/fragment_import" >
         <action
-            android:id="@+id/action_importFragment_to_galleryFragment2"
+            android:id="@+id/action_importFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />

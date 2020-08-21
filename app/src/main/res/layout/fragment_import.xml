@@ -11,6 +11,9 @@
         <variable
             name="importClickListener"
             type="android.view.View.OnClickListener" />
+        <variable
+            name="backToGalleryClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -19,71 +22,101 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/importStartImageView"
-            android:src="@drawable/ic_launcher_background"
-            android:layout_width="220dp"
-            android:layout_height="220dp"/>
-
-        <Button
-            android:id="@+id/importTestButton"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:onClick="@{importClickListener}"
-            android:text="Import Photos"
-            style="@style/ThinButtonStyle"/>
-
-        <TextView
-            android:id="@+id/importProgressTitleTextView"
-            android:text="Importing ..."
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <ProgressBar
-            android:id="@+id/importProgressBar"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:max="@{viewModel.importProgress.maxPercent}"
-            android:progress="@{viewModel.importProgress.progressPercent}"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content" />
-
+        <!-- START -->
         <LinearLayout
-            android:id="@+id/importInfoText"
+            android:id="@+id/importStartLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:src="@drawable/ic_launcher_background"
+                android:layout_width="220dp"
+                android:layout_height="220dp"/>
+
+            <Button
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
+                android:layout_marginTop="20dp"
+                android:onClick="@{importClickListener}"
+                android:text="@string/import_import_photos" />
+
+        </LinearLayout>
+        <!-- END START -->
+
+        <!-- IMPORTING -->
+        <LinearLayout
+            android:id="@+id/importImportingLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
             android:visibility="gone">
 
             <TextView
-                android:text="@{viewModel.importProgress.current.toString()}"
-                android:id="@+id/importInfoTextViewCurrent"
+                android:text="@string/import_importing"
+                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                style="@style/ProgressBarHorizontalStyle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:max="@{viewModel.importProgress.maxPercent}"
+                android:progress="@{viewModel.importProgress.progressPercent}"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@{viewModel.importProgress.current.toString()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/slash"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@{viewModel.importProgress.max.toString()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- END IMPORTING -->
+
+        <!-- FINISHED -->
+        <LinearLayout
+            android:id="@+id/importFinishedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:text="@string/import_finished"
+                android:textSize="30sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:text="/"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/importInfoTextViewMax"
-                android:text="@{viewModel.importProgress.max.toString()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <Button
+                android:text="@string/import_back_to_gallery"
+                android:onClick="@{backToGalleryClickListener}"
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/importFinishedTextView"
-            android:text="Finished"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!-- END FINISHED -->
 
     </LinearLayout>
 

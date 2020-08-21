@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="slash">/</string>
+
+    <!-- IMPORT -->
+    <string name="import_import_photos">Fotos Importieren</string>
+    <string name="import_importing">Importiere …</string>
+    <string name="import_finished">Import Abgeschlossen</string>
+    <string name="import_back_to_gallery">Zurück zur Gallerie</string>
+</resources>

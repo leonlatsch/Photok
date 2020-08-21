@@ -7,10 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImportBinding
@@ -32,26 +33,15 @@ class ImportFragment : Fragment() {
         viewModel.importState.observe(viewLifecycleOwner, {
             when(it) {
                 ImportState.START -> {
-                    importTestButton.visibility = View.VISIBLE
-                    importStartImageView.visibility = View.VISIBLE
-                    importProgressBar.visibility = View.GONE
-                    importProgressTitleTextView.visibility = View.GONE
-                    importInfoText.visibility = View.GONE
-                    importFinishedTextView.visibility = View.GONE
+                    importStartLayout.visibility = View.VISIBLE
                 }
                 ImportState.IMPORTING -> {
-                    importProgressTitleTextView.visibility = View.VISIBLE
-                    importProgressBar.visibility = View.VISIBLE
-                    importInfoText.visibility = View.VISIBLE
-                    importTestButton.visibility = View.GONE
-                    importStartImageView.visibility = View.GONE
-                    importFinishedTextView.visibility = View.GONE
+                    importStartLayout.visibility = View.GONE
+                    importImportingLayout.visibility = View.VISIBLE
                 }
                 ImportState.FINISHED -> {
-                    importFinishedTextView.visibility = View.VISIBLE
-                    importProgressTitleTextView.visibility = View.GONE
-                    importProgressBar.visibility = View.GONE
-                    importInfoText.visibility = View.GONE
+                    importImportingLayout.visibility = View.GONE
+                    importFinishedLayout.visibility = View.VISIBLE
                 }
                 else -> return@observe
             }
@@ -60,6 +50,7 @@ class ImportFragment : Fragment() {
         val binding: FragmentImportBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_import, container, false)
         binding.viewModel = viewModel
         binding.importClickListener = importClickListener
+        binding.backToGalleryClickListener = backToGalleryClickListener
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -72,6 +63,10 @@ class ImportFragment : Fragment() {
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         startActivityForResult(Intent.createChooser(intent, "Select Images"), selectPhotos)
+    }
+
+    private val backToGalleryClickListener = View.OnClickListener {
+        findNavController().navigate(R.id.action_importFragment_to_galleryFragment)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
