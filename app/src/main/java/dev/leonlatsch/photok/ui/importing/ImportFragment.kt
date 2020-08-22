@@ -43,10 +43,10 @@ class ImportFragment : Fragment() {
                 ImportState.FINISHED -> {
                     importImportingTextView.visibility = View.GONE
                     importPercentageLayout.visibility = View.GONE
+                    importingImageView.visibility = View.GONE
                     importFinishedTextView.visibility = View.VISIBLE
                     importBackToGalleryButton.visibility = View.VISIBLE
-                    importingImageView.visibility = View.VISIBLE
-                    importingImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.import_finished))
+                    importFinishedImageView.visibility = View.VISIBLE
                 }
                 else -> return@observe
             }

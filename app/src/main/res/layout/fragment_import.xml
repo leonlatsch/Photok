@@ -60,17 +60,35 @@
             android:layout_height="match_parent"
             android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/importingImageView"
+            <FrameLayout
+                android:id="@+id/importingAndFinishedImageContainer"
                 android:layout_width="320dp"
                 android:layout_height="320dp"
-                android:src="@drawable/importing"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.364" />
+                app:layout_constraintVertical_bias="0.364">
+
+                <ImageView
+                    android:id="@+id/importingImageView"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
+                    android:src="@drawable/importing"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/importFinishedImageView"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:visibility="gone"
+                    android:src="@drawable/import_finished"
+                    android:layout_gravity="center"/>
+
+            </FrameLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -81,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/importingImageView"
+                app:layout_constraintTop_toBottomOf="@+id/importingAndFinishedImageContainer"
                 app:layout_constraintVertical_bias="0.0">
 
                 <LinearLayout
