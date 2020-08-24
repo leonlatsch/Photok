@@ -10,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.other.PrefManager
+import dev.leonlatsch.photok.security.EncryptionManager
 import javax.inject.Singleton
 
 @Module
@@ -35,4 +36,8 @@ object AppModule {
     @Provides
     @Singleton
     fun providePrefManager(@ApplicationContext app: Context) = PrefManager(app)
+
+    @Provides
+    @Singleton
+    fun providePasswordManager() = EncryptionManager()
 }

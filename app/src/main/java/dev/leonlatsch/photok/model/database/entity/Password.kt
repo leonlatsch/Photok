@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "password")
 data class Password(
-    @PrimaryKey(autoGenerate = false) val id: Int = 0, // Set hard 0 to replace if a dupe happens
-    val password: String
+    val password: String,
+    @PrimaryKey(autoGenerate = false) val id: Int = 0 // Set hard 0 to replace if a dupe happens
 )

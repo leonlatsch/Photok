@@ -50,8 +50,6 @@ dependencies {
     def room_version = "2.2.5"
     def coroutines_version = "1.3.7"
 
-
-
     // Architectural Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
@@ -100,6 +98,10 @@ dependencies {
 
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    // jBCrypt for Password Hashing
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation group: 'androidx.preference', name: 'preference', version: '1.1.1'
