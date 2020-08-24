@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +14,11 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImportBinding
+import dev.leonlatsch.photok.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_import.*
 
 @AndroidEntryPoint
-class ImportFragment : Fragment() {
+class ImportFragment : BaseFragment<FragmentImportBinding>(R.layout.fragment_import, false) {
 
     private val viewModel: ImportViewModel by viewModels()
     private val selectPhotos = 0
@@ -52,12 +52,14 @@ class ImportFragment : Fragment() {
             }
         })
 
-        val binding: FragmentImportBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_import, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun insertBindings(binding: FragmentImportBinding) {
+        super.insertBindings(binding)
         binding.viewModel = viewModel
         binding.importClickListener = importClickListener
         binding.backToGalleryClickListener = backToGalleryClickListener
-        binding.lifecycleOwner = this
-        return binding.root
     }
 
     private val importClickListener = View.OnClickListener {
