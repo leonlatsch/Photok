@@ -25,7 +25,7 @@
             android:id="@+id/action_lockedFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
         <action
-            android:id="@+id/action_lockedFragment_to_introFragment"
+            android:id="@+id/action_lockedFragment_to_OnBoardingFragment"
             app:destination="@id/onBoardingFragment" />
     </fragment>
     <fragment

@@ -30,9 +30,6 @@ class ImportViewModel @ViewModelInject constructor(
             // Load Bytes
             val photo = load(contentResolver, image) ?: continue
 
-            // Encrypt Bytes
-            encrypt(photo)
-
             //SAVE
             save(photo)
             importProgress.value?.update(current, uris.size)
@@ -58,10 +55,6 @@ class ImportViewModel @ViewModelInject constructor(
         val data = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
         return Photo(fileName, data, System.currentTimeMillis(), type)
-    }
-
-    private fun encrypt(image: Photo) {
-        // TODO: Encrypt bytes
     }
 
     private suspend fun save(photo: Photo) = photoRepository.insert(photo)

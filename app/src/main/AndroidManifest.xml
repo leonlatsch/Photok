@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.leonlatsch.photok">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".BaseApplication"
@@ -12,18 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.StartActivity">
-            <!-- Add LAUNCHER from MainActivity -->
-        </activity>
         <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask" >
+            android:name=".ui.ViewPhotoActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.StartActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

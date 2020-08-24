@@ -21,10 +21,14 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        // TEST !!!
+        startNavHostFragment.findNavController().navigate(R.id.action_lockedFragment_to_setupFragment)
+        return
+
         // Nav to intro, locked or setup
         if (prefManager.getBoolean(FIRST_START, FIRST_START_DEFAULT)) {
             startNavHostFragment.findNavController()
-                .navigate(R.id.action_lockedFragment_to_introFragment)
+                .navigate(R.id.action_lockedFragment_to_OnBoardingFragment)
         } else {
             TODO("Determine if a password is set and decide if navigate to LockedFragment or SetupFragment ")
         }
