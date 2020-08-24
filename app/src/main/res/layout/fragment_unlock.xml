@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.locked.LockedFragment">
+    tools:context=".ui.unlock.UnlockFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.locked.LockedViewModel" />
+            type="dev.leonlatsch.photok.ui.unlock.LockedViewModel" />
     </data>
 
     <!-- PROTOTYPE LAYOUT -->
@@ -21,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter your password"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -11,6 +11,10 @@ import javax.crypto.spec.SecretKeySpec
 
 class EncryptionManager {
 
+    /**
+     * DO NOT POST VALUE FROM EXTERNAL!
+     * Instead use generateAndSetKey()
+     */
     val encryptionKey: MutableLiveData<SecretKeySpec> = MutableLiveData()
 
     fun generateAndSetKey(password: String) {

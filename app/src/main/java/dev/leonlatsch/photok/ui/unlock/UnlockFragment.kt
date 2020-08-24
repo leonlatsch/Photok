@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.setup
+package dev.leonlatsch.photok.ui.unlock
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,30 +8,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentSetupBinding
+import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.ui.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
 
 @AndroidEntryPoint
-class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
+class UnlockFragment : BaseFragment<FragmentUnlockBinding>(R.layout.fragment_unlock, false) {
 
-    private val viewModel: SetupViewModel by viewModels()
+    private val viewModel: LockedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.setupState.observe(viewLifecycleOwner, {
+        viewModel.unlockState.observe(viewLifecycleOwner, {
             when(it) {
-                SetupState.FINISHED -> {
-                    val intent = Intent(activity, MainActivity::class.java)
-                    startActivity(intent)
-                    activity?.finish()
-                }
-                SetupState.LOADING -> {
-                    //TODO
-                }
+                UnlockState.UNLOCKED -> unlock()
                 else -> return@observe
             }
         })
@@ -39,7 +32,13 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun bind(binding: FragmentSetupBinding) {
+    private fun unlock() {
+        val intent = Intent(activity, MainActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+    }
+
+    override fun bind(binding: FragmentUnlockBinding) {
         super.bind(binding)
         binding.viewModel = viewModel
     }

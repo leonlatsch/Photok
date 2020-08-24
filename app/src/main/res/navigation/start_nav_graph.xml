@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/start_nav_graph"
-    app:startDestination="@id/lockedFragment">
+    app:startDestination="@id/unlockFragment">
 
     <fragment
         android:id="@+id/setupFragment"
@@ -17,15 +17,15 @@
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
-        android:id="@+id/lockedFragment"
-        android:name="dev.leonlatsch.photok.ui.locked.LockedFragment"
-        android:label="fragment_locked"
-        tools:layout="@layout/fragment_locked" >
+        android:id="@+id/unlockFragment"
+        android:name="dev.leonlatsch.photok.ui.unlock.UnlockFragment"
+        android:label="fragment_unlock"
+        tools:layout="@layout/fragment_unlock" >
         <action
-            android:id="@+id/action_lockedFragment_to_setupFragment"
+            android:id="@+id/action_unlockFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
         <action
-            android:id="@+id/action_lockedFragment_to_OnBoardingFragment"
+            android:id="@+id/action_unlockFragment_to_OnBoardingFragment"
             app:destination="@id/onBoardingFragment" />
     </fragment>
     <fragment

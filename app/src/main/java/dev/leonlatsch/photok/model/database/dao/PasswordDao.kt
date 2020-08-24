@@ -20,5 +20,5 @@ interface PasswordDao {
      * Load the only password with id = 0
      */
     @Query("SELECT * FROM password WHERE id = 0")
-    fun getPassword(): LiveData<Password>
+    suspend fun getPassword(): Password?
 }

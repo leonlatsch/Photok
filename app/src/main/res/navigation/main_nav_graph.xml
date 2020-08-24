@@ -22,7 +22,9 @@
             app:exitAnim="@anim/slide_to_bottom" />
         <action
             android:id="@+id/action_galleryFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
+            app:destination="@id/infoFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -51,6 +53,8 @@
         android:label="InfoFragment" >
         <action
             android:id="@+id/action_infoFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment" />
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
 </navigation>

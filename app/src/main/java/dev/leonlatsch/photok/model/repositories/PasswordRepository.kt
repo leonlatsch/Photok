@@ -13,5 +13,5 @@ class PasswordRepository @Inject constructor(
 
     suspend fun update(password: Password) = passwordDao.update(password)
 
-    fun getPassword() = passwordDao.getPassword()
+    suspend fun getPassword() = passwordDao.getPassword()
 }

@@ -1,6 +1,7 @@
 package dev.leonlatsch.photok.ui.setup
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Password
@@ -20,14 +21,18 @@ class SetupViewModel @ViewModelInject constructor(
     var passwordText = emptyString()
     var confirmPasswordText = emptyString()
 
+    val setupState: MutableLiveData<SetupState> = MutableLiveData()
+
     fun savePassword() = viewModelScope.launch {
+        setupState.postValue(SetupState.LOADING)
         if (validatePassword()) {
             val bcryptHash = BCrypt.hashpw(passwordText, BCrypt.gensalt())
             val password = Password(bcryptHash)
             passwordRepository.insert(password)
             encryptionManager.generateAndSetKey(passwordText)
+            setupState.postValue(SetupState.FINISHED)
         } else {
-            println("No good password")
+            setupState.postValue(SetupState.SETUP)
         }
 
     }
