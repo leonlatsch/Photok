@@ -14,3 +14,7 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     }
     return null
 }
+
+fun emptyString(): String {
+    return ""
+}

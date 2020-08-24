@@ -11,7 +11,6 @@ import javax.crypto.spec.SecretKeySpec
 
 class EncryptionManager {
 
-
     val encryptionKey: MutableLiveData<SecretKeySpec> = MutableLiveData()
 
     fun generateAndSetKey(password: String) {

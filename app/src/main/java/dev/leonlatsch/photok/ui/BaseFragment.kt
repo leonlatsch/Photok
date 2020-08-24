@@ -24,14 +24,14 @@ abstract class BaseFragment<BindingType : ViewDataBinding>(
         savedInstanceState: Bundle?
     ): View? {
         val binding: BindingType = DataBindingUtil.inflate(inflater, layout, container, attachToParent)
-        insertBindings(binding)
+        bind(binding)
         return binding.root
     }
 
     /**
      * Inserts the Bindings. Always call super.insertBindings() to set lifecycle owner.
      */
-    open fun insertBindings(binding: BindingType) {
+    open fun bind(binding: BindingType) {
         binding.lifecycleOwner = this
     }
 }

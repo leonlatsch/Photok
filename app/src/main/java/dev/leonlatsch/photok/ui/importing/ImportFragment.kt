@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,8 +53,8 @@ class ImportFragment : BaseFragment<FragmentImportBinding>(R.layout.fragment_imp
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun insertBindings(binding: FragmentImportBinding) {
-        super.insertBindings(binding)
+    override fun bind(binding: FragmentImportBinding) {
+        super.bind(binding)
         binding.viewModel = viewModel
         binding.importClickListener = importClickListener
         binding.backToGalleryClickListener = backToGalleryClickListener

@@ -8,36 +8,52 @@
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.setup.SetupViewModel" />
-        <variable
-            name="submitClickListener"
-            type="android.view.View.OnClickListener" />
     </data>
 
+    <!-- PROTOTYPE LAYOUT -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/setupPasswordEditText"
+            android:text="@={viewModel.passwordText}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter your password"
+            android:singleLine="true"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <EditText
+            android:id="@+id/setupConfirmPasswordEditText"
+            android:text="@={viewModel.confirmPasswordText}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Confirm your password"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
+
         <Button
             android:layout_width="@dimen/wide_button_width"
             android:layout_height="@dimen/wide_button_height"
+            android:onClick="@{() -> viewModel.savePassword()}"
             android:text="Sumbit"
-            android:onClick="@{submitClickListener}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setupPasswordEditText"
-            app:layout_constraintVertical_bias="0.064" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.719" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
