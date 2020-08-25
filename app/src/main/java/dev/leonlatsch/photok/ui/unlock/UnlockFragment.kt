@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.ui.BaseFragment
+import dev.leonlatsch.photok.ui.components.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
 
 @AndroidEntryPoint

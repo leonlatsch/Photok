@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImportBinding
-import dev.leonlatsch.photok.ui.BaseFragment
+import dev.leonlatsch.photok.ui.components.BaseFragment
 import kotlinx.android.synthetic.main.fragment_import.*
 
 @AndroidEntryPoint

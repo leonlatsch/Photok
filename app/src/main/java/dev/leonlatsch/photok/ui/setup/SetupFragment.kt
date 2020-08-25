@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
-import dev.leonlatsch.photok.ui.BaseFragment
+import dev.leonlatsch.photok.ui.components.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_setup.*
 

@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui
+package dev.leonlatsch.photok.ui.components
 
 import android.os.Bundle
 import android.view.LayoutInflater
