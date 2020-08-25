@@ -11,4 +11,14 @@
     <string name="import_finished">Import Abgeschlossen</string>
     <string name="import_back_to_gallery">Zurück zur Gallerie</string>
     <string name="import_text_hint">Importiere Fotos von deinem Gerät und speichere sie gesichert in Photok!</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Erstelle dein Passwort</string>
+    <string name="setup_enter_password">Passwort eingeben</string>
+    <string name="setup_confirm_password">Passwort bestätigen</string>
+    <string name="setup_password_strength_label">Passwort stärke:</string>
+    <string name="setup_button">Erstellen</string>
+    <string name="setup_password_strength_weak">Schwach</string>
+    <string name="setup_password_strength_moderate">Moderat</string>
+    <string name="setup_password_strength_strong">Stark</string>
 </resources>

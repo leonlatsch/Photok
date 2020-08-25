@@ -3,4 +3,6 @@
     <dimen name="wide_button_height">40dp</dimen>
     <dimen name="wide_button_width">200dp</dimen>
     <dimen name="extra_wide_button_width">300dp</dimen>
+
+    <dimen name="password_edit_text_height">40dp</dimen>
 </resources>

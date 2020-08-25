@@ -9,11 +9,29 @@
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="buttonStyle">@style/ThinButtonStyle</item>
         <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
+        <item name="editTextStyle">@style/editTextStyle</item>
     </style>
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TitleTextViewStyle" parent="@style/TextViewStyle">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <!-- EDIT TEXT -->
+    <style name="editTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
+    </style>
+
+    <style name="passwordEditTextStyle" parent="@style/editTextStyle">
+        <item name="android:inputType">textPassword</item>
+        <item name="singleLine">true</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <!-- BUTTON -->

@@ -18,28 +18,32 @@ class SetupViewModel @ViewModelInject constructor(
     private val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
-    var passwordText = emptyString()
-    var confirmPasswordText = emptyString()
+    var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
+    var confirmPasswordText: MutableLiveData<String> = MutableLiveData(emptyString())
 
     val setupState: MutableLiveData<SetupState> = MutableLiveData()
 
+    var isLoading: Boolean = false
+
     fun savePassword() = viewModelScope.launch {
-        setupState.postValue(SetupState.LOADING)
-        if (validatePassword()) {
-            val bcryptHash = BCrypt.hashpw(passwordText, BCrypt.gensalt())
+        isLoading = true
+        if (validatePasswords()) {
+            val bcryptHash = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
             val password = Password(bcryptHash)
             passwordRepository.insert(password)
-            encryptionManager.generateAndSetKey(passwordText)
+            encryptionManager.generateAndSetKey(passwordText.value!!)
             setupState.postValue(SetupState.FINISHED)
-        } else {
-            setupState.postValue(SetupState.SETUP)
         }
-
+        isLoading = false
     }
 
-    private fun validatePassword(): Boolean {
-        return passwordText.isNotEmpty()
-                && confirmPasswordText.isNotEmpty()
-                && Pattern.matches(PASSWORD_REGEX, passwordText)
+    fun validatePassword(): Boolean = passwordText.value!!.isNotEmpty()
+            && Pattern.matches(PASSWORD_REGEX, passwordText.value!!)
+
+    private fun validatePasswords(): Boolean {
+        return passwordText.value!!.isNotEmpty()
+                && confirmPasswordText.value!!.isNotEmpty()
+                && passwordText.value!! == confirmPasswordText.value!!
+                && Pattern.matches(PASSWORD_REGEX, passwordText.value!!)
     }
 }

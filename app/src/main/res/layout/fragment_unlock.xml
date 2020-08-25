@@ -10,7 +10,6 @@
             type="dev.leonlatsch.photok.ui.unlock.LockedViewModel" />
     </data>
 
-    <!-- PROTOTYPE LAYOUT -->
     <androidx.constraintlayout.widget.ConstraintLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,9 +18,9 @@
             android:id="@+id/lockedPasswordEditText"
             android:text="@={viewModel.passwordText}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/password_edit_text_height"
             android:hint="Enter your password"
-            android:inputType="textPassword"
+            style="@style/passwordEditTextStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

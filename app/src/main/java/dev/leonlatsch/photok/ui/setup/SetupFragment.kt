@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
+import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.ui.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
+import kotlinx.android.synthetic.main.fragment_setup.*
 
 @AndroidEntryPoint
 class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
@@ -22,15 +24,42 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.passwordText.observe(viewLifecycleOwner, {
+            if (it.isNotEmpty()) {
+                val value = when (it.length) {
+                    1, 2, 3, 4, 5 -> {
+                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
+                        getString(R.string.setup_password_strength_weak)
+                    }
+                    6, 7, 8, 9, 10 -> {
+                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
+                        getString(R.string.setup_password_strength_moderate)
+                    }
+                    else -> {
+                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
+                        getString(R.string.setup_password_strength_strong)
+                    }
+                }
+                setupPasswordStrengthLayout.visibility = View.VISIBLE
+                setupPasswordStrengthValue.text = value
+            } else {
+                setupPasswordStrengthLayout.visibility = View.GONE
+            }
+
+            if (viewModel.validatePassword()) {
+                setupConfirmPasswordEditText.visibility = View.VISIBLE
+            } else {
+                setupConfirmPasswordEditText.setText(emptyString())
+                setupConfirmPasswordEditText.visibility = View.GONE
+            }
+        })
+
         viewModel.setupState.observe(viewLifecycleOwner, {
             when(it) {
                 SetupState.FINISHED -> {
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
-                }
-                SetupState.LOADING -> {
-                    //TODO
                 }
                 else -> return@observe
             }

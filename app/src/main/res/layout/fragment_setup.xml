@@ -10,51 +10,88 @@
             type="dev.leonlatsch.photok.ui.setup.SetupViewModel" />
     </data>
 
-    <!-- PROTOTYPE LAYOUT -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
-        <EditText
-            android:id="@+id/setupPasswordEditText"
-            android:text="@={viewModel.passwordText}"
-            android:layout_width="wrap_content"
+        <TextView
+            android:text="@string/setup_create_your_password"
+            android:lines="2"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:hint="Enter your password"
-            android:singleLine="true"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingStart="20dp"/>
 
-        <EditText
-            android:id="@+id/setupConfirmPasswordEditText"
-            android:text="@={viewModel.confirmPasswordText}"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm your password"
-            android:singleLine="true"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
-        <Button
-            android:layout_width="@dimen/wide_button_width"
-            android:layout_height="@dimen/wide_button_height"
-            android:onClick="@{() -> viewModel.savePassword()}"
-            android:text="Sumbit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.719" />
+            <EditText
+                android:id="@+id/setupPasswordEditText"
+                android:text="@={viewModel.passwordText}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/password_edit_text_height"
+                android:hint="@string/setup_enter_password"
+                style="@style/passwordEditTextStyle"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/setupConfirmPasswordEditText"
+                android:text="@={viewModel.confirmPasswordText}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/password_edit_text_height"
+                android:hint="@string/setup_confirm_password"
+                android:visibility="visible"
+                android:layout_marginTop="16dp"
+                style="@style/passwordEditTextStyle"/>
+
+            <LinearLayout
+                android:id="@+id/setupPasswordStrengthLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/setup_password_strength_label"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/setupPasswordStrengthValue"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
+                android:onClick="@{() -> viewModel.savePassword()}"
+                android:text="@string/setup_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </layout>

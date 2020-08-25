@@ -5,4 +5,4 @@ const val SHA_256 = "SHA256"
 const val AES = "AES"
 
 // Regex
-const val PASSWORD_REGEX = "^(?=.*?[a-z])(?=.*?[0-9]).{6,}.*"
+const val PASSWORD_REGEX = "^(?=.*?[a-z]).{6,}.*"
