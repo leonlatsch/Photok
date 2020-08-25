@@ -18,23 +18,8 @@ class StartActivity : AppCompatActivity() {
     @Inject
     lateinit var prefManager: PrefManager
 
-    @Inject
-    lateinit var passwordRepository: PasswordRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-
-        // TODO: Show OnBoarding if first start
-
-        checkVaultState()
-    }
-
-    private fun checkVaultState() = lifecycleScope.launch {
-        val password = passwordRepository.getPassword()?.password
-        if (password == null) {
-            startNavHostFragment.findNavController()
-                .navigate(R.id.action_unlockFragment_to_setupFragment)
-        }
     }
 }

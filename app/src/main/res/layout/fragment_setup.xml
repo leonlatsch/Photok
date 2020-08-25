@@ -17,15 +17,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textSize="62sp"
-            android:fontFamily="@font/quicksand_regular"
+            style="@style/AppNameTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textAlignment="center" />
 
         <TextView
             style="@style/TitleTextViewStyle"
@@ -103,9 +101,9 @@
             android:layout_width="@dimen/wide_button_width"
             android:layout_height="@dimen/wide_button_height"
             android:layout_gravity="center_horizontal"
+            android:enabled="false"
             android:onClick="@{() -> viewModel.savePassword()}"
-            android:text="@string/setup_button"
-            android:enabled="false"/>
+            android:text="@string/setup_button" />
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 <resources>
     <!-- COMMON -->
     <string name="app_name">Photok</string>
+    <string name="copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
     <string name="slash">/</string>
     <string name="percent">%</string>
 

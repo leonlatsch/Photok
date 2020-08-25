@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.ui.onboarding
+package dev.leonlatsch.photok.ui.start
 
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
