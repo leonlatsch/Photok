@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -52,6 +53,12 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
                 setupConfirmPasswordEditText.setText(emptyString())
                 setupConfirmPasswordEditText.visibility = View.GONE
             }
+
+            enableOrDisableSetup()
+        })
+
+        viewModel.confirmPasswordText.observe(viewLifecycleOwner, {
+            enableOrDisableSetup()
         })
 
         viewModel.setupState.observe(viewLifecycleOwner, {
@@ -66,6 +73,19 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
         })
 
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    private fun enableOrDisableSetup() {
+        if (!viewModel.passwordsEqual()
+            && setupConfirmPasswordEditText.visibility == View.VISIBLE) {
+            setupPasswordMatchWarningTextView.visibility = View.VISIBLE
+            setupButton.isEnabled = false
+        } else {
+            setupPasswordMatchWarningTextView.visibility = View.GONE
+            if (viewModel.validateBothPasswords()) {
+                setupButton.isEnabled = true
+            }
+        }
     }
 
     override fun bind(binding: FragmentSetupBinding) {

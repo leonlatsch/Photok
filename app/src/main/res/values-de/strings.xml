@@ -21,4 +21,5 @@
     <string name="setup_password_strength_weak">Schwach</string>
     <string name="setup_password_strength_moderate">Moderat</string>
     <string name="setup_password_strength_strong">Stark</string>
+    <string name="setup_password_match_warning">\u26A0 Die Passwörtert sind nicht gleich</string>
 </resources>

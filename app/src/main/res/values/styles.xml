@@ -38,13 +38,13 @@
     <style name="ThickButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/roboto_black</item>
         <item name="android:textSize">18sp</item>
-        <item name="background">@drawable/round_button</item>
+        <item name="background">@drawable/bg_button</item>
     </style>
 
     <style name="ThinButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:background">@drawable/round_button</item>
+        <item name="android:background">@drawable/bg_button</item>
     </style>
 
     <!-- PROGRESS BAR -->
