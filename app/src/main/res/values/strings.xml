@@ -4,6 +4,7 @@
     <string name="copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
     <string name="slash">/</string>
     <string name="percent">%</string>
+    <string name="loading">Loading …</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Import Photos</string>
@@ -23,4 +24,9 @@
     <string name="setup_password_strength_strong">Strong</string>
     <string name="setup_password_match_warning">\u26A0 Passwords do not match</string>
 
+    <!-- UNLOCK -->
+    <string name="unlockTitle">Unlock your safe</string>
+    <string name="unlockEnterPassword">Photok Password</string>
+    <string name="unlockButton">Unlock</string>
+    <string name="unlockWrongPassword">\u26A0 Wrong password</string>
 </resources>

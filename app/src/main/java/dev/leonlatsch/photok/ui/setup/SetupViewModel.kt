@@ -9,6 +9,7 @@ import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.PASSWORD_REGEX
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 import java.util.regex.Pattern
@@ -21,15 +22,19 @@ class SetupViewModel @ViewModelInject constructor(
     var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
     var confirmPasswordText: MutableLiveData<String> = MutableLiveData(emptyString())
 
-    val setupState: MutableLiveData<SetupState> = MutableLiveData()
+    val setupState: MutableLiveData<SetupState> = MutableLiveData(SetupState.SETUP)
 
     fun savePassword() = viewModelScope.launch {
+        setupState.postValue(SetupState.LOADING)
+
         if (validateBothPasswords()) {
             val bcryptHash = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
             val password = Password(bcryptHash)
             passwordRepository.insert(password)
             encryptionManager.generateAndSetKey(passwordText.value!!)
             setupState.postValue(SetupState.FINISHED)
+        } else {
+            setupState.postValue(SetupState.SETUP)
         }
     }
 

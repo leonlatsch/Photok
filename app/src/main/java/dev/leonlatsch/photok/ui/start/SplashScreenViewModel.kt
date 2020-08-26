@@ -18,6 +18,8 @@ class SplashScreenViewModel @ViewModelInject constructor(
         val password = passwordRepository.getPassword()?.password
         if (password == null) {
             vaultState.postValue(VaultState.SETUP)
+        } else {
+            vaultState.postValue(VaultState.LOCKED)
         }
     }
 }

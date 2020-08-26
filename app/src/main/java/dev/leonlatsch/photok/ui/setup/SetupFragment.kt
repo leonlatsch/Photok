@@ -10,9 +10,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.hideLoadingOverlay
+import dev.leonlatsch.photok.other.showLoadingOverlay
 import dev.leonlatsch.photok.ui.components.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_setup.*
+import kotlinx.android.synthetic.main.loading_overlay.*
 
 @AndroidEntryPoint
 class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
@@ -62,7 +65,11 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
 
         viewModel.setupState.observe(viewLifecycleOwner, {
             when(it) {
+                SetupState.LOADING -> showLoadingOverlay(loadingOverlay)
+                SetupState.SETUP -> hideLoadingOverlay(loadingOverlay)
                 SetupState.FINISHED -> {
+                    hideLoadingOverlay(loadingOverlay)
+
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
