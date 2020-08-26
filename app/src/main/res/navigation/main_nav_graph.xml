@@ -44,8 +44,9 @@
         <action
             android:id="@+id/action_importFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
+            app:popUpTo="@id/importFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
