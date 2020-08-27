@@ -1,7 +1,6 @@
 package dev.leonlatsch.photok.ui.importing
 
-import android.content.ContentResolver
-import android.graphics.BitmapFactory
+import android.content.Context
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -21,17 +20,14 @@ class ImportViewModel @ViewModelInject constructor(
     var importState: MutableLiveData<ImportState> = MutableLiveData()
     var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
 
-    fun importImages(contentResolver: ContentResolver, uris: List<Uri>) = viewModelScope.launch {
+    fun runImport(context: Context, uris: List<Uri>) = viewModelScope.launch {
         var current = 1
         importState.postValue(ImportState.IMPORTING)
         importProgress.value?.update(0, uris.size)
 
         for (image in uris) {
             // Load Bytes
-            val photo = load(contentResolver, image) ?: continue
-
-            //SAVE
-            save(photo)
+            import(context, image)
             importProgress.value?.update(current, uris.size)
             current++
         }
@@ -39,22 +35,23 @@ class ImportViewModel @ViewModelInject constructor(
         importState.postValue(ImportState.FINISHED)
     }
 
-    private fun load(contentResolver: ContentResolver, imageUri: Uri): Photo? {
-        val fileName = getFileName(contentResolver, imageUri) ?: UUID.randomUUID().toString()
+    private suspend fun import(context: Context, imageUri: Uri) {
+        val fileName = getFileName(context.contentResolver, imageUri) ?: UUID.randomUUID().toString()
 
-        val type = when(contentResolver.getType(imageUri)) {
+        val type = when(context.contentResolver.getType(imageUri)) {
             "image/png" -> PhotoType.PNG
             "image/jpeg" -> PhotoType.JPEG
             "image/gif" -> PhotoType.GIF
             else -> PhotoType.UNDEFINED
         }
-        if (type == PhotoType.UNDEFINED) return null
+        if (type == PhotoType.UNDEFINED) return
 
-        val bytes = contentResolver.openInputStream(imageUri)?.readBytes()
-        bytes ?: return null
-        val data = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        val bytes = photoRepository.readPhotoFromExternal(context.contentResolver, imageUri)
+        bytes ?: return
 
-        return Photo(fileName, data, System.currentTimeMillis(), type)
+        val photo = Photo(fileName, System.currentTimeMillis(), type)
+        val id = save(photo)
+        photoRepository.writePhotoData(context, id, bytes)
     }
 
     private suspend fun save(photo: Photo) = photoRepository.insert(photo)

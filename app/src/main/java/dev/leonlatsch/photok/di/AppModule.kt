@@ -39,5 +39,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePasswordManager() = EncryptionManager.instance
+    fun providePasswordManager() = EncryptionManager()
 }

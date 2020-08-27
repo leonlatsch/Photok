@@ -8,7 +8,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 interface PhotoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(photo: Photo)
+    suspend fun insert(photo: Photo): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(photos: List<Photo>)

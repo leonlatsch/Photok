@@ -11,16 +11,10 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class EncryptionManager private constructor() {
-
-    // TODO: Inject to Converters with Hilt
-    companion object {
-        val instance: EncryptionManager = EncryptionManager()
-    }
+class EncryptionManager {
 
     private var encryptionKey: SecretKeySpec? = null
-    private var encryptionCipher: Cipher = Cipher.getInstance(AES_ALGORITHM)
-    private var decryptionCipher: Cipher = Cipher.getInstance(AES_ALGORITHM)
+    private var ivParameterSpec: IvParameterSpec? = null
 
     var isReady: Boolean = false
 
@@ -29,17 +23,11 @@ class EncryptionManager private constructor() {
             val md = MessageDigest.getInstance(SHA_256)
             val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
             encryptionKey = SecretKeySpec(bytes, AES)
-            initCiphers(password)
+            ivParameterSpec = genIv(password)
         } catch (e: GeneralSecurityException) {
             Log.e(EncryptionManager::class.toString(), "Error initializing EncryptionManager: $e")
             isReady = false
         }
-    }
-
-    private fun initCiphers(password: String) {
-        val ivParameterSpec = genIv(password)
-        encryptionCipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
-        decryptionCipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
     }
 
     private fun genIv(password: String): IvParameterSpec {
@@ -51,7 +39,15 @@ class EncryptionManager private constructor() {
         return IvParameterSpec(iv)
     }
 
-    fun encrypt(bytes: ByteArray): ByteArray = encryptionCipher.doFinal(bytes)
+    fun encrypt(bytes: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance(AES_ALGORITHM)
+        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
+        return cipher.doFinal(bytes)
+    }
 
-    fun decrypt(encryptedBytes: ByteArray): ByteArray = decryptionCipher.doFinal(encryptedBytes)
+    fun decrypt(encryptedBytes: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance(AES_ALGORITHM)
+        cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
+        return cipher.doFinal(encryptedBytes)
+    }
 }
