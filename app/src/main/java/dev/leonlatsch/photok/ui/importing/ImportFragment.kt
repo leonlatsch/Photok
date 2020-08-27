@@ -91,7 +91,7 @@ class ImportFragment : BaseFragment<FragmentImportBinding>(R.layout.fragment_imp
                 }
             }
             if (images.size > 0) {
-                viewModel.runImport(requireContext(), images)
+                viewModel.runImport(images)
             }
         }
     }

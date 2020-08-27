@@ -17,5 +17,5 @@ interface PhotoDao {
     suspend fun delete(photo: Photo)
 
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPhotosSortedByImportedAt(): LiveData<List<Photo>>
+    fun getAllPagedSortedByImportedAt(): LiveData<Photo>
 }
