@@ -9,7 +9,6 @@ import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.PASSWORD_REGEX
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 import java.util.regex.Pattern
@@ -31,7 +30,7 @@ class SetupViewModel @ViewModelInject constructor(
             val bcryptHash = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
             val password = Password(bcryptHash)
             passwordRepository.insert(password)
-            encryptionManager.generateAndSetKey(passwordText.value!!)
+            encryptionManager.initialize(passwordText.value!!)
             setupState.postValue(SetupState.FINISHED)
         } else {
             setupState.postValue(SetupState.SETUP)

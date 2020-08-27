@@ -23,7 +23,7 @@ class UnlockViewModel @ViewModelInject constructor(
 
         val savedPassword = passwordRepository.getPassword()
         if (BCrypt.checkpw(passwordText.value!!, savedPassword?.password)) {
-            encryptionManager.generateAndSetKey(passwordText.value!!)
+            encryptionManager.initialize(passwordText.value!!)
             unlockState.postValue(UnlockState.UNLOCKED)
         } else {
             unlockState.postValue(UnlockState.LOCKED)
