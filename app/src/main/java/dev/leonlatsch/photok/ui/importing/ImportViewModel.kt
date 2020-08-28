@@ -1,7 +1,6 @@
 package dev.leonlatsch.photok.ui.importing
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
