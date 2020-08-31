@@ -2,10 +2,14 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.security.EncryptionManager
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(
@@ -28,6 +32,18 @@ class PhotoRepository @Inject constructor(
         context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
             it.write(encryptedBytes)
         }
+        createAndWriteThumbnail(context, id, bytes)
+    }
+
+    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray) {
+        val thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeByteArray(bytes, 0, bytes.size), THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+        val outputStream = ByteArrayOutputStream()
+        thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        val thumbnailBytes = outputStream.toByteArray()
+        val encryptedThumbnailBytes = encryptionManager.encrypt(thumbnailBytes)
+        context.openFileOutput("${id}.photok.tn", Context.MODE_PRIVATE).use {
+            it.write(encryptedThumbnailBytes)
+        }
     }
 
     fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
@@ -38,5 +54,9 @@ class PhotoRepository @Inject constructor(
         val fileOutputStream = context.openFileInput("${id}.photok")
         val encryptedBytes = fileOutputStream.readBytes()
         return encryptionManager.decrypt(encryptedBytes)
+    }
+
+    companion object {
+        private const val THUMBNAIL_SIZE = 128
     }
 }
