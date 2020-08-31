@@ -21,9 +21,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
+        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 3)
 
-        val adapter = PhotoAdapter(viewModel.photoRepository)
+        val adapter = PhotoAdapter(requireContext(), viewModel.photoRepository)
         galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }

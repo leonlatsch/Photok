@@ -46,13 +46,18 @@ class PhotoRepository @Inject constructor(
         }
     }
 
-    fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
-        return contentResolver.openInputStream(imageUri)?.readBytes()
-    }
+    fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? =
+        contentResolver.openInputStream(imageUri)?.readBytes()
 
-    fun readPhotoData(context: Context, id: Long): ByteArray {
-        val fileOutputStream = context.openFileInput("${id}.photok")
-        val encryptedBytes = fileOutputStream.readBytes()
+    fun readPhotoData(context: Context, id: Int): ByteArray =
+        readAndDecryptFile(context, "${id}.photok")
+
+    fun readPhotoThumbnailData(context: Context, id: Int): ByteArray =
+        readAndDecryptFile(context, "${id}.photok.tn")
+
+    private fun readAndDecryptFile(context: Context, fileName: String): ByteArray {
+        val fileInputStream = context.openFileInput(fileName)
+        val encryptedBytes = fileInputStream.readBytes()
         return encryptionManager.decrypt(encryptedBytes)
     }
 

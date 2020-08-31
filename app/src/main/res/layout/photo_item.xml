@@ -3,7 +3,8 @@
     android:src="@drawable/ic_launcher_background"
     android:id="@+id/photoItemImageView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="128dp"
+    android:layout_height="128dp"
+    android:scaleType="fitXY">
 
 </ImageView>
