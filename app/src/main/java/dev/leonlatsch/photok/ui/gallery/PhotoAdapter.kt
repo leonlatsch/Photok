@@ -4,14 +4,17 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 
-class PhotoAdapter : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
+class PhotoAdapter(
+    private val photoRepository: PhotoRepository
+) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder = PhotoViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder = PhotoViewHolder(parent, photoRepository)
 
     companion object {
         private val differCallback = object : DiffUtil.ItemCallback<Photo>() {

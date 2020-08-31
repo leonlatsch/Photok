@@ -2,28 +2,27 @@ package dev.leonlatsch.photok.ui.gallery
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import kotlinx.coroutines.launch
 
 class GalleryViewModel @ViewModelInject constructor(
-    private val photoRepository: PhotoRepository
+    val photoRepository: PhotoRepository
 ) : ViewModel() {
 
     val photos = Pager(
             PagingConfig(
-                pageSize = 60,
-                enablePlaceholders = true,
-                maxSize = 500
+                pageSize = PAGE_SIZE,
+                maxSize = MAX_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE,
             )
     ) {
         photoRepository.getAllPaged()
     }.flow
 
-    fun remove(photo: Photo) = viewModelScope.launch {
-        photoRepository.delete(photo)
+    companion object {
+        private const val PAGE_SIZE = 80
+        private const val INITIAL_LOAD_SIZE = 100
+        private const val MAX_SIZE = 800
     }
 }

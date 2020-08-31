@@ -16,10 +16,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/photoList"
+            android:id="@+id/galleryPhotoGrid"
             android:layout_width="match_parent"
             android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
