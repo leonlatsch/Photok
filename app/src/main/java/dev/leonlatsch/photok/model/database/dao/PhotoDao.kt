@@ -1,6 +1,7 @@
 package dev.leonlatsch.photok.model.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Photo
 
@@ -17,5 +18,5 @@ interface PhotoDao {
     suspend fun delete(photo: Photo)
 
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPagedSortedByImportedAt(): LiveData<Photo>
+    fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
 }

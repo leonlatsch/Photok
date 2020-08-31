@@ -8,5 +8,5 @@ data class Photo(
     val fileName: String,
     val importedAt: Long,
     val type: PhotoType,
-    @PrimaryKey(autoGenerate = true) val id: Long? = null
+    @PrimaryKey(autoGenerate = true) val id: Int? = null
 )
