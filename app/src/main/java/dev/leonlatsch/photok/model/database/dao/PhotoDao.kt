@@ -18,5 +18,5 @@ interface PhotoDao {
     suspend fun delete(photo: Photo)
 
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPagedSortedByImportedAt(): PagingSource<Long, Photo>
+    fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
 }
