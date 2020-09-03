@@ -31,6 +31,8 @@ class PhotoRepository @Inject constructor(
 
     suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
+    suspend fun get(id: Int) = photoDao.get(id)
+
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
     // FILESYSTEM

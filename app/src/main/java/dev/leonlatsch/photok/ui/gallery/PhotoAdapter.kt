@@ -6,14 +6,16 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlin.reflect.KFunction1
 
 class PhotoAdapter(
     private val context: Context,
-    private val photoRepository: PhotoRepository
+    private val photoRepository: PhotoRepository,
+    private val onClickCallback: KFunction1<Int, Unit>
 ) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.bindTo(getItem(position))
+        holder.bindTo(onClickCallback, getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder = PhotoViewHolder(parent, context, photoRepository)

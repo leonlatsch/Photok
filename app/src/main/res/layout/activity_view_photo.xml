@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ViewPhotoActivity">
+    tools:context=".ui.viewphoto.ViewPhotoActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoViewModel" />
+    </data>
+
+    <!--TODO Collapsing Toolbar  -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@{viewModel.photo.fileName}"
+            android:src="@{viewModel.photoDrawable, default=@drawable/ic_launcher_background}" />
+
+    </RelativeLayout>
+</layout>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlin.reflect.KFunction1
 
 class PhotoViewHolder(
     parent: ViewGroup,
@@ -20,9 +21,12 @@ class PhotoViewHolder(
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     var photo: Photo? = null
 
-    fun bindTo(photo: Photo?) {
+    fun bindTo(onClickCallback: KFunction1<Int, Unit>, photo: Photo?) {
         this.photo = photo
         loadThumbnail()
+        imageView.setOnClickListener {
+            onClickCallback.invoke(photo?.id!!)
+        }
     }
 
     private fun loadThumbnail() {

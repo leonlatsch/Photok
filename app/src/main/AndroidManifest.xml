@@ -12,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.ViewPhotoActivity"
-            android:launchMode="singleTask" />
+
         <activity
             android:name=".ui.StartActivity"
             android:launchMode="singleTask"
@@ -25,10 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.viewphoto.ViewPhotoActivity"
+            android:launchMode="singleTask" />
+
     </application>
 
 </manifest>
