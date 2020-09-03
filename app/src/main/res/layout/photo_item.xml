@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_launcher_background"
-    android:id="@+id/photoItemImageView"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="128dp"
-    android:layout_height="128dp"
-    android:scaleType="fitXY">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray"
+    android:padding="0.5dp">
 
-</ImageView>
+    <ImageView
+        android:id="@+id/photoItemImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher_background" />
+</FrameLayout>

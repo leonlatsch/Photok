@@ -62,6 +62,6 @@ class PhotoRepository @Inject constructor(
     }
 
     companion object {
-        private const val THUMBNAIL_SIZE = 128
+        private const val THUMBNAIL_SIZE = 256
     }
 }
