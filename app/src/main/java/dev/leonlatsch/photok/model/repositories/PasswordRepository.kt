@@ -4,6 +4,11 @@ import dev.leonlatsch.photok.model.database.dao.PasswordDao
 import dev.leonlatsch.photok.model.database.entity.Password
 import javax.inject.Inject
 
+/**
+ * Repository for [Password].
+ *
+ * @since 1.0.0
+ */
 class PasswordRepository @Inject constructor(
     private val passwordDao: PasswordDao
 ) {

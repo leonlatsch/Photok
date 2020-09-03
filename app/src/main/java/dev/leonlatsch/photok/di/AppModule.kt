@@ -13,6 +13,11 @@ import dev.leonlatsch.photok.other.PrefManager
 import dev.leonlatsch.photok.security.EncryptionManager
 import javax.inject.Singleton
 
+/**
+ * Hilt Module for [ApplicationComponent].
+ *
+ * @since 1.0.0
+ */
 @Module
 @InstallIn(ApplicationComponent::class)
 object AppModule {

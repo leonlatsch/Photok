@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Password
 
+/**
+ * Data Access Object for [Password] Entity.
+ *
+ * @since 1.0.0
+ */
 @Dao
 interface PasswordDao {
 

@@ -3,6 +3,11 @@ package dev.leonlatsch.photok.other
 import android.content.Context
 import android.content.SharedPreferences
 
+/**
+ * Manages reading and writing with the config file.
+ *
+ * @since 1.0.0
+ */
 class PrefManager(context: Context) {
 
     private val fileName = "dev.leonlatsch.photok_preferences"

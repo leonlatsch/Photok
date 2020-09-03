@@ -12,12 +12,19 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
+/**
+ * Repository for [Photo].
+ * Uses [PhotoDao] and accesses the filesystem to read and write encrypted photos.
+ *
+ * @since 1.0.0
+ */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val encryptionManager: EncryptionManager
 ) {
 
-    // Database
+    // DATABASE
+
     suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
     suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(photos)
@@ -26,7 +33,18 @@ class PhotoRepository @Inject constructor(
 
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
-    // Filesystem
+    // FILESYSTEM
+
+    /**
+     * Write a [ByteArray] of a photo to the filesystem.
+     * Also create a thumbnail for it using [createAndWriteThumbnail].
+     *
+     * @param context used to write file.
+     * @param id used for the file name.
+     * @param bytes the photo data to save.
+     *
+     * @since 1.0.0
+     */
     fun writePhotoData(context: Context, id: Long, bytes: ByteArray) {
         val encryptedBytes = encryptionManager.encrypt(bytes)
         context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
@@ -35,6 +53,15 @@ class PhotoRepository @Inject constructor(
         createAndWriteThumbnail(context, id, bytes)
     }
 
+    /**
+     * Create a thumbnail of a photo's bytes.
+     *
+     * @param context used to write file.
+     * @param id used for the file name.
+     * @param bytes the full size photo bytes.
+     *
+     * @since 1.0.0
+     */
     private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray) {
         val thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeByteArray(bytes, 0, bytes.size), THUMBNAIL_SIZE, THUMBNAIL_SIZE)
         val outputStream = ByteArrayOutputStream()
@@ -46,12 +73,21 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    /**
+     * Read a photo's bytes from external storage.
+     */
     fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? =
         contentResolver.openInputStream(imageUri)?.readBytes()
 
+    /**
+     * Read and decrypt a photo's bytes from internal storage.
+     */
     fun readPhotoData(context: Context, id: Int): ByteArray =
         readAndDecryptFile(context, "${id}.photok")
 
+    /**
+     * Read and decrypt a photo's thumbnail from internal storage.
+     */
     fun readPhotoThumbnailData(context: Context, id: Int): ByteArray =
         readAndDecryptFile(context, "${id}.photok.tn")
 

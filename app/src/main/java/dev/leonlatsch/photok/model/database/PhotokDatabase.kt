@@ -9,6 +9,11 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Password
 
+/**
+ * Abstract Room Database.
+ *
+ * @since 1.0.0
+ */
 @Database(
     entities = [
         Photo::class,

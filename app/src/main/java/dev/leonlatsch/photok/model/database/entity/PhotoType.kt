@@ -1,5 +1,11 @@
 package dev.leonlatsch.photok.model.database.entity
 
+/**
+ * Enum for [Photo.type].
+ * Internal value is an [Int].
+ *
+ * @since 1.0.0
+ */
 enum class PhotoType(val value: Int) {
     UNDEFINED(0),
     PNG(1),

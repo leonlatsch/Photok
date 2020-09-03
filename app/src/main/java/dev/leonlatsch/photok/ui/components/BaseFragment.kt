@@ -9,6 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
+/**
+ * Base for all fragments that use data binding.
+ *
+ * @param BindingType the binding type generated when adding <data> tag to a layout.
+ * @param layout the layout id with the data binding.
+ * @param attachToParent attach to parent
+ */
 abstract class BaseFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int,
     private val attachToParent: Boolean
@@ -16,7 +23,7 @@ abstract class BaseFragment<BindingType : ViewDataBinding>(
 
     /**
      * Creates layout and binding.
-     * Always call super.onCreateView() when overwriting.
+     * **ALWAYS** call super.onCreateView() when overwriting.
      */
     override fun onCreateView(
         inflater: LayoutInflater,
