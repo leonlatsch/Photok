@@ -8,6 +8,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.components.BaseActivity
+import kotlinx.android.synthetic.main.activity_view_photo.*
+import kotlinx.android.synthetic.main.fragment_splash_screen.*
 
 @AndroidEntryPoint
 class ViewPhotoActivity : BaseActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
@@ -16,6 +18,9 @@ class ViewPhotoActivity : BaseActivity<ActivityViewPhotoBinding>(R.layout.activi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.photoDrawable.observe(this, {
+            viewPhotoImageView.setImageBitmap(it)
+        })
         loadPhoto()
     }
 
