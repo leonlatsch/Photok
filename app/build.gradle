@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.android.application' // or 'java-library'
+apply plugin: 'com.jaredsburrows.license'
 
 android {
     compileSdkVersion 29
