@@ -7,12 +7,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.ui.components.BaseActivity
+import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_view_photo.*
-import kotlinx.android.synthetic.main.fragment_splash_screen.*
 
 @AndroidEntryPoint
-class ViewPhotoActivity : BaseActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
+class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
 
     private val viewModel: ViewPhotoViewModel by viewModels()
 
