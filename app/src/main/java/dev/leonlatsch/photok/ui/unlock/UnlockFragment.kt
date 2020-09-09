@@ -35,11 +35,11 @@ class UnlockFragment : BaseFragment<FragmentUnlockBinding>(R.layout.fragment_unl
             }
         })
 
-        unlockPasswordEditText.addTextChangedListener {
+        viewModel.passwordText.observe(viewLifecycleOwner, {
             if (unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
                 unlockWrongPasswordWarningTextView.visibility = View.INVISIBLE
             }
-        }
+        })
 
         super.onViewCreated(view, savedInstanceState)
     }

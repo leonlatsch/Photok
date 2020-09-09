@@ -12,8 +12,8 @@ import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.other.hideLoadingOverlay
 import dev.leonlatsch.photok.other.showLoadingOverlay
-import dev.leonlatsch.photok.ui.components.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.components.BaseFragment
 import kotlinx.android.synthetic.main.fragment_setup.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
@@ -52,7 +52,7 @@ class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup
             if (viewModel.validatePassword()) {
                 setupConfirmPasswordEditText.visibility = View.VISIBLE
             } else {
-                setupConfirmPasswordEditText.setText(emptyString())
+                setupConfirmPasswordEditText.setTextValue(emptyString())
                 setupConfirmPasswordEditText.visibility = View.GONE
             }
 

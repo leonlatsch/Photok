@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.password_edit_text.view.*
             type = PasswordEditText::class,
             attribute = "textValue",
             event = "android:textAttrChanged",
-            method = "getTextValue"
+            method = "textValue"
         )]
 )
 class PasswordEditText @JvmOverloads constructor(
@@ -76,7 +76,7 @@ class PasswordEditText @JvmOverloads constructor(
         passwordEditTextValue.setSelection(value.length)
     }
 
-    val getTextValue: String
+    val textValue: String
         get() {
             return passwordEditTextValue.text.toString()
         }

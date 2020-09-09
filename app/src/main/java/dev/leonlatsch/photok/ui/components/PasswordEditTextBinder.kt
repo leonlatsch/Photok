@@ -3,9 +3,11 @@ package dev.leonlatsch.photok.ui.components
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.databinding.adapters.ListenerUtil
 import androidx.databinding.adapters.TextViewBindingAdapter
+import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import kotlinx.android.synthetic.main.password_edit_text.view.*
 
@@ -13,11 +15,17 @@ object PasswordEditTextBinder {
 
     @JvmStatic
     @BindingAdapter("textValue")
-    fun setText(passwordEditText: PasswordEditText, value: String?) {
-        value?.let {
-            passwordEditText.setTextValue(it)
+    fun setTextValue(passwordEditText: PasswordEditText, liveData: MutableLiveData<String>) {
+        liveData.value?.let {
+            if (passwordEditText.textValue != it) {
+                passwordEditText.setTextValue(it)
+            }
         }
     }
+
+    @JvmStatic
+    @InverseBindingAdapter(attribute = "textValue", event = "android:textAttrChanged")
+    fun getTextValue(passwordEditText: PasswordEditText) = passwordEditText.textValue
 
     /**
      * "Copied" from Example code.
