@@ -3,19 +3,43 @@ package dev.leonlatsch.photok.ui.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
+import android.view.View.OnClickListener
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.databinding.DataBindingUtil
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
 import kotlinx.android.synthetic.main.password_edit_text.view.*
 
 class PasswordEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
     defStyle: Int = 0
-) : LinearLayout(context, attrs, defStyle) {
+) : ConstraintLayout(context, attrs, defStyle) {
+
+    private val onShowPasswordClickListener = OnClickListener {
+        passwordEditTextValue.inputType = when(passwordEditTextValue.inputType) {
+            INPUT_TYPE_PASSWORD -> {
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye_closed))
+                INPUT_TYPE_TEXT
+            }
+            INPUT_TYPE_TEXT -> {
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                INPUT_TYPE_PASSWORD
+            }
+            else -> {
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                INPUT_TYPE_PASSWORD
+            }
+        }
+    }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.password_edit_text, this, true)
+        val binding: PasswordEditTextBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.password_edit_text, this, true)
+        binding.onShowPasswordClickListener = onShowPasswordClickListener
+        binding.root
 
         attrs?.let {
             val styledAttrs = context.obtainStyledAttributes(it, R.styleable.PasswordEditText, 0, 0)
@@ -34,5 +58,10 @@ class PasswordEditText @JvmOverloads constructor(
 
     private fun setHint(hint: String) {
         passwordEditTextValue.hint = hint
+    }
+
+    companion object {
+        const val INPUT_TYPE_PASSWORD = 129
+        const val INPUT_TYPE_TEXT = 1
     }
 }
