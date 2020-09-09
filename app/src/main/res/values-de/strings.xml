@@ -6,6 +6,7 @@
     <string name="slash">/</string>
     <string name="percent">%</string>
     <string name="loading">Laden …</string>
+    <string name="password">Passwort</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Fotos Importieren</string>
@@ -27,7 +28,7 @@
 
     <!-- UNLOCK -->
     <string name="unlockTitle">Entsperre deinen Safe</string>
-    <string name="unlockEnterPassword">Photok Passwort</string>
+    <string name="unlockEnterPassword">Passwort eingeben</string>
     <string name="unlockButton">Entsperren</string>
     <string name="unlockWrongPassword">\u26A0 Falsches Passwort</string>
 </resources>

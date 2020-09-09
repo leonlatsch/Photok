@@ -5,7 +5,6 @@
     tools:context=".ui.unlock.UnlockFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.unlock.UnlockViewModel" />
@@ -45,14 +44,12 @@
                 android:paddingTop="30dp"
                 android:paddingEnd="20dp">
 
-                <EditText
+                <dev.leonlatsch.photok.ui.components.PasswordEditText
                     android:id="@+id/unlockPasswordEditText"
-                    style="@style/passwordEditTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/password_edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:hint="@string/unlockEnterPassword"
-                    android:text="@={viewModel.passwordText}" />
+                    app:password_edit_text_hint="@string/unlockEnterPassword" />
 
                 <TextView
                     android:id="@+id/unlockWrongPasswordWarningTextView"
