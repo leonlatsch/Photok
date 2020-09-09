@@ -2,18 +2,15 @@ package dev.leonlatsch.photok.ui.unlock
 
 import android.content.Intent
 import android.os.Bundle
-import android.service.voice.VoiceInteractionService
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.hideLoadingOverlay
 import dev.leonlatsch.photok.other.showLoadingOverlay
-import dev.leonlatsch.photok.ui.components.BaseFragment
 import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.components.BaseFragment
 import kotlinx.android.synthetic.main.fragment_unlock.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
@@ -22,13 +19,9 @@ class UnlockFragment : BaseFragment<FragmentUnlockBinding>(R.layout.fragment_unl
 
     private val viewModel: UnlockViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.unlockState.observe(viewLifecycleOwner, {
-            when(it) {
+            when (it) {
                 UnlockState.CHECKING -> showLoadingOverlay(loadingOverlay)
                 UnlockState.UNLOCKED -> {
                     hideLoadingOverlay(loadingOverlay)
@@ -42,13 +35,13 @@ class UnlockFragment : BaseFragment<FragmentUnlockBinding>(R.layout.fragment_unl
             }
         })
 
-        viewModel.passwordText.observe(viewLifecycleOwner, {
+        unlockPasswordEditText.addTextChangedListener {
             if (unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
                 unlockWrongPasswordWarningTextView.visibility = View.INVISIBLE
             }
-        })
+        }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun unlock() {

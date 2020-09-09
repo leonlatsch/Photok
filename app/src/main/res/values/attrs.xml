@@ -2,6 +2,5 @@
 <resources>
     <declare-styleable name="PasswordEditText">
         <attr name="password_edit_text_hint" format="reference"/>
-        <attr name="password_edit_text_value" format="reference" />
     </declare-styleable>
 </resources>

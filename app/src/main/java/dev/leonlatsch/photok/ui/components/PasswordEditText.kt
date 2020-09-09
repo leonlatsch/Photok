@@ -1,18 +1,29 @@
 package dev.leonlatsch.photok.ui.components
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.InverseBindingMethod
+import androidx.databinding.InverseBindingMethods
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
 import kotlinx.android.synthetic.main.password_edit_text.view.*
 
+@InverseBindingMethods(
+    value = [
+        InverseBindingMethod(
+            type = PasswordEditText::class,
+            attribute = "textValue",
+            event = "android:textAttrChanged",
+            method = "getTextValue"
+        )]
+)
 class PasswordEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
@@ -58,6 +69,31 @@ class PasswordEditText @JvmOverloads constructor(
 
     private fun setHint(hint: String) {
         passwordEditTextValue.hint = hint
+    }
+
+    fun setTextValue(value: String) {
+        passwordEditTextValue.setText(value)
+        passwordEditTextValue.setSelection(value.length)
+    }
+
+    val getTextValue: String
+        get() {
+            return passwordEditTextValue.text.toString()
+        }
+
+    /**
+     * Pass through of addTextChanged to [passwordEditTextValue]
+     */
+    fun addTextChangedListener(
+        beforeTextChanged: (CharSequence?, Int, Int, Int) -> Unit = { _, _, _, _ -> },
+        onTextChanged: (CharSequence?, Int, Int, Int) -> Unit = { _, _, _, _ -> },
+        afterTextChanged: (Editable?) -> Unit
+    ) {
+        passwordEditTextValue?.addTextChangedListener(
+            beforeTextChanged,
+            onTextChanged,
+            afterTextChanged
+        )
     }
 
     companion object {

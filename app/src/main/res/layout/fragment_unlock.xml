@@ -5,6 +5,7 @@
     tools:context=".ui.unlock.UnlockFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.unlock.UnlockViewModel" />
@@ -49,7 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    app:password_edit_text_hint="@string/unlockEnterPassword" />
+                    app:password_edit_text_hint="@string/unlockEnterPassword"
+                    app:textValue="@={viewModel.passwordText}" />
 
                 <TextView
                     android:id="@+id/unlockWrongPasswordWarningTextView"
