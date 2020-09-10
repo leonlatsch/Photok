@@ -23,11 +23,19 @@
             <TextView
                 style="@style/AppNameTitleStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
                 android:textAlignment="center" />
+
+            <TextView
+                android:text="@string/setupSetup"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginBottom="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 style="@style/TitleTextViewStyle"

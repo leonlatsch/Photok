@@ -24,7 +24,8 @@
     <string name="setup_password_strength_weak">Schwach</string>
     <string name="setup_password_strength_moderate">Moderat</string>
     <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_match_warning">\u26A0 Die Passwörter sind nicht gleich</string>
+    <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht über ein</string>
+    <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
     <string name="unlockTitle">Entsperre deinen Safe</string>

@@ -24,6 +24,7 @@
     <string name="setup_password_strength_moderate">Moderate</string>
     <string name="setup_password_strength_strong">Strong</string>
     <string name="setup_password_match_warning">\u26A0 Passwords do not match</string>
+    <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
     <string name="unlockTitle">Unlock your safe</string>

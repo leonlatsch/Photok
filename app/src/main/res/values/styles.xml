@@ -15,6 +15,7 @@
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -25,8 +26,9 @@
     </style>
 
     <style name="AppNameTitleStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:fontFamily">@font/lobster_regular</item>
         <item name="android:text">@string/app_name</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">62sp</item>
     </style>
 
