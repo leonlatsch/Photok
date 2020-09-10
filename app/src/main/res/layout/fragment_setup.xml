@@ -47,22 +47,20 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="20dp">
 
-                <EditText
+                <dev.leonlatsch.photok.ui.components.PasswordEditText
                     android:id="@+id/setupPasswordEditText"
-                    style="@style/passwordEditTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/password_edit_text_height"
-                    android:hint="@string/setup_enter_password"
-                    android:text="@={viewModel.passwordText}" />
+                    android:layout_height="wrap_content"
+                    app:password_edit_text_hint="@string/setup_enter_password"
+                    app:textValue="@={viewModel.passwordText}" />
 
-                <EditText
+                <dev.leonlatsch.photok.ui.components.PasswordEditText
                     android:id="@+id/setupConfirmPasswordEditText"
-                    style="@style/passwordEditTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/password_edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="@string/setup_confirm_password"
-                    android:text="@={viewModel.confirmPasswordText}"
+                    app:password_edit_text_hint="@string/setup_confirm_password"
+                    app:textValue="@={viewModel.confirmPasswordText}"
                     android:visibility="visible" />
 
                 <LinearLayout

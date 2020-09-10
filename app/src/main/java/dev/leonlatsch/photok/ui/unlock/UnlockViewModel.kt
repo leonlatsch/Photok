@@ -16,13 +16,13 @@ class UnlockViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
-    var unlockState: MutableLiveData<UnlockState> = MutableLiveData(UnlockState.LOCKED)
+    var unlockState: MutableLiveData<UnlockState> = MutableLiveData(UnlockState.UNDEFINED)
 
     fun unlock() = viewModelScope.launch {
         unlockState.postValue(UnlockState.CHECKING)
 
         val savedPassword = passwordRepository.getPassword()
-        if (BCrypt.checkpw(passwordText.value!!, savedPassword?.password)) {
+        if (BCrypt.checkpw(passwordText.value, savedPassword?.password)) {
             encryptionManager.initialize(passwordText.value!!)
             unlockState.postValue(UnlockState.UNLOCKED)
         } else {

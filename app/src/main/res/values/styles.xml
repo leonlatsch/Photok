@@ -31,7 +31,6 @@
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">@font/roboto_light</item>
-        <item name="android:background">@drawable/bg_edit_text</item>
     </style>
 
     <style name="passwordEditTextStyle" parent="@style/editTextStyle">
