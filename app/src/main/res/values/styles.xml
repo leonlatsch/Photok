@@ -7,19 +7,21 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:textViewStyle">@style/TextViewStyle</item>
-        <item name="buttonStyle">@style/ThinButtonStyle</item>
+        <item name="buttonStyle">@style/buttonStyle</item>
         <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
     </style>
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TitleTextViewStyle" parent="@style/TextViewStyle">
-        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:fontFamily">@font/raleway_bold</item>
         <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="AppNameTitleStyle" parent="android:Widget.TextView">
@@ -30,24 +32,12 @@
 
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
-        <item name="android:fontFamily">@font/roboto_light</item>
-    </style>
-
-    <style name="passwordEditTextStyle" parent="@style/editTextStyle">
-        <item name="android:inputType">textPassword</item>
-        <item name="singleLine">true</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/raleway_thin</item>
     </style>
 
     <!-- BUTTON -->
-    <style name="ThickButtonStyle" parent="android:Widget.Holo.Button">
-        <item name="android:fontFamily">@font/roboto_black</item>
-        <item name="android:textSize">18sp</item>
-        <item name="background">@drawable/bg_button</item>
-    </style>
-
-    <style name="ThinButtonStyle" parent="android:Widget.Holo.Button">
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="buttonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/raleway_semibold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/bg_button</item>
     </style>
