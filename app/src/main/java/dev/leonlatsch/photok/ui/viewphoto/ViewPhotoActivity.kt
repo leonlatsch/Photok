@@ -1,7 +1,9 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -10,6 +12,7 @@ import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_view_photo.*
 
+
 @AndroidEntryPoint
 class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
 
@@ -17,10 +20,49 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewPhotoToolbar.navigationIcon?.setTint(Color.WHITE)
+        setSupportActionBar(viewPhotoToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         viewModel.photoDrawable.observe(this, {
             viewPhotoImageView.setImageBitmap(it)
         })
+
+        initializeSystemUI()
         loadPhoto()
+    }
+
+    private val onClickListener = View.OnClickListener {
+        toggleSystemUI()
+    }
+
+    private fun initializeSystemUI() {
+        window.statusBarColor = getColor(android.R.color.black)
+        window.navigationBarColor = getColor(android.R.color.black)
+
+        val uiOptions = window.decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
+        window.decorView.systemUiVisibility = newUiOptions
+    }
+
+    private fun toggleSystemUI() {
+        val uiOptions: Int = window.decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        window.decorView.systemUiVisibility = newUiOptions
+
+        if (viewPhotoAppBarLayout.visibility == View.VISIBLE) {
+            viewPhotoAppBarLayout.visibility = View.GONE
+        } else {
+            viewPhotoAppBarLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun loadPhoto() {
@@ -36,8 +78,14 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         Log.e(ViewPhotoActivity::class.toString(), "Error loading photo for id: $id")
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun bind(binding: ActivityViewPhotoBinding) {
         super.bind(binding)
         binding.viewModel = viewModel
+        binding.onClickListener = onClickListener
     }
 }

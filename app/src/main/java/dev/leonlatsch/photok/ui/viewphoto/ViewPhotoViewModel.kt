@@ -17,10 +17,10 @@ class ViewPhotoViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     var photoDrawable: MutableLiveData<Bitmap> = MutableLiveData()
-    var photo: Photo? = null
+    var photo: MutableLiveData<Photo> = MutableLiveData()
 
     fun loadPhoto(id: Int) = viewModelScope.launch {
-        photo = photoRepository.get(id)
+        photo.postValue(photoRepository.get(id))
 
         val photoBytes = photoRepository.readPhotoData(app, id)
         photoDrawable.postValue(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size))

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.viewphoto.ViewPhotoActivity">
 
@@ -9,6 +8,10 @@
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoViewModel" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <!--TODO Collapsing Toolbar  -->
@@ -18,11 +21,37 @@
         android:layout_height="match_parent"
         android:background="@android:color/black">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/viewPhotoAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@drawable/bg_dark_toolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:theme="@style/toolbarDarkStyle"
+                android:foregroundTint="@android:color/white"
+                android:id="@+id/viewPhotoToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="fileName"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
+            android:src="@drawable/ic_launcher_background"
             android:id="@+id/viewPhotoImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@{viewModel.photo.fileName}" />
+            android:contentDescription="@{viewModel.photo.fileName}"
+            android:onClick="@{onClickListener}" />
 
     </RelativeLayout>
 </layout>

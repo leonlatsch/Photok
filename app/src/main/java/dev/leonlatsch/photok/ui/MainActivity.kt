@@ -2,7 +2,6 @@ package dev.leonlatsch.photok.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -21,13 +20,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(mainToolbar)
 
         mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener {_, destination, _ ->
-                when(destination.id) {
-                    R.id.galleryFragment, R.id.settingsFragment -> appBarLayout.visibility = View.VISIBLE
-                    else -> appBarLayout.visibility = View.GONE
+                when (destination.id) {
+                    R.id.galleryFragment, R.id.settingsFragment -> mainAppBarLayout.visibility =
+                        View.VISIBLE
+                    else -> mainAppBarLayout.visibility = View.GONE
                 }
             }
     }

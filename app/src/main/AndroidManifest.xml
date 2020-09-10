@@ -31,7 +31,8 @@
 
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize" />
 
     </application>
 
