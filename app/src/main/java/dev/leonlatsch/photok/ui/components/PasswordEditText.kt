@@ -2,15 +2,16 @@ package dev.leonlatsch.photok.ui.components
 
 import android.content.Context
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.InverseBindingMethod
-import androidx.databinding.InverseBindingMethods
+import androidx.databinding.*
+import androidx.databinding.adapters.ListenerUtil
+import androidx.databinding.adapters.TextViewBindingAdapter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
 import kotlinx.android.synthetic.main.password_edit_text.view.*
@@ -99,5 +100,68 @@ class PasswordEditText @JvmOverloads constructor(
     companion object {
         const val INPUT_TYPE_PASSWORD = 129
         const val INPUT_TYPE_TEXT = 1
+
+        /**
+         * Binding Adapter for "textValue".
+         *
+         * @param passwordEditText The [PasswordEditText] to bind
+         * @param value The new value. May come from LiveData
+         */
+        @JvmStatic
+        @BindingAdapter("textValue")
+        fun setTextValue(passwordEditText: PasswordEditText, value: String?) {
+            value?.let {
+                if (value != passwordEditText.textValue) {
+                    passwordEditText.setTextValue(value)
+                }
+            }
+        }
+
+        /**
+         * "Copied" from Example code.
+         * Sets TextWatcher to EditText.
+         *
+         * @see <a href="https://developer.android.com/reference/android/databinding/InverseBindingMethod">Generated binding classes | Android Developers</a!
+         */
+        @JvmStatic
+        @BindingAdapter(
+            value = ["android:afterTextChanged", "android:textAttrChanged"],
+            requireAll = false
+        )
+        fun setTextWatcher(
+            passwordEditText: PasswordEditText,
+            test: TextViewBindingAdapter.AfterTextChanged?,
+            textAttrChanged: InverseBindingListener?
+        ) {
+            val newValue = object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    test?.let {
+                        test.afterTextChanged(s)
+                    }
+
+                    textAttrChanged?.let {
+                        textAttrChanged.onChange()
+                    }
+                }
+            }
+            val oldValue = ListenerUtil.trackListener(
+                passwordEditText.passwordEditTextValue,
+                newValue,
+                R.id.textWatcher
+            )
+            if (oldValue != null) {
+                passwordEditText.passwordEditTextValue.removeTextChangedListener(oldValue)
+            }
+            passwordEditText.passwordEditTextValue.addTextChangedListener(newValue)
+        }
     }
 }
