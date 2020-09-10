@@ -14,15 +14,13 @@ class GalleryViewModel @ViewModelInject constructor(
             PagingConfig(
                 pageSize = PAGE_SIZE,
                 maxSize = MAX_SIZE,
-                initialLoadSize = INITIAL_LOAD_SIZE,
             )
     ) {
         photoRepository.getAllPaged()
     }.flow
 
     companion object {
-        private const val PAGE_SIZE = 80
-        private const val INITIAL_LOAD_SIZE = 100
+        private const val PAGE_SIZE = 100
         private const val MAX_SIZE = 800
     }
 }
