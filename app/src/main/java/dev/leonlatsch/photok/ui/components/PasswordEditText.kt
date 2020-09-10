@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.password_edit_text.view.*
             type = PasswordEditText::class,
             attribute = "textValue",
             event = "android:textAttrChanged",
-            method = "textValue"
+            method = "getTextValue"
         )]
 )
 class PasswordEditText @JvmOverloads constructor(
@@ -49,13 +49,27 @@ class PasswordEditText @JvmOverloads constructor(
     }
 
     init {
-        val binding: PasswordEditTextBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.password_edit_text, this, true)
-        binding.onShowPasswordClickListener = onShowPasswordClickListener
-        binding.root
+        if (isInEditMode) {
+            LayoutInflater.from(context).inflate(R.layout.password_edit_text, this, true)
+        } else {
+            val binding: PasswordEditTextBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.password_edit_text,
+                this,
+                true
+            )
+            binding.onShowPasswordClickListener = onShowPasswordClickListener
+            binding.root
+        }
 
         attrs?.let {
             val styledAttrs = context.obtainStyledAttributes(it, R.styleable.PasswordEditText, 0, 0)
-            val hint = resources.getText(styledAttrs.getResourceId(R.styleable.PasswordEditText_password_edit_text_hint, 0))
+            val hint = resources.getText(
+                styledAttrs.getResourceId(
+                    R.styleable.PasswordEditText_password_edit_text_hint,
+                    0
+                )
+            )
 
             setHint(hint as String)
 
@@ -77,25 +91,10 @@ class PasswordEditText @JvmOverloads constructor(
         passwordEditTextValue.setSelection(value.length)
     }
 
-    val textValue: String
+    val getTextValue: String
         get() {
             return passwordEditTextValue.text.toString()
         }
-
-    /**
-     * Pass through of addTextChanged to [passwordEditTextValue]
-     */
-    fun addTextChangedListener(
-        beforeTextChanged: (CharSequence?, Int, Int, Int) -> Unit = { _, _, _, _ -> },
-        onTextChanged: (CharSequence?, Int, Int, Int) -> Unit = { _, _, _, _ -> },
-        afterTextChanged: (Editable?) -> Unit
-    ) {
-        passwordEditTextValue?.addTextChangedListener(
-            beforeTextChanged,
-            onTextChanged,
-            afterTextChanged
-        )
-    }
 
     companion object {
         const val INPUT_TYPE_PASSWORD = 129
@@ -107,11 +106,10 @@ class PasswordEditText @JvmOverloads constructor(
          * @param passwordEditText The [PasswordEditText] to bind
          * @param value The new value. May come from LiveData
          */
-        @JvmStatic
         @BindingAdapter("textValue")
-        fun setTextValue(passwordEditText: PasswordEditText, value: String?) {
+        fun setTextValueAdapter(passwordEditText: PasswordEditText, value: String?) {
             value?.let {
-                if (value != passwordEditText.textValue) {
+                if (value != passwordEditText.getTextValue) {
                     passwordEditText.setTextValue(value)
                 }
             }
@@ -123,12 +121,11 @@ class PasswordEditText @JvmOverloads constructor(
          *
          * @see <a href="https://developer.android.com/reference/android/databinding/InverseBindingMethod">Generated binding classes | Android Developers</a!
          */
-        @JvmStatic
         @BindingAdapter(
             value = ["android:afterTextChanged", "android:textAttrChanged"],
             requireAll = false
         )
-        fun setTextWatcher(
+        fun setTextWatcherAdapter(
             passwordEditText: PasswordEditText,
             test: TextViewBindingAdapter.AfterTextChanged?,
             textAttrChanged: InverseBindingListener?
