@@ -13,4 +13,6 @@
     <color name="darkGreen">#44CC00</color>
 
     <color name="gray">#D6D7D7</color>
+
+    <color name="transparent_black">#88000000</color>
 </resources>
