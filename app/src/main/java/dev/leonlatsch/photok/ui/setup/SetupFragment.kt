@@ -13,12 +13,12 @@ import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.other.hideLoadingOverlay
 import dev.leonlatsch.photok.other.showLoadingOverlay
 import dev.leonlatsch.photok.ui.MainActivity
-import dev.leonlatsch.photok.ui.components.BaseFragment
+import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_setup.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
 @AndroidEntryPoint
-class SetupFragment : BaseFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
+class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
 
     private val viewModel: SetupViewModel by viewModels()
 

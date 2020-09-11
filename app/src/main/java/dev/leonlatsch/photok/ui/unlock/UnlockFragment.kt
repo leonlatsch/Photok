@@ -10,12 +10,12 @@ import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.hideLoadingOverlay
 import dev.leonlatsch.photok.other.showLoadingOverlay
 import dev.leonlatsch.photok.ui.MainActivity
-import dev.leonlatsch.photok.ui.components.BaseFragment
+import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_unlock.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
 @AndroidEntryPoint
-class UnlockFragment : BaseFragment<FragmentUnlockBinding>(R.layout.fragment_unlock, false) {
+class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock, false) {
 
     private val viewModel: UnlockViewModel by viewModels()
 

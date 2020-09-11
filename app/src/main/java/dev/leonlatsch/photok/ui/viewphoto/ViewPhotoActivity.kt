@@ -12,7 +12,11 @@ import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_view_photo.*
 
-
+/**
+ * Activity to view a photo in full screen mode.
+ *
+ * @since 1.0.0
+ */
 @AndroidEntryPoint
 class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
 
@@ -43,13 +47,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        val uiOptions = window.decorView.systemUiVisibility
-        var newUiOptions = uiOptions
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
-
-        window.decorView.systemUiVisibility = newUiOptions
+        toggleSystemUI()
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {

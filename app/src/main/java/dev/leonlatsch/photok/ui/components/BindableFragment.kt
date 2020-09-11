@@ -16,10 +16,10 @@ import androidx.fragment.app.Fragment
  * @param layout the layout id with the data binding.
  * @param attachToParent attach to parent
  */
-abstract class BaseFragment<BindingType : ViewDataBinding>(
+abstract class BindableFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int,
     private val attachToParent: Boolean
-) : Fragment() {
+) : Fragment(), Bindable<BindingType> {
 
     /**
      * Creates layout and binding.
@@ -38,7 +38,7 @@ abstract class BaseFragment<BindingType : ViewDataBinding>(
     /**
      * Inserts the Bindings. Always call super.insertBindings() to set lifecycle owner.
      */
-    open fun bind(binding: BindingType) {
+    override fun bind(binding: BindingType) {
         binding.lifecycleOwner = this
     }
 }
