@@ -45,8 +45,19 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         val uiOptions = window.decorView.systemUiVisibility
         var newUiOptions = uiOptions
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
+
         window.decorView.systemUiVisibility = newUiOptions
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                viewPhotoAppBarLayout.visibility = View.VISIBLE
+            } else {
+                viewPhotoAppBarLayout.visibility = View.GONE
+            }
+        }
     }
 
     private fun toggleSystemUI() {
@@ -55,14 +66,9 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
+        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
 
         window.decorView.systemUiVisibility = newUiOptions
-
-        if (viewPhotoAppBarLayout.visibility == View.VISIBLE) {
-            viewPhotoAppBarLayout.visibility = View.GONE
-        } else {
-            viewPhotoAppBarLayout.visibility = View.VISIBLE
-        }
     }
 
     private fun loadPhoto() {
