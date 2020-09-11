@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import android.view.Window
 
 /**
  * Get a file's name.
@@ -30,6 +31,18 @@ fun hideLoadingOverlay(overlay: View?) {
 
 fun showLoadingOverlay(overlay: View?) {
     overlay?.visibility = View.VISIBLE
+}
+
+fun toggleSystemUI(window: Window?) {
+    window ?: return
+    val uiOptions: Int = window.decorView.systemUiVisibility
+    var newUiOptions = uiOptions
+
+    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
+    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
+
+    window.decorView.systemUiVisibility = newUiOptions
 }
 
 fun emptyString(): String {

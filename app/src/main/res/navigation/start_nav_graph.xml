@@ -31,7 +31,9 @@
             android:id="@+id/action_introFragment_to_setupFragment"
             app:destination="@id/setupFragment"
             app:popUpTo="@id/onBoardingFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -42,16 +44,22 @@
             android:id="@+id/action_splashScreenFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
             app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/fragment_fade_exit" />
         <action
             android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment"
             app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
         <action
             android:id="@+id/action_splashScreenFragment_to_setupFragment"
             app:destination="@id/setupFragment"
             app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 </navigation>

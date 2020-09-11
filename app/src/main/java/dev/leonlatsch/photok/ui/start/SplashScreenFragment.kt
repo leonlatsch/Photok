@@ -1,9 +1,8 @@
 package dev.leonlatsch.photok.ui.start
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.os.Handler
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,21 +14,25 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
     private val viewModel: SplashScreenViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel.vaultState.observe(viewLifecycleOwner, {
             when(it) {
-                VaultState.FIRST_START -> findNavController().navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
-                VaultState.SETUP -> findNavController().navigate(R.id.action_splashScreenFragment_to_setupFragment)
-                VaultState.LOCKED -> findNavController().navigate(R.id.action_splashScreenFragment_to_unlockFragment)
+                VaultState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
+                VaultState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
+                VaultState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
                 else -> return@observe
             }
         })
-        viewModel.checkVaultState()
+        Handler().postDelayed({
+            viewModel.checkVaultState()
+        }, 300)
+    }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+
+
+    private fun navigate(fragment: Int) {
+        findNavController().navigate(fragment)
     }
 }

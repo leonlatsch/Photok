@@ -3,15 +3,10 @@ package dev.leonlatsch.photok.ui
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.PrefManager
 import dev.leonlatsch.photok.ui.components.BaseActivity
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class StartActivity : BaseActivity() {
-
-    @Inject
-    lateinit var prefManager: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

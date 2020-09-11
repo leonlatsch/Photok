@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.toggleSystemUI
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_view_photo.*
 
@@ -40,14 +41,14 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     private val onClickListener = View.OnClickListener {
-        toggleSystemUI()
+        toggleSystemUI(window)
     }
 
     private fun initializeSystemUI() {
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        toggleSystemUI()
+        toggleSystemUI(window)
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
@@ -56,17 +57,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 viewPhotoAppBarLayout.visibility = View.GONE
             }
         }
-    }
-
-    private fun toggleSystemUI() {
-        val uiOptions: Int = window.decorView.systemUiVisibility
-        var newUiOptions = uiOptions
-
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
-
-        window.decorView.systemUiVisibility = newUiOptions
     }
 
     private fun loadPhoto() {
