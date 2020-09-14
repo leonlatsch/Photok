@@ -24,7 +24,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 3)
+        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
 
         val adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize)
         galleryPhotoGrid.adapter = adapter

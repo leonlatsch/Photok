@@ -6,8 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -100,6 +100,6 @@ class PhotoRepository @Inject constructor(
     }
 
     companion object {
-        private const val THUMBNAIL_SIZE = 256
+        private const val THUMBNAIL_SIZE = 128
     }
 }
