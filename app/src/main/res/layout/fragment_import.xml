@@ -9,11 +9,8 @@
             name="viewModel"
             type="dev.leonlatsch.photok.ui.importing.ImportViewModel" />
         <variable
-            name="importClickListener"
-            type="android.view.View.OnClickListener" />
-        <variable
-            name="backToGalleryClickListener"
-            type="android.view.View.OnClickListener" />
+            name="context"
+            type="dev.leonlatsch.photok.ui.importing.ImportFragment" />
     </data>
 
     <LinearLayout
@@ -47,7 +44,7 @@
                 android:layout_width="@dimen/wide_button_width"
                 android:layout_height="@dimen/wide_button_height"
                 android:layout_marginTop="20dp"
-                android:onClick="@{importClickListener}"
+                android:onClick="@{() -> context.importClicked()}"
                 android:text="@string/import_importing_photos" />
 
         </LinearLayout>
@@ -139,7 +136,7 @@
                     android:id="@+id/importFinishedTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/import_finished"
+                    android:text="@{context.importFinishedText}"
                     android:textSize="18sp"
                     android:visibility="gone" />
 
@@ -178,10 +175,22 @@
             </LinearLayout>
 
             <Button
+                android:text="@string/import_abort"
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="0.887"
+                android:onClick="@{() -> viewModel.abortImport()}"/>
+
+            <Button
                 android:id="@+id/importBackToGalleryButton"
                 android:layout_width="@dimen/extra_wide_button_width"
                 android:layout_height="@dimen/wide_button_height"
-                android:onClick="@{backToGalleryClickListener}"
+                android:onClick="@{() -> context.backToGalleryClicked()}"
                 android:text="@string/import_back_to_gallery"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"

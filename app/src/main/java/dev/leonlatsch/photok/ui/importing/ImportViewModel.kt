@@ -21,12 +21,18 @@ class ImportViewModel @ViewModelInject constructor(
     var importState: MutableLiveData<ImportState> = MutableLiveData()
     var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
 
+    private var aborted = false
+
     fun runImport(uris: List<Uri>) = viewModelScope.launch {
         var current = 1
         importState.postValue(ImportState.IMPORTING)
         importProgress.value?.update(0, uris.size)
 
         for (image in uris) {
+            if (aborted) {
+                importState.postValue(ImportState.ABORTED)
+                return@launch
+            }
             // Load Bytes
             import(image)
             importProgress.value?.update(current, uris.size)
@@ -51,9 +57,11 @@ class ImportViewModel @ViewModelInject constructor(
         bytes ?: return
 
         val photo = Photo(fileName, System.currentTimeMillis(), type)
-        val id = save(photo)
+        val id = photoRepository.insert(photo)
         photoRepository.writePhotoData(app, id, bytes)
     }
 
-    private suspend fun save(photo: Photo) = photoRepository.insert(photo)
+    fun abortImport() {
+        aborted = true
+    }
 }
