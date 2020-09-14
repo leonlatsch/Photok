@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.viewphoto.ViewPhotoActivity">
 
     <data>
@@ -10,15 +11,14 @@
             type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoViewModel" />
 
         <variable
-            name="onClickListener"
-            type="android.view.View.OnClickListener" />
+            name="context"
+            type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity" />
     </data>
-
-    <!--TODO Collapsing Toolbar  -->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@android:color/black">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -28,30 +28,78 @@
             android:background="@drawable/bg_dark_toolbar">
 
             <androidx.appcompat.widget.Toolbar
-                android:theme="@style/toolbarDarkStyle"
-                android:foregroundTint="@android:color/white"
                 android:id="@+id/viewPhotoToolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:foregroundTint="@android:color/white"
+                android:theme="@style/toolbarDarkStyle">
 
                 <TextView
-                    android:text="fileName"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.photo.fileName, default=fileName}"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/info" />
 
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
-            android:src="@drawable/ic_launcher_background"
             android:id="@+id/viewPhotoImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@{viewModel.photo.fileName}"
-            android:onClick="@{onClickListener}" />
+            android:onClick="@{() -> context.onClick()}"
+            android:src="@{viewModel.photoDrawable, default=@drawable/ic_launcher_background}" />
+
+        <LinearLayout
+            android:id="@+id/viewPhotoBottomToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:background="@drawable/bg_dark_toolbar">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> context.onDelete()}">
+
+                <ImageView
+                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@android:color/white"
+                    android:src="@drawable/delete" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> context.onExport()}">
+
+                <ImageView
+                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    app:tint="@android:color/white"
+                    android:src="@drawable/export" />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>

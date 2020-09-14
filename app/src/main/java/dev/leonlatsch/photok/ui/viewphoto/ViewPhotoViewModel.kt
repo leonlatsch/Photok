@@ -1,8 +1,9 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.app.Application
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import androidx.core.graphics.drawable.toDrawable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,13 +17,13 @@ class ViewPhotoViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository
 ) : ViewModel() {
 
-    var photoDrawable: MutableLiveData<Bitmap> = MutableLiveData()
+    var photoDrawable: MutableLiveData<BitmapDrawable> = MutableLiveData()
     var photo: MutableLiveData<Photo> = MutableLiveData()
 
     fun loadPhoto(id: Int) = viewModelScope.launch {
         photo.postValue(photoRepository.get(id))
 
         val photoBytes = photoRepository.readPhotoData(app, id)
-        photoDrawable.postValue(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size))
+        photoDrawable.postValue(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources))
     }
 }

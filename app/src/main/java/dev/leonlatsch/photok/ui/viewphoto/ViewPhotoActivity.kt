@@ -1,6 +1,5 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,22 +25,25 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewPhotoToolbar.navigationIcon?.setTint(Color.WHITE)
         setSupportActionBar(viewPhotoToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        viewModel.photoDrawable.observe(this, {
-            viewPhotoImageView.setImageBitmap(it)
-        })
-
         initializeSystemUI()
         loadPhoto()
     }
 
-    private val onClickListener = View.OnClickListener {
+    fun onClick() {
         toggleSystemUI(window)
+    }
+
+    fun onDelete() {
+        //TODO
+    }
+
+    fun onExport() {
+        //TODO
     }
 
     private fun initializeSystemUI() {
@@ -53,8 +55,10 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
                 viewPhotoAppBarLayout.visibility = View.VISIBLE
+                viewPhotoBottomToolbarLayout.visibility = View.VISIBLE
             } else {
                 viewPhotoAppBarLayout.visibility = View.GONE
+                viewPhotoBottomToolbarLayout.visibility = View.GONE
             }
         }
     }
@@ -80,6 +84,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     override fun bind(binding: ActivityViewPhotoBinding) {
         super.bind(binding)
         binding.viewModel = viewModel
-        binding.onClickListener = onClickListener
+        binding.context = this
     }
 }

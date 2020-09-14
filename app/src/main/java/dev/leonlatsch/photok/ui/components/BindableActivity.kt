@@ -23,5 +23,6 @@ abstract class BindableActivity<BindingType : ViewDataBinding>(
     }
 
     override fun bind(binding: BindingType) {
+        binding.lifecycleOwner = this
     }
 }
