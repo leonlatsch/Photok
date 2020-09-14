@@ -37,6 +37,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="300dp"
+                    android:singleLine="true"
                     android:text="@{viewModel.photo.fileName, default=fileName}"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
