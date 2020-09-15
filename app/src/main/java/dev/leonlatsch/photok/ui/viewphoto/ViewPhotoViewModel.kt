@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ViewPhotoViewModel @ViewModelInject constructor(
     private val app: Application,
@@ -24,6 +25,13 @@ class ViewPhotoViewModel @ViewModelInject constructor(
         photo.postValue(photoRepository.get(id))
 
         val photoBytes = photoRepository.readPhotoData(app, id)
-        photoDrawable.postValue(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources))
+        if (photoBytes == null) {
+            // TODO: finish activity
+            Timber.d("Error reading photo for id: $id")
+            return@launch
+        }
+        photoDrawable.postValue(
+            BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources)
+        )
     }
 }

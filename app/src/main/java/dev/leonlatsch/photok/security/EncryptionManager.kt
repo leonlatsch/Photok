@@ -1,9 +1,9 @@
 package dev.leonlatsch.photok.security
 
-import android.util.Log
 import dev.leonlatsch.photok.other.AES
 import dev.leonlatsch.photok.other.AES_ALGORITHM
 import dev.leonlatsch.photok.other.SHA_256
+import timber.log.Timber
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
 import java.security.MessageDigest
@@ -39,7 +39,7 @@ class EncryptionManager {
             ivParameterSpec = genIv(password)
             isReady = true
         } catch (e: GeneralSecurityException) {
-            Log.e(EncryptionManager::class.toString(), "Error initializing EncryptionManager: $e")
+            Timber.d("Error initializing EncryptionManager: $e")
             isReady = false
         }
     }

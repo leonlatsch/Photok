@@ -2,7 +2,6 @@ package dev.leonlatsch.photok.ui.importing
 
 import android.app.Application
 import android.net.Uri
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 class ImportViewModel @ViewModelInject constructor(
@@ -42,7 +42,7 @@ class ImportViewModel @ViewModelInject constructor(
         }
 
         if (failed > 0) {
-            Log.w(TAG, "$failed photos failed to import")
+            Timber.d("$failed photos failed to import")
         }
         importState.postValue(ImportState.FINISHED)
     }
@@ -74,9 +74,5 @@ class ImportViewModel @ViewModelInject constructor(
 
     fun abortImport() {
         aborted = true
-    }
-
-    companion object {
-        const val TAG = "ImportViewModel"
     }
 }

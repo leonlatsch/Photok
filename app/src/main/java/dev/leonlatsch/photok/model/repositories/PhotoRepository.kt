@@ -6,10 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
-import android.util.Log
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import javax.inject.Inject
@@ -59,7 +59,7 @@ class PhotoRepository @Inject constructor(
             }
             createAndWriteThumbnail(context, id, bytes)
         } catch (e: Exception) {
-            Log.e(TAG, "Error writing photo data for id: $id $e")
+            Timber.d("Error writing photo data for id: $id $e")
             false
         }
     }
@@ -91,7 +91,7 @@ class PhotoRepository @Inject constructor(
             }
             true
         } catch (e: Exception) {
-            Log.e(TAG, "Error creating Thumbnail for id: $id: $e")
+            Timber.d("Error creating Thumbnail for id: $id: $e")
             false
         }
     }
@@ -103,7 +103,7 @@ class PhotoRepository @Inject constructor(
         return try {
             contentResolver.openInputStream(imageUri)?.readBytes()
         } catch (e: IOException) {
-            Log.e(TAG, "Error opening input stream for uri: $imageUri $e")
+            Timber.d("Error opening input stream for uri: $imageUri $e")
             null
         }
     }
@@ -126,14 +126,12 @@ class PhotoRepository @Inject constructor(
             val encryptedBytes = fileInputStream.readBytes()
             encryptionManager.decrypt(encryptedBytes)
         } catch (e: IOException) {
-            Log.e(javaClass.toString(), "Error reading file: $fileName $e")
+            Timber.d(javaClass.toString(), "Error reading file: $fileName $e")
             null
         }
     }
 
     companion object {
-        const val TAG = "PhotoRepository"
-
         private const val THUMBNAIL_SIZE = 128
     }
 }

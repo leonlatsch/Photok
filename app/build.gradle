@@ -78,6 +78,9 @@ dependencies {
     // Paging 3
     implementation "androidx.paging:paging-runtime:$paging_version"
 
+    // Timber Logging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     // Glide
     //implementation 'com.github.bumptech.glide:glide:4.11.0'
     //implementation 'androidx.legacy:legacy-support-v4:1.0.0'

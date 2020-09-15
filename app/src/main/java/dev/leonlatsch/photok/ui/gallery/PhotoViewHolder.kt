@@ -12,6 +12,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.reflect.KFunction1
 
 class PhotoViewHolder(
@@ -35,7 +36,12 @@ class PhotoViewHolder(
     private fun loadThumbnail() {
         GlobalScope.launch {
             val thumbnailBytes = photoRepository.readPhotoThumbnailData(context, photo?.id!!)
-            val thumbnailBitmap = BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
+            if (thumbnailBytes == null) {
+                Timber.d("Error loading thumbnail for photo: $photo.id")
+                return@launch
+            }
+            val thumbnailBitmap =
+                BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
             Handler(context.mainLooper).post {
                 imageView.setImageBitmap(thumbnailBitmap)
             }
