@@ -6,10 +6,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.util.Log
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -45,14 +47,21 @@ class PhotoRepository @Inject constructor(
      * @param id used for the file name.
      * @param bytes the photo data to save.
      *
+     * @return false if any error happened
+     *
      * @since 1.0.0
      */
-    fun writePhotoData(context: Context, id: Long, bytes: ByteArray) {
-        val encryptedBytes = encryptionManager.encrypt(bytes)
-        context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
-            it.write(encryptedBytes)
+    fun writePhotoData(context: Context, id: Long, bytes: ByteArray): Boolean {
+        return try {
+            val encryptedBytes = encryptionManager.encrypt(bytes)
+            context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
+                it.write(encryptedBytes)
+            }
+            createAndWriteThumbnail(context, id, bytes)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error writing photo data for id: $id $e")
+            false
         }
-        createAndWriteThumbnail(context, id, bytes)
     }
 
     /**
@@ -62,44 +71,69 @@ class PhotoRepository @Inject constructor(
      * @param id used for the file name.
      * @param bytes the full size photo bytes.
      *
+     * * @return false if any error happened
+     *
      * @since 1.0.0
      */
-    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray) {
-        val thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeByteArray(bytes, 0, bytes.size), THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-        val outputStream = ByteArrayOutputStream()
-        thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        val thumbnailBytes = outputStream.toByteArray()
-        val encryptedThumbnailBytes = encryptionManager.encrypt(thumbnailBytes)
-        context.openFileOutput("${id}.photok.tn", Context.MODE_PRIVATE).use {
-            it.write(encryptedThumbnailBytes)
+    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray): Boolean {
+        return try {
+            val thumbnail = ThumbnailUtils.extractThumbnail(
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.size),
+                THUMBNAIL_SIZE,
+                THUMBNAIL_SIZE
+            )
+            val outputStream = ByteArrayOutputStream()
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            val thumbnailBytes = outputStream.toByteArray()
+            val encryptedThumbnailBytes = encryptionManager.encrypt(thumbnailBytes)
+            context.openFileOutput("${id}.photok.tn", Context.MODE_PRIVATE).use {
+                it.write(encryptedThumbnailBytes)
+            }
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating Thumbnail for id: $id: $e")
+            false
         }
     }
 
     /**
      * Read a photo's bytes from external storage.
      */
-    fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? =
-        contentResolver.openInputStream(imageUri)?.readBytes()
+    fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
+        return try {
+            contentResolver.openInputStream(imageUri)?.readBytes()
+        } catch (e: IOException) {
+            Log.e(TAG, "Error opening input stream for uri: $imageUri $e")
+            null
+        }
+    }
 
     /**
      * Read and decrypt a photo's bytes from internal storage.
      */
-    fun readPhotoData(context: Context, id: Int): ByteArray =
+    fun readPhotoData(context: Context, id: Int): ByteArray? =
         readAndDecryptFile(context, "${id}.photok")
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.
      */
-    fun readPhotoThumbnailData(context: Context, id: Int): ByteArray =
+    fun readPhotoThumbnailData(context: Context, id: Int): ByteArray? =
         readAndDecryptFile(context, "${id}.photok.tn")
 
-    private fun readAndDecryptFile(context: Context, fileName: String): ByteArray {
-        val fileInputStream = context.openFileInput(fileName)
-        val encryptedBytes = fileInputStream.readBytes()
-        return encryptionManager.decrypt(encryptedBytes)
+    private fun readAndDecryptFile(context: Context, fileName: String): ByteArray? {
+        return try {
+            val fileInputStream = context.openFileInput(fileName)
+            val encryptedBytes = fileInputStream.readBytes()
+            encryptionManager.decrypt(encryptedBytes)
+        } catch (e: IOException) {
+            Log.e(javaClass.toString(), "Error reading file: $fileName $e")
+            null
+        }
     }
 
     companion object {
+        const val TAG = "PhotoRepository"
+
         private const val THUMBNAIL_SIZE = 128
     }
 }

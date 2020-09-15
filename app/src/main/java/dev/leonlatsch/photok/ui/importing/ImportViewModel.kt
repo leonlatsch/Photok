@@ -2,6 +2,7 @@ package dev.leonlatsch.photok.ui.importing
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ class ImportViewModel @ViewModelInject constructor(
 
     var importState: MutableLiveData<ImportState> = MutableLiveData()
     var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
+    private var failed = 0
 
     private var aborted = false
 
@@ -39,22 +41,31 @@ class ImportViewModel @ViewModelInject constructor(
             current++
         }
 
+        if (failed > 0) {
+            Log.w(TAG, "$failed photos failed to import")
+        }
         importState.postValue(ImportState.FINISHED)
     }
 
     private suspend fun import(imageUri: Uri) {
         val fileName = getFileName(app.contentResolver, imageUri) ?: UUID.randomUUID().toString()
 
-        val type = when(app.contentResolver.getType(imageUri)) {
+        val type = when (app.contentResolver.getType(imageUri)) {
             "image/png" -> PhotoType.PNG
             "image/jpeg" -> PhotoType.JPEG
             "image/gif" -> PhotoType.GIF
             else -> PhotoType.UNDEFINED
         }
-        if (type == PhotoType.UNDEFINED) return
+        if (type == PhotoType.UNDEFINED) {
+            failed++
+            return
+        }
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
-        bytes ?: return
+        if (bytes == null) {
+            failed++
+            return
+        }
 
         val photo = Photo(fileName, System.currentTimeMillis(), type)
         val id = photoRepository.insert(photo)
@@ -63,5 +74,9 @@ class ImportViewModel @ViewModelInject constructor(
 
     fun abortImport() {
         aborted = true
+    }
+
+    companion object {
+        const val TAG = "ImportViewModel"
     }
 }
