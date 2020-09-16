@@ -34,6 +34,5 @@ class DetailsBottomSheetDialog(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         photo ?: dismiss()
-        println(photo?.fileName)
     }
 }

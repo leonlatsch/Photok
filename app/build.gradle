@@ -81,11 +81,6 @@ dependencies {
     // Timber Logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    // Glide
-    //implementation 'com.github.bumptech.glide:glide:4.11.0'
-    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    //kapt 'com.github.bumptech.glide:compiler:4.11.0'
-
     // Dagger Core
     implementation 'com.google.dagger:dagger:2.28.3'
     kapt 'com.google.dagger:dagger-compiler:2.28.3'
@@ -105,6 +100,9 @@ dependencies {
 
     // jBCrypt for Password Hashing
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
+    // MikeOritz/TouchImageView - Zoomable Image View
+    implementation 'com.github.MikeOrtiz:TouchImageView:3.0.1'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation group: 'androidx.preference', name: 'preference', version: '1.1.1'
