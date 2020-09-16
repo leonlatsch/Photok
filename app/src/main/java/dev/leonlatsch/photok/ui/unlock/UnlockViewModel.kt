@@ -12,7 +12,7 @@ import org.mindrot.jbcrypt.BCrypt
 
 class UnlockViewModel @ViewModelInject constructor(
     private val passwordRepository: PasswordRepository,
-    private val encryptionManager: EncryptionManager
+    val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
     var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())

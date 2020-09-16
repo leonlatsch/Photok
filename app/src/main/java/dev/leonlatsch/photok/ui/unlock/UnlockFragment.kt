@@ -3,6 +3,7 @@ package dev.leonlatsch.photok.ui.unlock
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -24,7 +25,6 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             when (it) {
                 UnlockState.CHECKING -> showLoadingOverlay(loadingOverlay)
                 UnlockState.UNLOCKED -> {
-                    hideLoadingOverlay(loadingOverlay)
                     unlock()
                 }
                 UnlockState.LOCKED -> {
@@ -45,9 +45,15 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
-        val intent = Intent(activity, MainActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+        if (viewModel.encryptionManager.isReady) {
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.common_error), Toast.LENGTH_LONG)
+                .show()
+            hideLoadingOverlay(loadingOverlay)
+        }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

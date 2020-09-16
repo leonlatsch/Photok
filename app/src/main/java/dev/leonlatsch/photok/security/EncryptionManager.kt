@@ -24,6 +24,7 @@ class EncryptionManager {
 
     var isReady: Boolean = false
 
+
     /**
      * Initialize the [SecretKeySpec] with a [password].
      * Uses the [password] to create a SHA-256 hash binary that is used to create [SecretKeySpec].

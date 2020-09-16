@@ -1,10 +1,8 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
@@ -12,6 +10,7 @@ import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.toggleSystemUI
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_view_photo.*
+import timber.log.Timber
 
 /**
  * Activity to view a photo in full screen mode.
@@ -40,10 +39,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     fun onDetails() {
-        val detailView = layoutInflater.inflate(R.layout.view_photo_detail, viewPhotoLayout, false)
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(detailView)
-        dialog.show()
+        val detailsBottomSheetDialog = DetailsBottomSheetDialog(viewModel.photo.value)
+        detailsBottomSheetDialog.show(
+            supportFragmentManager,
+            DetailsBottomSheetDialog::class.qualifiedName
+        )
     }
 
     fun onDelete() {
@@ -81,7 +81,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     private fun closeOnError(id: Any?) {
-        Log.e(ViewPhotoActivity::class.toString(), "Error loading photo for id: $id")
+        Timber.d("Error loading photo for id: $id")
     }
 
     override fun onSupportNavigateUp(): Boolean {

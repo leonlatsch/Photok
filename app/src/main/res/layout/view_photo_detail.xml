@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/darkGray"
     android:orientation="vertical"
-    android:background="@color/darkGray">
+    android:paddingBottom="80dp">
 
     <TextView
         style="@style/LightTextViewStyle"
-        android:textSize="18sp"
-        android:text="Details"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Details"
+        android:textSize="18sp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="50dp">
+
+        <!-- FILENAME -->
+        <TextView
+            style="@style/LightLabelTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="Filename:" />
+
+        <TextView
+            style="@style/LightTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="file name sample.jpg" />
+
+        <!-- IMPORTED AT -->
+
+        <TextView
+            style="@style/LightLabelTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="Imported at:" />
+
+        <TextView
+            style="@style/LightTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10.10.2000" />
+
+        <!--  -->
+        <!--  -->
+    </GridLayout>
 
 </LinearLayout>

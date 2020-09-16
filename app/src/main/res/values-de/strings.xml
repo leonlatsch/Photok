@@ -9,6 +9,7 @@
     <string name="common_password">Passwort</string>
     <string name="common_delete">Löschen</string>
     <string name="common_export">Exportieren</string>
+    <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Fotos Importieren</string>
