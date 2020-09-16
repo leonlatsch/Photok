@@ -20,6 +20,7 @@ class ViewPhotoViewModel @ViewModelInject constructor(
 
     var photoDrawable: MutableLiveData<BitmapDrawable> = MutableLiveData()
     var photo: MutableLiveData<Photo> = MutableLiveData()
+    var photoSize = 0
 
     fun loadPhoto(id: Int) = viewModelScope.launch {
         photo.postValue(photoRepository.get(id))
@@ -30,6 +31,8 @@ class ViewPhotoViewModel @ViewModelInject constructor(
             Timber.d("Error reading photo for id: $id")
             return@launch
         }
+
+        photoSize = photoBytes.size
         photoDrawable.postValue(
             BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources)
         )

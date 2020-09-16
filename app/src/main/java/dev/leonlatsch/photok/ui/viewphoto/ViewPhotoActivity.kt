@@ -39,7 +39,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     fun onDetails() {
-        val detailsBottomSheetDialog = DetailsBottomSheetDialog(viewModel.photo.value)
+        val detailsBottomSheetDialog =
+            DetailsBottomSheetDialog(viewModel.photo.value, viewModel.photoSize)
         detailsBottomSheetDialog.show(
             supportFragmentManager,
             DetailsBottomSheetDialog::class.qualifiedName

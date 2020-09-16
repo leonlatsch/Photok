@@ -4,21 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.DialogDetailsBottomSheetBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
 
-@AndroidEntryPoint
 class DetailsBottomSheetDialog(
-    private val photo: Photo?
+    val photo: Photo?,
+    val photoSize: Int
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.view_photo_detail, container, false)
+    ): View? {
+        val binding: DialogDetailsBottomSheetBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.dialog_details_bottom_sheet,
+            container,
+            false
+        )
+        binding.lifecycleOwner = this
+        binding.context = this
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
