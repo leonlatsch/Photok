@@ -7,7 +7,8 @@
     <string name="common_percent">%</string>
     <string name="common_loading">Laden …</string>
     <string name="common_password">Passwort</string>
-    <string name="common_delete">Delete</string>
+    <string name="common_delete">Löschen</string>
+    <string name="common_export">Exportieren</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Fotos Importieren</string>

@@ -8,6 +8,7 @@
     <string name="common_loading">Loading …</string>
     <string name="common_password">Password</string>
     <string name="common_delete">Delete</string>
+    <string name="common_export">Export</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Import Photos</string>

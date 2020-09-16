@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
@@ -36,6 +37,13 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     fun onClick() {
         toggleSystemUI(window)
+    }
+
+    fun onDetails() {
+        val detailView = layoutInflater.inflate(R.layout.view_photo_detail, viewPhotoLayout, false)
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(detailView)
+        dialog.show()
     }
 
     fun onDelete() {

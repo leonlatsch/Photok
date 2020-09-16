@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center" android:visibility="gone">
+            android:gravity="center">
 
             <ImageView
                 android:contentDescription="@string/import_importing_photos"
@@ -55,7 +55,7 @@
             android:id="@+id/importImportingAndFinishedLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <FrameLayout
                 android:id="@+id/importingAndFinishedImageContainer"
@@ -151,7 +151,8 @@
                 <LinearLayout
                     android:id="@+id/importFailedLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:text="@string/import_failed"
@@ -159,7 +160,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:text="@{viewModel.failed}"
+                        android:text="@{viewModel.failed.toString()}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

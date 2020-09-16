@@ -16,6 +16,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/viewPhotoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
@@ -44,6 +45,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
+                    android:onClick="@{() -> context.onDetails()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -70,35 +72,53 @@
             android:gravity="center"
             android:background="@drawable/bg_dark_toolbar">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="@{() -> context.onDelete()}">
+                android:onClick="@{() -> context.onDelete()}"
+                android:orientation="vertical">
 
                 <ImageView
+                    android:contentDescription="@string/common_delete"
                     android:layout_height="30dp"
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     app:tint="@android:color/white"
                     android:src="@drawable/delete" />
 
-            </FrameLayout>
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/common_delete"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <FrameLayout
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="@{() -> context.onExport()}">
+                android:onClick="@{() -> context.onExport()}"
+                android:orientation="vertical">
 
                 <ImageView
+                    android:contentDescription="@string/common_export"
                     android:layout_height="30dp"
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     app:tint="@android:color/white"
                     android:src="@drawable/export" />
 
-            </FrameLayout>
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/common_export"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
