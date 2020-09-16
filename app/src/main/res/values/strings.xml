@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
-    <string name="slash">/</string>
-    <string name="percent">%</string>
-    <string name="loading">Loading …</string>
-    <string name="password">Password</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_loading">Loading …</string>
+    <string name="common_password">Password</string>
+    <string name="common_delete">Delete</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Import Photos</string>
@@ -29,8 +31,8 @@
     <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
-    <string name="unlockTitle">Unlock your safe</string>
-    <string name="unlockEnterPassword">Enter password</string>
-    <string name="unlockButton">Unlock</string>
-    <string name="unlockWrongPassword">\u26A0 Wrong password</string>
+    <string name="unlock_title">Unlock your safe</string>
+    <string name="unlock_enter_password">Enter password</string>
+    <string name="unlock_button">Unlock</string>
+    <string name="unlock_wrong_password">\u26A0 Wrong password</string>
 </resources>

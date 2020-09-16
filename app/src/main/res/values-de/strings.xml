@@ -2,11 +2,12 @@
 <resources>
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
-    <string name="slash">/</string>
-    <string name="percent">%</string>
-    <string name="loading">Laden …</string>
-    <string name="password">Passwort</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_loading">Laden …</string>
+    <string name="common_password">Passwort</string>
+    <string name="common_delete">Delete</string>
 
     <!-- IMPORT -->
     <string name="import_importing_photos">Fotos Importieren</string>
@@ -14,7 +15,7 @@
     <string name="import_abort">Abbrechen</string>
     <string name="import_finished">Importieren Abgeschlossen</string>
     <string name="import_aborted">Importieren Abgebrochen</string>
-    <string name="import_back_to_gallery">Zurück zur Gallerie</string>
+    <string name="import_back_to_gallery">Zurück zur Galerie</string>
     <string name="import_text_hint">Importiere Fotos von deinem Gerät und speichere sie gesichert in Photok!</string>
 
     <!-- SETUP -->
@@ -30,8 +31,8 @@
     <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
-    <string name="unlockTitle">Entsperre deinen Safe</string>
-    <string name="unlockEnterPassword">Passwort eingeben</string>
-    <string name="unlockButton">Entsperren</string>
-    <string name="unlockWrongPassword">\u26A0 Falsches Passwort</string>
+    <string name="unlock_title">Entsperre deinen Safe</string>
+    <string name="unlock_enter_password">Passwort eingeben</string>
+    <string name="unlock_button">Entsperren</string>
+    <string name="unlock_wrong_password">\u26A0 Falsches Passwort</string>
 </resources>

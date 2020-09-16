@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:width="280dp"
-                android:text="@string/unlockTitle" />
+                android:text="@string/unlock_title" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    app:password_edit_text_hint="@string/unlockEnterPassword"
+                    app:password_edit_text_hint="@string/unlock_enter_password"
                     app:textValue="@={viewModel.passwordText}" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/unlockWrongPassword"
+                    android:text="@string/unlock_wrong_password"
                     android:textColor="@color/darkRed"
                     android:visibility="invisible" />
 
@@ -70,7 +70,7 @@
                 android:layout_height="@dimen/wide_button_height"
                 android:layout_gravity="center_horizontal"
                 android:onClick="@{() -> viewModel.unlock()}"
-                android:text="@string/unlockButton" />
+                android:text="@string/unlock_button" />
 
         </LinearLayout>
 
