@@ -17,6 +17,7 @@
     <string name="import_aborted">Import Aborted</string>
     <string name="import_back_to_gallery">Back to Gallery</string>
     <string name="import_text_hint">Import photos from your device and save them secured in Photok!</string>
+    <string name="import_failed">Failed:</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Create your password</string>

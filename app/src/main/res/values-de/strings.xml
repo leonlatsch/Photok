@@ -17,6 +17,7 @@
     <string name="import_aborted">Importieren Abgebrochen</string>
     <string name="import_back_to_gallery">Zurück zur Galerie</string>
     <string name="import_text_hint">Importiere Fotos von deinem Gerät und speichere sie gesichert in Photok!</string>
+    <string name="import_failed">Fehlgeschlagen:</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Erstelle dein Passwort</string>

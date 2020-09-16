@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.leonlatsch.photok.base.NumberLiveData
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -21,7 +22,7 @@ class ImportViewModel @ViewModelInject constructor(
 
     var importState: MutableLiveData<ImportState> = MutableLiveData()
     var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
-    private var failed = 0
+    var failed: NumberLiveData = NumberLiveData()
 
     private var aborted = false
 
@@ -41,7 +42,7 @@ class ImportViewModel @ViewModelInject constructor(
             current++
         }
 
-        if (failed > 0) {
+        if (failed.value!! > 0) {
             Timber.d("$failed photos failed to import")
         }
         importState.postValue(ImportState.FINISHED)
@@ -57,13 +58,13 @@ class ImportViewModel @ViewModelInject constructor(
             else -> PhotoType.UNDEFINED
         }
         if (type == PhotoType.UNDEFINED) {
-            failed++
+            failed.increment()
             return
         }
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
         if (bytes == null) {
-            failed++
+            failed.increment()
             return
         }
 

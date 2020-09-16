@@ -65,6 +65,10 @@ class ImportFragment : BindableFragment<FragmentImportBinding>(R.layout.fragment
         importFinishedTextView.visibility = View.VISIBLE
         importBackToGalleryButton.visibility = View.VISIBLE
         importFinishedImageView.visibility = View.VISIBLE
+
+        if (viewModel.failed.value!! > 0) {
+            importFailedLayout.visibility = View.VISIBLE
+        }
     }
 
     override fun bind(binding: FragmentImportBinding) {
