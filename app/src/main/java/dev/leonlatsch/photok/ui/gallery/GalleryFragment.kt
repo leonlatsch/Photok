@@ -64,4 +64,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         intent.putExtra(INTENT_PHOTO_ID, id)
         startActivity(intent)
     }
+
+    override fun bind(binding: FragmentGalleryBinding) {
+        super.bind(binding)
+        binding.context = this
+    }
 }
