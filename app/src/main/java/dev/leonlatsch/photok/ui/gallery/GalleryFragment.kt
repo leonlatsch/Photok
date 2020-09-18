@@ -48,7 +48,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
 
-        val adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize)
+        val adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize, viewLifecycleOwner)
         galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
