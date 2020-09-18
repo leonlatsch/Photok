@@ -31,8 +31,13 @@ import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_unlock.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
+/**
+ * Fragment for the unlock.
+ *
+ * @since 1.0.0
+ */
 @AndroidEntryPoint
-class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock, false) {
+class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {
 
     private val viewModel: UnlockViewModel by viewModels()
 

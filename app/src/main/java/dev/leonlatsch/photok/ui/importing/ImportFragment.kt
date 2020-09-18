@@ -33,8 +33,13 @@ import dev.leonlatsch.photok.databinding.FragmentImportBinding
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_import.*
 
+/**
+ * Fragment for importing photos.
+ *
+ * @since 1.0.0
+ */
 @AndroidEntryPoint
-class ImportFragment : BindableFragment<FragmentImportBinding>(R.layout.fragment_import, false) {
+class ImportFragment : BindableFragment<FragmentImportBinding>(R.layout.fragment_import) {
 
     private val viewModel: ImportViewModel by viewModels()
     private val selectPhotos = 0

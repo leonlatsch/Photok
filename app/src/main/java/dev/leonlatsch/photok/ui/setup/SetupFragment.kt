@@ -33,8 +33,13 @@ import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_setup.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
+/**
+ * Fragment for the setup.
+ *
+ * @since 1.0.0
+ */
 @AndroidEntryPoint
-class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup, false) {
+class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup) {
 
     private val viewModel: SetupViewModel by viewModels()
 
