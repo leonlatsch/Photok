@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +14,21 @@
   ~   limitations under the License.
   -->
 
-<resources>
-    <dimen name="wide_button_height">40dp</dimen>
-    <dimen name="wide_button_width">200dp</dimen>
-    <dimen name="extra_wide_button_width">300dp</dimen>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <dimen name="password_edit_text_height">40dp</dimen>
+    <item
+        android:id="@+id/menuMainItemMore"
+        android:icon="@drawable/more"
+        app:showAsAction="always"
+        android:title="MORE">
 
-    <dimen name="toolbar_menu_margin_end">10dp</dimen>
-</resources>
+        <menu>
+            <item android:title="Settings"/>
+            <item android:title="About"/>
+            <!-- add more here -->
+        </menu>
+
+    </item>
+
+</menu>

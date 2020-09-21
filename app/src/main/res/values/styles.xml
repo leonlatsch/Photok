@@ -76,8 +76,12 @@
         <item name="android:maxHeight">20dip</item>
     </style>
 
-    <style name="toolbarDarkStyle" parent="AppTheme">
+    <!-- TOOLBAR -->
+    <style name="toolbarStyle" parent="AppTheme">
         <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
+
+    <style name="PopupThemeOverplay" parent="ThemeOverlay.AppCompat.Dark" />
 
 </resources>

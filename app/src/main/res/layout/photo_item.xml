@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@color/gray" />
 
     <CheckBox
         android:id="@+id/photoItemCheckBox"
