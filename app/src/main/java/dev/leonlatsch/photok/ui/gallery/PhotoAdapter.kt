@@ -76,10 +76,7 @@ class PhotoAdapter(
         isMultiSelectMode.postValue(true)
     }
 
-    fun addItemToSelection(position: Int): Boolean {
-        println("selecting $position")
-        return selectedItems.add(position)
-    }
+    fun addItemToSelection(position: Int): Boolean = selectedItems.add(position)
 
     fun removeItemFromSelection(position: Int) = selectedItems.remove(position)
 
