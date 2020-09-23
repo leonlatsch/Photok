@@ -33,6 +33,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * [RecyclerView.ViewHolder] for [Photo].
+ * Uses multi selection logic in [PhotoAdapter].
+ * Loads the thumbnail
+ *
+ * @param parent The parent [ViewGroup]
+ * @param context Required by [photoRepository]
+ * @param photoRepository Used to load the thumbnail
+ *
+ * @since 1.0.0
+ */
 class PhotoViewHolder(
     parent: ViewGroup,
     private val context: Context,
@@ -43,8 +54,8 @@ class PhotoViewHolder(
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
 
-    private lateinit var adapter: PhotoAdapter
     var photo: Photo? = null
+    private lateinit var adapter: PhotoAdapter
 
     fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
@@ -52,7 +63,7 @@ class PhotoViewHolder(
         imageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
                 // If the item clicked is the last selected item
-                if (adapter.selectedItems.size == 1 && adapter.selectedItems.contains(layoutPosition)) {
+                if (adapter.isLastSelectedItem(layoutPosition)) {
                     adapter.disableSelection()
                     return@setOnClickListener
                 }
@@ -72,7 +83,7 @@ class PhotoViewHolder(
         }
 
         adapter.isMultiSelectMode.observe(adapter.lifecycleOwner, {
-            if (it) { // When selection gets enabled, uncheck and show the checkbox
+            if (it) { // When selection gets enabled, show the checkbox
                 checkBox.visibility = View.VISIBLE
             } else {
                 checkBox.visibility = View.GONE
@@ -84,20 +95,24 @@ class PhotoViewHolder(
         loadThumbnail()
     }
 
+    /**
+     * Listener for changes in selected images.
+     * Calls [listChanged] whatever happens.
+     */
     private val onSelectedItemsChanged =
         object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
 
+            // No implementation needed
+            override fun onChanged(sender: ObservableList<Int>?) {
+                listChanged()
+            }
 
             override fun onItemRangeChanged(
                 sender: ObservableList<Int>?,
                 positionStart: Int,
                 itemCount: Int
             ) {
-                checkBox.isChecked = adapter.isItemSelected(layoutPosition)
-            }
-
-            // No implementation needed
-            override fun onChanged(sender: ObservableList<Int>?) {
+                listChanged()
             }
 
             override fun onItemRangeInserted(
@@ -105,6 +120,7 @@ class PhotoViewHolder(
                 positionStart: Int,
                 itemCount: Int
             ) {
+                listChanged()
             }
 
             override fun onItemRangeMoved(
@@ -113,6 +129,7 @@ class PhotoViewHolder(
                 toPosition: Int,
                 itemCount: Int
             ) {
+                listChanged()
             }
 
             override fun onItemRangeRemoved(
@@ -120,9 +137,14 @@ class PhotoViewHolder(
                 positionStart: Int,
                 itemCount: Int
             ) {
+                listChanged()
             }
 
         }
+
+    private fun listChanged() {
+        checkBox.isChecked = adapter.isItemSelected(layoutPosition)
+    }
 
     private fun setItemChecked(checked: Boolean) {
         layoutPosition.let {
@@ -134,6 +156,9 @@ class PhotoViewHolder(
         }
     }
 
+    /**
+     * Load the thumbnail for the [photo].
+     */
     private fun loadThumbnail() {
         GlobalScope.launch {
             val thumbnailBytes = photoRepository.readPhotoThumbnailData(context, photo?.id!!)
@@ -143,7 +168,7 @@ class PhotoViewHolder(
             }
             val thumbnailBitmap =
                 BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
-            Handler(context.mainLooper).post {
+            Handler(context.mainLooper).post { // Set thumbnail in main thread
                 imageView.setImageBitmap(thumbnailBitmap)
             }
         }

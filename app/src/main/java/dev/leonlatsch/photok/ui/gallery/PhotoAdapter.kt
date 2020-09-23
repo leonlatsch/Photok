@@ -27,6 +27,17 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlin.reflect.KFunction1
 
+/**
+ * [PagingDataAdapter] for [Photo] Grid.
+ * Implements custom multi selection. Used by [PhotoViewHolder]
+ *
+ * @param context Passthrough to [PhotoViewHolder]
+ * @param photoRepository Passthrough to [PhotoViewHolder]
+ * @param viewPhotoCallback Called by [PhotoViewHolder]. Defines what happens onClick.
+ * @param lifecycleOwner  The Fragments [LifecycleOwner]. Used for observing [MutableLiveData].
+ *
+ * @since 1.0.0
+ */
 class PhotoAdapter(
     private val context: Context,
     private val photoRepository: PhotoRepository,
@@ -34,7 +45,14 @@ class PhotoAdapter(
     val lifecycleOwner: LifecycleOwner
 ) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
 
+    /**
+     * Holds the layout positions of the selected items.
+     */
     val selectedItems = ObservableArrayList<Int>()
+
+    /**
+     * Holds a Boolean indicating if multi selection is enabled. In a LiveData.
+     */
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -60,11 +78,16 @@ class PhotoAdapter(
 
     fun addItemToSelection(position: Int) = selectedItems.add(position)
 
-    fun removeItemFromSelection(position: Int): Int = selectedItems.removeAt(position)
+    fun removeItemFromSelection(position: Int) = selectedItems.remove(position)
 
     fun isItemSelected(position: Int) = selectedItems.contains(position)
 
+    fun isLastSelectedItem(position: Int) = isItemSelected(position) && selectedItems.size == 1
+
     companion object {
+        /**
+         * Callback to check if items differ. Needed by [PagingDataAdapter].
+         */
         private val differCallback = object : DiffUtil.ItemCallback<Photo>() {
 
             override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean =
