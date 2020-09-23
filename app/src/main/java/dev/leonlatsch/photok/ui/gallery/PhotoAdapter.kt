@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.ui.gallery
 
 import android.content.Context
 import android.view.ViewGroup
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingDataAdapter
@@ -33,7 +34,7 @@ class PhotoAdapter(
     val lifecycleOwner: LifecycleOwner
 ) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
 
-    val selectedItems = mutableListOf<Int>()
+    val selectedItems = ObservableArrayList<Int>()
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -43,9 +44,25 @@ class PhotoAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder =
         PhotoViewHolder(parent, context, photoRepository)
 
+
     fun viewPhoto(position: Int) {
         viewPhotoCallback.invoke(getItem(position)?.id!!)
     }
+
+    fun disableSelection() {
+        selectedItems.clear()
+        isMultiSelectMode.postValue(false)
+    }
+
+    fun enableSelection() {
+        isMultiSelectMode.postValue(true)
+    }
+
+    fun addItemToSelection(position: Int) = selectedItems.add(position)
+
+    fun removeItemFromSelection(position: Int) = selectedItems.removeAt(position)
+
+    fun isItemSelected(position: Int) = selectedItems.contains(position)
 
     companion object {
         private val differCallback = object : DiffUtil.ItemCallback<Photo>() {

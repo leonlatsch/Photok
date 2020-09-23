@@ -93,7 +93,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
-            adapter.isMultiSelectMode.postValue(false)
+            adapter.disableSelection()
             //TODO: remove checked from ViewHolder
         }
     }

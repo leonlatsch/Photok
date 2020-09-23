@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -41,47 +42,75 @@ class PhotoViewHolder(
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
+
+    private var adapter: PhotoAdapter? = null
     var photo: Photo? = null
-    var position: Int? = null
+    private var position: Int? = null
 
     fun bindTo(adapter: PhotoAdapter, position: Int, photo: Photo?) {
         this.photo = photo
         this.position = position
-        loadThumbnail()
+        this.adapter = adapter
         imageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
+                // If the item clicked is the last selected item
                 if (adapter.selectedItems.size == 1 && adapter.selectedItems.contains(position)) {
-                    adapter.selectedItems.clear()
-                    adapter.isMultiSelectMode.postValue(false)
+                    adapter.disableSelection()
                     return@setOnClickListener
                 }
-                if (adapter.selectedItems.contains(position)) {
-                    checkBox.isChecked = false
-                    adapter.selectedItems.remove(position)
-                } else {
-                    checkBox.isChecked = true
-                    adapter.selectedItems.add(position)
-                }
+                // Set checked if not already checked
+                setItemChecked(!adapter.isItemSelected(position))
             } else {
                 adapter.viewPhoto(position)
             }
         }
+
         imageView.setOnLongClickListener {
             if (!adapter.isMultiSelectMode.value!!) {
-                adapter.isMultiSelectMode.postValue(true)
-                adapter.selectedItems.add(position)
-                checkBox.isChecked = true
+                adapter.enableSelection()
+                setItemChecked(true)
             }
             true
         }
 
         adapter.isMultiSelectMode.observe(adapter.lifecycleOwner, {
-            if (it) {
+            if (it) { // When selection gets enabled, uncheck and show the checkbox
                 checkBox.visibility = View.VISIBLE
             } else {
                 checkBox.visibility = View.GONE
             }
         })
+
+
+        loadThumbnail()
+    }
+
+    private val onSelectedItemChaned =
+        object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
+
+            override fun onChanged(sender: ObservableList<Int>?) {
+            }
+
+            // No implementation needed
+            override fun onItemRangeChanged(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+
+            override fun onItemRangeInserted(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+
+            override fun onItemRangeMoved(sender: ObservableList<Int>?, fromPosition: Int, toPosition: Int, itemCount: Int) {}
+
+            override fun onItemRangeRemoved(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+
+        }
+
+    private fun setItemChecked(checked: Boolean) {
+        checkBox.isChecked = checked
+        position?.let {
+            if (checked) {
+                adapter?.addItemToSelection(it)
+            } else {
+                adapter?.removeItemFromSelection(it)
+            }
+        }
     }
 
     private fun loadThumbnail() {
