@@ -62,7 +62,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
-                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
+                actionMode = (activity as MainActivity).startActionModeOnToolbar(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
@@ -88,6 +88,17 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            if (item?.itemId == R.id.menuMsAll) {
+                lifecycleScope.launch {
+                    adapter.selectAll()
+                }
+            }
+            if (item?.itemId == R.id.menuMsDelete) {
+                // TODO: delete
+            }
+            if (item?.itemId == R.id.menuMsExport) {
+                // TODO: export
+            }
             return true
         }
 

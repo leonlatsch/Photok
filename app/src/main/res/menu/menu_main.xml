@@ -20,12 +20,16 @@
     <item
         android:id="@+id/menuMainItemMore"
         android:icon="@drawable/more"
-        app:showAsAction="always"
-        android:title="MORE">
+        android:title="@string/menu_main_more"
+        app:showAsAction="ifRoom">
 
         <menu>
-            <item android:title="Settings"/>
-            <item android:title="About"/>
+            <item
+                android:title="@string/menu_main_settings"
+                app:showAsAction="never" />
+            <item
+                android:title="@string/menu_main_about"
+                app:showAsAction="never" />
             <!-- add more here -->
         </menu>
 

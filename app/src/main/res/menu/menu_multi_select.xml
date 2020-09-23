@@ -16,15 +16,20 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item 
+    <item
+        android:id="@+id/menuMsAll"
+        android:icon="@drawable/select_all"
+        android:title="@string/menu_ms_select_all"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/menuMsDelete"
         android:icon="@drawable/delete"
-        app:showAsAction="always"
-        android:title="DELETE" />
+        android:title="@string/menu_ms_delete"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menuMsExport"
         android:icon="@drawable/export"
-        app:showAsAction="always"
-        android:title="EXPORT" />
+        android:title="@string/menu_ms_export"
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -92,6 +92,7 @@ class PhotoViewHolder(
 
         adapter.selectedItems.addOnListChangedCallback(onSelectedItemsChanged)
 
+        listChanged()
         loadThumbnail()
     }
 

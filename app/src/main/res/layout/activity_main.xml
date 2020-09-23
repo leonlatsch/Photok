@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:theme="@style/toolbarStyle"
-                app:popupTheme="@style/PopupThemeOverplay">
+                app:popupTheme="@style/PopupThemeOverlay">
 
                 <TextView
                     android:id="@+id/toolbarTitle"

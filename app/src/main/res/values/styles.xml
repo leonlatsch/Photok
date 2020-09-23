@@ -22,10 +22,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!-- Action Mode -->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="actionModeCloseDrawable">@drawable/close</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButtonStyle</item>
+
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="buttonStyle">@style/buttonStyle</item>
         <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
+    </style>
+    
+    <style name="ActionModeCloseButtonStyle">
+        <item name="tint">@android:color/white</item>
     </style>
 
     <!-- TEXT VIEW -->
@@ -79,9 +89,9 @@
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
         <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
-    <style name="PopupThemeOverplay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

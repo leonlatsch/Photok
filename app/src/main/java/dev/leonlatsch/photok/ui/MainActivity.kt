@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.appcompat.view.ActionMode
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -44,6 +45,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 }
             }
     }
+
+    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? = startSupportActionMode(callback)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

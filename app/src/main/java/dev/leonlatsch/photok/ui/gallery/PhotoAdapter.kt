@@ -76,13 +76,24 @@ class PhotoAdapter(
         isMultiSelectMode.postValue(true)
     }
 
-    fun addItemToSelection(position: Int) = selectedItems.add(position)
+    fun addItemToSelection(position: Int): Boolean {
+        println("selecting $position")
+        return selectedItems.add(position)
+    }
 
     fun removeItemFromSelection(position: Int) = selectedItems.remove(position)
 
     fun isItemSelected(position: Int) = selectedItems.contains(position)
 
     fun isLastSelectedItem(position: Int) = isItemSelected(position) && selectedItems.size == 1
+
+    fun selectAll() {
+        for (i in 0 until itemCount) {
+            if (!isItemSelected(i)) {
+                addItemToSelection(i)
+            }
+        }
+    }
 
     companion object {
         /**
