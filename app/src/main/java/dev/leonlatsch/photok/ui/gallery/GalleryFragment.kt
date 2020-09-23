@@ -88,13 +88,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            // TODO
             return true
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             adapter.disableSelection()
-            //TODO: remove checked from ViewHolder
         }
     }
 
