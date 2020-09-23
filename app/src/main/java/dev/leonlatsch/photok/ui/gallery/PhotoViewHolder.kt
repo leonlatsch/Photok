@@ -43,25 +43,23 @@ class PhotoViewHolder(
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
 
-    private var adapter: PhotoAdapter? = null
+    private lateinit var adapter: PhotoAdapter
     var photo: Photo? = null
-    private var position: Int? = null
 
-    fun bindTo(adapter: PhotoAdapter, position: Int, photo: Photo?) {
+    fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
-        this.position = position
         this.adapter = adapter
         imageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
                 // If the item clicked is the last selected item
-                if (adapter.selectedItems.size == 1 && adapter.selectedItems.contains(position)) {
+                if (adapter.selectedItems.size == 1 && adapter.selectedItems.contains(layoutPosition)) {
                     adapter.disableSelection()
                     return@setOnClickListener
                 }
                 // Set checked if not already checked
-                setItemChecked(!adapter.isItemSelected(position))
+                setItemChecked(!adapter.isItemSelected(layoutPosition))
             } else {
-                adapter.viewPhoto(position)
+                adapter.viewPhoto(layoutPosition)
             }
         }
 
@@ -81,34 +79,57 @@ class PhotoViewHolder(
             }
         })
 
+        adapter.selectedItems.addOnListChangedCallback(onSelectedItemsChanged)
 
         loadThumbnail()
     }
 
-    private val onSelectedItemChaned =
+    private val onSelectedItemsChanged =
         object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
 
-            override fun onChanged(sender: ObservableList<Int>?) {
+
+            override fun onItemRangeChanged(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                checkBox.isChecked = adapter.isItemSelected(layoutPosition)
             }
 
             // No implementation needed
-            override fun onItemRangeChanged(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+            override fun onChanged(sender: ObservableList<Int>?) {
+            }
 
-            override fun onItemRangeInserted(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+            override fun onItemRangeInserted(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+            }
 
-            override fun onItemRangeMoved(sender: ObservableList<Int>?, fromPosition: Int, toPosition: Int, itemCount: Int) {}
+            override fun onItemRangeMoved(
+                sender: ObservableList<Int>?,
+                fromPosition: Int,
+                toPosition: Int,
+                itemCount: Int
+            ) {
+            }
 
-            override fun onItemRangeRemoved(sender: ObservableList<Int>?, positionStart: Int, itemCount: Int) {}
+            override fun onItemRangeRemoved(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+            }
 
         }
 
     private fun setItemChecked(checked: Boolean) {
-        checkBox.isChecked = checked
-        position?.let {
+        layoutPosition.let {
             if (checked) {
-                adapter?.addItemToSelection(it)
+                adapter.addItemToSelection(it)
             } else {
-                adapter?.removeItemFromSelection(it)
+                adapter.removeItemFromSelection(it)
             }
         }
     }

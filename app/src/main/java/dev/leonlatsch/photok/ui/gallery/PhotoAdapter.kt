@@ -38,7 +38,7 @@ class PhotoAdapter(
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.bindTo(this, position, getItem(position))
+        holder.bindTo(this, getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder =
@@ -60,7 +60,7 @@ class PhotoAdapter(
 
     fun addItemToSelection(position: Int) = selectedItems.add(position)
 
-    fun removeItemFromSelection(position: Int) = selectedItems.removeAt(position)
+    fun removeItemFromSelection(position: Int): Int = selectedItems.removeAt(position)
 
     fun isItemSelected(position: Int) = selectedItems.contains(position)
 
