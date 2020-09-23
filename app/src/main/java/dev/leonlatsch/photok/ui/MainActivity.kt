@@ -17,34 +17,44 @@
 package dev.leonlatsch.photok.ui
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import androidx.appcompat.view.ActionMode
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.PrefManager
-import dev.leonlatsch.photok.ui.components.BaseActivity
+import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
-
-    @Inject
-    lateinit var prefManager: PrefManager
+class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         setSupportActionBar(mainToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         mainNavHostFragment.findNavController()
-            .addOnDestinationChangedListener {_, destination, _ ->
+            .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.galleryFragment, R.id.settingsFragment -> mainAppBarLayout.visibility =
                         View.VISIBLE
                     else -> mainAppBarLayout.visibility = View.GONE
                 }
             }
+    }
+
+    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? = startSupportActionMode(callback)
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun bind(binding: ActivityMainBinding) {
+        super.bind(binding)
+        binding.context = this
     }
 }

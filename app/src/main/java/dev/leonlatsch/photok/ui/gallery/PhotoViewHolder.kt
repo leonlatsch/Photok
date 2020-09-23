@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -32,6 +33,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * [RecyclerView.ViewHolder] for [Photo].
+ * Uses multi selection logic in [PhotoAdapter].
+ * Loads the thumbnail
+ *
+ * @param parent The parent [ViewGroup]
+ * @param context Required by [photoRepository]
+ * @param photoRepository Used to load the thumbnail
+ *
+ * @since 1.0.0
+ */
 class PhotoViewHolder(
     parent: ViewGroup,
     private val context: Context,
@@ -41,49 +53,113 @@ class PhotoViewHolder(
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
-    var photo: Photo? = null
-    var position: Int? = null
 
-    fun bindTo(adapter: PhotoAdapter, position: Int, photo: Photo?) {
+    var photo: Photo? = null
+    private lateinit var adapter: PhotoAdapter
+
+    fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
-        this.position = position
-        loadThumbnail()
+        this.adapter = adapter
         imageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
-                if (adapter.selectedItems.size == 1 && adapter.selectedItems.contains(position)) {
-                    adapter.selectedItems.clear()
-                    adapter.isMultiSelectMode.postValue(false)
+                // If the item clicked is the last selected item
+                if (adapter.isLastSelectedItem(layoutPosition)) {
+                    adapter.disableSelection()
                     return@setOnClickListener
                 }
-                if (adapter.selectedItems.contains(position)) {
-                    checkBox.isChecked = false
-                    adapter.selectedItems.remove(position)
-                } else {
-                    checkBox.isChecked = true
-                    adapter.selectedItems.add(position)
-                }
+                // Set checked if not already checked
+                setItemChecked(!adapter.isItemSelected(layoutPosition))
             } else {
-                adapter.viewPhoto(position)
+                adapter.viewPhoto(layoutPosition)
             }
         }
+
         imageView.setOnLongClickListener {
             if (!adapter.isMultiSelectMode.value!!) {
-                adapter.isMultiSelectMode.postValue(true)
-                adapter.selectedItems.add(position)
-                checkBox.isChecked = true
+                adapter.enableSelection()
+                setItemChecked(true)
             }
             true
         }
 
         adapter.isMultiSelectMode.observe(adapter.lifecycleOwner, {
-            if (it) {
+            if (it) { // When selection gets enabled, show the checkbox
                 checkBox.visibility = View.VISIBLE
             } else {
                 checkBox.visibility = View.GONE
             }
         })
+
+        adapter.selectedItems.addOnListChangedCallback(onSelectedItemsChanged)
+
+        listChanged()
+        loadThumbnail()
     }
 
+    /**
+     * Listener for changes in selected images.
+     * Calls [listChanged] whatever happens.
+     */
+    private val onSelectedItemsChanged =
+        object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
+
+            // No implementation needed
+            override fun onChanged(sender: ObservableList<Int>?) {
+                listChanged()
+            }
+
+            override fun onItemRangeChanged(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                listChanged()
+            }
+
+            override fun onItemRangeInserted(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                listChanged()
+            }
+
+            override fun onItemRangeMoved(
+                sender: ObservableList<Int>?,
+                fromPosition: Int,
+                toPosition: Int,
+                itemCount: Int
+            ) {
+                listChanged()
+            }
+
+            override fun onItemRangeRemoved(
+                sender: ObservableList<Int>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                listChanged()
+            }
+
+        }
+
+    private fun listChanged() {
+        checkBox.isChecked = adapter.isItemSelected(layoutPosition)
+    }
+
+    private fun setItemChecked(checked: Boolean) {
+        layoutPosition.let {
+            if (checked) {
+                adapter.addItemToSelection(it)
+            } else {
+                adapter.removeItemFromSelection(it)
+            }
+        }
+    }
+
+    /**
+     * Load the thumbnail for the [photo].
+     */
     private fun loadThumbnail() {
         GlobalScope.launch {
             val thumbnailBytes = photoRepository.readPhotoThumbnailData(context, photo?.id!!)
@@ -93,7 +169,7 @@ class PhotoViewHolder(
             }
             val thumbnailBitmap =
                 BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
-            Handler(context.mainLooper).post {
+            Handler(context.mainLooper).post { // Set thumbnail in main thread
                 imageView.setImageBitmap(thumbnailBitmap)
             }
         }

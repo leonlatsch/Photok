@@ -18,7 +18,10 @@ package dev.leonlatsch.photok.ui.gallery
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -42,17 +46,27 @@ import kotlinx.coroutines.launch
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
     private val viewModel: GalleryViewModel by viewModels()
+    private lateinit var adapter: PhotoAdapter
+    private var actionMode: ActionMode? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
 
-        val adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize, viewLifecycleOwner)
+        adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize, viewLifecycleOwner)
         galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
         }
+
+        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+            if (it) {
+                actionMode = (activity as MainActivity).startActionModeOnToolbar(actionModeCallback)
+            } else {
+                actionMode?.finish()
+            }
+        })
     }
 
     fun navigateToImport() {
@@ -63,6 +77,34 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         val intent = Intent(requireActivity(), ViewPhotoActivity::class.java)
         intent.putExtra(INTENT_PHOTO_ID, id)
         startActivity(intent)
+    }
+
+    private val actionModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            mode?.menuInflater?.inflate(R.menu.menu_multi_select, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
+
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            if (item?.itemId == R.id.menuMsAll) {
+                lifecycleScope.launch {
+                    adapter.selectAll()
+                }
+            }
+            if (item?.itemId == R.id.menuMsDelete) {
+                // TODO: delete
+            }
+            if (item?.itemId == R.id.menuMsExport) {
+                // TODO: export
+            }
+            return true
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            adapter.disableSelection()
+        }
     }
 
     override fun bind(binding: FragmentGalleryBinding) {

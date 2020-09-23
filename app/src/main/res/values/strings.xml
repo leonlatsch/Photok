@@ -61,4 +61,14 @@
     <string name="view_photo_detail_import_at_label">Imported at:</string>
     <string name="view_photo_detail_file_type_label">File Type:</string>
     <string name="view_photo_detail_size_label">Filesize:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_more">More</string>
+    <string name="menu_main_settings">Settings</string>
+    <string name="menu_main_about">About</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Select All</string>
+    <string name="menu_ms_delete">Delete</string>
+    <string name="menu_ms_export">Export</string>
 </resources>

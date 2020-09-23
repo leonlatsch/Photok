@@ -64,11 +64,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     fun onDelete() {
-        //TODO
+        //TODO delete
     }
 
     fun onExport() {
-        //TODO
+        //TODO export
     }
 
     private fun initializeSystemUI() {

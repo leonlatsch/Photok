@@ -61,4 +61,14 @@
     <string name="view_photo_detail_import_at_label">Importiert am:</string>
     <string name="view_photo_detail_file_type_label">Datei Typ:</string>
     <string name="view_photo_detail_size_label">Dateigröße:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_more">Mehr</string>
+    <string name="menu_main_settings">Einstellungen</string>
+    <string name="menu_main_about">Über</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Alle auswählen</string>
+    <string name="menu_ms_delete">Löschen</string>
+    <string name="menu_ms_export">Exportieren</string>
 </resources>
