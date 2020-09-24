@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.ui.proccess.base
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
@@ -25,6 +24,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
 
 abstract class BaseProcessBottomSheetDialogFragment(
     @StringRes private val processingLabelTextResource: Int
@@ -35,8 +35,6 @@ abstract class BaseProcessBottomSheetDialogFragment(
     // region binding properties
 
     val labelText: MutableLiveData<String> = MutableLiveData(getString(R.string.process_initialize))
-    val statusIcon: MutableLiveData<Drawable> = MutableLiveData()
-    val statusIconTint: MutableLiveData<Int> = MutableLiveData()
     val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
 
     // endregion
@@ -49,27 +47,33 @@ abstract class BaseProcessBottomSheetDialogFragment(
         viewModel.processState.observe(viewLifecycleOwner, {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
-                    statusIcon.postValue(null)
+                    setCompoundDrawable(null)
                     closeButtonVisibility.postValue(View.GONE)
                     getString(R.string.process_initialize)
                 }
                 ProcessState.PROCESSING -> getString(processingLabelTextResource)
                 ProcessState.FINISHED -> {
-                    statusIcon.postValue(ContextCompat.getDrawable(requireContext(), R.drawable.check))
-                    statusIconTint.postValue(ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark))
+                    setCompoundDrawable(R.drawable.check, android.R.color.holo_red_dark)
                     closeButtonVisibility.postValue(View.VISIBLE)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
-                    statusIcon.postValue(ContextCompat.getDrawable(requireContext(), R.drawable.close))
-                    statusIconTint.postValue(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
-                    closeButtonVisibility.postValue(View.VISIBLE)
+                    setCompoundDrawable(R.drawable.close, android.R.color.holo_red_dark)
                     getString(R.string.process_abort)
                 }
                 else -> return@observe
             }
             labelText.postValue(label)
         })
+    }
+
+    private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {
+        if (drawable == null) {
+            processingLabelTextView.setCompoundDrawables(null, null, null, null)
+        }
+
+        processingLabelTextView.setCompoundDrawables(null, null, ContextCompat.getDrawable(requireContext(), drawable!!), null)
+        processingLabelTextView.compoundDrawables[0]?.setTint(color)
     }
 
     override fun bind(binding: BottomSheetDialogProcessBinding) {

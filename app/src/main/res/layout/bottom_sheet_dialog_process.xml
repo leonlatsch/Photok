@@ -14,8 +14,7 @@
   ~   limitations under the License.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -38,12 +37,11 @@
         android:paddingEnd="10dp">
 
         <TextView
+            android:id="@+id/processingLabelTextView"
             style="@style/ProcessingTestViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{context.labelText, default=Processing}"
-            app:drawableEndCompat="@{context.statusIcon, default=@drawable/check}"
-            app:drawableTint="@{context.statusIconTint, default=@android:color/holo_green_dark}" />
+            android:text="@{context.labelText, default=Processing}"/>
 
 
         <LinearLayout
@@ -100,7 +98,6 @@
             android:layout_height="@dimen/wide_button_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:onClick="@{() -> viewModel.cancel()}"
             android:text="@string/process_abort" />
 
         <Button
