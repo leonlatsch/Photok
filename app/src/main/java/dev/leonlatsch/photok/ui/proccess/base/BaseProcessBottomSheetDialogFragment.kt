@@ -34,7 +34,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     // region binding properties
 
-    val labelText: MutableLiveData<String> = MutableLiveData(getString(R.string.process_initialize))
+    val labelText: MutableLiveData<String> = MutableLiveData()
     val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
 
     // endregion
@@ -43,6 +43,8 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.processState.postValue(ProcessState.INITIALIZE)
+        viewModel.progress.postValue(ProcessProgress())
 
         viewModel.processState.observe(viewLifecycleOwner, {
             val label: String = when (it) {
@@ -69,7 +71,8 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
-            processingLabelTextView.setCompoundDrawables(null, null, null, null)
+            processingLabelTextView?.setCompoundDrawables(null, null, null, null)
+            return
         }
 
         processingLabelTextView.setCompoundDrawables(null, null, ContextCompat.getDrawable(requireContext(), drawable!!), null)

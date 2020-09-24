@@ -101,7 +101,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     fun startImport() {
         //findNavController().navigate(R.id.action_galleryFragment_to_importFragment)
-        ImportBottomSheetDialogFragment().show(requireActivity().supportFragmentManager.beginTransaction(), "") // TODO: not attached to context
+        ImportBottomSheetDialogFragment().show(requireActivity().supportFragmentManager, "")
     }
 
     private fun showFullSize(id: Int) {

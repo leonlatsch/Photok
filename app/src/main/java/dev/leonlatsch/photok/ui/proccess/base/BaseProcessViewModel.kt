@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseProcessViewModel : ViewModel() {
 
-    val processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.INITIALIZE)
-    val progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
+    val processState: MutableLiveData<ProcessState> = MutableLiveData()
+    val progress: MutableLiveData<ProcessProgress> = MutableLiveData()
 
     abstract fun process()
 
