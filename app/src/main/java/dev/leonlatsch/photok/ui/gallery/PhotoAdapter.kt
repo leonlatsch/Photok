@@ -55,6 +55,8 @@ class PhotoAdapter(
      */
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    var isEmpty: MutableLiveData<Boolean> = MutableLiveData(true)
+
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         holder.bindTo(this, getItem(position))
     }

@@ -23,9 +23,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
@@ -45,6 +47,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
+    var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
+
     private val viewModel: GalleryViewModel by viewModels()
     private lateinit var adapter: PhotoAdapter
     private var actionMode: ActionMode? = null
@@ -53,8 +57,15 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
 
         galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
+        viewModel.photos
 
-        adapter = PhotoAdapter(requireContext(), viewModel.photoRepository, this::showFullSize, viewLifecycleOwner)
+        adapter = PhotoAdapter(
+            requireContext(),
+            viewModel.photoRepository,
+            this::showFullSize,
+            viewLifecycleOwner
+        )
+        adapter.registerAdapterDataObserver(onAdapterDataObserver)
         galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
@@ -67,6 +78,25 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 actionMode?.finish()
             }
         })
+    }
+
+    private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            togglePlaceholder(itemCount)
+        }
+
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            togglePlaceholder(itemCount)
+        }
+    }
+
+    private fun togglePlaceholder(itemCount: Int) {
+        val visibility = if (itemCount > 0) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        placeholderVisibility.postValue(visibility)
     }
 
     fun navigateToImport() {
