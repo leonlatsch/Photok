@@ -63,6 +63,7 @@
     <string name="process_abort">Abort</string>
     <string name="process_finished">Finished</string>
     <string name="process_initialize">Preparing…</string>
+    <string name="process_aborted">Aborted</string>
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>

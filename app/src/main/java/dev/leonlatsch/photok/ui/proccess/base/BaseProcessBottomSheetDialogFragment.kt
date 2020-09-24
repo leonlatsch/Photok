@@ -16,21 +16,61 @@
 
 package dev.leonlatsch.photok.ui.proccess.base
 
+import android.graphics.drawable.Drawable
+import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
 abstract class BaseProcessBottomSheetDialogFragment(
-    @StringRes processingLabelTextResource: Int = R.string.app_name
+    @StringRes private val processingLabelTextResource: Int
 ) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
-    R.layout.bottom_sheet_dialog_process) {
+    R.layout.bottom_sheet_dialog_process
+) {
 
-    var labelText: MutableLiveData<String> = MutableLiveData(getString(processingLabelTextResource))
+    // region binding properties
+
+    val labelText: MutableLiveData<String> = MutableLiveData(getString(R.string.process_initialize))
+    val statusIcon: MutableLiveData<Drawable> = MutableLiveData()
+    val statusIconTint: MutableLiveData<Int> = MutableLiveData()
+    val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
+
+    // endregion
 
     abstract val viewModel: BaseProcessViewModel
-    val processProgress: ProcessProgress? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.processState.observe(viewLifecycleOwner, {
+            val label: String = when (it) {
+                ProcessState.INITIALIZE -> {
+                    statusIcon.postValue(null)
+                    closeButtonVisibility.postValue(View.GONE)
+                    getString(R.string.process_initialize)
+                }
+                ProcessState.PROCESSING -> getString(processingLabelTextResource)
+                ProcessState.FINISHED -> {
+                    statusIcon.postValue(ContextCompat.getDrawable(requireContext(), R.drawable.check))
+                    statusIconTint.postValue(ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark))
+                    closeButtonVisibility.postValue(View.VISIBLE)
+                    getString(R.string.process_finished)
+                }
+                ProcessState.ABORTED -> {
+                    statusIcon.postValue(ContextCompat.getDrawable(requireContext(), R.drawable.close))
+                    statusIconTint.postValue(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+                    closeButtonVisibility.postValue(View.VISIBLE)
+                    getString(R.string.process_abort)
+                }
+                else -> return@observe
+            }
+            labelText.postValue(label)
+        })
+    }
 
     override fun bind(binding: BottomSheetDialogProcessBinding) {
         super.bind(binding)

@@ -18,10 +18,11 @@ package dev.leonlatsch.photok.ui.proccess
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.proccess.base.BaseProcessBottomSheetDialogFragment
 
 @AndroidEntryPoint
-class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment() {
+class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
 
     override val viewModel: ImportViewModel by viewModels()
 }

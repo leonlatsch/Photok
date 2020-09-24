@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{context.labelText, default=Processing}"
-            app:drawableEndCompat="@drawable/check"
-            app:drawableTint="@android:color/holo_green_dark" />
+            app:drawableEndCompat="@{context.statusIcon, default=@drawable/check}"
+            app:drawableTint="@{context.statusIconTint, default=@android:color/holo_green_dark}" />
 
 
         <LinearLayout
@@ -110,7 +110,7 @@
             android:layout_marginTop="5dp"
             android:onClick="@{() -> context.dismiss()}"
             android:text="@string/process_close"
-            android:visibility="gone" />
+            android:visibility="@{context.closeButtonVisibility, default=gone}" />
 
     </LinearLayout>
 </layout>
