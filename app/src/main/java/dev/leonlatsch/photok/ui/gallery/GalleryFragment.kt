@@ -25,7 +25,6 @@ import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +33,7 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.proccess.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.flow.collectLatest
@@ -99,8 +99,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         placeholderVisibility.postValue(visibility)
     }
 
-    fun navigateToImport() {
-        findNavController().navigate(R.id.action_galleryFragment_to_importFragment)
+    fun startImport() {
+        //findNavController().navigate(R.id.action_galleryFragment_to_importFragment)
+        ImportBottomSheetDialogFragment().show(requireActivity().supportFragmentManager.beginTransaction(), "") // TODO: not attached to context
     }
 
     private fun showFullSize(id: Int) {
