@@ -68,6 +68,11 @@
         <item name="android:textSize">62sp</item>
     </style>
 
+    <style name="ProcessingTestViewStyle" parent="TextViewStyle">
+        <item name="android:fontFamily">@font/raleway_black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">@font/raleway_thin</item>
@@ -83,8 +88,8 @@
     <!-- PROGRESS BAR -->
     <style name="ProgressBarHorizontalStyle" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/thick_progress_bar</item>
-        <item name="android:minHeight">10dip</item>
-        <item name="android:maxHeight">20dip</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">15dip</item>
     </style>
 
     <!-- TOOLBAR -->

@@ -16,13 +16,24 @@
 
 package dev.leonlatsch.photok.ui.proccess.base
 
+import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
 abstract class BaseProcessBottomSheetDialogFragment(
+    @StringRes processingLabelTextResource: Int = R.string.app_name
 ) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
     R.layout.bottom_sheet_dialog_process) {
 
+    var labelText: MutableLiveData<String> = MutableLiveData(getString(processingLabelTextResource))
+
     abstract val viewModel: BaseProcessViewModel
+    val processProgress: ProcessProgress? = null
+
+    override fun bind(binding: BottomSheetDialogProcessBinding) {
+        super.bind(binding)
+        binding.context = this
+    }
 }

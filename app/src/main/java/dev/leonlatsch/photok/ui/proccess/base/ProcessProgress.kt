@@ -17,14 +17,23 @@
 package dev.leonlatsch.photok.ui.proccess.base
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 
-abstract class BaseProcessViewModel : ViewModel() {
+class ProcessProgress {
 
-    val processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.INITIALIZE)
-    val progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
+    val maxPercent: Int = 100
+    val progressPercent: MutableLiveData<Int> = MutableLiveData()
 
-    abstract fun process()
+    val max: MutableLiveData<Int> = MutableLiveData()
+    val current: MutableLiveData<Int> = MutableLiveData()
 
-    abstract fun cancel()
+    init {
+        max.postValue(0)
+        current.postValue(0)
+    }
+
+    fun update(current: Int, from: Int) {
+        this.max.postValue(from)
+        this.current.postValue(current)
+        progressPercent.postValue((current * maxPercent) / from)
+    }
 }
