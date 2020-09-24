@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +28,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/darkGray"
         android:orientation="vertical"
         android:paddingTop="20dp"
         android:paddingBottom="80dp">
@@ -40,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/view_photo_detail_title"
+            android:textAlignment="center"
             android:textSize="18sp" />
 
         <GridLayout

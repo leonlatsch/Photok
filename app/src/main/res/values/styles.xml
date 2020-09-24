@@ -32,8 +32,9 @@
         <item name="buttonStyle">@style/buttonStyle</item>
         <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
-    
+
     <style name="ActionModeCloseButtonStyle">
         <item name="tint">@android:color/white</item>
     </style>
@@ -94,4 +95,12 @@
 
     <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- BOTTOM SHEET DIALOG -->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
+    </style>
 </resources>
