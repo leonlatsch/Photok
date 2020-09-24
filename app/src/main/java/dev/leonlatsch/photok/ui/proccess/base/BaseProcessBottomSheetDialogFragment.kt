@@ -14,27 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.viewphoto
+package dev.leonlatsch.photok.ui.proccess.base
 
-import android.os.Bundle
-import android.view.View
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.DialogDetailsBottomSheetBinding
-import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
-class DetailsBottomSheetDialog(
-    val photo: Photo?,
-    val photoSize: Int
-) : BindableBottomSheetDialogFragment<DialogDetailsBottomSheetBinding>(R.layout.dialog_details_bottom_sheet) {
+abstract class BaseProcessBottomSheetDialogFragment(
+) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
+    R.layout.bottom_sheet_dialog_process) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        photo ?: dismiss()
-    }
-
-    override fun bind(binding: DialogDetailsBottomSheetBinding) {
-        super.bind(binding)
-        binding.context = this
-    }
+    abstract val viewModel: BaseProcessViewModel
 }
