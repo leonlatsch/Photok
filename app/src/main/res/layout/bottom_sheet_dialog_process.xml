@@ -36,12 +36,12 @@
         android:paddingStart="10dp"
         android:paddingTop="20dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="20dp">
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/processingLabelTextView"
             style="@style/ProcessingTestViewStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{context.labelText, default=Processing}" />
 
@@ -52,11 +52,13 @@
             android:visibility="@{context.processIndicatorsVisibility}">
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.progress.progressPercent.toString(), default=50}" />
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/common_percent" />
@@ -79,11 +81,13 @@
             android:visibility="@{context.processIndicatorsVisibility}">
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.progress.current.toString(), default=5}" />
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
@@ -91,31 +95,39 @@
                 android:text="@string/common_slash" />
 
             <TextView
+                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.progress.max.toString(), default=10}" />
 
         </LinearLayout>
 
-        <Button
-            style="@style/buttonStyle"
-            android:layout_width="@dimen/wide_button_width"
-            android:layout_height="@dimen/wide_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="@string/process_abort"
-            android:onClick="@{() -> viewModel.cancel()}"
-            android:visibility="@{context.abortButtonVisibility, default=visible}" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp">
 
-        <Button
-            style="@style/buttonStyle"
-            android:layout_width="@dimen/wide_button_width"
-            android:layout_height="@dimen/wide_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:onClick="@{() -> context.dismiss()}"
-            android:text="@string/process_close"
-            android:visibility="@{context.closeButtonVisibility, default=gone}" />
+            <Button
+                style="@style/buttonStyle"
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:onClick="@{() -> viewModel.cancel()}"
+                android:text="@string/process_abort"
+                android:visibility="@{context.abortButtonVisibility, default=visible}" />
+
+            <Button
+                style="@style/buttonStyle"
+                android:layout_width="@dimen/wide_button_width"
+                android:layout_height="@dimen/wide_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:onClick="@{() -> context.dismiss()}"
+                android:text="@string/process_close"
+                android:visibility="@{context.closeButtonVisibility, default=gone}" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.ui.proccess.base
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
@@ -50,6 +49,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
         viewModel.processState.observe(viewLifecycleOwner, {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
+                    isCancelable = false
                     setCompoundDrawable(null)
                     closeButtonVisibility.postValue(View.GONE)
                     processIndicatorsVisibility.postValue(View.GONE)
@@ -61,12 +61,14 @@ abstract class BaseProcessBottomSheetDialogFragment(
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
+                    isCancelable = true
                     setCompoundDrawable(R.drawable.check, android.R.color.holo_green_dark)
                     closeButtonVisibility.postValue(View.VISIBLE)
                     abortButtonVisibility.postValue(View.GONE)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
+                    isCancelable = true
                     setCompoundDrawable(R.drawable.close, android.R.color.holo_red_dark)
                     closeButtonVisibility.postValue(View.VISIBLE)
                     abortButtonVisibility.postValue(View.GONE)
@@ -82,16 +84,19 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
-            processingLabelTextView?.setCompoundDrawables(null, null, null, null)
+            processingLabelTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
             return
         }
 
-        processingLabelTextView.setCompoundDrawables(null, null, ContextCompat.getDrawable(requireContext(), drawable!!), null)
-        processingLabelTextView.compoundDrawables[0]?.setTint(color)
+        processingLabelTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, drawable, 0)
+        processingLabelTextView.compoundDrawables[2]?.setTint(color)
     }
 
     override fun bind(binding: BottomSheetDialogProcessBinding) {
         super.bind(binding)
         binding.context = this
+        binding.viewModel = viewModel
     }
+
+
 }

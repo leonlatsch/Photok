@@ -23,7 +23,7 @@ import kotlinx.coroutines.Job
 abstract class BaseProcessViewModel : ViewModel() {
 
     val processState: MutableLiveData<ProcessState> = MutableLiveData()
-    val progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
+    var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
 
     abstract fun process(): Job
 

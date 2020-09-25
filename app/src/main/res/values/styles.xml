@@ -41,7 +41,7 @@
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/raleway_medium</item>
+
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">14sp</item>
     </style>

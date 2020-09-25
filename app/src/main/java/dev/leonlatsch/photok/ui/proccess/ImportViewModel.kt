@@ -29,12 +29,12 @@ class ImportViewModel : BaseProcessViewModel(){
         processState.postValue(ProcessState.PROCESSING)
         for (i in 0..100) {
             delay(100)
-            progress.value!!.update(i, 100)
+            progress.value?.update(i, 100)
         }
         processState.postValue(ProcessState.FINISHED)
     }
 
     override fun cancel() {
-        TODO("Not yet implemented")
+        processState.postValue(ProcessState.ABORTED)
     }
 }
