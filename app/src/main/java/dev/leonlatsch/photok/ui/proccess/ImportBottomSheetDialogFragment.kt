@@ -16,13 +16,21 @@
 
 package dev.leonlatsch.photok.ui.proccess
 
+import android.net.Uri
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.proccess.base.BaseProcessBottomSheetDialogFragment
 
 @AndroidEntryPoint
-class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
+class ImportBottomSheetDialogFragment(
+    private val uris: List<Uri>
+) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
 
     override val viewModel: ImportViewModel by viewModels()
+
+    override fun beforeOnViewCreated() {
+        super.beforeOnViewCreated()
+        viewModel.uris = uris
+    }
 }

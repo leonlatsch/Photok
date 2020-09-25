@@ -46,6 +46,8 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        beforeOnViewCreated()
+
         viewModel.processState.postValue(ProcessState.INITIALIZE)
 
         viewModel.processState.observe(viewLifecycleOwner, {
@@ -82,6 +84,9 @@ abstract class BaseProcessBottomSheetDialogFragment(
         })
 
         viewModel.process()
+    }
+
+    open fun beforeOnViewCreated() {
     }
 
     private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {

@@ -16,7 +16,9 @@
 
 package dev.leonlatsch.photok.ui.gallery
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -100,8 +102,33 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     fun startImport() {
-        //findNavController().navigate(R.id.action_galleryFragment_to_importFragment)
-        ImportBottomSheetDialogFragment().show(requireActivity().supportFragmentManager, "")
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQ_CONTENT_PHOTOS)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
+            val images = mutableListOf<Uri>()
+            if (data != null) {
+                if (data.clipData != null) {
+                    val count = data.clipData!!.itemCount
+                    for (i in 0 until count) {
+                        val imageUri = data.clipData!!.getItemAt(i).uri
+                        images.add(imageUri)
+                    }
+                } else if (data.data != null) {
+                    val imageUri = data.data!!
+                    images.add(imageUri)
+                }
+            }
+            if (images.size > 0) {
+                val importDialog = ImportBottomSheetDialogFragment(images)
+                importDialog.show(requireActivity().supportFragmentManager, ImportBottomSheetDialogFragment::class.qualifiedName)
+            }
+        }
     }
 
     private fun showFullSize(id: Int) {
@@ -141,5 +168,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun bind(binding: FragmentGalleryBinding) {
         super.bind(binding)
         binding.context = this
+    }
+
+    companion object {
+        const val REQ_CONTENT_PHOTOS = 0
     }
 }
