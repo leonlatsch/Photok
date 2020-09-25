@@ -16,14 +16,15 @@
 
 package dev.leonlatsch.photok.ui.proccess.base
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
 
 abstract class BaseProcessBottomSheetDialogFragment(
     @StringRes private val processingLabelTextResource: Int
@@ -37,6 +38,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
     val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
     val abortButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
     val processIndicatorsVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
+    val statusDrawable: MutableLiveData<Drawable> = MutableLiveData()
 
     // endregion
 
@@ -84,12 +86,13 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
-            processingLabelTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            statusDrawable.postValue(null)
             return
         }
 
-        processingLabelTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, drawable, 0)
-        processingLabelTextView.compoundDrawables[2]?.setTint(color)
+        val drawable: Drawable? = ContextCompat.getDrawable(requireContext(), drawable)
+        statusDrawable.postValue(drawable)
+        // TODO: color
     }
 
     override fun bind(binding: BottomSheetDialogProcessBinding) {

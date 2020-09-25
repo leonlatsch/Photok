@@ -14,7 +14,8 @@
   ~   limitations under the License.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -38,12 +39,24 @@
         android:paddingEnd="10dp"
         android:paddingBottom="10dp">
 
-        <TextView
-            android:id="@+id/processingLabelTextView"
-            style="@style/ProcessingTestViewStyle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{context.labelText, default=Processing}" />
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                style="@style/ProcessingTestViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{context.labelText, default=Processing}" />
+
+            <ImageView
+                android:id="@+id/statusImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:src="@{context.statusDrawable}" />
+        </LinearLayout>
 
 
         <LinearLayout
