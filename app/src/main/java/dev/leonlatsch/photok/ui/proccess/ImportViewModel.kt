@@ -16,12 +16,22 @@
 
 package dev.leonlatsch.photok.ui.proccess
 
+import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.ui.proccess.base.BaseProcessViewModel
+import dev.leonlatsch.photok.ui.proccess.base.ProcessState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ImportViewModel : BaseProcessViewModel(){
 
-    override fun process() {
-        TODO("Not yet implemented")
+    override fun process() = viewModelScope.launch {
+        delay(1000)
+        processState.postValue(ProcessState.PROCESSING)
+        for (i in 0..100) {
+            delay(100)
+            progress.value!!.update(i, 100)
+        }
+        processState.postValue(ProcessState.FINISHED)
     }
 
     override fun cancel() {

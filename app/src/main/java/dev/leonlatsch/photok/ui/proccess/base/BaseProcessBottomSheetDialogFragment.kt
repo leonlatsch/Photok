@@ -36,6 +36,8 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     val labelText: MutableLiveData<String> = MutableLiveData()
     val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
+    val abortButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
+    val processIndicatorsVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
 
     // endregion
 
@@ -44,29 +46,38 @@ abstract class BaseProcessBottomSheetDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.processState.postValue(ProcessState.INITIALIZE)
-        viewModel.progress.postValue(ProcessProgress())
 
         viewModel.processState.observe(viewLifecycleOwner, {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
                     setCompoundDrawable(null)
                     closeButtonVisibility.postValue(View.GONE)
+                    processIndicatorsVisibility.postValue(View.GONE)
+                    abortButtonVisibility.postValue(View.VISIBLE)
                     getString(R.string.process_initialize)
                 }
-                ProcessState.PROCESSING -> getString(processingLabelTextResource)
+                ProcessState.PROCESSING -> {
+                    processIndicatorsVisibility.postValue(View.VISIBLE)
+                    getString(processingLabelTextResource)
+                }
                 ProcessState.FINISHED -> {
-                    setCompoundDrawable(R.drawable.check, android.R.color.holo_red_dark)
+                    setCompoundDrawable(R.drawable.check, android.R.color.holo_green_dark)
                     closeButtonVisibility.postValue(View.VISIBLE)
+                    abortButtonVisibility.postValue(View.GONE)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
                     setCompoundDrawable(R.drawable.close, android.R.color.holo_red_dark)
-                    getString(R.string.process_abort)
+                    closeButtonVisibility.postValue(View.VISIBLE)
+                    abortButtonVisibility.postValue(View.GONE)
+                    getString(R.string.process_aborted)
                 }
                 else -> return@observe
             }
             labelText.postValue(label)
         })
+
+        viewModel.process()
     }
 
     private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {

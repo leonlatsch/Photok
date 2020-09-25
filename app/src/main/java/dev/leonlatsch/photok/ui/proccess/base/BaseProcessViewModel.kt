@@ -18,13 +18,14 @@ package dev.leonlatsch.photok.ui.proccess.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Job
 
 abstract class BaseProcessViewModel : ViewModel() {
 
     val processState: MutableLiveData<ProcessState> = MutableLiveData()
-    val progress: MutableLiveData<ProcessProgress> = MutableLiveData()
+    val progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
 
-    abstract fun process()
+    abstract fun process(): Job
 
     abstract fun cancel()
 }
