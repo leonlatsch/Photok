@@ -86,8 +86,4 @@ class ImportViewModel @ViewModelInject constructor(
         val id = photoRepository.insert(photo)
         photoRepository.writePhotoData(app, id, bytes)
     }
-
-    override fun cancel() {
-        processState.postValue(ProcessState.ABORTED)
-    }
 }

@@ -30,12 +30,33 @@ import kotlinx.coroutines.Job
  */
 abstract class BaseProcessViewModel : ViewModel() {
 
+    /**
+     * The processing state should be checked every time in [process].
+     */
     val processState: MutableLiveData<ProcessState> = MutableLiveData()
+
+    /**
+     * An [ProcessProgress] instance which is bound to the ui.
+     */
     var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
 
+    /**
+     * Indicates if failures occurred.
+     * Gets evaluated by base DialogFragment to show warning. Should be set in [process] if an elements fails.
+     */
     var failuresOccurred = false
 
+    /**
+     * Handles processing in children.
+     * Needs to be launched in a coroutine.
+     * called by ui.
+     */
     abstract fun process(): Job
 
-    abstract fun cancel()
+    /**
+     * Updates the state to [ProcessState.ABORTED].
+     */
+    open fun cancel() {
+        processState.postValue(ProcessState.ABORTED)
+    }
 }

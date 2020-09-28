@@ -36,8 +36,8 @@ class ImportBottomSheetDialogFragment(
 
     override val viewModel: ImportViewModel by viewModels()
 
-    override fun beforeOnViewCreated() {
-        super.beforeOnViewCreated()
+    override fun preProcess() {
+        super.preProcess()
         // Reverse to match the order in gallery with order in photok
         viewModel.uris = uris.reversed()
     }

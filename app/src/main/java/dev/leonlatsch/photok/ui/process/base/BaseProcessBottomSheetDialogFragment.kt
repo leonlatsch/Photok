@@ -63,7 +63,6 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        beforeOnViewCreated()
 
         viewModel.processState.postValue(ProcessState.INITIALIZE)
 
@@ -97,6 +96,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
             labelText.postValue(label)
         })
 
+        preProcess()
         viewModel.process()
     }
 
@@ -109,7 +109,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
         }
     }
 
-    open fun beforeOnViewCreated() {
+    open fun preProcess() {
     }
 
     private fun setStatusIcon(drawable: Int?, color: Int = 0) {
