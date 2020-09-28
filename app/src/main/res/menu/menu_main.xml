@@ -25,9 +25,15 @@
 
         <menu>
             <item
+                android:id="@+id/menuMainItemSettings"
                 android:title="@string/menu_main_settings"
                 app:showAsAction="never" />
+
+            <item android:id="@+id/menuMainItemBackup"
+                android:title="@string/menu_main_backup"
+                app:showAsAction="never"/>
             <item
+                android:id="@+id/menuMainItemAbout"
                 android:title="@string/menu_main_about"
                 app:showAsAction="never" />
             <!-- add more here -->

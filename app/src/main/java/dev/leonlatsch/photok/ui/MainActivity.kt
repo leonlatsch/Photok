@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.ui
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.navigation.fragment.findNavController
@@ -39,18 +40,31 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.galleryFragment, R.id.settingsFragment -> mainAppBarLayout.visibility =
+                    R.id.galleryFragment -> mainAppBarLayout.visibility =
                         View.VISIBLE
                     else -> mainAppBarLayout.visibility = View.GONE
                 }
             }
     }
 
-    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? = startSupportActionMode(callback)
+    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? =
+        startSupportActionMode(callback)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuMainItemSettings -> {
+            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            true
+        }
+        R.id.menuMainItemAbout -> {
+            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_infoFragment)
+            true
+        }
+        else -> false
     }
 
     override fun bind(binding: ActivityMainBinding) {
