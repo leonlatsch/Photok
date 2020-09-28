@@ -28,14 +28,7 @@
     <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
 
     <!-- IMPORT -->
-    <string name="import_importing_photos">Fotos Importieren</string>
-    <string name="import_importing">Importiere Foto(s)</string>
-    <string name="import_abort">Abbrechen</string>
-    <string name="import_finished">Importieren Abgeschlossen</string>
-    <string name="import_aborted">Importieren Abgebrochen</string>
-    <string name="import_back_to_gallery">Zurück zur Galerie</string>
-    <string name="import_text_hint">Importiere Fotos von deinem Gerät und speichere sie gesichert in Photok!</string>
-    <string name="import_failed">Fehlgeschlagen:</string>
+    <string name="import_importing">Importiere Foto(s)…</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Erstelle dein Passwort</string>

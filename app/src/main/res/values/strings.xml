@@ -27,15 +27,8 @@
     <string name="common_export">Export</string>
     <string name="common_error">There was an error. Please try again.</string>
 
-    <!-- IMPORT -->
-    <string name="import_importing_photos">Import Photos</string>
-    <string name="import_importing">Importing Photo(s)</string>
-    <string name="import_abort">Abort</string>
-    <string name="import_finished">Import Finished</string>
-    <string name="import_aborted">Import Aborted</string>
-    <string name="import_back_to_gallery">Back to Gallery</string>
-    <string name="import_text_hint">Import photos from your device and save them secured in Photok!</string>
-    <string name="import_failed">Failed:</string>
+    <!-- IMPORT -->>
+    <string name="import_importing">Importing Photo(s)…</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Create your password</string>
@@ -71,7 +64,7 @@
     <string name="view_photo_detail_file_name_label">Filename:</string>
     <string name="view_photo_detail_import_at_label">Imported at:</string>
     <string name="view_photo_detail_file_type_label">File Type:</string>
-    <string name="view_photo_detail_size_label">Filesize:</string>
+    <string name="view_photo_detail_size_label">File size:</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_more">More</string>
