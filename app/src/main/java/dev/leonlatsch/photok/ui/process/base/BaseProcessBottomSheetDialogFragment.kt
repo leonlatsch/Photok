@@ -88,7 +88,9 @@ abstract class BaseProcessBottomSheetDialogFragment(
         isCancelable = true
         closeButtonVisibility.postValue(View.VISIBLE)
         abortButtonVisibility.postValue(View.GONE)
-        failuresWarnMessageVisibility.postValue(View.VISIBLE)
+        if (viewModel.failuresOccurred) {
+            failuresWarnMessageVisibility.postValue(View.VISIBLE)
+        }
     }
 
     open fun beforeOnViewCreated() {
@@ -100,8 +102,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
             return
         }
 
-        val drawable: Drawable? = ContextCompat.getDrawable(requireContext(), drawable)
-        statusDrawable.postValue(drawable)
+        statusDrawable.postValue(ContextCompat.getDrawable(requireContext(), drawable))
         // TODO: color
     }
 

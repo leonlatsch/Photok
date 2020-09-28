@@ -70,7 +70,7 @@ class ImportViewModel @ViewModelInject constructor(
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
         if (bytes == null) {
-            failuresOccurred = false
+            failuresOccurred = true
             return
         }
 
