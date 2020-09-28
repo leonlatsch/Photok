@@ -35,7 +35,7 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import dev.leonlatsch.photok.ui.proccess.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.flow.collectLatest

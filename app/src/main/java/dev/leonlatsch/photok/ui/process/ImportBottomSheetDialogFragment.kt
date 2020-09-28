@@ -14,20 +14,23 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.proccess.base
+package dev.leonlatsch.photok.ui.process
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Job
+import android.net.Uri
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
-abstract class BaseProcessViewModel : ViewModel() {
+@AndroidEntryPoint
+class ImportBottomSheetDialogFragment(
+    private val uris: List<Uri>
+) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
 
-    val processState: MutableLiveData<ProcessState> = MutableLiveData()
-    var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
+    override val viewModel: ImportViewModel by viewModels()
 
-    var failuresOccurred = false
-
-    abstract fun process(): Job
-
-    abstract fun cancel()
+    override fun beforeOnViewCreated() {
+        super.beforeOnViewCreated()
+        viewModel.uris = uris
+    }
 }

@@ -14,26 +14,20 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.proccess.base
+package dev.leonlatsch.photok.ui.process.base
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Job
 
-class ProcessProgress {
+abstract class BaseProcessViewModel : ViewModel() {
 
-    val maxPercent: Int = 100
-    val progressPercent: MutableLiveData<Int> = MutableLiveData()
+    val processState: MutableLiveData<ProcessState> = MutableLiveData()
+    var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
 
-    val max: MutableLiveData<Int> = MutableLiveData()
-    val current: MutableLiveData<Int> = MutableLiveData()
+    var failuresOccurred = false
 
-    init {
-        max.postValue(0)
-        current.postValue(0)
-    }
+    abstract fun process(): Job
 
-    fun update(current: Int, from: Int) {
-        this.max.postValue(from)
-        this.current.postValue(current)
-        progressPercent.postValue((current * maxPercent) / from)
-    }
+    abstract fun cancel()
 }

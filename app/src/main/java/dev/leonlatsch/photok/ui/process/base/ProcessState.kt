@@ -14,23 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.proccess
+package dev.leonlatsch.photok.ui.process.base
 
-import android.net.Uri
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.ui.proccess.base.BaseProcessBottomSheetDialogFragment
-
-@AndroidEntryPoint
-class ImportBottomSheetDialogFragment(
-    private val uris: List<Uri>
-) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
-
-    override val viewModel: ImportViewModel by viewModels()
-
-    override fun beforeOnViewCreated() {
-        super.beforeOnViewCreated()
-        viewModel.uris = uris
-    }
+enum class ProcessState {
+    INITIALIZE,
+    PROCESSING,
+    FINISHED,
+    ABORTED
 }

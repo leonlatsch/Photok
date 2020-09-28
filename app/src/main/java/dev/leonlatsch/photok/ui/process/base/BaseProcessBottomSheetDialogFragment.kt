@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.proccess.base
+package dev.leonlatsch.photok.ui.process.base
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
