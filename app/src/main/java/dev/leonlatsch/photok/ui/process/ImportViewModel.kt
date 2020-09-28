@@ -29,6 +29,12 @@ import dev.leonlatsch.photok.ui.process.base.ProcessState
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * View model to handle importing photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
@@ -37,6 +43,7 @@ class ImportViewModel @ViewModelInject constructor(
     lateinit var uris: List<Uri>
 
     override fun process() = viewModelScope.launch {
+        // Enter processing state
         var current = 1
         processState.postValue(ProcessState.PROCESSING)
         progress.value?.update(0, uris.size)
@@ -46,7 +53,7 @@ class ImportViewModel @ViewModelInject constructor(
                 return@launch
             }
 
-            // Import image
+            // Import image and update progress
             import(image)
             progress.value?.update(current, uris.size)
             current++
@@ -65,11 +72,12 @@ class ImportViewModel @ViewModelInject constructor(
             else -> PhotoType.UNDEFINED
         }
         if (type == PhotoType.UNDEFINED) {
+            failuresOccurred = true
             return
         }
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
-        if (bytes == null) {
+        if (bytes == null) { // Cloud not read file
             failuresOccurred = true
             return
         }

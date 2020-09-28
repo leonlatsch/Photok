@@ -22,6 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
+/**
+ * Process Fragment to import photos.
+ * Uses [ImportViewModel] for the process.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class ImportBottomSheetDialogFragment(
     private val uris: List<Uri>
@@ -31,6 +38,7 @@ class ImportBottomSheetDialogFragment(
 
     override fun beforeOnViewCreated() {
         super.beforeOnViewCreated()
-        viewModel.uris = uris
+        // Reverse to match the order in gallery with order in photok
+        viewModel.uris = uris.reversed()
     }
 }

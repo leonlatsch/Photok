@@ -20,6 +20,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Job
 
+/**
+ * Abstract base for all processing view models.
+ * Holds live data for [ProcessState] and [ProcessProgress].
+ * Provides abstract functions called by the ui.
+ *
+ * @sine 1.0.0
+ * @author Leon Latsch
+ */
 abstract class BaseProcessViewModel : ViewModel() {
 
     val processState: MutableLiveData<ProcessState> = MutableLiveData()

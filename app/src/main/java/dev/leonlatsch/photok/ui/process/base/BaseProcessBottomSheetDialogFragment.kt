@@ -27,6 +27,17 @@ import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
 
+/**
+ * Abstract base for all process dialogs.
+ * Handles state, messages and layout.
+ * Holds an [BaseProcessViewModel] which also needs to be overridden.
+ * [viewModel] is abstract and needs to be set in the child.
+ *
+ * @param processingLabelTextResource The string resource to be displayed while processing.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 abstract class BaseProcessBottomSheetDialogFragment(
     @StringRes private val processingLabelTextResource: Int
 ) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
@@ -44,6 +55,10 @@ abstract class BaseProcessBottomSheetDialogFragment(
 
     // endregion
 
+    /**
+     * Abstract [BaseProcessViewModel].
+     * Needs to be set in the child, handles processing.
+     */
     abstract val viewModel: BaseProcessViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,6 +127,4 @@ abstract class BaseProcessBottomSheetDialogFragment(
         binding.context = this
         binding.viewModel = viewModel
     }
-
-
 }

@@ -18,6 +18,13 @@ package dev.leonlatsch.photok.ui.process.base
 
 import androidx.lifecycle.MutableLiveData
 
+/**
+ * Wrapper class for handling a processes progress.
+ * Use [update] to update its live data objects.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class ProcessProgress {
 
     val maxPercent: Int = 100
