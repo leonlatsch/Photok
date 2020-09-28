@@ -93,7 +93,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="@{() -> context.onDelete()}"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:contentDescription="@string/common_delete"
@@ -117,7 +118,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="@{() -> context.onExport()}"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
                     android:contentDescription="@string/common_export"
