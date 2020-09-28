@@ -53,9 +53,8 @@ class DeleteViewModel @ViewModelInject constructor(
 
     private suspend fun delete(photo: Photo) {
         val id = photo.id!!
-
         // Delete db record
-        val deletedId = photoRepository.delete(photo)
+        photoRepository.delete(photo)
 
         // Delete data on disk
         val fileSuccess = photoRepository.deletePhotoData(app, id)

@@ -168,6 +168,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                     ) { _, _ -> // On positive button clicked
                         val selectedItems = adapter.getAllSelected()
                         startDelete(selectedItems)
+                        adapter.disableSelection()
                     }
                 }
                 true
