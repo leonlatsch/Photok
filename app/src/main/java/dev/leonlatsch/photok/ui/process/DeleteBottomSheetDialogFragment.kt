@@ -14,29 +14,30 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.dao
+package dev.leonlatsch.photok.ui.process
 
-import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
 /**
- * Data Access Object for [Photo] Entity.
+ * Process fragment ot delete photos.
+ * Uses [DeleteViewModel] for the process.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
-@Dao
-interface PhotoDao {
+@AndroidEntryPoint
+class DeleteBottomSheetDialogFragment(
+    private val photos: List<Photo>
+) : BaseProcessBottomSheetDialogFragment(R.string.delete_deleting) {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(photo: Photo): Long
+    override val viewModel: DeleteViewModel by viewModels()
 
-    @Delete
-    suspend fun delete(photo: Photo): Int
-
-    @Query("SELECT * FROM photo WHERE id = :id")
-    suspend fun get(id: Int): Photo
-
-    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
+    override fun preProcess() {
+        super.preProcess()
+        viewModel.photos = photos
+    }
 }

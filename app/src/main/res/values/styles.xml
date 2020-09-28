@@ -33,6 +33,7 @@
         <item name="progressBarStyle">@style/ProgressBarHorizontalStyle</item>
         <item name="editTextStyle">@style/editTextStyle</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
     <style name="ActionModeCloseButtonStyle">
@@ -107,5 +108,22 @@
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_bottom_sheet_dark</item>
+    </style>
+
+    <!-- ALERT DIALOG -->
+    <style name="AlertDialogStyle" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonBarPositiveStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonBarNegativeStyle</item>
+
+    </style>
+
+    <style name="AlertDialogButtonBarPositiveStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="AlertDialogButtonBarNegativeStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">15sp</item>
     </style>
 </resources>

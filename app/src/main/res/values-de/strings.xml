@@ -26,6 +26,9 @@
     <string name="common_delete">Löschen</string>
     <string name="common_export">Exportieren</string>
     <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
+    <string name="common_yes">Ja</string>
+    <string name="common_no">Nein</string>
+    <string name="common_are_you_sure">Bist du sicher?</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Foto(s)…</string>
@@ -76,4 +79,8 @@
     <string name="menu_ms_select_all">Alle auswählen</string>
     <string name="menu_ms_delete">Löschen</string>
     <string name="menu_ms_export">Exportieren</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) löschen willst?</string>
+    <string name="delete_deleting">Lösche foto(s)…</string>
 </resources>

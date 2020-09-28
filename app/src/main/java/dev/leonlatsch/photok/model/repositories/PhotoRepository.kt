@@ -45,8 +45,6 @@ class PhotoRepository @Inject constructor(
 
     suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
-    suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(photos)
-
     suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
     suspend fun get(id: Int) = photoDao.get(id)
@@ -145,6 +143,18 @@ class PhotoRepository @Inject constructor(
             Timber.d(javaClass.toString(), "Error reading file: $fileName $e")
             null
         }
+    }
+
+    fun deletePhotoData(context: Context, id: Int): Boolean
+            = deleteFile(context, "$id.photok")
+            && deleteFile(context, "$id.photok.tn")
+
+    private fun deleteFile(context: Context, fileName: String): Boolean {
+        val success = context.deleteFile(fileName)
+        if (!success) {
+            Timber.d("Error deleting file: $fileName")
+        }
+        return success
     }
 
     companion object {
