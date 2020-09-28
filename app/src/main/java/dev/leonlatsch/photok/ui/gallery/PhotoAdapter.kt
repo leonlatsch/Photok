@@ -94,6 +94,17 @@ class PhotoAdapter(
         }
     }
 
+    fun getAllSelected(): List<Photo> {
+        val items = mutableListOf<Photo>()
+        for(position in selectedItems) {
+            val photo = getItem(position)
+            if (photo != null) {
+                items.add(photo)
+            }
+        }
+        return items
+    }
+
     companion object {
         /**
          * Callback to check if items differ. Needed by [PagingDataAdapter].

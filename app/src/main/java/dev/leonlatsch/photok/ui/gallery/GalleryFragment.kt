@@ -32,9 +32,12 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -108,6 +111,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQ_CONTENT_PHOTOS)
     }
 
+    fun startDelete(photos: List<Photo>) {
+        val deleteDialog = DeleteBottomSheetDialogFragment(photos)
+        deleteDialog.show(requireActivity().supportFragmentManager, DeleteBottomSheetDialogFragment::class.qualifiedName)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
@@ -145,19 +153,27 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
 
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            if (item?.itemId == R.id.menuMsAll) {
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean = when(item?.itemId) {
+            R.id.menuMsAll -> {
                 lifecycleScope.launch {
                     adapter.selectAll()
                 }
+                true
             }
-            if (item?.itemId == R.id.menuMsDelete) {
-                // TODO: delete
+            R.id.menuMsDelete -> {
+                lifecycleScope.launch {
+                    Dialogs.showConfirmDialog(requireContext(),
+                        String.format(getString(R.string.delete_are_you_sure),
+                            adapter.selectedItems.size)
+                    ) { _, _ -> // On positive button clicked
+                        val selectedItems = adapter.getAllSelected()
+                        startDelete(selectedItems)
+                    }
+                }
+                true
             }
-            if (item?.itemId == R.id.menuMsExport) {
-                // TODO: export
-            }
-            return true
+            R.id.menuMsExport -> true // TODO
+            else -> false
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
