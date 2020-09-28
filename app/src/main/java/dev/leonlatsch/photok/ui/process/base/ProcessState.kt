@@ -14,11 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.importing
+package dev.leonlatsch.photok.ui.process.base
 
-enum class ImportState {
-    START,
-    IMPORTING,
-    ABORTED,
-    FINISHED
+enum class ProcessState {
+    INITIALIZE,
+    PROCESSING,
+    FINISHED,
+    ABORTED
 }

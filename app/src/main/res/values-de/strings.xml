@@ -58,6 +58,14 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
 
+    <!-- PROCESS -->
+    <string name="process_close">Schließen</string>
+    <string name="process_abort">Abbrechen</string>
+    <string name="process_finished">Abgeschlossen</string>
+    <string name="process_initialize">Vorbereiten…</string>
+    <string name="process_aborted">Abgebrochen</string>
+    <string name="process_failures_occurred">\u26A0 Einige Elemente konnten nicht verarbeitet werden</string>
+
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>
     <string name="view_photo_detail_file_name_label">Dateiname:</string>

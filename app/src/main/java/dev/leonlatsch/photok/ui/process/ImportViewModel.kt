@@ -14,54 +14,52 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.importing
+package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.base.NumberLiveData
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
+import dev.leonlatsch.photok.ui.process.base.ProcessState
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.*
 
+/**
+ * View model to handle importing photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : ViewModel() {
+) : BaseProcessViewModel(){
 
-    var importState: MutableLiveData<ImportState> = MutableLiveData()
-    var importProgress: MutableLiveData<ImportProgress> = MutableLiveData()
-    var failed: NumberLiveData = NumberLiveData()
+    lateinit var uris: List<Uri>
 
-    private var aborted = false
-
-    fun runImport(uris: List<Uri>) = viewModelScope.launch {
+    override fun process() = viewModelScope.launch {
+        // Enter processing state
         var current = 1
-        importState.postValue(ImportState.IMPORTING)
-        importProgress.value?.update(0, uris.size)
+        processState.postValue(ProcessState.PROCESSING)
+        progress.value?.update(0, uris.size)
 
         for (image in uris) {
-            if (aborted) {
-                importState.postValue(ImportState.ABORTED)
+            if (processState.value == ProcessState.ABORTED) {
                 return@launch
             }
-            // Load Bytes
+
+            // Import image and update progress
             import(image)
-            importProgress.value?.update(current, uris.size)
+            progress.value?.update(current, uris.size)
             current++
         }
 
-        if (failed.value!! > 0) {
-            Timber.d("$failed photos failed to import")
-        }
-        importState.postValue(ImportState.FINISHED)
+        processState.postValue(ProcessState.FINISHED)
     }
 
     private suspend fun import(imageUri: Uri) {
@@ -74,22 +72,18 @@ class ImportViewModel @ViewModelInject constructor(
             else -> PhotoType.UNDEFINED
         }
         if (type == PhotoType.UNDEFINED) {
-            failed.increment()
+            failuresOccurred = true
             return
         }
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
-        if (bytes == null) {
-            failed.increment()
+        if (bytes == null) { // Cloud not read file
+            failuresOccurred = true
             return
         }
 
         val photo = Photo(fileName, System.currentTimeMillis(), type)
         val id = photoRepository.insert(photo)
         photoRepository.writePhotoData(app, id, bytes)
-    }
-
-    fun abortImport() {
-        aborted = true
     }
 }

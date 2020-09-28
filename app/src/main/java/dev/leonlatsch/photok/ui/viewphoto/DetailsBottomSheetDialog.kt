@@ -17,38 +17,24 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogDetailsBottomSheetBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
 class DetailsBottomSheetDialog(
     val photo: Photo?,
     val photoSize: Int
-) : BottomSheetDialogFragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding: DialogDetailsBottomSheetBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dialog_details_bottom_sheet,
-            container,
-            false
-        )
-        binding.lifecycleOwner = this
-        binding.context = this
-        return binding.root
-    }
+) : BindableBottomSheetDialogFragment<DialogDetailsBottomSheetBinding>(R.layout.dialog_details_bottom_sheet) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         photo ?: dismiss()
+    }
+
+    override fun bind(binding: DialogDetailsBottomSheetBinding) {
+        super.bind(binding)
+        binding.context = this
     }
 }

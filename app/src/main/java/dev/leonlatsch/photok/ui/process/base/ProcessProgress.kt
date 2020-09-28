@@ -14,11 +14,18 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.importing
+package dev.leonlatsch.photok.ui.process.base
 
 import androidx.lifecycle.MutableLiveData
 
-class ImportProgress {
+/**
+ * Wrapper class for handling a processes progress.
+ * Use [update] to update its live data objects.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+class ProcessProgress {
 
     val maxPercent: Int = 100
     val progressPercent: MutableLiveData<Int> = MutableLiveData()

@@ -41,7 +41,7 @@
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/raleway_medium</item>
+
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -68,6 +68,11 @@
         <item name="android:textSize">62sp</item>
     </style>
 
+    <style name="ProcessingTestViewStyle" parent="TextViewStyle">
+        <item name="android:fontFamily">@font/raleway_black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">@font/raleway_thin</item>
@@ -83,8 +88,8 @@
     <!-- PROGRESS BAR -->
     <style name="ProgressBarHorizontalStyle" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/thick_progress_bar</item>
-        <item name="android:minHeight">10dip</item>
-        <item name="android:maxHeight">20dip</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">15dip</item>
     </style>
 
     <!-- TOOLBAR -->
@@ -101,6 +106,6 @@
     </style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_bottom_sheet</item>
+        <item name="android:background">@drawable/bg_bottom_sheet_dark</item>
     </style>
 </resources>
