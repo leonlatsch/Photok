@@ -87,33 +87,49 @@
             android:max="@{viewModel.progress.maxPercent}"
             android:progress="@{viewModel.progress.progressPercent, default=50}" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:visibility="@{context.processIndicatorsVisibility}">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.progress.current.toString(), default=5}" />
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/processItemsProgressIndicatorLayout"
+                android:text="@string/process_failures_occurred"
+                android:textColor="@android:color/holo_orange_dark"
+                android:visibility="@{context.failuresWarnMessageVisibility, default=invisible}" />
 
-            <TextView
-                style="@style/TextViewStyle"
+            <LinearLayout
+                android:id="@+id/processItemsProgressIndicatorLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:text="@string/common_slash" />
+                android:layout_alignParentEnd="true"
+                android:visibility="@{context.processIndicatorsVisibility}">
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.progress.max.toString(), default=10}" />
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.progress.current.toString(), default=5}" />
 
-        </LinearLayout>
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/common_slash" />
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.progress.max.toString(), default=10}" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

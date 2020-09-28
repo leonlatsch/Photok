@@ -64,6 +64,7 @@
     <string name="process_finished">Finished</string>
     <string name="process_initialize">Preparing…</string>
     <string name="process_aborted">Aborted</string>
+    <string name="process_failures_occurred">\u26A0 Some elements could not get processed</string>
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>

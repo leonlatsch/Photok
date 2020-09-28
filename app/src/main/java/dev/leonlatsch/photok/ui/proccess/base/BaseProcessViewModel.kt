@@ -25,6 +25,8 @@ abstract class BaseProcessViewModel : ViewModel() {
     val processState: MutableLiveData<ProcessState> = MutableLiveData()
     var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
 
+    var failuresOccurred = false
+
     abstract fun process(): Job
 
     abstract fun cancel()

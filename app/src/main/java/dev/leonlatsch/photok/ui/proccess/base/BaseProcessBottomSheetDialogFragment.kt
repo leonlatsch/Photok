@@ -39,6 +39,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
     val abortButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
     val processIndicatorsVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
     val statusDrawable: MutableLiveData<Drawable> = MutableLiveData()
+    val failuresWarnMessageVisibility: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
 
     // endregion
 
@@ -54,10 +55,11 @@ abstract class BaseProcessBottomSheetDialogFragment(
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
                     isCancelable = false
-                    setCompoundDrawable(null)
+                    setStatusIcon(null)
                     closeButtonVisibility.postValue(View.GONE)
-                    processIndicatorsVisibility.postValue(View.GONE)
                     abortButtonVisibility.postValue(View.VISIBLE)
+                    processIndicatorsVisibility.postValue(View.GONE)
+                    failuresWarnMessageVisibility.postValue(View.INVISIBLE)
                     getString(R.string.process_initialize)
                 }
                 ProcessState.PROCESSING -> {
@@ -65,17 +67,13 @@ abstract class BaseProcessBottomSheetDialogFragment(
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
-                    isCancelable = true
-                    setCompoundDrawable(R.drawable.check, android.R.color.holo_green_dark)
-                    closeButtonVisibility.postValue(View.VISIBLE)
-                    abortButtonVisibility.postValue(View.GONE)
+                    enterFinishedOrAbortedState()
+                    setStatusIcon(R.drawable.check, android.R.color.holo_green_dark)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
-                    isCancelable = true
-                    setCompoundDrawable(R.drawable.close, android.R.color.holo_red_dark)
-                    closeButtonVisibility.postValue(View.VISIBLE)
-                    abortButtonVisibility.postValue(View.GONE)
+                    enterFinishedOrAbortedState()
+                    setStatusIcon(R.drawable.close, android.R.color.holo_red_dark)
                     getString(R.string.process_aborted)
                 }
                 else -> return@observe
@@ -86,10 +84,17 @@ abstract class BaseProcessBottomSheetDialogFragment(
         viewModel.process()
     }
 
+    private fun enterFinishedOrAbortedState() {
+        isCancelable = true
+        closeButtonVisibility.postValue(View.VISIBLE)
+        abortButtonVisibility.postValue(View.GONE)
+        failuresWarnMessageVisibility.postValue(View.VISIBLE)
+    }
+
     open fun beforeOnViewCreated() {
     }
 
-    private fun setCompoundDrawable(drawable: Int?, color: Int = 0) {
+    private fun setStatusIcon(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
             statusDrawable.postValue(null)
             return

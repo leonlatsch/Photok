@@ -35,7 +35,6 @@ class ImportViewModel @ViewModelInject constructor(
 ) : BaseProcessViewModel(){
 
     lateinit var uris: List<Uri>
-    var failuresOccurred = false
 
     override fun process() = viewModelScope.launch {
         var current = 1
@@ -71,7 +70,7 @@ class ImportViewModel @ViewModelInject constructor(
 
         val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
         if (bytes == null) {
-            failuresOccurred = true
+            failuresOccurred = false
             return
         }
 
