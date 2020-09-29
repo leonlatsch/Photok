@@ -25,6 +25,12 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import dev.leonlatsch.photok.ui.process.base.ProcessState
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for deleting multiple photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class DeleteViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
@@ -52,16 +58,12 @@ class DeleteViewModel @ViewModelInject constructor(
     }
 
     private suspend fun delete(photo: Photo) {
-        val id = photo.id!!
-        // Delete db record
-        photoRepository.delete(photo)
-
-        // Delete data on disk
-        val fileSuccess = photoRepository.deletePhotoData(app, id)
-        if (!fileSuccess) {
+        if (photo.id == null) {
             failuresOccurred = true
             return
         }
+
+        photoRepository.deletePhotoAndData(app, photo)
     }
 
 }

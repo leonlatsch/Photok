@@ -48,6 +48,7 @@ import kotlinx.coroutines.launch
  * Fragment for displaying a gallery.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {

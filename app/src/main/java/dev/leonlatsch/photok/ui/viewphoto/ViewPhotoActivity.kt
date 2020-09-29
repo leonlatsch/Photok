@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.toggleSystemUI
 import dev.leonlatsch.photok.ui.components.BindableActivity
+import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
 import timber.log.Timber
 
@@ -64,7 +65,13 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     fun onDelete() {
-        //TODO delete
+        Dialogs.showConfirmDialog(this, getString(R.string.delete_are_you_sure_this)) { _, _ ->
+            viewModel.deletePhoto({ // onSuccess
+                finish()
+            }, { // onError
+                Dialogs.showLongToast(this, getString(R.string.common_error))
+            })
+        }
     }
 
     fun onExport() {
@@ -91,7 +98,9 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     private fun loadPhoto() {
         val id = intent.extras?.get(INTENT_PHOTO_ID)
         if (id != null && id is Int?) {
-            viewModel.loadPhoto(id)
+            viewModel.loadPhoto(id) {
+                finish() // onError
+            }
         } else {
             closeOnError(id)
         }

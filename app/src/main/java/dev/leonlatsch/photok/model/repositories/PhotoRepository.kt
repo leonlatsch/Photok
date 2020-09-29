@@ -35,6 +35,7 @@ import javax.inject.Inject
  * Uses [PhotoDao] and accesses the filesystem to read and write encrypted photos.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
@@ -145,8 +146,18 @@ class PhotoRepository @Inject constructor(
         }
     }
 
-    fun deletePhotoData(context: Context, id: Int): Boolean
-            = deleteFile(context, "$id.photok")
+    suspend fun deletePhotoAndData(context: Context, photo: Photo): Boolean {
+        val id = photo.id!!
+
+        val success = deletePhotoData(context, id) // Delete bytes on disk
+        if (success) {
+            delete(photo)
+        }
+
+        return success
+    }
+
+    private fun deletePhotoData(context: Context, id: Int): Boolean = deleteFile(context, "$id.photok")
             && deleteFile(context, "$id.photok.tn")
 
     private fun deleteFile(context: Context, fileName: String): Boolean {

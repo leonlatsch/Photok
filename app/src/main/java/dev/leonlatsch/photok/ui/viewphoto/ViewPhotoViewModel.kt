@@ -29,6 +29,12 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * ViewModel for loading the full size photo to [ViewPhotoActivity].
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class ViewPhotoViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
@@ -38,12 +44,12 @@ class ViewPhotoViewModel @ViewModelInject constructor(
     var photo: MutableLiveData<Photo> = MutableLiveData()
     var photoSize = 0
 
-    fun loadPhoto(id: Int) = viewModelScope.launch {
+    fun loadPhoto(id: Int, onError: () -> Unit) = viewModelScope.launch {
         photo.postValue(photoRepository.get(id))
 
         val photoBytes = photoRepository.readPhotoData(app, id)
         if (photoBytes == null) {
-            // TODO: finish activity
+            onError()
             Timber.d("Error reading photo for id: $id")
             return@launch
         }
@@ -52,5 +58,13 @@ class ViewPhotoViewModel @ViewModelInject constructor(
         photoDrawable.postValue(
             BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources)
         )
+    }
+
+    fun deletePhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
+        photo.value ?: return@launch
+        photo.value!!.id ?: return@launch
+
+        val success = photoRepository.deletePhotoAndData(app, photo.value!!)
+        if (success) onSuccess() else onError()
     }
 }

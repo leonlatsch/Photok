@@ -18,9 +18,16 @@ package dev.leonlatsch.photok.ui.components
 
 import android.content.Context
 import android.content.DialogInterface
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import dev.leonlatsch.photok.R
 
+/**
+ * Holds Dialogs and Toast presets.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 object Dialogs {
 
     fun showConfirmDialog(context: Context, title: String, onPositiveButtonClicked: DialogInterface.OnClickListener) {
@@ -29,5 +36,13 @@ object Dialogs {
             .setPositiveButton(R.string.common_yes, onPositiveButtonClicked)
             .setNegativeButton(R.string.common_no, null)
             .show()
+    }
+
+    fun showLongToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    fun showShortToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -82,5 +82,6 @@
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) löschen willst?</string>
+    <string name="delete_are_you_sure_this">Bist du sicher, dass du dieses Foto löschen willst?</string>
     <string name="delete_deleting">Lösche foto(s)…</string>
 </resources>
