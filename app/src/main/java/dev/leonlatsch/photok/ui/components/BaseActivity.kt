@@ -20,6 +20,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
+/**
+ * Base for all activities.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

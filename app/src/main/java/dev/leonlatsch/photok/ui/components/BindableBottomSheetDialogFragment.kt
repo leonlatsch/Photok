@@ -30,6 +30,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  *
  * @param BindingType The type of the generated binding
  * @param layout The layout resource id
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
  */
 abstract class BindableBottomSheetDialogFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int

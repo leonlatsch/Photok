@@ -23,6 +23,7 @@ import android.content.SharedPreferences
  * Manages reading and writing with the config file.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class PrefManager(context: Context) {
 

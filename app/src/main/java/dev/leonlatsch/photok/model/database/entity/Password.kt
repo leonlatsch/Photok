@@ -24,6 +24,7 @@ import androidx.room.PrimaryKey
  * Always uses 0 for [id] to only have one instance at a time.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @Entity(tableName = "password")
 data class Password(

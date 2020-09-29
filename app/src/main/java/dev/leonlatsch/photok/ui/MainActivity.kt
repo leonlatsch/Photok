@@ -28,6 +28,13 @@ import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * The main Activity.
+ * Holds all fragments and initializes toolbar, menu, etc.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
 

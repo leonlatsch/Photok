@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.model.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Password
 
@@ -24,6 +23,7 @@ import dev.leonlatsch.photok.model.database.entity.Password
  * Data Access Object for [Password] Entity.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @Dao
 interface PasswordDao {

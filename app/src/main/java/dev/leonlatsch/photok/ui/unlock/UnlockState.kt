@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.ui.unlock
 
+/**
+ * Enum class indicating state of the unlock process.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 enum class UnlockState {
     UNDEFINED,
     LOCKED,

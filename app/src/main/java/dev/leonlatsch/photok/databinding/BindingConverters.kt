@@ -20,6 +20,12 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Converters for data binding.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 object BindingConverters {
 
     private val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT)

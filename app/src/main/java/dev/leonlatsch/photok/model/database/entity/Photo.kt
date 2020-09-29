@@ -23,6 +23,7 @@ import androidx.room.PrimaryKey
  * Entity describing a Photo.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @Entity(tableName = "photo")
 data class Photo(

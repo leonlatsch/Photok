@@ -21,24 +21,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PasswordRepository
-import dev.leonlatsch.photok.other.PrefManager
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to check the application state.
+ * Used by SplashScreen.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class SplashScreenViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository,
-    private val prefManager: PrefManager
+    private val passwordRepository: PasswordRepository
 ) : ViewModel() {
 
-    var vaultState: MutableLiveData<VaultState> = MutableLiveData()
+    var applicationState: MutableLiveData<ApplicationState> = MutableLiveData()
 
     fun checkVaultState() = viewModelScope.launch {
 
         //TODO: check first start
         val password = passwordRepository.getPassword()?.password
         if (password == null) {
-            vaultState.postValue(VaultState.SETUP)
+            applicationState.postValue(ApplicationState.SETUP)
         } else {
-            vaultState.postValue(VaultState.LOCKED)
+            applicationState.postValue(ApplicationState.LOCKED)
         }
     }
 }

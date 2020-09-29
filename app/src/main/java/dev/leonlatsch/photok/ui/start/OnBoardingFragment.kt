@@ -19,4 +19,11 @@ package dev.leonlatsch.photok.ui.start
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 
+/**
+ * On boarding fragment.
+ * Used as a "tutorial".
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class OnBoardingFragment : Fragment(R.layout.fragment_onboarding)

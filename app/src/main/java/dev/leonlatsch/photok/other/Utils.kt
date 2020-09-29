@@ -28,7 +28,8 @@ import android.view.Window
  * @param contentResolver used to get the file name.
  * @param uri the uri to file file.
  *
- * TODO: Resolve resource not closed error
+ * @since 1.0.0
+ * @author Leon Latsch
  */
 fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)

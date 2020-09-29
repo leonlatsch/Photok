@@ -32,6 +32,7 @@ import javax.crypto.spec.SecretKeySpec
  * Holds the AES key and serves it to the app's components.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class EncryptionManager {
 

@@ -43,6 +43,7 @@ import timber.log.Timber
  * @param photoRepository Used to load the thumbnail
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class PhotoViewHolder(
     parent: ViewGroup,

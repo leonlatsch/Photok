@@ -30,6 +30,9 @@ import androidx.fragment.app.Fragment
  *
  * @param BindingType the binding type generated when adding <data> tag to a layout.
  * @param layout the layout id with the data binding.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
  */
 abstract class BindableFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int

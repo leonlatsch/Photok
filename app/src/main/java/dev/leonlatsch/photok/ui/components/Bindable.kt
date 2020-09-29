@@ -22,6 +22,7 @@ import androidx.databinding.ViewDataBinding
  * Interface for all bindable base ui components.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 interface Bindable<BindingType : ViewDataBinding> {
 

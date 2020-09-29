@@ -25,6 +25,12 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 
+/**
+ * Fragment to display a splash screen and check application state.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
@@ -33,11 +39,11 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.vaultState.observe(viewLifecycleOwner, {
+        viewModel.applicationState.observe(viewLifecycleOwner, {
             when(it) {
-                VaultState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
-                VaultState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
-                VaultState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
+                ApplicationState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
+                ApplicationState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
+                ApplicationState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
                 else -> return@observe
             }
         })

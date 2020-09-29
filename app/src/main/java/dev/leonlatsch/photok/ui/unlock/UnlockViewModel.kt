@@ -26,6 +26,14 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
+/**
+ * ViewModel for unlocking the safe.
+ * Handles state, password validation and initializing the [EncryptionManager].
+ * Just like the setup.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class UnlockViewModel @ViewModelInject constructor(
     private val passwordRepository: PasswordRepository,
     val encryptionManager: EncryptionManager

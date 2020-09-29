@@ -37,6 +37,7 @@ import kotlin.reflect.KFunction1
  * @param lifecycleOwner  The Fragments [LifecycleOwner]. Used for observing [MutableLiveData].
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class PhotoAdapter(
     private val context: Context,

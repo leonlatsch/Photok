@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.ui.setup
 
+/**
+ * Enum to indicate state in setup.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 enum class SetupState {
     SETUP,
     LOADING,

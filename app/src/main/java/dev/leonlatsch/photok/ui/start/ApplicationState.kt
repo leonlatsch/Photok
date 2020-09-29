@@ -14,31 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.base
-
-import androidx.lifecycle.MutableLiveData
+package dev.leonlatsch.photok.ui.start
 
 /**
- * Wrapper for [MutableLiveData] with Generic Type of Int.
+ * Enum class to indicate application state.
+ * Used in Splash Screen.
  *
  * @since 1.0.0
- *
+ * @author Leon Latsch
  */
-class NumberLiveData : MutableLiveData<Int> {
-
-    constructor() : super(0)
-
-    constructor(initialValue: Int) : super(initialValue)
-
-    /**
-     * Increment the value by 1.
-     */
-    fun increment() {
-        increment(1)
-    }
-
-    /**
-     * Increment the value by [amount]
-     */
-    fun increment(amount: Int) = postValue(value!!.plus(amount))
+enum class ApplicationState {
+    FIRST_START,
+    LOCKED,
+    SETUP
 }

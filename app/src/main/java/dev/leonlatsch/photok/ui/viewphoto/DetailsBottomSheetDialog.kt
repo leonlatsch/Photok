@@ -23,6 +23,12 @@ import dev.leonlatsch.photok.databinding.DialogDetailsBottomSheetBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
+/**
+ * Bottom Sheet Dialog for the photo details.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class DetailsBottomSheetDialog(
     val photo: Photo?,
     val photoSize: Int

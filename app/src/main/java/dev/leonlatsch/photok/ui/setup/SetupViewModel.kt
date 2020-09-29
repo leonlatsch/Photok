@@ -29,6 +29,13 @@ import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 import java.util.regex.Pattern
 
+/**
+ * ViewModel for the setup.
+ * Handles password validation, saving password, initializing the [EncryptionManager], etc.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class SetupViewModel @ViewModelInject constructor(
     private val passwordRepository: PasswordRepository,
     private val encryptionManager: EncryptionManager

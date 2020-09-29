@@ -32,9 +32,11 @@ import kotlinx.android.synthetic.main.fragment_unlock.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
 /**
- * Fragment for the unlock.
+ * Unlock fragment.
+ * Handles state and login.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @AndroidEntryPoint
 class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {

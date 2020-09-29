@@ -26,6 +26,7 @@ import androidx.databinding.ViewDataBinding
  * Inflates layout file and sets binding of type [BindingType].
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 abstract class BindableActivity<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int

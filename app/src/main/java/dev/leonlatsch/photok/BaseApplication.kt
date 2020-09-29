@@ -22,6 +22,9 @@ import timber.log.Timber
 
 /**
  * Base Application class.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
  */
 @HiltAndroidApp
 class BaseApplication : Application() {

@@ -33,6 +33,7 @@ import javax.inject.Singleton
  * Hilt Module for [ApplicationComponent].
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @Module
 @InstallIn(ApplicationComponent::class)

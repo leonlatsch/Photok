@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.ui.process.base
 
+/**
+ * Enum to indicate state in Processing Dialogs.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 enum class ProcessState {
     INITIALIZE,
     PROCESSING,

@@ -20,6 +20,7 @@ package dev.leonlatsch.photok.other
  * Holds the keys and the defaults for the apps config.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 object Config {
 

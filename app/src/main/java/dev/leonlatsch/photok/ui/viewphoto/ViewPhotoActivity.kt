@@ -33,6 +33,7 @@ import timber.log.Timber
  * Activity to view a photo in full screen mode.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @AndroidEntryPoint
 class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {

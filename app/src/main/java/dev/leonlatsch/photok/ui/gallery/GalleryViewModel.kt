@@ -22,6 +22,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 
+/**
+ * ViewModel for the Gallery.
+ * Holds a Flow for the photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class GalleryViewModel @ViewModelInject constructor(
     val photoRepository: PhotoRepository
 ) : ViewModel() {

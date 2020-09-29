@@ -19,4 +19,10 @@ package dev.leonlatsch.photok.ui
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 
+/**
+ * Fragment to display a info about the app and some links.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class InfoFragment : Fragment(R.layout.fragment_info)

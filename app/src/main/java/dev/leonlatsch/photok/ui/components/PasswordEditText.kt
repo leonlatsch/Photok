@@ -32,6 +32,14 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
 import kotlinx.android.synthetic.main.password_edit_text.view.*
 
+/**
+ * Custom Edit Text for Passwords.
+ * Handles password visibility.
+ * Should be used in all password layouts.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @InverseBindingMethods(
     value = [
         InverseBindingMethod(

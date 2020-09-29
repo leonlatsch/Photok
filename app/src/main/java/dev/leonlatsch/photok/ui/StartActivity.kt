@@ -21,6 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.BaseActivity
 
+/**
+ * The Launcher Activity
+ * Displays, SplashScreen, Setup or Unlock.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class StartActivity : BaseActivity() {
 

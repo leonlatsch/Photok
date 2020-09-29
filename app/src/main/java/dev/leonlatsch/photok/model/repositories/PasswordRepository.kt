@@ -24,6 +24,7 @@ import javax.inject.Inject
  * Repository for [Password].
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class PasswordRepository @Inject constructor(
     private val passwordDao: PasswordDao

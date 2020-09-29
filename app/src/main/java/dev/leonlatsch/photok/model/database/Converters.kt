@@ -23,6 +23,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
  * TypeConverters for Room
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 class Converters {
 

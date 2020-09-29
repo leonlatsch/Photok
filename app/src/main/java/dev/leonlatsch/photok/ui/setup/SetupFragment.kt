@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.loading_overlay.*
  * Fragment for the setup.
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 @AndroidEntryPoint
 class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup) {

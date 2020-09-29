@@ -21,6 +21,7 @@ package dev.leonlatsch.photok.model.database.entity
  * Internal value is an [Int].
  *
  * @since 1.0.0
+ * @author Leon Latsch
  */
 enum class PhotoType(val value: Int) {
     UNDEFINED(0),
