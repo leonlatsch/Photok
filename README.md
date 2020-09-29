@@ -2,6 +2,19 @@
 
 Encrypted Photo Safe for Andorid
 
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
+![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)
+![Maintenance](https://img.shields.io/maintenance/yes/2020)
+
+## About
+Photok is a encrypted photo safe for android. You can import private or sensetive photos.
+Photok uses AES-256 bit encryption. and is planned to be completly free, open source and without any ads.
+
+**Subscribe the Releases to get notified when its ready**
+
+> Further README will follow.
+
 LICENSE
 =======
     Copyright 2020 Leon Latsch
