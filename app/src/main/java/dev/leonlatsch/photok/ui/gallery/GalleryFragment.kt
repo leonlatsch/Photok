@@ -88,11 +88,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(itemCount)
+            togglePlaceholder(adapter.itemCount + itemCount)
         }
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(itemCount)
+            togglePlaceholder(adapter.itemCount - itemCount)
         }
     }
 
