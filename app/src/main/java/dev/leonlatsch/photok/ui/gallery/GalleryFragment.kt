@@ -158,9 +158,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         } else if (requestCode == REQ_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.data != null) {
                 val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected(), data.data!!)
-                exportDialog.show(
+                exportDialog.show( // TODO: fix error with adapter getting recreated when activity shows
                     requireActivity().supportFragmentManager,
                     ExportBottomSheetDialogFragment::class.qualifiedName)
+                adapter.disableSelection()
             }
         }
     }
@@ -198,7 +199,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                         ) { _, _ -> // On positive button clicked
                             val selectedItems = adapter.getAllSelected()
                             startDelete(selectedItems)
-                            adapter.disableSelection()
                         }
                     }
                     true

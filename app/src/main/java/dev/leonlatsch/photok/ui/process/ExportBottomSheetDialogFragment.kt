@@ -23,6 +23,12 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
+/**
+ * Process fragment to export photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class ExportBottomSheetDialogFragment(
     private val photos: List<Photo>,

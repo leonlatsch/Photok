@@ -23,7 +23,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
 /**
- * Process fragment ot delete photos.
+ * Process fragment to delete photos.
  * Uses [DeleteViewModel] for the process.
  *
  * @since 1.0.0

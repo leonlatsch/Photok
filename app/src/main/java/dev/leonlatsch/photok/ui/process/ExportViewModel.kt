@@ -16,12 +16,24 @@
 
 package dev.leonlatsch.photok.ui.process
 
+import android.app.Application
 import android.net.Uri
+import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import dev.leonlatsch.photok.ui.process.base.ProcessState
 
-class ExportViewModel : BaseProcessViewModel() {
+/**
+ * ViewModel for exporting multiple photos.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+class ExportViewModel @ViewModelInject constructor(
+    private val app: Application,
+    private val photoRepository: PhotoRepository
+): BaseProcessViewModel() {
 
     lateinit var photos: List<Photo>
     lateinit var dir: Uri
@@ -30,6 +42,12 @@ class ExportViewModel : BaseProcessViewModel() {
         for (photo in photos) {
             if (processState.value == ProcessState.ABORTED) {
                 return
+            }
+            currentElement++
+
+            val result = photoRepository.exportPhoto(app, photo, dir)
+            if (!result) {
+                failuresOccurred = true
             }
         }
     }

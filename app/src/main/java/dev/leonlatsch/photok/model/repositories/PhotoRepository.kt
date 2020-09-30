@@ -157,8 +157,9 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
-    fun exportPhoto(photo: Photo, dirUri: Uri) {
-
+    suspend fun exportPhoto(context: Context, photo: Photo, dirUri: Uri): Boolean {
+        val bytes = readPhotoData(context, photo.id!!)
+        return true
     }
 
     companion object {
