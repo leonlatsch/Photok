@@ -102,6 +102,9 @@ class PhotoRepository @Inject constructor(
 
     /**
      * Read a photo's bytes from external storage.
+     *
+     * @param contentResolver Reads the file system
+     * @param imageUri The uri to the original file
      */
     fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
         return try {
@@ -114,6 +117,9 @@ class PhotoRepository @Inject constructor(
 
     /**
      * Read and decrypt a photo's bytes from internal storage.
+     *
+     * @param context To open the file
+     * @param id The photo's id
      */
     fun readPhotoData(context: Context, id: Int): ByteArray? =
         readAndDecryptFile(context, "${id}.photok")
@@ -157,8 +163,15 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
+    /**
+     * Export a photo to a specific directory.
+     *
+     * @param context To save the file
+     * @param photo The Photo to be saved
+     * @param dirUri The directory uri the photo gets saved in
+     */
     suspend fun exportPhoto(context: Context, photo: Photo, dirUri: Uri): Boolean {
-        val bytes = readPhotoData(context, photo.id!!)
+        val bytes = readPhotoData(context, photo.id!!) // TODO: find a way of saving to external storage
         return true
     }
 
