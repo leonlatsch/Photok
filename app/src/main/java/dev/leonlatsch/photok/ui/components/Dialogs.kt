@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.HtmlCompat
 import dev.leonlatsch.photok.R
 
 /**
@@ -32,7 +33,7 @@ object Dialogs {
 
     fun showConfirmDialog(context: Context, title: String, onPositiveButtonClicked: DialogInterface.OnClickListener) {
         AlertDialog.Builder(context)
-            .setTitle(title)
+            .setMessage(HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY))
             .setPositiveButton(R.string.common_yes, onPositiveButtonClicked)
             .setNegativeButton(R.string.common_no, null)
             .show()

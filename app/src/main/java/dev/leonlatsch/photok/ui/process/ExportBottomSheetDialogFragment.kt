@@ -20,26 +20,21 @@ import android.net.Uri
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
-/**
- * Process Fragment to import photos.
- * Uses [ImportViewModel] for the process.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
 @AndroidEntryPoint
-class ImportBottomSheetDialogFragment(
-    private val uris: List<Uri>
-) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
+class ExportBottomSheetDialogFragment(
+    private val photos: List<Photo>,
+    private val dir: Uri
+) : BaseProcessBottomSheetDialogFragment(R.string.export_exporting) {
 
-    override val viewModel: ImportViewModel by viewModels()
+    override val viewModel: ExportViewModel by viewModels()
 
     override fun prepareViewModel() {
         super.prepareViewModel()
-        // Reverse to match the order in gallery with order in photok
-        viewModel.uris = uris.reversed()
-        viewModel.elementsToProcess = uris.size
+        viewModel.photos = photos
+        viewModel.dir = dir
+        viewModel.elementsToProcess = photos.size
     }
 }

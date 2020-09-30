@@ -81,7 +81,12 @@
     <string name="menu_ms_export">Exportieren</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) löschen willst?</string>
-    <string name="delete_are_you_sure_this">Bist du sicher, dass du dieses Foto löschen willst?</string>
+    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) <b>löschen</b> willst?</string>
+    <string name="delete_are_you_sure_this">Bist du sicher, dass du dieses Foto <b>löschen</b> willst?</string>
     <string name="delete_deleting">Lösche foto(s)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s) <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto <b>exportieren</b> willst?</string>
+    <string name="export_exporting">Exportiere Foto(s)…</string>
 </resources>

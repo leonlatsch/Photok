@@ -36,8 +36,9 @@ class DeleteBottomSheetDialogFragment(
 
     override val viewModel: DeleteViewModel by viewModels()
 
-    override fun preProcess() {
-        super.preProcess()
+    override fun prepareViewModel() {
+        super.prepareViewModel()
         viewModel.photos = photos
+        viewModel.elementsToProcess = photos.size
     }
 }

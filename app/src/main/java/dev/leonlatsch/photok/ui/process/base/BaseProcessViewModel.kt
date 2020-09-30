@@ -18,7 +18,8 @@ package dev.leonlatsch.photok.ui.process.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Job
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 /**
  * Abstract base for all processing view models.
@@ -47,16 +48,57 @@ abstract class BaseProcessViewModel : ViewModel() {
     var failuresOccurred = false
 
     /**
-     * Handles processing in children.
-     * Needs to be launched in a coroutine.
-     * called by ui.
+     * The current element index getting processed.
+     * Increase in [process]
      */
-    abstract fun process(): Job
+    var currentElement = 0
+
+    /**
+     * The number of elements to get processed.
+     * To be set before [runProcessing]!
+     */
+    var elementsToProcess = 0
+
+    fun runProcessing() = viewModelScope.launch {
+        preProcess()
+        process()
+        postProcess()
+    }
+
+    /**
+     * Gets executed before [process].
+     */
+    open fun preProcess() {
+        processState.postValue(ProcessState.PROCESSING)
+        updateProgress()
+    }
+
+    /**
+     * Template method. Gets called by [runProcessing].
+     * Should implement the processing of elements.
+     */
+    abstract suspend fun process()
+
+    /**
+     * Get executed after [process].
+     */
+    open fun postProcess() {
+        if (processState.value!! != ProcessState.ABORTED) {
+            processState.postValue(ProcessState.FINISHED)
+        }
+    }
 
     /**
      * Updates the state to [ProcessState.ABORTED].
      */
     open fun cancel() {
         processState.postValue(ProcessState.ABORTED)
+    }
+
+    /**
+     * Update the [progress] property
+     */
+    fun updateProgress() {
+        progress.value?.update(currentElement, elementsToProcess)
     }
 }

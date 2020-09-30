@@ -79,17 +79,6 @@ class PhotoRepository @Inject constructor(
         }
     }
 
-    /**
-     * Create a thumbnail of a photo's bytes.
-     *
-     * @param context used to write file.
-     * @param id used for the file name.
-     * @param bytes the full size photo bytes.
-     *
-     * * @return false if any error happened
-     *
-     * @since 1.0.0
-     */
     private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray): Boolean {
         return try {
             val thumbnail = ThumbnailUtils.extractThumbnail(
@@ -166,6 +155,10 @@ class PhotoRepository @Inject constructor(
             Timber.d("Error deleting file: $fileName")
         }
         return success
+    }
+
+    fun exportPhoto(photo: Photo, dirUri: Uri) {
+
     }
 
     companion object {

@@ -96,8 +96,8 @@ abstract class BaseProcessBottomSheetDialogFragment(
             labelText.postValue(label)
         })
 
-        preProcess()
-        viewModel.process()
+        prepareViewModel()
+        viewModel.runProcessing()
     }
 
     private fun enterFinishedOrAbortedState() {
@@ -109,7 +109,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
         }
     }
 
-    open fun preProcess() {
+    open fun prepareViewModel() {
     }
 
     private fun setStatusIcon(drawable: Int?, color: Int = 0) {

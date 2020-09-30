@@ -19,14 +19,12 @@ package dev.leonlatsch.photok.ui.process
 import android.app.Application
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import dev.leonlatsch.photok.ui.process.base.ProcessState
-import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -38,28 +36,21 @@ import java.util.*
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel(){
+) : BaseProcessViewModel() {
 
     lateinit var uris: List<Uri>
 
-    override fun process() = viewModelScope.launch {
-        // Enter processing state
-        var current = 1
-        processState.postValue(ProcessState.PROCESSING)
-        progress.value?.update(0, uris.size)
-
+    override suspend fun process() {
         for (image in uris) {
             if (processState.value == ProcessState.ABORTED) {
-                return@launch
+                return
             }
+            currentElement++
 
             // Import image and update progress
             import(image)
-            progress.value?.update(current, uris.size)
-            current++
+            updateProgress()
         }
-
-        processState.postValue(ProcessState.FINISHED)
     }
 
     private suspend fun import(imageUri: Uri) {

@@ -38,6 +38,7 @@ import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -114,11 +115,24 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     fun startDelete(photos: List<Photo>) {
         val deleteDialog = DeleteBottomSheetDialogFragment(photos)
-        deleteDialog.show(requireActivity().supportFragmentManager, DeleteBottomSheetDialogFragment::class.qualifiedName)
+        deleteDialog.show(
+            requireActivity().supportFragmentManager,
+            DeleteBottomSheetDialogFragment::class.qualifiedName
+        )
+    }
+
+    private fun startExport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Directory"),
+            REQ_DOCUMENT_TREE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        // Result from select photos for import
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
             val images = mutableListOf<Uri>()
             if (data != null) {
@@ -135,7 +149,18 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             }
             if (images.size > 0) {
                 val importDialog = ImportBottomSheetDialogFragment(images)
-                importDialog.show(requireActivity().supportFragmentManager, ImportBottomSheetDialogFragment::class.qualifiedName)
+                importDialog.show(
+                    requireActivity().supportFragmentManager,
+                    ImportBottomSheetDialogFragment::class.qualifiedName
+                )
+            }
+            // Result from select dir for export
+        } else if (requestCode == REQ_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.data != null) {
+                val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected(), data.data!!)
+                exportDialog.show(
+                    requireActivity().supportFragmentManager,
+                    ExportBottomSheetDialogFragment::class.qualifiedName)
             }
         }
     }
@@ -154,29 +179,47 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
 
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean = when(item?.itemId) {
-            R.id.menuMsAll -> {
-                lifecycleScope.launch {
-                    adapter.selectAll()
-                }
-                true
-            }
-            R.id.menuMsDelete -> {
-                lifecycleScope.launch {
-                    Dialogs.showConfirmDialog(requireContext(),
-                        String.format(getString(R.string.delete_are_you_sure),
-                            adapter.selectedItems.size)
-                    ) { _, _ -> // On positive button clicked
-                        val selectedItems = adapter.getAllSelected()
-                        startDelete(selectedItems)
-                        adapter.disableSelection()
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean =
+            when (item?.itemId) {
+                R.id.menuMsAll -> {
+                    lifecycleScope.launch {
+                        adapter.selectAll()
                     }
+                    true
                 }
-                true
+                R.id.menuMsDelete -> {
+                    lifecycleScope.launch {
+                        Dialogs.showConfirmDialog(
+                            requireContext(),
+                            String.format(
+                                getString(R.string.delete_are_you_sure),
+                                adapter.selectedItems.size
+                            )
+                        ) { _, _ -> // On positive button clicked
+                            val selectedItems = adapter.getAllSelected()
+                            startDelete(selectedItems)
+                            adapter.disableSelection()
+                        }
+                    }
+                    true
+                }
+                R.id.menuMsExport -> {
+                    lifecycleScope.launch {
+                        Dialogs.showConfirmDialog(
+                            requireContext(),
+                            String.format(
+                                getString(R.string.export_are_you_sure),
+                                adapter.selectedItems.size
+                            )
+                        ) { _, _ -> // On positive button clicked
+                            startExport()
+                            adapter.disableSelection()
+                        }
+                    }
+                    true
+                }
+                else -> false
             }
-            R.id.menuMsExport -> true // TODO
-            else -> false
-        }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             adapter.disableSelection()
@@ -190,5 +233,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     companion object {
         const val REQ_CONTENT_PHOTOS = 0
+        const val REQ_DOCUMENT_TREE = 1
     }
 }

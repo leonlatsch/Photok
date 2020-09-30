@@ -16,49 +16,21 @@
 
 package dev.leonlatsch.photok.ui.process
 
-import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
+import android.net.Uri
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import dev.leonlatsch.photok.ui.process.base.ProcessState
 
-/**
- * ViewModel for deleting multiple photos.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-class DeleteViewModel @ViewModelInject constructor(
-    private val app: Application,
-    private val photoRepository: PhotoRepository
-) : BaseProcessViewModel() {
+class ExportViewModel : BaseProcessViewModel() {
 
     lateinit var photos: List<Photo>
+    lateinit var dir: Uri
 
     override suspend fun process() {
         for (photo in photos) {
             if (processState.value == ProcessState.ABORTED) {
                 return
             }
-            currentElement++
-
-            // Delete image
-            delete(photo)
-            updateProgress()
         }
     }
-
-    private suspend fun delete(photo: Photo) {
-        if (photo.id == null) {
-            failuresOccurred = true
-            return
-        }
-
-        val success = photoRepository.deletePhotoAndData(app, photo)
-        if (!success) {
-            failuresOccurred = true
-        }
-    }
-
 }
