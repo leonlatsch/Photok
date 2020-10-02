@@ -134,6 +134,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    /**
+     * Start the deleting process.
+     */
     fun startDelete() {
         val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
         deleteDialog.show(
