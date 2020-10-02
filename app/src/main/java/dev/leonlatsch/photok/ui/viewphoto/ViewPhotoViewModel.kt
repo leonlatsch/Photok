@@ -67,4 +67,12 @@ class ViewPhotoViewModel @ViewModelInject constructor(
         val success = photoRepository.deletePhotoAndData(app, photo.value!!)
         if (success) onSuccess() else onError()
     }
+
+    fun exportPhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
+        photo.value ?: return@launch
+        photo.value!!.id ?: return@launch
+
+        val success = photoRepository.exportPhoto(app, photo.value!!)
+        if (success) onSuccess() else onError()
+    }
 }

@@ -88,7 +88,8 @@
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d photos(s)?</string>
-    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this photo</string>
+    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this photo?</string>
     <string name="export_exporting">Exporting photo(s)…</string>
     <string name="export_permission_rationale">Photok needs to access your storage, to export photos.</string>
+    <string name="export_finished">Exported</string>
 </resources>

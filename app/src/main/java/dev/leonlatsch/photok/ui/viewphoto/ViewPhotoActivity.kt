@@ -76,7 +76,13 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     }
 
     fun onExport() {
-        //TODO export
+        Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) {_, _ ->
+            viewModel.exportPhoto({ // onSuccess
+                Dialogs.showShortToast(this, getString(R.string.export_finished))
+            }, { // onError
+                Dialogs.showLongToast(this, getString(R.string.common_error))
+            })
+        }
     }
 
     private fun initializeSystemUI() {
