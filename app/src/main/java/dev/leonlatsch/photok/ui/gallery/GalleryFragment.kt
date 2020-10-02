@@ -19,14 +19,12 @@ package dev.leonlatsch.photok.ui.gallery
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +34,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
+import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
@@ -46,6 +46,8 @@ import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Fragment for displaying a gallery.
@@ -108,11 +110,28 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         placeholderVisibility.postValue(visibility)
     }
 
+    @AfterPermissionGranted(REQ_PERM_IMPORT)
     fun startImport() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQ_CONTENT_PHOTOS)
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Photos"),
+                REQ_CONTENT_PHOTOS
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_IMPORT,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
     fun startDelete() {
@@ -124,11 +143,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         adapter.disableSelection()
     }
 
+    @AfterPermissionGranted(REQ_PERM_EXPORT)
     private fun startExport() {
-        if (ContextCompat.checkSelfPermission(
+        if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
+            )
         ) {
             val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
             exportDialog.show(
@@ -137,7 +157,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             )
             adapter.disableSelection()
         } else {
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.export_permission_rationale),
+                REQ_PERM_EXPORT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
         }
     }
 
@@ -225,6 +250,16 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         override fun onDestroyActionMode(mode: ActionMode?) {
             adapter.disableSelection()
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun bind(binding: FragmentGalleryBinding) {
