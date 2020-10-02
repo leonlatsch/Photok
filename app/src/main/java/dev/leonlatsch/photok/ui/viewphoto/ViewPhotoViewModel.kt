@@ -44,6 +44,9 @@ class ViewPhotoViewModel @ViewModelInject constructor(
     var photo: MutableLiveData<Photo> = MutableLiveData()
     var photoSize = 0
 
+    /**
+     * Loads a photo. Gets called after onViewCreated
+     */
     fun loadPhoto(id: Int, onError: () -> Unit) = viewModelScope.launch {
         photo.postValue(photoRepository.get(id))
 
@@ -60,11 +63,31 @@ class ViewPhotoViewModel @ViewModelInject constructor(
         )
     }
 
+    /**
+     * Deletes a single photo. Called after verification.
+     *
+     * @param onSuccess Block called on success
+     * @param onError Block called on error
+     */
     fun deletePhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
         photo.value ?: return@launch
         photo.value!!.id ?: return@launch
 
         val success = photoRepository.deletePhotoAndData(app, photo.value!!)
+        if (success) onSuccess() else onError()
+    }
+
+    /**
+     * Exports a single photo. Called after verification.
+     *
+     * @param onSuccess Block called on success
+     * @param onError Block called on error
+     */
+    fun exportPhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
+        photo.value ?: return@launch
+        photo.value!!.id ?: return@launch
+
+        val success = photoRepository.exportPhoto(app, photo.value!!)
         if (success) onSuccess() else onError()
     }
 }

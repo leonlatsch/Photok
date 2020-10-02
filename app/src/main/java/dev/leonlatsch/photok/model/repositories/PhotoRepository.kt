@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -102,6 +104,9 @@ class PhotoRepository @Inject constructor(
 
     /**
      * Read a photo's bytes from external storage.
+     *
+     * @param contentResolver Reads the file system
+     * @param imageUri The uri to the original file
      */
     fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
         return try {
@@ -114,6 +119,9 @@ class PhotoRepository @Inject constructor(
 
     /**
      * Read and decrypt a photo's bytes from internal storage.
+     *
+     * @param context To open the file
+     * @param id The photo's id
      */
     fun readPhotoData(context: Context, id: Int): ByteArray? =
         readAndDecryptFile(context, "${id}.photok")
@@ -146,8 +154,9 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
-    private fun deletePhotoData(context: Context, id: Int): Boolean = deleteFile(context, "$id.photok")
-            && deleteFile(context, "$id.photok.tn")
+    private fun deletePhotoData(context: Context, id: Int): Boolean =
+        deleteFile(context, "$id.photok")
+                && deleteFile(context, "$id.photok.tn")
 
     private fun deleteFile(context: Context, fileName: String): Boolean {
         val success = context.deleteFile(fileName)
@@ -157,9 +166,34 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
-    suspend fun exportPhoto(context: Context, photo: Photo, dirUri: Uri): Boolean {
-        val bytes = readPhotoData(context, photo.id!!)
-        return true
+    /**
+     * Export a photo to a specific directory.
+     *
+     * @param context To save the file
+     * @param photo The Photo to be saved
+     */
+    fun exportPhoto(context: Context, photo: Photo): Boolean {
+        return try {
+            val bytes = readPhotoData(context, photo.id!!)
+            bytes ?: return false
+
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, photo.fileName)
+            contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
+
+            val uri = context.contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+            )
+            uri ?: return false
+            context.contentResolver.openOutputStream(uri).let {
+                it?.write(bytes)
+            }
+            true
+        } catch (e: IOException) {
+            Timber.d("Error exporting file: ${photo.fileName}")
+            false
+        }
     }
 
     companion object {

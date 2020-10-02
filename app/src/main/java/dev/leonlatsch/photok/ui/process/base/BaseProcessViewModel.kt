@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.process.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -34,12 +35,12 @@ abstract class BaseProcessViewModel : ViewModel() {
     /**
      * The processing state should be checked every time in [process].
      */
-    val processState: MutableLiveData<ProcessState> = MutableLiveData()
+    val processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.INITIALIZE)
 
     /**
      * An [ProcessProgress] instance which is bound to the ui.
      */
-    var progress: MutableLiveData<ProcessProgress> = MutableLiveData(ProcessProgress())
+    val progress = ProcessProgress()
 
     /**
      * Indicates if failures occurred.
@@ -61,6 +62,7 @@ abstract class BaseProcessViewModel : ViewModel() {
 
     fun runProcessing() = viewModelScope.launch {
         preProcess()
+        delay(1) // Delay for 1ms to properly show ui before starting process. For fast devices.
         process()
         postProcess()
     }
@@ -83,7 +85,7 @@ abstract class BaseProcessViewModel : ViewModel() {
      * Get executed after [process].
      */
     open fun postProcess() {
-        if (processState.value!! != ProcessState.ABORTED) {
+        if (processState.value != ProcessState.ABORTED) {
             processState.postValue(ProcessState.FINISHED)
         }
     }
@@ -99,6 +101,6 @@ abstract class BaseProcessViewModel : ViewModel() {
      * Update the [progress] property
      */
     fun updateProgress() {
-        progress.value?.update(currentElement, elementsToProcess)
+        progress.update(currentElement, elementsToProcess)
     }
 }

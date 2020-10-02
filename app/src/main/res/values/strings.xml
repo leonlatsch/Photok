@@ -32,6 +32,7 @@
 
     <!-- IMPORT -->>
     <string name="import_importing">Importing Photo(s)…</string>
+    <string name="import_permission_rationale">Photok needs to access your storage, to import photos.</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Create your password</string>
@@ -86,7 +87,9 @@
     <string name="delete_deleting">Deleting photo(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d photos(s)?</string>
-    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this photo</string>
+    <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d photos(s), back to your gallery?</string>
+    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this photo, back to your gallery?</string>
     <string name="export_exporting">Exporting photo(s)…</string>
+    <string name="export_permission_rationale">Photok needs to access your storage, to export photos.</string>
+    <string name="export_finished">Exported</string>
 </resources>

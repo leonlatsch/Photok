@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.ui.viewphoto
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -23,10 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.toggleSystemUI
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 
 /**
@@ -75,8 +79,24 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
     }
 
+    @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
-        //TODO export
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
+                viewModel.exportPhoto({ // onSuccess
+                    Dialogs.showShortToast(this, getString(R.string.export_finished))
+                }, { // onError
+                    Dialogs.showLongToast(this, getString(R.string.common_error))
+                })
+            }
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.export_permission_rationale),
+                REQ_PERM_EXPORT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
     }
 
     private fun initializeSystemUI() {
@@ -120,5 +140,15 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         super.bind(binding)
         binding.viewModel = viewModel
         binding.context = this
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

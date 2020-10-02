@@ -26,3 +26,7 @@ const val PASSWORD_REGEX = "^(?=.*?[a-z]).{6,}.*"
 
 // Intent
 const val INTENT_PHOTO_ID = "intent.photo.id"
+
+// Permissions
+const val REQ_PERM_IMPORT = 10
+const val REQ_PERM_EXPORT = 11

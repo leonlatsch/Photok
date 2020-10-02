@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
-import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -36,7 +35,6 @@ class ExportViewModel @ViewModelInject constructor(
 ): BaseProcessViewModel() {
 
     lateinit var photos: List<Photo>
-    lateinit var dir: Uri
 
     override suspend fun process() {
         for (photo in photos) {
@@ -45,10 +43,11 @@ class ExportViewModel @ViewModelInject constructor(
             }
             currentElement++
 
-            val result = photoRepository.exportPhoto(app, photo, dir)
+            val result = photoRepository.exportPhoto(app, photo)
             if (!result) {
                 failuresOccurred = true
             }
+            updateProgress()
         }
     }
 }
