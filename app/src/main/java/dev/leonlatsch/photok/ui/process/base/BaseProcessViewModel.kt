@@ -83,7 +83,7 @@ abstract class BaseProcessViewModel : ViewModel() {
      * Get executed after [process].
      */
     open fun postProcess() {
-        if (processState.value!! != ProcessState.ABORTED) {
+        if (processState.value != ProcessState.ABORTED) {
             processState.postValue(ProcessState.FINISHED)
         }
     }

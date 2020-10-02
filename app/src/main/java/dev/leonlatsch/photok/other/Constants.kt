@@ -26,3 +26,6 @@ const val PASSWORD_REGEX = "^(?=.*?[a-z]).{6,}.*"
 
 // Intent
 const val INTENT_PHOTO_ID = "intent.photo.id"
+
+// Other
+const val EXPORT_ALBUM = "Photok Export"

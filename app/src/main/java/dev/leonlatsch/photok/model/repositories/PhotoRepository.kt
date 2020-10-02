@@ -24,9 +24,11 @@ import android.media.ThumbnailUtils
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.other.getExternalExportDir
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
@@ -168,10 +170,13 @@ class PhotoRepository @Inject constructor(
      *
      * @param context To save the file
      * @param photo The Photo to be saved
-     * @param dirUri The directory uri the photo gets saved in
      */
-    suspend fun exportPhoto(context: Context, photo: Photo, dirUri: Uri): Boolean {
+    fun exportPhoto(context: Context, photo: Photo): Boolean {
         val bytes = readPhotoData(context, photo.id!!) // TODO: find a way of saving to external storage
+        val dir = getExternalExportDir(context)
+        File("${dir.absolutePath}/${photo.fileName}").outputStream().run {
+            write(bytes)
+        }
         return true
     }
 

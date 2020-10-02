@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
@@ -113,8 +112,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQ_CONTENT_PHOTOS)
     }
 
-    fun startDelete(photos: List<Photo>) {
-        val deleteDialog = DeleteBottomSheetDialogFragment(photos)
+    fun startDelete() {
+        val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
         deleteDialog.show(
             requireActivity().supportFragmentManager,
             DeleteBottomSheetDialogFragment::class.qualifiedName
@@ -122,11 +121,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private fun startExport() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Directory"),
-            REQ_DOCUMENT_TREE
-        )
+        val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
+        exportDialog.show(
+            requireActivity().supportFragmentManager,
+            ExportBottomSheetDialogFragment::class.qualifiedName)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,15 +151,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                     requireActivity().supportFragmentManager,
                     ImportBottomSheetDialogFragment::class.qualifiedName
                 )
-            }
-            // Result from select dir for export
-        } else if (requestCode == REQ_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
-            if (data != null && data.data != null) {
-                val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected(), data.data!!)
-                exportDialog.show( // TODO: fix error with adapter getting recreated when activity shows
-                    requireActivity().supportFragmentManager,
-                    ExportBottomSheetDialogFragment::class.qualifiedName)
-                adapter.disableSelection()
             }
         }
     }
@@ -197,8 +186,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                                 adapter.selectedItems.size
                             )
                         ) { _, _ -> // On positive button clicked
-                            val selectedItems = adapter.getAllSelected()
-                            startDelete(selectedItems)
+                            startDelete()
+                            adapter.disableSelection()
                         }
                     }
                     true
@@ -233,6 +222,5 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     companion object {
         const val REQ_CONTENT_PHOTOS = 0
-        const val REQ_DOCUMENT_TREE = 1
     }
 }

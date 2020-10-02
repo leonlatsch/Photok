@@ -17,10 +17,13 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
+import java.io.File
 
 /**
  * Get a file's name.
@@ -40,6 +43,12 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
         }
     }
     return null
+}
+
+fun getExternalExportDir(context: Context): File {
+    val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), EXPORT_ALBUM)
+    file.mkdirs()
+    return file
 }
 
 fun hideLoadingOverlay(overlay: View?) {

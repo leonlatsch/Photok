@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.ui.process
 
-import android.net.Uri
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -32,7 +31,6 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
 @AndroidEntryPoint
 class ExportBottomSheetDialogFragment(
     private val photos: List<Photo>,
-    private val dir: Uri
 ) : BaseProcessBottomSheetDialogFragment(R.string.export_exporting) {
 
     override val viewModel: ExportViewModel by viewModels()
@@ -40,7 +38,6 @@ class ExportBottomSheetDialogFragment(
     override fun prepareViewModel() {
         super.prepareViewModel()
         viewModel.photos = photos
-        viewModel.dir = dir
         viewModel.elementsToProcess = photos.size
     }
 }
