@@ -16,14 +16,17 @@
 
 package dev.leonlatsch.photok.ui.gallery
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -118,13 +121,24 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             requireActivity().supportFragmentManager,
             DeleteBottomSheetDialogFragment::class.qualifiedName
         )
+        adapter.disableSelection()
     }
 
     private fun startExport() {
-        val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
-        exportDialog.show(
-            requireActivity().supportFragmentManager,
-            ExportBottomSheetDialogFragment::class.qualifiedName)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
+            exportDialog.show(
+                requireActivity().supportFragmentManager,
+                ExportBottomSheetDialogFragment::class.qualifiedName
+            )
+            adapter.disableSelection()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -187,7 +201,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                             )
                         ) { _, _ -> // On positive button clicked
                             startDelete()
-                            adapter.disableSelection()
                         }
                     }
                     true
@@ -202,7 +215,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                             )
                         ) { _, _ -> // On positive button clicked
                             startExport()
-                            adapter.disableSelection()
                         }
                     }
                     true
