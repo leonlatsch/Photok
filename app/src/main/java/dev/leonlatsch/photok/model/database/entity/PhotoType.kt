@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.model.database.entity
 
+import dev.leonlatsch.photok.other.emptyString
+
 /**
  * Enum for [Photo.type].
  * Internal value is an [Int].
@@ -23,11 +25,11 @@ package dev.leonlatsch.photok.model.database.entity
  * @since 1.0.0
  * @author Leon Latsch
  */
-enum class PhotoType(val value: Int) {
-    UNDEFINED(0),
-    PNG(1),
-    JPEG(2),
-    GIF(3);
+enum class PhotoType(val value: Int, val mimeType: String) {
+    UNDEFINED(0,  emptyString()),
+    PNG(1, "image/png"),
+    JPEG(2, "image/jpeg"),
+    GIF(3, "image/gif");
 
     companion object {
         fun fromValue(value: Int) = values().first { it.value == value }
