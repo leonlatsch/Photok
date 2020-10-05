@@ -41,11 +41,22 @@ class SetupViewModel @ViewModelInject constructor(
     private val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
+    //region binding properties
+
     var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
     var confirmPasswordText: MutableLiveData<String> = MutableLiveData(emptyString())
 
+    // endregion
+
     val setupState: MutableLiveData<SetupState> = MutableLiveData(SetupState.SETUP)
 
+    /**
+     * Save the password to database.
+     * Validates both passwords.
+     * Hashes and saves the password.
+     * Initializes [EncryptionManager].
+     * Called by ui.
+     */
     fun savePassword() = viewModelScope.launch {
         setupState.postValue(SetupState.LOADING)
 
@@ -60,11 +71,20 @@ class SetupViewModel @ViewModelInject constructor(
         }
     }
 
+    /**
+     * Validate hte [passwordText] property.
+     */
     fun validatePassword(): Boolean = passwordText.value!!.isNotEmpty()
             && Pattern.matches(PASSWORD_REGEX, passwordText.value!!)
 
+    /**
+     * Indicates, of [passwordText] and [confirmPasswordText] are equal.
+     */
     fun passwordsEqual(): Boolean = passwordText.value == confirmPasswordText.value
 
+    /**
+     * Validates the [passwordText] and calls [passwordsEqual].
+     */
     fun validateBothPasswords(): Boolean = passwordText.value!!.isNotEmpty()
             && confirmPasswordText.value!!.isNotEmpty()
             && validatePassword()

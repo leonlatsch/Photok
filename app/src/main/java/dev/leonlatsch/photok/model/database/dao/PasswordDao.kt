@@ -28,12 +28,25 @@ import dev.leonlatsch.photok.model.database.entity.Password
 @Dao
 interface PasswordDao {
 
+    /**
+     * Insert one [Password]
+     *
+     * @return the id of the new inserted item.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(password: Password)
 
+    /**
+     * Delete one [Password]
+     *
+     * @return the id of the deleted item.
+     */
     @Delete
     suspend fun delete(password: Password)
 
+    /**
+     * Update the saved [Password]
+     */
     @Update
     suspend fun update(password: Password)
 
