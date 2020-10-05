@@ -27,6 +27,30 @@ object Config {
     /**
      * Determines if the app has started before.
      */
-    const val FIRST_START = "first_start"
-    const val FIRST_START_DEFAULT  = true
+    const val SYSTEM_FIRST_START = "system^firstStart"
+    const val SYSTEM_FIRST_START_DEFAULT  = true
+
+    /**
+     * Determines if the full screen photo view, should hide the system ui at start.
+     */
+    const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
+    const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
+
+    /**
+     * Determines the thumbnail size.
+     */
+    const val GALLERY_ADVANCED_THUMBNAIL_SIZE = "gallery^advanced.thumbnailSize"
+    const val GALLERY_ADVANCED_THUMBNAIL_SIZE_DEFAULT = 128
+
+    /**
+     * Determines the gallery columns.
+     */
+    const val GALLERY_ADVANCED_GALLERY_COLUMNS = "gallery^advanced.galleryColumns"
+    const val GALLERY_ADVANCED_GALLERY_COLUMNS_DEFAULT = 4
+
+    /**
+     * Determines if screenshots should be allowed.
+     */
+    const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
+    const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 }

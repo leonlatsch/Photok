@@ -14,6 +14,43 @@
   ~   limitations under the License.
   -->
 
-<PreferenceScreen>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Gallery">
+        <SwitchPreference
+            app:defaultValue="true"
+            app:key="gallery^fullscreen.auto"
+            app:summary="Enter fullscreen mode when opening a photo."
+            app:title="Auto Fullscreen" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Security">
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="security^allowScreenshots"
+            app:summary="Allow taking screenshots."
+            app:title="Allow screenshots" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:summary="Cloud impact performance of the app."
+        app:title="Advanced">
+
+        <DropDownPreference
+            app:entryValues="@array/thumbnailSizes"
+            app:entries="@array/thumbnailSizes"
+            app:key="gallery^advanced.thumbnailSize"
+            app:summary="Determines what size thumbnails should have."
+            app:title="Thumbnail size"
+            app:defaultValue="128"/>
+
+        <DropDownPreference
+            app:defaultValue="4"
+            app:entries="@array/galleryColumns"
+            app:entryValues="@array/galleryColumns"
+            app:key="gallery^advanced.galleryColumns"
+            app:summary="The amount of columns the gallery should show."
+            app:title="Gallery Columns" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
