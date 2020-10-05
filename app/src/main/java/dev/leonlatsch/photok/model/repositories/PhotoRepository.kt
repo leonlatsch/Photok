@@ -205,7 +205,7 @@ class PhotoRepository @Inject constructor(
             bytes ?: return false
 
             val contentValues = ContentValues()
-            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, photo.fileName)
+            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "photok_export_${photo.fileName}")
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
 
             val uri = context.contentResolver.insert(
