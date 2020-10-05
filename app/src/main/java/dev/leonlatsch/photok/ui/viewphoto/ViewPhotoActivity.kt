@@ -23,9 +23,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.toggleSystemUI
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
@@ -107,11 +105,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                viewPhotoAppBarLayout.visibility = View.VISIBLE
-                viewPhotoBottomToolbarLayout.visibility = View.VISIBLE
+                viewPhotoAppBarLayout.show()
+                viewPhotoBottomToolbarLayout.show()
             } else {
-                viewPhotoAppBarLayout.visibility = View.GONE
-                viewPhotoBottomToolbarLayout.visibility = View.GONE
+                viewPhotoAppBarLayout.hide()
+                viewPhotoBottomToolbarLayout.hide()
             }
         }
     }
