@@ -42,6 +42,10 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     return null
 }
 
+/**
+ * Toggle the system ui.
+ * Used for fullscreen.
+ */
 fun toggleSystemUI(window: Window?) {
     window ?: return
     val uiOptions: Int = window.decorView.systemUiVisibility

@@ -110,6 +110,9 @@ class PasswordEditText @JvmOverloads constructor(
         passwordEditTextValue.hint = hint
     }
 
+    /**
+     * Set the text property of [passwordEditTextValue]
+     */
     fun setTextValue(value: String) {
         passwordEditTextValue.setText(value)
         passwordEditTextValue.setSelection(value.length)
@@ -120,6 +123,10 @@ class PasswordEditText @JvmOverloads constructor(
             return passwordEditTextValue.text.toString()
         }
 
+    /**
+     * Binding Adapters for [PasswordEditText].
+     * Hold in separate class to not override other functuons
+     */
     class BindingAdapters {
         companion object {
             /**

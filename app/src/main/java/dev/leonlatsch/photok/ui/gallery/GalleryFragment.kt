@@ -110,6 +110,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         placeholderVisibility.postValue(visibility)
     }
 
+    /**
+     * Starts the photo import.
+     * Starts a chooser for images.
+     * May request permission READ_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
     @AfterPermissionGranted(REQ_PERM_IMPORT)
     fun startImport() {
         if (EasyPermissions.hasPermissions(
@@ -135,7 +141,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     /**
-     * Start the deleting process.
+     * Start the deleting process with all selected items.
+     * Called by ui.
      */
     fun startDelete() {
         val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
@@ -146,6 +153,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         adapter.disableSelection()
     }
 
+    /**
+     * Starts the exporting process.
+     * May request permission WRITE_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
     @AfterPermissionGranted(REQ_PERM_EXPORT)
     private fun startExport() {
         if (EasyPermissions.hasPermissions(
@@ -261,7 +273,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        // Forward result to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 

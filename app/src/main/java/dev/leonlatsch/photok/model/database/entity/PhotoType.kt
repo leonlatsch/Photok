@@ -32,6 +32,10 @@ enum class PhotoType(val value: Int, val mimeType: String) {
     GIF(3, "image/gif");
 
     companion object {
+        /**
+         * Create a [PhotoType] from its Int value.
+         * Used in converters.
+         */
         fun fromValue(value: Int) = values().first { it.value == value }
     }
 
