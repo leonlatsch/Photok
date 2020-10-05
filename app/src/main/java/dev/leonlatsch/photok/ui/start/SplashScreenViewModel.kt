@@ -36,7 +36,10 @@ class SplashScreenViewModel @ViewModelInject constructor(
 
     var applicationState: MutableLiveData<ApplicationState> = MutableLiveData()
 
-    fun checkVaultState() = viewModelScope.launch {
+    /**
+     * Check the application state.
+     */
+    fun checkApplicationState() = viewModelScope.launch {
 
         //TODO: check first start
         val password = passwordRepository.getPassword()?.password

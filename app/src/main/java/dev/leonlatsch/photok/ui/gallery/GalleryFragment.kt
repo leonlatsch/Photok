@@ -84,7 +84,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
-                actionMode = (activity as MainActivity).startActionModeOnToolbar(actionModeCallback)
+                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
@@ -159,7 +159,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * Called by ui.
      */
     @AfterPermissionGranted(REQ_PERM_EXPORT)
-    private fun startExport() {
+    fun startExport() {
         if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -188,16 +188,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
             val images = mutableListOf<Uri>()
             if (data != null) {
-                if (data.clipData != null) {
-                    val count = data.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = data.clipData!!.getItemAt(i).uri
-                        images.add(imageUri)
-                    }
-                } else if (data.data != null) {
-                    val imageUri = data.data!!
-                    images.add(imageUri)
-                }
+                extractDataFromResult(images, data)
             }
             if (images.size > 0) {
                 val importDialog = ImportBottomSheetDialogFragment(images)
@@ -207,6 +198,20 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 )
             }
         }
+    }
+
+    private fun extractDataFromResult(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
+        if (data.clipData != null) {
+            val count = data.clipData!!.itemCount
+            for (i in 0 until count) {
+                val imageUri = data.clipData!!.getItemAt(i).uri
+                images.add(imageUri)
+            }
+        } else if (data.data != null) {
+            val imageUri = data.data!!
+            images.add(imageUri)
+        }
+        return images
     }
 
     private fun showFullSize(id: Int) {

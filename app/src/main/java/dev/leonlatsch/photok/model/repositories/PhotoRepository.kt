@@ -118,7 +118,7 @@ class PhotoRepository @Inject constructor(
                 it.write(encryptedThumbnailBytes)
             }
             true
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Timber.d("Error creating Thumbnail for id: $id: $e")
             false
         }

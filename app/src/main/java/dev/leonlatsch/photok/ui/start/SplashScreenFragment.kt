@@ -48,7 +48,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
             }
         })
         Handler().postDelayed({
-            viewModel.checkVaultState()
+            viewModel.checkApplicationState()
         }, 300)
     }
 

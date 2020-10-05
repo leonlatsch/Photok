@@ -54,7 +54,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
     }
 
-    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? =
+    /**
+     * Starts the action mode on [mainToolbar].
+     */
+    fun startActionMode(callback: ActionMode.Callback): ActionMode? =
         startSupportActionMode(callback)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

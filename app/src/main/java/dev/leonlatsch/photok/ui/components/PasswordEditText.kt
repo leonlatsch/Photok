@@ -168,6 +168,7 @@ class PasswordEditText @JvmOverloads constructor(
                         count: Int,
                         after: Int
                     ) {
+                        // No implementation needed
                     }
 
                     override fun onTextChanged(
@@ -176,6 +177,7 @@ class PasswordEditText @JvmOverloads constructor(
                         before: Int,
                         count: Int
                     ) {
+                        // No implementation needed
                     }
 
                     override fun afterTextChanged(s: Editable) {

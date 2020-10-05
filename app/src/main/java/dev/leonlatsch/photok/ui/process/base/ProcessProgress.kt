@@ -38,7 +38,14 @@ class ProcessProgress {
         current.postValue(0)
     }
 
+    /**
+     * Update the progress properties.
+     */
     fun update(current: Int, from: Int) {
+        if (from == 0) {
+            return
+        }
+
         this.max.postValue(from)
         this.current.postValue(current)
         progressPercent.postValue((current * maxPercent) / from)

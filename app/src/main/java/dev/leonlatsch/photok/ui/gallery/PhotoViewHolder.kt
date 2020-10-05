@@ -59,6 +59,9 @@ class PhotoViewHolder(
     var photo: Photo? = null
     private lateinit var adapter: PhotoAdapter
 
+    /**
+     * Binds the parent adapter and the photo to the ViewHolder.
+     */
     fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
         this.adapter = adapter
@@ -105,7 +108,6 @@ class PhotoViewHolder(
     private val onSelectedItemsChanged =
         object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
 
-            // No implementation needed
             override fun onChanged(sender: ObservableList<Int>?) {
                 listChanged()
             }

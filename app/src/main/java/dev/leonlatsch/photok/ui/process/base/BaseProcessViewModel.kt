@@ -60,6 +60,10 @@ abstract class BaseProcessViewModel : ViewModel() {
      */
     var elementsToProcess = 0
 
+    /**
+     * Runs [preProcess], [process] and [postProcess].
+     * launched in [viewModelScope].
+     */
     fun runProcessing() = viewModelScope.launch {
         preProcess()
         delay(1) // Delay for 1ms to properly show ui before starting process. For fast devices.
