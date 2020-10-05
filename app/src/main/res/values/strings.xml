@@ -21,6 +21,7 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
     <string name="common_loading">Loading …</string>
     <string name="common_password">Password</string>
     <string name="common_delete">Delete</string>
@@ -28,6 +29,7 @@
     <string name="common_error">There was an error. Please try again.</string>
     <string name="common_yes">Yes</string>
     <string name="common_no">No</string>
+    <string name="common_ok">Ok</string>
     <string name="common_are_you_sure">Are you sure?</string>
 
     <!-- IMPORT -->>
@@ -92,4 +94,13 @@
     <string name="export_exporting">Exporting photo(s)…</string>
     <string name="export_permission_rationale">Photok needs to access your storage, to export photos.</string>
     <string name="export_finished">Exported</string>
+    
+    <!-- ABOUT -->
+    <string name="about_version">Version:</string>
+    <string name="about_developed_by">Developed by:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_thrid_party">Third Party Software</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev</string>
 </resources>

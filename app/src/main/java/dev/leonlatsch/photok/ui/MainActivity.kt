@@ -68,7 +68,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             true
         }
         R.id.menuMainItemAbout -> {
-            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_infoFragment)
+            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_aboutFragment)
             true
         }
         else -> false
