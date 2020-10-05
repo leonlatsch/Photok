@@ -42,14 +42,10 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     return null
 }
 
-fun hideLoadingOverlay(overlay: View?) {
-    overlay?.visibility = View.GONE
-}
-
-fun showLoadingOverlay(overlay: View?) {
-    overlay?.visibility = View.VISIBLE
-}
-
+/**
+ * Toggle the system ui.
+ * Used for fullscreen.
+ */
 fun toggleSystemUI(window: Window?) {
     window ?: return
     val uiOptions: Int = window.decorView.systemUiVisibility
@@ -60,8 +56,4 @@ fun toggleSystemUI(window: Window?) {
     newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
 
     window.decorView.systemUiVisibility = newUiOptions
-}
-
-fun emptyString(): String {
-    return ""
 }

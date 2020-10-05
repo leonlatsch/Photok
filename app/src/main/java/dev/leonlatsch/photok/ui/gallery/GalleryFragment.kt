@@ -84,7 +84,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
-                actionMode = (activity as MainActivity).startActionModeOnToolbar(actionModeCallback)
+                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
@@ -110,6 +110,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         placeholderVisibility.postValue(visibility)
     }
 
+    /**
+     * Starts the photo import.
+     * Starts a chooser for images.
+     * May request permission READ_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
     @AfterPermissionGranted(REQ_PERM_IMPORT)
     fun startImport() {
         if (EasyPermissions.hasPermissions(
@@ -135,7 +141,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     /**
-     * Start the deleting process.
+     * Start the deleting process with all selected items.
+     * Called by ui.
      */
     fun startDelete() {
         val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
@@ -146,8 +153,13 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         adapter.disableSelection()
     }
 
+    /**
+     * Starts the exporting process.
+     * May request permission WRITE_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
     @AfterPermissionGranted(REQ_PERM_EXPORT)
-    private fun startExport() {
+    fun startExport() {
         if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -176,16 +188,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
             val images = mutableListOf<Uri>()
             if (data != null) {
-                if (data.clipData != null) {
-                    val count = data.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = data.clipData!!.getItemAt(i).uri
-                        images.add(imageUri)
-                    }
-                } else if (data.data != null) {
-                    val imageUri = data.data!!
-                    images.add(imageUri)
-                }
+                extractDataFromResult(images, data)
             }
             if (images.size > 0) {
                 val importDialog = ImportBottomSheetDialogFragment(images)
@@ -195,6 +198,20 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 )
             }
         }
+    }
+
+    private fun extractDataFromResult(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
+        if (data.clipData != null) {
+            val count = data.clipData!!.itemCount
+            for (i in 0 until count) {
+                val imageUri = data.clipData!!.getItemAt(i).uri
+                images.add(imageUri)
+            }
+        } else if (data.data != null) {
+            val imageUri = data.data!!
+            images.add(imageUri)
+        }
+        return images
     }
 
     private fun showFullSize(id: Int) {
@@ -261,7 +278,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        // Forward result to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 

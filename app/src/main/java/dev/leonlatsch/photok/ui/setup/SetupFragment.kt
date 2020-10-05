@@ -21,13 +21,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
-import dev.leonlatsch.photok.other.hideLoadingOverlay
-import dev.leonlatsch.photok.other.showLoadingOverlay
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_setup.*
@@ -65,17 +66,17 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
                         getString(R.string.setup_password_strength_strong)
                     }
                 }
-                setupPasswordStrengthLayout.visibility = View.VISIBLE
+                setupPasswordStrengthLayout.show()
                 setupPasswordStrengthValue.text = value
             } else {
-                setupPasswordStrengthLayout.visibility = View.GONE
+                setupPasswordStrengthLayout.hide()
             }
 
             if (viewModel.validatePassword()) {
-                setupConfirmPasswordEditText.visibility = View.VISIBLE
+                setupConfirmPasswordEditText.show()
             } else {
                 setupConfirmPasswordEditText.setTextValue(emptyString())
-                setupConfirmPasswordEditText.visibility = View.GONE
+                setupConfirmPasswordEditText.hide()
             }
 
             enableOrDisableSetup()
@@ -87,10 +88,10 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
         viewModel.setupState.observe(viewLifecycleOwner, {
             when(it) {
-                SetupState.LOADING -> showLoadingOverlay(loadingOverlay)
-                SetupState.SETUP -> hideLoadingOverlay(loadingOverlay)
+                SetupState.LOADING -> loadingOverlay.show()
+                SetupState.SETUP -> loadingOverlay.hide()
                 SetupState.FINISHED -> {
-                    hideLoadingOverlay(loadingOverlay)
+                    loadingOverlay.hide()
 
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
@@ -105,11 +106,11 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
     private fun enableOrDisableSetup() {
         if (!viewModel.passwordsEqual()
-            && setupConfirmPasswordEditText.visibility == View.VISIBLE) {
-            setupPasswordMatchWarningTextView.visibility = View.VISIBLE
+            && setupConfirmPasswordEditText.isVisible) {
+            setupPasswordMatchWarningTextView.show()
             setupButton.isEnabled = false
         } else {
-            setupPasswordMatchWarningTextView.visibility = View.GONE
+            setupPasswordMatchWarningTextView.hide()
             if (viewModel.validateBothPasswords()) {
                 setupButton.isEnabled = true
             }

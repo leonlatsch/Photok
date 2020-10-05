@@ -20,7 +20,6 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -29,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -58,6 +59,9 @@ class PhotoViewHolder(
     var photo: Photo? = null
     private lateinit var adapter: PhotoAdapter
 
+    /**
+     * Binds the parent adapter and the photo to the ViewHolder.
+     */
     fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
         this.adapter = adapter
@@ -85,9 +89,9 @@ class PhotoViewHolder(
 
         adapter.isMultiSelectMode.observe(adapter.lifecycleOwner, {
             if (it) { // When selection gets enabled, show the checkbox
-                checkBox.visibility = View.VISIBLE
+                checkBox.show()
             } else {
-                checkBox.visibility = View.GONE
+                checkBox.hide()
             }
         })
 
@@ -104,7 +108,6 @@ class PhotoViewHolder(
     private val onSelectedItemsChanged =
         object : ObservableList.OnListChangedCallback<ObservableList<Int>>() {
 
-            // No implementation needed
             override fun onChanged(sender: ObservableList<Int>?) {
                 listChanged()
             }

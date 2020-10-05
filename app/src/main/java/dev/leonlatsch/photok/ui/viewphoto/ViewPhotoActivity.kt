@@ -23,9 +23,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.toggleSystemUI
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
@@ -56,10 +54,18 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         loadPhoto()
     }
 
+    /**
+     * On Image View Clicked.
+     * Called by ui.
+     */
     fun onClick() {
         toggleSystemUI(window)
     }
 
+    /**
+     * On Detail button clicked.
+     * Called by ui.
+     */
     fun onDetails() {
         val detailsBottomSheetDialog =
             DetailsBottomSheetDialog(viewModel.photo.value, viewModel.photoSize)
@@ -69,6 +75,10 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         )
     }
 
+    /**
+     * On delete button clicked.
+     * Called by ui.
+     */
     fun onDelete() {
         Dialogs.showConfirmDialog(this, getString(R.string.delete_are_you_sure_this)) { _, _ ->
             viewModel.deletePhoto({ // onSuccess
@@ -79,6 +89,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
     }
 
+    /**
+     * On export clicked.
+     * May request permission WRITE_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
     @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -107,11 +122,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                viewPhotoAppBarLayout.visibility = View.VISIBLE
-                viewPhotoBottomToolbarLayout.visibility = View.VISIBLE
+                viewPhotoAppBarLayout.show()
+                viewPhotoBottomToolbarLayout.show()
             } else {
-                viewPhotoAppBarLayout.visibility = View.GONE
-                viewPhotoBottomToolbarLayout.visibility = View.GONE
+                viewPhotoAppBarLayout.hide()
+                viewPhotoBottomToolbarLayout.hide()
             }
         }
     }

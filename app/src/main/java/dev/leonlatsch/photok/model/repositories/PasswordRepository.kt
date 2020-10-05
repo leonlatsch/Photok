@@ -29,11 +29,27 @@ import javax.inject.Inject
 class PasswordRepository @Inject constructor(
     private val passwordDao: PasswordDao
 ) {
+    /**
+     * Insert one [Password]
+     *
+     * @return the id of the new inserted item.
+     */
     suspend fun insert(password: Password) = passwordDao.insert(password)
 
+    /**
+     * Delete one [Password]
+     *
+     * @return the id of the deleted item.
+     */
     suspend fun delete(password: Password) = passwordDao.delete(password)
 
+    /**
+     * Update the saved [Password]
+     */
     suspend fun update(password: Password) = passwordDao.update(password)
 
+    /**
+     * Load the only password with id = 0
+     */
     suspend fun getPassword() = passwordDao.getPassword()
 }

@@ -109,6 +109,10 @@ abstract class BaseProcessBottomSheetDialogFragment(
         }
     }
 
+    /**
+     * Called before viewModel starts processing.
+     * Assign data and variables in implementations.
+     */
     open fun prepareViewModel() {
     }
 

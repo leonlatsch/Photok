@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.paging.PagingSource
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -46,12 +47,33 @@ class PhotoRepository @Inject constructor(
 
     // DATABASE
 
+    /**
+     * Insert one [Photo]
+     *
+     * @return the id of the new inserted item.
+     */
     suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
+    /**
+     * Delete one [Photo]
+     *
+     * @return the id of the deleted item.
+     */
     suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
+    /**
+     * Get one [Photo] by [id].
+     *
+     * @return the photo with [id]
+     */
     suspend fun get(id: Int) = photoDao.get(id)
 
+    /**
+     * Get all photos, ordered by importedAt (desc) as [PagingSource].
+     * Used for Paging all photos in gallery.
+     *
+     * @return all photo as [PagingSource]
+     */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
     // FILESYSTEM
@@ -75,7 +97,7 @@ class PhotoRepository @Inject constructor(
                 it.write(encryptedBytes)
             }
             createAndWriteThumbnail(context, id, bytes)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Timber.d("Error writing photo data for id: $id $e")
             false
         }
@@ -96,7 +118,7 @@ class PhotoRepository @Inject constructor(
                 it.write(encryptedThumbnailBytes)
             }
             true
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Timber.d("Error creating Thumbnail for id: $id: $e")
             false
         }
@@ -143,6 +165,11 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    /**
+     * Delete a photo from the filesystem. On success, delete it in the database.
+     *
+     * @return true, if the photo was successfully deleted on disk and in db.
+     */
     suspend fun deletePhotoAndData(context: Context, photo: Photo): Boolean {
         val id = photo.id!!
 

@@ -47,7 +47,13 @@ abstract class PhotokDatabase : RoomDatabase() {
         const val DATABASE_NAME = "photok.db"
     }
 
+    /**
+     * Get the data access object for [Photo]
+     */
     abstract fun getPhotoDao(): PhotoDao
 
+    /**
+     * Get the data access object for [Photo]
+     */
     abstract fun getPasswordDao(): PasswordDao
 }

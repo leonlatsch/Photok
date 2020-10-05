@@ -42,6 +42,12 @@ class UnlockViewModel @ViewModelInject constructor(
     var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
     var unlockState: MutableLiveData<UnlockState> = MutableLiveData(UnlockState.UNDEFINED)
 
+    /**
+     * Tries to unlock the save.
+     * Compares [passwordText] to saved hash.
+     * Updates UnlockState.
+     * Called by ui.
+     */
     fun unlock() = viewModelScope.launch {
         unlockState.postValue(UnlockState.CHECKING)
 

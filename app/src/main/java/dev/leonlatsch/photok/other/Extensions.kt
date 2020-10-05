@@ -14,29 +14,34 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.entity
+package dev.leonlatsch.photok.other
 
-import dev.leonlatsch.photok.other.emptyString
+import android.view.View
 
 /**
- * Enum for [Photo.type].
- * Internal value is an [Int].
- *
- * @since 1.0.0
- * @author Leon Latsch
+ * Sets the visibility to [View.VISIBLE]
  */
-enum class PhotoType(val value: Int, val mimeType: String) {
-    UNDEFINED(0,  emptyString()),
-    PNG(1, "image/png"),
-    JPEG(2, "image/jpeg"),
-    GIF(3, "image/gif");
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
 
-    companion object {
-        /**
-         * Create a [PhotoType] from its Int value.
-         * Used in converters.
-         */
-        fun fromValue(value: Int) = values().first { it.value == value }
-    }
+/**
+ * Sets the visibility to [View.GONE]
+ */
+fun View.hide() {
+    this.visibility = View.GONE
+}
 
+/**
+ * Sets the visibility to [View.INVISIBLE]
+ */
+fun View.vanish() {
+    this.visibility = View.INVISIBLE
+}
+
+/**
+ * Returns an empty string.
+ */
+fun emptyString(): String {
+    return ""
 }

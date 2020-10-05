@@ -24,8 +24,9 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.other.hideLoadingOverlay
-import dev.leonlatsch.photok.other.showLoadingOverlay
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_unlock.*
@@ -46,13 +47,13 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.unlockState.observe(viewLifecycleOwner, {
             when (it) {
-                UnlockState.CHECKING -> showLoadingOverlay(loadingOverlay)
+                UnlockState.CHECKING -> loadingOverlay.show()
                 UnlockState.UNLOCKED -> {
                     unlock()
                 }
                 UnlockState.LOCKED -> {
-                    hideLoadingOverlay(loadingOverlay)
-                    unlockWrongPasswordWarningTextView.visibility = View.VISIBLE
+                    loadingOverlay.hide()
+                    unlockWrongPasswordWarningTextView.show()
                 }
                 else -> return@observe
             }
@@ -60,7 +61,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         viewModel.passwordText.observe(viewLifecycleOwner, {
             if (unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
-                unlockWrongPasswordWarningTextView.visibility = View.INVISIBLE
+                unlockWrongPasswordWarningTextView.vanish()
             }
         })
 
@@ -75,7 +76,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         } else {
             Toast.makeText(requireContext(), getString(R.string.common_error), Toast.LENGTH_LONG)
                 .show()
-            hideLoadingOverlay(loadingOverlay)
+            loadingOverlay.hide()
         }
     }
 
