@@ -38,22 +38,40 @@ class PrefManager(context: Context) {
         edit = preferences.edit()
     }
 
+    /**
+     * Get a string value from the preferences.
+     */
     fun getString(key: String, default: String?) = preferences.getString(key, default)
 
+    /**
+     * Get an int value from the preferences.
+     */
     fun getInt(key: String, default: Int) = preferences.getInt(key, default)
 
+    /**
+     * Get a boolean value from the preferences.
+     */
     fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
+    /**
+     * Put a string in the preferences.
+     */
     fun putString(key: String, value: String) {
         edit.putString(key, value)
         edit.apply()
     }
 
+    /**
+     * Create or update an int in the preferences.
+     */
     fun putInt(key: String, value: Int) {
         edit.putInt(key, value)
         edit.apply()
     }
 
+    /**
+     * Create or update a boolean in the preferences.
+     */
     fun putBoolean(key: String, value: Boolean) {
         edit.putBoolean(key, value)
         edit.apply()
