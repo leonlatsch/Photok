@@ -21,7 +21,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.InfoFragment" />
+            type="dev.leonlatsch.photok.ui.about.AboutFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui
+package dev.leonlatsch.photok.ui.about
 
 import android.content.Intent
 import android.net.Uri
@@ -23,9 +23,9 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentInfoBinding
+import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_info.*
+import kotlinx.android.synthetic.main.fragment_about.*
 
 /**
  * Fragment to display a info about the app and some links.
@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_info.*
  * @since 1.0.0
  * @author Leon Latsch
  */
-class InfoFragment : BindableFragment<FragmentInfoBinding>(R.layout.fragment_info) {
+class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_about) {
 
     val version = BuildConfig.VERSION_NAME
 
@@ -41,7 +41,7 @@ class InfoFragment : BindableFragment<FragmentInfoBinding>(R.layout.fragment_inf
         super.onViewCreated(view, savedInstanceState)
 
         aboutToolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_infoFragment_to_galleryFragment)
+            findNavController().navigate(R.id.action_aboutFragment_to_galleryFragment)
         }
     }
 
@@ -58,7 +58,7 @@ class InfoFragment : BindableFragment<FragmentInfoBinding>(R.layout.fragment_inf
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        //TODO
+        LicensesDialogFragment().show(requireActivity().supportFragmentManager, LicensesDialogFragment::class.qualifiedName)
     }
 
     /**
@@ -70,7 +70,7 @@ class InfoFragment : BindableFragment<FragmentInfoBinding>(R.layout.fragment_inf
         startActivity(intent)
     }
 
-    override fun bind(binding: FragmentInfoBinding) {
+    override fun bind(binding: FragmentAboutBinding) {
         super.bind(binding)
         binding.context = this
     }

@@ -29,6 +29,7 @@
     <string name="common_error">There was an error. Please try again.</string>
     <string name="common_yes">Yes</string>
     <string name="common_no">No</string>
+    <string name="common_ok">Ok</string>
     <string name="common_are_you_sure">Are you sure?</string>
 
     <!-- IMPORT -->>

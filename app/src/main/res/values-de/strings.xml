@@ -29,6 +29,7 @@
     <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
     <string name="common_yes">Ja</string>
     <string name="common_no">Nein</string>
+    <string name="common_ok">Ok</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
 
     <!-- IMPORT -->

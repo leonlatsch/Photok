@@ -32,8 +32,8 @@
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
         <action
-            android:id="@+id/action_galleryFragment_to_infoFragment"
-            app:destination="@id/infoFragment"
+            android:id="@+id/action_galleryFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
@@ -48,11 +48,11 @@
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
-        android:id="@+id/infoFragment"
-        android:name="dev.leonlatsch.photok.ui.InfoFragment"
-        android:label="InfoFragment" >
+        android:id="@+id/aboutFragment"
+        android:name="dev.leonlatsch.photok.ui.about.AboutFragment"
+        android:label="AboutFragment" >
         <action
-            android:id="@+id/action_infoFragment_to_galleryFragment"
+            android:id="@+id/action_aboutFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />

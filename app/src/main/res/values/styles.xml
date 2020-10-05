@@ -115,19 +115,24 @@
     <style name="AlertDialogStyle" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonBarPositiveStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonBarNegativeStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AlertDialogButtonBarNeutralStyle</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
-
     </style>
 
-    <style name="AlertDialogButtonBarPositiveStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <style name="AlertDialogButtonBarStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="AlertDialogButtonBarPositiveStyle" parent="AlertDialogButtonBarStyle">
         <item name="android:textColor">@android:color/holo_green_dark</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="AlertDialogButtonBarNegativeStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <style name="AlertDialogButtonBarNegativeStyle" parent="AlertDialogButtonBarStyle">
         <item name="android:textColor">@android:color/holo_red_dark</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="AlertDialogButtonBarNeutralStyle" parent="AlertDialogButtonBarStyle">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 </resources>
