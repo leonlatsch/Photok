@@ -58,7 +58,10 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        LicensesDialogFragment().show(requireActivity().supportFragmentManager, LicensesDialogFragment::class.qualifiedName)
+        LicensesDialogFragment().show(
+            requireActivity().supportFragmentManager,
+            LicensesDialogFragment::class.qualifiedName
+        )
     }
 
     /**

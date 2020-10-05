@@ -23,6 +23,12 @@ import android.webkit.WebView
 import androidx.fragment.app.DialogFragment
 import dev.leonlatsch.photok.R
 
+/**
+ * Dialog for showing open_source_licenses.html
+ *
+ * @author Leon Latsch
+ * @since 1.0.0
+ */
 class LicensesDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
