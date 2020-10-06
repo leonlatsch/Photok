@@ -55,15 +55,6 @@
     <PreferenceCategory
         android:summary="@string/settings_category_advanced_summary"
         android:title="@string/settings_category_advanced">
-r
-        <DropDownPreference
-            android:defaultValue="128"
-            android:entries="@array/thumbnailSizes"
-            android:entryValues="@array/thumbnailSizes"
-            android:icon="@drawable/photo_size"
-            android:key="gallery^advanced.thumbnailSize"
-            android:title="@string/settings_thumbnail_size_title"
-            app:useSimpleSummaryProvider="true" />
 
         <DropDownPreference
             android:defaultValue="4"

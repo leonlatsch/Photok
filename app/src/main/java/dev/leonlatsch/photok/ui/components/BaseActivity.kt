@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.components
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import dev.leonlatsch.photok.settings.Config
 
 /**
  * Base for all activities.
@@ -30,6 +31,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+        if (!config.getBoolean(Config.SECURITY_ALLOW_SCREENSHOTS, Config.SECURITY_ALLOW_SCREENSHOTS_DEFAULT)) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        }
     }
+
+    /**
+     * Abstract [Config], must be injected in implementations.
+     */
+    abstract var config: Config
 }

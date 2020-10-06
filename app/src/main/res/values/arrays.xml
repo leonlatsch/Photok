@@ -17,14 +17,9 @@
 
 <resources>
 
-    <!-- Gallery thumbnail size Dropdown -->
-    <string-array name="thumbnailSizes">
-        <item>128</item>
-        <item>256</item>
-    </string-array>
-
     <!-- Gallery Columns Settings Dropdown -->
     <string-array name="galleryColumns">
+        <item>5</item>
         <item>4</item>
         <item>3</item>
     </string-array>

@@ -36,6 +36,7 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 /**
  * Fragment for displaying a gallery.
@@ -58,16 +60,30 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
+    // region binding properties
+
     var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
 
+    // endregion
+
+    @Inject
+    lateinit var config: Config
+
     private val viewModel: GalleryViewModel by viewModels()
+
     private lateinit var adapter: PhotoAdapter
     private var actionMode: ActionMode? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
+        galleryPhotoGrid.layoutManager = GridLayoutManager(
+            requireContext(),
+            config.getIntFromString(
+                Config.GALLERY_ADVANCED_GALLERY_COLUMNS,
+                Config.GALLERY_ADVANCED_GALLERY_COLUMNS_DEFAULT
+            )
+        )
         viewModel.photos
 
         adapter = PhotoAdapter(

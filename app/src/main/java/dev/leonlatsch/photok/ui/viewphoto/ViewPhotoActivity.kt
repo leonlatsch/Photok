@@ -24,12 +24,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Activity to view a photo in full screen mode.
@@ -42,6 +44,9 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     private val viewModel: ViewPhotoViewModel by viewModels()
 
+    @Inject
+    override lateinit var config: Config
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +55,13 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        initializeSystemUI()
+        if (config.getBoolean(
+                Config.GALLERY_AUTO_FULLSCREEN,
+                Config.GALLERY_AUTO_FULLSCREEN_DEFAULT
+            )
+        ) {
+            initializeSystemUI()
+        }
         loadPhoto()
     }
 
