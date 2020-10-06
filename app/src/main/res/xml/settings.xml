@@ -19,18 +19,20 @@
 
     <PreferenceCategory android:title="App">
         <DropDownPreference
-            android:key="app^language"
             android:defaultValue="default"
-            android:title="Language"
             android:entries="@array/localeStrings"
             android:entryValues="@array/locales"
-            app:useSimpleSummaryProvider="true"/>
+            android:icon="@drawable/language"
+            android:key="app^language"
+            android:title="Language"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Gallery">
         <SwitchPreference
             android:defaultValue="true"
+            android:icon="@drawable/fullscreen"
             android:key="gallery^fullscreen.auto"
             android:summary="Enter fullscreen mode when opening a photo."
             android:title="Auto Fullscreen" />
@@ -39,11 +41,13 @@
     <PreferenceCategory android:title="Security">
         <SwitchPreference
             android:defaultValue="false"
+            android:icon="@drawable/screen_lock"
             android:key="security^allowScreenshots"
             android:summary="Allow taking screenshots."
             android:title="Allow screenshots" />
 
         <Preference
+            android:icon="@drawable/key"
             android:summary="Change your password"
             android:title="Change Password" />
     </PreferenceCategory>
@@ -56,6 +60,7 @@
             android:defaultValue="128"
             android:entries="@array/thumbnailSizes"
             android:entryValues="@array/thumbnailSizes"
+            android:icon="@drawable/photo_size"
             android:key="gallery^advanced.thumbnailSize"
             android:title="Thumbnail size"
             app:useSimpleSummaryProvider="true" />
@@ -64,6 +69,7 @@
             android:defaultValue="4"
             android:entries="@array/galleryColumns"
             android:entryValues="@array/galleryColumns"
+            android:icon="@drawable/view_column"
             android:key="gallery^advanced.galleryColumns"
             android:title="Gallery Columns"
             app:useSimpleSummaryProvider="true" />

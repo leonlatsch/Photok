@@ -39,6 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
             app:navigationIcon="@drawable/back"
+            android:theme="@style/transparentToolbarStyle"
             app:title="@string/menu_main_about" />
 
         <LinearLayout
