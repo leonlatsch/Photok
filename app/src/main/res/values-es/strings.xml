@@ -106,19 +106,19 @@
 
 
     <!-- SETTINGS -->
-    <string name="settings_title">Settings</string>
-    <string name="settings_category_app">App</string>
-    <string name="settings_category_gallery">Gallery</string>
-    <string name="settings_auto_fullscreen_title">Auto Fullscreen</string>
-    <string name="settings_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>
-    <string name="settings_category_security">Security</string>
-    <string name="settings_allow_screenshots_title">Allow Screenshots</string>
-    <string name="settings_allow_screenshots_summary">Allow taking screenshots</string>
-    <string name="settings_change_password_title">Change Password</string>
-    <string name="settings_change_password_summary">Change your password</string>
-    <string name="settings_category_advanced">Advanced</string>
-    <string name="settings_category_advanced_summary">Use carefully</string>
-    <string name="settings_gallery_columns_title">Gallery Columns</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_category_app">Aplicación</string>
+    <string name="settings_category_gallery">Galería</string>
+    <string name="settings_auto_fullscreen_title">Pantalla completa automática</string>
+    <string name="settings_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
+    <string name="settings_category_security">Seguridad</string>
+    <string name="settings_allow_screenshots_title">Permitir capturas de pantalla</string>
+    <string name="settings_allow_screenshots_summary">Permitir tomar capturas de pantalla</string>
+    <string name="settings_change_password_title">Cambiar contraseña</string>
+    <string name="settings_change_password_summary">Cambia tu contraseña</string>
+    <string name="settings_category_advanced">Avanzado</string>
+    <string name="settings_category_advanced_summary">Usar con cuidado</string>
+    <string name="settings_gallery_columns_title">Columnas a motrar en la galería</string>
 
     <string name="locale_name">Español</string>
     <string name="locale_system_default">Sistema por defecto</string>
