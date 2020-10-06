@@ -27,7 +27,7 @@
         android:background="@color/colorPrimary"
         app:navigationIcon="@drawable/back"
         android:theme="@style/toolbarStyle"
-        app:title="Settings" />
+        app:title="@string/settings_title" />
 
     <!-- Container for settings.xml -->
     <FrameLayout

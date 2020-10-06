@@ -106,6 +106,22 @@
 
 
     <!-- SETTINGS -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_category_app">App</string>
+    <string name="settings_lang_title">Sprache</string>
+    <string name="settings_category_gallery">Galerie</string>
+    <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
+    <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
+    <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots</string>
+    <string name="settings_change_password_title">Passwort ändern</string>
+    <string name="settings_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_category_advanced">Erweitert</string>
+    <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
+    <string name="settings_thumbnail_size_title">Vorschaubild Größe</string>
+    <string name="settings_gallery_columns_title">Galerie Spalten</string>
+
     <string name="locale_name">Deutsch</string>
     <string name="locale_system_default">System standard</string>
     <string name="locale_name_en">Englisch</string>
