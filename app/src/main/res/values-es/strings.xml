@@ -29,7 +29,7 @@
     <string name="common_error">Ha ocurrido un error. Por favor, inténtalo de nuevo.</string>
     <string name="common_yes">Sí</string>
     <string name="common_no">No</string>
-    <string name="common_ok">Ok</string>
+    <string name="common_ok">OK</string>
     <string name="common_are_you_sure">¿Estás seguro?</string>
 
     <!-- IMPORT -->>
@@ -103,4 +103,12 @@
     <string name="about_thrid_party">Software de terceros</string>
     <string name="about_privacy_policy">Política de Privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev</string>
+
+
+    <!-- SETTINGS -->
+    <string name="locale_name">Español</string>
+    <string name="locale_system_default">Sistema por defecto</string>
+    <string name="locale_name_en">Inglés</string>
+    <string name="locale_name_de">Alemán</string>
+    <string name="locale_name_es">Español</string>
 </resources>

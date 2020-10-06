@@ -14,43 +14,59 @@
   ~   limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Gallery">
-        <SwitchPreference
-            app:defaultValue="true"
-            app:key="gallery^fullscreen.auto"
-            app:summary="Enter fullscreen mode when opening a photo."
-            app:title="Auto Fullscreen" />
+    <PreferenceCategory android:title="App">
+        <DropDownPreference
+            android:key="app^language"
+            android:defaultValue="default"
+            android:title="Language"
+            android:entries="@array/localeStrings"
+            android:entryValues="@array/locales"
+            app:useSimpleSummaryProvider="true"/>
+
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Security">
+    <PreferenceCategory android:title="Gallery">
         <SwitchPreference
-            app:defaultValue="false"
-            app:key="security^allowScreenshots"
-            app:summary="Allow taking screenshots."
-            app:title="Allow screenshots" />
+            android:defaultValue="true"
+            android:key="gallery^fullscreen.auto"
+            android:summary="Enter fullscreen mode when opening a photo."
+            android:title="Auto Fullscreen" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Security">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="security^allowScreenshots"
+            android:summary="Allow taking screenshots."
+            android:title="Allow screenshots" />
+
+        <Preference
+            android:summary="Change your password"
+            android:title="Change Password" />
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:summary="Cloud impact performance of the app."
-        app:title="Advanced">
+        android:summary="Cloud impact performance of the app."
+        android:title="Advanced">
 
         <DropDownPreference
-            app:entryValues="@array/thumbnailSizes"
-            app:entries="@array/thumbnailSizes"
-            app:key="gallery^advanced.thumbnailSize"
-            app:summary="Determines what size thumbnails should have."
-            app:title="Thumbnail size"
-            app:defaultValue="128"/>
+            android:defaultValue="128"
+            android:entries="@array/thumbnailSizes"
+            android:entryValues="@array/thumbnailSizes"
+            android:key="gallery^advanced.thumbnailSize"
+            android:title="Thumbnail size"
+            app:useSimpleSummaryProvider="true" />
 
         <DropDownPreference
-            app:defaultValue="4"
-            app:entries="@array/galleryColumns"
-            app:entryValues="@array/galleryColumns"
-            app:key="gallery^advanced.galleryColumns"
-            app:summary="The amount of columns the gallery should show."
-            app:title="Gallery Columns" />
+            android:defaultValue="4"
+            android:entries="@array/galleryColumns"
+            android:entryValues="@array/galleryColumns"
+            android:key="gallery^advanced.galleryColumns"
+            android:title="Gallery Columns"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>

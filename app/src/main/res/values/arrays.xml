@@ -16,6 +16,30 @@
   -->
 
 <resources>
-    <array name="thumbnailSizes">128,256</array>
-    <array name="galleryColumns">3,4</array>
+
+    <!-- Gallery thumbnail size Dropdown -->
+    <string-array name="thumbnailSizes">
+        <item>128</item>
+        <item>256</item>
+    </string-array>
+
+    <!-- Gallery Columns Settings Dropdown -->
+    <string-array name="galleryColumns">
+        <item>4</item>
+        <item>3</item>
+    </string-array>
+
+    <!-- Locale Settings Dropdown -->
+    <string-array name="localeStrings">
+        <item>@string/locale_system_default</item>
+        <item>@string/locale_name_en</item>
+        <item>@string/locale_name_de</item>
+        <item>@string/locale_name_es</item>
+    </string-array>
+    <string-array name="locales">
+        <item>default</item>
+        <item>en</item>
+        <item>de</item>
+        <item>es</item>
+    </string-array>
 </resources>
