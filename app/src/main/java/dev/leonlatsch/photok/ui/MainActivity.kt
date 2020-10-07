@@ -26,8 +26,10 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 /**
  * The main Activity.
@@ -38,6 +40,9 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 @AndroidEntryPoint
 class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
+
+    @Inject
+    override lateinit var config: Config
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +72,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuMainItemSettings -> {
-            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            mainNavHostFragment.findNavController()
+                .navigate(R.id.action_galleryFragment_to_settingsFragment)
             true
         }
         R.id.menuMainItemAbout -> {
-            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_aboutFragment)
+            mainNavHostFragment.findNavController()
+                .navigate(R.id.action_galleryFragment_to_aboutFragment)
             true
         }
         else -> false

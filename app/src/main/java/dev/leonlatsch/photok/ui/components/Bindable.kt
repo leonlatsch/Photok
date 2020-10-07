@@ -28,6 +28,7 @@ interface Bindable<BindingType : ViewDataBinding> {
 
     /**
      * Used to insert bindings.
+     * @sample dev.leonlatsch.photok.ui.components.BindableActivity.bind
      */
     fun bind(binding: BindingType)
 

@@ -14,6 +14,49 @@
   ~   limitations under the License.
   -->
 
-<PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- may need later
+    <PreferenceCategory android:title="@string/settings_category_app">
+    </PreferenceCategory>
+    -->
+
+    <PreferenceCategory android:title="@string/settings_category_gallery">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:icon="@drawable/fullscreen"
+            android:key="gallery^fullscreen.auto"
+            android:summary="@string/settings_auto_fullscreen_summary"
+            android:title="@string/settings_auto_fullscreen_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_security">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/screen_lock"
+            android:key="security^allowScreenshots"
+            android:summary="@string/settings_allow_screenshots_summary"
+            android:title="@string/settings_allow_screenshots_title" />
+
+        <Preference
+            android:icon="@drawable/key"
+            android:summary="@string/settings_change_password_summary"
+            android:title="@string/settings_change_password_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:summary="@string/settings_category_advanced_summary"
+        android:title="@string/settings_category_advanced">
+
+        <DropDownPreference
+            android:defaultValue="4"
+            android:entries="@array/galleryColumns"
+            android:entryValues="@array/galleryColumns"
+            android:icon="@drawable/view_column"
+            android:key="gallery^advanced.galleryColumns"
+            android:title="@string/settings_gallery_columns_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
