@@ -118,6 +118,8 @@
     <string name="settings_category_advanced">Advanced</string>
     <string name="settings_category_advanced_summary">Use carefully</string>
     <string name="settings_gallery_columns_title">Gallery Columns</string>
+    <string name="settings_gallery_columns_option">Select an option</string>
+    <string name="settings_gallery_columns_cancel">Cancel</string>
 
     <string name="locale_name">English</string>
     <string name="locale_system_default">System default</string>

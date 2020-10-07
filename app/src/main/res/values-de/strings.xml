@@ -119,6 +119,8 @@
     <string name="settings_category_advanced">Erweitert</string>
     <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
     <string name="settings_gallery_columns_title">Galerie Spalten</string>
+    <string name="settings_gallery_columns_option">Select an option</string>
+    <string name="settings_gallery_columns_cancel">Cancel</string>
 
     <string name="locale_name">Deutsch</string>
     <string name="locale_system_default">System standard</string>

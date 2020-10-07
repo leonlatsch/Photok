@@ -49,12 +49,13 @@
         android:summary="@string/settings_category_advanced_summary"
         android:title="@string/settings_category_advanced">
 
-        <DropDownPreference
+        <Preference
             android:defaultValue="4"
             android:entries="@array/galleryColumns"
             android:entryValues="@array/galleryColumns"
             android:icon="@drawable/view_column"
             android:key="gallery^advanced.galleryColumns"
+            android:onClick="openDialog"
             android:title="@string/settings_gallery_columns_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
