@@ -17,17 +17,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- may need later
     <PreferenceCategory android:title="@string/settings_category_app">
-        <DropDownPreference
-            android:defaultValue="default"
-            android:entries="@array/localeStrings"
-            android:entryValues="@array/locales"
-            android:icon="@drawable/language"
-            android:key="app^language"
-            android:title="@string/settings_lang_title"
-            app:useSimpleSummaryProvider="true" />
-
     </PreferenceCategory>
+    -->
 
     <PreferenceCategory android:title="@string/settings_category_gallery">
         <SwitchPreference

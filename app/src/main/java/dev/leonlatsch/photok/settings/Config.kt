@@ -102,9 +102,6 @@ class Config(context: Context) {
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT  = true
 
-        const val APP_LANGUAGE = "app^language"
-        const val APP_LANGUAGE_DEFAULT = "default"
-
         /**
          * Determines if the full screen photo view, should hide the system ui at start.
          */

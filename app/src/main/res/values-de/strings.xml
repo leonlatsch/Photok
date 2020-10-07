@@ -108,7 +108,6 @@
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
     <string name="settings_category_app">App</string>
-    <string name="settings_lang_title">Sprache</string>
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>

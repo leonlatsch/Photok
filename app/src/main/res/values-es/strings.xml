@@ -108,7 +108,6 @@
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_category_app">App</string>
-    <string name="settings_lang_title">Language</string>
     <string name="settings_category_gallery">Gallery</string>
     <string name="settings_auto_fullscreen_title">Auto Fullscreen</string>
     <string name="settings_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>

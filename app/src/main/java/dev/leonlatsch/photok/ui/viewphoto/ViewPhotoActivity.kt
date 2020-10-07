@@ -55,13 +55,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        if (config.getBoolean(
-                Config.GALLERY_AUTO_FULLSCREEN,
-                Config.GALLERY_AUTO_FULLSCREEN_DEFAULT
-            )
-        ) {
-            initializeSystemUI()
-        }
+
+        initializeSystemUI()
         loadPhoto()
     }
 
@@ -135,8 +130,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        toggleSystemUI(window)
-
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
                 viewPhotoAppBarLayout.show()
@@ -145,6 +138,14 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 viewPhotoAppBarLayout.hide()
                 viewPhotoBottomToolbarLayout.hide()
             }
+        }
+
+        if (config.getBoolean(
+                Config.GALLERY_AUTO_FULLSCREEN,
+                Config.GALLERY_AUTO_FULLSCREEN_DEFAULT
+            )
+        ) { // Hide system ui if configured
+            toggleSystemUI(window)
         }
     }
 
