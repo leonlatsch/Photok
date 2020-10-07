@@ -57,9 +57,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePrefManager(@ApplicationContext app: Context) = Config(app)
+    fun provideConfig(@ApplicationContext app: Context) = Config(app)
 
     @Provides
     @Singleton
-    fun providePasswordManager() = EncryptionManager()
+    fun provideEncryptionManager() = EncryptionManager()
 }
