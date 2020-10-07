@@ -78,7 +78,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@{viewModel.photo.fileName}"
             android:onClick="@{() -> context.onClick()}"
-            android:src="@{viewModel.photoDrawable, default=@drawable/ic_launcher_background}" />
+            android:src="@{viewModel.photoDrawable}" />
 
         <LinearLayout
             android:id="@+id/viewPhotoBottomToolbarLayout"
@@ -94,7 +94,8 @@
                 android:layout_weight="1"
                 android:onClick="@{() -> context.onDelete()}"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:contentDescription="@string/common_delete"
@@ -119,7 +120,8 @@
                 android:layout_weight="1"
                 android:onClick="@{() -> context.onExport()}"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:contentDescription="@string/common_export"
