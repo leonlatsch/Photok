@@ -17,8 +17,11 @@
 package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
+import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import dev.leonlatsch.photok.R
+import kotlinx.android.synthetic.main.preference_layout_template.*
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -27,6 +30,15 @@ import dev.leonlatsch.photok.R
  * @author Leon Latsch
  */
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        settingsToolbar.setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_galleryFragment)
+        }
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
     }

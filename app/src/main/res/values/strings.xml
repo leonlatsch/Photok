@@ -29,7 +29,7 @@
     <string name="common_error">There was an error. Please try again.</string>
     <string name="common_yes">Yes</string>
     <string name="common_no">No</string>
-    <string name="common_ok">Ok</string>
+    <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Are you sure?</string>
 
     <!-- IMPORT -->>
@@ -94,7 +94,7 @@
     <string name="export_exporting">Exporting photo(s)…</string>
     <string name="export_permission_rationale">Photok needs to access your storage, to export photos.</string>
     <string name="export_finished">Exported</string>
-    
+
     <!-- ABOUT -->
     <string name="about_version">Version:</string>
     <string name="about_developed_by">Developed by:</string>
@@ -103,4 +103,25 @@
     <string name="about_thrid_party">Third Party Software</string>
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_category_app">App</string>
+    <string name="settings_category_gallery">Gallery</string>
+    <string name="settings_auto_fullscreen_title">Auto Fullscreen</string>
+    <string name="settings_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>
+    <string name="settings_category_security">Security</string>
+    <string name="settings_allow_screenshots_title">Allow Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Allow taking screenshots</string>
+    <string name="settings_change_password_title">Change Password</string>
+    <string name="settings_change_password_summary">Change your password</string>
+    <string name="settings_category_advanced">Advanced</string>
+    <string name="settings_category_advanced_summary">Use carefully</string>
+    <string name="settings_gallery_columns_title">Gallery Columns</string>
+
+    <string name="locale_name">English</string>
+    <string name="locale_system_default">System default</string>
+    <string name="locale_name_en">English</string>
+    <string name="locale_name_de">German</string>
+    <string name="locale_name_es">Spanish</string>
 </resources>

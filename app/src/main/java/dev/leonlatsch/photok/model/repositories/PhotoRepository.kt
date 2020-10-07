@@ -28,6 +28,7 @@ import androidx.paging.PagingSource
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.Config
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -42,7 +43,8 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
-    private val encryptionManager: EncryptionManager
+    private val encryptionManager: EncryptionManager,
+    private val config: Config
 ) {
 
     // DATABASE
@@ -205,7 +207,7 @@ class PhotoRepository @Inject constructor(
             bytes ?: return false
 
             val contentValues = ContentValues()
-            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, photo.fileName)
+            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "photok_export_${photo.fileName}")
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
 
             val uri = context.contentResolver.insert(

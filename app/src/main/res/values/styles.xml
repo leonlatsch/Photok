@@ -34,6 +34,7 @@
         <item name="editTextStyle">@style/editTextStyle</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
     </style>
 
     <style name="ActionModeCloseButtonStyle">
@@ -45,7 +46,7 @@
 
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
     <style name="LightTextViewStyle" parent="TextViewStyle">
@@ -77,7 +78,7 @@
 
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
-        <item name="android:fontFamily">@font/raleway_thin</item>
+        <item name="android:fontFamily">@font/raleway_regular</item>
     </style>
 
     <!-- BUTTON -->
@@ -96,8 +97,16 @@
 
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="transparentToolbarStyle" parent="toolbarStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
     <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -116,12 +125,12 @@
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonBarPositiveStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonBarNegativeStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertDialogButtonBarNeutralStyle</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
     <style name="AlertDialogButtonBarStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textSize">15sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
     <style name="AlertDialogButtonBarPositiveStyle" parent="AlertDialogButtonBarStyle">
@@ -134,5 +143,10 @@
 
     <style name="AlertDialogButtonBarNeutralStyle" parent="AlertDialogButtonBarStyle">
         <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <!-- SETTINGS -->
+    <style name="AppTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+        <item name="android:layout">@layout/preference_layout_template</item>
     </style>
 </resources>

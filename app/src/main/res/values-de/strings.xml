@@ -29,7 +29,7 @@
     <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
     <string name="common_yes">Ja</string>
     <string name="common_no">Nein</string>
-    <string name="common_ok">Ok</string>
+    <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
 
     <!-- IMPORT -->
@@ -89,8 +89,8 @@
     <string name="delete_deleting">Lösche foto(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s), zurück in deine Gallerie, <b>exportieren</b> willst?</string>
-    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto, zurück in deine Gallerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s), zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_exporting">Exportiere Foto(s)…</string>
     <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
     <string name="export_finished">Exportiert</string>
@@ -103,4 +103,26 @@
     <string name="about_thrid_party">Drittanbietersoftware</string>
     <string name="about_privacy_policy">Datenschutzerklärung</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev</string>
+
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_category_app">App</string>
+    <string name="settings_category_gallery">Galerie</string>
+    <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
+    <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
+    <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots</string>
+    <string name="settings_change_password_title">Passwort ändern</string>
+    <string name="settings_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_category_advanced">Erweitert</string>
+    <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
+    <string name="settings_gallery_columns_title">Galerie Spalten</string>
+
+    <string name="locale_name">Deutsch</string>
+    <string name="locale_system_default">System standard</string>
+    <string name="locale_name_en">Englisch</string>
+    <string name="locale_name_de">Deutsch</string>
+    <string name="locale_name_es">Spanisch</string>
 </resources>

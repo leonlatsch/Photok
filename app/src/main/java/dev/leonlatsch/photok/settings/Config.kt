@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.settings
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -25,17 +25,12 @@ import android.content.SharedPreferences
  * @since 1.0.0
  * @author Leon Latsch
  */
-class PrefManager(context: Context) {
-
-    private val fileName = "dev.leonlatsch.photok_preferences"
-    private val mode = Context.MODE_PRIVATE
+class Config(context: Context) {
 
     private val preferences: SharedPreferences
-    private val edit: SharedPreferences.Editor
 
     init {
-        preferences = context.getSharedPreferences(fileName, mode)
-        edit = preferences.edit()
+        preferences = context.getSharedPreferences(FILE_NAME, MODE)
     }
 
     /**
@@ -49,6 +44,16 @@ class PrefManager(context: Context) {
     fun getInt(key: String, default: Int) = preferences.getInt(key, default)
 
     /**
+     * Gets an int value which is stored as a string.
+     * Like the ones created by DropDownPreference.
+     */
+    fun getIntFromString(key: String, default: Int): Int {
+        val origValue = preferences.getString(key, default.toString())
+        origValue ?: return default
+        return Integer.parseInt(origValue)
+    }
+
+    /**
      * Get a boolean value from the preferences.
      */
     fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
@@ -57,6 +62,7 @@ class PrefManager(context: Context) {
      * Put a string in the preferences.
      */
     fun putString(key: String, value: String) {
+        val edit = preferences.edit()
         edit.putString(key, value)
         edit.apply()
     }
@@ -65,6 +71,7 @@ class PrefManager(context: Context) {
      * Create or update an int in the preferences.
      */
     fun putInt(key: String, value: Int) {
+        val edit = preferences.edit()
         edit.putInt(key, value)
         edit.apply()
     }
@@ -73,7 +80,44 @@ class PrefManager(context: Context) {
      * Create or update a boolean in the preferences.
      */
     fun putBoolean(key: String, value: Boolean) {
+        val edit = preferences.edit()
         edit.putBoolean(key, value)
         edit.apply()
+    }
+
+    companion object {
+        /**
+         * The filename used to store the preferences.
+         */
+        const val FILE_NAME = "dev.leonlatsch.photok_preferences"
+
+        /**
+         * Always use private mode to open preferences.
+         */
+        const val MODE = Context.MODE_PRIVATE
+
+        /**
+         * Determines if the app has started before.
+         */
+        const val SYSTEM_FIRST_START = "system^firstStart"
+        const val SYSTEM_FIRST_START_DEFAULT  = true
+
+        /**
+         * Determines if the full screen photo view, should hide the system ui at start.
+         */
+        const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
+        const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
+
+        /**
+         * Determines the gallery columns.
+         */
+        const val GALLERY_ADVANCED_GALLERY_COLUMNS = "gallery^advanced.galleryColumns"
+        const val GALLERY_ADVANCED_GALLERY_COLUMNS_DEFAULT = 4
+
+        /**
+         * Determines if screenshots should be allowed.
+         */
+        const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
+        const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
     }
 }

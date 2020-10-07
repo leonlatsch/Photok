@@ -24,12 +24,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Activity to view a photo in full screen mode.
@@ -42,6 +44,9 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     private val viewModel: ViewPhotoViewModel by viewModels()
 
+    @Inject
+    override lateinit var config: Config
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,6 +54,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
 
         initializeSystemUI()
         loadPhoto()
@@ -96,7 +102,12 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      */
     @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (EasyPermissions.hasPermissions(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
             Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
                     Dialogs.showShortToast(this, getString(R.string.export_finished))
@@ -109,7 +120,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 this,
                 getString(R.string.export_permission_rationale),
                 REQ_PERM_EXPORT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
     }
@@ -117,8 +129,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     private fun initializeSystemUI() {
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
-
-        toggleSystemUI(window)
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
@@ -128,6 +138,14 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 viewPhotoAppBarLayout.hide()
                 viewPhotoBottomToolbarLayout.hide()
             }
+        }
+
+        if (config.getBoolean(
+                Config.GALLERY_AUTO_FULLSCREEN,
+                Config.GALLERY_AUTO_FULLSCREEN_DEFAULT
+            )
+        ) { // Hide system ui if configured
+            toggleSystemUI(window)
         }
     }
 

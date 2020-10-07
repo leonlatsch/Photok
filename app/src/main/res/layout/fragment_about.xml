@@ -39,6 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
             app:navigationIcon="@drawable/back"
+            android:theme="@style/transparentToolbarStyle"
             app:title="@string/menu_main_about" />
 
         <LinearLayout
@@ -69,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="Version:"
+                    android:text="@string/about_version"
                     android:textColor="@color/darkGray" />
 
                 <TextView
