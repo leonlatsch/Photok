@@ -33,13 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@android:color/transparent"
+            android:theme="@style/transparentToolbarStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
             app:navigationIcon="@drawable/back"
-            android:theme="@style/transparentToolbarStyle"
             app:title="@string/menu_main_about" />
 
         <LinearLayout
@@ -54,6 +54,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.15">
 
+            <ImageView
+                android:layout_width="108dp"
+                android:layout_height="108dp"
+                android:src="@mipmap/ic_launcher" />
+
             <TextView
                 style="@style/AppNameTitleStyle"
                 android:layout_width="wrap_content"
@@ -64,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-20dp">
+                android:layout_marginTop="-18dp">
 
                 <TextView
                     android:layout_width="wrap_content"
