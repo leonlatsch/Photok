@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,35 +24,43 @@
         android:id="@+id/galleryFragment"
         android:name="dev.leonlatsch.photok.ui.gallery.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" >
+        tools:layout="@layout/fragment_gallery">
         <action
             android:id="@+id/action_galleryFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/galleryFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_galleryFragment_to_aboutFragment"
             app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/galleryFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.leonlatsch.photok.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="SettingsFragment">
         <action
             android:id="@+id/action_settingsFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="dev.leonlatsch.photok.ui.about.AboutFragment"
-        android:label="AboutFragment" >
+        android:label="AboutFragment">
         <action
             android:id="@+id/action_aboutFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
+            app:popUpTo="@id/aboutFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
