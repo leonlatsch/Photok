@@ -29,135 +29,144 @@
 
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_sheet_light"
-        android:orientation="vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="UseCompoundDrawables">
-
-            <TextView
-                style="@style/ProcessingTestViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{context.labelText, default=Processing}" />
-
-            <ImageView
-                android:id="@+id/statusImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="5dp"
-                android:src="@{context.statusDrawable}" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{context.processIndicatorsVisibility}">
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.progress.progressPercent.toString(), default=50}" />
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/common_percent" />
-
-        </LinearLayout>
-
-        <ProgressBar
-            style="@style/ProgressBarHorizontalStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:max="@{viewModel.progress.maxPercent}"
-            android:progress="@{viewModel.progress.progressPercent, default=50}" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/processItemsProgressIndicatorLayout"
-                android:text="@string/process_failures_occurred"
-                android:textColor="@android:color/holo_orange_dark"
-                android:visibility="@{context.failuresWarnMessageVisibility, default=invisible}" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_bottom_sheet_light"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp">
 
             <LinearLayout
-                android:id="@+id/processItemsProgressIndicatorLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    style="@style/ProcessingTestViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{context.labelText, default=Processing}" />
+
+                <ImageView
+                    android:id="@+id/statusImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="5dp"
+                    android:src="@{context.statusDrawable}" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="@{context.processIndicatorsVisibility}">
 
                 <TextView
                     style="@style/TextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.progress.current.toString(), default=5}" />
+                    android:text="@{viewModel.progress.progressPercent.toString(), default=50}" />
 
                 <TextView
                     style="@style/TextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:text="@string/common_slash" />
-
-                <TextView
-                    style="@style/TextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.progress.max.toString(), default=10}" />
+                    android:text="@string/common_percent" />
 
             </LinearLayout>
 
-        </RelativeLayout>
+            <ProgressBar
+                style="@style/ProgressBarHorizontalStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:max="@{viewModel.progress.maxPercent}"
+                android:progress="@{viewModel.progress.progressPercent, default=50}" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/processItemsProgressIndicatorLayout"
+                    android:text="@string/process_failures_occurred"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:visibility="@{context.failuresWarnMessageVisibility, default=invisible}" />
+
+                <LinearLayout
+                    android:id="@+id/processItemsProgressIndicatorLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="@{context.processIndicatorsVisibility}">
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.progress.current.toString(), default=5}" />
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/common_slash" />
+
+                    <TextView
+                        style="@style/TextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.progress.max.toString(), default=10}" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp">
+            android:paddingTop="5dp">
 
-            <Button
-                style="@style/buttonStyle"
-                android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:onClick="@{() -> viewModel.cancel()}"
-                android:text="@string/process_abort"
-                android:visibility="@{context.abortButtonVisibility, default=visible}" />
+                <Button
+                    style="@style/buttonStyle"
+                    android:layout_width="@dimen/wide_button_width"
+                    android:layout_height="@dimen/wide_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:onClick="@{() -> viewModel.cancel()}"
+                    android:text="@string/process_abort"
+                    android:visibility="@{context.abortButtonVisibility, default=visible}" />
 
-            <Button
-                style="@style/buttonStyle"
-                android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:onClick="@{() -> context.dismiss()}"
-                android:text="@string/process_close"
-                android:visibility="@{context.closeButtonVisibility, default=gone}" />
+                <Button
+                    style="@style/buttonStyle"
+                    android:layout_width="@dimen/wide_button_width"
+                    android:layout_height="@dimen/wide_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:onClick="@{() -> context.dismiss()}"
+                    android:text="@string/process_close"
+                    android:visibility="@{context.closeButtonVisibility, default=gone}" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
+    </FrameLayout>
 </layout>
