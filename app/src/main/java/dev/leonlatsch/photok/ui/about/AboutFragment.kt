@@ -20,7 +20,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
@@ -41,7 +40,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
         super.onViewCreated(view, savedInstanceState)
 
         aboutToolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_aboutFragment_to_galleryFragment)
+            requireActivity().onBackPressed()
         }
     }
 

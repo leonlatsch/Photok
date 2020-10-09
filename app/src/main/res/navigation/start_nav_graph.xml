@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,19 +24,12 @@
         android:id="@+id/setupFragment"
         android:name="dev.leonlatsch.photok.ui.setup.SetupFragment"
         android:label="fragment_setup"
-        tools:layout="@layout/fragment_setup" >
-        <action
-            android:id="@+id/action_setupFragment_to_tutorialFragment"
-            app:destination="@id/onBoardingFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
-    </fragment>
+        tools:layout="@layout/fragment_setup" />
     <fragment
         android:id="@+id/unlockFragment"
         android:name="dev.leonlatsch.photok.ui.unlock.UnlockFragment"
         android:label="fragment_unlock"
-        tools:layout="@layout/fragment_unlock" >
-    </fragment>
+        tools:layout="@layout/fragment_unlock" />
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="dev.leonlatsch.photok.ui.start.OnBoardingFragment"
@@ -46,10 +38,10 @@
         <action
             android:id="@+id/action_introFragment_to_setupFragment"
             app:destination="@id/setupFragment"
-            app:popUpTo="@id/onBoardingFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/onBoardingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
@@ -59,23 +51,23 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
-            app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment"
-            app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashScreenFragment_to_setupFragment"
             app:destination="@id/setupFragment"
-            app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/fragment_fade_exit" />
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

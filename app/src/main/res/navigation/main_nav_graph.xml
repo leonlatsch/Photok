@@ -29,39 +29,19 @@
             android:id="@+id/action_galleryFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/galleryFragment"
-            app:popUpToInclusive="true" />
+            app:exitAnim="@anim/slide_to_bottom" />
         <action
             android:id="@+id/action_galleryFragment_to_aboutFragment"
             app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/galleryFragment"
-            app:popUpToInclusive="true" />
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.leonlatsch.photok.ui.settings.SettingsFragment"
-        android:label="SettingsFragment">
-        <action
-            android:id="@+id/action_settingsFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:popUpTo="@id/settingsFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
-    </fragment>
+        android:label="SettingsFragment" />
     <fragment
         android:id="@+id/aboutFragment"
         android:name="dev.leonlatsch.photok.ui.about.AboutFragment"
-        android:label="AboutFragment">
-        <action
-            android:id="@+id/action_aboutFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:popUpTo="@id/aboutFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
-    </fragment>
+        android:label="AboutFragment" />
 </navigation>

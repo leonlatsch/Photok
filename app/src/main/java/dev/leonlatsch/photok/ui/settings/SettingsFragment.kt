@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import dev.leonlatsch.photok.R
 import kotlinx.android.synthetic.main.preference_layout_template.*
@@ -35,7 +34,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onViewCreated(view, savedInstanceState)
 
         settingsToolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_galleryFragment)
+            requireActivity().onBackPressed()
         }
     }
 
