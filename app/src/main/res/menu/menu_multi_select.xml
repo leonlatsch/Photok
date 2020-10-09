@@ -18,17 +18,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menuMsAll"
-        android:icon="@drawable/select_all"
+        android:icon="@drawable/ic_select_all"
         android:title="@string/menu_ms_select_all"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menuMsDelete"
-        android:icon="@drawable/delete"
+        android:icon="@drawable/ic_delete"
         android:title="@string/menu_ms_delete"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menuMsExport"
-        android:icon="@drawable/export"
+        android:icon="@drawable/ic_export"
         android:title="@string/menu_ms_export"
         app:showAsAction="ifRoom" />
 

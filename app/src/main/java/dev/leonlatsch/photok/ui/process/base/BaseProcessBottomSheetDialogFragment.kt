@@ -83,12 +83,12 @@ abstract class BaseProcessBottomSheetDialogFragment(
                 }
                 ProcessState.FINISHED -> {
                     enterFinishedOrAbortedState()
-                    setStatusIcon(R.drawable.check, android.R.color.holo_green_dark)
+                    setStatusIcon(R.drawable.ic_check, android.R.color.holo_green_dark)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
                     enterFinishedOrAbortedState()
-                    setStatusIcon(R.drawable.close, android.R.color.holo_red_dark)
+                    setStatusIcon(R.drawable.ic_close, android.R.color.holo_red_dark)
                     getString(R.string.process_aborted)
                 }
                 else -> return@observe

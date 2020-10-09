@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/menuMainItemMore"
-        android:icon="@drawable/more"
+        android:icon="@drawable/ic_more"
         android:title="@string/menu_main_more"
         app:showAsAction="ifRoom">
 

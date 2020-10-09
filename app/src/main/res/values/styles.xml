@@ -25,7 +25,7 @@
         <!-- Action Mode -->
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/colorPrimary</item>
-        <item name="actionModeCloseDrawable">@drawable/close</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButtonStyle</item>
 
         <item name="android:textViewStyle">@style/TextViewStyle</item>
@@ -90,7 +90,7 @@
 
     <!-- PROGRESS BAR -->
     <style name="ProgressBarHorizontalStyle" parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/thick_progress_bar</item>
+        <item name="android:progressDrawable">@drawable/bg_thick_progress_bar</item>
         <item name="android:minHeight">15dip</item>
         <item name="android:maxHeight">15dip</item>
     </style>

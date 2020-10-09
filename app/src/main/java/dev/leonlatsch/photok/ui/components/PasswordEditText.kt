@@ -58,15 +58,15 @@ class PasswordEditText @JvmOverloads constructor(
     private val onShowPasswordClickListener = OnClickListener {
         passwordEditTextValue.inputType = when(passwordEditTextValue.inputType) {
             INPUT_TYPE_PASSWORD -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye_closed))
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_eye_closed))
                 INPUT_TYPE_TEXT
             }
             INPUT_TYPE_TEXT -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_eye))
                 INPUT_TYPE_PASSWORD
             }
             else -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_eye))
                 INPUT_TYPE_PASSWORD
             }
         }
