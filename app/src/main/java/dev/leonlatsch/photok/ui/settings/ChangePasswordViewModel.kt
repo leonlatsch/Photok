@@ -16,20 +16,10 @@
 
 package dev.leonlatsch.photok.ui.settings
 
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.DialogChangePasswordBinding
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.ViewModel
+import dev.leonlatsch.photok.model.repositories.PasswordRepository
 
-@AndroidEntryPoint
-class ChangePasswordDialog : BindableDialogFragment<DialogChangePasswordBinding>(R.layout.dialog_change_password) {
-
-    private val viewModel: ChangePasswordViewModel by viewModels()
-
-    override fun bind(binding: DialogChangePasswordBinding) {
-        super.bind(binding)
-        binding.context = this
-        binding.viewModel = viewModel
-    }
-}
+class ChangePasswordViewModel @ViewModelInject constructor(
+    private val passwordRepository: PasswordRepository
+) : ViewModel()
