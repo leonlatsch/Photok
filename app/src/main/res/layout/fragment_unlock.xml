@@ -46,7 +46,7 @@
                 android:textAlignment="center" />
 
             <TextView
-                style="@style/TitleTextViewStyle"
+                style="@style/VeryBigTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

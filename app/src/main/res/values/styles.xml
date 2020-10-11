@@ -35,6 +35,7 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogBaseStyle</item>
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
+        <item name="dialogTheme">@style/DialogStyle</item>
     </style>
 
     <style name="ActionModeCloseButtonStyle">
@@ -58,7 +59,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TitleTextViewStyle" parent="@style/TextViewStyle">
+    <style name="BigTextViewStyle" parent="TextViewStyle">
+        <item name="android:fontFamily">@font/raleway_black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="VeryBigTextViewStyle" parent="@style/TextViewStyle">
         <item name="android:fontFamily">@font/raleway_bold</item>
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">@android:color/black</item>
@@ -69,11 +75,6 @@
         <item name="android:text">@string/app_name</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">62sp</item>
-    </style>
-
-    <style name="ProcessingTestViewStyle" parent="TextViewStyle">
-        <item name="android:fontFamily">@font/raleway_black</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
     <!-- EDIT TEXT -->
@@ -110,6 +111,11 @@
     </style>
 
     <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- DIALOG -->
+    <style name="DialogStyle" parent="">
+        <item name="android:background">@drawable/bg_bottom_sheet_light</item>
+    </style>
 
     <!-- BOTTOM SHEET DIALOG -->
     <style name="BottomSheetDialogBaseStyle" parent="Theme.Design.Light.BottomSheetDialog">
