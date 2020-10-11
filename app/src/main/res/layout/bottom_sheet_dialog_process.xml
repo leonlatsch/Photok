@@ -37,8 +37,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bg_bottom_sheet_light"
             android:orientation="vertical"
@@ -107,7 +107,7 @@
                     android:layout_toStartOf="@id/processItemsProgressIndicatorLayout"
                     android:text="@string/process_failures_occurred"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:visibility="@{context.failuresWarnMessageVisibility, default=invisible}" />
+                    android:visibility="@{context.failuresWarnMessageVisibility, default=gone}" />
 
                 <LinearLayout
                     android:id="@+id/processItemsProgressIndicatorLayout"

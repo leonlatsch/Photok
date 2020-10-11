@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.core.view.setPadding
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
@@ -148,7 +149,11 @@ class PhotoViewHolder(
         }
 
     private fun listChanged() {
-        checkBox.isChecked = adapter.isItemSelected(layoutPosition)
+        val isSelected = adapter.isItemSelected(layoutPosition)
+        val padding = if (isSelected) 20 else 0
+
+        checkBox.isChecked = isSelected
+        imageView.setPadding(padding)
     }
 
     private fun setItemChecked(checked: Boolean) {
