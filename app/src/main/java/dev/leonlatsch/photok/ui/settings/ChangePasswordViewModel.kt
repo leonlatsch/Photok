@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.security.PasswordUtils
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -36,7 +37,8 @@ class ChangePasswordViewModel @ViewModelInject constructor(
     private val passwordRepository: PasswordRepository
 ) : ViewModel() {
 
-    val changePasswordState: MutableLiveData<ChangePasswordState> = MutableLiveData(ChangePasswordState.START)
+    val changePasswordState: MutableLiveData<ChangePasswordState> =
+        MutableLiveData(ChangePasswordState.START)
 
     val oldPasswordTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
     val newPasswordTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
@@ -48,7 +50,7 @@ class ChangePasswordViewModel @ViewModelInject constructor(
         val storedPassword = passwordRepository.getPassword()
         storedPassword ?: return@launch
 
-        if (BCrypt.checkpw(oldPasswordTextValue.value!!, storedPassword.password))         {
+        if (BCrypt.checkpw(oldPasswordTextValue.value!!, storedPassword.password)) {
             changePasswordState.postValue(ChangePasswordState.OLD_VALID)
         } else {
             changePasswordState.postValue(ChangePasswordState.OLD_INVALID)
@@ -56,6 +58,16 @@ class ChangePasswordViewModel @ViewModelInject constructor(
     }
 
     fun checkNew() = viewModelScope.launch {
-        // TODO
+        changePasswordState.postValue(ChangePasswordState.CHECKING_NEW)
+
+        if (PasswordUtils.validatePasswords(
+                newPasswordTextValue.value!!,
+                newPasswordConfirmTextValue.value!!
+            )
+        ) {
+            changePasswordState.postValue(ChangePasswordState.NEW_VALID)
+        } else {
+            changePasswordState.postValue(ChangePasswordState.NEW_INVALID)
+        }
     }
 }

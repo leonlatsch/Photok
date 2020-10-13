@@ -38,7 +38,9 @@ object PasswordUtils {
     /**
      * Indicates if two password equal.
      */
-    fun passwordsEqual(password: String, confirmPassword: String) = password == confirmPassword
+    fun passwordsEqual(password: String, confirmPassword: String) = password.isNotEmpty()
+            && confirmPassword.isNotEmpty()
+            && password == confirmPassword
 
     /**
      * Indicates if two password are valid and equal.
