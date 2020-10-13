@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.security
 
+import androidx.lifecycle.LiveData
 import dev.leonlatsch.photok.other.PASSWORD_REGEX
 import java.util.regex.Pattern
 
@@ -35,17 +36,25 @@ object PasswordUtils {
         PASSWORD_REGEX, password
     )
 
+    fun validatePassword(password: LiveData<String>) = validatePassword(password.value!!)
+
     /**
      * Indicates if two password equal.
      */
-    fun passwordsEqual(password: String, confirmPassword: String) = password.isNotEmpty()
+    fun passwordsNotEmptyAndEqual(password: String, confirmPassword: String) = password.isNotEmpty()
             && confirmPassword.isNotEmpty()
             && password == confirmPassword
+
+    fun passwordsNotEmptyAndEqual(password: LiveData<String>, confirmPassword: LiveData<String>) =
+        passwordsNotEmptyAndEqual(password.value!!, confirmPassword.value!!)
 
     /**
      * Indicates if two password are valid and equal.
      */
     fun validatePasswords(password: String, confirmPassword: String) = validatePassword(password)
             && validatePassword(confirmPassword)
-            && passwordsEqual(password, confirmPassword)
+            && passwordsNotEmptyAndEqual(password, confirmPassword)
+
+    fun validatePasswords(password: LiveData<String>, confirmPassword: LiveData<String>) =
+        validatePasswords(password.value!!, confirmPassword.value!!)
 }

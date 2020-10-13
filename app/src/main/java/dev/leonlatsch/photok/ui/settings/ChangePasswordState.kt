@@ -27,7 +27,6 @@ enum class ChangePasswordState {
     CHECKING_OLD,
     OLD_VALID,
     OLD_INVALID,
-    CHECKING_NEW,
     NEW_VALID,
     NEW_INVALID
 }

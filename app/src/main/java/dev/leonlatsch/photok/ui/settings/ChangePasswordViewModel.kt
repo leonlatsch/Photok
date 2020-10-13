@@ -58,11 +58,9 @@ class ChangePasswordViewModel @ViewModelInject constructor(
     }
 
     fun checkNew() = viewModelScope.launch {
-        changePasswordState.postValue(ChangePasswordState.CHECKING_NEW)
-
         if (PasswordUtils.validatePasswords(
-                newPasswordTextValue.value!!,
-                newPasswordConfirmTextValue.value!!
+                newPasswordTextValue,
+                newPasswordConfirmTextValue
             )
         ) {
             changePasswordState.postValue(ChangePasswordState.NEW_VALID)

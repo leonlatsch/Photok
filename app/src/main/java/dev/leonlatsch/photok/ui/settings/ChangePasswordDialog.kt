@@ -18,11 +18,12 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogChangePasswordBinding
+import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.security.PasswordUtils
@@ -56,21 +57,16 @@ class ChangePasswordDialog :
                     changePasswordOldStatusIcon.show() // Show different icon on fail
                     changePasswordNewPasswordLayout.show()
                     changePasswordNewPasswordLayout.requestFocus()
-                    // TODO: Disable old edit text
                 }
                 ChangePasswordState.OLD_INVALID -> {
                     loadingOverlay.hide()
                     changePasswordOldPasswordWrongLabel.show()
                 }
-                ChangePasswordState.CHECKING_NEW -> {
-                    loadingOverlay.show()
-                    changePasswordNewPasswordNotEqualLabel.hide()
-                }
                 ChangePasswordState.NEW_VALID -> {
                     loadingOverlay.hide()
                     Dialogs.showConfirmDialog(
                         requireContext(),
-                        "Changing your password requires re-encrypting all your photos! Do you want to continue?"
+                        getString(R.string.change_password_confirm_message)
                     ) { _, _ ->
                         dismiss()
                         // TODO: Start re encrypting bottom sheet dialog and pass new password
@@ -83,26 +79,39 @@ class ChangePasswordDialog :
             }
         })
 
-        val newPasswordObserver: Observer<String> = Observer {
-            val passwordsValid = PasswordUtils.passwordsEqual(
-                viewModel.newPasswordTextValue.value!!,
-                viewModel.newPasswordConfirmTextValue.value!!
-            ) && PasswordUtils.validatePasswords(
-                viewModel.newPasswordTextValue.value!!,
-                viewModel.newPasswordConfirmTextValue.value!!
-            )
-
-            changePasswordButton.isEnabled = passwordsValid
-            if (passwordsValid
-                || (viewModel.newPasswordTextValue.value!!.isEmpty() && viewModel.newPasswordConfirmTextValue.value!!.isEmpty())
-            ) {
-                changePasswordNewPasswordNotEqualLabel.hide()
+        viewModel.newPasswordTextValue.observe(viewLifecycleOwner, {
+            if (PasswordUtils.validatePassword(viewModel.newPasswordTextValue)) {
+                changePasswordNewPasswordConfirmEditText.show()
             } else {
-                changePasswordNewPasswordNotEqualLabel.show()
+                changePasswordNewPasswordConfirmEditText.setTextValue(emptyString())
+                changePasswordNewPasswordConfirmEditText.hide()
+            }
+            enableOrDisableSetup()
+        })
+        viewModel.newPasswordConfirmTextValue.observe(viewLifecycleOwner, {
+            enableOrDisableSetup()
+        })
+    }
+
+    private fun enableOrDisableSetup() {
+        if (!PasswordUtils.passwordsNotEmptyAndEqual(
+                viewModel.newPasswordTextValue,
+                viewModel.newPasswordConfirmTextValue
+            )
+            && changePasswordNewPasswordConfirmEditText.isVisible
+        ) {
+            changePasswordNewPasswordNotEqualLabel.show()
+            changePasswordButton.isEnabled = false
+        } else {
+            changePasswordNewPasswordNotEqualLabel.hide()
+            if (PasswordUtils.validatePasswords(
+                    viewModel.newPasswordTextValue,
+                    viewModel.newPasswordConfirmTextValue
+                )
+            ) {
+                changePasswordButton.isEnabled = true
             }
         }
-        viewModel.newPasswordTextValue.observe(viewLifecycleOwner, newPasswordObserver)
-        viewModel.newPasswordConfirmTextValue.observe(viewLifecycleOwner, newPasswordObserver)
     }
 
     override fun bind(binding: DialogChangePasswordBinding) {

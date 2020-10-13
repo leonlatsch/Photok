@@ -125,4 +125,15 @@
     <string name="locale_name_en">Englisch</string>
     <string name="locale_name_de">Deutsch</string>
     <string name="locale_name_es">Spanisch</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Passwort ändern</string>
+    <string name="change_password_old_password">Altes Passwort</string>
+    <string name="change_password_new_password">Neues Passwort</string>
+    <string name="change_password_check">Prüfen</string>
+    <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
+    <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
+    <string name="change_password_button">Passwort ändern</string>
+    <string name="change_password_confirm_message">Durch das Ändern des Passwortes müssen alle deine Fotos neue verschlüsselt werden! Willst du fortfahren?</string>
+    <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
 </resources>

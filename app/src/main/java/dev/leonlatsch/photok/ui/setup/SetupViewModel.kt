@@ -76,9 +76,10 @@ class SetupViewModel @ViewModelInject constructor(
     fun validatePassword() = PasswordUtils.validatePassword(passwordText.value!!)
 
     /**
-     * @see PasswordUtils.passwordsEqual
+     * @see PasswordUtils.passwordsNotEmptyAndEqual
      */
-    fun passwordsEqual() = PasswordUtils.passwordsEqual(passwordText.value!!, confirmPasswordText.value!!)
+    fun passwordsEqual() =
+        PasswordUtils.passwordsNotEmptyAndEqual(passwordText.value!!, confirmPasswordText.value!!)
 
     /**
      * @see PasswordUtils.validatePasswords
