@@ -32,6 +32,13 @@ import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.dialog_change_password.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
+/**
+ * Dialog for chaging the password. Validates that the old password os known and collects the new password.
+ * Starts re-encryption process.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class ChangePasswordDialog :
     BindableDialogFragment<DialogChangePasswordBinding>(R.layout.dialog_change_password) {

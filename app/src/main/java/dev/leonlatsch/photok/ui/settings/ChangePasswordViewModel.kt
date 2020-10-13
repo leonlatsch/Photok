@@ -44,6 +44,10 @@ class ChangePasswordViewModel @ViewModelInject constructor(
     val newPasswordTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
     val newPasswordConfirmTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
 
+    /**
+     * Checks if the old password is valid and updates state. For security concerns.
+     * Called by ui.
+     */
     fun checkOld() = viewModelScope.launch {
         changePasswordState.postValue(ChangePasswordState.CHECKING_OLD)
 
@@ -57,6 +61,10 @@ class ChangePasswordViewModel @ViewModelInject constructor(
         }
     }
 
+    /**
+     * Checks if the entered password is valid and updates state.
+     * Called by ui.
+     */
     fun checkNew() = viewModelScope.launch {
         if (PasswordUtils.validatePasswords(
                 newPasswordTextValue,
