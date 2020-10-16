@@ -73,7 +73,7 @@ class ViewPhotoViewModel @ViewModelInject constructor(
         photo.value ?: return@launch
         photo.value!!.id ?: return@launch
 
-        val success = photoRepository.deletePhotoAndData(app, photo.value!!)
+        val success = photoRepository.safeDeletePhoto(app, photo.value!!)
         if (success) onSuccess() else onError()
     }
 

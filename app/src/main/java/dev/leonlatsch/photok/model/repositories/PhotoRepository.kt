@@ -28,7 +28,6 @@ import androidx.paging.PagingSource
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.settings.Config
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -43,11 +42,10 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
-    private val encryptionManager: EncryptionManager,
-    private val config: Config
+    private val encryptionManager: EncryptionManager
 ) {
 
-    // DATABASE
+    ////////////////////////////// DB //////////////////////////////
 
     /**
      * Insert one [Photo]
@@ -71,6 +69,14 @@ class PhotoRepository @Inject constructor(
     suspend fun get(id: Int) = photoDao.get(id)
 
     /**
+     * Get all photos, ordered by imported At (desc).
+     * Used for re-encrypting.
+     *
+     * @return all photos as [List]
+     */
+    suspend fun getAll() = photoDao.getAllSortedByImportedAt()
+
+    /**
      * Get all photos, ordered by importedAt (desc) as [PagingSource].
      * Used for Paging all photos in gallery.
      *
@@ -78,7 +84,26 @@ class PhotoRepository @Inject constructor(
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
-    // FILESYSTEM
+    ////////////////////////////// IO //////////////////////////////
+
+    // region WRITE
+
+    /**
+     * Safely insert a photo to the database and write its bytes to the filesystem.
+     * Handles IOErrors.
+     *
+     * @return true, if everything was successfully inserted and written to io.
+     */
+    suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
+        val id = insert(photo)
+        val success = writePhotoData(context, id, bytes)
+        if (!success) {
+            val photoToRemove = get(id.toInt())
+            delete(photoToRemove)
+        }
+
+        return success
+    }
 
     /**
      * Write a [ByteArray] of a photo to the filesystem.
@@ -126,6 +151,10 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    // endregion
+
+    // region READ
+
     /**
      * Read a photo's bytes from external storage.
      *
@@ -167,12 +196,16 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    // endregion
+
+    // region DELETE
+
     /**
      * Delete a photo from the filesystem. On success, delete it in the database.
      *
      * @return true, if the photo was successfully deleted on disk and in db.
      */
-    suspend fun deletePhotoAndData(context: Context, photo: Photo): Boolean {
+    suspend fun safeDeletePhoto(context: Context, photo: Photo): Boolean {
         val id = photo.id!!
 
         val success = deletePhotoData(context, id) // Delete bytes on disk
@@ -183,7 +216,15 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
-    private fun deletePhotoData(context: Context, id: Int): Boolean =
+    /**
+     * Delete a photos bytes and thumbnail bytes on the filesystem.
+     *
+     * @param context used for io
+     * @param id Id of the photo to delete
+     *
+     * @return true, if photo and thumbnail could be deleted
+     */
+    fun deletePhotoData(context: Context, id: Int): Boolean =
         deleteFile(context, "$id.photok")
                 && deleteFile(context, "$id.photok.tn")
 
@@ -194,6 +235,10 @@ class PhotoRepository @Inject constructor(
         }
         return success
     }
+
+    // endregion
+
+    // region EXPORT
 
     /**
      * Export a photo to a specific directory.
@@ -224,6 +269,8 @@ class PhotoRepository @Inject constructor(
             false
         }
     }
+
+    // endregion
 
     companion object {
         private const val THUMBNAIL_SIZE = 128

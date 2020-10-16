@@ -74,7 +74,7 @@ abstract class BaseProcessViewModel : ViewModel() {
     /**
      * Gets executed before [process].
      */
-    open fun preProcess() {
+    open suspend fun preProcess() {
         processState.postValue(ProcessState.PROCESSING)
         updateProgress()
     }
@@ -88,7 +88,7 @@ abstract class BaseProcessViewModel : ViewModel() {
     /**
      * Get executed after [process].
      */
-    open fun postProcess() {
+    open suspend fun postProcess() {
         if (processState.value != ProcessState.ABORTED) {
             processState.postValue(ProcessState.FINISHED)
         }
