@@ -35,7 +35,6 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogBaseStyle</item>
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
-        <item name="dialogTheme">@style/DialogStyle</item>
     </style>
 
     <style name="ActionModeCloseButtonStyle">
@@ -112,11 +111,6 @@
 
     <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- DIALOG -->
-    <style name="DialogStyle" parent="">
-        <item name="android:background">@drawable/bg_bottom_sheet_light</item>
-    </style>
-
     <!-- BOTTOM SHEET DIALOG -->
     <style name="BottomSheetDialogBaseStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalTransparentBottomSheetStyle</item>
@@ -128,6 +122,8 @@
 
     <!-- ALERT DIALOG -->
     <style name="AlertDialogStyle" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@drawable/bg_dialog_round_light</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonBarPositiveStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonBarNegativeStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertDialogButtonBarNeutralStyle</item>

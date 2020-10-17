@@ -23,7 +23,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.DialogFragment
 
 /**
  * Base for all Dialogs that use Bindings.
@@ -36,7 +35,7 @@ import androidx.fragment.app.DialogFragment
  */
 abstract class BindableDialogFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
-) : DialogFragment(), Bindable<BindingType> {
+) : BaseDialogFragment(), Bindable<BindingType> {
 
     override fun onCreateView(
         inflater: LayoutInflater,
