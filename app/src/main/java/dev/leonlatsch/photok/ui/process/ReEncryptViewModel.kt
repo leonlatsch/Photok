@@ -45,8 +45,8 @@ class ReEncryptViewModel @ViewModelInject constructor(
     lateinit var newPassword: String
 
     override suspend fun preProcess() {
-        super.preProcess()
         photos = photoRepository.getAll()
+        super.preProcess()
     }
 
     override suspend fun process() {

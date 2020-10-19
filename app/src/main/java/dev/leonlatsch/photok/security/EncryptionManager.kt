@@ -64,19 +64,33 @@ class EncryptionManager {
     /**
      * Encrypt a [ByteArray] with the stored [SecretKeySpec].
      */
-    fun encrypt(bytes: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
-        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
-        return cipher.doFinal(bytes)
+    fun encrypt(bytes: ByteArray): ByteArray? {
+        return if (isReady) try {
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error encrypting bytes: $e")
+            null
+        } else {
+            null
+        }
     }
 
     /**
      * Decrypt a [ByteArray] with the stored [SecretKeySpec]
      */
-    fun decrypt(encryptedBytes: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
-        cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
-        return cipher.doFinal(encryptedBytes)
+    fun decrypt(encryptedBytes: ByteArray): ByteArray? {
+        return if (isReady) try {
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
+            cipher.doFinal(encryptedBytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error decrypting bytes: $e")
+            null
+        } else {
+            null
+        }
     }
 
     /**
@@ -84,14 +98,19 @@ class EncryptionManager {
      * USE WITH CAUTION!
      * Used by re-encrypt dialog.
      */
-    fun encrypt(bytes: ByteArray, password: String): ByteArray {
-        val key = genSecKey(password)
-        val iv = genIv(password)
+    fun encrypt(bytes: ByteArray, password: String): ByteArray? {
+        return try {
+            val key = genSecKey(password)
+            val iv = genIv(password)
 
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv)
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.ENCRYPT_MODE, key, iv)
 
-        return cipher.doFinal(bytes)
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error encrypting bytes: $e")
+            null
+        }
     }
 
     private fun genSecKey(password: String): SecretKeySpec {
