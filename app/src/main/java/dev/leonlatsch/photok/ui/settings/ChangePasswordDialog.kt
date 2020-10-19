@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.process.ReEncryptBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_change_password.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
@@ -61,7 +62,7 @@ class ChangePasswordDialog :
                     loadingOverlay.hide()
                     changePasswordOldPasswordEditText.hide()
                     changePasswordCheckOldButton.hide()
-                    changePasswordOldStatusIcon.show() // Show different icon on fail
+                    changePasswordOldStatusIcon.show()
                     changePasswordNewPasswordLayout.show()
                     changePasswordNewPasswordLayout.requestFocus()
                 }
@@ -75,8 +76,14 @@ class ChangePasswordDialog :
                         requireContext(),
                         getString(R.string.change_password_confirm_message)
                     ) { _, _ ->
+                        val reEncryptDialog = ReEncryptBottomSheetDialogFragment(
+                            viewModel.newPasswordTextValue.value!!
+                        )
+                        reEncryptDialog.show(
+                            requireActivity().supportFragmentManager,
+                            ReEncryptBottomSheetDialogFragment::class.qualifiedName
+                        )
                         dismiss()
-                        // TODO: Start re encrypting bottom sheet dialog and pass new password
                     }
                 }
                 ChangePasswordState.NEW_INVALID -> {

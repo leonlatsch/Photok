@@ -154,6 +154,7 @@
                     android:layout_marginTop="5dp"
                     android:onClick="@{() -> viewModel.cancel()}"
                     android:text="@string/process_abort"
+                    android:enabled="@{context.canAbort}"
                     android:visibility="@{context.abortButtonVisibility, default=visible}" />
 
                 <Button

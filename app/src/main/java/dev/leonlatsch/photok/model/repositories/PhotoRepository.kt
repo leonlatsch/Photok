@@ -117,21 +117,26 @@ class PhotoRepository @Inject constructor(
      *
      * @since 1.0.0
      */
-    fun writePhotoData(context: Context, id: Long, bytes: ByteArray): Boolean {
+    fun writePhotoData(context: Context, id: Long, bytes: ByteArray, password: String? = null): Boolean {
         return try {
-            val encryptedBytes = encryptionManager.encrypt(bytes)
+            val encryptedBytes = if (password == null) {
+                encryptionManager.encrypt(bytes)
+            } else {
+                encryptionManager.encrypt(bytes, password)
+            }
             context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
                 it.write(encryptedBytes)
             }
-            createAndWriteThumbnail(context, id, bytes)
+            createAndWriteThumbnail(context, id, bytes, password)
         } catch (e: IOException) {
             Timber.d("Error writing photo data for id: $id $e")
             false
         }
     }
 
-    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray): Boolean {
+    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray, password: String? = null): Boolean {
         return try {
+            // Create thumbnail
             val thumbnail = ThumbnailUtils.extractThumbnail(
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.size),
                 THUMBNAIL_SIZE,
@@ -140,7 +145,13 @@ class PhotoRepository @Inject constructor(
             val outputStream = ByteArrayOutputStream()
             thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             val thumbnailBytes = outputStream.toByteArray()
-            val encryptedThumbnailBytes = encryptionManager.encrypt(thumbnailBytes)
+
+            // Write to fs
+            val encryptedThumbnailBytes = if (password == null) {
+                encryptionManager.encrypt(thumbnailBytes)
+            } else {
+                encryptionManager.encrypt(thumbnailBytes, password)
+            }
             context.openFileOutput("${id}.photok.tn", Context.MODE_PRIVATE).use {
                 it.write(encryptedThumbnailBytes)
             }

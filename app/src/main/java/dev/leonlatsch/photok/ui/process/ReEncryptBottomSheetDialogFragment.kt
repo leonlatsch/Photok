@@ -21,10 +21,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
+/**
+ * Process fragment for re-encrypting photos.
+ * Cannot be aborted.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class ReEncryptBottomSheetDialogFragment(
-    private val newPassword: String
-) : BaseProcessBottomSheetDialogFragment(R.string.change_password_reencrypting) {
+    private val newPassword: String,
+) : BaseProcessBottomSheetDialogFragment(R.string.change_password_reencrypting, false) {
 
     override val viewModel: ReEncryptViewModel by viewModels()
 

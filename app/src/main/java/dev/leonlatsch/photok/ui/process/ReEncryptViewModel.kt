@@ -16,15 +16,29 @@
 
 package dev.leonlatsch.photok.ui.process
 
+import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
+import dev.leonlatsch.photok.model.database.entity.Password
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
+import kotlinx.coroutines.delay
+import org.mindrot.jbcrypt.BCrypt
 
+/**
+ * ViewModel for re-encrypting photos with a new password.
+ * Executed after password change.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class ReEncryptViewModel @ViewModelInject constructor(
+    private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val passwordRepository: PasswordRepository
+    private val passwordRepository: PasswordRepository,
+    private val encryptionManager: EncryptionManager
 ) : BaseProcessViewModel() {
 
     private lateinit var photos: List<Photo>
@@ -36,6 +50,34 @@ class ReEncryptViewModel @ViewModelInject constructor(
     }
 
     override suspend fun process() {
-        TODO("Not yet implemented")
+        for (photo in photos) {
+            currentElement++
+            reEncrypt(photo)
+            updateProgress()
+        }
+    }
+
+    private suspend fun reEncrypt(photo: Photo) {
+        delay(1)
+        val bytes = photoRepository.readPhotoData(app, photo.id!!)
+        if (bytes == null) {
+            failuresOccurred = true
+            return
+        }
+
+        photoRepository.deletePhotoData(app, photo.id)
+
+        val result = photoRepository.writePhotoData(app, photo.id.toLong(), bytes, newPassword)
+        if (!result) {
+            failuresOccurred = true
+        }
+    }
+
+    override suspend fun postProcess() {
+        super.postProcess()
+        val hashedPw = BCrypt.hashpw(newPassword, BCrypt.gensalt())
+        val newPasswordEntity = Password(hashedPw)
+        passwordRepository.insert(newPasswordEntity)
+        encryptionManager.initialize(newPassword)
     }
 }

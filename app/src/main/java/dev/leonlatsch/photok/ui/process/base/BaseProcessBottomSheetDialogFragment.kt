@@ -39,7 +39,8 @@ import kotlinx.android.synthetic.main.dialog_bottom_sheet_process.*
  * @author Leon Latsch
  */
 abstract class BaseProcessBottomSheetDialogFragment(
-    @StringRes private val processingLabelTextResource: Int
+    @StringRes private val processingLabelTextResource: Int,
+    val canAbort: Boolean
 ) : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
     R.layout.dialog_bottom_sheet_process
 ) {

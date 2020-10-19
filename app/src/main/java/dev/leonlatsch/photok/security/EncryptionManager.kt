@@ -51,9 +51,7 @@ class EncryptionManager {
      */
     fun initialize(password: String) {
         try {
-            val md = MessageDigest.getInstance(SHA_256)
-            val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
-            encryptionKey = SecretKeySpec(bytes, AES)
+            encryptionKey = genSecKey(password)
             ivParameterSpec = genIv(password)
             isReady = true
         } catch (e: GeneralSecurityException) {
@@ -62,14 +60,6 @@ class EncryptionManager {
         }
     }
 
-    private fun genIv(password: String): IvParameterSpec {
-        val iv = ByteArray(16)
-        val charArray = password.toCharArray()
-        for (i in charArray.indices){
-            iv[i] = charArray[i].toByte()
-        }
-        return IvParameterSpec(iv)
-    }
 
     /**
      * Encrypt a [ByteArray] with the stored [SecretKeySpec].
@@ -87,5 +77,35 @@ class EncryptionManager {
         val cipher = Cipher.getInstance(AES_ALGORITHM)
         cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
         return cipher.doFinal(encryptedBytes)
+    }
+
+    /**
+     * Encrypt [bytes] with a specific password.
+     * USE WITH CAUTION!
+     * Used by re-encrypt dialog.
+     */
+    fun encrypt(bytes: ByteArray, password: String): ByteArray {
+        val key = genSecKey(password)
+        val iv = genIv(password)
+
+        val cipher = Cipher.getInstance(AES_ALGORITHM)
+        cipher.init(Cipher.ENCRYPT_MODE, key, iv)
+
+        return cipher.doFinal(bytes)
+    }
+
+    private fun genSecKey(password: String): SecretKeySpec {
+        val md = MessageDigest.getInstance(SHA_256)
+        val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
+        return SecretKeySpec(bytes, AES)
+    }
+
+    private fun genIv(password: String): IvParameterSpec {
+        val iv = ByteArray(16)
+        val charArray = password.toCharArray()
+        for (i in charArray.indices){
+            iv[i] = charArray[i].toByte()
+        }
+        return IvParameterSpec(iv)
     }
 }
