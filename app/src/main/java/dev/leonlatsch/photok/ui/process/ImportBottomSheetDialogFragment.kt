@@ -32,7 +32,7 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
 @AndroidEntryPoint
 class ImportBottomSheetDialogFragment(
     private val uris: List<Uri>
-) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
+) : BaseProcessBottomSheetDialogFragment(R.string.import_importing, true) {
 
     override val viewModel: ImportViewModel by viewModels()
 

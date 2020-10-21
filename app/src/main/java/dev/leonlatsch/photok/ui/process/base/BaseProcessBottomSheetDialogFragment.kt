@@ -23,9 +23,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
+import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
+import kotlinx.android.synthetic.main.dialog_bottom_sheet_process.*
 
 /**
  * Abstract base for all process dialogs.
@@ -39,9 +39,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
  * @author Leon Latsch
  */
 abstract class BaseProcessBottomSheetDialogFragment(
-    @StringRes private val processingLabelTextResource: Int
-) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
-    R.layout.bottom_sheet_dialog_process
+    @StringRes private val processingLabelTextResource: Int,
+    val canAbort: Boolean
+) : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
+    R.layout.dialog_bottom_sheet_process
 ) {
 
     // region binding properties
@@ -126,7 +127,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
         statusImageView.setColorFilter(ContextCompat.getColor(requireContext(), color))
     }
 
-    override fun bind(binding: BottomSheetDialogProcessBinding) {
+    override fun bind(binding: DialogBottomSheetProcessBinding) {
         super.bind(binding)
         binding.context = this
         binding.viewModel = viewModel

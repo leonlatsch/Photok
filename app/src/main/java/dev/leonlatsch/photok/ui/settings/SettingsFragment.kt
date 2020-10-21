@@ -18,8 +18,10 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.settings.Config
 import kotlinx.android.synthetic.main.preference_layout_template.*
 
 /**
@@ -40,5 +42,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+
+        val changePasswordPreference = preferenceManager.findPreference<Preference>(Config.SECURITY_CHANGE_PASSWORD)
+        changePasswordPreference?.setOnPreferenceClickListener {
+            onChangePasswordClicked()
+            true
+        }
+    }
+
+    private fun onChangePasswordClicked() {
+        val dialog = ChangePasswordDialog()
+        dialog.show(requireActivity().supportFragmentManager, ChangePasswordDialog::class.qualifiedName)
     }
 }

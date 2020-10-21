@@ -55,6 +55,15 @@ interface PhotoDao {
     suspend fun get(id: Int): Photo
 
     /**
+     * Get all photos, ordered by imported At (desc).
+     * Used for re-encrypting.
+     *
+     * @return all photos as [List]
+     */
+    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
+    suspend fun getAllSortedByImportedAt(): List<Photo>
+
+    /**
      * Get all photos, ordered by importedAt (desc) as [PagingSource].
      * Used for Paging all photos in gallery.
      *

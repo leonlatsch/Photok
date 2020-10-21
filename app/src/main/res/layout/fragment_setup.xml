@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                style="@style/TitleTextViewStyle"
+                style="@style/VeryBigTextViewStyle"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -82,7 +82,7 @@
                     android:id="@+id/setupConfirmPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/medium_gap"
                     app:password_edit_text_hint="@string/setup_confirm_password"
                     app:textValue="@={viewModel.confirmPasswordText}"
                     android:visibility="visible" />

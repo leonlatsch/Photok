@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.ui.unlock
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -29,6 +28,7 @@ import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.fragment_unlock.*
 import kotlinx.android.synthetic.main.loading_overlay.*
 
@@ -74,8 +74,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             startActivity(intent)
             activity?.finish()
         } else {
-            Toast.makeText(requireContext(), getString(R.string.common_error), Toast.LENGTH_LONG)
-                .show()
+            Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
             loadingOverlay.hide()
         }
     }

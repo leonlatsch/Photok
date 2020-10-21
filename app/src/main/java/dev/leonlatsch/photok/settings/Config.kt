@@ -119,5 +119,10 @@ class Config(context: Context) {
          */
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
+
+        /**
+         * Key to change the password. Doesn't get persisted.
+         */
+        const val SECURITY_CHANGE_PASSWORD = "security^changePassword"
     }
 }

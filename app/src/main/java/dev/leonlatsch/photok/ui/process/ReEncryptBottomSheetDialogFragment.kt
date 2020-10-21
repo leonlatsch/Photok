@@ -19,25 +19,24 @@ package dev.leonlatsch.photok.ui.process
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
 /**
- * Process fragment to export photos.
+ * Process fragment for re-encrypting photos.
+ * Cannot be aborted.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ExportBottomSheetDialogFragment(
-    private val photos: List<Photo>,
-) : BaseProcessBottomSheetDialogFragment(R.string.export_exporting, true) {
+class ReEncryptBottomSheetDialogFragment(
+    private val newPassword: String,
+) : BaseProcessBottomSheetDialogFragment(R.string.change_password_reencrypting, false) {
 
-    override val viewModel: ExportViewModel by viewModels()
+    override val viewModel: ReEncryptViewModel by viewModels()
 
     override fun prepareViewModel() {
         super.prepareViewModel()
-        viewModel.photos = photos
-        viewModel.elementsToProcess = photos.size
+        viewModel.newPassword = newPassword
     }
 }

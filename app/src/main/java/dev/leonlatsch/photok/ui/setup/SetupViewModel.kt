@@ -22,12 +22,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Password
 import dev.leonlatsch.photok.model.repositories.PasswordRepository
-import dev.leonlatsch.photok.other.PASSWORD_REGEX
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.PasswordUtils
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
-import java.util.regex.Pattern
 
 /**
  * ViewModel for the setup.
@@ -74,19 +73,16 @@ class SetupViewModel @ViewModelInject constructor(
     /**
      * Validate hte [passwordText] property.
      */
-    fun validatePassword(): Boolean = passwordText.value!!.isNotEmpty()
-            && Pattern.matches(PASSWORD_REGEX, passwordText.value!!)
+    fun validatePassword() = PasswordUtils.validatePassword(passwordText.value!!)
 
     /**
-     * Indicates, of [passwordText] and [confirmPasswordText] are equal.
+     * @see PasswordUtils.passwordsNotEmptyAndEqual
      */
-    fun passwordsEqual(): Boolean = passwordText.value == confirmPasswordText.value
+    fun passwordsEqual() =
+        PasswordUtils.passwordsNotEmptyAndEqual(passwordText.value!!, confirmPasswordText.value!!)
 
     /**
-     * Validates the [passwordText] and calls [passwordsEqual].
+     * @see PasswordUtils.validatePasswords
      */
-    fun validateBothPasswords(): Boolean = passwordText.value!!.isNotEmpty()
-            && confirmPasswordText.value!!.isNotEmpty()
-            && validatePassword()
-            && passwordsEqual()
+    fun validateBothPasswords() = PasswordUtils.validatePasswords(passwordText.value!!, confirmPasswordText.value!!)
 }

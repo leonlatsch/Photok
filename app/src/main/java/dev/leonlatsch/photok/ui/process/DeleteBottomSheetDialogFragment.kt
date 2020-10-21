@@ -32,7 +32,7 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
 @AndroidEntryPoint
 class DeleteBottomSheetDialogFragment(
     private val photos: List<Photo>
-) : BaseProcessBottomSheetDialogFragment(R.string.delete_deleting) {
+) : BaseProcessBottomSheetDialogFragment(R.string.delete_deleting, true) {
 
     override val viewModel: DeleteViewModel by viewModels()
 

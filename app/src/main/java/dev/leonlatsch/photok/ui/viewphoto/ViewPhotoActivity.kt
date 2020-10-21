@@ -156,12 +156,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 finish() // onError
             }
         } else {
-            closeOnError(id)
+            Timber.d("Error loading photo for id: $id")
         }
-    }
-
-    private fun closeOnError(id: Any?) {
-        Timber.d("Error loading photo for id: $id")
     }
 
     override fun onSupportNavigateUp(): Boolean {

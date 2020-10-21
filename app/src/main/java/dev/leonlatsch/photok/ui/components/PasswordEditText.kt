@@ -91,7 +91,7 @@ class PasswordEditText @JvmOverloads constructor(
             val hint = resources.getText(
                 styledAttrs.getResourceId(
                     R.styleable.PasswordEditText_password_edit_text_hint,
-                    0
+                    R.string.setup_enter_password
                 )
             )
 
