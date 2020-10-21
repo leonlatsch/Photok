@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.dialog_bottom_sheet_process.*
  * [viewModel] is abstract and needs to be set in the child.
  *
  * @param processingLabelTextResource The string resource to be displayed while processing.
+ * @param T Type of elements to be processed
  *
  * @since 1.0.0
  * @author Leon Latsch

@@ -27,6 +27,8 @@ import kotlinx.coroutines.launch
  * Holds live data for [ProcessState] and [ProcessProgress].
  * Provides abstract functions called by the ui.
  *
+ * @param T Type of elements to be processed
+ *
  * @sine 1.0.0
  * @author Leon Latsch
  */
