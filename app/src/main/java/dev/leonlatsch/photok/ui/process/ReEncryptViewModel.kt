@@ -24,7 +24,6 @@ import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import kotlinx.coroutines.delay
 import org.mindrot.jbcrypt.BCrypt
 
 /**
@@ -39,36 +38,26 @@ class ReEncryptViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository,
     private val passwordRepository: PasswordRepository,
     private val encryptionManager: EncryptionManager
-) : BaseProcessViewModel() {
+) : BaseProcessViewModel<Photo>() {
 
-    private lateinit var photos: List<Photo>
     lateinit var newPassword: String
 
     override suspend fun preProcess() {
-        photos = photoRepository.getAll()
-        elementsToProcess = photos.size
+        items = photoRepository.getAll()
+        elementsToProcess = items.size
         super.preProcess()
     }
 
-    override suspend fun process() {
-        for (photo in photos) {
-            currentElement++
-            reEncrypt(photo)
-            updateProgress()
-        }
-    }
-
-    private suspend fun reEncrypt(photo: Photo) {
-        delay(1) // TODO: Workaround for updating ui. Refactoring process dialogs required!
-        val bytes = photoRepository.readPhotoData(app, photo.id!!)
+    override suspend fun processItem(item: Photo) {
+        val bytes = photoRepository.readPhotoData(app, item.id!!)
         if (bytes == null) {
             failuresOccurred = true
             return
         }
 
-        photoRepository.deletePhotoData(app, photo.id)
+        photoRepository.deletePhotoData(app, item.id)
 
-        val result = photoRepository.writePhotoData(app, photo.id.toLong(), bytes, newPassword)
+        val result = photoRepository.writePhotoData(app, item.id.toLong(), bytes, newPassword)
         if (!result) {
             failuresOccurred = true
         }

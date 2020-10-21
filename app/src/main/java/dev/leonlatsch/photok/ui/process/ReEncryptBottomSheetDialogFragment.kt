@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.process
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
 /**
@@ -31,12 +32,16 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
 @AndroidEntryPoint
 class ReEncryptBottomSheetDialogFragment(
     private val newPassword: String,
-) : BaseProcessBottomSheetDialogFragment(R.string.change_password_reencrypting, false) {
+) : BaseProcessBottomSheetDialogFragment<Photo>(
+    null,
+    R.string.change_password_reencrypting,
+    false
+) {
 
     override val viewModel: ReEncryptViewModel by viewModels()
 
-    override fun prepareViewModel() {
-        super.prepareViewModel()
+    override fun prepareViewModel(items: List<Photo>?) {
+        super.prepareViewModel(items)
         viewModel.newPassword = newPassword
     }
 }

@@ -21,7 +21,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import dev.leonlatsch.photok.ui.process.base.ProcessState
 
 /**
  * ViewModel for exporting multiple photos.
@@ -32,22 +31,12 @@ import dev.leonlatsch.photok.ui.process.base.ProcessState
 class ExportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-): BaseProcessViewModel() {
+): BaseProcessViewModel<Photo>() {
 
-    lateinit var photos: List<Photo>
-
-    override suspend fun process() {
-        for (photo in photos) {
-            if (processState.value == ProcessState.ABORTED) {
-                return
-            }
-            currentElement++
-
-            val result = photoRepository.exportPhoto(app, photo)
-            if (!result) {
-                failuresOccurred = true
-            }
-            updateProgress()
+    override suspend fun processItem(item: Photo) {
+        val result = photoRepository.exportPhoto(app, item)
+        if (!result) {
+            failuresOccurred = true
         }
     }
 }

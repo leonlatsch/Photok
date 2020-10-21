@@ -27,13 +27,22 @@ import kotlinx.coroutines.launch
  * Holds live data for [ProcessState] and [ProcessProgress].
  * Provides abstract functions called by the ui.
  *
+ * @param T Type of elements to be processed
+ *
  * @sine 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessViewModel : ViewModel() {
+abstract class BaseProcessViewModel<T> : ViewModel() {
 
     /**
-     * The processing state should be checked every time in [process].
+     * List of [T].
+     * Gets set automatically by fragment.
+     * Gets processed in [processLoop].
+     */
+    lateinit var items: List<T>
+
+    /**
+     * The processing state should be checked every time in [processLoop].
      */
     val processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.INITIALIZE)
 
@@ -44,49 +53,65 @@ abstract class BaseProcessViewModel : ViewModel() {
 
     /**
      * Indicates if failures occurred.
-     * Gets evaluated by base DialogFragment to show warning. Should be set in [process] if an elements fails.
+     * Gets evaluated by base DialogFragment to show warning. Should be set in [processItem] if an elements fails.
      */
     var failuresOccurred = false
 
     /**
      * The current element index getting processed.
-     * Increase in [process]
+     * Used for [progress].
      */
-    var currentElement = 0
+    private var currentElement = 0
 
     /**
      * The number of elements to get processed.
-     * To be set before [runProcessing]!
+     * Gets set automatically.
      */
     var elementsToProcess = 0
 
     /**
-     * Runs [preProcess], [process] and [postProcess].
+     * Runs [preProcess], [processLoop] and [postProcess].
      * launched in [viewModelScope].
      */
     fun runProcessing() = viewModelScope.launch {
         preProcess()
-        delay(1) // Delay for 1ms to properly show ui before starting process. For fast devices.
-        process()
+        processLoop()
         postProcess()
     }
 
     /**
-     * Gets executed before [process].
+     * Gets executed before [processLoop].
      */
     open suspend fun preProcess() {
         processState.postValue(ProcessState.PROCESSING)
-        updateProgress()
+        initProgress()
     }
 
     /**
-     * Template method. Gets called by [runProcessing].
-     * Should implement the processing of elements.
+     * Processing loop.
+     * Calls [processItem].
+     * Handles: Aborting and Updating progress.
      */
-    abstract suspend fun process()
+    private suspend fun processLoop() {
+        for (item in items) {
+            delay(1) // Delay ensure to always run a suspending call to update ui properly.
+            if (processState.value == ProcessState.ABORTED) {
+                return
+            }
+
+            processItem(item)
+            itemProcessed()
+        }
+    }
 
     /**
-     * Get executed after [process].
+     * Template method. Gets called by [processLoop].
+     * Should implement the processing of one item.
+     */
+    abstract suspend fun processItem(item: T)
+
+    /**
+     * Get executed after [processLoop].
      */
     open suspend fun postProcess() {
         if (processState.value != ProcessState.ABORTED) {
@@ -101,10 +126,15 @@ abstract class BaseProcessViewModel : ViewModel() {
         processState.postValue(ProcessState.ABORTED)
     }
 
+    private fun initProgress() {
+        progress.update(0, currentElement)
+    }
+
     /**
-     * Update the [progress] property
+     * Update the [progress] property.
      */
-    fun updateProgress() {
+    private fun itemProcessed() {
+        currentElement++
         progress.update(currentElement, elementsToProcess)
     }
 }
