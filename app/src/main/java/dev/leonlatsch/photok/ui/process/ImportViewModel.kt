@@ -24,7 +24,6 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import dev.leonlatsch.photok.ui.process.base.ProcessState
 import java.util.*
 
 /**
@@ -38,23 +37,10 @@ class ImportViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Uri>() {
 
-    override suspend fun process() {
-        for (image in items) {
-            if (processState.value == ProcessState.ABORTED) {
-                return
-            }
-            currentElement++
+    override suspend fun processItem(item: Uri) {
+        val fileName = getFileName(app.contentResolver, item) ?: UUID.randomUUID().toString()
 
-            // Import image and update progress
-            import(image)
-            updateProgress()
-        }
-    }
-
-    private suspend fun import(imageUri: Uri) {
-        val fileName = getFileName(app.contentResolver, imageUri) ?: UUID.randomUUID().toString()
-
-        val type = when (app.contentResolver.getType(imageUri)) {
+        val type = when (app.contentResolver.getType(item)) {
             "image/png" -> PhotoType.PNG
             "image/jpeg" -> PhotoType.JPEG
             "image/gif" -> PhotoType.GIF
@@ -65,7 +51,7 @@ class ImportViewModel @ViewModelInject constructor(
             return
         }
 
-        val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
+        val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, item)
         if (bytes == null) { // Cloud not read file
             failuresOccurred = true
             return
