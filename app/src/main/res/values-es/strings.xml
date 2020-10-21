@@ -134,6 +134,6 @@
     <string name="change_password_enter_new_password">Enter your new password</string>
     <string name="change_password_confirm_new_password">Confirm your new password</string>
     <string name="change_password_button">Change Password</string>
-    <string name="change_password_confirm_message">Changing your password requires re-encrypting all your photos! Do you want to continue?</string>
+    <string name="change_password_confirm_message">Backup recommended!<br/> Changing your password requires re-encrypting all your photos! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting photo(s)…</string>
 </resources>
