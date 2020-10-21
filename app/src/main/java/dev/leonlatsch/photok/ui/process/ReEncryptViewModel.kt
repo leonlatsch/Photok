@@ -39,19 +39,18 @@ class ReEncryptViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository,
     private val passwordRepository: PasswordRepository,
     private val encryptionManager: EncryptionManager
-) : BaseProcessViewModel() {
+) : BaseProcessViewModel<Photo>() {
 
-    private lateinit var photos: List<Photo>
     lateinit var newPassword: String
 
     override suspend fun preProcess() {
-        photos = photoRepository.getAll()
-        elementsToProcess = photos.size
+        items = photoRepository.getAll()
+        elementsToProcess = items.size
         super.preProcess()
     }
 
     override suspend fun process() {
-        for (photo in photos) {
+        for (photo in items) {
             currentElement++
             reEncrypt(photo)
             updateProgress()

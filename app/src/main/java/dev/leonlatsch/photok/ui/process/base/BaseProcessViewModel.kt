@@ -30,7 +30,9 @@ import kotlinx.coroutines.launch
  * @sine 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessViewModel : ViewModel() {
+abstract class BaseProcessViewModel<T> : ViewModel() {
+
+    lateinit var items: List<T>
 
     /**
      * The processing state should be checked every time in [process].

@@ -36,12 +36,10 @@ import java.util.*
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel() {
-
-    lateinit var uris: List<Uri>
+) : BaseProcessViewModel<Uri>() {
 
     override suspend fun process() {
-        for (image in uris) {
+        for (image in items) {
             if (processState.value == ProcessState.ABORTED) {
                 return
             }

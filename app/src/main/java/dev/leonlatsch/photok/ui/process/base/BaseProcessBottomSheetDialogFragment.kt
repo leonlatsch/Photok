@@ -38,7 +38,8 @@ import kotlinx.android.synthetic.main.dialog_bottom_sheet_process.*
  * @since 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessBottomSheetDialogFragment(
+abstract class BaseProcessBottomSheetDialogFragment<T>(
+    private val itemSource: List<T>?,
     @StringRes private val processingLabelTextResource: Int,
     val canAbort: Boolean
 ) : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
@@ -60,7 +61,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
      * Abstract [BaseProcessViewModel].
      * Needs to be set in the child, handles processing.
      */
-    abstract val viewModel: BaseProcessViewModel
+    abstract val viewModel: BaseProcessViewModel<T>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,7 +98,7 @@ abstract class BaseProcessBottomSheetDialogFragment(
             labelText.postValue(label)
         })
 
-        prepareViewModel()
+        prepareViewModel(itemSource)
         viewModel.runProcessing()
     }
 
@@ -114,7 +115,11 @@ abstract class BaseProcessBottomSheetDialogFragment(
      * Called before viewModel starts processing.
      * Assign data and variables in implementations.
      */
-    open fun prepareViewModel() {
+    open fun prepareViewModel(items: List<T>?) {
+        if (items != null) {
+            viewModel.items = items
+            viewModel.elementsToProcess = items.size
+        }
     }
 
     private fun setStatusIcon(drawable: Int?, color: Int = 0) {

@@ -30,14 +30,12 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
  */
 @AndroidEntryPoint
 class ExportBottomSheetDialogFragment(
-    private val photos: List<Photo>,
-) : BaseProcessBottomSheetDialogFragment(R.string.export_exporting, true) {
+    photos: List<Photo>,
+) : BaseProcessBottomSheetDialogFragment<Photo>(
+    photos,
+    R.string.export_exporting,
+    true
+) {
 
     override val viewModel: ExportViewModel by viewModels()
-
-    override fun prepareViewModel() {
-        super.prepareViewModel()
-        viewModel.photos = photos
-        viewModel.elementsToProcess = photos.size
-    }
 }
