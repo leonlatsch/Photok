@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.gallery
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -36,7 +37,6 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
-import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
@@ -49,7 +49,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
 
 /**
  * Fragment for displaying a gallery.
@@ -66,9 +65,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     // endregion
 
-    @Inject
-    lateinit var config: Config
-
     private val viewModel: GalleryViewModel by viewModels()
 
     private lateinit var adapter: PhotoAdapter
@@ -77,13 +73,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(
-            requireContext(),
-            config.getIntFromString(
-                Config.GALLERY_ADVANCED_GALLERY_COLUMNS,
-                Config.GALLERY_ADVANCED_GALLERY_COLUMNS_DEFAULT
-            )
-        )
+        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         viewModel.photos
 
         adapter = PhotoAdapter(
@@ -114,6 +104,14 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
             togglePlaceholder(adapter.itemCount - itemCount)
+        }
+    }
+
+    private fun getColCount(): Int {
+        return when(resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> 4
+            Configuration.ORIENTATION_LANDSCAPE -> 8
+            else -> 4
         }
     }
 

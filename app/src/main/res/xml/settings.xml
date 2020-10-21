@@ -14,8 +14,7 @@
   ~   limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- may need later
     <PreferenceCategory android:title="@string/settings_category_app">
@@ -46,18 +45,11 @@
             android:title="@string/settings_change_password_title" />
     </PreferenceCategory>
 
+<!--
     <PreferenceCategory
         android:summary="@string/settings_category_advanced_summary"
         android:title="@string/settings_category_advanced">
-
-        <DropDownPreference
-            android:defaultValue="4"
-            android:entries="@array/galleryColumns"
-            android:entryValues="@array/galleryColumns"
-            android:icon="@drawable/ic_view_column"
-            android:key="gallery^advanced.galleryColumns"
-            android:title="@string/settings_gallery_columns_title"
-            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
+-->
 
 </PreferenceScreen>
