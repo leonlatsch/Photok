@@ -46,6 +46,7 @@ class ReEncryptViewModel @ViewModelInject constructor(
 
     override suspend fun preProcess() {
         photos = photoRepository.getAll()
+        elementsToProcess = photos.size
         super.preProcess()
     }
 
@@ -58,7 +59,7 @@ class ReEncryptViewModel @ViewModelInject constructor(
     }
 
     private suspend fun reEncrypt(photo: Photo) {
-        delay(1)
+        delay(1) // TODO: Workaround for updating ui. Refactoring process dialogs required!
         val bytes = photoRepository.readPhotoData(app, photo.id!!)
         if (bytes == null) {
             failuresOccurred = true
