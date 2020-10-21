@@ -60,6 +60,15 @@ class EncryptionManager {
         }
     }
 
+    /**
+     * Resets the encryption manager to default state.
+     */
+    fun reset() {
+        encryptionKey = null
+        ivParameterSpec = null
+        isReady = false
+    }
+
 
     /**
      * Encrypt a [ByteArray] with the stored [SecretKeySpec].

@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -26,6 +27,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +46,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     @Inject
     override lateinit var config: Config
 
+    @Inject lateinit var encryptionManager: EncryptionManager
+
+    private var stoppedAt: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,6 +63,27 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                     else -> mainAppBarLayout.hide()
                 }
             }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stoppedAt = System.currentTimeMillis()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if (System.currentTimeMillis() - stoppedAt >= 300000 // 5 minutes
+            && stoppedAt != 0L // Not reset
+        ) {
+            encryptionManager.reset()
+            startActivity(Intent(this, StartActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        stoppedAt = 0 // Reset lock timer when restarting from activity result
     }
 
     /**
