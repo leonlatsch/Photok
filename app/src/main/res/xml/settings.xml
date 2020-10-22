@@ -22,7 +22,7 @@
     -->
 
     <PreferenceCategory android:title="@string/settings_category_gallery">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:icon="@drawable/ic_fullscreen"
             android:key="gallery^fullscreen.auto"
@@ -31,7 +31,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_security">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/ic_screen_lock"
             android:key="security^allowScreenshots"
