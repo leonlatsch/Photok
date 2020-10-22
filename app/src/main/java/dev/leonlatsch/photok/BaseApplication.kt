@@ -17,7 +17,13 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
+import android.content.Intent
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
+import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
 
 /**
@@ -27,9 +33,33 @@ import timber.log.Timber
  * @author Leon Latsch
  */
 @HiltAndroidApp
-class BaseApplication : Application() {
+class BaseApplication : Application(), LifecycleObserver {
+
+    private var wentToBackgroundAt = 0L
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+    }
+
+    /**
+     * Launch [StartActivity] when app was ON_STOP for at least 5 Minutes
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onAppForeground() {
+        if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= 300000) { // 5 Minutes
+            val intent = Intent(this, StartActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+    }
+
+    /**
+     * Saves the ON_STOP timestamp
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onAppBackground() {
+        wentToBackgroundAt = System.currentTimeMillis()
     }
 }
