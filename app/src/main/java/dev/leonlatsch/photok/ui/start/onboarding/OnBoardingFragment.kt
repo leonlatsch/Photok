@@ -41,7 +41,7 @@ class OnBoardingFragment :
     BindableFragment<FragmentOnboardingBinding>(R.layout.fragment_onboarding) {
 
     @Inject
-    private lateinit var config: Config
+    lateinit var config: Config
 
     private var isLastPage = false
 
