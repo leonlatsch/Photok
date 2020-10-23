@@ -21,10 +21,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
+import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOnboardingBinding
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import kotlinx.android.synthetic.main.fragment_onboarding.*
+import javax.inject.Inject
 
 /**
  * On boarding fragment.
@@ -33,8 +36,12 @@ import kotlinx.android.synthetic.main.fragment_onboarding.*
  * @since 1.0.0
  * @author Leon Latsch
  */
+@AndroidEntryPoint
 class OnBoardingFragment :
     BindableFragment<FragmentOnboardingBinding>(R.layout.fragment_onboarding) {
+
+    @Inject
+    private lateinit var config: Config
 
     private var isLastPage = false
 
@@ -79,6 +86,7 @@ class OnBoardingFragment :
 
     fun finish() {
         findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
+        //config.putBoolean(Config.SYSTEM_FIRST_START, false) // TODO: Enable when finished
     }
 
     override fun bind(binding: FragmentOnboardingBinding) {

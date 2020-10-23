@@ -45,7 +45,6 @@ class SplashScreenViewModel @ViewModelInject constructor(
 
         // First start
         if (config.getBoolean(Config.SYSTEM_FIRST_START, Config.SYSTEM_FIRST_START_DEFAULT)) {
-            // config.putBoolean(Config.SYSTEM_FIRST_START, false) TODO: IMPORTANT! JUST COMMENTED FOR TEST PURPOSE
             applicationState.postValue(ApplicationState.FIRST_START)
             return@launch
         }
