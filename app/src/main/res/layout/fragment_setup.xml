@@ -124,7 +124,7 @@
             <Button
                 android:id="@+id/setupButton"
                 android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height"
+                android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false"
                 android:onClick="@{() -> viewModel.savePassword()}"

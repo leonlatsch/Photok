@@ -32,11 +32,11 @@
         tools:layout="@layout/fragment_unlock" />
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="dev.leonlatsch.photok.ui.start.OnBoardingFragment"
+        android:name="dev.leonlatsch.photok.ui.start.onboarding.OnBoardingFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_onboarding">
         <action
-            android:id="@+id/action_introFragment_to_setupFragment"
+            android:id="@+id/action_onBoardingFragment_to_setupFragment"
             app:destination="@id/setupFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/fragment_fade_exit"

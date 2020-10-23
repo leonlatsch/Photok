@@ -149,7 +149,7 @@
                 <Button
                     style="@style/buttonStyle"
                     android:layout_width="@dimen/wide_button_width"
-                    android:layout_height="@dimen/wide_button_height"
+                    android:layout_height="@dimen/button_height"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:onClick="@{() -> viewModel.cancel()}"
@@ -160,7 +160,7 @@
                 <Button
                     style="@style/buttonStyle"
                     android:layout_width="@dimen/wide_button_width"
-                    android:layout_height="@dimen/wide_button_height"
+                    android:layout_height="@dimen/button_height"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:onClick="@{() -> context.dismiss()}"

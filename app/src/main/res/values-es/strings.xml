@@ -136,4 +136,9 @@
     <string name="change_password_button">Cambiar contraseña</string>
     <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br/> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Finish</string>
+    <string name="onboarding_skip"><u>Skip</u></string>
 </resources>
