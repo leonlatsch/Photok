@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,23 +32,23 @@
         android:orientation="vertical">
 
         <ImageView
-            android:src="@mipmap/ic_launcher_round"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:text="@string/onboarding_slide2_title"
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/elipse" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:maxWidth="250dp"
             android:layout_height="wrap_content"
-            android:text="@string/onboarding_slide2_description"
+            android:text="@string/onboarding_slide2_title"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:maxWidth="250dp"
+            android:text="@string/onboarding_slide2_description"
             android:textAlignment="center" />
     </LinearLayout>
 </RelativeLayout>
