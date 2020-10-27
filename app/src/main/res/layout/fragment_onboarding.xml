@@ -39,28 +39,60 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/onBoardingButton"
-            android:layout_width="@dimen/small_button_width"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:onClick="@{() -> context.buttonClicked()}"
-            android:text="@string/onboarding_next"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="15dp"
-            android:onClick="@{() -> context.finish()}"
-            android:text="@string/onboarding_skip"
-            android:textColor="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:gravity="start"
+                android:onClick="@{() -> context.finish()}"
+                android:text="@string/onboarding_skip"
+                android:textColor="@android:color/darker_gray" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/onBoardingDotSelector1"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/slider_dot_selector" />
+
+                <ImageView
+                    android:id="@+id/onBoardingDotSelector2"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/slider_dot_selector" />
+
+                <ImageView
+                    android:id="@+id/onBoardingDotSelector3"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/slider_dot_selector" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/onBoardingButton"
+                android:layout_width="@dimen/small_button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:onClick="@{() -> context.buttonClicked()}"
+                android:text="@string/onboarding_next" />
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

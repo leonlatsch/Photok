@@ -48,6 +48,10 @@ class OnBoardingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onBoardingDotSelector1.isSelected = true
+        onBoardingDotSelector2.isSelected = false
+        onBoardingDotSelector3.isSelected = false
+
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_1))
         viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_2))
@@ -65,12 +69,28 @@ class OnBoardingFragment :
         }
 
         override fun onPageSelected(position: Int) {
-            isLastPage = position == 2
-            onBoardingButton.text = if (isLastPage) {
-                getString(R.string.onboarding_finish)
-            } else {
-                getString(R.string.onboarding_next)
+            onBoardingButton.text = when (position) {
+                0 -> {
+                    onBoardingDotSelector1.isSelected = true
+                    onBoardingDotSelector2.isSelected = false
+                    onBoardingDotSelector3.isSelected = false
+                    getString(R.string.onboarding_next)
+                }
+                1 -> {
+                    onBoardingDotSelector1.isSelected = false
+                    onBoardingDotSelector2.isSelected = true
+                    onBoardingDotSelector3.isSelected = false
+                    getString(R.string.onboarding_next)
+                }
+                2 -> {
+                    onBoardingDotSelector1.isSelected = false
+                    onBoardingDotSelector2.isSelected = false
+                    onBoardingDotSelector3.isSelected = true
+                    getString(R.string.onboarding_finish)
+                }
+                else -> getString(R.string.onboarding_next)
             }
+            isLastPage = position == 2
         }
 
         override fun onPageScrollStateChanged(state: Int) {}
