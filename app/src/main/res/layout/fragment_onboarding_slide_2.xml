@@ -19,31 +19,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4" />
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:src="@mipmap/ic_launcher_round"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
 
         <TextView
-            android:text="Slide 2"
+            android:text="@string/onboarding_slide2_title"
             android:textSize="30sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="Slide 2 will be the password tutorial bla bla bla bla bla bla"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
+            android:maxWidth="250dp"
             android:layout_height="wrap_content"
+            android:text="@string/onboarding_slide2_description"
             android:layout_marginTop="20dp"
             android:textAlignment="center" />
-
     </LinearLayout>
 </RelativeLayout>

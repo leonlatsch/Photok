@@ -49,9 +49,9 @@ class OnBoardingFragment :
         super.onViewCreated(view, savedInstanceState)
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(OnBoardingSlide1Fragment())
-        viewPagerAdapter.addFragment(OnBoardingSlide2Fragment())
-        viewPagerAdapter.addFragment(OnBoardingSlide3Fragment())
+        viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_1))
+        viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_2))
+        viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_3))
         onBoardingViewPager.adapter = viewPagerAdapter
         onBoardingViewPager.addOnPageChangeListener(onPageChangeListener)
     }
@@ -86,7 +86,7 @@ class OnBoardingFragment :
 
     fun finish() {
         findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
-        //config.putBoolean(Config.SYSTEM_FIRST_START, false) // TODO: Enable when finished
+        config.putBoolean(Config.SYSTEM_FIRST_START, false)
     }
 
     override fun bind(binding: FragmentOnboardingBinding) {
@@ -94,11 +94,3 @@ class OnBoardingFragment :
         binding.context = this
     }
 }
-
-// Fragment Slide classes
-
-class OnBoardingSlide1Fragment : Fragment(R.layout.fragment_onboarding_slide_1)
-
-class OnBoardingSlide2Fragment : Fragment(R.layout.fragment_onboarding_slide_2)
-
-class OnBoardingSlide3Fragment : Fragment(R.layout.fragment_onboarding_slide_3)

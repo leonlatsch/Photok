@@ -21,8 +21,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.4"
-        android:src="@drawable/bg" />
+        android:alpha="0.4" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,20 +31,27 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/ic_launcher_round" />
+
         <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to" />
+            android:text="@string/onboarding_slide1_title"
+            android:layout_width="wrap_content"
+            android:textSize="30sp" />
 
         <TextView
             style="@style/AppNameTitleStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:text="@string/onboarding_slide1_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A safe place for your photos." />
+            android:textAlignment="center" />
     </LinearLayout>
 </RelativeLayout>
