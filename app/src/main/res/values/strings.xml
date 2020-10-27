@@ -133,6 +133,18 @@
     <string name="change_password_enter_new_password">Enter your new password</string>
     <string name="change_password_confirm_new_password">Confirm your new password</string>
     <string name="change_password_button">Change Password</string>
-    <string name="change_password_confirm_message">Backup recommended!<br/> Changing your password requires re-encrypting all your photos! Do you want to continue?</string>
+    <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your photos! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting photo(s)…</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Finish</string>
+    <string name="onboarding_skip"><u>Skip</u></string>
+
+    <string name="onboarding_slide1_title">Welcome to</string>
+    <string name="onboarding_slide1_description">A safe place for your photos.</string>
+    <string name="onboarding_slide2_title">Create a password</string>
+    <string name="onboarding_slide2_description">Create a secure password. Your password is used to encrypt your photos directly on your phone.</string>
+    <string name="onboarding_slide3_title">Start Importing</string>
+    <string name="onboarding_slide3_description">Start importing your photos into photok and keep them safe from others.</string>
 </resources>

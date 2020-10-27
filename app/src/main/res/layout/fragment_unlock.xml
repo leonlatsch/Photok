@@ -83,7 +83,7 @@
 
             <Button
                 android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height"
+                android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:onClick="@{() -> viewModel.unlock()}"
                 android:text="@string/unlock_button" />
