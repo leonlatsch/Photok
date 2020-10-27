@@ -21,6 +21,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import dev.leonlatsch.photok.other.emptyString
 
+/**
+ * Adapter for ViewPager with Fragments.
+ *
+ * @author Leon Latsch
+ * @since 1.0.0
+ */
 class ViewPagerAdapter(
     fragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -32,11 +38,14 @@ class ViewPagerAdapter(
 
     override fun getItem(position: Int): Fragment = fragmentList.get(position)
 
-    override fun getPageTitle(position: Int): CharSequence? = fragmentTitleList.get(position)
+    override fun getPageTitle(position: Int): CharSequence? = fragmentTitleList[position]
 
+    /**
+     * Add a [Fragment] to the view pager.
+     */
     fun addFragment(fragment: Fragment) = addFragment(fragment, emptyString())
 
-    fun addFragment(fragment: Fragment, title: String) {
+    private fun addFragment(fragment: Fragment, title: String) {
         fragmentList.add(fragment)
         fragmentTitleList.add(title)
     }

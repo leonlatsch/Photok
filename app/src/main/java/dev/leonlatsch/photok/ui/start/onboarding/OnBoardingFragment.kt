@@ -76,6 +76,10 @@ class OnBoardingFragment :
         override fun onPageScrollStateChanged(state: Int) {}
     }
 
+    /**
+     * Swipe to next slide or finish
+     * Called by ui.
+     */
     fun buttonClicked() {
         if (isLastPage) {
             finish()
@@ -84,6 +88,9 @@ class OnBoardingFragment :
         }
     }
 
+    /**
+     * Navigate to setup and set first start to false.
+     */
     fun finish() {
         findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
         config.putBoolean(Config.SYSTEM_FIRST_START, false)
