@@ -138,14 +138,14 @@
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
 
     <!-- ON BOARDING -->
-    <string name="onboarding_next">Next</string>
-    <string name="onboarding_finish">Finish</string>
-    <string name="onboarding_skip"><u>Skip</u></string>
+    <string name="onboarding_next">Siguiente</string>
+    <string name="onboarding_finish">Terminar</string>
+    <string name="onboarding_skip"><u>Saltar</u></string>
 
-    <string name="onboarding_slide1_title">Welcome to</string>
-    <string name="onboarding_slide1_description">A safe place for your photos.</string>
-    <string name="onboarding_slide2_title">Create a password</string>
-    <string name="onboarding_slide2_description">Create a secure password. Your password is used to encrypt your photos directly on your phone.</string>
-    <string name="onboarding_slide3_title">Start Importing</string>
-    <string name="onboarding_slide3_description">Start importing your photos into photok and keep them safe from others.</string>
+    <string name="onboarding_slide1_title">Bienvenido a</string>
+    <string name="onboarding_slide1_description">Un lugar seguro para gurdar tus fotos.</string>
+    <string name="onboarding_slide2_title">Crear una contraseña</string>
+    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar tus fotos directamente en tu teléfono.</string>
+    <string name="onboarding_slide3_title">Empezar a importar</string>
+    <string name="onboarding_slide3_description">Comienza a importar tus fotos en Photok y mantenlas a salvo de los demás.</string>
 </resources>
