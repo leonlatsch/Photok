@@ -144,8 +144,8 @@
 
     <string name="onboarding_slide1_title">Bienvenido a</string>
     <string name="onboarding_slide1_description">Un lugar seguro para gurdar tus fotos.</string>
-    <string name="onboarding_slide2_title">Crear una contraseña</string>
-    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar tus fotos directamente en tu teléfono.</string>
-    <string name="onboarding_slide3_title">Empezar a importar</string>
+    <string name="onboarding_slide2_title">Crea una contraseña</string>
+    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
+    <string name="onboarding_slide3_title">Empieza a importar</string>
     <string name="onboarding_slide3_description">Comienza a importar tus fotos en Photok y mantenlas a salvo de los demás.</string>
 </resources>
