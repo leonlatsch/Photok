@@ -30,26 +30,25 @@
         android:layout_height="match_parent"
         tools:context=".ui.gallery.GalleryFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:layout_margin="30dp"
             android:id="@+id/galleryPlaceholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="40dp"
+            android:gravity="center"
             android:visibility="@{context.placeholderVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_gallery_placeholder"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/lightGray" />
+                android:layout_height="300dp"
+                android:alpha="0.3"
+                android:src="@drawable/ic_vault_colored" />
 
             <TextView
                 android:id="@+id/textView"
@@ -59,14 +58,9 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:fontFamily="@font/raleway_bold"
-                android:textColor="@color/lightGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.8" />
+                android:textColor="@color/lightGray" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
         <LinearLayout

@@ -1,0 +1,40 @@
+<!--
+  ~   Copyright 2020 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#4BB9FF"
+        android:pathData="M512,66v380c0,8.28 -6.72,15 -15,15H15c-8.28,0 -15,-6.72 -15,-15V66c0,-8.28 6.72,-15 15,-15h482C505.28,51 512,57.72 512,66z" />
+    <path
+        android:fillColor="#3E98EF"
+        android:pathData="M497,51H256v410h241c8.28,0 15,-6.72 15,-15V66C512,57.72 505.28,51 497,51z" />
+    <path
+        android:fillColor="#2FD6F0"
+        android:pathData="M215,300v161H15c-8.28,0 -15,-6.72 -15,-15V285h200C208.28,285 215,291.72 215,300z" />
+    <path
+        android:fillColor="#92ECF6"
+        android:pathData="M512,438.73V446c0,8.28 -6.72,15 -15,15H15c-8.28,0 -15,-6.72 -15,-15v-7.27L194.98,285l51.73,-40.78c5.45,-4.29 13.13,-4.29 18.58,0L512,438.73z" />
+    <path
+        android:fillColor="#2FD6F0"
+        android:pathData="M265.29,244.22c-2.725,-2.145 -6.008,-3.218 -9.29,-3.218V461h241c8.28,0 15,-6.72 15,-15v-7.27L265.29,244.22z" />
+    <path
+        android:fillColor="#FFDD3E"
+        android:pathData="M387,111c-35.841,0 -65,29.159 -65,65s29.159,65 65,65s65,-29.159 65,-65S422.841,111 387,111z" />
+</vector>

@@ -24,9 +24,10 @@
             type="dev.leonlatsch.photok.ui.about.AboutFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/aboutToolbar"
@@ -34,83 +35,78 @@
             android:layout_height="?android:attr/actionBarSize"
             android:background="@android:color/transparent"
             android:theme="@style/transparentToolbarStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/menu_main_about" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.15">
-
-            <ImageView
-                android:layout_width="108dp"
-                android:layout_height="108dp"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
-                style="@style/AppNameTitleStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-18dp">
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingBottom="80dp">
+
+                <ImageView
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    style="@style/AppNameTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/about_version"
+                        android:textColor="@color/darkGray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{context.version, default=0}"
+                        android:textColor="@color/darkGray" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:text="@string/about_version"
-                    android:textColor="@color/darkGray" />
+                    android:layout_marginTop="50dp"
+                    android:text="@string/about_developed_by" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{context.version, default=0}"
-                    android:textColor="@color/darkGray" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{() -> context.openWebsite()}"
+                    android:text="@string/about_website_label"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="36sp" />
+
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/about_developed_by" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{() -> context.openWebsite()}"
-                android:text="@string/about_website_label"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="36sp" />
-
-        </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.98">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
@@ -150,8 +146,7 @@
             </LinearLayout>
 
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>
 

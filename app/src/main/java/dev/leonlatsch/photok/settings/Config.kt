@@ -109,12 +109,6 @@ class Config(context: Context) {
         const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
 
         /**
-         * Determines the gallery columns.
-         */
-        const val GALLERY_ADVANCED_GALLERY_COLUMNS = "gallery^advanced.galleryColumns"
-        const val GALLERY_ADVANCED_GALLERY_COLUMNS_DEFAULT = 4
-
-        /**
          * Determines if screenshots should be allowed.
          */
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"

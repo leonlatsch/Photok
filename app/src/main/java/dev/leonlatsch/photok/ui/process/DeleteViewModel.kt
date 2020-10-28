@@ -21,7 +21,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import dev.leonlatsch.photok.ui.process.base.ProcessState
 
 /**
  * ViewModel for deleting multiple photos.
@@ -32,30 +31,15 @@ import dev.leonlatsch.photok.ui.process.base.ProcessState
 class DeleteViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel() {
+) : BaseProcessViewModel<Photo>() {
 
-    lateinit var photos: List<Photo>
-
-    override suspend fun process() {
-        for (photo in photos) {
-            if (processState.value == ProcessState.ABORTED) {
-                return
-            }
-            currentElement++
-
-            // Delete image
-            delete(photo)
-            updateProgress()
-        }
-    }
-
-    private suspend fun delete(photo: Photo) {
-        if (photo.id == null) {
+    override suspend fun processItem(item: Photo) {
+        if (item.id == null) {
             failuresOccurred = true
             return
         }
 
-        val success = photoRepository.safeDeletePhoto(app, photo)
+        val success = photoRepository.safeDeletePhoto(app, item)
         if (!success) {
             failuresOccurred = true
         }

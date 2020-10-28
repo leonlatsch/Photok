@@ -21,6 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PasswordRepository
+import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 
 /**
@@ -31,7 +32,8 @@ import kotlinx.coroutines.launch
  * @author Leon Latsch
  */
 class SplashScreenViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository
+    private val passwordRepository: PasswordRepository,
+    private val config: Config
 ) : ViewModel() {
 
     var applicationState: MutableLiveData<ApplicationState> = MutableLiveData()
@@ -41,7 +43,13 @@ class SplashScreenViewModel @ViewModelInject constructor(
      */
     fun checkApplicationState() = viewModelScope.launch {
 
-        //TODO: check first start
+        // First start
+        if (config.getBoolean(Config.SYSTEM_FIRST_START, Config.SYSTEM_FIRST_START_DEFAULT)) {
+            applicationState.postValue(ApplicationState.FIRST_START)
+            return@launch
+        }
+
+        // Unlock or Setup
         val password = passwordRepository.getPassword()?.password
         if (password == null) {
             applicationState.postValue(ApplicationState.SETUP)

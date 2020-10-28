@@ -134,6 +134,18 @@
     <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
     <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
     <string name="change_password_button">Passwort ändern</string>
-    <string name="change_password_confirm_message">Backup empfohlen!<br/> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
+    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_finish">Fertig</string>
+    <string name="onboarding_skip"><u>Überspringen</u></string>
+
+    <string name="onboarding_slide1_title">Willkommen bei</string>
+    <string name="onboarding_slide1_description">Ein sicherer Ort für deine Fotos.</string>
+    <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
+    <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
+    <string name="onboarding_slide3_title">Fang an zu importieren</string>
+    <string name="onboarding_slide3_description">Importiere deine Fotos in Photok und halte sie sicher vor anderen.</string>
 </resources>

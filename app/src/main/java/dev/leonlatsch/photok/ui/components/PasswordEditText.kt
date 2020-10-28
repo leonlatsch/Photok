@@ -56,6 +56,7 @@ class PasswordEditText @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyle) {
 
     private val onShowPasswordClickListener = OnClickListener {
+        val origTf = passwordEditTextValue.typeface
         passwordEditTextValue.inputType = when(passwordEditTextValue.inputType) {
             INPUT_TYPE_PASSWORD -> {
                 passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_eye_closed))
@@ -70,6 +71,7 @@ class PasswordEditText @JvmOverloads constructor(
                 INPUT_TYPE_PASSWORD
             }
         }
+        passwordEditTextValue.typeface = origTf
     }
 
     init {
