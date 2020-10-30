@@ -113,7 +113,7 @@ class OnBoardingFragment :
      */
     fun finish() {
         findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
-        config.putBoolean(Config.SYSTEM_FIRST_START, false)
+        config.systemFirstStart = false
     }
 
     override fun bind(binding: FragmentOnboardingBinding) {

@@ -44,7 +44,7 @@ class SplashScreenViewModel @ViewModelInject constructor(
     fun checkApplicationState() = viewModelScope.launch {
 
         // First start
-        if (config.getBoolean(Config.SYSTEM_FIRST_START, Config.SYSTEM_FIRST_START_DEFAULT)) {
+        if (config.systemFirstStart) {
             applicationState.postValue(ApplicationState.FIRST_START)
             return@launch
         }

@@ -32,7 +32,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!config.getBoolean(Config.SECURITY_ALLOW_SCREENSHOTS, Config.SECURITY_ALLOW_SCREENSHOTS_DEFAULT)) {
+        if (!config.securityAllowScreenshots) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         }
     }
