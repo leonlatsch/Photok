@@ -140,11 +140,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             }
         }
 
-        if (config.getBoolean(
-                Config.GALLERY_AUTO_FULLSCREEN,
-                Config.GALLERY_AUTO_FULLSCREEN_DEFAULT
-            )
-        ) { // Hide system ui if configured
+        if (config.galleryAutoFullscreen) { // Hide system ui if configured
             toggleSystemUI(window)
         }
     }
