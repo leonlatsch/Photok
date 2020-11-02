@@ -84,6 +84,12 @@ class PhotoRepository @Inject constructor(
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
+
+    /**
+     * Get all photo Ids.
+     */
+    suspend fun getAllIds() = photoDao.getAllIds()
+
     ////////////////////////////// IO //////////////////////////////
 
     // region WRITE

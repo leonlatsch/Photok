@@ -71,4 +71,10 @@ interface PhotoDao {
      */
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
+
+    /**
+     * Get all photo Ids.
+     */
+    @Query("SELECT id FROM photo ORDER BY importedAt DESC")
+    suspend fun getAllIds(): List<Int>
 }

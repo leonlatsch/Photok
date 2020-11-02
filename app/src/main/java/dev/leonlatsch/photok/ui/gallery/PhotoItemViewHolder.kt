@@ -47,7 +47,7 @@ import timber.log.Timber
  * @since 1.0.0
  * @author Leon Latsch
  */
-class PhotoViewHolder(
+class PhotoItemViewHolder(
     parent: ViewGroup,
     private val context: Context,
     private val photoRepository: PhotoRepository
