@@ -29,11 +29,11 @@ import kotlin.reflect.KFunction1
 
 /**
  * [PagingDataAdapter] for [Photo] Grid.
- * Implements custom multi selection. Used by [PhotoViewHolder]
+ * Implements custom multi selection. Used by [PhotoItemViewHolder]
  *
- * @param context Passthrough to [PhotoViewHolder]
- * @param photoRepository Passthrough to [PhotoViewHolder]
- * @param viewPhotoCallback Called by [PhotoViewHolder]. Defines what happens onClick.
+ * @param context Passthrough to [PhotoItemViewHolder]
+ * @param photoRepository Passthrough to [PhotoItemViewHolder]
+ * @param viewPhotoCallback Called by [PhotoItemViewHolder]. Defines what happens onClick.
  * @param lifecycleOwner  The Fragments [LifecycleOwner]. Used for observing [MutableLiveData].
  *
  * @since 1.0.0
@@ -44,7 +44,7 @@ class PhotoAdapter(
     private val photoRepository: PhotoRepository,
     private val viewPhotoCallback: KFunction1<Int, Unit>,
     val lifecycleOwner: LifecycleOwner
-) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
+) : PagingDataAdapter<Photo, PhotoItemViewHolder>(differCallback) {
 
     /**
      * Holds the layout positions of the selected items.
@@ -56,12 +56,12 @@ class PhotoAdapter(
      */
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.bindTo(this, getItem(position))
+    override fun onBindViewHolder(holderItem: PhotoItemViewHolder, position: Int) {
+        holderItem.bindTo(this, getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder =
-        PhotoViewHolder(parent, context, photoRepository)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder =
+        PhotoItemViewHolder(parent, context, photoRepository)
 
     /**
      * Called by ui. On Click.

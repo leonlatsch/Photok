@@ -20,6 +20,7 @@ import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
@@ -30,7 +31,6 @@ import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.activity_view_photo.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -55,17 +55,30 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
         initializeSystemUI()
-        loadPhoto()
-    }
 
-    /**
-     * On Image View Clicked.
-     * Called by ui.
-     */
-    fun onClick() {
-        toggleSystemUI(window)
+        viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.updateDetails(position)
+            }
+        })
+
+        viewModel.preloadData { ids ->
+            val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
+                viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+            }, {
+                toggleSystemUI(window) // On clicked
+            })
+            viewPhotoViewPager.adapter = photoPagerAdapter
+
+            val photoId = intent.extras?.get(INTENT_PHOTO_ID)
+            val startingAt = if (photoId != null && photoId is Int?) {
+                ids.indexOf(photoId)
+            } else {
+                0
+            }
+            viewPhotoViewPager.setCurrentItem(startingAt, false)
+        }
     }
 
     /**
@@ -74,7 +87,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      */
     fun onDetails() {
         val detailsBottomSheetDialog =
-            DetailsBottomSheetDialog(viewModel.photo.value, viewModel.photoSize)
+            DetailsBottomSheetDialog(viewModel.currentPhoto.value)
         detailsBottomSheetDialog.show(
             supportFragmentManager,
             DetailsBottomSheetDialog::class.qualifiedName
@@ -142,17 +155,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         if (config.galleryAutoFullscreen) { // Hide system ui if configured
             toggleSystemUI(window)
-        }
-    }
-
-    private fun loadPhoto() {
-        val id = intent.extras?.get(INTENT_PHOTO_ID)
-        if (id != null && id is Int?) {
-            viewModel.loadPhoto(id) {
-                finish() // onError
-            }
-        } else {
-            Timber.d("Error loading photo for id: $id")
         }
     }
 
