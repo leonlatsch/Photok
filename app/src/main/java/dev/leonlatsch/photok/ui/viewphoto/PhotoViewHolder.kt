@@ -21,8 +21,8 @@ import android.graphics.BitmapFactory
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.GlobalScope
@@ -33,15 +33,27 @@ class PhotoViewHolder(
     parent: ViewGroup,
     private val context: Context,
     private val photoRepository: PhotoRepository,
+    private val onZoomed: (zoomed: Boolean) -> Unit,
+    private val onClick: () -> Unit
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
-    private val imageView: ImageView = itemView.findViewById(R.id.photoImageView)
+    private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
     var photoId: Int = 0
 
     fun bindTo(id: Int?) {
         id ?: return
         photoId = id
+
+        imageView.setOnTouchImageViewListener(object : TouchImageView.OnTouchImageViewListener {
+            override fun onMove() {
+                onZoomed(imageView.isZoomed)
+            }
+        })
+        imageView.setOnClickListener {
+            onClick()
+        }
+
         loadPhoto()
     }
 

@@ -64,7 +64,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         })
 
         viewModel.preloadData { ids ->
-            val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository)
+            val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
+                viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+            }, {
+                toggleSystemUI(window) // On clicked
+            })
             viewPhotoViewPager.adapter = photoPagerAdapter
 
             val photoId = intent.extras?.get(INTENT_PHOTO_ID)
@@ -76,12 +80,6 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             viewPhotoViewPager.setCurrentItem(startingAt, false)
         }
     }
-
-    /**
-     * On Image View Clicked.
-     * Called by ui.
-     */
-    fun onClick() = toggleSystemUI(window)
 
     /**
      * On Detail button clicked.
