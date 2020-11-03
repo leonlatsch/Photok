@@ -20,6 +20,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 
+/**
+ * Adapter for fullscreen photos in a ViewPager.
+ *
+ * @param photos [List] of photo ids
+ * @param photoRepository To load photo data
+ * @param onZoomed Block top be called on image zoomed
+ * @param onClick Block to be called on image click
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class PhotoPagerAdapter(
     private val photos: List<Int>,
     private val photoRepository: PhotoRepository,

@@ -29,6 +29,19 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * ViewHolder for a fullscreen photo.
+ * Loads data async on binding finished.
+ *
+ * @param parent for inflating layout
+ * @param context Needed to load data
+ * @param photoRepository To load photo data
+ * @param onZoomed Block top be called on image zoomed
+ * @param onClick Block to be called on image click
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class PhotoViewHolder(
     parent: ViewGroup,
     private val context: Context,
@@ -41,6 +54,11 @@ class PhotoViewHolder(
     private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
     var photoId: Int = 0
 
+    /**
+     * Called by Adapters onBindViewHolder.
+     *
+     * @param id The photo's id
+     */
     fun bindTo(id: Int?) {
         id ?: return
         photoId = id

@@ -39,6 +39,10 @@ class ViewPhotoViewModel @ViewModelInject constructor(
     var ids = listOf<Int>()
     var currentPhoto: MutableLiveData<Photo> = MutableLiveData()
 
+    /**
+     * Load all photo Ids.
+     * Save them in viewModel and pass them to [onFinished].
+     */
     fun preloadData(onFinished: (List<Int>) -> Unit) = viewModelScope.launch {
         if (ids.isEmpty()) {
             ids = photoRepository.getAllIds()
