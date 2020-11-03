@@ -57,7 +57,7 @@ class ImportViewModel @ViewModelInject constructor(
             return
         }
 
-        val photo = Photo(fileName, System.currentTimeMillis(), type)
+        val photo = Photo(fileName, System.currentTimeMillis(), type, bytes.size.toLong())
         val success = photoRepository.safeCreatePhoto(app, photo, bytes)
         if (!success) {
             failuresOccurred = true

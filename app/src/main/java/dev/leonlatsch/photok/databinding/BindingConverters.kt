@@ -41,7 +41,7 @@ object BindingConverters {
         return dateFormat.format(date)
     }
 
-    fun formatByteSizeConverter(bytes: Int): String {
+    fun formatByteSizeConverter(bytes: Long): String {
         val kiloBytes = bytes / 1024
         val megaBytes = kiloBytes / 1024
         val gigaBytes = megaBytes / 1024
