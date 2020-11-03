@@ -29,8 +29,6 @@ import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
-import kotlinx.android.synthetic.main.fragment_unlock.*
-import kotlinx.android.synthetic.main.loading_overlay.*
 
 /**
  * Unlock fragment.
@@ -47,21 +45,21 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.unlockState.observe(viewLifecycleOwner, {
             when (it) {
-                UnlockState.CHECKING -> loadingOverlay.show()
+                UnlockState.CHECKING -> binding.loadingOverlay.show()
                 UnlockState.UNLOCKED -> {
                     unlock()
                 }
                 UnlockState.LOCKED -> {
-                    loadingOverlay.hide()
-                    unlockWrongPasswordWarningTextView.show()
+                    binding.loadingOverlay.hide()
+                    binding.unlockWrongPasswordWarningTextView.show()
                 }
                 else -> return@observe
             }
         })
 
         viewModel.passwordText.observe(viewLifecycleOwner, {
-            if (unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
-                unlockWrongPasswordWarningTextView.vanish()
+            if (binding.unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
+                binding.unlockWrongPasswordWarningTextView.vanish()
             }
         })
 
@@ -75,7 +73,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             activity?.finish()
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            loadingOverlay.hide()
+            binding.loadingOverlay.hide()
         }
     }
 

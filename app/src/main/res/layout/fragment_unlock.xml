@@ -90,7 +90,9 @@
 
         </LinearLayout>
 
-        <include layout="@layout/loading_overlay" />
+        <include
+            android:id="@+id/loadingOverlay"
+            layout="@layout/loading_overlay" />
 
     </FrameLayout>
 

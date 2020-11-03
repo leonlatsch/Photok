@@ -31,8 +31,6 @@ import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_setup.*
-import kotlinx.android.synthetic.main.loading_overlay.*
 
 /**
  * Fragment for the setup.
@@ -54,29 +52,29 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             if (it.isNotEmpty()) {
                 val value = when (it.length) {
                     1, 2, 3, 4, 5 -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
                         getString(R.string.setup_password_strength_weak)
                     }
                     6, 7, 8, 9, 10 -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
                         getString(R.string.setup_password_strength_moderate)
                     }
                     else -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
                         getString(R.string.setup_password_strength_strong)
                     }
                 }
-                setupPasswordStrengthLayout.show()
-                setupPasswordStrengthValue.text = value
+                binding.setupPasswordStrengthLayout.show()
+                binding.setupPasswordStrengthValue.text = value
             } else {
-                setupPasswordStrengthLayout.hide()
+                binding.setupPasswordStrengthLayout.hide()
             }
 
             if (viewModel.validatePassword()) {
-                setupConfirmPasswordEditText.show()
+                binding.setupConfirmPasswordEditText.show()
             } else {
-                setupConfirmPasswordEditText.setTextValue(emptyString())
-                setupConfirmPasswordEditText.hide()
+                binding.setupConfirmPasswordEditText.setTextValue(emptyString())
+                binding.setupConfirmPasswordEditText.hide()
             }
 
             enableOrDisableSetup()
@@ -87,11 +85,11 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
         })
 
         viewModel.setupState.observe(viewLifecycleOwner, {
-            when(it) {
-                SetupState.LOADING -> loadingOverlay.show()
-                SetupState.SETUP -> loadingOverlay.hide()
+            when (it) {
+                SetupState.LOADING -> binding.loadingOverlay.show()
+                SetupState.SETUP -> binding.loadingOverlay.hide()
                 SetupState.FINISHED -> {
-                    loadingOverlay.hide()
+                    binding.loadingOverlay.hide()
 
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
@@ -106,13 +104,14 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
     private fun enableOrDisableSetup() {
         if (!viewModel.passwordsEqual()
-            && setupConfirmPasswordEditText.isVisible) {
-            setupPasswordMatchWarningTextView.show()
-            setupButton.isEnabled = false
+            && binding.setupConfirmPasswordEditText.isVisible
+        ) {
+            binding.setupPasswordMatchWarningTextView.show()
+            binding.setupButton.isEnabled = false
         } else {
-            setupPasswordMatchWarningTextView.hide()
+            binding.setupPasswordMatchWarningTextView.hide()
             if (viewModel.validateBothPasswords()) {
-                setupButton.isEnabled = true
+                binding.setupButton.isEnabled = true
             }
         }
     }

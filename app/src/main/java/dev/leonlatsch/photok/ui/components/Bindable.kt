@@ -26,6 +26,12 @@ import androidx.databinding.ViewDataBinding
  */
 interface Bindable<BindingType : ViewDataBinding> {
 
+
+    /**
+     * Binding instance. Contains all Views and Variables in a layout.
+     */
+    var binding: BindingType
+
     /**
      * Used to insert bindings.
      * @sample dev.leonlatsch.photok.ui.components.BindableActivity.bind

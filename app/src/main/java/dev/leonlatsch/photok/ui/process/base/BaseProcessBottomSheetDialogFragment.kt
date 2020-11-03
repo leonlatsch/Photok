@@ -25,7 +25,6 @@ import androidx.lifecycle.MutableLiveData
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_bottom_sheet_process.*
 
 /**
  * Abstract base for all process dialogs.
@@ -130,7 +129,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
         }
 
         statusDrawable.postValue(ContextCompat.getDrawable(requireContext(), drawable))
-        statusImageView.setColorFilter(ContextCompat.getColor(requireContext(), color))
+        binding.statusImageView.setColorFilter(ContextCompat.getColor(requireContext(), color))
     }
 
     override fun bind(binding: DialogBottomSheetProcessBinding) {

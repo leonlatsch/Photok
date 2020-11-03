@@ -28,7 +28,6 @@ import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
-import kotlinx.android.synthetic.main.activity_view_photo.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -50,14 +49,15 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(viewPhotoToolbar)
+        setSupportActionBar(binding.viewPhotoToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         initializeSystemUI()
 
-        viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDetails(position)
             }
@@ -65,11 +65,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         viewModel.preloadData { ids ->
             val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
-                viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+                binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
             }, {
                 toggleSystemUI(window) // On clicked
             })
-            viewPhotoViewPager.adapter = photoPagerAdapter
+            binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
             val photoId = intent.extras?.get(INTENT_PHOTO_ID)
             val startingAt = if (photoId != null && photoId is Int?) {
@@ -77,7 +77,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             } else {
                 0
             }
-            viewPhotoViewPager.setCurrentItem(startingAt, false)
+            binding.viewPhotoViewPager.setCurrentItem(startingAt, false)
         }
     }
 
@@ -145,11 +145,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                viewPhotoAppBarLayout.show()
-                viewPhotoBottomToolbarLayout.show()
+                binding.viewPhotoAppBarLayout.show()
+                binding.viewPhotoBottomToolbarLayout.show()
             } else {
-                viewPhotoAppBarLayout.hide()
-                viewPhotoBottomToolbarLayout.hide()
+                binding.viewPhotoAppBarLayout.hide()
+                binding.viewPhotoBottomToolbarLayout.hide()
             }
         }
 

@@ -24,7 +24,6 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_about.*
 
 /**
  * Fragment to display a info about the app and some links.
@@ -39,7 +38,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        aboutToolbar.setNavigationOnClickListener {
+        binding.aboutToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
     }
