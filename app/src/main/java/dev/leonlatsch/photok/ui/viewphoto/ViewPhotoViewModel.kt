@@ -49,8 +49,9 @@ class ViewPhotoViewModel @ViewModelInject constructor(
     /**
      * Loads a photo. Gets called after onViewCreated
      */
-    fun updateDetails(id: Int) = viewModelScope.launch {
-        currentPhoto.postValue(photoRepository.get(id))
+    fun updateDetails(position: Int) = viewModelScope.launch {
+        val photo = photoRepository.get(ids[position])
+        currentPhoto.postValue(photo)
     }
 
     /**

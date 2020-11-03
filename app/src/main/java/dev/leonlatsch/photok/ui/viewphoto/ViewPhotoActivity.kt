@@ -20,6 +20,7 @@ import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
@@ -55,6 +56,12 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         initializeSystemUI()
+
+        viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.updateDetails(position)
+            }
+        })
 
         viewModel.preloadData { ids ->
             val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository)
