@@ -45,10 +45,14 @@ class Config(context: Context) {
         get() = getBoolean(SECURITY_ALLOW_SCREENSHOTS, SECURITY_ALLOW_SCREENSHOTS_DEFAULT)
         set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
 
+    var securityPassword: String?
+        get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
+        set(value) = putString(SECURITY_PASSWORD, value!!)
+
 
     // region put/get methods
 
-    private fun getString(key: String, default: String?) = preferences.getString(key, default)
+    private fun getString(key: String, default: String) = preferences.getString(key, default)
 
     private fun getInt(key: String, default: Int) = preferences.getInt(key, default)
 
@@ -102,6 +106,12 @@ class Config(context: Context) {
          */
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
+
+        /**
+         * Password hash to check when unlockung.
+         */
+        const val SECURITY_PASSWORD = "security^password"
+        const val SECURITY_PASSWORD_DEFAULT = ""
 
         /**
          * Key to change the password. Doesn't get persisted.

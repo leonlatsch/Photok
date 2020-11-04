@@ -20,9 +20,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.VERSION
-import dev.leonlatsch.photok.model.database.dao.PasswordDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
-import dev.leonlatsch.photok.model.database.entity.Password
 import dev.leonlatsch.photok.model.database.entity.Photo
 
 /**
@@ -32,10 +30,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
  * @author Leon Latsch
  */
 @Database(
-    entities = [
-        Photo::class,
-        Password::class
-    ],
+    entities = [Photo::class],
     version = VERSION,
     exportSchema = false
 )
@@ -51,9 +46,4 @@ abstract class PhotokDatabase : RoomDatabase() {
      * Get the data access object for [Photo]
      */
     abstract fun getPhotoDao(): PhotoDao
-
-    /**
-     * Get the data access object for [Photo]
-     */
-    abstract fun getPasswordDao(): PasswordDao
 }

@@ -20,7 +20,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 
@@ -32,7 +31,6 @@ import kotlinx.coroutines.launch
  * @author Leon Latsch
  */
 class SplashScreenViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository,
     private val config: Config
 ) : ViewModel() {
 
@@ -50,8 +48,8 @@ class SplashScreenViewModel @ViewModelInject constructor(
         }
 
         // Unlock or Setup
-        val password = passwordRepository.getPassword()?.password
-        if (password == null) {
+        val password = config.securityPassword
+        if (password == null || password.isEmpty()) {
             applicationState.postValue(ApplicationState.SETUP)
         } else {
             applicationState.postValue(ApplicationState.LOCKED)

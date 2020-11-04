@@ -20,9 +20,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -35,7 +35,7 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class UnlockViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository,
+    private val config: Config,
     val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
@@ -51,8 +51,8 @@ class UnlockViewModel @ViewModelInject constructor(
     fun unlock() = viewModelScope.launch {
         unlockState.postValue(UnlockState.CHECKING)
 
-        val savedPassword = passwordRepository.getPassword()
-        if (BCrypt.checkpw(passwordText.value, savedPassword?.password)) {
+        val savedPassword = config.securityPassword
+        if (BCrypt.checkpw(passwordText.value, savedPassword)) {
             encryptionManager.initialize(passwordText.value!!)
             unlockState.postValue(UnlockState.UNLOCKED)
         } else {

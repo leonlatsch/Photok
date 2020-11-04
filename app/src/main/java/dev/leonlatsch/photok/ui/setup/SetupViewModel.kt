@@ -20,11 +20,10 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.database.entity.Password
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordUtils
+import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -36,7 +35,7 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class SetupViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository,
+    private val config: Config,
     private val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
@@ -60,9 +59,8 @@ class SetupViewModel @ViewModelInject constructor(
         setupState.postValue(SetupState.LOADING)
 
         if (validateBothPasswords()) {
-            val bcryptHash = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
-            val password = Password(bcryptHash)
-            passwordRepository.insert(password)
+            val password = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
+            config.securityPassword = password
             encryptionManager.initialize(passwordText.value!!)
             setupState.postValue(SetupState.FINISHED)
         } else {
