@@ -37,6 +37,13 @@
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
     </style>
 
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="ActionModeCloseButtonStyle">
         <item name="tint">@android:color/white</item>
     </style>

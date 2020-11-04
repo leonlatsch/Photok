@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.ui.start
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,18 +39,15 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.applicationState.observe(viewLifecycleOwner, {
-            when(it) {
+            when (it) {
                 ApplicationState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
                 ApplicationState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
                 ApplicationState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
                 else -> return@observe
             }
         })
-        Handler().postDelayed({
-            viewModel.checkApplicationState()
-        }, 300)
+        viewModel.checkApplicationState()
     }
-
 
 
     private fun navigate(fragment: Int) {

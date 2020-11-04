@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.components
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.Config
 
 /**
@@ -31,6 +32,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme)
 
         if (!config.securityAllowScreenshots) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
