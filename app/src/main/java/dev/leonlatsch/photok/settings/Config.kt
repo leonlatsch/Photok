@@ -112,10 +112,5 @@ class Config(context: Context) {
          */
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
-
-        /**
-         * Key to change the password. Doesn't get persisted.
-         */
-        const val SECURITY_CHANGE_PASSWORD = "security^changePassword"
     }
 }

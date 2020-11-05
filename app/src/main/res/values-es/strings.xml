@@ -57,7 +57,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_add_from_gallery">From Gallery</string><!--TODO: Translate-->
-    <string name="gallery_add_from_backup">From Backup</string>
+    <string name="gallery_add_from_backup">From Backup</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -102,7 +102,7 @@
     <string name="about_developed_by">Desarollado por:</string>
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
-    <string name="about_thrid_party">Software de terceros</string>
+    <string name="about_third_party">Software de terceros</string>
     <string name="about_privacy_policy">Política de Privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
 
@@ -110,6 +110,11 @@
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_category_app">Aplicación</string>
+    <string name="settings_lock_title">Lock</string><!-- TODO: Translate -->
+    <string name="settings_lock_summary">Lock Photok now</string><!-- TODO: Translate -->
+    <string name="settings_reset_title">Reset Safe</string><!-- TODO: Translate -->
+    <string name="settings_reset_summary">Wipe data and reset password</string><!-- TODO: Translate -->
+    <string name="settings_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string><!-- TODO: Translate -->
     <string name="settings_category_gallery">Galería</string>
     <string name="settings_auto_fullscreen_title">Pantalla completa automática</string>
     <string name="settings_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>

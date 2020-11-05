@@ -17,10 +17,13 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
+import dev.leonlatsch.photok.ui.StartActivity
 
 /**
  * Get a file's name.
@@ -56,4 +59,13 @@ fun toggleSystemUI(window: Window?) {
     newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
 
     window.decorView.systemUiVisibility = newUiOptions
+}
+
+/**
+ * Restart the app. Clear backstack and start [StartActivity]
+ */
+fun restartAppLifecycle(context: Context) {
+    val intent = Intent(context, StartActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    context.startActivity(intent)
 }

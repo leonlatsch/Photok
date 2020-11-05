@@ -102,13 +102,18 @@
     <string name="about_developed_by">Developed by:</string>
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
-    <string name="about_thrid_party">Third Party Software</string>
+    <string name="about_third_party">Third Party Software</string>
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_category_app">App</string>
+    <string name="settings_lock_title">Lock</string>
+    <string name="settings_lock_summary">Lock Photok now</string>
+    <string name="settings_reset_title">Reset Safe</string>
+    <string name="settings_reset_summary">Wipe data and reset password</string>
+    <string name="settings_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
     <string name="settings_category_gallery">Gallery</string>
     <string name="settings_auto_fullscreen_title">Auto Fullscreen</string>
     <string name="settings_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>

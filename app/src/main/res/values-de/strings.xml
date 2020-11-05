@@ -102,7 +102,7 @@
     <string name="about_developed_by">Entwickelt von:</string>
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
-    <string name="about_thrid_party">Drittanbietersoftware</string>
+    <string name="about_third_party">Drittanbietersoftware</string>
     <string name="about_privacy_policy">Datenschutzerklärung</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
 
@@ -110,6 +110,11 @@
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
     <string name="settings_category_app">App</string>
+    <string name="settings_lock_title">Sperren</string>
+    <string name="settings_lock_summary">Photok jetzt sperren</string>
+    <string name="settings_reset_title">Safe zurücksetzen</string>
+    <string name="settings_reset_summary">Daten löschen und Passwort zurücksetzen</string>
+    <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>

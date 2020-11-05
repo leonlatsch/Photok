@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.unlock.options.UnlockOptionsContainerDialog
 
 /**
  * Unlock fragment.
@@ -77,8 +78,21 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
     }
 
+    /**
+     * Shows [UnlockOptionsContainerDialog].
+     * Called by ui.
+     */
+    fun showOptions() {
+        val dialog = UnlockOptionsContainerDialog()
+        dialog.show(
+            requireActivity().supportFragmentManager,
+            UnlockOptionsContainerDialog::class.qualifiedName
+        )
+    }
+
     override fun bind(binding: FragmentUnlockBinding) {
         super.bind(binding)
+        binding.context = this
         binding.viewModel = viewModel
     }
 }

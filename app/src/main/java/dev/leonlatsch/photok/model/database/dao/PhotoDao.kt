@@ -47,6 +47,12 @@ interface PhotoDao {
     suspend fun delete(photo: Photo): Int
 
     /**
+     * Delete all [Photo] rows.
+     */
+    @Query("DELETE FROM photo")
+    suspend fun deleteAll()
+
+    /**
      * Get one [Photo] by [id].
      *
      * @return the photo with [id]

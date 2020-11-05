@@ -36,7 +36,7 @@ class LicensesDialogFragment : DialogFragment() {
         webView.loadUrl(LICENSE_REPORT_URL)
 
         return AlertDialog.Builder(requireActivity())
-            .setTitle(getString(R.string.about_thrid_party))
+            .setTitle(getString(R.string.about_third_party))
             .setView(webView)
             .setNeutralButton(getString(R.string.common_ok)) { dialog, _ ->
                 dialog.dismiss()
