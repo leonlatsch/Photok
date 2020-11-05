@@ -27,5 +27,6 @@
     <dimen name="big_gap">24dp</dimen>
 
     <dimen name="round_corners_radius">18dp</dimen>
+    <dimen name="slight_round_corners_radius">8dp</dimen>
     <dimen name="toolbar_menu_margin_end">10dp</dimen>
 </resources>

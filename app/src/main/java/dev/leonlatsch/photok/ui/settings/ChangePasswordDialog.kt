@@ -32,7 +32,7 @@ import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.ReEncryptBottomSheetDialogFragment
 
 /**
- * Dialog for chaging the password. Validates that the old password os known and collects the new password.
+ * Dialog for changing the password. Validates that the old password os known and collects the new password.
  * Starts re-encryption process.
  *
  * @since 1.0.0
