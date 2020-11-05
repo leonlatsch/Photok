@@ -136,6 +136,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
+            binding.galleryActionMenu.collapse()
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

@@ -31,16 +31,16 @@
         tools:context=".ui.gallery.GalleryFragment">
 
         <LinearLayout
-            android:layout_margin="30dp"
             android:id="@+id/galleryPlaceholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="30dp"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="@{context.placeholderVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UseCompoundDrawables">
 
@@ -54,11 +54,11 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_bold"
                 android:text="@string/gallery_placeholder"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:fontFamily="@font/raleway_bold"
-                android:textColor="@color/lightGray" />
+                android:textColor="@color/lightGray"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabImport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,6 +92,44 @@
             app:layout_constraintHorizontal_bias="0.96"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.98" /> -->
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/galleryActionMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorNormal="@color/colorPrimary"
+            app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+            app:fab_labelStyle="@style/FabLabelStyle"
+            app:fab_labelsPosition="left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.98">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/galleryActionMenuBackup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorPrimaryDark"
+                app:fab_colorPressed="@android:color/darker_gray"
+                app:fab_icon="@drawable/ic_backup_restore"
+                app:fab_size="mini"
+                app:fab_title="@string/gallery_add_from_backup" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/galleryActionMenuGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> context.startImport()}"
+                app:fab_colorNormal="@color/colorPrimaryDark"
+                app:fab_colorPressed="@android:color/darker_gray"
+                app:fab_icon="@drawable/ic_image_search"
+                app:fab_size="mini"
+                app:fab_title="@string/gallery_add_from_gallery" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
