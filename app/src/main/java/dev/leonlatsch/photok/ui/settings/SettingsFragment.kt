@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -66,6 +67,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             onResetSafe()
             true
         }
+        val backupPreference = preferenceManager.findPreference<Preference>(KEY_BACKUP)
+        backupPreference?.setOnPreferenceClickListener {
+            onBackup()
+            true
+        }
     }
 
     private fun onChangePasswordClicked() {
@@ -91,9 +97,39 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun onBackup() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.type = "application/zip"
+        intent.putExtra(Intent.EXTRA_TITLE, "photok_backup_${System.currentTimeMillis()}.zip")
+        startActivityForResult(Intent.createChooser(intent, "Select Backup File"), REQ_BACKUP)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        /*
+        val uri = data!!.data!!
+            contentResolver.openOutputStream(uri).let { os ->
+                val bytes = byteArrayOf(127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, )
+                ZipOutputStream(os).let {
+                    for (i in 0 until 10) {
+                        val fileName = i.toString()
+                        val zipEntry = ZipEntry(fileName)
+                        it.putNextEntry(zipEntry)
+                        it.write(bytes)
+                        it.closeEntry()
+                    }
+                    it.close()
+                }
+            }
+         */
+    }
+
     companion object {
+        const val REQ_BACKUP = 42
+
         const val KEY_LOCK = "lock_safe"
         const val KEY_RESET = "reset_safe"
         const val KEY_CHANGE_PASSWORD = "change_password"
+        const val KEY_BACKUP = "backup_safe"
     }
 }

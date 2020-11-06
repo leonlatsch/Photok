@@ -17,55 +17,44 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
+import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import org.mindrot.jbcrypt.BCrypt
+import java.util.zip.ZipOutputStream
 
-/**
- * ViewModel for re-encrypting photos with a new password.
- * Executed after password change.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-class ReEncryptViewModel @ViewModelInject constructor(
+class BackupViewModel @ViewModelInject constructor(
     private val app: Application,
-    private val photoRepository: PhotoRepository,
-    private val config: Config,
-    private val encryptionManager: EncryptionManager
+    private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>() {
 
-    lateinit var newPassword: String
+    lateinit var uri: Uri
+    lateinit var outputStream: ZipOutputStream
 
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
+        createStream()
         super.preProcess()
     }
 
+    private fun createStream() {
+        val out = app.contentResolver.openOutputStream(uri)
+        outputStream = ZipOutputStream(out)
+    }
+
     override suspend fun processItem(item: Photo) {
-        val bytes = photoRepository.readPhotoData(app, item.id!!)
-        if (bytes == null) {
-            failuresOccurred = true
-            return
-        }
-
-        photoRepository.deletePhotoData(app, item.id)
-
-        val result = photoRepository.writePhotoData(app, item.uuid, bytes, newPassword)
-        if (!result) {
-            failuresOccurred = true
-        }
+        // TODO: write raw data in zip entry, save photo to list of saved photos
     }
 
     override suspend fun postProcess() {
+        // TODO: create meta data from saved photos list, close stream
         super.postProcess()
-        val hashedPw = BCrypt.hashpw(newPassword, BCrypt.gensalt())
-        config.securityPassword = hashedPw
-        encryptionManager.initialize(newPassword)
+    }
+
+    override fun cancel() {
+        // TODO: delete zip file, close stream
+        super.cancel()
     }
 }

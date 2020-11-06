@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.model.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  * Entity describing a Photo.
@@ -31,5 +32,6 @@ data class Photo(
     val importedAt: Long,
     val type: PhotoType,
     val size: Long,
+    val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 )

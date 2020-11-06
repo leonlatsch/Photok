@@ -53,11 +53,16 @@
             android:title="@string/settings_change_password_title" />
     </PreferenceCategory>
 
-    <!--
-        <PreferenceCategory
-            android:summary="@string/settings_category_advanced_summary"
-            android:title="@string/settings_category_advanced">
-        </PreferenceCategory>
-    -->
+    <PreferenceCategory
+        android:summary="@string/settings_category_advanced_summary"
+        android:title="@string/settings_category_advanced">
+
+        <Preference
+            android:icon="@drawable/ic_save_as"
+            android:key="backup_safe"
+            android:summary="@string/settings_backup_summary"
+            android:title="@string/settings_backup_title" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -77,7 +77,6 @@
     <!-- MAIN MENU -->
     <string name="menu_main_more">Más</string>
     <string name="menu_main_settings">Ajustes</string>
-    <string name="menu_main_backup">Copia de Seguridad</string>
     <string name="menu_main_about">Sobre la app</string>
 
     <!-- MULTI SELECT MENU -->
@@ -125,7 +124,8 @@
     <string name="settings_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
-    <string name="settings_gallery_columns_title">Columnas a motrar en la galería</string>
+    <string name="settings_backup_title">Backup</string><!-- TODO: Translate -->
+    <string name="settings_backup_summary">Create a new backup of yor safe</string><!-- TODO: Translate -->
 
     <string name="locale_name">Español</string>
     <string name="locale_system_default">Sistema por defecto</string>
@@ -155,4 +155,7 @@
     <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
     <string name="onboarding_slide3_title">Empieza a importar</string>
     <string name="onboarding_slide3_description">Comienza a importar tus fotos en Photok y mantenlas a salvo de los demás.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Creating backup…</string><!-- TODO: Translate -->
 </resources>

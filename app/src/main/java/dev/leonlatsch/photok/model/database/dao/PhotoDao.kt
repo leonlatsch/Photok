@@ -83,4 +83,10 @@ interface PhotoDao {
      */
     @Query("SELECT id FROM photo ORDER BY importedAt DESC")
     suspend fun getAllIds(): List<Int>
+
+    /**
+     * Get uuid for a photo
+     */
+    @Query("SELECT uuid FROM photo WHERE id = :id")
+    suspend fun getUUIDForPhoto(id: Int): String
 }
