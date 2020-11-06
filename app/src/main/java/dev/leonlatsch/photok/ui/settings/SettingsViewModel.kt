@@ -26,6 +26,12 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for Operations started from Settings.
+ *
+ * @author Leon Latsch
+ * @since 1.0.0
+ */
 class SettingsViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
