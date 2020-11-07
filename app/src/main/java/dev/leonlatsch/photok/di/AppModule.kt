@@ -53,10 +53,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePasswordDao(database: PhotokDatabase) = database.getPasswordDao()
-
-    @Provides
-    @Singleton
     fun provideConfig(@ApplicationContext app: Context) = Config(app)
 
     @Provides

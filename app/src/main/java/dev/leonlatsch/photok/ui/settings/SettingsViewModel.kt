@@ -14,45 +14,40 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.start
+package dev.leonlatsch.photok.ui.settings
 
+import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel to check the application state.
- * Used by SplashScreen.
+ * ViewModel for Operations started from Settings.
  *
- * @since 1.0.0
  * @author Leon Latsch
+ * @since 1.0.0
  */
-class SplashScreenViewModel @ViewModelInject constructor(
+class SettingsViewModel @ViewModelInject constructor(
+    private val app: Application,
+    private val photoRepository: PhotoRepository,
+    private val encryptionManager: EncryptionManager,
     private val config: Config
 ) : ViewModel() {
 
-    var applicationState: MutableLiveData<ApplicationState> = MutableLiveData()
-
-    /**
-     * Check the application state.
-     */
-    fun checkApplicationState() = viewModelScope.launch {
-
-        // First start
-        if (config.systemFirstStart) {
-            applicationState.postValue(ApplicationState.FIRST_START)
-            return@launch
+    fun resetComponents(onFinished: () -> Unit) = viewModelScope.launch {
+        val ids = photoRepository.getAllIds()
+        for (id in ids) {
+            photoRepository.deletePhotoData(app, id)
         }
+        photoRepository.deleteAll()
 
-        // Unlock or Setup
-        val password = config.securityPassword
-        if (password == null || password.isEmpty()) {
-            applicationState.postValue(ApplicationState.SETUP)
-        } else {
-            applicationState.postValue(ApplicationState.LOCKED)
-        }
+        config.securityPassword = emptyString()
+        encryptionManager.reset()
+        onFinished()
     }
 }

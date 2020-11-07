@@ -18,7 +18,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <item >
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/round_corners_radius" />
+            <corners android:radius="@dimen/slight_round_corners_radius" />
             <solid android:color="@color/colorPrimary" />
         </shape>
     </item>

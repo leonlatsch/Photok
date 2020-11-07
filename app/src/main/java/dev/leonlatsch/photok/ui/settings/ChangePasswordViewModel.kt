@@ -20,21 +20,21 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.PasswordUtils
+import dev.leonlatsch.photok.settings.Config
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
 /**
  * ViewModel for changing the password.
- * Validates old and new passwords and starts [ReEncryptBottomSheetDialogFragment].
+ * Validates old and new passwords and starts ReEncryptBottomSheetDialogFragment.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 class ChangePasswordViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository
+    private val config: Config
 ) : ViewModel() {
 
     val changePasswordState: MutableLiveData<ChangePasswordState> =
@@ -51,10 +51,10 @@ class ChangePasswordViewModel @ViewModelInject constructor(
     fun checkOld() = viewModelScope.launch {
         changePasswordState.postValue(ChangePasswordState.CHECKING_OLD)
 
-        val storedPassword = passwordRepository.getPassword()
+        val storedPassword = config.securityPassword
         storedPassword ?: return@launch
 
-        if (BCrypt.checkpw(oldPasswordTextValue.value!!, storedPassword.password)) {
+        if (BCrypt.checkpw(oldPasswordTextValue.value!!, storedPassword)) {
             changePasswordState.postValue(ChangePasswordState.OLD_VALID)
         } else {
             changePasswordState.postValue(ChangePasswordState.OLD_INVALID)

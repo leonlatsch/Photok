@@ -38,6 +38,8 @@ abstract class BindableFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
 ) : Fragment(), Bindable<BindingType> {
 
+    final override lateinit var binding: BindingType
+
     /**
      * Creates layout and binding.
      * **ALWAYS** call super.onCreateView() when overwriting.
@@ -47,7 +49,7 @@ abstract class BindableFragment<BindingType : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: BindingType = DataBindingUtil.inflate(inflater, layout, container, false)
+        binding = DataBindingUtil.inflate(inflater, layout, container, false)
         bind(binding)
         return binding.root
     }

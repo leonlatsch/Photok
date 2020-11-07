@@ -30,5 +30,6 @@ data class Photo(
     val fileName: String,
     val importedAt: Long,
     val type: PhotoType,
+    val size: Long,
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 )

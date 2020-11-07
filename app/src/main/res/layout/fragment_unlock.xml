@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,9 +24,13 @@
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.unlock.UnlockViewModel" />
+
+        <variable
+            name="context"
+            type="dev.leonlatsch.photok.ui.unlock.UnlockFragment" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -90,8 +93,10 @@
 
         </LinearLayout>
 
-        <include layout="@layout/loading_overlay" />
+        <include
+            android:id="@+id/loadingOverlay"
+            layout="@layout/loading_overlay" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

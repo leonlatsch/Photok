@@ -26,7 +26,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOnboardingBinding
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_onboarding.*
 import javax.inject.Inject
 
 /**
@@ -48,16 +47,16 @@ class OnBoardingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onBoardingDotSelector1.isSelected = true
-        onBoardingDotSelector2.isSelected = false
-        onBoardingDotSelector3.isSelected = false
+        binding.onBoardingDotSelector1.isSelected = true
+        binding.onBoardingDotSelector2.isSelected = false
+        binding.onBoardingDotSelector3.isSelected = false
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_1))
         viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_2))
         viewPagerAdapter.addFragment(Fragment(R.layout.fragment_onboarding_slide_3))
-        onBoardingViewPager.adapter = viewPagerAdapter
-        onBoardingViewPager.addOnPageChangeListener(onPageChangeListener)
+        binding.onBoardingViewPager.adapter = viewPagerAdapter
+        binding.onBoardingViewPager.addOnPageChangeListener(onPageChangeListener)
     }
 
     private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
@@ -69,23 +68,23 @@ class OnBoardingFragment :
         }
 
         override fun onPageSelected(position: Int) {
-            onBoardingButton.text = when (position) {
+            binding.onBoardingButton.text = when (position) {
                 0 -> {
-                    onBoardingDotSelector1.isSelected = true
-                    onBoardingDotSelector2.isSelected = false
-                    onBoardingDotSelector3.isSelected = false
+                    binding.onBoardingDotSelector1.isSelected = true
+                    binding.onBoardingDotSelector2.isSelected = false
+                    binding.onBoardingDotSelector3.isSelected = false
                     getString(R.string.onboarding_next)
                 }
                 1 -> {
-                    onBoardingDotSelector1.isSelected = false
-                    onBoardingDotSelector2.isSelected = true
-                    onBoardingDotSelector3.isSelected = false
+                    binding.onBoardingDotSelector1.isSelected = false
+                    binding.onBoardingDotSelector2.isSelected = true
+                    binding.onBoardingDotSelector3.isSelected = false
                     getString(R.string.onboarding_next)
                 }
                 2 -> {
-                    onBoardingDotSelector1.isSelected = false
-                    onBoardingDotSelector2.isSelected = false
-                    onBoardingDotSelector3.isSelected = true
+                    binding.onBoardingDotSelector1.isSelected = false
+                    binding.onBoardingDotSelector2.isSelected = false
+                    binding.onBoardingDotSelector3.isSelected = true
                     getString(R.string.onboarding_finish)
                 }
                 else -> getString(R.string.onboarding_next)
@@ -104,7 +103,10 @@ class OnBoardingFragment :
         if (isLastPage) {
             finish()
         } else {
-            onBoardingViewPager.setCurrentItem(onBoardingViewPager.currentItem + 1, true)
+            binding.onBoardingViewPager.setCurrentItem(
+                binding.onBoardingViewPager.currentItem + 1,
+                true
+            )
         }
     }
 
@@ -113,7 +115,7 @@ class OnBoardingFragment :
      */
     fun finish() {
         findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
-        config.putBoolean(Config.SYSTEM_FIRST_START, false)
+        config.systemFirstStart = false
     }
 
     override fun bind(binding: FragmentOnboardingBinding) {

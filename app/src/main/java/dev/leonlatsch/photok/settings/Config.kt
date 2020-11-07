@@ -33,57 +33,50 @@ class Config(context: Context) {
         preferences = context.getSharedPreferences(FILE_NAME, MODE)
     }
 
-    /**
-     * Get a string value from the preferences.
-     */
-    fun getString(key: String, default: String?) = preferences.getString(key, default)
+    var systemFirstStart: Boolean
+        get() = getBoolean(SYSTEM_FIRST_START, SYSTEM_FIRST_START_DEFAULT)
+        set(value) = putBoolean(SYSTEM_FIRST_START, value)
 
-    /**
-     * Get an int value from the preferences.
-     */
-    fun getInt(key: String, default: Int) = preferences.getInt(key, default)
+    var galleryAutoFullscreen: Boolean
+        get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
+        set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
 
-    /**
-     * Gets an int value which is stored as a string.
-     * Like the ones created by DropDownPreference.
-     */
-    fun getIntFromString(key: String, default: Int): Int {
-        val origValue = preferences.getString(key, default.toString())
-        origValue ?: return default
-        return Integer.parseInt(origValue)
-    }
+    var securityAllowScreenshots: Boolean
+        get() = getBoolean(SECURITY_ALLOW_SCREENSHOTS, SECURITY_ALLOW_SCREENSHOTS_DEFAULT)
+        set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
 
-    /**
-     * Get a boolean value from the preferences.
-     */
-    fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
+    var securityPassword: String?
+        get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
+        set(value) = putString(SECURITY_PASSWORD, value!!)
 
-    /**
-     * Put a string in the preferences.
-     */
-    fun putString(key: String, value: String) {
+
+    // region put/get methods
+
+    private fun getString(key: String, default: String) = preferences.getString(key, default)
+
+    private fun getInt(key: String, default: Int) = preferences.getInt(key, default)
+
+    private fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
+
+    private fun putString(key: String, value: String) {
         val edit = preferences.edit()
         edit.putString(key, value)
         edit.apply()
     }
 
-    /**
-     * Create or update an int in the preferences.
-     */
-    fun putInt(key: String, value: Int) {
+    private fun putInt(key: String, value: Int) {
         val edit = preferences.edit()
         edit.putInt(key, value)
         edit.apply()
     }
 
-    /**
-     * Create or update a boolean in the preferences.
-     */
-    fun putBoolean(key: String, value: Boolean) {
+    private fun putBoolean(key: String, value: Boolean) {
         val edit = preferences.edit()
         edit.putBoolean(key, value)
         edit.apply()
     }
+
+    // endregion
 
     companion object {
         /**
@@ -115,8 +108,9 @@ class Config(context: Context) {
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 
         /**
-         * Key to change the password. Doesn't get persisted.
+         * Password hash to check when unlockung.
          */
-        const val SECURITY_CHANGE_PASSWORD = "security^changePassword"
+        const val SECURITY_PASSWORD = "security^password"
+        const val SECURITY_PASSWORD_DEFAULT = ""
     }
 }

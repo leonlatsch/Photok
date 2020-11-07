@@ -30,8 +30,7 @@ import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
  * @author Leon Latsch
  */
 class DetailsBottomSheetDialog(
-    val photo: Photo?,
-    val photoSize: Int
+    val photo: Photo?
 ) : BindableBottomSheetDialogFragment<DialogBottomSheetDetailsBinding>(R.layout.dialog_bottom_sheet_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

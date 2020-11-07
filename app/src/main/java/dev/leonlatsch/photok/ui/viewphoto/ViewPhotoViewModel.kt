@@ -17,9 +17,6 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.app.Application
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import androidx.core.graphics.drawable.toDrawable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +24,6 @@ import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * ViewModel for loading the full size photo to [ViewPhotoActivity].
@@ -37,30 +33,29 @@ import timber.log.Timber
  */
 class ViewPhotoViewModel @ViewModelInject constructor(
     private val app: Application,
-    private val photoRepository: PhotoRepository
+    val photoRepository: PhotoRepository
 ) : ViewModel() {
 
-    var photoDrawable: MutableLiveData<BitmapDrawable> = MutableLiveData()
-    var photo: MutableLiveData<Photo> = MutableLiveData()
-    var photoSize = 0
+    var ids = listOf<Int>()
+    var currentPhoto: MutableLiveData<Photo> = MutableLiveData()
+
+    /**
+     * Load all photo Ids.
+     * Save them in viewModel and pass them to [onFinished].
+     */
+    fun preloadData(onFinished: (List<Int>) -> Unit) = viewModelScope.launch {
+        if (ids.isEmpty()) {
+            ids = photoRepository.getAllIds()
+        }
+        onFinished(ids)
+    }
 
     /**
      * Loads a photo. Gets called after onViewCreated
      */
-    fun loadPhoto(id: Int, onError: () -> Unit) = viewModelScope.launch {
-        photo.postValue(photoRepository.get(id))
-
-        val photoBytes = photoRepository.readPhotoData(app, id)
-        if (photoBytes == null) {
-            onError()
-            Timber.d("Error reading photo for id: $id")
-            return@launch
-        }
-
-        photoSize = photoBytes.size
-        photoDrawable.postValue(
-            BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size).toDrawable(app.resources)
-        )
+    fun updateDetails(position: Int) = viewModelScope.launch {
+        val photo = photoRepository.get(ids[position])
+        currentPhoto.postValue(photo)
     }
 
     /**
@@ -70,10 +65,10 @@ class ViewPhotoViewModel @ViewModelInject constructor(
      * @param onError Block called on error
      */
     fun deletePhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
-        photo.value ?: return@launch
-        photo.value!!.id ?: return@launch
+        currentPhoto.value ?: return@launch
+        currentPhoto.value!!.id ?: return@launch
 
-        val success = photoRepository.safeDeletePhoto(app, photo.value!!)
+        val success = photoRepository.safeDeletePhoto(app, currentPhoto.value!!)
         if (success) onSuccess() else onError()
     }
 
@@ -84,10 +79,10 @@ class ViewPhotoViewModel @ViewModelInject constructor(
      * @param onError Block called on error
      */
     fun exportPhoto(onSuccess: () -> Unit, onError: () -> Unit) = viewModelScope.launch {
-        photo.value ?: return@launch
-        photo.value!!.id ?: return@launch
+        currentPhoto.value ?: return@launch
+        currentPhoto.value!!.id ?: return@launch
 
-        val success = photoRepository.exportPhoto(app, photo.value!!)
+        val success = photoRepository.exportPhoto(app, currentPhoto.value!!)
         if (success) onSuccess() else onError()
     }
 }

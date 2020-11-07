@@ -44,7 +44,6 @@ import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
-import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -73,7 +72,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
+        binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         viewModel.photos
 
         adapter = PhotoAdapter(
@@ -83,7 +82,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             viewLifecycleOwner
         )
         adapter.registerAdapterDataObserver(onAdapterDataObserver)
-        galleryPhotoGrid.adapter = adapter
+        binding.galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
         }
@@ -137,6 +136,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
+            binding.galleryActionMenu.collapse()
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

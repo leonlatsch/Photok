@@ -16,10 +16,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- may need later
     <PreferenceCategory android:title="@string/settings_category_app">
+        <Preference
+            android:icon="@drawable/ic_lock"
+            android:key="lock_safe"
+            android:summary="@string/settings_lock_summary"
+            android:title="@string/settings_lock_title" />
+        <Preference
+            android:icon="@drawable/ic_warning"
+            android:key="reset_safe"
+            android:summary="@string/settings_reset_summary"
+            android:title="@string/settings_reset_title" />
     </PreferenceCategory>
-    -->
 
     <PreferenceCategory android:title="@string/settings_category_gallery">
         <SwitchPreferenceCompat
@@ -39,17 +47,17 @@
             android:title="@string/settings_allow_screenshots_title" />
 
         <Preference
-            android:key="security^changePassword"
             android:icon="@drawable/ic_key"
+            android:key="change_password"
             android:summary="@string/settings_change_password_summary"
             android:title="@string/settings_change_password_title" />
     </PreferenceCategory>
 
-<!--
-    <PreferenceCategory
-        android:summary="@string/settings_category_advanced_summary"
-        android:title="@string/settings_category_advanced">
-    </PreferenceCategory>
--->
+    <!--
+        <PreferenceCategory
+            android:summary="@string/settings_category_advanced_summary"
+            android:title="@string/settings_category_advanced">
+        </PreferenceCategory>
+    -->
 
 </PreferenceScreen>

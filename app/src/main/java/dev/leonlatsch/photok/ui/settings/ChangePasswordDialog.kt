@@ -30,11 +30,9 @@ import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.ReEncryptBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_change_password.*
-import kotlinx.android.synthetic.main.loading_overlay.*
 
 /**
- * Dialog for chaging the password. Validates that the old password os known and collects the new password.
+ * Dialog for changing the password. Validates that the old password os known and collects the new password.
  * Starts re-encryption process.
  *
  * @since 1.0.0
@@ -52,26 +50,26 @@ class ChangePasswordDialog :
         viewModel.changePasswordState.observe(viewLifecycleOwner, {
             when (it) {
                 ChangePasswordState.START -> {
-                    changePasswordNewPasswordLayout.hide()
+                    binding.changePasswordNewPasswordLayout.hide()
                 }
                 ChangePasswordState.CHECKING_OLD -> {
-                    loadingOverlay.show()
-                    changePasswordOldPasswordWrongLabel.hide()
+                    binding.loadingOverlay.show()
+                    binding.changePasswordOldPasswordWrongLabel.hide()
                 }
                 ChangePasswordState.OLD_VALID -> {
-                    loadingOverlay.hide()
-                    changePasswordOldPasswordEditText.hide()
-                    changePasswordCheckOldButton.hide()
-                    changePasswordOldStatusIcon.show()
-                    changePasswordNewPasswordLayout.show()
-                    changePasswordNewPasswordLayout.requestFocus()
+                    binding.loadingOverlay.hide()
+                    binding.changePasswordOldPasswordEditText.hide()
+                    binding.changePasswordCheckOldButton.hide()
+                    binding.changePasswordOldStatusIcon.show()
+                    binding.changePasswordNewPasswordLayout.show()
+                    binding.changePasswordNewPasswordLayout.requestFocus()
                 }
                 ChangePasswordState.OLD_INVALID -> {
-                    loadingOverlay.hide()
-                    changePasswordOldPasswordWrongLabel.show()
+                    binding.loadingOverlay.hide()
+                    binding.changePasswordOldPasswordWrongLabel.show()
                 }
                 ChangePasswordState.NEW_VALID -> {
-                    loadingOverlay.hide()
+                    binding.loadingOverlay.hide()
                     Dialogs.showConfirmDialog(
                         requireContext(),
                         getString(R.string.change_password_confirm_message)
@@ -87,7 +85,7 @@ class ChangePasswordDialog :
                     }
                 }
                 ChangePasswordState.NEW_INVALID -> {
-                    loadingOverlay.hide()
+                    binding.loadingOverlay.hide()
                 }
                 else -> return@observe
             }
@@ -95,10 +93,10 @@ class ChangePasswordDialog :
 
         viewModel.newPasswordTextValue.observe(viewLifecycleOwner, {
             if (PasswordUtils.validatePassword(viewModel.newPasswordTextValue)) {
-                changePasswordNewPasswordConfirmEditText.show()
+                binding.changePasswordNewPasswordConfirmEditText.show()
             } else {
-                changePasswordNewPasswordConfirmEditText.setTextValue(emptyString())
-                changePasswordNewPasswordConfirmEditText.hide()
+                binding.changePasswordNewPasswordConfirmEditText.setTextValue(emptyString())
+                binding.changePasswordNewPasswordConfirmEditText.hide()
             }
             enableOrDisableSetup()
         })
@@ -112,18 +110,18 @@ class ChangePasswordDialog :
                 viewModel.newPasswordTextValue,
                 viewModel.newPasswordConfirmTextValue
             )
-            && changePasswordNewPasswordConfirmEditText.isVisible
+            && binding.changePasswordNewPasswordConfirmEditText.isVisible
         ) {
-            changePasswordNewPasswordNotEqualLabel.show()
-            changePasswordButton.isEnabled = false
+            binding.changePasswordNewPasswordNotEqualLabel.show()
+            binding.changePasswordButton.isEnabled = false
         } else {
-            changePasswordNewPasswordNotEqualLabel.hide()
+            binding.changePasswordNewPasswordNotEqualLabel.hide()
             if (PasswordUtils.validatePasswords(
                     viewModel.newPasswordTextValue,
                     viewModel.newPasswordConfirmTextValue
                 )
             ) {
-                changePasswordButton.isEnabled = true
+                binding.changePasswordButton.isEnabled = true
             }
         }
     }

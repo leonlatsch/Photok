@@ -62,6 +62,11 @@ class PhotoRepository @Inject constructor(
     suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
     /**
+     * Delete all photo records.
+     */
+    suspend fun deleteAll() = photoDao.deleteAll()
+
+    /**
      * Get one [Photo] by [id].
      *
      * @return the photo with [id]
@@ -83,6 +88,12 @@ class PhotoRepository @Inject constructor(
      * @return all photo as [PagingSource]
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
+
+
+    /**
+     * Get all photo Ids.
+     */
+    suspend fun getAllIds() = photoDao.getAllIds()
 
     ////////////////////////////// IO //////////////////////////////
 

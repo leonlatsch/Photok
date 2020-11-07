@@ -32,10 +32,12 @@ abstract class BindableActivity<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
 ) : BaseActivity(), Bindable<BindingType> {
 
+    final override lateinit var binding: BindingType
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: BindingType = DataBindingUtil.setContentView(this, layout)
+        binding = DataBindingUtil.setContentView(this, layout)
         bind(binding)
     }
 

@@ -18,10 +18,13 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.ui.components.Dialogs
 import kotlinx.android.synthetic.main.preference_layout_template.*
 
 /**
@@ -30,7 +33,10 @@ import kotlinx.android.synthetic.main.preference_layout_template.*
  * @since 1.0.0
  * @author Leon Latsch
  */
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,15 +49,51 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
-        val changePasswordPreference = preferenceManager.findPreference<Preference>(Config.SECURITY_CHANGE_PASSWORD)
+        val changePasswordPreference = preferenceManager.findPreference<Preference>(
+            KEY_CHANGE_PASSWORD
+        )
         changePasswordPreference?.setOnPreferenceClickListener {
             onChangePasswordClicked()
+            true
+        }
+        val lockSafePreference = preferenceManager.findPreference<Preference>(KEY_LOCK)
+        lockSafePreference?.setOnPreferenceClickListener {
+            onLockSafe()
+            true
+        }
+        val resetSafePreference = preferenceManager.findPreference<Preference>(KEY_RESET)
+        resetSafePreference?.setOnPreferenceClickListener {
+            onResetSafe()
             true
         }
     }
 
     private fun onChangePasswordClicked() {
         val dialog = ChangePasswordDialog()
-        dialog.show(requireActivity().supportFragmentManager, ChangePasswordDialog::class.qualifiedName)
+        dialog.show(
+            requireActivity().supportFragmentManager,
+            ChangePasswordDialog::class.qualifiedName
+        )
+    }
+
+    private fun onLockSafe() {
+        restartAppLifecycle(requireActivity())
+    }
+
+    private fun onResetSafe() {
+        Dialogs.showConfirmDialog(
+            requireContext(),
+            getString(R.string.settings_reset_confirmation)
+        ) { _, _ ->
+            viewModel.resetComponents {
+                onLockSafe()
+            }
+        }
+    }
+
+    companion object {
+        const val KEY_LOCK = "lock_safe"
+        const val KEY_RESET = "reset_safe"
+        const val KEY_CHANGE_PASSWORD = "change_password"
     }
 }

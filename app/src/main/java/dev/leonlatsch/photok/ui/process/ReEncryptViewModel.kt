@@ -18,11 +18,10 @@ package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import dev.leonlatsch.photok.model.database.entity.Password
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import org.mindrot.jbcrypt.BCrypt
 
@@ -36,7 +35,7 @@ import org.mindrot.jbcrypt.BCrypt
 class ReEncryptViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val passwordRepository: PasswordRepository,
+    private val config: Config,
     private val encryptionManager: EncryptionManager
 ) : BaseProcessViewModel<Photo>() {
 
@@ -66,8 +65,7 @@ class ReEncryptViewModel @ViewModelInject constructor(
     override suspend fun postProcess() {
         super.postProcess()
         val hashedPw = BCrypt.hashpw(newPassword, BCrypt.gensalt())
-        val newPasswordEntity = Password(hashedPw)
-        passwordRepository.insert(newPasswordEntity)
+        config.securityPassword = hashedPw
         encryptionManager.initialize(newPassword)
     }
 }

@@ -17,12 +17,12 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
-import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
+import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
 
@@ -49,9 +49,7 @@ class BaseApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
         if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= 300000) { // 5 Minutes
-            val intent = Intent(this, StartActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            restartAppLifecycle(this)
         }
     }
 
