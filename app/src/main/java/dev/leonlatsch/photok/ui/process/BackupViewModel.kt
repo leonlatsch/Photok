@@ -19,42 +19,90 @@ package dev.leonlatsch.photok.ui.process
 import android.app.Application
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.annotations.Expose
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
+import kotlinx.coroutines.delay
+import timber.log.Timber
+import java.io.IOException
+import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 class BackupViewModel @ViewModelInject constructor(
     private val app: Application,
-    private val photoRepository: PhotoRepository
+    private val photoRepository: PhotoRepository,
+    private val config: Config
 ) : BaseProcessViewModel<Photo>() {
 
     lateinit var uri: Uri
     lateinit var outputStream: ZipOutputStream
+    private var backedUpPhotos = arrayListOf<Photo>()
+    private val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
-        createStream()
+        openZipFile()
         super.preProcess()
     }
 
-    private fun createStream() {
-        val out = app.contentResolver.openOutputStream(uri)
-        outputStream = ZipOutputStream(out)
-    }
-
     override suspend fun processItem(item: Photo) {
-        // TODO: write raw data in zip entry, save photo to list of saved photos
+        delay(500)
+        val rawData = photoRepository.readRawPhotoData(app, item)
+        if (rawData == null) {
+            failuresOccurred = true
+            return
+        }
+
+        val success = writeZipEntry(item.internalFileName, rawData)
+        if (success) {
+            backedUpPhotos.add(item)
+        } else {
+            failuresOccurred = true
+        }
     }
 
     override suspend fun postProcess() {
-        // TODO: create meta data from saved photos list, close stream
+        val details = BackupDetails(config.securityPassword!!, backedUpPhotos)
+        val jsonString = gson.toJson(details)
+        writeZipEntry("meta.json", jsonString.toByteArray())
+
+        closeZipFile()
         super.postProcess()
     }
 
-    override fun cancel() {
-        // TODO: delete zip file, close stream
-        super.cancel()
+    private fun openZipFile() {
+        val out = app.contentResolver.openOutputStream(uri)
+        outputStream = ZipOutputStream(out)
+
     }
+
+    private fun writeZipEntry(fileName: String, data: ByteArray): Boolean {
+        return try {
+            val entry = ZipEntry(fileName)
+            outputStream.putNextEntry(entry)
+            outputStream.write(data)
+            outputStream.closeEntry()
+            true
+        } catch (e: IOException) {
+            Timber.d("Cloud not write to backup: $e")
+            false
+        }
+    }
+
+    private fun closeZipFile() {
+        outputStream.close()
+    }
+
+    private data class BackupDetails(
+        @Expose val password: String,
+        @Expose val photos: List<Photo>,
+        @Expose val createdAt: Long = System.currentTimeMillis(),
+        @Expose val version: String = BuildConfig.VERSION_NAME
+    )
 }

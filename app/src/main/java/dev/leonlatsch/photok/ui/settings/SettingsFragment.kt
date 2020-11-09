@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.ui.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.preference_layout_template.*
 
 /**
@@ -106,22 +108,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        /*
-        val uri = data!!.data!!
-            contentResolver.openOutputStream(uri).let { os ->
-                val bytes = byteArrayOf(127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, )
-                ZipOutputStream(os).let {
-                    for (i in 0 until 10) {
-                        val fileName = i.toString()
-                        val zipEntry = ZipEntry(fileName)
-                        it.putNextEntry(zipEntry)
-                        it.write(bytes)
-                        it.closeEntry()
-                    }
-                    it.close()
-                }
-            }
-         */
+        if (requestCode == REQ_BACKUP && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            uri ?: return
+            val dialog = BackupBottomSheetDialogFragment(uri)
+            dialog.show(
+                requireActivity().supportFragmentManager,
+                BackupBottomSheetDialogFragment::class.qualifiedName
+            )
+        }
     }
 
     companion object {

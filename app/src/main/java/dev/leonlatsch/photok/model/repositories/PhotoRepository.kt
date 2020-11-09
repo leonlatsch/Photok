@@ -223,8 +223,8 @@ class PhotoRepository @Inject constructor(
      * Read a photo's raw bytes.
      * Used similar as [readPhotoData]
      */
-    fun readRawPhotoData(context: Context, uuid: String): ByteArray? =
-        readRawBytes(context, "${uuid}.photok")
+    fun readRawPhotoData(context: Context, photo: Photo): ByteArray? =
+        readRawBytes(context, "${photo.uuid}.photok")
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.

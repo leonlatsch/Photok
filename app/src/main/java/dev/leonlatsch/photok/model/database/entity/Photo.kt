@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.model.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import java.util.*
 
 /**
@@ -28,10 +29,16 @@ import java.util.*
  */
 @Entity(tableName = "photo")
 data class Photo(
-    val fileName: String,
+    @Expose val fileName: String,
     val importedAt: Long,
-    val type: PhotoType,
-    val size: Long,
-    val uuid: String = UUID.randomUUID().toString(),
+    @Expose val type: PhotoType,
+    @Expose val size: Long,
+    @Expose val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
-)
+) {
+    val internalFileName: String
+        get() = "${uuid}.photok"
+
+    val internalThumbnailFileName: String
+        get() = "${uuid}.photok.tn"
+}
