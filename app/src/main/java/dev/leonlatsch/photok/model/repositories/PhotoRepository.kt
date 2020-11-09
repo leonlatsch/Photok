@@ -225,7 +225,7 @@ class PhotoRepository @Inject constructor(
      * Used similar as [readPhotoData]
      */
     fun readRawPhotoData(context: Context, photo: Photo): ByteArray? =
-        readRawBytes(context, Photo.internalFileName(photo.internalFileName))
+        readRawBytes(context, photo.internalFileName)
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.

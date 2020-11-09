@@ -1,0 +1,76 @@
+<!--
+  ~   Copyright 2020 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#2d80b3"
+        android:pathData="m276.53,446.91 l4.28,39.77a229.937,229.937 0,0 0,42.04 -8.46l-11.52,-38.31a191.422,191.422 0,0 1,-34.8 7z" />
+    <path
+        android:fillColor="#379ec3"
+        android:pathData="m192.61,479.23a230.118,230.118 0,0 0,42.18 7.81l3.65,-39.83a192.318,192.318 0,0 1,-34.9 -6.46z" />
+    <path
+        android:fillColor="#e44042"
+        android:pathData="m410.29,370.29 l-34.29,-34.29v96h96l-33.17,-33.17a232.065,232.065 0,0 0,-79.44 -350.57l-17.82,35.82a192.062,192.062 0,0 1,68.72 286.21z" />
+    <path
+        android:fillColor="#8acce7"
+        android:pathData="m24,256a231.987,231.987 0,0 0,128.61 207.74l17.82,-35.82a192.062,192.062 0,0 1,-68.72 -286.21l34.29,34.29v-96h-96l33.17,33.17a230.983,230.983 0,0 0,-49.17 142.83z" />
+    <path
+        android:fillColor="#bf2226"
+        android:pathData="m189.15,33.78 l11.52,38.31a191.427,191.427 0,0 1,34.8 -7l-4.28,-39.77a229.932,229.932 0,0 0,-42.04 8.46z" />
+    <path
+        android:fillColor="#d1393b"
+        android:pathData="m273.56,64.79a192.323,192.323 0,0 1,34.9 6.46l10.93,-38.48a230.118,230.118 0,0 0,-42.18 -7.81z" />
+    <path
+        android:fillColor="#eedc9a"
+        android:pathData="m192,384h128a24,24 0,0 0,24 -24v-184l-48,-48h-104a24,24 0,0 0,-24 24v208a24,24 0,0 0,24 24z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m296,128v48h48z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m192,152h32v16h-32z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m208,200h80v16h-80z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m304,200h16v16h-16z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m288,264h32v16h-32z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m192,264h80v16h-80z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m256,232h64v16h-64z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m192,232h48v16h-48z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m192,296h64v16h-64z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m272.798,296h31.202v16h-31.202z" />
+    <path
+        android:fillColor="#eebe33"
+        android:pathData="m280.798,328h31.202v16h-31.202z" />
+</vector>

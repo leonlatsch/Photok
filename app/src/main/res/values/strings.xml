@@ -157,4 +157,9 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Creating backup…</string>
+    <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_details_created_at">Created at:</string>
+    <string name="backup_restore_details_photos_contained">Contained Photos:</string>
+    <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_button">Unlock and Restore</string>
 </resources>

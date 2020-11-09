@@ -14,20 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.ui.backup
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
+import com.google.gson.annotations.Expose
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.model.database.entity.Photo
 
-// Regex
-const val PASSWORD_REGEX = "^(?=.*?[a-z]).{6,}.*"
-
-// Intent
-const val INTENT_PHOTO_ID = "intent.photo.id"
-
-// Permissions
-const val REQ_PERM_IMPORT = 10
-const val REQ_PERM_EXPORT = 11
-const val REQ_PERM_RESTORE = 12
+data class BackupDetails(
+    @Expose val password: String,
+    @Expose val photos: List<Photo>,
+    @Expose val createdAt: Long = System.currentTimeMillis(),
+    @Expose val version: String = BuildConfig.VERSION_NAME
+) {
+    companion object {
+        const val FILE_NAME = "meta.json"
+    }
+}

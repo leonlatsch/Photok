@@ -21,11 +21,10 @@ import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.Expose
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.backup.BackupDetails
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import timber.log.Timber
 import java.io.IOException
@@ -75,7 +74,7 @@ class BackupViewModel @ViewModelInject constructor(
     override suspend fun postProcess() {
         val details = BackupDetails(config.securityPassword!!, backedUpPhotos)
         val jsonString = gson.toJson(details)
-        writeZipEntry("meta.json", jsonString.toByteArray())
+        writeZipEntry(BackupDetails.FILE_NAME, jsonString.toByteArray())
 
         closeZipFile()
         super.postProcess()
@@ -103,11 +102,4 @@ class BackupViewModel @ViewModelInject constructor(
     private fun closeZipFile() {
         outputStream.close()
     }
-
-    private data class BackupDetails(
-        @Expose val password: String,
-        @Expose val photos: List<Photo>,
-        @Expose val createdAt: Long = System.currentTimeMillis(),
-        @Expose val version: String = BuildConfig.VERSION_NAME
-    )
 }
