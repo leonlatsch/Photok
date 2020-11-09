@@ -124,8 +124,8 @@
     <string name="settings_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
-    <string name="settings_backup_title">Backup</string><!-- TODO: Translate -->
-    <string name="settings_backup_summary">Create a new backup of yor safe</string><!-- TODO: Translate -->
+    <string name="settings_backup_title">Copia de Seguridad</string>
+    <string name="settings_backup_summary">Crea una copia de seguridad de tu baúl</string>
 
     <string name="locale_name">Español</string>
     <string name="locale_system_default">Sistema por defecto</string>
@@ -157,13 +157,13 @@
     <string name="onboarding_slide3_description">Comienza a importar tus fotos en Photok y mantenlas a salvo de los demás.</string>
 
     <!-- BACKUP -->
-    <string name="backup_processing_title">Creating backup…</string><!-- TODO: Translate -->
-    <string name="backup_restore_title">Restore Backup</string><!-- TODO: Translate -->
-    <string name="backup_restore_details_created_at">Created at:</string><!-- TODO: Translate -->
-    <string name="backup_restore_details_photos_contained">Contained Photos:</string><!-- TODO: Translate -->
-    <string name="backup_restore_details_compatible">Compatible:</string><!-- TODO: Translate -->
-    <string name="backup_restore_button">Unlock and Restore</string><!-- TODO: Translate -->
-    <string name="backup_restore_invalid_file">\u26A0 Invalid File</string><!-- TODO: Translate -->
-    <string name="backup_restore_processing">Restoring Backup…</string><!-- TODO: Translate -->
-    <string name="backup_unlock_title">Unlock Backup</string><!-- TODO: Translate -->
+    <string name="backup_processing_title">Creando copia de seguridad…</string>
+    <string name="backup_restore_title">Restaurar copia de seguridad</string>
+    <string name="backup_restore_details_created_at">Creado el:</string>
+    <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
+    <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_button">Desbloquear y Restaurar</string>
+    <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
+    <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
+    <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
 </resources>
