@@ -37,8 +37,13 @@ data class Photo(
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 ) {
     val internalFileName: String
-        get() = "${uuid}.photok"
+        get() = internalFileName(uuid)
 
     val internalThumbnailFileName: String
-        get() = "${uuid}.photok.tn"
+        get() = internalThumbnailFileName(uuid)
+
+    companion object {
+        fun internalFileName(uuid: String) = "${uuid}.photok"
+        fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
+    }
 }

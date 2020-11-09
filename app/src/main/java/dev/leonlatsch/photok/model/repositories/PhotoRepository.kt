@@ -59,7 +59,7 @@ class PhotoRepository @Inject constructor(
      *
      * @return the id of the deleted item.
      */
-    suspend fun delete(photo: Photo) = photoDao.delete(photo)
+    private suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
     /**
      * Delete all photo records.
@@ -146,7 +146,7 @@ class PhotoRepository @Inject constructor(
             } else {
                 encryptionManager.encrypt(bytes, password)
             }
-            context.openFileOutput("${uuid}.photok", Context.MODE_PRIVATE).use {
+            context.openFileOutput(Photo.internalFileName(uuid), Context.MODE_PRIVATE).use {
                 it.write(encryptedBytes)
             }
             createAndWriteThumbnail(context, uuid, bytes, password)
@@ -179,9 +179,10 @@ class PhotoRepository @Inject constructor(
             } else {
                 encryptionManager.encrypt(thumbnailBytes, password)
             }
-            context.openFileOutput("${uuid}.photok.tn", Context.MODE_PRIVATE).use {
-                it.write(encryptedThumbnailBytes)
-            }
+            context.openFileOutput(Photo.internalThumbnailFileName(uuid), Context.MODE_PRIVATE)
+                .use {
+                    it.write(encryptedThumbnailBytes)
+                }
             true
         } catch (e: IOException) {
             Timber.d("Error creating Thumbnail for id: $uuid: $e")
@@ -216,7 +217,7 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun readPhotoData(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
-        return readAndDecryptFile(context, "${uuid}.photok")
+        return readAndDecryptFile(context, Photo.internalFileName(uuid))
     }
 
     /**
@@ -224,14 +225,14 @@ class PhotoRepository @Inject constructor(
      * Used similar as [readPhotoData]
      */
     fun readRawPhotoData(context: Context, photo: Photo): ByteArray? =
-        readRawBytes(context, "${photo.uuid}.photok")
+        readRawBytes(context, Photo.internalFileName(photo.internalFileName))
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.
      */
     suspend fun readPhotoThumbnailData(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
-        return readAndDecryptFile(context, "${uuid}.photok.tn")
+        return readAndDecryptFile(context, Photo.internalThumbnailFileName(uuid))
     }
 
     private fun readAndDecryptFile(context: Context, fileName: String): ByteArray? {
@@ -286,8 +287,8 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun deletePhotoData(context: Context, id: Int): Boolean {
         val photo = get(id)
-        return (deleteFile(context, "${photo.uuid}.photok")
-                && deleteFile(context, "${photo.uuid}.photok.tn"))
+        return (deleteFile(context, photo.internalFileName)
+                && deleteFile(context, photo.internalThumbnailFileName))
     }
 
     private fun deleteFile(context: Context, fileName: String): Boolean {

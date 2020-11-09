@@ -27,12 +27,18 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+/**
+ * ViewModel to create a backup.
+ * Backups photos and meta data to zip file.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class BackupViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
@@ -52,7 +58,6 @@ class BackupViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        delay(500)
         val rawData = photoRepository.readRawPhotoData(app, item)
         if (rawData == null) {
             failuresOccurred = true
