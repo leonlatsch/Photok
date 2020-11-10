@@ -73,7 +73,7 @@ class RestoreBackupDialogFragment(
      * Called by ui.
      */
     fun onRestoreAndUnlock() {
-        UnlockBackupDialogFragment {
+        UnlockBackupDialogFragment(viewModel.metaData!!.password) {
             dismiss()
             println("Show process")
         }.show(

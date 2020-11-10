@@ -22,7 +22,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
-import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
@@ -34,8 +33,7 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class UnlockBackupViewModel @ViewModelInject constructor(
-    app: Application,
-    private val config: Config
+    app: Application
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -48,7 +46,8 @@ class UnlockBackupViewModel @ViewModelInject constructor(
     /**
      * Verifies the password and calls [result] with true/false.
      */
-    fun verifyPassword(result: (valid: Boolean) -> Unit) = viewModelScope.launch {
-        result(BCrypt.checkpw(password, config.securityPassword))
-    }
+    fun verifyPassword(backupPassword: String, result: (valid: Boolean) -> Unit) =
+        viewModelScope.launch {
+            result(BCrypt.checkpw(password, backupPassword))
+        }
 }
