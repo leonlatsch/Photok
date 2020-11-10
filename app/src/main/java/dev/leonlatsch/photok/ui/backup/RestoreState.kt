@@ -25,6 +25,5 @@ package dev.leonlatsch.photok.ui.backup
 enum class RestoreState {
     INITIALIZE,
     FILE_VALID,
-    FILE_INVALID,
-    FILE_UNLOCKED
+    FILE_INVALID
 }

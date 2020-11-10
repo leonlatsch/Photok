@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
 
 /**
  * Dialog for loading and validating a backup file.
@@ -61,7 +62,6 @@ class RestoreBackupDialogFragment(
                     binding.restoreCloseButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
-                RestoreState.FILE_UNLOCKED -> return@addOnPropertyChange
             }
         }
 
@@ -73,9 +73,14 @@ class RestoreBackupDialogFragment(
      * Called by ui.
      */
     fun onRestoreAndUnlock() {
-        UnlockBackupDialogFragment(viewModel.metaData!!.password) {
+        UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
             dismiss()
-            println("Show process")
+            val restoreDialog =
+                RestoreBackupBottomSheetDialogFragment(uri, viewModel.metaData!!, origPassword)
+            restoreDialog.show(
+                requireActivity().supportFragmentManager,
+                RestoreBackupBottomSheetDialogFragment::class.qualifiedName
+            )
         }.show(
             requireActivity().supportFragmentManager,
             UnlockBackupDialogFragment::class.qualifiedName

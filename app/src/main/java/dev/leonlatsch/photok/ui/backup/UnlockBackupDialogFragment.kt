@@ -33,7 +33,7 @@ import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 @AndroidEntryPoint
 class UnlockBackupDialogFragment(
     private val backupPassword: String,
-    val onUnlockSuccess: () -> Unit
+    val onUnlockSuccess: (origPassword: String) -> Unit
 ) : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
 
     private val viewModel: UnlockBackupViewModel by viewModels()
@@ -47,7 +47,7 @@ class UnlockBackupDialogFragment(
         viewModel.verifyPassword(backupPassword) {
             if (it) {
                 dismiss()
-                onUnlockSuccess()
+                onUnlockSuccess(viewModel.password)
             } else {
                 binding.unlockBackupWrongPasswordWarning.show()
             }
