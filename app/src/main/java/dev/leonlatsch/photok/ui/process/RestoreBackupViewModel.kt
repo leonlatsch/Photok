@@ -27,6 +27,12 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
+/**
+ * ViewModel for restoring photos from a backup file.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class RestoreBackupViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,

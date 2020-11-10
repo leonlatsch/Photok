@@ -24,6 +24,12 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.ui.backup.BackupDetails
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
+/**
+ * Fragment for restoring photos from a backup file.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class RestoreBackupBottomSheetDialogFragment(
     private val uri: Uri,
