@@ -27,6 +27,12 @@ import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 
+/**
+ * Dialog for loading and validating a backup file.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 @AndroidEntryPoint
 class RestoreBackupDialogFragment(
     private val uri: Uri
@@ -52,7 +58,7 @@ class RestoreBackupDialogFragment(
             }
         })
 
-        viewModel.loadFile(uri)
+        viewModel.loadAndValidateBackup(uri)
     }
 
     override fun bind(binding: DialogRestoreBackupBinding) {

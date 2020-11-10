@@ -30,12 +30,21 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.zip.ZipInputStream
 
+/**
+ * ViewModel for loading and validating a backup file.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class RestoreBackupViewModel @ViewModelInject constructor(
     private val app: Application
 ) : ObservableViewModel(app) {
 
     val restoreState: MutableLiveData<RestoreState> = MutableLiveData(RestoreState.INITIALIZE)
 
+    /**
+     * [BackupDetails] holding meta data of the loaded backup.
+     */
     @get:Bindable
     var metaData: BackupDetails? = null
         set(value) {
@@ -43,7 +52,10 @@ class RestoreBackupViewModel @ViewModelInject constructor(
             notifyChange(BR.metaData)
         }
 
-    fun loadFile(uri: Uri) = GlobalScope.launch(Dispatchers.IO) {
+    /**
+     * Load and Validate a backup file. Fill [metaData].
+     */
+    fun loadAndValidateBackup(uri: Uri) = GlobalScope.launch(Dispatchers.IO) {
         val inputStream = createStream(uri)
         var photoFiles = 0
 

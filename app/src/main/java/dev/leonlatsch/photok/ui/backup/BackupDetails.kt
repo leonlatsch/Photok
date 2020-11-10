@@ -20,6 +20,12 @@ import com.google.gson.annotations.Expose
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.database.entity.Photo
 
+/**
+ * Model for meta.json in backups.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 data class BackupDetails(
     @Expose val password: String,
     @Expose val photos: List<Photo>,

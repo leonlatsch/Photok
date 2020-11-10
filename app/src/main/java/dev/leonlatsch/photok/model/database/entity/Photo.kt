@@ -43,7 +43,16 @@ data class Photo(
         get() = internalThumbnailFileName(uuid)
 
     companion object {
+        /**
+         * Get FileName for internal files and backup files.
+         * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok
+         */
         fun internalFileName(uuid: String) = "${uuid}.photok"
+
+        /**
+         * Get FileName for internal thumbnails.
+         * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.tn
+         */
         fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
     }
 }

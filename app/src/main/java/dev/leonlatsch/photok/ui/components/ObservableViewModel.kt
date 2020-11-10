@@ -21,6 +21,14 @@ import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
 
+/**
+ * Base for all ViewModels. Implements [Observable].
+ *
+ * @sample dev.leonlatsch.photok.ui.backup.RestoreBackupViewModel.metaData
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Observable {
 
     private val changeListeners: PropertyChangeRegistry = PropertyChangeRegistry()
@@ -33,10 +41,16 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
         changeListeners.remove(listener)
     }
 
+    /**
+     * Notify changes on all properties.
+     */
     fun notifyChange() {
         changeListeners.notifyCallbacks(this, 0, null)
     }
 
+    /**
+     * Notify changes in [view].
+     */
     fun notifyChange(view: Int) {
         changeListeners.notifyCallbacks(this, view, null)
     }
