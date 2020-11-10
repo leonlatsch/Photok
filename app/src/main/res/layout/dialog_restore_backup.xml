@@ -123,6 +123,25 @@
             android:text="@string/backup_restore_button"
             android:visibility="gone" />
 
+
+        <TextView
+            android:id="@+id/restoreInvalidWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_restore_invalid_file"
+            android:textColor="@color/darkRed"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/restoreCloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/small_gap"
+            android:minWidth="@dimen/wide_button_width"
+            android:onClick="@{() -> context.dismiss()}"
+            android:text="@string/process_close"
+            android:visibility="gone" />
+
         <ProgressBar
             android:id="@+id/restoreProgressIndicator"
             android:layout_width="wrap_content"

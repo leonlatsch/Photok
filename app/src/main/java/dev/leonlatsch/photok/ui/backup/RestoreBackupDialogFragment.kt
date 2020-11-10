@@ -56,6 +56,12 @@ class RestoreBackupDialogFragment(
                     binding.restoreButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
+                RestoreState.FILE_INVALID -> {
+                    binding.restoreInvalidWarning.show()
+                    binding.restoreCloseButton.show()
+                    binding.restoreProgressIndicator.hide()
+                }
+                RestoreState.FILE_UNLOCKED -> return@addOnPropertyChange
             }
         }
 

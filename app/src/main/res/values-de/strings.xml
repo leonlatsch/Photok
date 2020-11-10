@@ -163,4 +163,6 @@
     <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
     <string name="backup_restore_details_compatible">Kompatibel:</string>
     <string name="backup_restore_button">Entsperren und wiederherstellen</string>
+    <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
+    <string name="backup_restore_processing">Backup wiederherstellen…</string>
 </resources>

@@ -162,4 +162,6 @@
     <string name="backup_restore_details_photos_contained">Contained Photos:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
     <string name="backup_restore_button">Unlock and Restore</string>
+    <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
+    <string name="backup_restore_processing">Restoring Backup…</string>
 </resources>

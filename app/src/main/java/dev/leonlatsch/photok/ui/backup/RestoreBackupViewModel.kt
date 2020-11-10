@@ -25,7 +25,6 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.ui.components.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -84,7 +83,6 @@ class RestoreBackupViewModel @ViewModelInject constructor(
         // Validate backup
         if (metaData?.photos?.size == photoFiles) {
             restoreState = RestoreState.FILE_VALID
-            delay(1)
         }
 
         if (restoreState == RestoreState.INITIALIZE) {
