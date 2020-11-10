@@ -68,6 +68,20 @@ class RestoreBackupDialogFragment(
         viewModel.loadAndValidateBackup(uri)
     }
 
+    /**
+     * Starts the [UnlockBackupDialogFragment].
+     * Called by ui.
+     */
+    fun onRestoreAndUnlock() {
+        UnlockBackupDialogFragment {
+            dismiss()
+            println("Show process")
+        }.show(
+            requireActivity().supportFragmentManager,
+            UnlockBackupDialogFragment::class.qualifiedName
+        )
+    }
+
     override fun bind(binding: DialogRestoreBackupBinding) {
         super.bind(binding)
         binding.context = this

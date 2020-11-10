@@ -30,7 +30,7 @@ import java.util.*
 @Entity(tableName = "photo")
 data class Photo(
     @Expose val fileName: String,
-    val importedAt: Long,
+    var importedAt: Long,
     @Expose val type: PhotoType,
     @Expose val size: Long,
     @Expose val uuid: String = UUID.randomUUID().toString(),

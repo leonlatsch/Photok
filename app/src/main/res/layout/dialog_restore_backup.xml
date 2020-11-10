@@ -31,16 +31,11 @@
     </data>
 
     <LinearLayout
+        style="@style/LinearDialogStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:gravity="center_horizontal"
-        android:minWidth="@dimen/dialog_min_width"
-        android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="20dp">
+        android:minWidth="@dimen/dialog_min_width">
 
         <TextView
             style="@style/BigTextViewStyle"
@@ -120,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height"
             android:minWidth="@dimen/wide_button_width"
+            android:onClick="@{() -> context.onRestoreAndUnlock()}"
             android:text="@string/backup_restore_button"
             android:visibility="gone" />
 

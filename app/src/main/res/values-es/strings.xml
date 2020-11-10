@@ -165,4 +165,5 @@
     <string name="backup_restore_button">Unlock and Restore</string><!-- TODO: Translate -->
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string><!-- TODO: Translate -->
     <string name="backup_restore_processing">Restoring Backup…</string><!-- TODO: Translate -->
+    <string name="backup_unlock_title">Unlock Backup</string><!-- TODO: Translate -->
 </resources>

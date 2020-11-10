@@ -165,4 +165,5 @@
     <string name="backup_restore_button">Entsperren und wiederherstellen</string>
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>
+    <string name="backup_unlock_title">Backup Entsperren</string>
 </resources>
