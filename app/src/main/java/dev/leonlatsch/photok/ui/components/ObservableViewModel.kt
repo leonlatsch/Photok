@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.ui.components
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
@@ -53,5 +55,19 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
      */
     fun notifyChange(view: Int) {
         changeListeners.notifyCallbacks(this, view, null)
+    }
+
+    /**
+     * Handy version of [addOnPropertyChangedCallback].
+     * Takes a [block] that gets posted to MainLooper.
+     */
+    fun addOnPropertyChange(property: Int, block: () -> Unit) {
+        addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (propertyId == property) {
+                    Handler(Looper.getMainLooper()).post(block)
+                }
+            }
+        })
     }
 }

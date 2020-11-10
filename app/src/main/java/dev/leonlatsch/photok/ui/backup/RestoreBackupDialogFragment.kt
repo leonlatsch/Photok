@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.hide
@@ -43,8 +44,8 @@ class RestoreBackupDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.restoreState.observe(this, {
-            when (it) {
+        viewModel.addOnPropertyChange(BR.restoreState) {
+            when (viewModel.restoreState) {
                 RestoreState.INITIALIZE -> {
                     binding.restoreDetails.hide()
                     binding.restoreButton.hide()
@@ -56,7 +57,7 @@ class RestoreBackupDialogFragment(
                     binding.restoreProgressIndicator.hide()
                 }
             }
-        })
+        }
 
         viewModel.loadAndValidateBackup(uri)
     }

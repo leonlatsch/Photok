@@ -20,7 +20,6 @@ import android.app.Application
 import android.net.Uri
 import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.ui.components.ObservableViewModel
@@ -28,6 +27,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.io.IOException
 import java.util.zip.ZipInputStream
 
 /**
@@ -40,7 +41,12 @@ class RestoreBackupViewModel @ViewModelInject constructor(
     private val app: Application
 ) : ObservableViewModel(app) {
 
-    val restoreState: MutableLiveData<RestoreState> = MutableLiveData(RestoreState.INITIALIZE)
+    @Bindable
+    var restoreState: RestoreState = RestoreState.INITIALIZE
+        set(value) {
+            field = value
+            notifyChange(BR.restoreState)
+        }
 
     /**
      * [BackupDetails] holding meta data of the loaded backup.
@@ -56,37 +62,48 @@ class RestoreBackupViewModel @ViewModelInject constructor(
      * Load and Validate a backup file. Fill [metaData].
      */
     fun loadAndValidateBackup(uri: Uri) = GlobalScope.launch(Dispatchers.IO) {
-        val inputStream = createStream(uri)
         var photoFiles = 0
 
-        while (true) {
-            val ze = inputStream.nextEntry
-            ze ?: break
+        // Load backup
+        createStream(uri)?.use { stream ->
+            var ze = stream.nextEntry
+            while (ze != null) {
+                if (ze.name == BackupDetails.FILE_NAME) {
+                    val bytes = stream.readBytes()
+                    val string = String(bytes)
+                    metaData = Gson().fromJson(string, BackupDetails::class.java)
 
-            if (ze.name == BackupDetails.FILE_NAME) {
-                val bytes = inputStream.readBytes()
-                val string = String(bytes)
-                metaData = Gson().fromJson(string, BackupDetails::class.java)
+                } else {
+                    photoFiles++
+                }
 
-            } else {
-                photoFiles++
+                ze = stream.nextEntry
             }
         }
-        inputStream.close()
 
+        // Validate backup
         if (metaData?.photos?.size == photoFiles) {
-            restoreState.postValue(RestoreState.FILE_VALID)
+            restoreState = RestoreState.FILE_VALID
             delay(1)
         }
 
-        if (restoreState.value == RestoreState.INITIALIZE) {
-            restoreState.postValue(RestoreState.FILE_INVALID)
+        if (restoreState == RestoreState.INITIALIZE) {
+            restoreState = RestoreState.FILE_INVALID
         }
 
     }
 
-    private fun createStream(uri: Uri): ZipInputStream {
-        val inputStream = app.contentResolver.openInputStream(uri)
-        return ZipInputStream(inputStream)
+    private fun createStream(uri: Uri): ZipInputStream? {
+        val inputStream = try {
+            app.contentResolver.openInputStream(uri)
+        } catch (e: IOException) {
+            Timber.d("Error opening backup at: $uri")
+            null
+        }
+        return if (inputStream != null) {
+            ZipInputStream(inputStream)
+        } else {
+            null
+        }
     }
 }

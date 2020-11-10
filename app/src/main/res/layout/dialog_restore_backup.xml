@@ -59,7 +59,8 @@
             android:id="@+id/restoreDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:visibility="gone">
 
             <TextView
                 style="@style/LabelTextViewStyle"
@@ -119,7 +120,8 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height"
             android:minWidth="@dimen/wide_button_width"
-            android:text="@string/backup_restore_button" />
+            android:text="@string/backup_restore_button"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/restoreProgressIndicator"
