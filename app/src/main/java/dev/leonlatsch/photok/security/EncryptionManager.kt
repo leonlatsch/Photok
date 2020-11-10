@@ -122,6 +122,26 @@ class EncryptionManager {
         }
     }
 
+    /**
+     * Encrypt [bytes] with a specific password.
+     * USE WITH CAUTION!
+     * Used by re-encrypt dialog.
+     */
+    fun decrypt(bytes: ByteArray, password: String): ByteArray? {
+        return try {
+            val key = genSecKey(password)
+            val iv = genIv(password)
+
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.DECRYPT_MODE, key, iv)
+
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error decrypting bytes: $e")
+            null
+        }
+    }
+
     private fun genSecKey(password: String): SecretKeySpec {
         val md = MessageDigest.getInstance(SHA_256)
         val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))

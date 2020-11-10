@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.databinding
 
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,4 +63,14 @@ object BindingConverters {
             }
         }
     }
+
+    fun toStringConverter(obj: Any?) = obj.toString()
+
+    fun versionCompatibleConverter(version: String?): Int {
+        version ?: return R.string.common_no
+        val majorVersion = BuildConfig.VERSION_NAME.split(".")[0]
+        return if (version.startsWith(majorVersion)) R.string.common_yes else R.string.common_no
+    }
+
+    fun upperCaseConverter(str: String?): String? = str?.toUpperCase(Locale.ROOT)
 }

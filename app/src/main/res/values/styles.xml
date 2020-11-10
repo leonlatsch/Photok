@@ -60,9 +60,13 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="LightLabelTextViewStyle" parent="LightTextViewStyle">
+    <style name="LabelTextViewStyle">
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LightLabelTextViewStyle" parent="LabelTextViewStyle">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="BigTextViewStyle" parent="TextViewStyle">
@@ -131,6 +135,16 @@
 
     <style name="ModalTransparentBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- DIALOG -->
+    <style name="LinearDialogStyle">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <!-- ALERT DIALOG -->

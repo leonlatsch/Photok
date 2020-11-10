@@ -14,20 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.ui.backup
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
-
-// Regex
-const val PASSWORD_REGEX = "^(?=.*?[a-z]).{6,}.*"
-
-// Intent
-const val INTENT_PHOTO_ID = "intent.photo.id"
-
-// Permissions
-const val REQ_PERM_IMPORT = 10
-const val REQ_PERM_EXPORT = 11
-const val REQ_PERM_RESTORE = 12
+/**
+ * Enum for state of [ValidateBackupDialogFragment]
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+enum class RestoreState {
+    INITIALIZE,
+    FILE_VALID,
+    FILE_INVALID
+}
