@@ -66,8 +66,7 @@ class RestoreBackupViewModel @ViewModelInject constructor(
             metaPhoto.fileName,
             System.currentTimeMillis(),
             metaPhoto.type,
-            metaPhoto.size,
-            metaPhoto.uuid
+            metaPhoto.size
         )
 
         val origBytes = readBytesFromZip()

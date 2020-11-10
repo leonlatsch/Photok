@@ -23,7 +23,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
+import dev.leonlatsch.photok.databinding.DialogValidateBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
@@ -36,11 +36,11 @@ import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class RestoreBackupDialogFragment(
+class ValidateBackupDialogFragment(
     private val uri: Uri
-) : BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
+) : BindableDialogFragment<DialogValidateBackupBinding>(R.layout.dialog_validate_backup) {
 
-    private val viewModel: RestoreBackupViewModel by viewModels()
+    private val viewModel: ValidateBackupViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,11 +49,13 @@ class RestoreBackupDialogFragment(
             when (viewModel.restoreState) {
                 RestoreState.INITIALIZE -> {
                     binding.restoreDetails.hide()
+                    binding.validateBackupFilename.hide()
                     binding.restoreButton.hide()
                     binding.restoreProgressIndicator.show()
                 }
                 RestoreState.FILE_VALID -> {
                     binding.restoreDetails.show()
+                    binding.validateBackupFilename.show()
                     binding.restoreButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
@@ -87,7 +89,7 @@ class RestoreBackupDialogFragment(
         )
     }
 
-    override fun bind(binding: DialogRestoreBackupBinding) {
+    override fun bind(binding: DialogValidateBackupBinding) {
         super.bind(binding)
         binding.context = this
         binding.viewModel = viewModel

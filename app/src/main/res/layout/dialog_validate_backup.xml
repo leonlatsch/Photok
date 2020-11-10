@@ -22,11 +22,11 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.backup.RestoreBackupDialogFragment" />
+            type="dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment" />
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.backup.RestoreBackupViewModel" />
+            type="dev.leonlatsch.photok.ui.backup.ValidateBackupViewModel" />
 
     </data>
 
@@ -49,6 +49,15 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_restore" />
+
+        <TextView
+            android:id="@+id/validateBackupFilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/small_gap"
+            android:fontFamily="@font/raleway_black"
+            android:text="@{BindingConverters.INSTANCE.upperCaseConverter(viewModel.zipFileName), default=abcde}"
+            android:visibility="gone" />
 
         <GridLayout
             android:id="@+id/restoreDetails"

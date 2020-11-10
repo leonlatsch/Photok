@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.ui.backup
 
 /**
- * Enum for state of [RestoreBackupDialogFragment]
+ * Enum for state of [ValidateBackupDialogFragment]
  *
  * @since 1.0.0
  * @author Leon Latsch

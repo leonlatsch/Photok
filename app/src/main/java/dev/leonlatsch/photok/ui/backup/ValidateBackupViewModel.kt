@@ -22,6 +22,8 @@ import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import com.google.gson.Gson
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.components.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -36,7 +38,7 @@ import java.util.zip.ZipInputStream
  * @since 1.0.0
  * @author Leon Latsch
  */
-class RestoreBackupViewModel @ViewModelInject constructor(
+class ValidateBackupViewModel @ViewModelInject constructor(
     private val app: Application
 ) : ObservableViewModel(app) {
 
@@ -58,6 +60,16 @@ class RestoreBackupViewModel @ViewModelInject constructor(
         }
 
     /**
+     * File name of the zip.
+     */
+    @get:Bindable
+    var zipFileName: String? = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.zipFileName)
+        }
+
+    /**
      * Load and Validate a backup file. Fill [metaData].
      */
     fun loadAndValidateBackup(uri: Uri) = GlobalScope.launch(Dispatchers.IO) {
@@ -65,6 +77,7 @@ class RestoreBackupViewModel @ViewModelInject constructor(
 
         // Load backup
         createStream(uri)?.use { stream ->
+            zipFileName = getFileName(app.contentResolver, uri)
             var ze = stream.nextEntry
             while (ze != null) {
                 if (ze.name == BackupDetails.FILE_NAME) {

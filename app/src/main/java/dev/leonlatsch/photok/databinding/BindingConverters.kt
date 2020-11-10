@@ -71,4 +71,6 @@ object BindingConverters {
         val majorVersion = BuildConfig.VERSION_NAME.split(".")[0]
         return if (version.startsWith(majorVersion)) R.string.common_yes else R.string.common_no
     }
+
+    fun upperCaseConverter(str: String?): String? = str?.toUpperCase(Locale.ROOT)
 }

@@ -26,7 +26,7 @@ import androidx.lifecycle.AndroidViewModel
 /**
  * Base for all ViewModels. Implements [Observable].
  *
- * @sample dev.leonlatsch.photok.ui.backup.RestoreBackupViewModel.metaData
+ * @sample dev.leonlatsch.photok.ui.backup.ValidateBackupViewModel.metaData
  *
  * @since 1.0.0
  * @author Leon Latsch

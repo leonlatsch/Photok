@@ -39,7 +39,7 @@ import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
 import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.ui.MainActivity
-import dev.leonlatsch.photok.ui.backup.RestoreBackupDialogFragment
+import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
@@ -158,7 +158,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     /**
      * Start restoring a backup.
-     * Requests permission and shows [RestoreBackupDialogFragment].
+     * Requests permission and shows [ValidateBackupDialogFragment].
      */
     @AfterPermissionGranted(REQ_PERM_RESTORE)
     fun startRestore() {
@@ -245,10 +245,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 data.data ?: return
-                val restoreDialog = RestoreBackupDialogFragment(data.data!!)
+                val restoreDialog = ValidateBackupDialogFragment(data.data!!)
                 restoreDialog.show(
                     requireActivity().supportFragmentManager,
-                    RestoreBackupDialogFragment::class.qualifiedName
+                    ValidateBackupDialogFragment::class.qualifiedName
                 )
             }
         }
