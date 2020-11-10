@@ -45,6 +45,9 @@ class UnlockBackupViewModel @ViewModelInject constructor(
             notifyChange(BR.password)
         }
 
+    /**
+     * Verifies the password and calls [result] with true/false.
+     */
     fun verifyPassword(result: (valid: Boolean) -> Unit) = viewModelScope.launch {
         result(BCrypt.checkpw(password, config.securityPassword))
     }
