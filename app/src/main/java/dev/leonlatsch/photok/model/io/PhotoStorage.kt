@@ -31,10 +31,19 @@ import java.io.IOException
 import java.io.OutputStream
 import javax.inject.Inject
 
+/**
+ * Storage Manager for photos in internal and external storage.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
 class PhotoStorage @Inject constructor(
     private val encryptionManager: EncryptionManager
 ) {
 
+    /**
+     * Delete a file in internal storage.
+     */
     fun deleteFile(context: Context, fileName: String): Boolean {
         val success = context.deleteFile(fileName)
         if (!success) {
@@ -43,6 +52,9 @@ class PhotoStorage @Inject constructor(
         return success
     }
 
+    /**
+     * Read a file from internal storage.
+     */
     fun readRawFile(context: Context, fileName: String): ByteArray {
         return try {
             val fileInputStream = context.openFileInput(fileName)
@@ -54,6 +66,10 @@ class PhotoStorage @Inject constructor(
         }
     }
 
+    /**
+     * Read and decrypt a file from internal storage using [readRawFile].
+     * Used [EncryptionManager] for decryption.
+     */
     fun readAndDecryptFile(context: Context, fileName: String): ByteArray? {
         return try {
             val encryptedBytes = readRawFile(context, fileName)
@@ -64,6 +80,10 @@ class PhotoStorage @Inject constructor(
         }
     }
 
+    /**
+     * Insert a photo to an external content uri and pass the output stream to the [operation].
+     * @see insertAndOpenInternalFile
+     */
     fun insertAndOpenExternalFile(
         contentResolver: ContentResolver,
         contentValues: ContentValues,
@@ -75,6 +95,10 @@ class PhotoStorage @Inject constructor(
         return contentResolver.openOutputStream(uri).use(operation)
     }
 
+    /**
+     * Insert a file to internal storage and pass the output stream to the [operation].
+     * @see insertAndOpenExternalFile
+     */
     fun insertAndOpenInternalFile(
         context: Context,
         fileName: String,
@@ -83,6 +107,9 @@ class PhotoStorage @Inject constructor(
         context.openFileOutput(fileName, Context.MODE_PRIVATE).use(operation)
     }
 
+    /**
+     * Read a file from external storage.
+     */
     fun readFileFromExternal(contentResolver: ContentResolver, fileUri: Uri): ByteArray? {
         return try {
             contentResolver.openInputStream(fileUri)?.readBytes()
