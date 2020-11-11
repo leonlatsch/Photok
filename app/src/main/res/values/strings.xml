@@ -77,7 +77,6 @@
     <!-- MAIN MENU -->
     <string name="menu_main_more">More</string>
     <string name="menu_main_settings">Settings</string>
-    <string name="menu_main_backup">Backup</string>
     <string name="menu_main_about">About</string>
 
     <!-- MULTI SELECT MENU -->
@@ -124,7 +123,8 @@
     <string name="settings_change_password_summary">Change your password</string>
     <string name="settings_category_advanced">Advanced</string>
     <string name="settings_category_advanced_summary">Use carefully</string>
-    <string name="settings_gallery_columns_title">Gallery Columns</string>
+    <string name="settings_backup_title">Backup</string>
+    <string name="settings_backup_summary">Create a backup of your safe</string>
 
     <string name="locale_name">English</string>
     <string name="locale_system_default">System default</string>
@@ -154,4 +154,15 @@
     <string name="onboarding_slide2_description">Create a secure password. Your password is used to encrypt your photos directly on your phone.</string>
     <string name="onboarding_slide3_title">Start Importing</string>
     <string name="onboarding_slide3_description">Start importing your photos into photok and keep them safe from others.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Creating backup…</string>
+    <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_details_created_at">Created at:</string>
+    <string name="backup_restore_details_photos_contained">Contained Photos:</string>
+    <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_button">Unlock and Restore</string>
+    <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
+    <string name="backup_restore_processing">Restoring Backup…</string>
+    <string name="backup_unlock_title">Unlock Backup</string>
 </resources>

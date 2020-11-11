@@ -37,7 +37,9 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
+import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
@@ -107,7 +109,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private fun getColCount(): Int {
-        return when(resources.configuration.orientation) {
+        return when (resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 4
             Configuration.ORIENTATION_LANDSCAPE -> 8
             else -> 4
@@ -149,6 +151,35 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 this,
                 getString(R.string.import_permission_rationale),
                 REQ_PERM_IMPORT,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    /**
+     * Start restoring a backup.
+     * Requests permission and shows [ValidateBackupDialogFragment].
+     */
+    @AfterPermissionGranted(REQ_PERM_RESTORE)
+    fun startRestore() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            binding.galleryActionMenu.collapse()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "application/zip"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Backup"),
+                REQ_CONTENT_BACKUP
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_RESTORE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
@@ -209,6 +240,15 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 importDialog.show(
                     requireActivity().supportFragmentManager,
                     ImportBottomSheetDialogFragment::class.qualifiedName
+                )
+            }
+        } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                data.data ?: return
+                val restoreDialog = ValidateBackupDialogFragment(data.data!!)
+                restoreDialog.show(
+                    requireActivity().supportFragmentManager,
+                    ValidateBackupDialogFragment::class.qualifiedName
                 )
             }
         }
@@ -303,5 +343,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     companion object {
         const val REQ_CONTENT_PHOTOS = 0
+        const val REQ_CONTENT_BACKUP = 1
     }
 }

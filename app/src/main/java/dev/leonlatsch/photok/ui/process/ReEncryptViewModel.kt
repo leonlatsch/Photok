@@ -56,7 +56,7 @@ class ReEncryptViewModel @ViewModelInject constructor(
 
         photoRepository.deletePhotoData(app, item.id)
 
-        val result = photoRepository.writePhotoData(app, item.id.toLong(), bytes, newPassword)
+        val result = photoRepository.writePhotoData(app, item.uuid, bytes, newPassword)
         if (!result) {
             failuresOccurred = true
         }

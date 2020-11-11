@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
+
+        <variable
+            name="context"
+            type="dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment" />
+
+        <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.ui.backup.ValidateBackupViewModel" />
+
+    </data>
+
+    <LinearLayout
+        style="@style/LinearDialogStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:minWidth="@dimen/dialog_min_width">
+
+        <TextView
+            style="@style/BigTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_restore_title" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_restore" />
+
+        <TextView
+            android:id="@+id/validateBackupFilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/small_gap"
+            android:fontFamily="@font/raleway_black"
+            android:text="@{BindingConverters.INSTANCE.upperCaseConverter(viewModel.zipFileName), default=abcde}"
+            android:visibility="gone" />
+
+        <GridLayout
+            android:id="@+id/restoreDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/LabelTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:singleLine="true"
+                android:text="@string/backup_restore_details_created_at" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:singleLine="true"
+                android:text="@{BindingConverters.INSTANCE.millisToFormattedDateConverter(viewModel.metaData.createdAt), default=value}" />
+
+            <TextView
+                style="@style/LabelTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:singleLine="true"
+                android:text="@string/backup_restore_details_photos_contained" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:singleLine="true"
+                android:text="@{BindingConverters.INSTANCE.toStringConverter(viewModel.metaData.photos.size), default=value}" />
+
+            <TextView
+                style="@style/LabelTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:singleLine="true"
+                android:text="@string/backup_restore_details_compatible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:singleLine="true"
+                android:text="@{BindingConverters.INSTANCE.versionCompatibleConverter(viewModel.metaData.version), default=value}" />
+        </GridLayout>
+
+
+        <Button
+            android:id="@+id/restoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:minWidth="@dimen/wide_button_width"
+            android:onClick="@{() -> context.onRestoreAndUnlock()}"
+            android:text="@string/backup_restore_button"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/restoreInvalidWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_restore_invalid_file"
+            android:textColor="@color/darkRed"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/restoreCloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/small_gap"
+            android:minWidth="@dimen/wide_button_width"
+            android:onClick="@{() -> context.dismiss()}"
+            android:text="@string/process_close"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/restoreProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>
+
