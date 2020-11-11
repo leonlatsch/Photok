@@ -16,18 +16,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
     <PreferenceCategory android:title="@string/settings_category_app">
-        <Preference
-            android:icon="@drawable/ic_lock"
-            android:key="lock_safe"
-            android:summary="@string/settings_lock_summary"
-            android:title="@string/settings_lock_title" />
-        <Preference
-            android:icon="@drawable/ic_warning"
-            android:key="reset_safe"
-            android:summary="@string/settings_reset_summary"
-            android:title="@string/settings_reset_title" />
     </PreferenceCategory>
+    -->
 
     <PreferenceCategory android:title="@string/settings_category_gallery">
         <SwitchPreferenceCompat
@@ -56,6 +48,12 @@
     <PreferenceCategory
         android:summary="@string/settings_category_advanced_summary"
         android:title="@string/settings_category_advanced">
+
+        <Preference
+            android:icon="@drawable/ic_warning"
+            android:key="reset_safe"
+            android:summary="@string/settings_reset_summary"
+            android:title="@string/settings_reset_title" />
 
         <Preference
             android:icon="@drawable/ic_save_as"

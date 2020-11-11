@@ -75,6 +75,7 @@
     <string name="view_photo_detail_size_label">File size:</string>
 
     <!-- MAIN MENU -->
+    <string name="menu_main_lock">Lock</string>
     <string name="menu_main_more">More</string>
     <string name="menu_main_settings">Settings</string>
     <string name="menu_main_about">About</string>
@@ -108,8 +109,6 @@
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_category_app">App</string>
-    <string name="settings_lock_title">Lock</string>
-    <string name="settings_lock_summary">Lock Photok now</string>
     <string name="settings_reset_title">Reset Safe</string>
     <string name="settings_reset_summary">Wipe data and reset password</string>
     <string name="settings_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>

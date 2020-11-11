@@ -18,6 +18,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuMainItemLock"
+        android:icon="@drawable/ic_lock"
+        android:title="@string/menu_main_lock"
+        app:showAsAction="always"></item>
+
+    <item
         android:id="@+id/menuMainItemMore"
         android:icon="@drawable/ic_more"
         android:title="@string/menu_main_more"

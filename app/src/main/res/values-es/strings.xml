@@ -75,6 +75,7 @@
     <string name="view_photo_detail_size_label">Tamaño del archivo:</string>
 
     <!-- MAIN MENU -->
+    <string name="menu_main_lock">Bloquear</string>
     <string name="menu_main_more">Más</string>
     <string name="menu_main_settings">Ajustes</string>
     <string name="menu_main_about">Sobre la app</string>
@@ -109,8 +110,6 @@
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_category_app">Aplicación</string>
-    <string name="settings_lock_title">Bloquear</string>
-    <string name="settings_lock_summary">Bloquear Photok ahora</string>
     <string name="settings_reset_title">Restablecer baúl</string>
     <string name="settings_reset_summary">Borrar datos y restablecer contraseña</string>
     <string name="settings_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
