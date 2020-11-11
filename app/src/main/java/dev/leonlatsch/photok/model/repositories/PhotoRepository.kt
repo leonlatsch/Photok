@@ -21,7 +21,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
-import androidx.paging.PagingSource
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.PhotoStorage
@@ -44,55 +43,43 @@ class PhotoRepository @Inject constructor(
     // region DATABASE
 
     /**
-     * Insert one [Photo]
-     *
-     * @return the id of the new inserted item.
+     * @see PhotoDao.insert
      */
     private suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
     /**
-     * Delete one [Photo]
-     *
-     * @return the id of the deleted item.
+     * @see PhotoDao.delete
      */
     private suspend fun delete(photo: Photo) = photoDao.delete(photo)
 
     /**
-     * Delete all photo records.
+     * @see PhotoDao.deleteAll
      */
     suspend fun deleteAll() = photoDao.deleteAll()
 
     /**
-     * Get one [Photo] by [id].
-     *
-     * @return the photo with [id]
+     * @see PhotoDao.get
      */
     suspend fun get(id: Int) = photoDao.get(id)
 
     /**
-     * Get all photos, ordered by imported At (desc).
-     * Used for re-encrypting.
-     *
-     * @return all photos as [List]
+     * @see PhotoDao.getAllSortedByImportedAt
      */
     suspend fun getAll() = photoDao.getAllSortedByImportedAt()
 
     /**
-     * Get all photos, ordered by importedAt (desc) as [PagingSource].
-     * Used for Paging all photos in gallery.
-     *
-     * @return all photo as [PagingSource]
+     * @see PhotoDao.getAllPagedSortedByImportedAt
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
 
     /**
-     * Get all photo Ids.
+     * @see PhotoDao.getAllIds
      */
     suspend fun getAllIds() = photoDao.getAllIds()
 
     /**
-     * Get uuid for a photo
+     * @see PhotoDao.getUUIDForPhoto
      */
     private suspend fun getUUID(id: Int) = photoDao.getUUIDForPhoto(id)
 
@@ -120,6 +107,9 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
+    /**
+     * @see PhotoStorage.writePhotoFile
+     */
     fun writePhotoFile(
         context: Context,
         uuid: String,
