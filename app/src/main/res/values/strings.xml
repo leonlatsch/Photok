@@ -139,12 +139,6 @@
     <string name="settings_other_about_title">About</string>
     <string name="settings_other_about_summary">Information about Photok</string>
 
-    <string name="locale_name">English</string>
-    <string name="locale_system_default">System default</string>
-    <string name="locale_name_en">English</string>
-    <string name="locale_name_de">German</string>
-    <string name="locale_name_es">Spanish</string>
-
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Change your Password</string>
     <string name="change_password_old_password">Old Password</string>

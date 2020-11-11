@@ -140,12 +140,6 @@
     <string name="settings_other_about_title">About</string><!-- TODO: Translate -->
     <string name="settings_other_about_summary">Sobre la Photok</string>
 
-    <string name="locale_name">Español</string>
-    <string name="locale_system_default">Sistema por defecto</string>
-    <string name="locale_name_en">Inglés</string>
-    <string name="locale_name_de">Alemán</string>
-    <string name="locale_name_es">Español</string>
-
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Cambiar contraseña</string>
     <string name="change_password_old_password">Contraseña antigua</string>
