@@ -115,6 +115,8 @@
     <string name="settings_auto_fullscreen_title">Pantalla completa automática</string>
     <string name="settings_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
     <string name="settings_category_security">Seguridad</string>
+    <string name="settings_security_timeout_title">Automatic Lock Timeout</string><!-- TODO: Translate -->
+    <string name="settings_security_timeout_summary">Automatic Lock after given time in background</string><!-- TODO: Translate -->
     <string name="settings_security_timeout_immediately">Immediately</string> <!-- TODO: Translate -->
     <string name="settings_security_timeout_one_minute">1 Minute</string><!-- TODO: Translate -->
     <string name="settings_security_timeout_two_minute">2 Minutes</string><!-- TODO: Translate -->

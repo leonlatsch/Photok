@@ -115,6 +115,8 @@
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
     <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
+    <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
     <string name="settings_security_timeout_one_minute">1 Minute</string>
     <string name="settings_security_timeout_two_minute">2 Minuten</string>

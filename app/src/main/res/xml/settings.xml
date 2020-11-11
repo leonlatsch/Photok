@@ -51,8 +51,8 @@
             android:entryValues="@array/timeouts"
             android:icon="@drawable/ic_schedule"
             android:key="security^lockTimeout"
-            android:summary="Automatic Lock after given time in background"
-            android:title="Automatic Lock Timeout"
+            android:summary="@string/settings_security_timeout_summary"
+            android:title="@string/settings_security_timeout_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
