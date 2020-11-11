@@ -137,7 +137,7 @@
     <string name="settings_other_sourcecode_summary">Contribute to Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_about_title">About</string>
-    <string name="settings_other_about_summary">Information about the Photok</string>
+    <string name="settings_other_about_summary">Information about Photok</string>
 
     <string name="locale_name">English</string>
     <string name="locale_system_default">System default</string>
