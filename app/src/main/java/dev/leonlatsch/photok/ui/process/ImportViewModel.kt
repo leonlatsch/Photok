@@ -51,7 +51,7 @@ class ImportViewModel @ViewModelInject constructor(
             return
         }
 
-        val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, item)
+        val bytes = photoRepository.readPhotoFileFromExternal(app.contentResolver, item)
         if (bytes == null) { // Cloud not read file
             failuresOccurred = true
             return

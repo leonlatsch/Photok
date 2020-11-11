@@ -48,15 +48,15 @@ class ReEncryptViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        val bytes = photoRepository.readPhotoData(app, item.id!!)
+        val bytes = photoRepository.readPhotoFileFromInternal(app, item.id!!)
         if (bytes == null) {
             failuresOccurred = true
             return
         }
 
-        photoRepository.deletePhotoData(app, item.id)
+        photoRepository.deletePhotoFiles(app, item.id)
 
-        val result = photoRepository.writePhotoData(app, item.uuid, bytes, newPassword)
+        val result = photoRepository.writePhotoFile(app, item.uuid, bytes, newPassword)
         if (!result) {
             failuresOccurred = true
         }

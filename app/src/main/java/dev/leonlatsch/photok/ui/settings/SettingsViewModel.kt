@@ -42,7 +42,7 @@ class SettingsViewModel @ViewModelInject constructor(
     fun resetComponents(onFinished: () -> Unit) = viewModelScope.launch {
         val ids = photoRepository.getAllIds()
         for (id in ids) {
-            photoRepository.deletePhotoData(app, id)
+            photoRepository.deletePhotoFiles(app, id)
         }
         photoRepository.deleteAll()
 

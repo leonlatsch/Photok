@@ -171,7 +171,8 @@ class PhotoItemViewHolder(
      */
     private fun loadThumbnail() {
         GlobalScope.launch {
-            val thumbnailBytes = photoRepository.readPhotoThumbnailData(context, photo?.id!!)
+            val thumbnailBytes =
+                photoRepository.readPhotoThumbnailFromInternal(context, photo?.id!!)
             if (thumbnailBytes == null) {
                 Timber.d("Error loading thumbnail for photo: $photo.id")
                 return@launch
