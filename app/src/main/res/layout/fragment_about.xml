@@ -36,7 +36,7 @@
             android:background="@android:color/transparent"
             android:theme="@style/transparentToolbarStyle"
             app:navigationIcon="@drawable/ic_back"
-            app:title="@string/menu_main_about" />
+            app:title="@string/settings_other_about_title" />
 
         <ScrollView
             android:layout_width="match_parent"

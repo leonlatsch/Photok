@@ -30,16 +30,17 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
-        <action
-            android:id="@+id/action_galleryFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.leonlatsch.photok.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="dev.leonlatsch.photok.ui.about.AboutFragment"

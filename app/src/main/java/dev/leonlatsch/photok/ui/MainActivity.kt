@@ -80,11 +80,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 .navigate(R.id.action_galleryFragment_to_settingsFragment)
             true
         }
-        R.id.menuMainItemAbout -> {
-            binding.mainNavHostFragment.findNavController()
-                .navigate(R.id.action_galleryFragment_to_aboutFragment)
-            true
-        }
         R.id.menuMainItemLock -> {
             restartAppLifecycle(this)
             true

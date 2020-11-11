@@ -23,8 +23,10 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Base Application class.
@@ -34,6 +36,9 @@ import timber.log.Timber
  */
 @HiltAndroidApp
 class BaseApplication : Application(), LifecycleObserver {
+
+    @Inject
+    lateinit var config: Config
 
     private var wentToBackgroundAt = 0L
 
@@ -48,7 +53,7 @@ class BaseApplication : Application(), LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
-        if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= 300000) { // 5 Minutes
+        if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout) { // 5 Minutes
             restartAppLifecycle(this)
         }
     }

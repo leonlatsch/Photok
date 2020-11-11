@@ -76,9 +76,7 @@
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Sperren</string>
-    <string name="menu_main_more">Mehr</string>
     <string name="menu_main_settings">Einstellungen</string>
-    <string name="menu_main_about">Über</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Alle auswählen</string>
@@ -117,6 +115,11 @@
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
     <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_security_timeout_immediately">Sofort</string>
+    <string name="settings_security_timeout_one_minute">1 Minute</string>
+    <string name="settings_security_timeout_two_minute">2 Minuten</string>
+    <string name="settings_security_timeout_five_minute">5 Minuten</string>
+    <string name="settings_security_timeout_ten_minute">10 Minuten</string>
     <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
     <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots</string>
     <string name="settings_change_password_title">Passwort ändern</string>
@@ -125,6 +128,17 @@
     <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
     <string name="settings_backup_title">Backup</string>
     <string name="settings_backup_summary">Erstelle ein Backup von deinem Safe</string>
+    <string name="settings_other_title">Andere</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>
+    <string name="settings_other_feedback_mail_subject">Feedback zu Photok</string>
+    <string name="settings_other_feedback_mail_body">Schreibe ein Feedback zu Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_sourcecode_title">Quellcode</string>
+    <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_about_title">Über</string>
+    <string name="settings_other_about_summary">Informationen über Photok</string>
 
     <string name="locale_name">Deutsch</string>
     <string name="locale_system_default">System standard</string>
