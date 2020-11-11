@@ -57,7 +57,7 @@ class BackupViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        val rawData = photoRepository.readRawPhotoData(app, item)
+        val rawData = photoRepository.readRawPhotoFileFromInternal(app, item)
         if (rawData == null) {
             failuresOccurred = true
             return
