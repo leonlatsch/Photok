@@ -46,9 +46,15 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
         changeListeners.remove(listener)
     }
 
+    /**
+     * Add callback to [valueChangeRegistry]
+     */
     fun addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
         valueChangeRegistry.addValueCallback(callback)
 
+    /**
+     * Remove callback from [valueChangeRegistry]
+     */
     fun removeOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
         valueChangeRegistry.removeValueCallback(callback)
 
