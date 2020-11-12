@@ -103,6 +103,7 @@
         <item name="android:fontFamily">@font/raleway_semibold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/bg_button</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <!-- PROGRESS BAR -->
