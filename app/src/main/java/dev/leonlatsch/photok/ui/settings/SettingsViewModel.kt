@@ -21,6 +21,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
@@ -39,7 +40,10 @@ class SettingsViewModel @ViewModelInject constructor(
     private val config: Config
 ) : ObservableViewModel(app) {
 
-    fun resetComponents(onFinished: () -> Unit) = viewModelScope.launch {
+    /**
+     * Reset all components and call [restartAppLifecycle]
+     */
+    fun resetComponents() = viewModelScope.launch {
         val ids = photoRepository.getAllIds()
         for (id in ids) {
             photoRepository.deletePhotoFiles(app, id)
@@ -48,6 +52,6 @@ class SettingsViewModel @ViewModelInject constructor(
 
         config.securityPassword = emptyString()
         encryptionManager.reset()
-        onFinished()
+        restartAppLifecycle(app)
     }
 }
