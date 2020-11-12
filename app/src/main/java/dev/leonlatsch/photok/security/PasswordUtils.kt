@@ -17,8 +17,6 @@
 package dev.leonlatsch.photok.security
 
 import androidx.lifecycle.LiveData
-import dev.leonlatsch.photok.other.PASSWORD_REGEX
-import java.util.regex.Pattern
 
 /**
  * Utils to validate passwords.
@@ -29,12 +27,10 @@ import java.util.regex.Pattern
 object PasswordUtils {
 
     /**
-     * Validates a password string using [PASSWORD_REGEX].
+     * Validates a password string using [PASSWORD_MIN_LENGTH].
      */
     fun validatePassword(password: String) = password.isNotEmpty()
-            && Pattern.matches(
-        PASSWORD_REGEX, password
-    )
+            && password.length >= PASSWORD_MIN_LENGTH
 
     fun validatePassword(password: LiveData<String>) = validatePassword(password.value!!)
 
@@ -57,4 +53,6 @@ object PasswordUtils {
 
     fun validatePasswords(password: LiveData<String>, confirmPassword: LiveData<String>) =
         validatePasswords(password.value!!, confirmPassword.value!!)
+
+    private const val PASSWORD_MIN_LENGTH = 6
 }
