@@ -18,12 +18,12 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -37,7 +37,7 @@ class SettingsViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager,
     private val config: Config
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
     fun resetComponents(onFinished: () -> Unit) = viewModelScope.launch {
         val ids = photoRepository.getAllIds()

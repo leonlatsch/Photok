@@ -21,6 +21,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogChangePasswordBinding
 import dev.leonlatsch.photok.other.emptyString
@@ -47,7 +48,7 @@ class ChangePasswordDialog :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.changePasswordState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<ChangePasswordState>(BR.changePasswordState) {
             when (it) {
                 ChangePasswordState.START -> {
                     binding.changePasswordNewPasswordLayout.hide()
@@ -75,7 +76,7 @@ class ChangePasswordDialog :
                         getString(R.string.change_password_confirm_message)
                     ) { _, _ ->
                         val reEncryptDialog = ReEncryptBottomSheetDialogFragment(
-                            viewModel.newPasswordTextValue.value!!
+                            viewModel.newPassword
                         )
                         reEncryptDialog.show(
                             requireActivity().supportFragmentManager,
@@ -87,28 +88,27 @@ class ChangePasswordDialog :
                 ChangePasswordState.NEW_INVALID -> {
                     binding.loadingOverlay.hide()
                 }
-                else -> return@observe
             }
-        })
+        }
 
-        viewModel.newPasswordTextValue.observe(viewLifecycleOwner, {
-            if (PasswordUtils.validatePassword(viewModel.newPasswordTextValue)) {
+        viewModel.addOnPropertyChange<String>(BR.newPassword) {
+            if (PasswordUtils.validatePassword(viewModel.newPassword)) {
                 binding.changePasswordNewPasswordConfirmEditText.show()
             } else {
                 binding.changePasswordNewPasswordConfirmEditText.setTextValue(emptyString())
                 binding.changePasswordNewPasswordConfirmEditText.hide()
             }
             enableOrDisableSetup()
-        })
-        viewModel.newPasswordConfirmTextValue.observe(viewLifecycleOwner, {
+        }
+        viewModel.addOnPropertyChange<String>(BR.newPasswordConfirm) {
             enableOrDisableSetup()
-        })
+        }
     }
 
     private fun enableOrDisableSetup() {
         if (!PasswordUtils.passwordsNotEmptyAndEqual(
-                viewModel.newPasswordTextValue,
-                viewModel.newPasswordConfirmTextValue
+                viewModel.newPassword,
+                viewModel.newPasswordConfirm
             )
             && binding.changePasswordNewPasswordConfirmEditText.isVisible
         ) {
@@ -117,8 +117,8 @@ class ChangePasswordDialog :
         } else {
             binding.changePasswordNewPasswordNotEqualLabel.hide()
             if (PasswordUtils.validatePasswords(
-                    viewModel.newPasswordTextValue,
-                    viewModel.newPasswordConfirmTextValue
+                    viewModel.newPassword,
+                    viewModel.newPasswordConfirm
                 )
             ) {
                 binding.changePasswordButton.isEnabled = true

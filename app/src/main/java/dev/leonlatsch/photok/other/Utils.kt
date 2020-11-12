@@ -20,6 +20,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
@@ -62,10 +64,15 @@ fun toggleSystemUI(window: Window?) {
 }
 
 /**
- * Restart the app. Clear backstack and start [StartActivity]
+ * Restart the app. Clear back stack and start [StartActivity]
  */
 fun restartAppLifecycle(context: Context) {
     val intent = Intent(context, StartActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     context.startActivity(intent)
 }
+
+/**
+ * Post a [operation] to the main looper.
+ */
+fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)

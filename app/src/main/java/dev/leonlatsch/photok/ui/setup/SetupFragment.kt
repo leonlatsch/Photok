@@ -18,12 +18,11 @@ package dev.leonlatsch.photok.ui.setup
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
@@ -43,12 +42,8 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
     private val viewModel: SetupViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        viewModel.passwordText.observe(viewLifecycleOwner, {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.addOnPropertyChange<String>(BR.password) {
             if (it.isNotEmpty()) {
                 val value = when (it.length) {
                     1, 2, 3, 4, 5 -> {
@@ -78,11 +73,11 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             }
 
             enableOrDisableSetup()
-        })
+        }
 
-        viewModel.confirmPasswordText.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<String>(BR.confirmPassword) {
             enableOrDisableSetup()
-        })
+        }
 
         viewModel.setupState.observe(viewLifecycleOwner, {
             when (it) {
@@ -98,8 +93,6 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
                 else -> return@observe
             }
         })
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun enableOrDisableSetup() {
