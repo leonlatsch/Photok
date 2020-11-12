@@ -22,7 +22,6 @@ import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
@@ -90,7 +89,7 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
      * Runs [preProcess], [processLoop] and [postProcess].
      * launched in [viewModelScope].
      */
-    fun runProcessing() = GlobalScope.launch(Dispatchers.IO) {
+    fun runProcessing() = viewModelScope.launch(Dispatchers.IO) {
         preProcess()
         processLoop()
         postProcess()

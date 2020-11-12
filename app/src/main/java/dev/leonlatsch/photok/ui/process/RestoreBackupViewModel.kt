@@ -53,7 +53,6 @@ class RestoreBackupViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        println("next entry ${System.currentTimeMillis()}")
         currentEntry ?: return
         if (currentEntry!!.name == BackupDetails.FILE_NAME) {
             currentEntry = inputStream?.nextEntry
@@ -72,14 +71,11 @@ class RestoreBackupViewModel @ViewModelInject constructor(
 
         val origBytes = readBytesFromZip()
         origBytes ?: return
-        println("bytes gereadet ${System.currentTimeMillis()}")
 
         val decryptedBytes = encryptionManager.decrypt(origBytes, origPassword)
         decryptedBytes ?: return
-        println("decrypted ${System.currentTimeMillis()}")
 
         photoRepository.safeCreatePhoto(app, newPhoto, decryptedBytes)
-        println("gespeichert ${System.currentTimeMillis()}")
 
         currentEntry = inputStream?.nextEntry
     }
