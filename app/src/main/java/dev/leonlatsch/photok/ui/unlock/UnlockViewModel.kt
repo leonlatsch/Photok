@@ -16,13 +16,15 @@
 
 package dev.leonlatsch.photok.ui.unlock
 
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -35,28 +37,40 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class UnlockViewModel @ViewModelInject constructor(
+    app: Application,
     private val config: Config,
     val encryptionManager: EncryptionManager
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
-    var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
-    var unlockState: MutableLiveData<UnlockState> = MutableLiveData(UnlockState.UNDEFINED)
+    @Bindable
+    var password: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.password, value)
+        }
+
+    @get:Bindable
+    var unlockState: UnlockState = UnlockState.UNDEFINED
+        set(value) {
+            field = value
+            notifyChange(BR.unlockState, value)
+        }
 
     /**
      * Tries to unlock the save.
-     * Compares [passwordText] to saved hash.
+     * Compares [password] to saved hash.
      * Updates UnlockState.
      * Called by ui.
      */
     fun unlock() = viewModelScope.launch {
-        unlockState.postValue(UnlockState.CHECKING)
+        unlockState = UnlockState.CHECKING
 
         val savedPassword = config.securityPassword
-        if (BCrypt.checkpw(passwordText.value, savedPassword)) {
-            encryptionManager.initialize(passwordText.value!!)
-            unlockState.postValue(UnlockState.UNLOCKED)
+        unlockState = if (BCrypt.checkpw(password, savedPassword)) {
+            encryptionManager.initialize(password)
+            UnlockState.UNLOCKED
         } else {
-            unlockState.postValue(UnlockState.LOCKED)
+            UnlockState.LOCKED
         }
     }
 

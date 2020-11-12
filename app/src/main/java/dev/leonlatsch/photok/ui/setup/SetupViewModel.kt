@@ -16,14 +16,17 @@
 
 package dev.leonlatsch.photok.ui.setup
 
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -35,14 +38,26 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class SetupViewModel @ViewModelInject constructor(
+    app: Application,
     private val config: Config,
     private val encryptionManager: EncryptionManager
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
     //region binding properties
 
-    var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
-    var confirmPasswordText: MutableLiveData<String> = MutableLiveData(emptyString())
+    @Bindable
+    var password: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.password, value)
+        }
+
+    @Bindable
+    var confirmPassword: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.confirmPassword, value)
+        }
 
     // endregion
 
@@ -59,9 +74,9 @@ class SetupViewModel @ViewModelInject constructor(
         setupState.postValue(SetupState.LOADING)
 
         if (validateBothPasswords()) {
-            val password = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
+            val password = BCrypt.hashpw(password, BCrypt.gensalt())
             config.securityPassword = password
-            encryptionManager.initialize(passwordText.value!!)
+            encryptionManager.initialize(this@SetupViewModel.password)
             setupState.postValue(SetupState.FINISHED)
         } else {
             setupState.postValue(SetupState.SETUP)
@@ -69,18 +84,18 @@ class SetupViewModel @ViewModelInject constructor(
     }
 
     /**
-     * Validate hte [passwordText] property.
+     * Validate hte [password] property.
      */
-    fun validatePassword() = PasswordUtils.validatePassword(passwordText.value!!)
+    fun validatePassword() = PasswordUtils.validatePassword(password)
 
     /**
      * @see PasswordUtils.passwordsNotEmptyAndEqual
      */
     fun passwordsEqual() =
-        PasswordUtils.passwordsNotEmptyAndEqual(passwordText.value!!, confirmPasswordText.value!!)
+        PasswordUtils.passwordsNotEmptyAndEqual(password, confirmPassword)
 
     /**
      * @see PasswordUtils.validatePasswords
      */
-    fun validateBothPasswords() = PasswordUtils.validatePasswords(passwordText.value!!, confirmPasswordText.value!!)
+    fun validateBothPasswords() = PasswordUtils.validatePasswords(password, confirmPassword)
 }

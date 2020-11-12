@@ -37,7 +37,7 @@ class RestoreBackupViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager
-) : BaseProcessViewModel<Photo>() {
+) : BaseProcessViewModel<Photo>(app) {
 
     private var inputStream: ZipInputStream? = null
     private var currentEntry: ZipEntry? = null

@@ -16,11 +16,12 @@
 
 package dev.leonlatsch.photok.ui.gallery
 
+import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 
 /**
  * ViewModel for the Gallery.
@@ -30,14 +31,15 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
  * @author Leon Latsch
  */
 class GalleryViewModel @ViewModelInject constructor(
+    app: Application,
     val photoRepository: PhotoRepository
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
     val photos = Pager(
-            PagingConfig(
-                pageSize = PAGE_SIZE,
-                maxSize = MAX_SIZE,
-            )
+        PagingConfig(
+            pageSize = PAGE_SIZE,
+            maxSize = MAX_SIZE,
+        )
     ) {
         photoRepository.getAllPaged()
     }.flow

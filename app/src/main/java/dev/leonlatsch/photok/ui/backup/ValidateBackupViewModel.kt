@@ -24,7 +24,7 @@ import com.google.gson.Gson
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.other.getFileName
-import dev.leonlatsch.photok.ui.components.ObservableViewModel
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,7 +46,7 @@ class ValidateBackupViewModel @ViewModelInject constructor(
     var restoreState: RestoreState = RestoreState.INITIALIZE
         set(value) {
             field = value
-            notifyChange(BR.restoreState)
+            notifyChange(BR.restoreState, value)
         }
 
     /**
@@ -56,7 +56,7 @@ class ValidateBackupViewModel @ViewModelInject constructor(
     var metaData: BackupDetails? = null
         set(value) {
             field = value
-            notifyChange(BR.metaData)
+            notifyChange(BR.metaData, value)
         }
 
     /**
@@ -66,7 +66,7 @@ class ValidateBackupViewModel @ViewModelInject constructor(
     var zipFileName: String? = emptyString()
         set(value) {
             field = value
-            notifyChange(BR.zipFileName)
+            notifyChange(BR.zipFileName, value)
         }
 
     /**

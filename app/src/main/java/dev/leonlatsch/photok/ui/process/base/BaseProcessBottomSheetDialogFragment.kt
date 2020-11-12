@@ -16,14 +16,16 @@
 
 package dev.leonlatsch.photok.ui.process.base
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
 
 /**
@@ -46,17 +48,6 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
     R.layout.dialog_bottom_sheet_process
 ) {
 
-    // region binding properties
-
-    val labelText: MutableLiveData<String> = MutableLiveData()
-    val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
-    val abortButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
-    val processIndicatorsVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
-    val statusDrawable: MutableLiveData<Drawable> = MutableLiveData()
-    val failuresWarnMessageVisibility: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
-
-    // endregion
-
     /**
      * Abstract [BaseProcessViewModel].
      * Needs to be set in the child, handles processing.
@@ -66,21 +57,23 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.processState.postValue(ProcessState.INITIALIZE)
+        viewModel.processState = ProcessState.INITIALIZE
 
-        viewModel.processState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<ProcessState>(BR.processState) {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
                     isCancelable = false
                     setStatusIcon(null)
-                    closeButtonVisibility.postValue(View.GONE)
-                    abortButtonVisibility.postValue(View.VISIBLE)
-                    processIndicatorsVisibility.postValue(View.GONE)
-                    failuresWarnMessageVisibility.postValue(View.INVISIBLE)
+                    binding.processCloseButton.hide()
+                    binding.processAbortButton.show()
+                    binding.processItemsProgressIndicatorLayout.hide()
+                    binding.processPercentLayout.hide()
+                    binding.processFailuresWarnMessage.vanish()
                     getString(R.string.process_initialize)
                 }
                 ProcessState.PROCESSING -> {
-                    processIndicatorsVisibility.postValue(View.VISIBLE)
+                    binding.processItemsProgressIndicatorLayout.show()
+                    binding.processPercentLayout.show()
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
@@ -93,10 +86,9 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     setStatusIcon(R.drawable.ic_close, android.R.color.holo_red_dark)
                     getString(R.string.process_aborted)
                 }
-                else -> return@observe
             }
-            labelText.postValue(label)
-        })
+            binding.processLabel.text = label
+        }
 
         prepareViewModel(itemSource)
         viewModel.runProcessing()
@@ -104,10 +96,10 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
 
     private fun enterFinishedOrAbortedState() {
         isCancelable = true
-        closeButtonVisibility.postValue(View.VISIBLE)
-        abortButtonVisibility.postValue(View.GONE)
+        binding.processCloseButton.show()
+        binding.processAbortButton.hide()
         if (viewModel.failuresOccurred) {
-            failuresWarnMessageVisibility.postValue(View.VISIBLE)
+            binding.processFailuresWarnMessage.show()
         }
     }
 
@@ -124,12 +116,22 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
 
     private fun setStatusIcon(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
-            statusDrawable.postValue(null)
+            binding.processStatusImageView.setImageDrawable(null)
             return
         }
 
-        statusDrawable.postValue(ContextCompat.getDrawable(requireContext(), drawable))
-        binding.statusImageView.setColorFilter(ContextCompat.getColor(requireContext(), color))
+        binding.processStatusImageView.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                drawable
+            )
+        )
+        binding.processStatusImageView.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                color
+            )
+        )
     }
 
     override fun bind(binding: DialogBottomSheetProcessBinding) {

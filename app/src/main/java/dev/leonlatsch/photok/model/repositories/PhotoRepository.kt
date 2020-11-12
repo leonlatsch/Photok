@@ -96,12 +96,10 @@ class PhotoRepository @Inject constructor(
      * @return true, if everything was successfully inserted and written to io.
      */
     suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
-        val id = insert(photo)
-        val savedPhoto = get(id.toInt())
-        val success = photoStorage.writePhotoFile(context, savedPhoto.uuid, bytes)
-        if (!success) {
-            val photoToRemove = get(id.toInt())
-            delete(photoToRemove)
+        var success = photoStorage.writePhotoFile(context, photo.uuid, bytes)
+        if (success) {
+            val photoId = insert(photo)
+            success = photoId != -1L
         }
 
         return success

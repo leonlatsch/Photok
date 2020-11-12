@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     app:password_edit_text_hint="@string/unlock_enter_password"
-                    app:textValue="@={viewModel.passwordText}" />
+                    app:textValue="@={viewModel.password}" />
 
                 <TextView
                     android:id="@+id/unlockWrongPasswordWarningTextView"

@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:password_edit_text_hint="@string/setup_enter_password"
-                    app:textValue="@={viewModel.passwordText}" />
+                    app:textValue="@={viewModel.password}" />
 
                 <dev.leonlatsch.photok.ui.components.PasswordEditText
                     android:id="@+id/setupConfirmPasswordEditText"
@@ -84,13 +84,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_gap"
                     app:password_edit_text_hint="@string/setup_confirm_password"
-                    app:textValue="@={viewModel.confirmPasswordText}"
-                    android:visibility="visible" />
+                    android:visibility="gone"
+                    app:textValue="@={viewModel.confirmPassword}" />
 
                 <LinearLayout
                     android:id="@+id/setupPasswordStrengthLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -42,7 +42,7 @@ class BackupViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config
-) : BaseProcessViewModel<Photo>() {
+) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
     lateinit var outputStream: ZipOutputStream

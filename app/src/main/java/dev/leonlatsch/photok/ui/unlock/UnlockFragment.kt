@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.hide
@@ -43,7 +44,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private val viewModel: UnlockViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.unlockState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<UnlockState>(BR.unlockState) {
             when (it) {
                 UnlockState.CHECKING -> binding.loadingOverlay.show()
                 UnlockState.UNLOCKED -> {
@@ -53,15 +54,15 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     binding.loadingOverlay.hide()
                     binding.unlockWrongPasswordWarningTextView.show()
                 }
-                else -> return@observe
+                else -> return@addOnPropertyChange
             }
-        })
+        }
 
-        viewModel.passwordText.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<String>(BR.password) {
             if (binding.unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
                 binding.unlockWrongPasswordWarningTextView.vanish()
             }
-        })
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }

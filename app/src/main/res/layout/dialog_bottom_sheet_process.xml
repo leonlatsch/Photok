@@ -18,6 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
 
         <variable
             name="context"
@@ -53,31 +54,31 @@
                 tools:ignore="UseCompoundDrawables">
 
                 <TextView
+                    android:id="@+id/processLabel"
                     style="@style/BigTextViewStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{context.labelText, default=Processing}" />
+                    android:layout_height="wrap_content" />
 
                 <ImageView
-                    android:id="@+id/statusImageView"
+                    android:id="@+id/processStatusImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="5dp"
-                    android:src="@{context.statusDrawable}" />
+                    android:layout_marginStart="5dp" />
             </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/processPercentLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{context.processIndicatorsVisibility}">
+                android:visibility="gone">
 
                 <TextView
                     style="@style/TextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.progress.progressPercent.toString(), default=50}" />
+                    android:text="@{BindingConverters.INSTANCE.toStringConverter(viewModel.progressPercent), default=50}" />
 
                 <TextView
                     style="@style/TextViewStyle"
@@ -93,34 +94,35 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:max="@{viewModel.progress.maxPercent}"
-                android:progress="@{viewModel.progress.progressPercent, default=50}" />
+                android:max="100"
+                android:progress="@{viewModel.progressPercent, default=50}" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/processFailuresWarnMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@id/processItemsProgressIndicatorLayout"
                     android:text="@string/process_failures_occurred"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:visibility="@{context.failuresWarnMessageVisibility, default=gone}" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/processItemsProgressIndicatorLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:visibility="@{context.processIndicatorsVisibility}">
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.progress.current.toString(), default=5}" />
+                        android:text="@{BindingConverters.INSTANCE.toStringConverter(viewModel.current), default=5}" />
 
                     <TextView
                         style="@style/TextViewStyle"
@@ -134,7 +136,7 @@
                         style="@style/TextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.progress.max.toString(), default=10}" />
+                        android:text="@{BindingConverters.INSTANCE.toStringConverter(viewModel.elementsToProcess), default=10}" />
 
                 </LinearLayout>
 
@@ -147,6 +149,7 @@
                 android:paddingTop="5dp">
 
                 <Button
+                    android:id="@+id/processAbortButton"
                     style="@style/buttonStyle"
                     android:layout_width="@dimen/wide_button_width"
                     android:layout_height="@dimen/button_height"
@@ -154,10 +157,10 @@
                     android:layout_marginTop="5dp"
                     android:onClick="@{() -> viewModel.cancel()}"
                     android:text="@string/process_abort"
-                    android:enabled="@{context.canAbort}"
-                    android:visibility="@{context.abortButtonVisibility, default=visible}" />
+                    android:enabled="@{context.canAbort}" />
 
                 <Button
+                    android:id="@+id/processCloseButton"
                     style="@style/buttonStyle"
                     android:layout_width="@dimen/wide_button_width"
                     android:layout_height="@dimen/button_height"
@@ -165,7 +168,7 @@
                     android:layout_marginTop="5dp"
                     android:onClick="@{() -> context.dismiss()}"
                     android:text="@string/process_close"
-                    android:visibility="@{context.closeButtonVisibility, default=gone}" />
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

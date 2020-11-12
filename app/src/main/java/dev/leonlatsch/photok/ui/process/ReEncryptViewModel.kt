@@ -37,7 +37,7 @@ class ReEncryptViewModel @ViewModelInject constructor(
     private val photoRepository: PhotoRepository,
     private val config: Config,
     private val encryptionManager: EncryptionManager
-) : BaseProcessViewModel<Photo>() {
+) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var newPassword: String
 
