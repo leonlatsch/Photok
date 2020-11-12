@@ -27,3 +27,29 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task licenseAndCreditsReport(dependsOn: 'app:licenseReleaseReport') {
+    group 'reporting'
+    doLast {
+        print "Copying Icon Credits to license report file... "
+        def bodyEnd = 0
+        def licFile = new File("app/src/main/assets/open_source_licenses.html")
+        def licensesLines = licFile.collect {it}
+        licensesLines.eachWithIndex { String line, int i ->
+            if (line.contains("</body>")) {
+                bodyEnd = i
+            }
+        }
+
+        def credits = new File("icon_credits.html").text
+        licensesLines.add(bodyEnd, credits)
+
+        licFile.withWriter { out ->
+            licensesLines.each {
+                out.println it
+            }
+        }
+
+        println "Done"
+    }
+}
