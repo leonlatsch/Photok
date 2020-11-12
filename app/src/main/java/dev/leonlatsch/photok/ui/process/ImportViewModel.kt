@@ -35,7 +35,7 @@ import java.util.*
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel<Uri>() {
+) : BaseProcessViewModel<Uri>(app) {
 
     override suspend fun processItem(item: Uri) {
         val fileName = getFileName(app.contentResolver, item) ?: UUID.randomUUID().toString()

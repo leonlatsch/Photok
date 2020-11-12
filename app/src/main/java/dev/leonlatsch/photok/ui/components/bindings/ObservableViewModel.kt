@@ -14,14 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.bindings
 
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import androidx.databinding.Observable
+import androidx.databinding.Observable.OnPropertyChangedCallback
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
+import timber.log.Timber
 
 /**
  * Base for all ViewModels. Implements [Observable].
@@ -34,14 +36,21 @@ import androidx.lifecycle.AndroidViewModel
 abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Observable {
 
     private val changeListeners: PropertyChangeRegistry = PropertyChangeRegistry()
+    private val valueChangeRegistry: PropertyValueChangeRegistry = PropertyValueChangeRegistry()
 
-    override fun addOnPropertyChangedCallback(listener: Observable.OnPropertyChangedCallback) {
+    override fun addOnPropertyChangedCallback(listener: OnPropertyChangedCallback) {
         changeListeners.add(listener)
     }
 
-    override fun removeOnPropertyChangedCallback(listener: Observable.OnPropertyChangedCallback) {
+    override fun removeOnPropertyChangedCallback(listener: OnPropertyChangedCallback) {
         changeListeners.remove(listener)
     }
+
+    fun addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
+        valueChangeRegistry.addValueCallback(callback)
+
+    fun removeOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
+        valueChangeRegistry.removeValueCallback(callback)
 
     /**
      * Notify changes on all properties.
@@ -58,14 +67,29 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
     }
 
     /**
+     * Notify changes in instances of [PropertyChangedValueCallback].
+     */
+    fun notifyChange(property: Int, newValue: Any?) {
+        changeListeners.notifyCallbacks(this, property, null)
+        valueChangeRegistry.notifyCallbacks(property, newValue)
+    }
+
+    /**
      * Handy version of [addOnPropertyChangedCallback].
      * Takes a [block] that gets posted to MainLooper.
      */
-    fun addOnPropertyChange(property: Int, block: () -> Unit) {
-        addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                if (propertyId == property) {
-                    Handler(Looper.getMainLooper()).post(block)
+    @Suppress("UNCHECKED_CAST")
+    fun <T> addOnPropertyChange(propertyId: Int, block: (newValue: T) -> Unit) {
+        valueChangeRegistry.addValueCallback(object : PropertyChangedValueCallback {
+            override fun onCallback(property: Int, newValue: Any?) {
+                if (property == propertyId) {
+                    Handler(Looper.getMainLooper()).post {
+                        try {
+                            block(newValue as T)
+                        } catch (e: ClassCastException) {
+                            Timber.d("newValue is not type of T")
+                        }
+                    }
                 }
             }
         })

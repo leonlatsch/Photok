@@ -16,15 +16,18 @@
 
 package dev.leonlatsch.photok.ui.process.base
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
  * Abstract base for all processing view models.
- * Holds live data for [ProcessState] and [ProcessProgress].
+ * Holds live data for [ProcessState].
  * Provides abstract functions called by the ui.
  *
  * @param T Type of elements to be processed
@@ -32,7 +35,7 @@ import kotlinx.coroutines.launch
  * @sine 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessViewModel<T> : ViewModel() {
+abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(app) {
 
     /**
      * List of [T].
@@ -44,12 +47,38 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
     /**
      * The processing state should be checked every time in [processLoop].
      */
-    val processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.INITIALIZE)
+    @get:Bindable
+    var processState: ProcessState = ProcessState.INITIALIZE
+        set(value) {
+            field = value
+            notifyChange(BR.processState, value)
+        }
+
+    @get:Bindable
+    var progressPercent: Int = 0
+        set(value) {
+            field = value
+            notifyChange(BR.progressPercent, value)
+        }
+
+
+    @get:Bindable
+    var current: Int = 0
+        set(value) {
+            field = value
+            notifyChange(BR.current, value)
+        }
 
     /**
-     * An [ProcessProgress] instance which is bound to the ui.
+     * The number of elements to get processed.
+     * Gets set automatically.
      */
-    val progress = ProcessProgress()
+    @get:Bindable
+    var elementsToProcess = 0
+        set(value) {
+            field = value
+            notifyChange(BR.elementsToProcess, value)
+        }
 
     /**
      * Indicates if failures occurred.
@@ -58,22 +87,10 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
     var failuresOccurred = false
 
     /**
-     * The current element index getting processed.
-     * Used for [progress].
-     */
-    private var currentElement = 0
-
-    /**
-     * The number of elements to get processed.
-     * Gets set automatically.
-     */
-    var elementsToProcess = 0
-
-    /**
      * Runs [preProcess], [processLoop] and [postProcess].
      * launched in [viewModelScope].
      */
-    fun runProcessing() = viewModelScope.launch {
+    fun runProcessing() = GlobalScope.launch(Dispatchers.IO) {
         preProcess()
         processLoop()
         postProcess()
@@ -83,8 +100,8 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
      * Gets executed before [processLoop].
      */
     open suspend fun preProcess() {
-        processState.postValue(ProcessState.PROCESSING)
-        initProgress()
+        processState = ProcessState.PROCESSING
+        updateProgress()
     }
 
     /**
@@ -94,8 +111,7 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
      */
     private suspend fun processLoop() {
         for (item in items) {
-            delay(1) // Delay ensure to always run a suspending call to update ui properly.
-            if (processState.value == ProcessState.ABORTED) {
+            if (processState == ProcessState.ABORTED) {
                 return
             }
 
@@ -114,8 +130,8 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
      * Get executed after [processLoop].
      */
     open suspend fun postProcess() {
-        if (processState.value != ProcessState.ABORTED) {
-            processState.postValue(ProcessState.FINISHED)
+        if (processState != ProcessState.ABORTED) {
+            processState = ProcessState.FINISHED
         }
     }
 
@@ -123,18 +139,22 @@ abstract class BaseProcessViewModel<T> : ViewModel() {
      * Updates the state to [ProcessState.ABORTED].
      */
     open fun cancel() {
-        processState.postValue(ProcessState.ABORTED)
-    }
-
-    private fun initProgress() {
-        progress.update(0, currentElement)
+        processState = ProcessState.ABORTED
     }
 
     /**
-     * Update the [progress] property.
+     * Update the progress.
      */
     private fun itemProcessed() {
-        currentElement++
-        progress.update(currentElement, elementsToProcess)
+        current++
+        updateProgress()
+    }
+
+    private fun updateProgress() {
+        if (elementsToProcess == 0) {
+            return
+        }
+
+        progressPercent = (current * 100) / elementsToProcess
     }
 }
