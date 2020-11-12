@@ -43,6 +43,6 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="dev.leonlatsch.photok.ui.about.AboutFragment"
+        android:name="dev.leonlatsch.photok.ui.settings.AboutFragment"
         android:label="AboutFragment" />
 </navigation>
