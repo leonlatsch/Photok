@@ -49,11 +49,14 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
-     * Launch [StartActivity] when app was ON_STOP for at least 5 Minutes
+     * Launch [StartActivity] when app was ON_STOP for at least the configured time.
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
-        if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout) { // 5 Minutes
+        if (config.securityLockTimeout != -1
+            && wentToBackgroundAt != 0L
+            && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
+        ) {
             restartAppLifecycle(this)
         }
     }

@@ -121,6 +121,7 @@
     <string name="settings_security_timeout_two_minute">2 Minutes</string>
     <string name="settings_security_timeout_five_minute">5 Minutes</string>
     <string name="settings_security_timeout_ten_minute">10 Minutes</string>
+    <string name="settings_security_timeout_never">Never</string>
     <string name="settings_allow_screenshots_title">Allow Screenshots</string>
     <string name="settings_allow_screenshots_summary">Allow taking screenshots</string>
     <string name="settings_change_password_title">Change Password</string>
