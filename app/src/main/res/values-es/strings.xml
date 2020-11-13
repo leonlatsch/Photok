@@ -115,13 +115,13 @@
     <string name="settings_auto_fullscreen_title">Pantalla completa automática</string>
     <string name="settings_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
     <string name="settings_category_security">Seguridad</string>
-    <string name="settings_security_timeout_title">Automatic Lock Timeout</string><!-- TODO: Translate -->
-    <string name="settings_security_timeout_summary">Automatic Lock after given time in background</string><!-- TODO: Translate -->
-    <string name="settings_security_timeout_immediately">Immediately</string> <!-- TODO: Translate -->
-    <string name="settings_security_timeout_one_minute">1 Minute</string><!-- TODO: Translate -->
-    <string name="settings_security_timeout_two_minute">2 Minutes</string><!-- TODO: Translate -->
-    <string name="settings_security_timeout_five_minute">5 Minutes</string><!-- TODO: Translate -->
-    <string name="settings_security_timeout_ten_minute">10 Minutes</string><!-- TODO: Translate -->
+    <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
+    <string name="settings_security_timeout_summary">Bloqueo automático después de un tiempo determinado en segundo plano</string>
+    <string name="settings_security_timeout_immediately">Inmediatamente</string>
+    <string name="settings_security_timeout_one_minute">1 minuto</string>
+    <string name="settings_security_timeout_two_minute">2 minutos</string>
+    <string name="settings_security_timeout_five_minute">5 minutos</string>
+    <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_allow_screenshots_title">Permitir capturas de pantalla</string>
     <string name="settings_allow_screenshots_summary">Permitir tomar capturas de pantalla</string>
     <string name="settings_change_password_title">Cambiar contraseña</string>
@@ -130,16 +130,16 @@
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
     <string name="settings_backup_title">Copia de Seguridad</string>
     <string name="settings_backup_summary">Crea una copia de seguridad de tu baúl</string>
-    <string name="settings_other_title">Other</string><!-- TODO: Translate -->
-    <string name="settings_other_feedback_title">Feedback</string><!-- TODO: Translate -->
-    <string name="settings_other_feedback_summary">Send me an email with feedback</string><!-- TODO: Translate -->
+    <string name="settings_other_title">Otra</string>
+    <string name="settings_other_feedback_title">Retroalimentación</string>
+    <string name="settings_other_feedback_summary">Envíame un correo electrónico con comentarios</string>
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
-    <string name="settings_other_sourcecode_title">Source Code</string><!-- TODO: Translate -->
-    <string name="settings_other_sourcecode_summary">Contribute to Photok</string><!-- TODO: Translate -->
+    <string name="settings_other_sourcecode_title">Código fuente</string>
+    <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
-    <string name="settings_other_about_title">About</string><!-- TODO: Translate -->
+    <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Sobre la Photok</string>
 
     <!-- CHANGE PASSWORD -->

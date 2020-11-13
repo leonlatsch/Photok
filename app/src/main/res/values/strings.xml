@@ -115,7 +115,7 @@
     <string name="settings_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>
     <string name="settings_category_security">Security</string>
     <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
-    <string name="settings_security_timeout_summary">Automatic Lock after given time in background</string>
+    <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
     <string name="settings_security_timeout_immediately">Immediately</string>
     <string name="settings_security_timeout_one_minute">1 Minute</string>
     <string name="settings_security_timeout_two_minute">2 Minutes</string>
