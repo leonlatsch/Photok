@@ -22,13 +22,13 @@ apply plugin: 'com.android.application' /*
 apply plugin: 'com.jaredsburrows.license'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "dev.leonlatsch.photok"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0.0-dev"
 
