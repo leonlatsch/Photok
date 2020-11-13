@@ -74,8 +74,8 @@ class SetupViewModel @ViewModelInject constructor(
         setupState.postValue(SetupState.LOADING)
 
         if (validateBothPasswords()) {
-            val password = BCrypt.hashpw(password, BCrypt.gensalt())
-            config.securityPassword = password
+            val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+            config.securityPassword = hashedPassword
             encryptionManager.initialize(this@SetupViewModel.password)
             setupState.postValue(SetupState.FINISHED)
         } else {
