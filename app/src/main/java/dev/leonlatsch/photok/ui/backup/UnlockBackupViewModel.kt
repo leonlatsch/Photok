@@ -40,7 +40,7 @@ class UnlockBackupViewModel @ViewModelInject constructor(
     var password: String = emptyString()
         set(value) {
             field = value
-            notifyChange(BR.password)
+            notifyChange(BR.password, value)
         }
 
     /**

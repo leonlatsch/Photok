@@ -123,7 +123,7 @@
     <string name="settings_security_timeout_ten_minute">10 Minutes</string>
     <string name="settings_security_timeout_never">Never</string>
     <string name="settings_allow_screenshots_title">Allow Screenshots</string>
-    <string name="settings_allow_screenshots_summary">Allow taking screenshots</string>
+    <string name="settings_allow_screenshots_summary">Allow taking screenshot. Requires restart.</string>
     <string name="settings_change_password_title">Change Password</string>
     <string name="settings_change_password_summary">Change your password</string>
     <string name="settings_category_advanced">Advanced</string>
@@ -163,7 +163,7 @@
     <string name="onboarding_slide2_title">Create a password</string>
     <string name="onboarding_slide2_description">Create a secure password. Your password is used to encrypt your photos directly on your phone.</string>
     <string name="onboarding_slide3_title">Start Importing</string>
-    <string name="onboarding_slide3_description">Start importing your photos into photok and keep them safe from others.</string>
+    <string name="onboarding_slide3_description">Start importing your photos and keep them safe from others.\nAfterwards you can delete them in your gallery.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Creating backup…</string>

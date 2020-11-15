@@ -16,8 +16,11 @@
 
 package dev.leonlatsch.photok.ui.backup
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBackupUnlockBinding
 import dev.leonlatsch.photok.other.hide
@@ -37,6 +40,14 @@ class UnlockBackupDialogFragment(
 ) : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
 
     private val viewModel: UnlockBackupViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.addOnPropertyChange<String>(BR.password) {
+            binding.unlockBackupWrongPasswordWarning.hide()
+        }
+    }
 
     /**
      * Unlocks the safe and calls [onUnlockSuccess] if it matches.

@@ -124,7 +124,7 @@
     <string name="settings_security_timeout_ten_minute">10 Minuten</string>
     <string name="settings_security_timeout_never">Niemals</string>
     <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
-    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
     <string name="settings_change_password_title">Passwort ändern</string>
     <string name="settings_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_category_advanced">Erweitert</string>
@@ -164,7 +164,7 @@
     <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
     <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
     <string name="onboarding_slide3_title">Fang an zu importieren</string>
-    <string name="onboarding_slide3_description">Importiere deine Fotos in Photok und halte sie sicher vor anderen.</string>
+    <string name="onboarding_slide3_description">Importiere deine Fotos und halte sie sicher vor anderen.\nDanach kannst du sie in deiner Galerie löschen.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
