@@ -124,7 +124,7 @@
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
     <string name="settings_allow_screenshots_title">Permitir capturas de pantalla</string>
-    <string name="settings_allow_screenshots_summary">Permitir tomar capturas de pantalla</string>
+    <string name="settings_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
     <string name="settings_change_password_title">Cambiar contraseña</string>
     <string name="settings_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_category_advanced">Avanzado</string>
@@ -164,7 +164,7 @@
     <string name="onboarding_slide2_title">Crea una contraseña</string>
     <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
     <string name="onboarding_slide3_title">Empieza a importar</string>
-    <string name="onboarding_slide3_description">Comienza a importar tus fotos en Photok y mantenlas a salvo de los demás.</string>
+    <string name="onboarding_slide3_description">Comienza a importar tus fotos y mantenlas a salvo de los demás.\nPuedes eliminarlas en tu galería después.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
