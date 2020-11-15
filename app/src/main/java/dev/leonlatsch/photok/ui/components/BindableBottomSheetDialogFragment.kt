@@ -38,12 +38,14 @@ abstract class BindableBottomSheetDialogFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
 ) : BottomSheetDialogFragment(), Bindable<BindingType> {
 
+    final override lateinit var binding: BindingType
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: BindingType = DataBindingUtil.inflate(inflater, layout, container, false)
+        binding = DataBindingUtil.inflate(inflater, layout, container, false)
         bind(binding)
         return binding.root
     }

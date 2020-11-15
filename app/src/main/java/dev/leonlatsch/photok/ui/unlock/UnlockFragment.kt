@@ -19,17 +19,17 @@ package dev.leonlatsch.photok.ui.unlock
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.other.hideLoadingOverlay
-import dev.leonlatsch.photok.other.showLoadingOverlay
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_unlock.*
-import kotlinx.android.synthetic.main.loading_overlay.*
+import dev.leonlatsch.photok.ui.components.Dialogs
 
 /**
  * Unlock fragment.
@@ -44,25 +44,25 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private val viewModel: UnlockViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.unlockState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<UnlockState>(BR.unlockState) {
             when (it) {
-                UnlockState.CHECKING -> showLoadingOverlay(loadingOverlay)
+                UnlockState.CHECKING -> binding.loadingOverlay.show()
                 UnlockState.UNLOCKED -> {
                     unlock()
                 }
                 UnlockState.LOCKED -> {
-                    hideLoadingOverlay(loadingOverlay)
-                    unlockWrongPasswordWarningTextView.visibility = View.VISIBLE
+                    binding.loadingOverlay.hide()
+                    binding.unlockWrongPasswordWarningTextView.show()
                 }
-                else -> return@observe
+                else -> return@addOnPropertyChange
             }
-        })
+        }
 
-        viewModel.passwordText.observe(viewLifecycleOwner, {
-            if (unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
-                unlockWrongPasswordWarningTextView.visibility = View.INVISIBLE
+        viewModel.addOnPropertyChange<String>(BR.password) {
+            if (binding.unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
+                binding.unlockWrongPasswordWarningTextView.vanish()
             }
-        })
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -73,14 +73,14 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             startActivity(intent)
             activity?.finish()
         } else {
-            Toast.makeText(requireContext(), getString(R.string.common_error), Toast.LENGTH_LONG)
-                .show()
-            hideLoadingOverlay(loadingOverlay)
+            Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+            binding.loadingOverlay.hide()
         }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {
         super.bind(binding)
+        binding.context = this
         binding.viewModel = viewModel
     }
 }

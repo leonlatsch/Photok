@@ -51,15 +51,101 @@ class EncryptionManager {
      */
     fun initialize(password: String) {
         try {
-            val md = MessageDigest.getInstance(SHA_256)
-            val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
-            encryptionKey = SecretKeySpec(bytes, AES)
+            encryptionKey = genSecKey(password)
             ivParameterSpec = genIv(password)
             isReady = true
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
             isReady = false
         }
+    }
+
+    /**
+     * Resets the encryption manager to default state.
+     */
+    fun reset() {
+        encryptionKey = null
+        ivParameterSpec = null
+        isReady = false
+    }
+
+
+    /**
+     * Encrypt a [ByteArray] with the stored [SecretKeySpec].
+     */
+    fun encrypt(bytes: ByteArray): ByteArray? {
+        return if (isReady) try {
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error encrypting bytes: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Decrypt a [ByteArray] with the stored [SecretKeySpec]
+     */
+    fun decrypt(encryptedBytes: ByteArray): ByteArray? {
+        return if (isReady) try {
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
+            cipher.doFinal(encryptedBytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error decrypting bytes: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Encrypt [bytes] with a specific password.
+     * USE WITH CAUTION!
+     * Used by re-encrypt dialog.
+     */
+    fun encrypt(bytes: ByteArray, password: String): ByteArray? {
+        return try {
+            val key = genSecKey(password)
+            val iv = genIv(password)
+
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.ENCRYPT_MODE, key, iv)
+
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error encrypting bytes: $e")
+            null
+        }
+    }
+
+    /**
+     * Encrypt [bytes] with a specific password.
+     * USE WITH CAUTION!
+     * Used by re-encrypt dialog.
+     */
+    fun decrypt(bytes: ByteArray, password: String): ByteArray? {
+        return try {
+            val key = genSecKey(password)
+            val iv = genIv(password)
+
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
+            cipher.init(Cipher.DECRYPT_MODE, key, iv)
+
+            cipher.doFinal(bytes)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error decrypting bytes: $e")
+            null
+        }
+    }
+
+    private fun genSecKey(password: String): SecretKeySpec {
+        val md = MessageDigest.getInstance(SHA_256)
+        val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
+        return SecretKeySpec(bytes, AES)
     }
 
     private fun genIv(password: String): IvParameterSpec {
@@ -69,23 +155,5 @@ class EncryptionManager {
             iv[i] = charArray[i].toByte()
         }
         return IvParameterSpec(iv)
-    }
-
-    /**
-     * Encrypt a [ByteArray] with the stored [SecretKeySpec].
-     */
-    fun encrypt(bytes: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
-        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
-        return cipher.doFinal(bytes)
-    }
-
-    /**
-     * Decrypt a [ByteArray] with the stored [SecretKeySpec]
-     */
-    fun decrypt(encryptedBytes: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
-        cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
-        return cipher.doFinal(encryptedBytes)
     }
 }

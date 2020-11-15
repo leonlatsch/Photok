@@ -25,8 +25,8 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
-import dev.leonlatsch.photok.other.PrefManager
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.Config
 import javax.inject.Singleton
 
 /**
@@ -53,13 +53,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePasswordDao(database: PhotokDatabase) = database.getPasswordDao()
+    fun provideConfig(@ApplicationContext app: Context) = Config(app)
 
     @Provides
     @Singleton
-    fun providePrefManager(@ApplicationContext app: Context) = PrefManager(app)
-
-    @Provides
-    @Singleton
-    fun providePasswordManager() = EncryptionManager()
+    fun provideEncryptionManager() = EncryptionManager()
 }

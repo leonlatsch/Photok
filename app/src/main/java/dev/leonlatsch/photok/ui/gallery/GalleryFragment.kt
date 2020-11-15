@@ -16,8 +16,10 @@
 
 package dev.leonlatsch.photok.ui.gallery
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -29,21 +31,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
+import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
+import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
-import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Fragment for displaying a gallery.
@@ -54,16 +61,23 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
+    // region binding properties
+
     var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
 
+    // endregion
+
     private val viewModel: GalleryViewModel by viewModels()
+
     private lateinit var adapter: PhotoAdapter
     private var actionMode: ActionMode? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), 4)
+        binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
+        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+            false
         viewModel.photos
 
         adapter = PhotoAdapter(
@@ -73,14 +87,14 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             viewLifecycleOwner
         )
         adapter.registerAdapterDataObserver(onAdapterDataObserver)
-        galleryPhotoGrid.adapter = adapter
+        binding.galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
         }
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
-                actionMode = (activity as MainActivity).startActionModeOnToolbar(actionModeCallback)
+                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
@@ -97,6 +111,14 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    private fun getColCount(): Int {
+        return when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> 4
+            Configuration.ORIENTATION_LANDSCAPE -> 8
+            else -> 4
+        }
+    }
+
     private fun togglePlaceholder(itemCount: Int) {
         val visibility = if (itemCount > 0) {
             View.GONE
@@ -106,27 +128,105 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         placeholderVisibility.postValue(visibility)
     }
 
+    /**
+     * Starts the photo import.
+     * Starts a chooser for images.
+     * May request permission READ_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
+    @AfterPermissionGranted(REQ_PERM_IMPORT)
     fun startImport() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQ_CONTENT_PHOTOS)
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            binding.galleryActionMenu.collapse()
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Photos"),
+                REQ_CONTENT_PHOTOS
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_IMPORT,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
-    fun startDelete(photos: List<Photo>) {
-        val deleteDialog = DeleteBottomSheetDialogFragment(photos)
+    /**
+     * Start restoring a backup.
+     * Requests permission and shows [ValidateBackupDialogFragment].
+     */
+    @AfterPermissionGranted(REQ_PERM_RESTORE)
+    fun startRestore() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            binding.galleryActionMenu.collapse()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "application/zip"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Backup"),
+                REQ_CONTENT_BACKUP
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_RESTORE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    /**
+     * Start the deleting process with all selected items.
+     * Called by ui.
+     */
+    fun startDelete() {
+        val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
         deleteDialog.show(
             requireActivity().supportFragmentManager,
             DeleteBottomSheetDialogFragment::class.qualifiedName
         )
+        adapter.disableSelection()
     }
 
-    private fun startExport() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Directory"),
-            REQ_DOCUMENT_TREE
-        )
+    /**
+     * Starts the exporting process.
+     * May request permission WRITE_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
+    @AfterPermissionGranted(REQ_PERM_EXPORT)
+    fun startExport() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        ) {
+            val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
+            exportDialog.show(
+                requireActivity().supportFragmentManager,
+                ExportBottomSheetDialogFragment::class.qualifiedName
+            )
+            adapter.disableSelection()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.export_permission_rationale),
+                REQ_PERM_EXPORT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -136,16 +236,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
             val images = mutableListOf<Uri>()
             if (data != null) {
-                if (data.clipData != null) {
-                    val count = data.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = data.clipData!!.getItemAt(i).uri
-                        images.add(imageUri)
-                    }
-                } else if (data.data != null) {
-                    val imageUri = data.data!!
-                    images.add(imageUri)
-                }
+                extractDataFromResult(images, data)
             }
             if (images.size > 0) {
                 val importDialog = ImportBottomSheetDialogFragment(images)
@@ -154,16 +245,30 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                     ImportBottomSheetDialogFragment::class.qualifiedName
                 )
             }
-            // Result from select dir for export
-        } else if (requestCode == REQ_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
-            if (data != null && data.data != null) {
-                val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected(), data.data!!)
-                exportDialog.show( // TODO: fix error with adapter getting recreated when activity shows
+        } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                data.data ?: return
+                val restoreDialog = ValidateBackupDialogFragment(data.data!!)
+                restoreDialog.show(
                     requireActivity().supportFragmentManager,
-                    ExportBottomSheetDialogFragment::class.qualifiedName)
-                adapter.disableSelection()
+                    ValidateBackupDialogFragment::class.qualifiedName
+                )
             }
         }
+    }
+
+    private fun extractDataFromResult(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
+        if (data.clipData != null) {
+            val count = data.clipData!!.itemCount
+            for (i in 0 until count) {
+                val imageUri = data.clipData!!.getItemAt(i).uri
+                images.add(imageUri)
+            }
+        } else if (data.data != null) {
+            val imageUri = data.data!!
+            images.add(imageUri)
+        }
+        return images
     }
 
     private fun showFullSize(id: Int) {
@@ -197,8 +302,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                                 adapter.selectedItems.size
                             )
                         ) { _, _ -> // On positive button clicked
-                            val selectedItems = adapter.getAllSelected()
-                            startDelete(selectedItems)
+                            startDelete()
                         }
                     }
                     true
@@ -213,7 +317,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                             )
                         ) { _, _ -> // On positive button clicked
                             startExport()
-                            adapter.disableSelection()
                         }
                     }
                     true
@@ -226,6 +329,16 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward result to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
     override fun bind(binding: FragmentGalleryBinding) {
         super.bind(binding)
         binding.context = this
@@ -233,6 +346,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     companion object {
         const val REQ_CONTENT_PHOTOS = 0
-        const val REQ_DOCUMENT_TREE = 1
+        const val REQ_CONTENT_BACKUP = 1
     }
 }

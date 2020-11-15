@@ -16,16 +16,17 @@
 
 package dev.leonlatsch.photok.ui.process.base
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.BottomSheetDialogProcessBinding
+import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.vanish
 import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
 
 /**
  * Abstract base for all process dialogs.
@@ -34,95 +35,106 @@ import kotlinx.android.synthetic.main.bottom_sheet_dialog_process.*
  * [viewModel] is abstract and needs to be set in the child.
  *
  * @param processingLabelTextResource The string resource to be displayed while processing.
+ * @param T Type of elements to be processed
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessBottomSheetDialogFragment(
-    @StringRes private val processingLabelTextResource: Int
-) : BindableBottomSheetDialogFragment<BottomSheetDialogProcessBinding>(
-    R.layout.bottom_sheet_dialog_process
+abstract class BaseProcessBottomSheetDialogFragment<T>(
+    private val itemSource: List<T>?,
+    @StringRes private val processingLabelTextResource: Int,
+    val canAbort: Boolean
+) : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
+    R.layout.dialog_bottom_sheet_process
 ) {
-
-    // region binding properties
-
-    val labelText: MutableLiveData<String> = MutableLiveData()
-    val closeButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
-    val abortButtonVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
-    val processIndicatorsVisibility: MutableLiveData<Int> = MutableLiveData(View.GONE)
-    val statusDrawable: MutableLiveData<Drawable> = MutableLiveData()
-    val failuresWarnMessageVisibility: MutableLiveData<Int> = MutableLiveData(View.INVISIBLE)
-
-    // endregion
 
     /**
      * Abstract [BaseProcessViewModel].
      * Needs to be set in the child, handles processing.
      */
-    abstract val viewModel: BaseProcessViewModel
+    abstract val viewModel: BaseProcessViewModel<T>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.processState.postValue(ProcessState.INITIALIZE)
+        viewModel.processState = ProcessState.INITIALIZE
 
-        viewModel.processState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<ProcessState>(BR.processState) {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
                     isCancelable = false
                     setStatusIcon(null)
-                    closeButtonVisibility.postValue(View.GONE)
-                    abortButtonVisibility.postValue(View.VISIBLE)
-                    processIndicatorsVisibility.postValue(View.GONE)
-                    failuresWarnMessageVisibility.postValue(View.INVISIBLE)
+                    binding.processCloseButton.hide()
+                    binding.processAbortButton.show()
+                    binding.processItemsProgressIndicatorLayout.hide()
+                    binding.processPercentLayout.hide()
+                    binding.processFailuresWarnMessage.vanish()
                     getString(R.string.process_initialize)
                 }
                 ProcessState.PROCESSING -> {
-                    processIndicatorsVisibility.postValue(View.VISIBLE)
+                    binding.processItemsProgressIndicatorLayout.show()
+                    binding.processPercentLayout.show()
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
                     enterFinishedOrAbortedState()
-                    setStatusIcon(R.drawable.check, android.R.color.holo_green_dark)
+                    setStatusIcon(R.drawable.ic_check, android.R.color.holo_green_dark)
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
                     enterFinishedOrAbortedState()
-                    setStatusIcon(R.drawable.close, android.R.color.holo_red_dark)
+                    setStatusIcon(R.drawable.ic_close, android.R.color.holo_red_dark)
                     getString(R.string.process_aborted)
                 }
-                else -> return@observe
             }
-            labelText.postValue(label)
-        })
+            binding.processLabel.text = label
+        }
 
-        prepareViewModel()
+        prepareViewModel(itemSource)
         viewModel.runProcessing()
     }
 
     private fun enterFinishedOrAbortedState() {
         isCancelable = true
-        closeButtonVisibility.postValue(View.VISIBLE)
-        abortButtonVisibility.postValue(View.GONE)
+        binding.processCloseButton.show()
+        binding.processAbortButton.hide()
         if (viewModel.failuresOccurred) {
-            failuresWarnMessageVisibility.postValue(View.VISIBLE)
+            binding.processFailuresWarnMessage.show()
         }
     }
 
-    open fun prepareViewModel() {
+    /**
+     * Called before viewModel starts processing.
+     * Assign data and variables in implementations.
+     */
+    open fun prepareViewModel(items: List<T>?) {
+        if (items != null) {
+            viewModel.items = items
+            viewModel.elementsToProcess = items.size
+        }
     }
 
     private fun setStatusIcon(drawable: Int?, color: Int = 0) {
         if (drawable == null) {
-            statusDrawable.postValue(null)
+            binding.processStatusImageView.setImageDrawable(null)
             return
         }
 
-        statusDrawable.postValue(ContextCompat.getDrawable(requireContext(), drawable))
-        statusImageView.setColorFilter(ContextCompat.getColor(requireContext(), color))
+        binding.processStatusImageView.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                drawable
+            )
+        )
+        binding.processStatusImageView.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                color
+            )
+        )
     }
 
-    override fun bind(binding: BottomSheetDialogProcessBinding) {
+    override fun bind(binding: DialogBottomSheetProcessBinding) {
         super.bind(binding)
         binding.context = this
         binding.viewModel = viewModel

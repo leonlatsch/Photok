@@ -18,20 +18,18 @@ package dev.leonlatsch.photok.ui.setup
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.emptyString
-import dev.leonlatsch.photok.other.hideLoadingOverlay
-import dev.leonlatsch.photok.other.showLoadingOverlay
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
-import kotlinx.android.synthetic.main.fragment_setup.*
-import kotlinx.android.synthetic.main.loading_overlay.*
 
 /**
  * Fragment for the setup.
@@ -44,53 +42,49 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
     private val viewModel: SetupViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        viewModel.passwordText.observe(viewLifecycleOwner, {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.addOnPropertyChange<String>(BR.password) {
             if (it.isNotEmpty()) {
                 val value = when (it.length) {
                     1, 2, 3, 4, 5 -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
                         getString(R.string.setup_password_strength_weak)
                     }
                     6, 7, 8, 9, 10 -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
                         getString(R.string.setup_password_strength_moderate)
                     }
                     else -> {
-                        setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
+                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
                         getString(R.string.setup_password_strength_strong)
                     }
                 }
-                setupPasswordStrengthLayout.visibility = View.VISIBLE
-                setupPasswordStrengthValue.text = value
+                binding.setupPasswordStrengthLayout.show()
+                binding.setupPasswordStrengthValue.text = value
             } else {
-                setupPasswordStrengthLayout.visibility = View.GONE
+                binding.setupPasswordStrengthLayout.hide()
             }
 
             if (viewModel.validatePassword()) {
-                setupConfirmPasswordEditText.visibility = View.VISIBLE
+                binding.setupConfirmPasswordEditText.show()
             } else {
-                setupConfirmPasswordEditText.setTextValue(emptyString())
-                setupConfirmPasswordEditText.visibility = View.GONE
+                binding.setupConfirmPasswordEditText.setTextValue(emptyString())
+                binding.setupConfirmPasswordEditText.hide()
             }
 
             enableOrDisableSetup()
-        })
+        }
 
-        viewModel.confirmPasswordText.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<String>(BR.confirmPassword) {
             enableOrDisableSetup()
-        })
+        }
 
         viewModel.setupState.observe(viewLifecycleOwner, {
-            when(it) {
-                SetupState.LOADING -> showLoadingOverlay(loadingOverlay)
-                SetupState.SETUP -> hideLoadingOverlay(loadingOverlay)
+            when (it) {
+                SetupState.LOADING -> binding.loadingOverlay.show()
+                SetupState.SETUP -> binding.loadingOverlay.hide()
                 SetupState.FINISHED -> {
-                    hideLoadingOverlay(loadingOverlay)
+                    binding.loadingOverlay.hide()
 
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
@@ -99,19 +93,18 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
                 else -> return@observe
             }
         })
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun enableOrDisableSetup() {
         if (!viewModel.passwordsEqual()
-            && setupConfirmPasswordEditText.visibility == View.VISIBLE) {
-            setupPasswordMatchWarningTextView.visibility = View.VISIBLE
-            setupButton.isEnabled = false
+            && binding.setupConfirmPasswordEditText.isVisible
+        ) {
+            binding.setupPasswordMatchWarningTextView.show()
+            binding.setupButton.isEnabled = false
         } else {
-            setupPasswordMatchWarningTextView.visibility = View.GONE
+            binding.setupPasswordMatchWarningTextView.hide()
             if (viewModel.validateBothPasswords()) {
-                setupButton.isEnabled = true
+                binding.setupButton.isEnabled = true
             }
         }
     }

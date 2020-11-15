@@ -21,6 +21,7 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
     <string name="common_loading">Laden …</string>
     <string name="common_password">Passwort</string>
     <string name="common_delete">Löschen</string>
@@ -28,10 +29,12 @@
     <string name="common_error">Ein Fehler ist aufgetreten. Bitte versuche es erneut.</string>
     <string name="common_yes">Ja</string>
     <string name="common_no">Nein</string>
+    <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Foto(s)…</string>
+    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu importieren.</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Erstelle dein Passwort</string>
@@ -53,6 +56,8 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
+    <string name="gallery_add_from_gallery">Aus Galerie</string>
+    <string name="gallery_add_from_backup">Aus Backup</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
@@ -70,10 +75,8 @@
     <string name="view_photo_detail_size_label">Dateigröße:</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_more">Mehr</string>
+    <string name="menu_main_lock">Sperren</string>
     <string name="menu_main_settings">Einstellungen</string>
-    <string name="menu_main_backup">Backup</string>
-    <string name="menu_main_about">Über</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Alle auswählen</string>
@@ -86,7 +89,91 @@
     <string name="delete_deleting">Lösche foto(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s) <b>exportieren</b> willst?</string>
-    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s), zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_exporting">Exportiere Foto(s)…</string>
+    <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
+    <string name="export_finished">Exportiert</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Version:</string>
+    <string name="about_developed_by">Entwickelt von:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Drittanbietersoftware</string>
+    <string name="about_privacy_policy">Datenschutzerklärung</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_category_app">App</string>
+    <string name="settings_reset_title">Safe zurücksetzen</string>
+    <string name="settings_reset_summary">Daten löschen und Passwort zurücksetzen</string>
+    <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
+    <string name="settings_category_gallery">Galerie</string>
+    <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
+    <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
+    <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
+    <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
+    <string name="settings_security_timeout_immediately">Sofort</string>
+    <string name="settings_security_timeout_one_minute">1 Minute</string>
+    <string name="settings_security_timeout_two_minute">2 Minuten</string>
+    <string name="settings_security_timeout_five_minute">5 Minuten</string>
+    <string name="settings_security_timeout_ten_minute">10 Minuten</string>
+    <string name="settings_security_timeout_never">Niemals</string>
+    <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
+    <string name="settings_change_password_title">Passwort ändern</string>
+    <string name="settings_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_category_advanced">Erweitert</string>
+    <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
+    <string name="settings_backup_title">Backup</string>
+    <string name="settings_backup_summary">Erstelle ein Backup von deinem Safe</string>
+    <string name="settings_other_title">Andere</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>
+    <string name="settings_other_feedback_mail_subject">Feedback zu Photok</string>
+    <string name="settings_other_feedback_mail_body">Schreibe ein Feedback zu Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_sourcecode_title">Quellcode</string>
+    <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_about_title">Über</string>
+    <string name="settings_other_about_summary">Informationen über Photok</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Passwort ändern</string>
+    <string name="change_password_old_password">Altes Passwort</string>
+    <string name="change_password_new_password">Neues Passwort</string>
+    <string name="change_password_check">Prüfen</string>
+    <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
+    <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
+    <string name="change_password_button">Passwort ändern</string>
+    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
+    <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_finish">Fertig</string>
+    <string name="onboarding_skip"><u>Überspringen</u></string>
+
+    <string name="onboarding_slide1_title">Willkommen bei</string>
+    <string name="onboarding_slide1_description">Ein sicherer Ort für deine Fotos.</string>
+    <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
+    <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
+    <string name="onboarding_slide3_title">Fang an zu importieren</string>
+    <string name="onboarding_slide3_description">Importiere deine Fotos und halte sie sicher vor anderen.\nDanach kannst du sie in deiner Galerie löschen.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Erstelle Backup…</string>
+    <string name="backup_restore_title">Backup wiederherstellen</string>
+    <string name="backup_restore_details_created_at">Erstellt am:</string>
+    <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
+    <string name="backup_restore_details_compatible">Kompatibel:</string>
+    <string name="backup_restore_button">Entsperren und wiederherstellen</string>
+    <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
+    <string name="backup_restore_processing">Backup wiederherstellen…</string>
+    <string name="backup_unlock_title">Backup Entsperren</string>
 </resources>

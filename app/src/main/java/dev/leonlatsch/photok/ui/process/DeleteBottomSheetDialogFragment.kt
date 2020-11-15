@@ -31,14 +31,12 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
  */
 @AndroidEntryPoint
 class DeleteBottomSheetDialogFragment(
-    private val photos: List<Photo>
-) : BaseProcessBottomSheetDialogFragment(R.string.delete_deleting) {
+    photos: List<Photo>
+) : BaseProcessBottomSheetDialogFragment<Photo>(
+    photos,
+    R.string.delete_deleting,
+    true
+) {
 
     override val viewModel: DeleteViewModel by viewModels()
-
-    override fun prepareViewModel() {
-        super.prepareViewModel()
-        viewModel.photos = photos
-        viewModel.elementsToProcess = photos.size
-    }
 }

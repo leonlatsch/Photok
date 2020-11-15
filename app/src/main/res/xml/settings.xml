@@ -14,6 +14,85 @@
   ~   limitations under the License.
   -->
 
-<PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+    <PreferenceCategory android:title="@string/settings_category_app">
+    </PreferenceCategory>
+    -->
+
+    <PreferenceCategory android:title="@string/settings_category_gallery">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_fullscreen"
+            android:key="gallery^fullscreen.auto"
+            android:summary="@string/settings_auto_fullscreen_summary"
+            android:title="@string/settings_auto_fullscreen_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_security">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_screen_lock"
+            android:key="security^allowScreenshots"
+            android:summary="@string/settings_allow_screenshots_summary"
+            android:title="@string/settings_allow_screenshots_title" />
+
+        <Preference
+            android:icon="@drawable/ic_key"
+            android:key="action_change_password"
+            android:summary="@string/settings_change_password_summary"
+            android:title="@string/settings_change_password_title" />
+
+        <ListPreference
+            android:defaultValue="300000"
+            android:entries="@array/timeoutStrings"
+            android:entryValues="@array/timeouts"
+            android:icon="@drawable/ic_schedule"
+            android:key="security^lockTimeout"
+            android:summary="@string/settings_security_timeout_summary"
+            android:title="@string/settings_security_timeout_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:summary="@string/settings_category_advanced_summary"
+        android:title="@string/settings_category_advanced">
+
+        <Preference
+            android:icon="@drawable/ic_warning"
+            android:key="action_reset_safe"
+            android:summary="@string/settings_reset_summary"
+            android:title="@string/settings_reset_title" />
+
+        <Preference
+            android:icon="@drawable/ic_save_as"
+            android:key="action_backup_safe"
+            android:summary="@string/settings_backup_summary"
+            android:title="@string/settings_backup_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Other">
+
+        <Preference
+            android:icon="@drawable/ic_feedback"
+            android:key="action_feedback"
+            android:summary="@string/settings_other_feedback_summary"
+            android:title="@string/settings_other_feedback_title" />
+        <Preference
+            android:icon="@drawable/ic_code"
+            android:key="action_sourcecode"
+            android:summary="@string/settings_other_sourcecode_summary"
+            android:title="@string/settings_other_sourcecode_title" />
+
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="action_about"
+            android:summary="@string/settings_other_about_summary"
+            android:title="@string/settings_other_about_title" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

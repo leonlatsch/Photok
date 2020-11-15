@@ -24,7 +24,6 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import dev.leonlatsch.photok.ui.process.base.ProcessState
 import java.util.*
 
 /**
@@ -36,27 +35,12 @@ import java.util.*
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel() {
+) : BaseProcessViewModel<Uri>(app) {
 
-    lateinit var uris: List<Uri>
+    override suspend fun processItem(item: Uri) {
+        val fileName = getFileName(app.contentResolver, item) ?: UUID.randomUUID().toString()
 
-    override suspend fun process() {
-        for (image in uris) {
-            if (processState.value == ProcessState.ABORTED) {
-                return
-            }
-            currentElement++
-
-            // Import image and update progress
-            import(image)
-            updateProgress()
-        }
-    }
-
-    private suspend fun import(imageUri: Uri) {
-        val fileName = getFileName(app.contentResolver, imageUri) ?: UUID.randomUUID().toString()
-
-        val type = when (app.contentResolver.getType(imageUri)) {
+        val type = when (app.contentResolver.getType(item)) {
             "image/png" -> PhotoType.PNG
             "image/jpeg" -> PhotoType.JPEG
             "image/gif" -> PhotoType.GIF
@@ -67,14 +51,16 @@ class ImportViewModel @ViewModelInject constructor(
             return
         }
 
-        val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, imageUri)
+        val bytes = photoRepository.readPhotoFileFromExternal(app.contentResolver, item)
         if (bytes == null) { // Cloud not read file
             failuresOccurred = true
             return
         }
 
-        val photo = Photo(fileName, System.currentTimeMillis(), type)
-        val id = photoRepository.insert(photo)
-        photoRepository.writePhotoData(app, id, bytes)
+        val photo = Photo(fileName, System.currentTimeMillis(), type, bytes.size.toLong())
+        val success = photoRepository.safeCreatePhoto(app, photo, bytes)
+        if (!success) {
+            failuresOccurred = true
+        }
     }
 }

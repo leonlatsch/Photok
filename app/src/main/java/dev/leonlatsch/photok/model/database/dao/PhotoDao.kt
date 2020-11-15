@@ -22,6 +22,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 
 /**
  * Data Access Object for [Photo] Entity.
+ * Never use directory. Use with Repository only.
  *
  * @since 1.0.0
  * @author Leon Latsch
@@ -29,15 +30,69 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 @Dao
 interface PhotoDao {
 
+    /**
+     * Insert one [Photo]
+     *
+     * @return the id of the new inserted item.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(photo: Photo): Long
 
+    /**
+     * Delete one [Photo]
+     *
+     * @return the id of the deleted item.
+     */
     @Delete
     suspend fun delete(photo: Photo): Int
 
+    /**
+     * Delete all [Photo] rows.
+     */
+    @Query("DELETE FROM photo")
+    suspend fun deleteAll()
+
+    /**
+     * Get one [Photo] by [id].
+     *
+     * @return the photo with [id]
+     */
     @Query("SELECT * FROM photo WHERE id = :id")
     suspend fun get(id: Int): Photo
 
+    /**
+     * Get all photos, ordered by imported At (desc).
+     * Used for re-encrypting.
+     *
+     * @return all photos as [List]
+     */
+    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
+    suspend fun getAllSortedByImportedAt(): List<Photo>
+
+    /**
+     * Get all photos, ordered by importedAt (desc) as [PagingSource].
+     * Used for Paging all photos in gallery.
+     *
+     * @return all photo as [PagingSource]
+     */
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
+
+    /**
+     * Get all photo Ids.
+     */
+    @Query("SELECT id FROM photo ORDER BY importedAt DESC")
+    suspend fun getAllIds(): List<Int>
+
+    /**
+     * Get uuid for a photo.
+     */
+    @Query("SELECT uuid FROM photo WHERE id = :id")
+    suspend fun getUUIDForPhoto(id: Int): String?
+
+    /**
+     * Get all UUIDs.
+     */
+    @Query("SELECT uuid FROM photo")
+    suspend fun getAllUUIDs(): List<String>
 }

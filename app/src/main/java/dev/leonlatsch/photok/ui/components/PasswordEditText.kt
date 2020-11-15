@@ -30,7 +30,6 @@ import androidx.databinding.adapters.ListenerUtil
 import androidx.databinding.adapters.TextViewBindingAdapter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
-import kotlinx.android.synthetic.main.password_edit_text.view.*
 
 /**
  * Custom Edit Text for Passwords.
@@ -55,28 +54,47 @@ class PasswordEditText @JvmOverloads constructor(
     defStyle: Int = 0
 ) : ConstraintLayout(context, attrs, defStyle) {
 
+    private lateinit var binding: PasswordEditTextBinding
+
     private val onShowPasswordClickListener = OnClickListener {
-        passwordEditTextValue.inputType = when(passwordEditTextValue.inputType) {
+        val origTf = binding.passwordEditTextValue.typeface
+        binding.passwordEditTextValue.inputType = when (binding.passwordEditTextValue.inputType) {
             INPUT_TYPE_PASSWORD -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye_closed))
+                binding.passwordEditTextIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        context,
+                        R.drawable.ic_eye_closed
+                    )
+                )
                 INPUT_TYPE_TEXT
             }
             INPUT_TYPE_TEXT -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                binding.passwordEditTextIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        context,
+                        R.drawable.ic_eye
+                    )
+                )
                 INPUT_TYPE_PASSWORD
             }
             else -> {
-                passwordEditTextIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.eye))
+                binding.passwordEditTextIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        context,
+                        R.drawable.ic_eye
+                    )
+                )
                 INPUT_TYPE_PASSWORD
             }
         }
+        binding.passwordEditTextValue.typeface = origTf
     }
 
     init {
         if (isInEditMode) {
             LayoutInflater.from(context).inflate(R.layout.password_edit_text, this, true)
         } else {
-            val binding: PasswordEditTextBinding = DataBindingUtil.inflate(
+            binding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
                 R.layout.password_edit_text,
                 this,
@@ -91,7 +109,7 @@ class PasswordEditText @JvmOverloads constructor(
             val hint = resources.getText(
                 styledAttrs.getResourceId(
                     R.styleable.PasswordEditText_password_edit_text_hint,
-                    0
+                    R.string.setup_enter_password
                 )
             )
 
@@ -100,26 +118,33 @@ class PasswordEditText @JvmOverloads constructor(
             styledAttrs.recycle()
         }
 
-        passwordEditTextValue.addTextChangedListener {
+        binding.passwordEditTextValue.addTextChangedListener {
             val letterSpacing = if (it.isNullOrEmpty()) 0f else 0.4f
-            passwordEditTextValue.letterSpacing = letterSpacing
+            binding.passwordEditTextValue.letterSpacing = letterSpacing
         }
     }
 
     private fun setHint(hint: String) {
-        passwordEditTextValue.hint = hint
+        binding.passwordEditTextValue.hint = hint
     }
 
+    /**
+     * Set the text property of passwordEditTextValue
+     */
     fun setTextValue(value: String) {
-        passwordEditTextValue.setText(value)
-        passwordEditTextValue.setSelection(value.length)
+        binding.passwordEditTextValue.setText(value)
+        binding.passwordEditTextValue.setSelection(value.length)
     }
 
     val getTextValue: String
         get() {
-            return passwordEditTextValue.text.toString()
+            return binding.passwordEditTextValue.text.toString()
         }
 
+    /**
+     * Binding Adapters for [PasswordEditText].
+     * Hold in separate class to not override other functuons
+     */
     class BindingAdapters {
         companion object {
             /**
@@ -161,6 +186,7 @@ class PasswordEditText @JvmOverloads constructor(
                         count: Int,
                         after: Int
                     ) {
+                        // No implementation needed
                     }
 
                     override fun onTextChanged(
@@ -169,6 +195,7 @@ class PasswordEditText @JvmOverloads constructor(
                         before: Int,
                         count: Int
                     ) {
+                        // No implementation needed
                     }
 
                     override fun afterTextChanged(s: Editable) {
@@ -182,14 +209,16 @@ class PasswordEditText @JvmOverloads constructor(
                     }
                 }
                 val oldValue = ListenerUtil.trackListener(
-                    passwordEditText.passwordEditTextValue,
+                    passwordEditText.binding.passwordEditTextValue,
                     newValue,
                     R.id.textWatcher
                 )
                 if (oldValue != null) {
-                    passwordEditText.passwordEditTextValue.removeTextChangedListener(oldValue)
+                    passwordEditText.binding.passwordEditTextValue.removeTextChangedListener(
+                        oldValue
+                    )
                 }
-                passwordEditText.passwordEditTextValue.addTextChangedListener(newValue)
+                passwordEditText.binding.passwordEditTextValue.addTextChangedListener(newValue)
             }
         }
     }

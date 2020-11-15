@@ -31,15 +31,16 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
  */
 @AndroidEntryPoint
 class ImportBottomSheetDialogFragment(
-    private val uris: List<Uri>
-) : BaseProcessBottomSheetDialogFragment(R.string.import_importing) {
+    uris: List<Uri>
+) : BaseProcessBottomSheetDialogFragment<Uri>(
+    uris,
+    R.string.import_importing,
+    true
+) {
 
     override val viewModel: ImportViewModel by viewModels()
 
-    override fun prepareViewModel() {
-        super.prepareViewModel()
-        // Reverse to match the order in gallery with order in photok
-        viewModel.uris = uris.reversed()
-        viewModel.elementsToProcess = uris.size
+    override fun prepareViewModel(items: List<Uri>?) {
+        super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
     }
 }

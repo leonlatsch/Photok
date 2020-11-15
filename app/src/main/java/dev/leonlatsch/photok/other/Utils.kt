@@ -17,10 +17,15 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
+import dev.leonlatsch.photok.ui.StartActivity
 
 /**
  * Get a file's name.
@@ -42,14 +47,10 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     return null
 }
 
-fun hideLoadingOverlay(overlay: View?) {
-    overlay?.visibility = View.GONE
-}
-
-fun showLoadingOverlay(overlay: View?) {
-    overlay?.visibility = View.VISIBLE
-}
-
+/**
+ * Toggle the system ui.
+ * Used for fullscreen.
+ */
 fun toggleSystemUI(window: Window?) {
     window ?: return
     val uiOptions: Int = window.decorView.systemUiVisibility
@@ -62,6 +63,16 @@ fun toggleSystemUI(window: Window?) {
     window.decorView.systemUiVisibility = newUiOptions
 }
 
-fun emptyString(): String {
-    return ""
+/**
+ * Restart the app. Clear back stack and start [StartActivity]
+ */
+fun restartAppLifecycle(context: Context) {
+    val intent = Intent(context, StartActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    context.startActivity(intent)
 }
+
+/**
+ * Post a [operation] to the main looper.
+ */
+fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,9 +24,13 @@
         <variable
             name="viewModel"
             type="dev.leonlatsch.photok.ui.unlock.UnlockViewModel" />
+
+        <variable
+            name="context"
+            type="dev.leonlatsch.photok.ui.unlock.UnlockFragment" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,7 +49,7 @@
                 android:textAlignment="center" />
 
             <TextView
-                style="@style/TitleTextViewStyle"
+                style="@style/VeryBigTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -67,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     app:password_edit_text_hint="@string/unlock_enter_password"
-                    app:textValue="@={viewModel.passwordText}" />
+                    app:textValue="@={viewModel.password}" />
 
                 <TextView
                     android:id="@+id/unlockWrongPasswordWarningTextView"
@@ -83,15 +86,17 @@
 
             <Button
                 android:layout_width="@dimen/wide_button_width"
-                android:layout_height="@dimen/wide_button_height"
+                android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:onClick="@{() -> viewModel.unlock()}"
                 android:text="@string/unlock_button" />
 
         </LinearLayout>
 
-        <include layout="@layout/loading_overlay" />
+        <include
+            android:id="@+id/loadingOverlay"
+            layout="@layout/loading_overlay" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -16,18 +16,19 @@
 
 package dev.leonlatsch.photok.ui.setup
 
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.database.entity.Password
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
-import dev.leonlatsch.photok.other.PASSWORD_REGEX
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.PasswordUtils
+import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
-import java.util.regex.Pattern
 
 /**
  * ViewModel for the setup.
@@ -37,36 +38,64 @@ import java.util.regex.Pattern
  * @author Leon Latsch
  */
 class SetupViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository,
+    app: Application,
+    private val config: Config,
     private val encryptionManager: EncryptionManager
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
-    var passwordText: MutableLiveData<String> = MutableLiveData(emptyString())
-    var confirmPasswordText: MutableLiveData<String> = MutableLiveData(emptyString())
+    //region binding properties
+
+    @Bindable
+    var password: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.password, value)
+        }
+
+    @Bindable
+    var confirmPassword: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.confirmPassword, value)
+        }
+
+    // endregion
 
     val setupState: MutableLiveData<SetupState> = MutableLiveData(SetupState.SETUP)
 
+    /**
+     * Save the password to database.
+     * Validates both passwords.
+     * Hashes and saves the password.
+     * Initializes [EncryptionManager].
+     * Called by ui.
+     */
     fun savePassword() = viewModelScope.launch {
         setupState.postValue(SetupState.LOADING)
 
         if (validateBothPasswords()) {
-            val bcryptHash = BCrypt.hashpw(passwordText.value, BCrypt.gensalt())
-            val password = Password(bcryptHash)
-            passwordRepository.insert(password)
-            encryptionManager.initialize(passwordText.value!!)
+            val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
+            config.securityPassword = hashedPassword
+            encryptionManager.initialize(this@SetupViewModel.password)
             setupState.postValue(SetupState.FINISHED)
         } else {
             setupState.postValue(SetupState.SETUP)
         }
     }
 
-    fun validatePassword(): Boolean = passwordText.value!!.isNotEmpty()
-            && Pattern.matches(PASSWORD_REGEX, passwordText.value!!)
+    /**
+     * Validate hte [password] property.
+     */
+    fun validatePassword() = PasswordUtils.validatePassword(password)
 
-    fun passwordsEqual(): Boolean = passwordText.value == confirmPasswordText.value
+    /**
+     * @see PasswordUtils.passwordsNotEmptyAndEqual
+     */
+    fun passwordsEqual() =
+        PasswordUtils.passwordsNotEmptyAndEqual(password, confirmPassword)
 
-    fun validateBothPasswords(): Boolean = passwordText.value!!.isNotEmpty()
-            && confirmPasswordText.value!!.isNotEmpty()
-            && validatePassword()
-            && passwordsEqual()
+    /**
+     * @see PasswordUtils.validatePasswords
+     */
+    fun validateBothPasswords() = PasswordUtils.validatePasswords(password, confirmPassword)
 }

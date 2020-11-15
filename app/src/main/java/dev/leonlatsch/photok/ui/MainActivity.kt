@@ -19,14 +19,17 @@ package dev.leonlatsch.photok.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.view.ActionMode
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 /**
  * The main Activity.
@@ -38,23 +41,32 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
 
+    @Inject
+    override lateinit var config: Config
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(mainToolbar)
+        setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
 
-        mainNavHostFragment.findNavController()
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        binding.mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.galleryFragment -> mainAppBarLayout.visibility =
-                        View.VISIBLE
-                    else -> mainAppBarLayout.visibility = View.GONE
+                    R.id.galleryFragment -> binding.mainAppBarLayout.show()
+                    else -> binding.mainAppBarLayout.hide()
                 }
             }
     }
 
-    fun startActionModeOnToolbar(callback: ActionMode.Callback): ActionMode? =
+    /**
+     * Starts the action mode on mainToolbar.
+     */
+    fun startActionMode(callback: ActionMode.Callback): ActionMode? =
         startSupportActionMode(callback)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -64,11 +76,12 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuMainItemSettings -> {
-            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            binding.mainNavHostFragment.findNavController()
+                .navigate(R.id.action_galleryFragment_to_settingsFragment)
             true
         }
-        R.id.menuMainItemAbout -> {
-            mainNavHostFragment.findNavController().navigate(R.id.action_galleryFragment_to_infoFragment)
+        R.id.menuMainItemLock -> {
+            restartAppLifecycle(this)
             true
         }
         else -> false

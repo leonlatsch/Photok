@@ -17,8 +17,16 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
+import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Base Application class.
@@ -27,9 +35,37 @@ import timber.log.Timber
  * @author Leon Latsch
  */
 @HiltAndroidApp
-class BaseApplication : Application() {
+class BaseApplication : Application(), LifecycleObserver {
+
+    @Inject
+    lateinit var config: Config
+
+    private var wentToBackgroundAt = 0L
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+    }
+
+    /**
+     * Launch [StartActivity] when app was ON_STOP for at least the configured time.
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onAppForeground() {
+        if (config.securityLockTimeout != -1
+            && wentToBackgroundAt != 0L
+            && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
+        ) {
+            restartAppLifecycle(this)
+        }
+    }
+
+    /**
+     * Saves the ON_STOP timestamp
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onAppBackground() {
+        wentToBackgroundAt = System.currentTimeMillis()
     }
 }

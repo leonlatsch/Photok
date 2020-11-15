@@ -16,18 +16,21 @@
 
 package dev.leonlatsch.photok.ui.viewphoto
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.toggleSystemUI
+import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
-import kotlinx.android.synthetic.main.activity_view_photo.*
-import timber.log.Timber
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 /**
  * Activity to view a photo in full screen mode.
@@ -40,31 +43,61 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     private val viewModel: ViewPhotoViewModel by viewModels()
 
+    @Inject
+    override lateinit var config: Config
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(viewPhotoToolbar)
+        setSupportActionBar(binding.viewPhotoToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         initializeSystemUI()
-        loadPhoto()
+
+        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.updateDetails(position)
+            }
+        })
+
+        viewModel.preloadData { ids ->
+            val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
+                binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+            }, {
+                toggleSystemUI(window) // On clicked
+            })
+            binding.viewPhotoViewPager.adapter = photoPagerAdapter
+
+            val photoId = intent.extras?.get(INTENT_PHOTO_ID)
+            val startingAt = if (photoId != null && photoId is Int?) {
+                ids.indexOf(photoId)
+            } else {
+                0
+            }
+            binding.viewPhotoViewPager.setCurrentItem(startingAt, false)
+        }
     }
 
-    fun onClick() {
-        toggleSystemUI(window)
-    }
-
+    /**
+     * On Detail button clicked.
+     * Called by ui.
+     */
     fun onDetails() {
         val detailsBottomSheetDialog =
-            DetailsBottomSheetDialog(viewModel.photo.value, viewModel.photoSize)
+            DetailsBottomSheetDialog(viewModel.currentPhoto)
         detailsBottomSheetDialog.show(
             supportFragmentManager,
             DetailsBottomSheetDialog::class.qualifiedName
         )
     }
 
+    /**
+     * On delete button clicked.
+     * Called by ui.
+     */
     fun onDelete() {
         Dialogs.showConfirmDialog(this, getString(R.string.delete_are_you_sure_this)) { _, _ ->
             viewModel.deletePhoto({ // onSuccess
@@ -75,40 +108,54 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
     }
 
+    /**
+     * On export clicked.
+     * May request permission WRITE_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
+    @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
-        //TODO export
+        if (EasyPermissions.hasPermissions(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
+                viewModel.exportPhoto({ // onSuccess
+                    Dialogs.showShortToast(this, getString(R.string.export_finished))
+                }, { // onError
+                    Dialogs.showLongToast(this, getString(R.string.common_error))
+                })
+            }
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.export_permission_rationale),
+                REQ_PERM_EXPORT,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
     private fun initializeSystemUI() {
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        toggleSystemUI(window)
-
         window.decorView.setOnSystemUiVisibilityChangeListener {
             if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                viewPhotoAppBarLayout.visibility = View.VISIBLE
-                viewPhotoBottomToolbarLayout.visibility = View.VISIBLE
+                binding.viewPhotoAppBarLayout.show()
+                binding.viewPhotoBottomToolbarLayout.show()
             } else {
-                viewPhotoAppBarLayout.visibility = View.GONE
-                viewPhotoBottomToolbarLayout.visibility = View.GONE
+                binding.viewPhotoAppBarLayout.hide()
+                binding.viewPhotoBottomToolbarLayout.hide()
             }
         }
-    }
 
-    private fun loadPhoto() {
-        val id = intent.extras?.get(INTENT_PHOTO_ID)
-        if (id != null && id is Int?) {
-            viewModel.loadPhoto(id) {
-                finish() // onError
-            }
-        } else {
-            closeOnError(id)
+        if (config.galleryAutoFullscreen) { // Hide system ui if configured
+            toggleSystemUI(window)
         }
-    }
-
-    private fun closeOnError(id: Any?) {
-        Timber.d("Error loading photo for id: $id")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -120,5 +167,15 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         super.bind(binding)
         binding.viewModel = viewModel
         binding.context = this
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

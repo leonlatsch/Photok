@@ -29,11 +29,11 @@ import kotlin.reflect.KFunction1
 
 /**
  * [PagingDataAdapter] for [Photo] Grid.
- * Implements custom multi selection. Used by [PhotoViewHolder]
+ * Implements custom multi selection. Used by [PhotoItemViewHolder]
  *
- * @param context Passthrough to [PhotoViewHolder]
- * @param photoRepository Passthrough to [PhotoViewHolder]
- * @param viewPhotoCallback Called by [PhotoViewHolder]. Defines what happens onClick.
+ * @param context Passthrough to [PhotoItemViewHolder]
+ * @param photoRepository Passthrough to [PhotoItemViewHolder]
+ * @param viewPhotoCallback Called by [PhotoItemViewHolder]. Defines what happens onClick.
  * @param lifecycleOwner  The Fragments [LifecycleOwner]. Used for observing [MutableLiveData].
  *
  * @since 1.0.0
@@ -44,7 +44,7 @@ class PhotoAdapter(
     private val photoRepository: PhotoRepository,
     private val viewPhotoCallback: KFunction1<Int, Unit>,
     val lifecycleOwner: LifecycleOwner
-) : PagingDataAdapter<Photo, PhotoViewHolder>(differCallback) {
+) : PagingDataAdapter<Photo, PhotoItemViewHolder>(differCallback) {
 
     /**
      * Holds the layout positions of the selected items.
@@ -56,37 +56,58 @@ class PhotoAdapter(
      */
     var isMultiSelectMode: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    var isEmpty: MutableLiveData<Boolean> = MutableLiveData(true)
-
-    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.bindTo(this, getItem(position))
+    override fun onBindViewHolder(holderItem: PhotoItemViewHolder, position: Int) {
+        holderItem.bindTo(this, getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder =
-        PhotoViewHolder(parent, context, photoRepository)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder =
+        PhotoItemViewHolder(parent, context, photoRepository)
 
-
+    /**
+     * Called by ui. On Click.
+     */
     fun viewPhoto(position: Int) {
         viewPhotoCallback.invoke(getItem(position)?.id!!)
     }
 
+    /**
+     * Disables multi selection.
+     */
     fun disableSelection() {
         selectedItems.clear()
         isMultiSelectMode.postValue(false)
     }
 
+    /**
+     * Enables multi selection.
+     */
     fun enableSelection() {
         isMultiSelectMode.postValue(true)
     }
 
+    /**
+     * Add an item it the selection.
+     */
     fun addItemToSelection(position: Int): Boolean = selectedItems.add(position)
 
+    /**
+     * Remove an item to the selection.
+     */
     fun removeItemFromSelection(position: Int) = selectedItems.remove(position)
 
+    /**
+     * Indicate if an item is already selected.
+     */
     fun isItemSelected(position: Int) = selectedItems.contains(position)
 
+    /**
+     * Indicate if an item is the last selected.
+     */
     fun isLastSelectedItem(position: Int) = isItemSelected(position) && selectedItems.size == 1
 
+    /**
+     * Select all items.
+     */
     fun selectAll() {
         for (i in 0 until itemCount) {
             if (!isItemSelected(i)) {
@@ -95,6 +116,9 @@ class PhotoAdapter(
         }
     }
 
+    /**
+     * Get all items that are selected.
+     */
     fun getAllSelected(): List<Photo> {
         val items = mutableListOf<Photo>()
         for(position in selectedItems) {
@@ -107,9 +131,6 @@ class PhotoAdapter(
     }
 
     companion object {
-        /**
-         * Callback to check if items differ. Needed by [PagingDataAdapter].
-         */
         private val differCallback = object : DiffUtil.ItemCallback<Photo>() {
 
             override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean =

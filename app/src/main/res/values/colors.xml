@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#50C9C3 </color>
+    <color name="colorPrimary">#50C9C3</color>
     <color name="colorPrimaryDark">#319f99</color>
     <color name="colorAccent">#50c9c3</color>
     <color name="colorComplementary">#c95056</color>
@@ -33,4 +33,5 @@
     <color name="darkGray">#373737</color>
 
     <color name="transparent_black">#88000000</color>
+    <color name="black_semi_transparent">#B2000000</color>
 </resources>

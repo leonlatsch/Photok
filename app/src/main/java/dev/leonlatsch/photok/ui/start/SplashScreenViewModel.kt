@@ -16,11 +16,13 @@
 
 package dev.leonlatsch.photok.ui.start
 
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leonlatsch.photok.model.repositories.PasswordRepository
+import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -31,19 +33,34 @@ import kotlinx.coroutines.launch
  * @author Leon Latsch
  */
 class SplashScreenViewModel @ViewModelInject constructor(
-    private val passwordRepository: PasswordRepository
-) : ViewModel() {
+    app: Application,
+    private val config: Config
+) : ObservableViewModel(app) {
 
-    var applicationState: MutableLiveData<ApplicationState> = MutableLiveData()
+    @get:Bindable
+    var applicationState: ApplicationState? = null
+        set(value) {
+            field = value
+            notifyChange(BR.applicationState, value)
+        }
 
-    fun checkVaultState() = viewModelScope.launch {
+    /**
+     * Check the application state.
+     */
+    fun checkApplicationState() = viewModelScope.launch {
 
-        //TODO: check first start
-        val password = passwordRepository.getPassword()?.password
-        if (password == null) {
-            applicationState.postValue(ApplicationState.SETUP)
+        // First start
+        if (config.systemFirstStart) {
+            applicationState = ApplicationState.FIRST_START
+            return@launch
+        }
+
+        // Unlock or Setup
+        val password = config.securityPassword
+        applicationState = if (password == null || password.isEmpty()) {
+            ApplicationState.SETUP
         } else {
-            applicationState.postValue(ApplicationState.LOCKED)
+            ApplicationState.LOCKED
         }
     }
 }

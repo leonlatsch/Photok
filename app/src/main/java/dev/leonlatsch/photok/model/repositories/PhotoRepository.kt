@@ -17,16 +17,14 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
 import android.net.Uri
+import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.model.io.PhotoStorage
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import javax.inject.Inject
 
@@ -39,130 +37,198 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
-    private val encryptionManager: EncryptionManager
+    private val photoStorage: PhotoStorage
 ) {
 
-    // DATABASE
-
-    suspend fun insert(photo: Photo) = photoDao.insert(photo)
-
-    suspend fun delete(photo: Photo) = photoDao.delete(photo)
-
-    suspend fun get(id: Int) = photoDao.get(id)
-
-    fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
-
-    // FILESYSTEM
+    // region DATABASE
 
     /**
-     * Write a [ByteArray] of a photo to the filesystem.
-     * Also create a thumbnail for it using [createAndWriteThumbnail].
-     *
-     * @param context used to write file.
-     * @param id used for the file name.
-     * @param bytes the photo data to save.
-     *
-     * @return false if any error happened
-     *
-     * @since 1.0.0
+     * @see PhotoDao.insert
      */
-    fun writePhotoData(context: Context, id: Long, bytes: ByteArray): Boolean {
-        return try {
-            val encryptedBytes = encryptionManager.encrypt(bytes)
-            context.openFileOutput("${id}.photok", Context.MODE_PRIVATE).use {
-                it.write(encryptedBytes)
-            }
-            createAndWriteThumbnail(context, id, bytes)
-        } catch (e: Exception) {
-            Timber.d("Error writing photo data for id: $id $e")
-            false
+    private suspend fun insert(photo: Photo) = photoDao.insert(photo)
+
+    /**
+     * @see PhotoDao.delete
+     */
+    private suspend fun delete(photo: Photo) = photoDao.delete(photo)
+
+    /**
+     * @see PhotoDao.deleteAll
+     */
+    suspend fun deleteAll() = photoDao.deleteAll()
+
+    /**
+     * @see PhotoDao.get
+     */
+    suspend fun get(id: Int) = photoDao.get(id)
+
+    /**
+     * @see PhotoDao.getAllSortedByImportedAt
+     */
+    suspend fun getAll() = photoDao.getAllSortedByImportedAt()
+
+    /**
+     * @see PhotoDao.getAllPagedSortedByImportedAt
+     */
+    fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
+
+
+    /**
+     * @see PhotoDao.getAllIds
+     */
+    suspend fun getAllIds() = photoDao.getAllIds()
+
+    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
+
+    /**
+     * @see PhotoDao.getUUIDForPhoto
+     */
+    private suspend fun getUUID(id: Int) = photoDao.getUUIDForPhoto(id)
+
+    // endregion
+
+    // region IO
+
+    // region WRITE
+
+    /**
+     * Safely insert a photo to the database and write its bytes to the filesystem.
+     * Handles IOErrors.
+     *
+     * @return true, if everything was successfully inserted and written to io.
+     */
+    suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
+        var success = photoStorage.writePhotoFile(context, photo.uuid, bytes)
+        if (success) {
+            val photoId = insert(photo)
+            success = photoId != -1L
         }
+
+        return success
     }
 
-    private fun createAndWriteThumbnail(context: Context, id: Long, bytes: ByteArray): Boolean {
-        return try {
-            val thumbnail = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size),
-                THUMBNAIL_SIZE,
-                THUMBNAIL_SIZE
-            )
-            val outputStream = ByteArrayOutputStream()
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            val thumbnailBytes = outputStream.toByteArray()
-            val encryptedThumbnailBytes = encryptionManager.encrypt(thumbnailBytes)
-            context.openFileOutput("${id}.photok.tn", Context.MODE_PRIVATE).use {
-                it.write(encryptedThumbnailBytes)
-            }
-            true
-        } catch (e: Exception) {
-            Timber.d("Error creating Thumbnail for id: $id: $e")
-            false
-        }
-    }
+    /**
+     * @see PhotoStorage.writePhotoFile
+     */
+    fun writePhotoFile(
+        context: Context,
+        uuid: String,
+        bytes: ByteArray,
+        password: String? = null
+    ): Boolean = photoStorage.writePhotoFile(context, uuid, bytes, password)
+
+    // endregion
+
+    // region READ
 
     /**
      * Read a photo's bytes from external storage.
+     *
+     * @param contentResolver Reads the file system
+     * @param imageUri The uri to the original file
      */
-    fun readPhotoFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? {
-        return try {
-            contentResolver.openInputStream(imageUri)?.readBytes()
-        } catch (e: IOException) {
-            Timber.d("Error opening input stream for uri: $imageUri $e")
-            null
-        }
-    }
+    fun readPhotoFileFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? =
+        photoStorage.readFileFromExternal(contentResolver, imageUri)
 
     /**
      * Read and decrypt a photo's bytes from internal storage.
+     *
+     * @param context To open the file
+     * @param id The photo's uuid
      */
-    fun readPhotoData(context: Context, id: Int): ByteArray? =
-        readAndDecryptFile(context, "${id}.photok")
+    suspend fun readPhotoFileFromInternal(context: Context, id: Int): ByteArray? {
+        val uuid = getUUID(id)
+        uuid ?: return null
+        return photoStorage.readAndDecryptFile(context, Photo.internalFileName(uuid))
+    }
+
+    /**
+     * Read a photo's raw bytes.
+     * Used similar as [readPhotoFileFromInternal]
+     */
+    fun readRawPhotoFileFromInternal(context: Context, photo: Photo): ByteArray? =
+        photoStorage.readRawFile(context, photo.internalFileName)
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.
      */
-    fun readPhotoThumbnailData(context: Context, id: Int): ByteArray? =
-        readAndDecryptFile(context, "${id}.photok.tn")
-
-    private fun readAndDecryptFile(context: Context, fileName: String): ByteArray? {
-        return try {
-            val fileInputStream = context.openFileInput(fileName)
-            val encryptedBytes = fileInputStream.readBytes()
-            encryptionManager.decrypt(encryptedBytes)
-        } catch (e: IOException) {
-            Timber.d(javaClass.toString(), "Error reading file: $fileName $e")
-            null
-        }
+    suspend fun readPhotoThumbnailFromInternal(context: Context, id: Int): ByteArray? {
+        val uuid = getUUID(id)
+        uuid ?: return null
+        return photoStorage.readAndDecryptFile(context, Photo.internalThumbnailFileName(uuid))
     }
 
-    suspend fun deletePhotoAndData(context: Context, photo: Photo): Boolean {
-        val id = photo.id!!
+    // endregion
 
-        val success = deletePhotoData(context, id) // Delete bytes on disk
+    // region DELETE
+
+    /**
+     * Delete a photo from the filesystem. On success, delete it in the database.
+     *
+     * @return true, if the photo was successfully deleted on disk and in db.
+     */
+    suspend fun safeDeletePhoto(context: Context, photo: Photo): Boolean {
+        val uuid = photo.uuid
+
+        val deletedElements = delete(photo)
+        val success = deletedElements != -1
+
         if (success) {
-            delete(photo)
+            deletePhotoFiles(context, uuid)
         }
 
         return success
     }
 
-    private fun deletePhotoData(context: Context, id: Int): Boolean = deleteFile(context, "$id.photok")
-            && deleteFile(context, "$id.photok.tn")
+    /**
+     * Delete a photos bytes and thumbnail bytes on the filesystem.
+     *
+     * @param context used for io
+     * @param uuid UUID of the photo to delete
+     *
+     * @return true, if photo and thumbnail could be deleted
+     */
+    fun deletePhotoFiles(context: Context, uuid: String): Boolean {
+        return (photoStorage.deleteFile(context, Photo.internalFileName(uuid))
+                && photoStorage.deleteFile(context, Photo.internalThumbnailFileName(uuid)))
+    }
 
-    private fun deleteFile(context: Context, fileName: String): Boolean {
-        val success = context.deleteFile(fileName)
-        if (!success) {
-            Timber.d("Error deleting file: $fileName")
+
+    // endregion
+
+    // region EXPORT
+
+    /**
+     * Export a photo to a specific directory.
+     *
+     * @param context To save the file
+     * @param photo The Photo to be saved
+     */
+    suspend fun exportPhoto(context: Context, photo: Photo): Boolean {
+        return try {
+            val bytes = readPhotoFileFromInternal(context, photo.id!!)
+            bytes ?: return false
+
+            val contentValues = ContentValues()
+            contentValues.put(
+                MediaStore.Images.Media.DISPLAY_NAME,
+                "photok_export_${photo.fileName}"
+            )
+            contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
+
+            photoStorage.insertAndOpenExternalFile(
+                context.contentResolver,
+                contentValues,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            ) {
+                it?.write(bytes)
+            }
+            true
+        } catch (e: IOException) {
+            Timber.d("Error exporting file: ${photo.fileName}")
+            false
         }
-        return success
     }
 
-    suspend fun exportPhoto(context: Context, photo: Photo, dirUri: Uri): Boolean {
-        val bytes = readPhotoData(context, photo.id!!)
-        return true
-    }
-
-    companion object {
-        private const val THUMBNAIL_SIZE = 128
-    }
+    // endregion
 }
