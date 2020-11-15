@@ -31,6 +31,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
@@ -75,6 +76,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
 
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
+        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+            false
         viewModel.photos
 
         adapter = PhotoAdapter(

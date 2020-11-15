@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.ui.gallery
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -30,7 +29,9 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.runOnMain
 import dev.leonlatsch.photok.other.show
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -170,7 +171,7 @@ class PhotoItemViewHolder(
      * Load the thumbnail for the [photo].
      */
     private fun loadThumbnail() {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             val thumbnailBytes =
                 photoRepository.readPhotoThumbnailFromInternal(context, photo?.id!!)
             if (thumbnailBytes == null) {
@@ -179,7 +180,7 @@ class PhotoItemViewHolder(
             }
             val thumbnailBitmap =
                 BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
-            Handler(context.mainLooper).post { // Set thumbnail in main thread
+            runOnMain { // Set thumbnail in main thread
                 imageView.setImageBitmap(thumbnailBitmap)
             }
         }

@@ -78,6 +78,8 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun getAllIds() = photoDao.getAllIds()
 
+    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
+
     /**
      * @see PhotoDao.getUUIDForPhoto
      */
@@ -136,6 +138,7 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun readPhotoFileFromInternal(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
+        uuid ?: return null
         return photoStorage.readAndDecryptFile(context, Photo.internalFileName(uuid))
     }
 
@@ -151,6 +154,7 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun readPhotoThumbnailFromInternal(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
+        uuid ?: return null
         return photoStorage.readAndDecryptFile(context, Photo.internalThumbnailFileName(uuid))
     }
 
@@ -164,11 +168,13 @@ class PhotoRepository @Inject constructor(
      * @return true, if the photo was successfully deleted on disk and in db.
      */
     suspend fun safeDeletePhoto(context: Context, photo: Photo): Boolean {
-        val id = photo.id!!
+        val uuid = photo.uuid
 
-        val success = deletePhotoFiles(context, id) // Delete bytes on disk
+        val deletedElements = delete(photo)
+        val success = deletedElements != -1
+
         if (success) {
-            delete(photo)
+            deletePhotoFiles(context, uuid)
         }
 
         return success
@@ -178,14 +184,13 @@ class PhotoRepository @Inject constructor(
      * Delete a photos bytes and thumbnail bytes on the filesystem.
      *
      * @param context used for io
-     * @param id Id of the photo to delete
+     * @param uuid UUID of the photo to delete
      *
      * @return true, if photo and thumbnail could be deleted
      */
-    suspend fun deletePhotoFiles(context: Context, id: Int): Boolean {
-        val photo = get(id)
-        return (photoStorage.deleteFile(context, photo.internalFileName)
-                && photoStorage.deleteFile(context, photo.internalThumbnailFileName))
+    fun deletePhotoFiles(context: Context, uuid: String): Boolean {
+        return (photoStorage.deleteFile(context, Photo.internalFileName(uuid))
+                && photoStorage.deleteFile(context, Photo.internalThumbnailFileName(uuid)))
     }
 
 
