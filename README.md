@@ -1,8 +1,8 @@
 # Photok
 
-![](https://i.imgur.com/MMY40N1.jpg)
+![Project Image](https://i.imgur.com/MMY40N1.jpg)
 
-Encrypt your photos on your device and secure them with a password.
+Encrypt your photos on your device and keep them safe from others.
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
@@ -16,10 +16,13 @@ Photok is available at Google Play and F-Droid.
 <a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## About
-Photok is a encrypted photo safe for android. You can import private or sensetive photos.
-Photok uses AES-256 bit encryption. and is planned to be completly free, open source and without any ads.
+Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
+It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
+Photok is completely free, open source, and contains no ads.
 
-**Subscribe the Releases to get notified when its ready**
+**Legal Notice**
+
+Google Play and the Google Play logo are trademarks of Google LLC
 
 LICENSE
 =======
