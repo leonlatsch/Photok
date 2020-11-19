@@ -11,7 +11,9 @@ Encrypt your photos on your device and secure them with a password.
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 
 ## Download
-<a href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+Photok is available at Google Play and F-Droid.
+
+<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## About
 Photok is a encrypted photo safe for android. You can import private or sensetive photos.
