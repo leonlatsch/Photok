@@ -1,12 +1,14 @@
 # Photok
 
+![](https://i.imgur.com/MMY40N1.jpg)
+
+Encrypt your photos on your device and secure them with a password.
+
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
 ![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
-Encrypt your photos on your device and secure them with a password.
-![](https://i.imgur.com/MMY40N1.jpg)
 
 ## Download
 <a href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
