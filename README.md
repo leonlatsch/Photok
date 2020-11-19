@@ -20,10 +20,6 @@ Photok is a free Photo-Safe. It stores your photos encrypted on your device and 
 It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
 Photok is completely free, open source, and contains no ads.
 
-**Legal Notice**
-
-Google Play and the Google Play logo are trademarks of Google LLC
-
 LICENSE
 =======
     Copyright 2020 Leon Latsch
@@ -39,3 +35,8 @@ LICENSE
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+**Legal Notice**
+
+Google Play and the Google Play logo are trademarks of Google LLC
