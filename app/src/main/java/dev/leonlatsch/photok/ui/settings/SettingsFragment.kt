@@ -27,6 +27,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.preference_layout_template.*
@@ -69,7 +70,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Intent.EXTRA_TITLE,
                 "photok_backup_${System.currentTimeMillis()}.zip"
             )
-            startActivityForResult(
+            startActivityForResultAndIgnoreTimer(
                 Intent.createChooser(intent, "Select Backup File"),
                 REQ_BACKUP
             )
