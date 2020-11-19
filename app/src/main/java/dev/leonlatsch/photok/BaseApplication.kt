@@ -53,6 +53,12 @@ class BaseApplication : Application(), LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
+        print("Back: ignore: $ignoreNextTimeout")
+        if (ignoreNextTimeout) {
+            ignoreNextTimeout = false
+            return
+        }
+
         if (config.securityLockTimeout != -1
             && wentToBackgroundAt != 0L
             && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
@@ -67,5 +73,13 @@ class BaseApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackground() {
         wentToBackgroundAt = System.currentTimeMillis()
+    }
+
+    companion object {
+        private var ignoreNextTimeout = false
+
+        fun ignoreNextTimeout() {
+            ignoreNextTimeout = true
+        }
     }
 }

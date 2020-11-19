@@ -25,6 +25,8 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
+import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.ui.StartActivity
 
 /**
@@ -76,3 +78,8 @@ fun restartAppLifecycle(context: Context) {
  * Post a [operation] to the main looper.
  */
 fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
+
+fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {
+    startActivityForResult(intent, reqCode)
+    BaseApplication.ignoreNextTimeout()
+}

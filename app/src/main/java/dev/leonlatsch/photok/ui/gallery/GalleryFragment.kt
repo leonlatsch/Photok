@@ -35,10 +35,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.REQ_PERM_IMPORT
-import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.BindableFragment
@@ -145,7 +142,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            startActivityForResult(
+            startActivityForResultAndIgnoreTimer(
                 Intent.createChooser(intent, "Select Photos"),
                 REQ_CONTENT_PHOTOS
             )
@@ -174,7 +171,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "application/zip"
             intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(
+            startActivityForResultAndIgnoreTimer(
                 Intent.createChooser(intent, "Select Backup"),
                 REQ_CONTENT_BACKUP
             )
