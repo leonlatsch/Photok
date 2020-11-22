@@ -79,6 +79,9 @@ fun restartAppLifecycle(context: Context) {
  */
 fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
 
+/**
+ * Extension for starting an activity for result and disable lock timer in [BaseApplication].
+ */
 fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {
     startActivityForResult(intent, reqCode)
     BaseApplication.ignoreNextTimeout()

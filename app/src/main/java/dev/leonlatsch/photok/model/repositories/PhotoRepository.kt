@@ -78,6 +78,9 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun getAllIds() = photoDao.getAllIds()
 
+    /**
+     * @see PhotoDao.getAllUUIDs
+     */
     suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
 
     /**
