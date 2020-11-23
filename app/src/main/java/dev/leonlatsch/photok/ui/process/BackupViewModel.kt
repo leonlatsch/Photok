@@ -42,7 +42,7 @@ class BackupViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config
-) : BaseProcessViewModel<Photo>() {
+) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
     lateinit var outputStream: ZipOutputStream
@@ -57,7 +57,7 @@ class BackupViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        val rawData = photoRepository.readRawPhotoData(app, item)
+        val rawData = photoRepository.readRawPhotoFileFromInternal(app, item)
         if (rawData == null) {
             failuresOccurred = true
             return

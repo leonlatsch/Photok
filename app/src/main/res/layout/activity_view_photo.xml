@@ -54,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="300dp"
+                    android:onClick="@{() -> context.onDetails()}"
                     android:singleLine="true"
                     android:text="@{viewModel.currentPhoto.fileName, default=fileName}"
                     android:textColor="@android:color/white"

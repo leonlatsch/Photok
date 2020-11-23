@@ -16,13 +16,15 @@
 
 package dev.leonlatsch.photok.ui.settings
 
+import android.app.Application
+import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.emptyString
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
@@ -34,30 +36,52 @@ import org.mindrot.jbcrypt.BCrypt
  * @author Leon Latsch
  */
 class ChangePasswordViewModel @ViewModelInject constructor(
+    app: Application,
     private val config: Config
-) : ViewModel() {
+) : ObservableViewModel(app) {
 
-    val changePasswordState: MutableLiveData<ChangePasswordState> =
-        MutableLiveData(ChangePasswordState.START)
+    @get:Bindable
+    var changePasswordState: ChangePasswordState = ChangePasswordState.START
+        set(value) {
+            field = value
+            notifyChange(BR.changePasswordState, value)
+        }
 
-    val oldPasswordTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
-    val newPasswordTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
-    val newPasswordConfirmTextValue: MutableLiveData<String> = MutableLiveData(emptyString())
+    @Bindable
+    var oldPassword: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.oldPassword, value)
+        }
+
+    @Bindable
+    var newPassword: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.newPassword, value)
+        }
+
+    @Bindable
+    var newPasswordConfirm: String = emptyString()
+        set(value) {
+            field = value
+            notifyChange(BR.newPasswordConfirm, value)
+        }
 
     /**
      * Checks if the old password is valid and updates state. For security concerns.
      * Called by ui.
      */
     fun checkOld() = viewModelScope.launch {
-        changePasswordState.postValue(ChangePasswordState.CHECKING_OLD)
+        changePasswordState = ChangePasswordState.CHECKING_OLD
 
         val storedPassword = config.securityPassword
         storedPassword ?: return@launch
 
-        if (BCrypt.checkpw(oldPasswordTextValue.value!!, storedPassword)) {
-            changePasswordState.postValue(ChangePasswordState.OLD_VALID)
+        changePasswordState = if (BCrypt.checkpw(oldPassword, storedPassword)) {
+            ChangePasswordState.OLD_VALID
         } else {
-            changePasswordState.postValue(ChangePasswordState.OLD_INVALID)
+            ChangePasswordState.OLD_INVALID
         }
     }
 
@@ -66,14 +90,14 @@ class ChangePasswordViewModel @ViewModelInject constructor(
      * Called by ui.
      */
     fun checkNew() = viewModelScope.launch {
-        if (PasswordUtils.validatePasswords(
-                newPasswordTextValue,
-                newPasswordConfirmTextValue
+        changePasswordState = if (PasswordUtils.validatePasswords(
+                newPassword,
+                newPasswordConfirm
             )
         ) {
-            changePasswordState.postValue(ChangePasswordState.NEW_VALID)
+            ChangePasswordState.NEW_VALID
         } else {
-            changePasswordState.postValue(ChangePasswordState.NEW_INVALID)
+            ChangePasswordState.NEW_INVALID
         }
     }
 }

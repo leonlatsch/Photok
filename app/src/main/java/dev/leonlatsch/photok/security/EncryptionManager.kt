@@ -151,9 +151,11 @@ class EncryptionManager {
     private fun genIv(password: String): IvParameterSpec {
         val iv = ByteArray(16)
         val charArray = password.toCharArray()
-        for (i in charArray.indices){
-            iv[i] = charArray[i].toByte()
+        val firstChars = charArray.take(16)
+        for (i in firstChars.indices) {
+            iv[i] = firstChars[i].toByte()
         }
+
         return IvParameterSpec(iv)
     }
 }

@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
@@ -79,9 +80,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 .navigate(R.id.action_galleryFragment_to_settingsFragment)
             true
         }
-        R.id.menuMainItemAbout -> {
-            binding.mainNavHostFragment.findNavController()
-                .navigate(R.id.action_galleryFragment_to_aboutFragment)
+        R.id.menuMainItemLock -> {
+            restartAppLifecycle(this)
             true
         }
         else -> false

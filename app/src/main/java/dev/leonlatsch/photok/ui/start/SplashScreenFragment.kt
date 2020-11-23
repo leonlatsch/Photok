@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 
 /**
@@ -38,14 +39,13 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.applicationState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<ApplicationState>(BR.applicationState) {
             when (it) {
                 ApplicationState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
                 ApplicationState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
                 ApplicationState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
-                else -> return@observe
             }
-        })
+        }
         viewModel.checkApplicationState()
     }
 

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.about
+package dev.leonlatsch.photok.ui.settings
 
 import android.content.Intent
 import android.net.Uri
@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.Dialogs
 
 /**
  * Fragment to display a info about the app and some links.
@@ -56,10 +57,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        LicensesDialogFragment().show(
-            requireActivity().supportFragmentManager,
-            LicensesDialogFragment::class.qualifiedName
-        )
+        Dialogs.showLicensesDialog(requireActivity())
     }
 
     /**

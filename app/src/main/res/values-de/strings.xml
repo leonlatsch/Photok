@@ -75,9 +75,8 @@
     <string name="view_photo_detail_size_label">Dateigröße:</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_more">Mehr</string>
+    <string name="menu_main_lock">Sperren</string>
     <string name="menu_main_settings">Einstellungen</string>
-    <string name="menu_main_about">Über</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Alle auswählen</string>
@@ -109,8 +108,6 @@
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
     <string name="settings_category_app">App</string>
-    <string name="settings_lock_title">Sperren</string>
-    <string name="settings_lock_summary">Photok jetzt sperren</string>
     <string name="settings_reset_title">Safe zurücksetzen</string>
     <string name="settings_reset_summary">Daten löschen und Passwort zurücksetzen</string>
     <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
@@ -118,20 +115,33 @@
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
     <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
+    <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
+    <string name="settings_security_timeout_immediately">Sofort</string>
+    <string name="settings_security_timeout_one_minute">1 Minute</string>
+    <string name="settings_security_timeout_two_minute">2 Minuten</string>
+    <string name="settings_security_timeout_five_minute">5 Minuten</string>
+    <string name="settings_security_timeout_ten_minute">10 Minuten</string>
+    <string name="settings_security_timeout_never">Niemals</string>
     <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
-    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots</string>
+    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
     <string name="settings_change_password_title">Passwort ändern</string>
     <string name="settings_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_category_advanced">Erweitert</string>
     <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
     <string name="settings_backup_title">Backup</string>
     <string name="settings_backup_summary">Erstelle ein Backup von deinem Safe</string>
-
-    <string name="locale_name">Deutsch</string>
-    <string name="locale_system_default">System standard</string>
-    <string name="locale_name_en">Englisch</string>
-    <string name="locale_name_de">Deutsch</string>
-    <string name="locale_name_es">Spanisch</string>
+    <string name="settings_other_title">Andere</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>
+    <string name="settings_other_feedback_mail_subject">Feedback zu Photok</string>
+    <string name="settings_other_feedback_mail_body">Schreibe ein Feedback zu Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_sourcecode_title">Quellcode</string>
+    <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_about_title">Über</string>
+    <string name="settings_other_about_summary">Informationen über Photok</string>
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Passwort ändern</string>
@@ -154,7 +164,7 @@
     <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
     <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
     <string name="onboarding_slide3_title">Fang an zu importieren</string>
-    <string name="onboarding_slide3_description">Importiere deine Fotos in Photok und halte sie sicher vor anderen.</string>
+    <string name="onboarding_slide3_description">Importiere deine Fotos und halte sie sicher vor anderen.\nDanach kannst du sie in deiner Galerie löschen.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>

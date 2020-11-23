@@ -31,7 +31,7 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 class DeleteViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel<Photo>() {
+) : BaseProcessViewModel<Photo>(app) {
 
     override suspend fun processItem(item: Photo) {
         if (item.id == null) {

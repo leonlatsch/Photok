@@ -45,8 +45,8 @@ class ValidateBackupDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.addOnPropertyChange(BR.restoreState) {
-            when (viewModel.restoreState) {
+        viewModel.addOnPropertyChange<RestoreState>(BR.restoreState) {
+            when (it) {
                 RestoreState.INITIALIZE -> {
                     binding.restoreDetails.hide()
                     binding.validateBackupFilename.hide()

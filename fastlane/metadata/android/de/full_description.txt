@@ -1,0 +1,25 @@
+Photok ist eine kostenloser Foto-Safe. Es speichert deine Fotos verschlüsselt auf deinem Smartphone und versteckt sie vor fremden.
+Es benutzt Technologien wie AES-256 encryption standard oder bcrypt, um deine Fotos zu sichern.
+Photos ist komplett kostenlos, open source und beinhaltet keine Werbung.
+
+-- Funktionen --
+
+- Importiere Fotos aus deine Galerie
+- Komplett funktionale In-App-Galerie.
+- Exportiere Fotos zurück in deine Galerie
+- Ändere dein Passwort
+- Erstelle und stelle Backups wieder her
+
+-- Vorteile --
+
+- Verstecke deine sensiblen Fotos vor Anderen
+- Schütze deine Fotos vor Datendiebstahl
+
+-- Kommende Funktionen --
+- Fingerprint Unlock
+- Backup in der Cloud
+- Darkmode
+
+Photok auf GitHub: https://github.com/leonlatsch/Photok
+
+Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>

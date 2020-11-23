@@ -23,8 +23,10 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Base Application class.
@@ -35,6 +37,9 @@ import timber.log.Timber
 @HiltAndroidApp
 class BaseApplication : Application(), LifecycleObserver {
 
+    @Inject
+    lateinit var config: Config
+
     private var wentToBackgroundAt = 0L
 
     override fun onCreate() {
@@ -44,11 +49,19 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
-     * Launch [StartActivity] when app was ON_STOP for at least 5 Minutes
+     * Launch [StartActivity] when app was ON_STOP for at least the configured time.
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
-        if (wentToBackgroundAt != 0L && System.currentTimeMillis() - wentToBackgroundAt >= 300000) { // 5 Minutes
+        if (ignoreNextTimeout) {
+            ignoreNextTimeout = false
+            return
+        }
+
+        if (config.securityLockTimeout != -1
+            && wentToBackgroundAt != 0L
+            && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
+        ) {
             restartAppLifecycle(this)
         }
     }
@@ -59,5 +72,16 @@ class BaseApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackground() {
         wentToBackgroundAt = System.currentTimeMillis()
+    }
+
+    companion object {
+        private var ignoreNextTimeout = false
+
+        /**
+         * Ignore next check for lock timeout.
+         */
+        fun ignoreNextTimeout() {
+            ignoreNextTimeout = true
+        }
     }
 }

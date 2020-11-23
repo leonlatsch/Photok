@@ -18,23 +18,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menuMainItemMore"
-        android:icon="@drawable/ic_more"
-        android:title="@string/menu_main_more"
-        app:showAsAction="ifRoom">
+        android:id="@+id/menuMainItemLock"
+        android:icon="@drawable/ic_lock"
+        android:title="@string/menu_main_lock"
+        app:showAsAction="always" />
 
-        <menu>
-            <item
-                android:id="@+id/menuMainItemSettings"
-                android:title="@string/menu_main_settings"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/menuMainItemAbout"
-                android:title="@string/menu_main_about"
-                app:showAsAction="never" />
-            <!-- add more here -->
-        </menu>
-
-    </item>
+    <item
+        android:id="@+id/menuMainItemSettings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/menu_main_settings"
+        app:showAsAction="ifRoom" />
 
 </menu>

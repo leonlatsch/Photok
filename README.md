@@ -1,6 +1,8 @@
 # Photok
 
-Encrypted Photo Safe for Andorid
+![Project Image](https://i.imgur.com/MMY40N1.jpg)
+
+Encrypt your photos on your device and keep them safe from others.
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
@@ -8,13 +10,15 @@ Encrypted Photo Safe for Andorid
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 
+## Download
+Photok is available at Google Play and F-Droid.
+
+<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
 ## About
-Photok is a encrypted photo safe for android. You can import private or sensetive photos.
-Photok uses AES-256 bit encryption. and is planned to be completly free, open source and without any ads.
-
-**Subscribe the Releases to get notified when its ready**
-
-> Further README will follow.
+Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
+It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
+Photok is completely free, open source, and contains no ads.
 
 LICENSE
 =======
@@ -31,3 +35,8 @@ LICENSE
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+**Legal Notice**
+
+Google Play and the Google Play logo are trademarks of Google LLC

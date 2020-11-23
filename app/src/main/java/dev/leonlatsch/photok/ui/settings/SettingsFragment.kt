@@ -18,14 +18,16 @@ package dev.leonlatsch.photok.ui.settings
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.preference_layout_template.*
@@ -52,58 +54,70 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
-        val changePasswordPreference = preferenceManager.findPreference<Preference>(
-            KEY_CHANGE_PASSWORD
-        )
-        changePasswordPreference?.setOnPreferenceClickListener {
-            onChangePasswordClicked()
-            true
-        }
-        val lockSafePreference = preferenceManager.findPreference<Preference>(KEY_LOCK)
-        lockSafePreference?.setOnPreferenceClickListener {
-            onLockSafe()
-            true
-        }
-        val resetSafePreference = preferenceManager.findPreference<Preference>(KEY_RESET)
-        resetSafePreference?.setOnPreferenceClickListener {
-            onResetSafe()
-            true
-        }
-        val backupPreference = preferenceManager.findPreference<Preference>(KEY_BACKUP)
-        backupPreference?.setOnPreferenceClickListener {
-            onBackup()
-            true
-        }
-    }
-
-    private fun onChangePasswordClicked() {
-        val dialog = ChangePasswordDialog()
-        dialog.show(
-            requireActivity().supportFragmentManager,
-            ChangePasswordDialog::class.qualifiedName
-        )
-    }
-
-    private fun onLockSafe() {
-        restartAppLifecycle(requireActivity())
-    }
-
-    private fun onResetSafe() {
-        Dialogs.showConfirmDialog(
-            requireContext(),
-            getString(R.string.settings_reset_confirmation)
-        ) { _, _ ->
-            viewModel.resetComponents {
-                onLockSafe()
+        addActionTo(KEY_ACTION_RESET) {
+            Dialogs.showConfirmDialog(
+                requireContext(),
+                getString(R.string.settings_reset_confirmation)
+            ) { _, _ ->
+                viewModel.resetComponents()
             }
         }
-    }
 
-    private fun onBackup() {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.type = "application/zip"
-        intent.putExtra(Intent.EXTRA_TITLE, "photok_backup_${System.currentTimeMillis()}.zip")
-        startActivityForResult(Intent.createChooser(intent, "Select Backup File"), REQ_BACKUP)
+        addActionTo(KEY_ACTION_BACKUP) {
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            intent.type = "application/zip"
+            intent.putExtra(
+                Intent.EXTRA_TITLE,
+                "photok_backup_${System.currentTimeMillis()}.zip"
+            )
+            startActivityForResultAndIgnoreTimer(
+                Intent.createChooser(intent, "Select Backup File"),
+                REQ_BACKUP
+            )
+        }
+
+        addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
+            val dialog = ChangePasswordDialog()
+            dialog.show(
+                requireActivity().supportFragmentManager,
+                ChangePasswordDialog::class.qualifiedName
+            )
+        }
+
+        addActionTo(KEY_ACTION_FEEDBACK) {
+            val emailIntent = Intent(
+                Intent.ACTION_SENDTO,
+                Uri.fromParts(
+                    SCHEMA_MAILTO,
+                    getString(R.string.settings_other_feedback_mail_emailaddress),
+                    null
+                )
+            )
+            emailIntent.putExtra(
+                Intent.EXTRA_SUBJECT,
+                getString(R.string.settings_other_feedback_mail_subject)
+            )
+            emailIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                getString(R.string.settings_other_feedback_mail_body)
+            )
+            startActivity(
+                Intent.createChooser(
+                    emailIntent,
+                    getString(R.string.settings_other_feedback_title)
+                )
+            )
+        }
+
+        addActionTo(KEY_ACTION_SOURCECODE) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(getString(R.string.settings_other_sourcecode_url))
+            startActivity(intent)
+        }
+
+        addActionTo(KEY_ACTION_ABOUT) {
+            findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -119,12 +133,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun addActionTo(preferenceId: String, action: () -> Unit) {
+        preferenceManager
+            .findPreference<Preference>(preferenceId)
+            ?.setOnPreferenceClickListener {
+                action()
+                true
+            }
+    }
+
     companion object {
         const val REQ_BACKUP = 42
 
-        const val KEY_LOCK = "lock_safe"
-        const val KEY_RESET = "reset_safe"
-        const val KEY_CHANGE_PASSWORD = "change_password"
-        const val KEY_BACKUP = "backup_safe"
+        const val SCHEMA_MAILTO = "mailto"
+
+        const val KEY_ACTION_RESET = "action_reset_safe"
+        const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_BACKUP = "action_backup_safe"
+        const val KEY_ACTION_FEEDBACK = "action_feedback"
+        const val KEY_ACTION_SOURCECODE = "action_sourcecode"
+        const val KEY_ACTION_ABOUT = "action_about"
     }
 }

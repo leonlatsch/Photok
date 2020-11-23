@@ -35,7 +35,7 @@ import java.util.*
 class ImportViewModel @ViewModelInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
-) : BaseProcessViewModel<Uri>() {
+) : BaseProcessViewModel<Uri>(app) {
 
     override suspend fun processItem(item: Uri) {
         val fileName = getFileName(app.contentResolver, item) ?: UUID.randomUUID().toString()
@@ -51,7 +51,7 @@ class ImportViewModel @ViewModelInject constructor(
             return
         }
 
-        val bytes = photoRepository.readPhotoFromExternal(app.contentResolver, item)
+        val bytes = photoRepository.readPhotoFileFromExternal(app.contentResolver, item)
         if (bytes == null) { // Cloud not read file
             failuresOccurred = true
             return

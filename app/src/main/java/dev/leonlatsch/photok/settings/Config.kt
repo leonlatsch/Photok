@@ -49,12 +49,21 @@ class Config(context: Context) {
         get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
         set(value) = putString(SECURITY_PASSWORD, value!!)
 
+    var securityLockTimeout: Int
+        get() = getIntFromString(SECURITY_LOCK_TIMEOUT, SECURITY_LOCK_TIMEOUT_DEFAULT)
+        set(value) = putString(SECURITY_LOCK_TIMEOUT, value.toString())
+
 
     // region put/get methods
 
     private fun getString(key: String, default: String) = preferences.getString(key, default)
 
     private fun getInt(key: String, default: Int) = preferences.getInt(key, default)
+
+    private fun getIntFromString(key: String, default: Int): Int {
+        val stringValue = preferences.getString(key, default.toString())
+        return stringValue?.toInt() ?: default
+    }
 
     private fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
@@ -112,5 +121,11 @@ class Config(context: Context) {
          */
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
+
+        /**
+         * Timeout to auto lock when in background-
+         */
+        const val SECURITY_LOCK_TIMEOUT = "security^lockTimeout"
+        const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000
     }
 }
