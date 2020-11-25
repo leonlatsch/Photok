@@ -20,7 +20,7 @@ import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
@@ -50,7 +50,7 @@ class SettingsViewModel @ViewModelInject constructor(
         }
         photoRepository.deleteAll()
 
-        config.securityPassword = emptyString()
+        config.securityPassword = String.empty
         encryptionManager.reset()
         restartAppLifecycle(app)
     }

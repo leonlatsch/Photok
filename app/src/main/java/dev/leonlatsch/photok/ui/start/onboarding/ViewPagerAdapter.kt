@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.ui.start.onboarding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 
 /**
  * Adapter for ViewPager with Fragments.
@@ -43,7 +43,7 @@ class ViewPagerAdapter(
     /**
      * Add a [Fragment] to the view pager.
      */
-    fun addFragment(fragment: Fragment) = addFragment(fragment, emptyString())
+    fun addFragment(fragment: Fragment) = addFragment(fragment, String.empty)
 
     private fun addFragment(fragment: Fragment, title: String) {
         fragmentList.add(fragment)

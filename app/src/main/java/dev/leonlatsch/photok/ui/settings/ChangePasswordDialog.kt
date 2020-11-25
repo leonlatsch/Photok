@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogChangePasswordBinding
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.security.PasswordUtils
@@ -95,7 +95,7 @@ class ChangePasswordDialog :
             if (PasswordUtils.validatePassword(viewModel.newPassword)) {
                 binding.changePasswordNewPasswordConfirmEditText.show()
             } else {
-                binding.changePasswordNewPasswordConfirmEditText.setTextValue(emptyString())
+                binding.changePasswordNewPasswordConfirmEditText.setTextValue(String.empty)
                 binding.changePasswordNewPasswordConfirmEditText.hide()
             }
             enableOrDisableSetup()

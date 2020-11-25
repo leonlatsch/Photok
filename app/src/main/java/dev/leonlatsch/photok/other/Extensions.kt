@@ -42,6 +42,5 @@ fun View.vanish() {
 /**
  * Returns an empty string.
  */
-fun emptyString(): String {
-    return ""
-}
+val String.Companion.empty: String
+    get() = ""
