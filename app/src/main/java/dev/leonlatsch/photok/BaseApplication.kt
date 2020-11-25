@@ -53,7 +53,6 @@ class BaseApplication : Application(), LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
-        print("Back: ignore: $ignoreNextTimeout")
         if (ignoreNextTimeout) {
             ignoreNextTimeout = false
             return
@@ -78,6 +77,9 @@ class BaseApplication : Application(), LifecycleObserver {
     companion object {
         private var ignoreNextTimeout = false
 
+        /**
+         * Ignore next check for lock timeout.
+         */
         fun ignoreNextTimeout() {
             ignoreNextTimeout = true
         }

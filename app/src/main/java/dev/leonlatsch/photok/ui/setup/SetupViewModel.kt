@@ -22,7 +22,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.Config
@@ -46,14 +46,14 @@ class SetupViewModel @ViewModelInject constructor(
     //region binding properties
 
     @Bindable
-    var password: String = emptyString()
+    var password: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.password, value)
         }
 
     @Bindable
-    var confirmPassword: String = emptyString()
+    var confirmPassword: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.confirmPassword, value)

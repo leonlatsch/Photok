@@ -21,7 +21,7 @@ import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
@@ -48,21 +48,21 @@ class ChangePasswordViewModel @ViewModelInject constructor(
         }
 
     @Bindable
-    var oldPassword: String = emptyString()
+    var oldPassword: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.oldPassword, value)
         }
 
     @Bindable
-    var newPassword: String = emptyString()
+    var newPassword: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.newPassword, value)
         }
 
     @Bindable
-    var newPasswordConfirm: String = emptyString()
+    var newPasswordConfirm: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.newPasswordConfirm, value)

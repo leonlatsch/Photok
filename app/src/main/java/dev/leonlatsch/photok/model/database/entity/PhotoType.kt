@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.model.database.entity
 
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 
 /**
  * Enum for [Photo.type].
@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.other.emptyString
  * @author Leon Latsch
  */
 enum class PhotoType(val value: Int, val mimeType: String) {
-    UNDEFINED(0,  emptyString()),
+    UNDEFINED(0,  String.empty),
     PNG(1, "image/png"),
     JPEG(2, "image/jpeg"),
     GIF(3, "image/gif");
