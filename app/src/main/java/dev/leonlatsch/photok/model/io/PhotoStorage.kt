@@ -139,6 +139,7 @@ class PhotoStorage @Inject constructor(
     ): Boolean {
         return try {
             val encryptedBytes = dynamicEncryptBytes(bytes, password)
+            encryptedBytes ?: return false
 
             insertAndOpenInternalFile(context, Photo.internalFileName(uuid)) {
                 it?.write(encryptedBytes)
