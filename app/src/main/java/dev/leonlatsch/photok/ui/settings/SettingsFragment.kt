@@ -21,6 +21,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -30,7 +31,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.preference_layout_template.*
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -42,11 +42,13 @@ import kotlinx.android.synthetic.main.preference_layout_template.*
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
+    private lateinit var toolbar: Toolbar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        settingsToolbar.setNavigationOnClickListener {
+        toolbar = view.findViewById(R.id.settingsToolbar)
+        toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
     }
