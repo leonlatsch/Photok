@@ -133,8 +133,8 @@
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
-    <string name="settings_other_feedback_mail_subject">给 Photok 的反馈</string>
-    <string name="settings_other_feedback_mail_body">写一段有关 Photok 的反馈 :)</string>
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
