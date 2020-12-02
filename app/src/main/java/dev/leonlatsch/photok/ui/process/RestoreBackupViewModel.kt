@@ -22,7 +22,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.ui.backup.BackupDetails
+import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
@@ -43,7 +43,7 @@ class RestoreBackupViewModel @ViewModelInject constructor(
     private var currentEntry: ZipEntry? = null
 
     lateinit var zipUri: Uri
-    lateinit var metaData: BackupDetails
+    lateinit var metaData: BackupMetaData
     lateinit var origPassword: String
 
     override suspend fun preProcess() {
@@ -54,7 +54,7 @@ class RestoreBackupViewModel @ViewModelInject constructor(
 
     override suspend fun processItem(item: Photo) {
         currentEntry ?: return
-        if (currentEntry!!.name == BackupDetails.FILE_NAME) {
+        if (currentEntry!!.name == BackupMetaData.FILE_NAME) {
             currentEntry = inputStream?.nextEntry
             currentEntry ?: return
         }
