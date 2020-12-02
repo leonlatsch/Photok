@@ -28,6 +28,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
@@ -70,7 +71,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             intent.type = "application/zip"
             intent.putExtra(
                 Intent.EXTRA_TITLE,
-                "photok_backup_${System.currentTimeMillis()}.zip"
+                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
             )
             startActivityForResultAndIgnoreTimer(
                 Intent.createChooser(intent, "Select Backup File"),
