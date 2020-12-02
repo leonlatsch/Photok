@@ -50,6 +50,10 @@ class EncryptionManager {
      * @param password the password string to use.
      */
     fun initialize(password: String) {
+        if (password.length < 6) {
+            isReady = false
+            return
+        }
         try {
             encryptionKey = genSecKey(password)
             ivParameterSpec = genIv(password)
