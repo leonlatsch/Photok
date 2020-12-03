@@ -22,7 +22,7 @@
             android:shape="ring"
             android:thickness="3dp"
             android:useLevel="false">
-            <solid android:color="@color/darkGray" />
+            <solid android:color="@color/dotSelectedColor" />
         </shape>
     </item>
 </layer-list>

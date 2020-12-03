@@ -73,14 +73,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="@string/about_version"
-                        android:textColor="@color/darkGray" />
+                        android:text="@string/about_version" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{context.version, default=0}"
-                        android:textColor="@color/darkGray" />
+                        android:text="@{context.version, default=0}" />
                 </LinearLayout>
 
                 <TextView
@@ -112,8 +110,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/common_copyright_notice"
-                android:textColor="@color/darkGray" />
+                android:text="@string/common_copyright_notice" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
