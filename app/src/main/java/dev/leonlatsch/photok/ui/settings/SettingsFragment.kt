@@ -46,13 +46,13 @@ import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
-    private lateinit var toolbar: Toolbar
+    private var toolbar: Toolbar? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar = view.findViewById(R.id.settingsToolbar)
-        toolbar.setNavigationOnClickListener {
+        toolbar?.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
     }

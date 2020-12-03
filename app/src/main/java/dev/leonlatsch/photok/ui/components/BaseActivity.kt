@@ -31,8 +31,8 @@ import dev.leonlatsch.photok.settings.Config
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
+        super.onCreate(savedInstanceState)
 
         if (!config.securityAllowScreenshots) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
