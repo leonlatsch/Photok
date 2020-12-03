@@ -13,7 +13,7 @@ jobs:
     
     steps:
       # Checkout
-      - uses: action/checkout@v2
+      - uses: actions/checkout@v2
         with:
           ref: master
       
