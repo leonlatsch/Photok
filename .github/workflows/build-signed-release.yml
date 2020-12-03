@@ -1,6 +1,11 @@
 name: Build Signed Release
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to Build'
+        required: true
 
 jobs:
   Build and Sign:
@@ -52,12 +57,12 @@ jobs:
       - name: Upload GPlay AAB
         uses: actions/upload-artifact@v2
         with:
-          name: GPlay AAB Signed
+          name: Photok ${{ github.event.inputs.version }} GPlay AAB
           path: $${{ steps.sign_aab.outputs.signedReleaseFile }}
       
       # Upload .apk file
       - name: Upload Standalone APK
         uses: actions/upload-artifact@v2
         with:
-          name: Standalone APK Signed
+          name: Photok ${{ github.event.inputs.version }} Standalone APK
           path: $${{ steps.sign_apk.outputs.signedReleaseFile }}
