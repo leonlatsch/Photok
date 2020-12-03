@@ -35,9 +35,9 @@
     </string-array>
 
     <string-array name="designStrings">
-        <item>System default</item>
-        <item>Light</item>
-        <item>Dark</item>
+        <item>@string/settings_app_design_system_default</item>
+        <item>@string/settings_app_design_system_light</item>
+        <item>@string/settings_app_design_system_dark</item>
     </string-array>
     <string-array name="design">
         <item>system</item>
