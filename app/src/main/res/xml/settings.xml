@@ -17,10 +17,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--
+
     <PreferenceCategory android:title="@string/settings_category_app">
+        <ListPreference
+            android:defaultValue="system"
+            android:entries="@array/designStrings"
+            android:entryValues="@array/design"
+            android:icon="@drawable/ic_brush"
+            android:key="system^design"
+            android:title="Design"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    -->
 
     <PreferenceCategory android:title="@string/settings_category_gallery">
         <SwitchPreferenceCompat

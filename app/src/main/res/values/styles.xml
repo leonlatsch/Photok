@@ -15,12 +15,19 @@
   -->
 
 <resources>
-    <!-- Base application theme. -->
+    <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:actionMenuTextColor">@color/textColor</item>
+        <item name="textColorAlertDialogListItem">@color/textColor</item>
+        <item name="android:textColorHint">@color/secondaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
 
         <!-- Action Mode -->
         <item name="windowActionModeOverlay">true</item>
@@ -50,7 +57,6 @@
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
-        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
@@ -77,13 +83,12 @@
     <style name="VeryBigTextViewStyle" parent="@style/TextViewStyle">
         <item name="android:fontFamily">@font/raleway_bold</item>
         <item name="android:textSize">40sp</item>
-        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="AppNameTitleStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/lobster_regular</item>
         <item name="android:text">@string/app_name</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/appTitleColor</item>
         <item name="android:textSize">62sp</item>
     </style>
 
@@ -122,9 +127,9 @@
     </style>
 
     <style name="transparentToolbarStyle" parent="toolbarStyle">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:textColorSecondary">@android:color/black</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorSecondary">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
     </style>
 
     <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -151,7 +156,7 @@
     <!-- ALERT DIALOG -->
     <style name="AlertDialogStyle" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:background">@drawable/bg_dialog_round_light</item>
+        <item name="android:background">@drawable/bg_dialog_round</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertDialogButtonBarPositiveStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertDialogButtonBarNegativeStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertDialogButtonBarNeutralStyle</item>
@@ -172,7 +177,7 @@
     </style>
 
     <style name="AlertDialogButtonBarNeutralStyle" parent="AlertDialogButtonBarStyle">
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <!-- SETTINGS -->
