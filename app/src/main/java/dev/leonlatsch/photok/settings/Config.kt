@@ -37,6 +37,10 @@ class Config(context: Context) {
         get() = getBoolean(SYSTEM_FIRST_START, SYSTEM_FIRST_START_DEFAULT)
         set(value) = putBoolean(SYSTEM_FIRST_START, value)
 
+    var systemDesign: String?
+        get() = getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT)
+        set(value) = putString(SYSTEM_DESIGN, value!!)
+
     var galleryAutoFullscreen: Boolean
         get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
         set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
@@ -102,7 +106,13 @@ class Config(context: Context) {
          * Determines if the app has started before.
          */
         const val SYSTEM_FIRST_START = "system^firstStart"
-        const val SYSTEM_FIRST_START_DEFAULT  = true
+        const val SYSTEM_FIRST_START_DEFAULT = true
+
+        /**
+         * Sets the app design to "light", "dark" or "system"
+         */
+        const val SYSTEM_DESIGN = "system^design"
+        const val SYSTEM_DESIGN_DEFAULT = "system"
 
         /**
          * Determines if the full screen photo view, should hide the system ui at start.

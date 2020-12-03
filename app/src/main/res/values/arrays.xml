@@ -33,4 +33,15 @@
         <item>600000</item>
         <item>-1</item>
     </string-array>
+
+    <string-array name="designStrings">
+        <item>System default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="design">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
 </resources>

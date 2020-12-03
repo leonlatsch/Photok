@@ -107,6 +107,7 @@
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_category_app">App</string>
+    <string name="settings_design_title">Design</string>
     <string name="settings_reset_title">Reset Safe</string>
     <string name="settings_reset_summary">Wipe data and reset password</string>
     <string name="settings_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>

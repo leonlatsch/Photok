@@ -107,6 +107,7 @@
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
     <string name="settings_category_app">应用程序</string>
+    <string name="settings_design_title">Design</string> <!-- TODO(sr093906): translate -->
     <string name="settings_reset_title">重置照片保险库</string>
     <string name="settings_reset_summary">抹去数据并重置密码</string>
     <string name="settings_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>

@@ -108,6 +108,7 @@
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
     <string name="settings_category_app">App</string>
+    <string name="settings_design_title">Erscheinungsbild</string>
     <string name="settings_reset_title">Safe zurücksetzen</string>
     <string name="settings_reset_summary">Daten löschen und Passwort zurücksetzen</string>
     <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
