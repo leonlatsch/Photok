@@ -1,5 +1,7 @@
-### {version}
+### 1.1.0
+- New Feature: Darkmode
 - Simple Chinese Translation
+- Fixed Backup Compatibility Check
 
 ### 1.0.3
 - Improve spanish translation
