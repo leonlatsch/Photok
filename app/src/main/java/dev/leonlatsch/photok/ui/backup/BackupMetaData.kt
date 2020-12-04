@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.ui.backup
 
 import com.google.gson.annotations.Expose
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.database.entity.Photo
 
 /**
@@ -26,13 +25,14 @@ import dev.leonlatsch.photok.model.database.entity.Photo
  * @since 1.0.0
  * @author Leon Latsch
  */
-data class BackupDetails(
+data class BackupMetaData(
     @Expose val password: String,
     @Expose val photos: List<Photo>,
     @Expose val createdAt: Long = System.currentTimeMillis(),
-    @Expose val version: String = BuildConfig.VERSION_NAME
+    @Expose val backupVersion: Int = CURRENT_BACKUP_VERSION
 ) {
     companion object {
         const val FILE_NAME = "meta.json"
+        const val CURRENT_BACKUP_VERSION = 1
     }
 }

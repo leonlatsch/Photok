@@ -108,6 +108,10 @@
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_category_app">Aplicación</string>
+    <string name="settings_app_design_title">Design</string> <!-- TODO(Ismael034): translate -->
+    <string name="settings_app_design_system_default">System Default</string> <!-- TODO(Ismael034): translate -->
+    <string name="settings_app_design_system_light">Light</string> <!-- TODO(Ismael034): translate -->
+    <string name="settings_app_design_system_dark">Dark</string> <!-- TODO(Ismael034): translate -->
     <string name="settings_reset_title">Restablecer baúl</string>
     <string name="settings_reset_summary">Borrar datos y restablecer contraseña</string>
     <string name="settings_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>

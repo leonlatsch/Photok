@@ -18,7 +18,7 @@
     <item android:id="@android:id/background">
         <shape android:thickness="20dp">
             <corners android:radius="2dip" />
-            <solid android:color="#DFDFDF"/>
+            <solid android:color="@color/disabledColor" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress">

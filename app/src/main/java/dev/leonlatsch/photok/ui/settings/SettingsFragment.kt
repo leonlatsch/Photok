@@ -24,11 +24,15 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 
@@ -42,19 +46,23 @@ import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
-    private lateinit var toolbar: Toolbar
+    private var toolbar: Toolbar? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar = view.findViewById(R.id.settingsToolbar)
-        toolbar.setNavigationOnClickListener {
+        toolbar?.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+
+        addCallbackTo<ListPreference>(Config.SYSTEM_DESIGN) {
+            setAppDesign(it as String)
+        }
 
         addActionTo(KEY_ACTION_RESET) {
             Dialogs.showConfirmDialog(
@@ -70,7 +78,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             intent.type = "application/zip"
             intent.putExtra(
                 Intent.EXTRA_TITLE,
-                "photok_backup_${System.currentTimeMillis()}.zip"
+                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
             )
             startActivityForResultAndIgnoreTimer(
                 Intent.createChooser(intent, "Select Backup File"),
@@ -140,6 +148,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .findPreference<Preference>(preferenceId)
             ?.setOnPreferenceClickListener {
                 action()
+                true
+            }
+    }
+
+    private fun <T : Preference> addCallbackTo(preferenceId: String, action: (value: Any) -> Unit) {
+        preferenceManager.findPreference<T>(preferenceId)
+            ?.setOnPreferenceChangeListener { _, newValue ->
+                action(newValue)
                 true
             }
     }
