@@ -21,7 +21,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.ui.backup.BackupDetails
+import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment
 
 /**
@@ -33,7 +33,7 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragmen
 @AndroidEntryPoint
 class RestoreBackupBottomSheetDialogFragment(
     private val uri: Uri,
-    private val metaData: BackupDetails,
+    private val metaData: BackupMetaData,
     private val origPassword: String
 ) : BaseProcessBottomSheetDialogFragment<Photo>(
     metaData.photos,

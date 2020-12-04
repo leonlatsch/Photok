@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.MainActivity
@@ -68,7 +68,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             if (viewModel.validatePassword()) {
                 binding.setupConfirmPasswordEditText.show()
             } else {
-                binding.setupConfirmPasswordEditText.setTextValue(emptyString())
+                binding.setupConfirmPasswordEditText.setTextValue(String.empty)
                 binding.setupConfirmPasswordEditText.hide()
             }
 

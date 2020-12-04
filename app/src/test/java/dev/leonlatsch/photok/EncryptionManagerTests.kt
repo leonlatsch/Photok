@@ -14,29 +14,31 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.entity
+package dev.leonlatsch.photok
 
 import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.security.EncryptionManager
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
-/**
- * Enum for [Photo.type].
- * Internal value is an [Int].
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class PhotoType(val value: Int, val mimeType: String) {
-    UNDEFINED(0,  String.empty),
-    PNG(1, "image/png"),
-    JPEG(2, "image/jpeg"),
-    GIF(3, "image/gif");
+class EncryptionManagerTests {
 
-    companion object {
-        /**
-         * Create a [PhotoType] from its Int value.
-         * Used in converters.
-         */
-        fun fromValue(value: Int) = values().first { it.value == value }
+    private val validPassword = "abc123"
+
+    var encryptionManager: EncryptionManager = EncryptionManager()
+
+    @Test
+    fun initializeTest() {
+        encryptionManager.initialize(validPassword)
+
+        assertTrue(encryptionManager.isReady)
     }
 
+    @Test
+    fun initializeFailTest() {
+        encryptionManager.initialize(String.empty)
+
+        assertFalse(encryptionManager.isReady)
+    }
 }

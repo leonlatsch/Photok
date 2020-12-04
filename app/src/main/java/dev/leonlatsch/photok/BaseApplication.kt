@@ -23,6 +23,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.other.restartAppLifecycle
+import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
@@ -46,6 +47,8 @@ class BaseApplication : Application(), LifecycleObserver {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+
+        setAppDesign(config.systemDesign)
     }
 
     /**

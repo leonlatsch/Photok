@@ -14,6 +14,7 @@ Encrypt your photos on your device and keep them safe from others.
 Photok is available at Google Play and F-Droid.
 
 <a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" style="width: 250px; height: 54px; vertical-align: center;" width="250" height="54" /></a>
 
 ## About
 Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.

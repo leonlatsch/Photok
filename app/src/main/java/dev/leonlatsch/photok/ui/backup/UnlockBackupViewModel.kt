@@ -21,7 +21,7 @@ import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
@@ -37,7 +37,7 @@ class UnlockBackupViewModel @ViewModelInject constructor(
 ) : ObservableViewModel(app) {
 
     @Bindable
-    var password: String = emptyString()
+    var password: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.password, value)

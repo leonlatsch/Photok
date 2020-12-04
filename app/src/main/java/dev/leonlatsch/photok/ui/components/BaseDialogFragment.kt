@@ -39,6 +39,6 @@ abstract class BaseDialogFragment : DialogFragment() {
         // Set necessary drawables for rounded corners
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         view.background =
-            ResourcesCompat.getDrawable(resources, R.drawable.bg_dialog_round_light, null)
+            ResourcesCompat.getDrawable(resources, R.drawable.bg_dialog_round, null)
     }
 }

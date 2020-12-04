@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.backup.BackupDetails
+import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import timber.log.Timber
 import java.io.IOException
@@ -72,9 +72,9 @@ class BackupViewModel @ViewModelInject constructor(
     }
 
     override suspend fun postProcess() {
-        val details = BackupDetails(config.securityPassword!!, backedUpPhotos)
+        val details = BackupMetaData(config.securityPassword!!, backedUpPhotos)
         val jsonString = gson.toJson(details)
-        writeZipEntry(BackupDetails.FILE_NAME, jsonString.toByteArray())
+        writeZipEntry(BackupMetaData.FILE_NAME, jsonString.toByteArray())
 
         closeZipFile()
         super.postProcess()

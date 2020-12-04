@@ -22,7 +22,7 @@ import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import com.google.gson.Gson
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.emptyString
+import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
@@ -50,10 +50,10 @@ class ValidateBackupViewModel @ViewModelInject constructor(
         }
 
     /**
-     * [BackupDetails] holding meta data of the loaded backup.
+     * [BackupMetaData] holding meta data of the loaded backup.
      */
     @get:Bindable
-    var metaData: BackupDetails? = null
+    var metaData: BackupMetaData? = null
         set(value) {
             field = value
             notifyChange(BR.metaData, value)
@@ -63,10 +63,17 @@ class ValidateBackupViewModel @ViewModelInject constructor(
      * File name of the zip.
      */
     @get:Bindable
-    var zipFileName: String? = emptyString()
+    var zipFileName: String? = String.empty
         set(value) {
             field = value
             notifyChange(BR.zipFileName, value)
+        }
+
+    @get:Bindable
+    var backupCompatible: Boolean = false
+        set(value) {
+            field = value
+            notifyChange(BR.backupCompatible, value)
         }
 
     /**
@@ -80,10 +87,11 @@ class ValidateBackupViewModel @ViewModelInject constructor(
             zipFileName = getFileName(app.contentResolver, uri)
             var ze = stream.nextEntry
             while (ze != null) {
-                if (ze.name == BackupDetails.FILE_NAME) {
+                if (ze.name == BackupMetaData.FILE_NAME) {
                     val bytes = stream.readBytes()
                     val string = String(bytes)
-                    metaData = Gson().fromJson(string, BackupDetails::class.java)
+                    metaData = Gson().fromJson(string, BackupMetaData::class.java)
+                    validateBackupVersion()
 
                 } else {
                     photoFiles++
@@ -102,6 +110,21 @@ class ValidateBackupViewModel @ViewModelInject constructor(
             restoreState = RestoreState.FILE_INVALID
         }
 
+    }
+
+    private fun validateBackupVersion() {
+        metaData?.let {
+            val version =
+                if (it.backupVersion == 0) { // Old method with string "version", seen as version 1
+                    1
+                } else {
+                    it.backupVersion
+                }
+
+            backupCompatible = version == BackupMetaData.CURRENT_BACKUP_VERSION
+        } ?: run {
+            backupCompatible = false
+        }
     }
 
     private fun createStream(uri: Uri): ZipInputStream? {

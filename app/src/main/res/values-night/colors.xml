@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,13 +21,13 @@
     <color name="colorComplementary">#c95056</color>
 
     <!-- Components -->
-    <color name="background">#FAFAFA</color>
-    <color name="textColor">@android:color/black</color>
-    <color name="secondaryTextColor">#737373</color>
-    <color name="appTitleColor">@android:color/black</color>
-    <color name="disabledColor">@color/gray</color>
-    <color name="dotSelectedColor">@color/darkGray</color>
-    <color name="dotUnselectedColor">@color/lightGray</color>
+    <color name="background">#1a1a1a</color>
+    <color name="textColor">#fafafa</color>
+    <color name="secondaryTextColor">#B3B3B3</color>
+    <color name="appTitleColor">@android:color/white</color>
+    <color name="disabledColor">@color/darkGray</color>
+    <color name="dotSelectedColor">@color/lightGray</color>
+    <color name="dotUnselectedColor">@color/darkGray</color>
 
     <!-- Explicit -->
     <color name="darkRed">#FF0000</color>
