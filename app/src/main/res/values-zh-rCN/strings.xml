@@ -107,10 +107,10 @@
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
     <string name="settings_category_app">应用程序</string>
-    <string name="settings_app_design_title">设计</string> <!-- TODO(sr093906): translate -->
-    <string name="settings_app_design_system_default">系统默认</string> <!-- TODO(Ismael034): translate -->
-    <string name="settings_app_design_system_light">浅色</string> <!-- TODO(Ismael034): translate -->
-    <string name="settings_app_design_system_dark">深色</string> <!-- TODO(Ismael034): translate -->
+    <string name="settings_app_design_title">设计</string> 
+    <string name="settings_app_design_system_default">系统默认</string> 
+    <string name="settings_app_design_system_light">浅色</string> 
+    <string name="settings_app_design_system_dark">深色</string> 
     <string name="settings_reset_title">重置照片保险库</string>
     <string name="settings_reset_summary">抹去数据并重置密码</string>
     <string name="settings_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
