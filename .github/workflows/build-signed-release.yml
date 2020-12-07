@@ -72,8 +72,8 @@ jobs:
         run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
 
       - name: Upload AAB to Nextcloud
-        run: curl -T ${{ steps.sign_aab.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/photok-${{ github.event.inputs.version }}-gplay.aab
+        run: curl -T ${{ steps.sign_aab.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}-gplay.aab
       
       - name: Upload APK to Nextcloud
-        run: curl -T ${{ steps.sign_apk.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/photok-${{ github.event.inputs.version }}-standalone.apk
+        run: curl -T ${{ steps.sign_apk.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}-standalone.apk
 
