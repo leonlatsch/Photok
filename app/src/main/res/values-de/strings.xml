@@ -109,7 +109,7 @@
     <string name="settings_title">Einstellungen</string>
     <string name="settings_category_app">App</string>
     <string name="settings_app_design_title">Erscheinungsbild</string>
-    <string name="settings_app_design_system_default">System Stamdart</string>
+    <string name="settings_app_design_system_default">System Standart</string>
     <string name="settings_app_design_system_light">Hell</string>
     <string name="settings_app_design_system_dark">Dunkel</string>
     <string name="settings_reset_title">Safe zurücksetzen</string>
