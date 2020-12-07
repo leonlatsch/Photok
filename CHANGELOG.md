@@ -1,3 +1,9 @@
+### 1.1.0
+- New Feature: Darkmode
+- Simple Chinese Translation
+- Fixed Backup Compatibility Check
+- Fixed Info icon size
+
 ### 1.0.3
 - Improve spanish translation
 - Update Libraries

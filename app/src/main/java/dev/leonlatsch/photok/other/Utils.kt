@@ -25,6 +25,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.view.Window
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.ui.StartActivity
@@ -85,4 +86,21 @@ fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(oper
 fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {
     startActivityForResult(intent, reqCode)
     BaseApplication.ignoreNextTimeout()
+}
+
+/**
+ * Update the app design.
+ */
+fun setAppDesign(design: String?) {
+    design ?: return
+
+    val nightMode = when (design) {
+        "system" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        "light" -> AppCompatDelegate.MODE_NIGHT_NO
+        "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+        else -> null
+    }
+
+    nightMode ?: return
+    AppCompatDelegate.setDefaultNightMode(nightMode)
 }

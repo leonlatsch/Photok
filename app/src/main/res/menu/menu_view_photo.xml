@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +14,13 @@
   ~   limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item >
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/slight_round_corners_radius" />
-            <solid android:color="@color/disabledColor" />
-        </shape>
-    </item>
-</selector>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuViewPhotoInfo"
+        android:icon="@drawable/ic_info"
+        android:title="@string/view_photo_detail_title"
+        app:showAsAction="always" />
+
+</menu>

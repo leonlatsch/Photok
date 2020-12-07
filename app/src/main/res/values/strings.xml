@@ -107,6 +107,10 @@
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Design</string>
+    <string name="settings_app_design_system_default">System Default</string>
+    <string name="settings_app_design_system_light">Light</string>
+    <string name="settings_app_design_system_dark">Dark</string>
     <string name="settings_reset_title">Reset Safe</string>
     <string name="settings_reset_summary">Wipe data and reset password</string>
     <string name="settings_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
