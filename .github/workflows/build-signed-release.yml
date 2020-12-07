@@ -69,11 +69,11 @@ jobs:
       
       # Upload to Nextcloud
       - name: Create Directory for Release
-        run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNMAE }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
+        run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
 
       - name: Upload AAB to Nextcloud
-        run: curl -T ${{ steps.sign_aab.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNMAE }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
+        run: curl -T ${{ steps.sign_aab.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
       
       - name: Upload APK to Nextcloud
-        run: curl -T ${{ steps.sign_apk.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNMAE }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
+        run: curl -T ${{ steps.sign_apk.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
 
