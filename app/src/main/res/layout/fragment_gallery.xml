@@ -57,7 +57,7 @@
                 android:fontFamily="@font/raleway_bold"
                 android:text="@string/gallery_placeholder"
                 android:textAlignment="center"
-                android:textColor="@color/lightGray"
+                android:textColor="@color/dotUnselectedColor"
                 android:textSize="20sp" />
 
         </LinearLayout>
