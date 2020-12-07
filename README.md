@@ -1,8 +1,4 @@
-# Photok
-
-![Project Image](https://i.imgur.com/MMY40N1.jpg)
-
-Encrypt your photos on your device and keep them safe from others.
+![Project Image](fastlane/metadata/android/featureGraphic.jpg)
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
@@ -10,16 +6,18 @@ Encrypt your photos on your device and keep them safe from others.
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 
-## Download
-Photok is available at Google Play and on its way to F-Droid.
-
-<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
-<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" style="width: 250px; height: 54px; vertical-align: center;" width="250" height="54" /></a>
+Encrypt your photos on your device and keep them safe from others.
 
 ## About
 Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
 It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
 Photok is completely free, open source, and contains no ads.
+
+## Download
+Photok is available at Google Play and on its way to F-Droid.
+
+<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="250px" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" width="250" height="54" /></a>
 
 LICENSE
 =======
