@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  build-and-sign:
+  release-process:
     runs-on: ubuntu-18.04
     
     steps:
@@ -53,16 +53,27 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         
-      # Upload .aab file
-      - name: Upload GPlay AAB
+      # Upload .aab Artifact
+      - name: Upload GPlay AAB Artifact
         uses: actions/upload-artifact@v2
         with:
           name: Photok ${{ github.event.inputs.version }} GPlay AAB
           path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
       
-      # Upload .apk file
-      - name: Upload Standalone APK
+      # Upload .apk Artifact
+      - name: Upload Standalone APK Artifact
         uses: actions/upload-artifact@v2
         with:
           name: Photok ${{ github.event.inputs.version }} Standalone APK
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
+      
+      # Upload to Nextcloud
+      - name: Create Release Directory on Nextcloud
+        run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
+
+      - name: Upload AAB to Nextcloud
+        run: curl -T ${{ steps.sign_aab.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}-gplay.aab
+      
+      - name: Upload APK to Nextcloud
+        run: curl -T ${{ steps.sign_apk.outputs.signedReleaseFile }} -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}-standalone.apk
+

@@ -1,3 +1,9 @@
+### 1.1.2
+- Fixed more visual issues
+
+### 1.1.1
+- Fixed visual issue
+
 ### 1.1.0
 - New Feature: Darkmode
 - Simple Chinese Translation
