@@ -1,3 +1,6 @@
+### 1.1.2
+- Fixed more visual issues
+
 ### 1.1.1
 - Fixed visual issue
 
