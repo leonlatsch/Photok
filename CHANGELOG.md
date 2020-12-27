@@ -1,3 +1,7 @@
+### 1.1.3
+- Improve darkmode
+- Update third party software
+
 ### 1.1.2
 - Fixed more visual issues
 
