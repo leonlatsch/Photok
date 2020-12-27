@@ -122,8 +122,8 @@
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
         <item name="android:textColor">@color/textColor</item>
-        <item name="android:textColorSecondary">@color/textColor</item>
-        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textSize">15sp</item>
     </style>
 
@@ -133,7 +133,9 @@
         <item name="android:textColorPrimary">@color/textColor</item>
     </style>
 
-    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/background</item>
+    </style>
 
     <!-- BOTTOM SHEET DIALOG -->
     <style name="BottomSheetDialogBaseStyle" parent="Theme.Design.Light.BottomSheetDialog">
