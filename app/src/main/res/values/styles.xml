@@ -25,7 +25,7 @@
         <item name="android:textColorPrimary">@color/textColor</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:actionMenuTextColor">@color/textColor</item>
-        <item name="android:textColorAlertDialogListItem">@color/textColor</item>
+        <item name="textColorAlertDialogListItem">@color/textColor</item>
         <item name="android:textColorHint">@color/secondaryTextColor</item>
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
 
@@ -121,8 +121,9 @@
 
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
-        <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorSecondary">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
         <item name="android:textSize">15sp</item>
     </style>
 

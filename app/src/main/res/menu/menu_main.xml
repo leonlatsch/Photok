@@ -21,7 +21,7 @@
         android:id="@+id/menuMainItemLock"
         android:icon="@drawable/ic_lock"
         android:title="@string/menu_main_lock"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menuMainItemSettings"
