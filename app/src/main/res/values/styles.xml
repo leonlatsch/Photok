@@ -44,6 +44,7 @@
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
     </style>
 
+    <!-- Theme for Splash Screen, will be set back to AppTheme before activity.onCreate() -->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:windowFullscreen">true</item>
@@ -120,7 +121,7 @@
 
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textSize">15sp</item>
@@ -132,7 +133,9 @@
         <item name="android:textColorPrimary">@color/textColor</item>
     </style>
 
-    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/background</item>
+    </style>
 
     <!-- BOTTOM SHEET DIALOG -->
     <style name="BottomSheetDialogBaseStyle" parent="Theme.Design.Light.BottomSheetDialog">

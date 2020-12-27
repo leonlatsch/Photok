@@ -14,8 +14,8 @@ android {
         applicationId "dev.leonlatsch.photok"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.1.2"
+        versionCode 8
+        versionName "1.1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -48,9 +48,9 @@ android {
 }
 
 dependencies {
-    def room_version = "2.3.0-alpha03"
+    def room_version = "2.3.0-alpha04"
     def coroutines_version = "1.3.7"
-    def paging_version = "3.0.0-alpha09"
+    def paging_version = "3.0.0-alpha11"
 
     // Architectural Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
@@ -76,8 +76,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
     // Navigation Components
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
 
     // Paging 3
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
