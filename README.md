@@ -1,4 +1,4 @@
-![Photok](fastlane/metadata/android/images/en-US/featureGraphic.jpg)
+![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
