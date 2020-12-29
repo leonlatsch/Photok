@@ -1,5 +1,5 @@
 ### 1.*.*
-- Portuguese translation
+- Brasilian Portuguese translation
 
 ### 1.1.3
 - Improve darkmode
