@@ -1,3 +1,6 @@
+### 1.*.*
+- Portuguese translation
+
 ### 1.1.3
 - Improve darkmode
 - Update third party software
