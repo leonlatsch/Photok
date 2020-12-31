@@ -18,11 +18,18 @@ Photok is completely free, open source, and contains no ads.
 </a>
 
 ## Download
-Photok is available at Google Play and on its way to F-Droid.
+Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 
-<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&utm_source=github'>
-    <img width="240px" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
-</a>
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
+      alt="Download from Google Play" 
+      height="80">](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok?utm_source=github)
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/packages/dev.leonlatsch.photok/)
+      
+Alternative 1: [Direct Download APK](https://github.com/leonlatsch/Photok/releases)
+
+Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
 
 LICENSE
