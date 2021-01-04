@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.Dialogs.showLicensesDialog
 
 /**
  * Fragment to display a info about the app and some links.
@@ -57,7 +58,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        Dialogs.showLicensesDialog(requireActivity())
+        showLicensesDialog(requireActivity())
     }
 
     /**
