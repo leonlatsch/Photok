@@ -117,7 +117,7 @@
     <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_auto_fullscreen_summary">Vollbind Modus beim öffnen eines Fotos</string>
+    <string name="settings_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>

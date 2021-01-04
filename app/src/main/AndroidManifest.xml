@@ -28,6 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
+
         <activity
             android:name=".ui.StartActivity"
             android:launchMode="singleTask"
@@ -38,13 +39,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTask" />
+
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
+
         <activity android:name=".share.ReceiveShareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -61,6 +65,19 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.viewphoto.ViewPhotoActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.ActionBar" />
     </application>
 
 </manifest>

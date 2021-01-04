@@ -15,12 +15,6 @@ Photok is completely free, open source, and contains no ads.
 - Hide your sensitive photos from others
 - Protect your photos from data theft
 
-<b>Upcoming Features</b>
-
-- Fingerprint unlock
-- Backup in cloud
-- Darkmode
-
 Photok on GitHub: https://github.com/leonlatsch/Photok
 
 Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
