@@ -28,7 +28,9 @@ import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.share.ReceiveShareActivity
 import dev.leonlatsch.photok.ui.components.BindableActivity
+import dev.leonlatsch.photok.ui.components.Dialogs
 import javax.inject.Inject
 
 /**
@@ -49,6 +51,12 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        if (ReceiveShareActivity.shareData.isNotEmpty()) {
+            Dialogs.showLongToast(this, "There is data from share")
+//            val importDialog = ImportBottomSheetDialogFragment(ReceiveShareActivity.shareData)
+//            importDialog.show(supportFragmentManager, ImportBottomSheetDialogFragment::class.qualifiedName)
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
