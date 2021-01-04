@@ -10,7 +10,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.2"
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.28-alpha"
-        classpath 'com.jaredsburrows:gradle-license-plugin:0.8.80'
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -26,30 +26,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-task licenseAndCreditsReport(dependsOn: 'app:licenseReleaseReport') {
-    group 'reporting'
-    doLast {
-        print "Copying Icon Credits to license report file... "
-        def bodyEnd = 0
-        def licFile = new File("app/src/main/assets/open_source_licenses.html")
-        def licensesLines = licFile.collect {it}
-        licensesLines.eachWithIndex { String line, int i ->
-            if (line.contains("</body>")) {
-                bodyEnd = i
-            }
-        }
-
-        def credits = new File("icon_credits.html").text
-        licensesLines.add(bodyEnd, credits)
-
-        licFile.withWriter { out ->
-            licensesLines.each {
-                out.println it
-            }
-        }
-
-        println "Done"
-    }
 }
