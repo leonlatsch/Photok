@@ -22,11 +22,9 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
-import androidx.fragment.app.Fragment
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.runOnMain
-import dev.leonlatsch.photok.other.startActivityAndIgnoreTimer
 
 /**
  * Holds Dialogs and Toast presets.
@@ -62,9 +60,9 @@ object Dialogs {
         }
     }
 
-    fun Fragment.showLicensesDialog(context: Context) {
+    fun showLicensesDialog(context: Context) {
         runOnMain {
-            startActivityAndIgnoreTimer(Intent(context, OssLicensesMenuActivity::class.java))
+            context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             OssLicensesMenuActivity.setActivityTitle(context.getString(R.string.about_third_party))
         }
     }

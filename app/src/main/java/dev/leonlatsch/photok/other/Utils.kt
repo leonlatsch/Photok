@@ -89,14 +89,6 @@ fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) 
 }
 
 /**
- * Extension for starting an activity for result and disable lock timer in [BaseApplication].
- */
-fun Fragment.startActivityAndIgnoreTimer(intent: Intent) {
-    startActivity(intent)
-    BaseApplication.ignoreNextTimeout()
-}
-
-/**
  * Update the app design.
  */
 fun setAppDesign(design: String?) {
