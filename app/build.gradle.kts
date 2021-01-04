@@ -16,8 +16,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 8
-        versionName = "1.1.3"
+        versionCode = 9
+        versionName = "1.2.0-dev"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

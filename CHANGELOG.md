@@ -1,4 +1,7 @@
-### 1.*.*
+### 1.2.0 (under development)
+- Feature: Share to Photok (under development)
+- New third party page
+- New credits page (under development)
 - Brazilian Portuguese translation
 
 ### 1.1.3
