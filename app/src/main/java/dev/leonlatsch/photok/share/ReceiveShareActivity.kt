@@ -57,7 +57,7 @@ class ReceiveShareActivity : BaseActivity() {
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uri != null) {
-                    shareData.add(uri)
+                    sharedData.add(uri)
                     true
                 } else {
                     false
@@ -66,7 +66,7 @@ class ReceiveShareActivity : BaseActivity() {
             Intent.ACTION_SEND_MULTIPLE -> {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uris != null) {
-                    shareData.addAll(uris)
+                    sharedData.addAll(uris)
                     true
                 } else {
                     false
@@ -83,6 +83,6 @@ class ReceiveShareActivity : BaseActivity() {
     override lateinit var config: Config
 
     companion object {
-        var shareData = arrayListOf<Uri>()
+        var sharedData = arrayListOf<Uri>()
     }
 }
