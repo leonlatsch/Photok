@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.share
+package dev.leonlatsch.photok.ui.share
 
 import android.content.Intent
 import android.net.Uri

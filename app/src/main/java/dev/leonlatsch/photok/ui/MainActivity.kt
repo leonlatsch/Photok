@@ -28,10 +28,10 @@ import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.share.ReceiveShareActivity
-import dev.leonlatsch.photok.share.ReceiveShareDialog
 import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.share.ReceiveShareActivity
+import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
 import javax.inject.Inject
 
 /**

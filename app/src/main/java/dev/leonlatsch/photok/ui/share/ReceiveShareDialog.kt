@@ -14,12 +14,18 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.share
+package dev.leonlatsch.photok.ui.share
 
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogReceiveShareBinding
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 
+/**
+ * Dialog shown when sharing elements to photok. Asks for permission and launches import dialog
+ *
+ * @since 1.2.0
+ * @author Leon Latsch
+ */
 class ReceiveShareDialog :
     BindableDialogFragment<DialogReceiveShareBinding>(R.layout.dialog_receive_share) {
 }
