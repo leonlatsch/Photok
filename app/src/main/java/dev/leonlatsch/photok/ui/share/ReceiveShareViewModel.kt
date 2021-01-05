@@ -14,18 +14,27 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.ui.share
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
+import android.app.Application
+import androidx.databinding.Bindable
+import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 
-// Intent
-const val INTENT_PHOTO_ID = "intent.photo.id"
+/**
+ * ViewModel for holding information about shared elements.
+ *
+ * @since 1.2.0
+ * @author Leon Latsch
+ */
+class ReceiveShareViewModel(
+    private val app: Application
+) : ObservableViewModel(app) {
 
-// Permissions
-const val REQ_PERM_IMPORT = 10
-const val REQ_PERM_EXPORT = 11
-const val REQ_PERM_RESTORE = 12
-const val REQ_PERM_SHARED_IMPORT = 13
+    @get:Bindable
+    var elementsToProcess: Int = ReceiveShareActivity.sharedData.size
+        set(value) {
+            field = value
+            notifyChange(BR.elementsToProcess, value)
+        }
+}
