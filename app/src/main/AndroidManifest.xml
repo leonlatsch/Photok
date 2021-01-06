@@ -31,7 +31,6 @@
 
         <activity
             android:name=".ui.StartActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,16 +39,13 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".ui.MainActivity" />
 
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|screenSize" />
 
-        <activity android:name="dev.leonlatsch.photok.ui.share.ReceiveShareActivity">
+        <activity android:name=".ui.share.ReceiveShareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -65,11 +61,6 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask" />
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
