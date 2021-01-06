@@ -49,7 +49,6 @@ class ReceiveShareActivity : BaseActivity() {
                 startActivity(nextIntent)
             }
         }
-        finish()
     }
 
     private fun storeData(): Boolean {

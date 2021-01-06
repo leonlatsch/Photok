@@ -49,6 +49,8 @@ class ReceiveShareDialog :
                 requireActivity().supportFragmentManager,
                 ImportBottomSheetDialogFragment::class.qualifiedName
             )
+
+            dismiss()
         } else {
             EasyPermissions.requestPermissions(
                 this,
