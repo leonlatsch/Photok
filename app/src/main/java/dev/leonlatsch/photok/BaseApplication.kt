@@ -25,7 +25,6 @@ import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.StartActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,7 +51,7 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
-     * Launch [StartActivity] when app was ON_STOP for at least the configured time.
+     * Call [restartAppLifecycle] when app was ON_STOP for at least the configured time.
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {

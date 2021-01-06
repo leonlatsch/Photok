@@ -29,23 +29,12 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
-        <activity
-            android:name=".ui.StartActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".ui.MainActivity" />
-
-        <activity
-            android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:configChanges="orientation|screenSize" />
-
-        <activity android:name=".ui.share.ReceiveShareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -61,6 +50,10 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.viewphoto.ViewPhotoActivity"
+            android:configChanges="orientation|screenSize" />
 
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"

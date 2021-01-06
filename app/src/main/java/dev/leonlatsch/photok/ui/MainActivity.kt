@@ -29,9 +29,6 @@ import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
-import dev.leonlatsch.photok.ui.components.Dialogs
-import dev.leonlatsch.photok.ui.share.ReceiveShareActivity
-import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
 import javax.inject.Inject
 
 /**
@@ -64,15 +61,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                     else -> binding.mainAppBarLayout.hide()
                 }
             }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (ReceiveShareActivity.sharedData.isNotEmpty()) {
-            Dialogs.showLongToast(this, "There is data from share")
-            val receiveDialog = ReceiveShareDialog()
-            receiveDialog.show(supportFragmentManager, ReceiveShareDialog::class.qualifiedName)
-        }
     }
 
     /**

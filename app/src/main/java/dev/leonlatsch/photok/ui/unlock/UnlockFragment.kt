@@ -16,10 +16,10 @@
 
 package dev.leonlatsch.photok.ui.unlock
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -27,7 +27,7 @@ import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.other.vanish
-import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.components.BaseActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 
@@ -68,13 +68,13 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
+        (requireActivity() as BaseActivity).hideKeyboard()
+        binding.loadingOverlay.hide()
+
         if (viewModel.encryptionManager.isReady) {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
+            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            binding.loadingOverlay.hide()
         }
     }
 

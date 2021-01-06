@@ -28,7 +28,7 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.BaseApplication
-import dev.leonlatsch.photok.ui.StartActivity
+import dev.leonlatsch.photok.ui.MainActivity
 
 /**
  * Get a file's name.
@@ -67,10 +67,10 @@ fun toggleSystemUI(window: Window?) {
 }
 
 /**
- * Restart the app. Clear back stack and start [StartActivity]
+ * Restart the app.
  */
 fun restartAppLifecycle(context: Context) {
-    val intent = Intent(context, StartActivity::class.java)
+    val intent = Intent(context, MainActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     context.startActivity(intent)
 }

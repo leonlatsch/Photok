@@ -22,7 +22,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogReceiveShareBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
-import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -44,11 +43,12 @@ class ReceiveShareDialog :
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            val importDialog = ImportBottomSheetDialogFragment(ReceiveShareActivity.sharedData)
-            importDialog.show(
-                requireActivity().supportFragmentManager,
-                ImportBottomSheetDialogFragment::class.qualifiedName
-            )
+//            TODO
+//            val importDialog = ImportBottomSheetDialogFragment(ReceiveShareActivity.sharedData)
+//            importDialog.show(
+//                requireActivity().supportFragmentManager,
+//                ImportBottomSheetDialogFragment::class.qualifiedName
+//            )
 
             dismiss()
         } else {

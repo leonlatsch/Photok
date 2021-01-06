@@ -32,7 +32,7 @@ class ReceiveShareViewModel(
 ) : ObservableViewModel(app) {
 
     @get:Bindable
-    var elementsToProcess: Int = ReceiveShareActivity.sharedData.size
+    var elementsToProcess: Int = 0 // TODO
         set(value) {
             field = value
             notifyChange(BR.elementsToProcess, value)
