@@ -14,27 +14,9 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.share
+package dev.leonlatsch.photok
 
-import android.app.Application
-import androidx.databinding.Bindable
-import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
-
-/**
- * ViewModel for holding information about shared elements.
- *
- * @since 1.2.0
- * @author Leon Latsch
- */
-class ReceiveShareViewModel(
-    private val app: Application
-) : ObservableViewModel(app) {
-
-    @get:Bindable
-    var elementsToProcess: Int = 0
-        set(value) {
-            field = value
-            notifyChange(BR.elementsToProcess, value)
-        }
+enum class ApplicationState {
+    LOCKED,
+    UNLOCKED
 }

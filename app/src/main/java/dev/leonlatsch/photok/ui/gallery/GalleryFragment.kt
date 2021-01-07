@@ -75,7 +75,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
             false
-        viewModel.photos
 
         adapter = PhotoAdapter(
             requireContext(),

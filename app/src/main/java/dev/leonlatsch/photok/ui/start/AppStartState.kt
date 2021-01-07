@@ -23,7 +23,7 @@ package dev.leonlatsch.photok.ui.start
  * @since 1.0.0
  * @author Leon Latsch
  */
-enum class ApplicationState {
+enum class AppStartState {
     FIRST_START,
     LOCKED,
     SETUP

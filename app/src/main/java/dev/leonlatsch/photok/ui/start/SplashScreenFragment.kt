@@ -39,11 +39,11 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.addOnPropertyChange<ApplicationState>(BR.applicationState) {
+        viewModel.addOnPropertyChange<AppStartState>(BR.appStartState) {
             when (it) {
-                ApplicationState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
-                ApplicationState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
-                ApplicationState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
+                AppStartState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
+                AppStartState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
+                AppStartState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
             }
         }
         viewModel.checkApplicationState()

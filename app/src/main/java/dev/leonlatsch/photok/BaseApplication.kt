@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -39,6 +40,8 @@ class BaseApplication : Application(), LifecycleObserver {
 
     @Inject
     lateinit var config: Config
+
+    val applicationState = ObservableField<ApplicationState>()
 
     private var wentToBackgroundAt = 0L
 

@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -29,6 +31,7 @@ import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
+import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
 import javax.inject.Inject
 
 /**
@@ -61,6 +64,37 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                     else -> binding.mainAppBarLayout.hide()
                 }
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val sharedData = extractSharedDataFromIntent()
+        if (sharedData.isNotEmpty()) {
+            val receiveDialog = ReceiveShareDialog(sharedData)
+            receiveDialog.show(supportFragmentManager, ReceiveShareDialog::class.qualifiedName)
+        }
+    }
+
+    private fun extractSharedDataFromIntent(): List<Uri> {
+        val data = arrayListOf<Uri>()
+
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
+                if (uri != null) {
+                    data.add(uri)
+                }
+            }
+            Intent.ACTION_SEND_MULTIPLE -> {
+                val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
+                if (uris != null) {
+                    data.addAll(uris)
+                }
+            }
+        }
+
+        return data
     }
 
     /**

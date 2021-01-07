@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok.ui.share
 
 import android.Manifest
+import android.net.Uri
 import androidx.fragment.app.viewModels
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogReceiveShareBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -31,8 +33,9 @@ import pub.devrel.easypermissions.EasyPermissions
  * @since 1.2.0
  * @author Leon Latsch
  */
-class ReceiveShareDialog :
-    BindableDialogFragment<DialogReceiveShareBinding>(R.layout.dialog_receive_share) {
+class ReceiveShareDialog(
+    private val sharedData: List<Uri>
+) : BindableDialogFragment<DialogReceiveShareBinding>(R.layout.dialog_receive_share) {
 
     private val viewModel: ReceiveShareViewModel by viewModels()
 
@@ -43,12 +46,11 @@ class ReceiveShareDialog :
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-//            TODO
-//            val importDialog = ImportBottomSheetDialogFragment(ReceiveShareActivity.sharedData)
-//            importDialog.show(
-//                requireActivity().supportFragmentManager,
-//                ImportBottomSheetDialogFragment::class.qualifiedName
-//            )
+            val importDialog = ImportBottomSheetDialogFragment(sharedData)
+            importDialog.show(
+                requireActivity().supportFragmentManager,
+                ImportBottomSheetDialogFragment::class.qualifiedName
+            )
 
             dismiss()
         } else {

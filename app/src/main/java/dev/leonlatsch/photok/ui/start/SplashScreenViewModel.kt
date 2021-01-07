@@ -38,10 +38,10 @@ class SplashScreenViewModel @ViewModelInject constructor(
 ) : ObservableViewModel(app) {
 
     @get:Bindable
-    var applicationState: ApplicationState? = null
+    var appStartState: AppStartState? = null
         set(value) {
             field = value
-            notifyChange(BR.applicationState, value)
+            notifyChange(BR.appStartState, value)
         }
 
     /**
@@ -51,16 +51,16 @@ class SplashScreenViewModel @ViewModelInject constructor(
 
         // First start
         if (config.systemFirstStart) {
-            applicationState = ApplicationState.FIRST_START
+            appStartState = AppStartState.FIRST_START
             return@launch
         }
 
         // Unlock or Setup
         val password = config.securityPassword
-        applicationState = if (password == null || password.isEmpty()) {
-            ApplicationState.SETUP
+        appStartState = if (password == null || password.isEmpty()) {
+            AppStartState.SETUP
         } else {
-            ApplicationState.LOCKED
+            AppStartState.LOCKED
         }
     }
 }
