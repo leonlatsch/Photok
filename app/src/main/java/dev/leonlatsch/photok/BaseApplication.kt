@@ -17,11 +17,7 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
-import androidx.databinding.ObservableField
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.setAppDesign
@@ -41,9 +37,13 @@ class BaseApplication : Application(), LifecycleObserver {
     @Inject
     lateinit var config: Config
 
-    val applicationState = ObservableField<ApplicationState>()
-
     private var wentToBackgroundAt = 0L
+
+    val rawApplicationState = MutableLiveData(ApplicationState.LOCKED)
+
+    var applicationState: ApplicationState
+        get() = rawApplicationState.value!!
+        set(value) = rawApplicationState.postValue(value)
 
     override fun onCreate() {
         super.onCreate()
@@ -77,6 +77,13 @@ class BaseApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackground() {
         wentToBackgroundAt = System.currentTimeMillis()
+    }
+
+    /**
+     * Set the [rawApplicationState] to [applicationState] to notify observers again.
+     */
+    fun notifyApplicationState() {
+        rawApplicationState.postValue(applicationState)
     }
 
     companion object {

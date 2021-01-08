@@ -16,7 +16,9 @@
 
 package dev.leonlatsch.photok.other
 
+import android.app.Activity
 import android.view.View
+import dev.leonlatsch.photok.BaseApplication
 
 /**
  * Sets the visibility to [View.VISIBLE]
@@ -44,3 +46,8 @@ fun View.vanish() {
  */
 val String.Companion.empty: String
     get() = ""
+
+/**
+ * Get the "application" as [BaseApplication] from any activity.
+ */
+fun Activity.getBaseApplication(): BaseApplication = application as BaseApplication

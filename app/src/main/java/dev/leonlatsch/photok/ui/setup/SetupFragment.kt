@@ -22,10 +22,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.BaseActivity
@@ -94,6 +96,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
+            requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
             findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(

@@ -24,13 +24,16 @@ import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
+import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
 import javax.inject.Inject
 
@@ -47,6 +50,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     @Inject
     override lateinit var config: Config
 
+    private var sharedDataCache: ArrayList<Uri> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,6 +62,18 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
+        getBaseApplication().rawApplicationState.observe(this, {
+            if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
+                ReceiveShareDialog(sharedDataCache).show(
+                    supportFragmentManager,
+                    ReceiveShareDialog::class.qualifiedName
+                )
+                sharedDataCache = arrayListOf()
+            }
+        })
+
+        dispatchIntent()
+
         binding.mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
@@ -66,35 +83,22 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val sharedData = extractSharedDataFromIntent()
-        if (sharedData.isNotEmpty()) {
-            val receiveDialog = ReceiveShareDialog(sharedData)
-            receiveDialog.show(supportFragmentManager, ReceiveShareDialog::class.qualifiedName)
-        }
-    }
-
-    private fun extractSharedDataFromIntent(): List<Uri> {
-        val data = arrayListOf<Uri>()
-
+    private fun dispatchIntent() {
+        Dialogs.showLongToast(this, intent.action.toString())
         when (intent.action) {
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uri != null) {
-                    data.add(uri)
+                    sharedDataCache.add(uri)
                 }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uris != null) {
-                    data.addAll(uris)
+                    sharedDataCache.addAll(uris)
                 }
             }
         }
-
-        return data
     }
 
     /**

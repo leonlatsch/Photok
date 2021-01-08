@@ -21,9 +21,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
+import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.other.vanish
@@ -47,9 +49,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         viewModel.addOnPropertyChange<UnlockState>(BR.unlockState) {
             when (it) {
                 UnlockState.CHECKING -> binding.loadingOverlay.show()
-                UnlockState.UNLOCKED -> {
-                    unlock()
-                }
+                UnlockState.UNLOCKED -> unlock()
                 UnlockState.LOCKED -> {
                     binding.loadingOverlay.hide()
                     binding.unlockWrongPasswordWarningTextView.show()
@@ -72,6 +72,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
+            requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
             findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))

@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.ui.share
 
 import android.Manifest
 import android.net.Uri
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogReceiveShareBinding
@@ -39,6 +41,11 @@ class ReceiveShareDialog(
 
     private val viewModel: ReceiveShareViewModel by viewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.elementsToProcess = sharedData.size
+    }
+
     @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
     fun startImport() {
         if (EasyPermissions.hasPermissions(
@@ -46,8 +53,7 @@ class ReceiveShareDialog(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            val importDialog = ImportBottomSheetDialogFragment(sharedData)
-            importDialog.show(
+            ImportBottomSheetDialogFragment(sharedData).show(
                 requireActivity().supportFragmentManager,
                 ImportBottomSheetDialogFragment::class.qualifiedName
             )

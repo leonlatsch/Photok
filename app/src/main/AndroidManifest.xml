@@ -29,9 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
-        <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
