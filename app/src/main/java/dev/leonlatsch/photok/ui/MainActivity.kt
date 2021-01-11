@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,19 +16,28 @@
 
 package dev.leonlatsch.photok.ui
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
+import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
+import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 /**
@@ -44,6 +53,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     @Inject
     override lateinit var config: Config
 
+    private var sharedDataCache: ArrayList<Uri> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +65,14 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
+        getBaseApplication().rawApplicationState.observe(this, {
+            if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
+                importShared()
+            }
+        })
+
+        dispatchIntent()
+
         binding.mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
@@ -61,6 +80,55 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                     else -> binding.mainAppBarLayout.hide()
                 }
             }
+    }
+
+    private fun dispatchIntent() {
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
+                if (uri != null) {
+                    sharedDataCache.add(uri)
+                }
+            }
+            Intent.ACTION_SEND_MULTIPLE -> {
+                val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
+                if (uris != null) {
+                    sharedDataCache.addAll(uris)
+                }
+            }
+        }
+    }
+
+    /**
+     * Start importing after the overview of photos.
+     */
+    @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
+    fun importShared() {
+        Dialogs.showConfirmDialog(
+            this,
+            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
+        ) { _, _ ->
+            if (EasyPermissions.hasPermissions(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
+                sharedDataCache.let {
+                    ImportBottomSheetDialogFragment(it).show(
+                        supportFragmentManager,
+                        ImportBottomSheetDialogFragment::class.qualifiedName
+                    )
+                }
+                sharedDataCache = arrayListOf()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.import_permission_rationale),
+                    REQ_PERM_SHARED_IMPORT,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            }
+        }
     }
 
     /**
@@ -81,7 +149,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             true
         }
         R.id.menuMainItemLock -> {
-            restartAppLifecycle(this)
+            getBaseApplication().lockApp()
             true
         }
         else -> false
@@ -90,5 +158,15 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun bind(binding: ActivityMainBinding) {
         super.bind(binding)
         binding.context = this
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward result to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

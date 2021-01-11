@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.ui.viewphoto
 
 import android.Manifest
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -137,6 +139,19 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_view_photo, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuViewPhotoInfo -> {
+            onDetails()
+            true
+        }
+        else -> false
     }
 
     private fun initializeSystemUI() {

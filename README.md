@@ -1,29 +1,40 @@
-# Photok
-
-![Project Image](https://i.imgur.com/MMY40N1.jpg)
-
-Encrypt your photos on your device and keep them safe from others.
+![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
 ![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
-![Maintenance](https://img.shields.io/maintenance/yes/2020)
+![Maintenance](https://img.shields.io/maintenance/yes/2021)
 
-## Download
-Photok is available at Google Play and F-Droid.
-
-<a target="_blank" href='https://play.google.com/store/apps/details?id=dev.leonlatsch.photok&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="20%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
-<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" style="width: 250px; height: 54px; vertical-align: center;" width="250" height="54" /></a>
+Encrypt your photos on your device and keep them safe from others.
 
 ## About
 Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
 It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
 Photok is completely free, open source, and contains no ads.
 
+<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank">
+    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" width="250" height="54" />
+</a>
+
+## Download
+Photok is available at Google Play and F-Droid. Aswell as some alternatives.
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
+      alt="Download from Google Play" 
+      height="80">](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
+[<img src="https://f-droid.org/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/packages/dev.leonlatsch.photok/)
+      
+Alternative 1: [Direct Download APK](https://github.com/leonlatsch/Photok/releases)
+
+Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
+
+
 LICENSE
 =======
-    Copyright 2020 Leon Latsch
+    Copyright 2020-2021 Leon Latsch
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

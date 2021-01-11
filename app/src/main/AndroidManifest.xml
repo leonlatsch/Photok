@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~   Copyright 2020 Leon Latsch
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -30,26 +29,40 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
-        <activity
-            android:name=".ui.StartActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
         </activity>
 
         <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask" />
-
-        <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:launchMode="singleTask"
+            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize" />
 
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.ActionBar" />
     </application>
 
 </manifest>

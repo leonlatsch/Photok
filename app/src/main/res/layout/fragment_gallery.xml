@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright 2020 Leon Latsch
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@
                 android:fontFamily="@font/raleway_bold"
                 android:text="@string/gallery_placeholder"
                 android:textAlignment="center"
-                android:textColor="@color/lightGray"
+                android:textColor="@color/dotUnselectedColor"
                 android:textSize="20sp" />
 
         </LinearLayout>

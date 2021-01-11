@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -75,7 +75,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
             false
-        viewModel.photos
 
         adapter = PhotoAdapter(
             requireContext(),
@@ -108,12 +107,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    private fun getColCount(): Int {
-        return when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> 4
-            Configuration.ORIENTATION_LANDSCAPE -> 8
-            else -> 4
-        }
+    private fun getColCount() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> 4
+        Configuration.ORIENTATION_LANDSCAPE -> 8
+        else -> 4
     }
 
     private fun togglePlaceholder(itemCount: Int) {

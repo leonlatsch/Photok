@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,10 +18,11 @@ package dev.leonlatsch.photok.ui.components
 
 import android.content.Context
 import android.content.DialogInterface
-import android.webkit.WebView
+import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.runOnMain
 
@@ -61,18 +62,8 @@ object Dialogs {
 
     fun showLicensesDialog(context: Context) {
         runOnMain {
-            val webView = WebView(context)
-            webView.loadUrl(LICENSE_REPORT_URL)
-
-            AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.about_third_party))
-                .setView(webView)
-                .setNeutralButton(context.getString(R.string.common_ok)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            OssLicensesMenuActivity.setActivityTitle(context.getString(R.string.about_third_party))
         }
     }
-
-    private const val LICENSE_REPORT_URL = "file:///android_asset/open_source_licenses.html"
 }

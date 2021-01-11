@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020 Leon Latsch
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)…</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
+    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
@@ -108,10 +109,10 @@
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_category_app">Aplicación</string>
-    <string name="settings_app_design_title">Design</string> <!-- TODO(Ismael034): translate -->
-    <string name="settings_app_design_system_default">System Default</string> <!-- TODO(Ismael034): translate -->
-    <string name="settings_app_design_system_light">Light</string> <!-- TODO(Ismael034): translate -->
-    <string name="settings_app_design_system_dark">Dark</string> <!-- TODO(Ismael034): translate -->
+    <string name="settings_app_design_title">Diseño</string>
+    <string name="settings_app_design_system_default">Por defecto del sistema</string>
+    <string name="settings_app_design_system_light">Claro</string>
+    <string name="settings_app_design_system_dark">Oscuro</string> 
     <string name="settings_reset_title">Restablecer baúl</string>
     <string name="settings_reset_summary">Borrar datos y restablecer contraseña</string>
     <string name="settings_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
