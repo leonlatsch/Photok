@@ -53,6 +53,7 @@
 
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
+            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize" />
 
         <activity
