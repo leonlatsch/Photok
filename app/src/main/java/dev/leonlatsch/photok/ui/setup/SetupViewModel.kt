@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.ui.setup
 import android.app.Application
 import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.empty
@@ -39,8 +38,8 @@ import org.mindrot.jbcrypt.BCrypt
  */
 class SetupViewModel @ViewModelInject constructor(
     app: Application,
-    private val config: Config,
-    private val encryptionManager: EncryptionManager
+    val encryptionManager: EncryptionManager,
+    private val config: Config
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -59,9 +58,14 @@ class SetupViewModel @ViewModelInject constructor(
             notifyChange(BR.confirmPassword, value)
         }
 
-    // endregion
+    @get:Bindable
+    var setupState: SetupState = SetupState.SETUP
+        set(value) {
+            field = value
+            notifyChange(BR.setupState, value)
+        }
 
-    val setupState: MutableLiveData<SetupState> = MutableLiveData(SetupState.SETUP)
+    // endregion
 
     /**
      * Save the password to database.
@@ -71,15 +75,15 @@ class SetupViewModel @ViewModelInject constructor(
      * Called by ui.
      */
     fun savePassword() = viewModelScope.launch {
-        setupState.postValue(SetupState.LOADING)
+        setupState = SetupState.LOADING
 
         if (validateBothPasswords()) {
             val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
             config.securityPassword = hashedPassword
             encryptionManager.initialize(this@SetupViewModel.password)
-            setupState.postValue(SetupState.FINISHED)
+            setupState = SetupState.FINISHED
         } else {
-            setupState.postValue(SetupState.SETUP)
+            setupState = SetupState.SETUP
         }
     }
 

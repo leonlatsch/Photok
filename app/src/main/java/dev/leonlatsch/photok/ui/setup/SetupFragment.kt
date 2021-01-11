@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,20 +16,23 @@
 
 package dev.leonlatsch.photok.ui.setup
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.ui.components.BaseActivity
 import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.Dialogs
 
 /**
  * Fragment for the setup.
@@ -79,20 +82,28 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             enableOrDisableSetup()
         }
 
-        viewModel.setupState.observe(viewLifecycleOwner, {
+        viewModel.addOnPropertyChange<SetupState>(BR.setupState) {
             when (it) {
                 SetupState.LOADING -> binding.loadingOverlay.show()
                 SetupState.SETUP -> binding.loadingOverlay.hide()
-                SetupState.FINISHED -> {
-                    binding.loadingOverlay.hide()
-
-                    val intent = Intent(activity, MainActivity::class.java)
-                    startActivity(intent)
-                    activity?.finish()
-                }
-                else -> return@observe
+                SetupState.FINISHED -> finishSetup()
             }
-        })
+        }
+    }
+
+    private fun finishSetup() {
+        (requireActivity() as BaseActivity).hideKeyboard()
+        binding.loadingOverlay.hide()
+
+        if (viewModel.encryptionManager.isReady) {
+            requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
+            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
+        } else {
+            Dialogs.showLongToast(
+                requireContext(),
+                getString(R.string.common_error)
+            )
+        }
     }
 
     private fun enableOrDisableSetup() {

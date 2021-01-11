@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.start
+package dev.leonlatsch.photok
 
 /**
- * Enum class to indicate application state.
- * Used in Splash Screen.
+ * Enum for [BaseApplication.applicationState].
  *
- * @since 1.0.0
- * @author Leon Latsch
+ * @since 1.2.0
+ * @author Leon Latshc
  */
 enum class ApplicationState {
-    FIRST_START,
     LOCKED,
-    SETUP
+    UNLOCKED
 }

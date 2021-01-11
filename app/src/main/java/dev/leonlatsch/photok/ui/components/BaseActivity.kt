@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.ui.components
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.Config
@@ -43,4 +44,12 @@ abstract class BaseActivity : AppCompatActivity() {
      * Abstract [Config], must be injected in implementations.
      */
     abstract var config: Config
+
+    /**
+     * Hide the soft-keyboard of displayed.
+     */
+    fun hideKeyboard() {
+        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    }
 }

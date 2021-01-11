@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,30 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui
-
-import android.os.Bundle
-import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.components.BaseActivity
-import javax.inject.Inject
+package dev.leonlatsch.photok.ui.start
 
 /**
- * The Launcher Activity
- * Displays, SplashScreen, Setup or Unlock.
+ * Enum class to indicate application state.
+ * Used in Splash Screen.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-@AndroidEntryPoint
-class StartActivity : BaseActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
-    }
-
-    @Inject
-    override lateinit var config: Config
+enum class AppStartState {
+    FIRST_START,
+    LOCKED,
+    SETUP
 }

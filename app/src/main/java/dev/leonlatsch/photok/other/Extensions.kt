@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 
 package dev.leonlatsch.photok.other
 
+import android.app.Activity
 import android.view.View
+import dev.leonlatsch.photok.BaseApplication
 
 /**
  * Sets the visibility to [View.VISIBLE]
@@ -44,3 +46,8 @@ fun View.vanish() {
  */
 val String.Companion.empty: String
     get() = ""
+
+/**
+ * Get the "application" as [BaseApplication] from any activity.
+ */
+fun Activity.getBaseApplication(): BaseApplication = application as BaseApplication
