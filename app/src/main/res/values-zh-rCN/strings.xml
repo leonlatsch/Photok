@@ -35,7 +35,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">正在导入照片……</string>
     <string name="import_permission_rationale">Photok 需要访问你的存储来导入照片</string>
-    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
+    <string name="import_sharted_question">你想导入 %1$d 张照片吗？</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">创建你的密码</string>
@@ -138,8 +138,8 @@
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
-    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
-    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> 
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> 
     <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
