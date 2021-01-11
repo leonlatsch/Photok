@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.ui
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,12 +28,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
-import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
+import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 /**
@@ -62,11 +67,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
         getBaseApplication().rawApplicationState.observe(this, {
             if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
-                ReceiveShareDialog(sharedDataCache).show(
-                    supportFragmentManager,
-                    ReceiveShareDialog::class.qualifiedName
-                )
-                sharedDataCache = arrayListOf()
+                importShared()
             }
         })
 
@@ -99,6 +100,38 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     }
 
     /**
+     * Start importing after the overview of photos.
+     */
+    @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
+    fun importShared() {
+        Dialogs.showConfirmDialog(
+            this,
+            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
+        ) { _, _ ->
+            if (EasyPermissions.hasPermissions(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
+                sharedDataCache.let {
+                    ImportBottomSheetDialogFragment(it).show(
+                        supportFragmentManager,
+                        ImportBottomSheetDialogFragment::class.qualifiedName
+                    )
+                }
+                sharedDataCache = arrayListOf()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.import_permission_rationale),
+                    REQ_PERM_SHARED_IMPORT,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            }
+        }
+    }
+
+    /**
      * Starts the action mode on mainToolbar.
      */
     fun startActionMode(callback: ActionMode.Callback): ActionMode? =
@@ -125,5 +158,15 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun bind(binding: ActivityMainBinding) {
         super.bind(binding)
         binding.context = this
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward result to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

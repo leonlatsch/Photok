@@ -35,6 +35,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)…</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
+    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
