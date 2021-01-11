@@ -84,6 +84,9 @@ class BaseApplication : Application(), LifecycleObserver {
         wentToBackgroundAt = System.currentTimeMillis()
     }
 
+    /**
+     * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
+     */
     fun lockApp() {
         encryptionManager.reset()
         applicationState = ApplicationState.LOCKED
