@@ -107,12 +107,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    private fun getColCount(): Int {
-        return when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> 4
-            Configuration.ORIENTATION_LANDSCAPE -> 8
-            else -> 4
-        }
+    private fun getColCount() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> 4
+        Configuration.ORIENTATION_LANDSCAPE -> 8
+        else -> 4
     }
 
     private fun togglePlaceholder(itemCount: Int) {

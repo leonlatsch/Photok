@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
-import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.ui.MainActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,6 +38,9 @@ class BaseApplication : Application(), LifecycleObserver {
 
     @Inject
     lateinit var config: Config
+
+    @Inject
+    lateinit var encryptionManager: EncryptionManager
 
     private var wentToBackgroundAt = 0L
 
@@ -54,7 +59,7 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
-     * Call [restartAppLifecycle] when app was ON_STOP for at least the configured time.
+     * Call [lockApp] when app was ON_STOP for at least the configured time.
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
@@ -67,7 +72,7 @@ class BaseApplication : Application(), LifecycleObserver {
             && wentToBackgroundAt != 0L
             && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
         ) {
-            restartAppLifecycle(this)
+            lockApp()
         }
     }
 
@@ -79,11 +84,12 @@ class BaseApplication : Application(), LifecycleObserver {
         wentToBackgroundAt = System.currentTimeMillis()
     }
 
-    /**
-     * Set the [rawApplicationState] to [applicationState] to notify observers again.
-     */
-    fun notifyApplicationState() {
-        rawApplicationState.postValue(applicationState)
+    fun lockApp() {
+        encryptionManager.reset()
+        applicationState = ApplicationState.LOCKED
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     companion object {

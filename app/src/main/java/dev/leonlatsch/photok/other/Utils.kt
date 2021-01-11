@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
@@ -28,7 +27,6 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.BaseApplication
-import dev.leonlatsch.photok.ui.MainActivity
 
 /**
  * Get a file's name.
@@ -64,15 +62,6 @@ fun toggleSystemUI(window: Window?) {
     newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
 
     window.decorView.systemUiVisibility = newUiOptions
-}
-
-/**
- * Restart the app.
- */
-fun restartAppLifecycle(context: Context) {
-    val intent = Intent(context, MainActivity::class.java)
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    context.startActivity(intent)
 }
 
 /**

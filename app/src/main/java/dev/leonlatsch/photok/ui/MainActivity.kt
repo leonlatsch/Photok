@@ -29,11 +29,9 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.getBaseApplication
 import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.BindableActivity
-import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.share.ReceiveShareDialog
 import javax.inject.Inject
 
@@ -84,7 +82,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     }
 
     private fun dispatchIntent() {
-        Dialogs.showLongToast(this, intent.action.toString())
         when (intent.action) {
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
@@ -119,7 +116,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             true
         }
         R.id.menuMainItemLock -> {
-            restartAppLifecycle(this)
+            getBaseApplication().lockApp()
             true
         }
         else -> false
