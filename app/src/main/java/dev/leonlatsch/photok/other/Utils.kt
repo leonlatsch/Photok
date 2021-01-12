@@ -17,16 +17,11 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
-import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
-import android.view.View
-import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
-import dev.leonlatsch.photok.BaseApplication
 
 /**
  * Get a file's name.
@@ -49,33 +44,9 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
 }
 
 /**
- * Toggle the system ui.
- * Used for fullscreen.
- */
-fun toggleSystemUI(window: Window?) {
-    window ?: return
-    val uiOptions: Int = window.decorView.systemUiVisibility
-    var newUiOptions = uiOptions
-
-    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
-    newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE
-
-    window.decorView.systemUiVisibility = newUiOptions
-}
-
-/**
  * Post a [operation] to the main looper.
  */
 fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
-
-/**
- * Extension for starting an activity for result and disable lock timer in [BaseApplication].
- */
-fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {
-    startActivityForResult(intent, reqCode)
-    BaseApplication.ignoreNextTimeout()
-}
 
 /**
  * Update the app design.
