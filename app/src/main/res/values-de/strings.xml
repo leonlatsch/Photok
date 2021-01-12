@@ -145,6 +145,8 @@
     <string name="settings_other_sourcecode_title">Quellcode</string>
     <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string>
+    <string name="settings_other_credits_summary">Mitwirkende und Credits</string>
     <string name="settings_other_about_title">Über</string>
     <string name="settings_other_about_summary">Informationen über Photok</string>
 

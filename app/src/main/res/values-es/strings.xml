@@ -145,6 +145,8 @@
     <string name="settings_other_sourcecode_title">Código fuente</string>
     <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Sobre Photok</string>
 

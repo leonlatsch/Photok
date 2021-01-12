@@ -95,6 +95,12 @@
             android:title="@string/settings_other_sourcecode_title" />
 
         <Preference
+            android:icon="@drawable/ic_book"
+            android:key="action_credits"
+            android:summary="@string/settings_other_credits_summary"
+            android:title="@string/settings_other_credits_title" />
+
+        <Preference
             android:icon="@drawable/ic_info"
             android:key="action_about"
             android:summary="@string/settings_other_about_summary"
