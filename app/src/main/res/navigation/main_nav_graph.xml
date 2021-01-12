@@ -40,6 +40,11 @@
             app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
+        <action
+            android:id="@+id/action_settingsFragment_to_creditsFragment"
+            app:destination="@id/creditsFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -111,4 +116,8 @@
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="dev.leonlatsch.photok.ui.settings.CreditsFragment"
+        android:label="CreditsFragment" />
 </navigation>

@@ -125,6 +125,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startActivity(intent)
         }
 
+        addActionTo(KEY_ACTION_CREDITS) {
+            findNavController().navigate(R.id.action_settingsFragment_to_creditsFragment)
+        }
+
         addActionTo(KEY_ACTION_ABOUT) {
             findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
         }
@@ -170,6 +174,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"
+        const val KEY_ACTION_CREDITS = "action_credits"
         const val KEY_ACTION_ABOUT = "action_about"
     }
 }
