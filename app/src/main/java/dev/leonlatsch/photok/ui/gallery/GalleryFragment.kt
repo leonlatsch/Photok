@@ -21,6 +21,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -205,7 +206,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
             exportDialog.show(

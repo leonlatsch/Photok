@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -121,7 +122,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
