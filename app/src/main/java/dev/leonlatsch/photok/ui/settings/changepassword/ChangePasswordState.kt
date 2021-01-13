@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings
+package dev.leonlatsch.photok.ui.settings.changepassword
 
 /**
  * Enum to indicate the state of [ChangePasswordDialog]

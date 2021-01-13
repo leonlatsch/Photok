@@ -14,27 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings
-
-import android.os.Bundle
-import android.view.View
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentCreditsBinding
-import dev.leonlatsch.photok.ui.components.BindableFragment
+package dev.leonlatsch.photok.ui.settings.credits
 
 /**
- * Fragment for displaying credits for icons and contributors.
+ * Representing data for an entry in the contributors page.
  *
  * @since 1.2.0
  * @author Leon Latsch
  */
-class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragment_credits) {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.creditsToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
-    }
-}
+data class CreditEntry(
+    val contribution: String,
+    val name: String,
+    val contact: String,
+    val website: String
+)

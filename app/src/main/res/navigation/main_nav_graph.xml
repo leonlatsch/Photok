@@ -118,6 +118,6 @@
     </fragment>
     <fragment
         android:id="@+id/creditsFragment"
-        android:name="dev.leonlatsch.photok.ui.settings.CreditsFragment"
+        android:name="dev.leonlatsch.photok.ui.settings.credits.CreditsFragment"
         android:label="CreditsFragment" />
 </navigation>

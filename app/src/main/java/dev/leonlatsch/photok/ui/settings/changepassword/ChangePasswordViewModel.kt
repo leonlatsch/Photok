@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings
+package dev.leonlatsch.photok.ui.settings.changepassword
 
 import android.app.Application
 import androidx.databinding.Bindable

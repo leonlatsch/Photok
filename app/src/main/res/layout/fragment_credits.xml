@@ -32,19 +32,17 @@
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/settings_other_credits_title" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+        <TextView
+            style="@style/BigTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_gap"
+            android:text="Contributions" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="80dp" />
-        </ScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/creditsRecycler"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/small_gap" />
     </LinearLayout>
 </layout>
