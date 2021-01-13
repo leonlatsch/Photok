@@ -46,7 +46,8 @@ class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragme
         requireActivity().assets.open(CONTRIBUTORS_FILE).let {
             val json = String(it.readBytes())
             val listType = object : TypeToken<ArrayList<CreditEntry?>?>() {}.type
-            val entries: ArrayList<CreditEntry> = Gson().fromJson(json, listType)
+            val entries: ArrayList<CreditEntry?> = Gson().fromJson(json, listType)
+            entries.add(null)
 
             val layoutManager = LinearLayoutManager(requireContext())
             binding.creditsRecycler.layoutManager = layoutManager
@@ -56,11 +57,11 @@ class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragme
                     layoutManager.orientation
                 )
             )
-            binding.creditsRecycler.adapter = CreditsAdapter(entries, onClick)
+            binding.creditsRecycler.adapter = CreditsAdapter(entries, openWebsite)
         }
     }
 
-    private val onClick: (str: String?) -> Unit = {
+    private val openWebsite: (url: String?) -> Unit = {
         if (it != null) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(it)

@@ -146,6 +146,11 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
     <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_html">Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>,
+        <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>and
+        <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from
+        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+    </string>
     <string name="settings_other_about_title">关于</string>
     <string name="settings_other_about_summary">有关 Photok 的信息</string>
 

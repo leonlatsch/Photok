@@ -16,9 +16,10 @@
 
 package dev.leonlatsch.photok.ui.settings.credits
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.content.Context
+import android.view.View
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.empty
@@ -30,33 +31,41 @@ import dev.leonlatsch.photok.other.empty
  * @author Leon Latsch
  */
 class CreditEntryViewHolder(
-    parent: ViewGroup,
-    private val onClick: (str: String?) -> Unit
-) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.item_credit_entry, parent, false)
-) {
+    view: View,
+    private val onClick: (str: String?) -> Unit,
+    private val context: Context
+) : RecyclerView.ViewHolder(view) {
 
-    private val nameTextView: TextView = itemView.findViewById(R.id.creditName)
-    private val contributionTextView: TextView = itemView.findViewById(R.id.creditContribution)
-    private val contactTextView: TextView = itemView.findViewById(R.id.creditContact)
-    private val websiteTextView: TextView = itemView.findViewById(R.id.creditWebsite)
+    private val nameTextView: TextView? = itemView.findViewById(R.id.creditName)
+    private val contributionTextView: TextView? = itemView.findViewById(R.id.creditContribution)
+    private val contactTextView: TextView? = itemView.findViewById(R.id.creditContact)
+    private val websiteTextView: TextView? = itemView.findViewById(R.id.creditWebsite)
+
+    private val headerHtmlTextView: TextView? = itemView.findViewById(R.id.creditIconHtmlTextView)
 
     private lateinit var rawWebsite: String
 
     /**
      * Bind [creditEntry] to the ui.
      */
-    fun bindTo(creditEntry: CreditEntry) {
-        rawWebsite = creditEntry.website
+    fun bindTo(creditEntry: CreditEntry?) {
+        if (creditEntry != null) {
+            rawWebsite = creditEntry.website
 
-        itemView.setOnClickListener {
-            onClick(normalizeSensitive(rawWebsite))
+            itemView.setOnClickListener {
+                onClick(normalizeSensitive(rawWebsite))
+            }
+
+            nameTextView?.text = creditEntry.name
+            contributionTextView?.text = creditEntry.contribution
+            contactTextView?.text = normalizeSensitive(creditEntry.contact)
+            websiteTextView?.text = prettifyWebsite(normalizeSensitive(creditEntry.website))
+        } else {
+            headerHtmlTextView?.text = HtmlCompat.fromHtml(
+                context.getString(R.string.settings_other_credits_html),
+                HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
         }
-
-        nameTextView.text = creditEntry.name
-        contributionTextView.text = creditEntry.contribution
-        contactTextView.text = normalizeSensitive(creditEntry.contact)
-        websiteTextView.text = prettifyWebsite(normalizeSensitive(creditEntry.website))
     }
 
     private fun normalizeSensitive(str: String) = str

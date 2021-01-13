@@ -16,8 +16,10 @@
 
 package dev.leonlatsch.photok.ui.settings.credits
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dev.leonlatsch.photok.R
 
 /**
  * Adapter for managing viewHolders for credit entries.
@@ -26,16 +28,38 @@ import androidx.recyclerview.widget.RecyclerView
  * @author Leon Latsch
  */
 class CreditsAdapter(
-    private val creditEntries: List<CreditEntry>,
+    private val creditEntries: List<CreditEntry?>,
     private val onClick: (str: String?) -> Unit
 ) : RecyclerView.Adapter<CreditEntryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditEntryViewHolder =
-        CreditEntryViewHolder(parent, onClick)
+        if (viewType == ENTRY_VIEW_TYPE) {
+            CreditEntryViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_credit_entry, parent, false), onClick, parent.context
+            )
+        } else {
+            CreditEntryViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_icon_credits, parent, false), onClick, parent.context
+            )
+        }
 
     override fun onBindViewHolder(holder: CreditEntryViewHolder, position: Int) {
         holder.bindTo(creditEntries[position])
     }
 
+    override fun getItemViewType(position: Int) =
+        if (creditEntries[position] == null) {
+            FOOTER_VIEW_TYPE
+        } else {
+            ENTRY_VIEW_TYPE
+        }
+
     override fun getItemCount(): Int = creditEntries.size
+
+    companion object {
+        private const val FOOTER_VIEW_TYPE = 0
+        private const val ENTRY_VIEW_TYPE = 1
+    }
 }

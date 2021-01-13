@@ -27,6 +27,7 @@
             android:id="@+id/creditsToolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginBottom="@dimen/big_gap"
             android:background="@android:color/transparent"
             android:theme="@style/transparentToolbarStyle"
             app:navigationIcon="@drawable/ic_back"
@@ -36,13 +37,14 @@
             style="@style/BigTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/small_gap"
-            android:text="Contributions" />
+            android:layout_marginStart="@dimen/small_gap"
+            android:layout_marginBottom="@dimen/small_gap"
+            android:text="Contributors and credits" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/creditsRecycler"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/small_gap" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/big_gap" />
     </LinearLayout>
 </layout>
