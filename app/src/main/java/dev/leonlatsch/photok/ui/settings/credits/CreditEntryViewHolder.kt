@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.ui.settings.credits
 
 import android.content.Context
+import android.text.Spanned
 import android.view.View
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
@@ -48,9 +49,11 @@ class CreditEntryViewHolder(
     /**
      * Bind [creditEntry] to the ui.
      */
-    fun bindTo(creditEntry: CreditEntry?) {
-        if (creditEntry != null) {
-            rawWebsite = creditEntry.website
+    fun bindTo(creditEntry: CreditEntry) {
+        if (creditEntry.isFooter) {
+            headerHtmlTextView?.text = loadIconCredits()
+        } else if (!creditEntry.isHeader) {
+            rawWebsite = creditEntry.website!!
 
             itemView.setOnClickListener {
                 onClick(normalizeSensitive(rawWebsite))
@@ -58,14 +61,15 @@ class CreditEntryViewHolder(
 
             nameTextView?.text = creditEntry.name
             contributionTextView?.text = creditEntry.contribution
-            contactTextView?.text = normalizeSensitive(creditEntry.contact)
+            contactTextView?.text = normalizeSensitive(creditEntry.contact!!)
             websiteTextView?.text = prettifyWebsite(normalizeSensitive(creditEntry.website))
-        } else {
-            headerHtmlTextView?.text = HtmlCompat.fromHtml(
-                context.getString(R.string.settings_other_credits_html),
-                HtmlCompat.FROM_HTML_MODE_COMPACT
-            )
         }
+    }
+
+    private fun loadIconCredits(): Spanned {
+        val bytes = context.assets.open(ICON_CREDITS_FILE).readBytes()
+        val rawText = String(bytes)
+        return HtmlCompat.fromHtml(rawText, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
     private fun normalizeSensitive(str: String) = str
@@ -76,5 +80,9 @@ class CreditEntryViewHolder(
         website.contains("http://") -> website.replace("http://", String.empty)
         website.contains("https://") -> website.replace("https://", String.empty)
         else -> website
+    }
+
+    companion object {
+        private const val ICON_CREDITS_FILE = "icon_credits.html"
     }
 }

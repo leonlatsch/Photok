@@ -15,9 +15,12 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/big_gap"
+    tools:ignore="UseCompoundDrawables">
 
     <TextView
         style="@style/VeryBigTextViewStyle"
@@ -26,21 +29,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/big_gap"
         android:layout_marginEnd="@dimen/big_gap"
-        android:text="Icons"
+        android:text="Contributors"
         android:textAlignment="center" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="120dp"
-        android:layout_marginTop="@dimen/big_gap"
-        android:layout_marginBottom="@dimen/big_gap"
-        android:src="@drawable/ic_paint_brush" />
-
-    <TextView
-        android:id="@+id/creditIconHtmlTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/small_gap"
-        android:paddingEnd="@dimen/small_gap" />
+        android:src="@drawable/ic_community" />
 
 </LinearLayout>

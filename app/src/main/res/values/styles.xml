@@ -28,6 +28,7 @@
         <item name="textColorAlertDialogListItem">@color/textColor</item>
         <item name="android:textColorHint">@color/secondaryTextColor</item>
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:listDivider">@color/secondaryTextColor</item>
 
         <!-- Action Mode -->
         <item name="windowActionModeOverlay">true</item>

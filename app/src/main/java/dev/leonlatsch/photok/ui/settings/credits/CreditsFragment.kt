@@ -46,8 +46,9 @@ class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragme
         requireActivity().assets.open(CONTRIBUTORS_FILE).let {
             val json = String(it.readBytes())
             val listType = object : TypeToken<ArrayList<CreditEntry?>?>() {}.type
-            val entries: ArrayList<CreditEntry?> = Gson().fromJson(json, listType)
-            entries.add(null)
+            val entries: ArrayList<CreditEntry> = Gson().fromJson(json, listType)
+            entries.add(0, CreditEntry.createHeader())
+            entries.add(CreditEntry.createFooter())
 
             val layoutManager = LinearLayoutManager(requireContext())
             binding.creditsRecycler.layoutManager = layoutManager

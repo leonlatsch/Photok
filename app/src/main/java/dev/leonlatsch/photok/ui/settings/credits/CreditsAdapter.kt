@@ -28,38 +28,45 @@ import dev.leonlatsch.photok.R
  * @author Leon Latsch
  */
 class CreditsAdapter(
-    private val creditEntries: List<CreditEntry?>,
+    private val creditEntries: List<CreditEntry>,
     private val onClick: (str: String?) -> Unit
 ) : RecyclerView.Adapter<CreditEntryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditEntryViewHolder =
-        if (viewType == ENTRY_VIEW_TYPE) {
-            CreditEntryViewHolder(
+        when (viewType) {
+            ENTRY_HEADER_TYPE -> CreditEntryViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_credit_entry, parent, false), onClick, parent.context
+                    .inflate(R.layout.item_credits_header, parent, false),
+                onClick,
+                parent.context
             )
-        } else {
-            CreditEntryViewHolder(
+            ENTRY_FOOTER_TYPE -> CreditEntryViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_icon_credits, parent, false), onClick, parent.context
             )
+            else -> CreditEntryViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_credit_entry, parent, false), onClick, parent.context
+            )
         }
+
 
     override fun onBindViewHolder(holder: CreditEntryViewHolder, position: Int) {
         holder.bindTo(creditEntries[position])
     }
 
     override fun getItemViewType(position: Int) =
-        if (creditEntries[position] == null) {
-            FOOTER_VIEW_TYPE
-        } else {
-            ENTRY_VIEW_TYPE
+        when {
+            creditEntries[position].isHeader -> ENTRY_HEADER_TYPE
+            creditEntries[position].isFooter -> ENTRY_FOOTER_TYPE
+            else -> ENTRY_VIEW_TYPE
         }
 
     override fun getItemCount(): Int = creditEntries.size
 
     companion object {
-        private const val FOOTER_VIEW_TYPE = 0
-        private const val ENTRY_VIEW_TYPE = 1
+        private const val ENTRY_VIEW_TYPE = 0
+        private const val ENTRY_FOOTER_TYPE = 1
+        private const val ENTRY_HEADER_TYPE = 2
     }
 }
