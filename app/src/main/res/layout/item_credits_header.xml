@@ -29,7 +29,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/big_gap"
         android:layout_marginEnd="@dimen/big_gap"
-        android:text="Contributors"
+        android:text="@string/credits_contributors_title"
         android:textAlignment="center" />
 
     <ImageView

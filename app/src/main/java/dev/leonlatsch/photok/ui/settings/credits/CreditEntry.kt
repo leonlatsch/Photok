@@ -39,12 +39,12 @@ data class CreditEntry(
         private const val LAYOUT_FOOTER = "layout_footer"
 
         /**
-         * Creates an entry wich will be interpreted as a header.
+         * Creates an entry which will be interpreted as a header.
          */
         fun createHeader() = CreditEntry(LAYOUT_HEADER)
 
         /**
-         * Creates an entry wich will be interpreted as a footer.
+         * Creates an entry which will be interpreted as a footer.
          */
         fun createFooter() = CreditEntry(LAYOUT_FOOTER)
     }

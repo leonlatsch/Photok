@@ -149,6 +149,10 @@
     <string name="settings_other_about_title">关于</string>
     <string name="settings_other_about_summary">有关 Photok 的信息</string>
 
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
+
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">更改你的密码</string>
     <string name="change_password_old_password">旧密码</string>

@@ -26,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/big_gap"
         android:layout_marginEnd="@dimen/big_gap"
-        android:text="Icons"
+        android:text="@string/credits_icons_title"
         android:textAlignment="center" />
 
     <ImageView

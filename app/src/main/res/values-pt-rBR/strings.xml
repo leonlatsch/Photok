@@ -149,6 +149,10 @@
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Informações sobre o Photok</string>
 
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
+
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Alterar sua senha</string>
     <string name="change_password_old_password">Senha antiga</string>

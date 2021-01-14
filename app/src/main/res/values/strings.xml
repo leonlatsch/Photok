@@ -148,6 +148,10 @@
     <string name="settings_other_about_title">About</string>
     <string name="settings_other_about_summary">Information about Photok</string>
 
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string>
+    <string name="credits_icons_title">Icons</string>
+
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Change your Password</string>
     <string name="change_password_old_password">Old Password</string>

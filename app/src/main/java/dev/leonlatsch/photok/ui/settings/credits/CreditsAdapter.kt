@@ -32,23 +32,19 @@ class CreditsAdapter(
     private val onClick: (str: String?) -> Unit
 ) : RecyclerView.Adapter<CreditEntryViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditEntryViewHolder =
-        when (viewType) {
-            ENTRY_HEADER_TYPE -> CreditEntryViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_credits_header, parent, false),
-                onClick,
-                parent.context
-            )
-            ENTRY_FOOTER_TYPE -> CreditEntryViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_icon_credits, parent, false), onClick, parent.context
-            )
-            else -> CreditEntryViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_credit_entry, parent, false), onClick, parent.context
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditEntryViewHolder {
+        val layout = when (viewType) {
+            ENTRY_HEADER_TYPE -> R.layout.item_credits_header
+            ENTRY_FOOTER_TYPE -> R.layout.item_icon_credits
+            else -> R.layout.item_credit_entry
         }
+
+        return CreditEntryViewHolder(
+            LayoutInflater.from(parent.context).inflate(layout, parent, false),
+            onClick,
+            parent.context
+        )
+    }
 
 
     override fun onBindViewHolder(holder: CreditEntryViewHolder, position: Int) {
