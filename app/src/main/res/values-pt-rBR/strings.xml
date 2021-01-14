@@ -144,8 +144,14 @@
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Informações sobre o Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Alterar sua senha</string>

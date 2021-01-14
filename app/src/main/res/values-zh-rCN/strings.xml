@@ -138,14 +138,20 @@
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
-    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> 
-    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> 
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
     <string name="settings_other_about_title">关于</string>
     <string name="settings_other_about_summary">有关 Photok 的信息</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">更改你的密码</string>
