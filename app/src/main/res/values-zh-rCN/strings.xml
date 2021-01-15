@@ -151,6 +151,7 @@
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">贡献者</string>
+    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
     <string name="credits_icons_title">图标</string>
 
     <!-- CHANGE PASSWORD -->

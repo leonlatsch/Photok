@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/big_gap"
+    android:paddingBottom="@dimen/medium_gap"
     tools:ignore="UseCompoundDrawables">
 
     <TextView
@@ -36,5 +36,13 @@
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:src="@drawable/ic_community" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/medium_gap"
+        android:text="@string/credits_contributors_hint"
+        android:textAlignment="center" />
 
 </LinearLayout>

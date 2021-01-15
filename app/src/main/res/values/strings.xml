@@ -150,6 +150,7 @@
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">Contributors</string>
+    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string>
     <string name="credits_icons_title">Icons</string>
 
     <!-- CHANGE PASSWORD -->

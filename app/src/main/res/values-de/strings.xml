@@ -152,6 +152,7 @@
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">Mitwirkende</string>
+    <string name="credits_contributors_hint">Besuche Photok auf GitHub um alle Mitwirkenden zu sehen</string>
     <string name="credits_icons_title">Icons</string>
 
     <!-- CHANGE PASSWORD -->
