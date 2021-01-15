@@ -25,7 +25,7 @@
             android:entryValues="@array/design"
             android:icon="@drawable/ic_brush"
             android:key="system^design"
-            android:title="Design"
+            android:title="@string/settings_app_design_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
