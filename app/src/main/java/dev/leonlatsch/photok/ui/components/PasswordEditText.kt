@@ -146,6 +146,9 @@ class PasswordEditText @JvmOverloads constructor(
         const val INPUT_TYPE_TEXT = 1
     }
 
+    /**
+     * Adapters for custom xml fields.
+     */
     object BindingAdapters {
         /**
          * Binding Adapter for "textValue".
