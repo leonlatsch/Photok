@@ -31,7 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
-        <activity android:name=".ui.MainActivity">
+        <activity-alias
+            android:name=".Launcher"
+            android:targetActivity=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +53,9 @@
 
                 <data android:mimeType="image/*" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity android:name=".ui.MainActivity" />
 
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"

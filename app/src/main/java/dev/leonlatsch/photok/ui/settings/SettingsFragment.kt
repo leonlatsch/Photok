@@ -36,6 +36,7 @@ import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.settings.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.ui.settings.hideapp.HideAppDialog
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -61,10 +62,29 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
+        setupAppCategory()
+        setupSecurityCategory()
+        setupAdvancedCategory()
+        setupOtherCategory()
+    }
+
+
+    private fun setupAppCategory() {
         addCallbackTo<ListPreference>(Config.SYSTEM_DESIGN) {
             setAppDesign(it as String)
         }
+    }
 
+    private fun setupSecurityCategory() {
+        addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
+            val dialog = ChangePasswordDialog()
+            dialog.show(
+                requireActivity().supportFragmentManager
+            )
+        }
+    }
+
+    private fun setupAdvancedCategory() {
         addActionTo(KEY_ACTION_RESET) {
             Dialogs.showConfirmDialog(
                 requireContext(),
@@ -87,14 +107,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             )
         }
 
-        addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
-            val dialog = ChangePasswordDialog()
-            dialog.show(
-                requireActivity().supportFragmentManager,
-                ChangePasswordDialog::class.qualifiedName
-            )
+        addActionTo(KEY_ACTION_HIDE_APP) {
+            HideAppDialog().show(childFragmentManager)
         }
+    }
 
+    private fun setupOtherCategory() {
         addActionTo(KEY_ACTION_FEEDBACK) {
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
@@ -172,6 +190,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"

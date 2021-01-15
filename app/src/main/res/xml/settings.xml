@@ -61,6 +61,12 @@
             android:summary="@string/settings_security_timeout_summary"
             android:title="@string/settings_security_timeout_title"
             app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            android:icon="@drawable/ic_dialpad"
+            android:key="action_hide_app"
+            android:summary="Hide Photok and only launch it from dial."
+            android:title="Hide App" />
     </PreferenceCategory>
 
     <PreferenceCategory
