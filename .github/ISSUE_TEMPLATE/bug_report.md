@@ -4,6 +4,7 @@ about: Create a report to help us improve
 title: '[Bug] *your bug goes here*'
 labels: 'bug'
 assignees: ''
+project: '1'
 
 ---
 
