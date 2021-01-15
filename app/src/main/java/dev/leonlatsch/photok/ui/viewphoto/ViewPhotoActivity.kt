@@ -17,10 +17,10 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +48,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     @Inject
     override lateinit var config: Config
 
+    private var systemUiVisible = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,7 +71,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
                 binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
             }, {
-                toggleSystemUI(window) // On clicked
+                toggleSystemUI() // On clicked
             })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
@@ -121,7 +123,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
@@ -154,12 +156,14 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         else -> false
     }
 
+    @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        window.decorView.setOnSystemUiVisibilityChangeListener {
-            if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+        window.addSystemUIVisibilityListener {
+            systemUiVisible = it
+            if (it) {
                 binding.viewPhotoAppBarLayout.show()
                 binding.viewPhotoBottomToolbarLayout.show()
             } else {
@@ -169,7 +173,15 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
 
         if (config.galleryAutoFullscreen) { // Hide system ui if configured
-            toggleSystemUI(window)
+            toggleSystemUI()
+        }
+    }
+
+    private fun toggleSystemUI() {
+        if (systemUiVisible) {
+            hideSystemUI()
+        } else {
+            showSystemUI()
         }
     }
 

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings
+package dev.leonlatsch.photok.ui.settings.changepassword
 
 import android.os.Bundle
 import android.view.View

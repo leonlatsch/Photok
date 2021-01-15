@@ -143,8 +143,14 @@
     <string name="settings_other_sourcecode_title">Source Code</string>
     <string name="settings_other_sourcecode_summary">Contribute to Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string>
+    <string name="settings_other_credits_summary">Contributors and credits</string>
     <string name="settings_other_about_title">About</string>
     <string name="settings_other_about_summary">Information about Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string>
+    <string name="credits_icons_title">Icons</string>
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Change your Password</string>

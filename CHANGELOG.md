@@ -1,7 +1,9 @@
 ### 1.2.0 (under development)
 - Feature: Share to Photok
+- Feature: Albums (under development)
+- Feature: Hide Photok (under development)
 - New third party page
-- New credits page (under development)
+- New credits page
 - Brazilian Portuguese translation
 
 ### 1.1.3

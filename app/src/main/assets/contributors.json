@@ -1,0 +1,26 @@
+[
+  {
+    "contribution": "Main programming and designing, maintaing of the project",
+    "name": "Leon Latsch",
+    "contact": "dev.leonlatsch@gmail.com",
+    "website": "https://leonlatsch.dev"
+  },
+  {
+    "contribution": "Maintaining spanish translation",
+    "name": "Ismael",
+    "contact": "ismael034@correo.ugr.es",
+    "website": "https://github.com/Ismael034"
+  },
+  {
+    "contribution": "ptbr translation",
+    "name": "mezysinc",
+    "contact": "@mezysinc on github",
+    "website": "https://github.com/mezysinc"
+  },
+  {
+    "contribution": "Doing some stuff",
+    "name": "Michael Rittmeister",
+    "contact": "michael@rittmeister.in",
+    "website": "https://rittmeister.in"
+  }
+]
