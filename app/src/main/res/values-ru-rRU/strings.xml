@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2020 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Авторское право \\00A9 2020 Леон Латш</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Загрузка ...</string>
+    <string name="common_password">Пароль</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_export">Экспорт</string>
+    <string name="common_error">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
+    <string name="common_yes">Да</string>
+    <string name="common_no">Нет</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_are_you_sure">Вы уверены?</string>
+
+    <!-- IMPORT -->>
+    <string name="import_importing">Импорт фотографии(ий)...</string>
+    <string name="import_permission_rationale">Photok должен получить доступ к вашему хранилищу, чтобы импортировать фотографии.</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Создайте свой пароль</string>
+    <string name="setup_enter_password">Введите свой пароль</string>
+    <string name="setup_confirm_password">Подтвердите свой пароль</string>
+    <string name="setup_password_strength_label">Надежность пароля:</string>
+    <string name="setup_button">Создать</string>
+    <string name="setup_password_strength_weak">Слабый</string>
+    <string name="setup_password_strength_moderate">Средний</string>
+    <string name="setup_password_strength_strong">Сильный</string>
+    <string name="setup_password_match_warning">\\26A0 Пароли не совпадают</string>
+    <string name="setupSetup">Установка</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Открой свой сейф</string>
+    <string name="unlock_enter_password">Введите пароль</string>
+    <string name="unlock_button">Разблокировка</string>
+    <string name="unlock_wrong_password">\\26A0 Неверный пароль</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">В вашем сейфе нет фотографий</string>
+    <string name="gallery_add_from_gallery">Из галереи</string>
+    <string name="gallery_add_from_backup">Из резервной копии</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Закрыть</string>
+    <string name="process_abort">Прервать</string>
+    <string name="process_finished">Завершенный</string>
+    <string name="process_initialize">Подготовка…</string>
+    <string name="process_aborted">Прервана</string>
+    <string name="process_failures_occurred">\\26A0 Некоторые элементы не могут быть обработаны</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Подробности</string>
+    <string name="view_photo_detail_file_name_label">Имя файла:</string>
+    <string name="view_photo_detail_import_at_label">Импортируется по адресу:</string>
+    <string name="view_photo_detail_file_type_label">Тип файла:</string>
+    <string name="view_photo_detail_size_label">Размер файла:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Блокировка</string>
+    <string name="menu_main_settings">Настройки</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Выбрать всё</string>
+    <string name="menu_ms_delete">Удалить</string>
+    <string name="menu_ms_export">Экспорт</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Вы уверены ,что хотите удалить фотографию(ии) %1$d?</string>
+    <string name="delete_are_you_sure_this">Вы уверены ,что хотите удалить эту фотографию?</string>
+    <string name="delete_deleting">Удаление фотографии (ий)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Вы действительно хотите  <b >экспортировать</b> %1$d фотографию(ии) обратно в галерею?</string>
+    <string name="export_are_you_sure_this">Вы действительно хотите <b >экспортировать</b> эту фотографию обратно в галерею?</string>
+    <string name="export_exporting">Экспорт фотографии(ий)...</string>
+    <string name="export_permission_rationale">Photok должен получить доступ к вашему хранилищу, чтобы экспортировать фотографии.</string>
+    <string name="export_finished">Экспортируется</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Версия:</string>
+    <string name="about_developed_by">Разработано компанией:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Стороннее Программное Обеспечение</string>
+    <string name="about_privacy_policy">Политика конфиденциальности</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_category_app">Приложение</string>
+    <string name="settings_app_design_title">Дизайн</string>
+    <string name="settings_app_design_system_default">Система по умолчанию</string>
+    <string name="settings_app_design_system_light">Светлый</string>
+    <string name="settings_app_design_system_dark">Тёмный</string>
+    <string name="settings_reset_title">Безопасный сброс</string>
+    <string name="settings_reset_summary">Стереть данные и сбросить пароль</string>
+    <string name="settings_reset_confirmation">Вы действительно хотите сбросить свой сейф? Все данные будут потеряны!</string>
+    <string name="settings_category_gallery">Галерея</string>
+    <string name="settings_auto_fullscreen_title">Автоматический полноэкранный экран</string>
+    <string name="settings_auto_fullscreen_summary">Переход в полноэкранный режим при открытии фотографии</string>
+    <string name="settings_category_security">Безопасность</string>
+    <string name="settings_security_timeout_title">Тайм-аут автоматической блокировки</string>
+    <string name="settings_security_timeout_summary">Автоматическая блокировка после заданного времени в фоновом режиме</string>
+    <string name="settings_security_timeout_immediately">Немедленно</string>
+    <string name="settings_security_timeout_one_minute">1 минута</string>
+    <string name="settings_security_timeout_two_minute">2 минуты</string>
+    <string name="settings_security_timeout_five_minute">5 минут</string>
+    <string name="settings_security_timeout_ten_minute">10 минут</string>
+    <string name="settings_security_timeout_never">Никогда</string>
+    <string name="settings_allow_screenshots_title">Разрешить скриншоты</string>
+    <string name="settings_allow_screenshots_summary">Разрешить делать скриншот. Требуется перезагрузка.</string>
+    <string name="settings_change_password_title">Изменить пароль</string>
+    <string name="settings_change_password_summary">Измените свой пароль</string>
+    <string name="settings_category_advanced">Продвинутый</string>
+    <string name="settings_category_advanced_summary">Используйте осторожно</string>
+    <string name="settings_backup_title">Резервная копия</string>
+    <string name="settings_backup_summary">Создание резервной копии сейфа</string>
+    <string name="settings_other_title">Прочие</string>
+    <string name="settings_other_feedback_title">Обратная связь</string>
+    <string name="settings_other_feedback_summary">Отправить мне электронное письмо с отзывами</string>
+    <string name="settings_other_feedback_mail_subject">Обратная связь с Photok</string>
+    <string name="settings_other_feedback_mail_body">Напишите отзыв о Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_sourcecode_title">Исходный код</string>
+    <string name="settings_other_sourcecode_summary">Внести свой вклад в Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_about_title">О приложении</string>
+    <string name="settings_other_about_summary">Информация о Photok</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Изменить пароль</string>
+    <string name="change_password_old_password">Старый пароль</string>
+    <string name="change_password_new_password">Новый пароль</string>
+    <string name="change_password_check">Проверить</string>
+    <string name="change_password_enter_new_password">Введите свой новый пароль</string>
+    <string name="change_password_confirm_new_password">Подтвердите свой новый пароль</string>
+    <string name="change_password_button">Поменять пароль</string>
+    <string name="change_password_confirm_message">Рекомендуется резервное копирование! <br ></br> Для смены пароля требуется повторное шифрование всех ваших фотографий! Хотите продолжить?</string>
+    <string name="change_password_reencrypting">Повторное шифрование фотографии(ий)…</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_finish">Завершить</string>
+    <string name="onboarding_skip"><u >Пропускать</u></string>
+
+    <string name="onboarding_slide1_title">Добро пожаловать в</string>
+    <string name="onboarding_slide1_description">Безопасное место для ваших фотографий.</string>
+    <string name="onboarding_slide2_title">Создайте пароль</string>
+    <string name="onboarding_slide2_description">Создайте безопасный пароль. Ваш пароль используется для шифрования ваших фотографий непосредственно на вашем телефоне</string>
+    <string name="onboarding_slide3_title">Начать импорт</string>
+    <string name="onboarding_slide3_description">Начните импортировать свои фотографии и храните их в безопасности от других.\n
+  После этого вы можете удалить их в своей галерее.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Создание резервной копии…</string>
+    <string name="backup_restore_title">Восстановление резервной копии…</string>
+    <string name="backup_restore_details_created_at">Создано в:</string>
+    <string name="backup_restore_details_photos_contained">Содержащиеся фотографии:</string>
+    <string name="backup_restore_details_compatible">Совместимый:</string>
+    <string name="backup_restore_button">Разблокировка и восстановление</string>
+    <string name="backup_restore_invalid_file">\\26A0 Неверный Файл</string>
+    <string name="backup_restore_processing">Восстановление резервной копии…</string>
+    <string name="backup_unlock_title">Разблокировать резервную копию</string>
+</resources>
