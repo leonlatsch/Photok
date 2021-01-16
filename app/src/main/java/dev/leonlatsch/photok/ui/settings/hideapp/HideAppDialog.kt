@@ -16,11 +16,34 @@
 
 package dev.leonlatsch.photok.ui.settings.hideapp
 
+import android.content.ComponentName
+import android.content.pm.PackageManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogHideAppBinding
 import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.components.Dialogs
 
 @AndroidEntryPoint
 class HideAppDialog : BindableDialogFragment<DialogHideAppBinding>(R.layout.dialog_hide_app) {
+
+    override fun bind(binding: DialogHideAppBinding) {
+        super.bind(binding)
+        binding.context = this
+    }
+
+    fun hideApp() {
+        Dialogs.showConfirmDialog(requireContext(), "DO u want to hide???") { _, _ ->
+            requireActivity().packageManager.setComponentEnabledSetting(
+                LAUNCHER_COMPONENT,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
+    }
+
+    companion object {
+        private val LAUNCHER_COMPONENT =
+            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.MainLauncher")
+    }
 }

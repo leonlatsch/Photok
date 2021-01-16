@@ -32,13 +32,18 @@
         android:theme="@style/SplashScreenTheme">
 
         <activity-alias
-            android:name=".Launcher"
+            android:name=".MainLauncher"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".SendLauncher"
+            android:targetActivity=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 

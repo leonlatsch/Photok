@@ -18,12 +18,29 @@
 
     <data>
 
+        <variable
+            name="context"
+            type="dev.leonlatsch.photok.ui.settings.hideapp.HideAppDialog" />
+
+        <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
     </data>
 
     <LinearLayout
         style="@style/LinearDialogStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            style="@style/BigTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hide App" />
+
+        <Button
+            android:layout_width="@dimen/wide_button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="@{() -> context.hideApp()}"
+            android:text="Hide Photok" />
 
     </LinearLayout>
 </layout>
