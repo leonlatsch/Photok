@@ -22,6 +22,10 @@
             name="context"
             type="dev.leonlatsch.photok.ui.settings.hideapp.HideAppDialog" />
 
+        <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.ui.settings.hideapp.HideAppViewModel" />
+
         <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
     </data>
 
@@ -35,6 +39,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hide App" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_gap"
+                android:text="Hidden:" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{BindingConverters.INSTANCE.boolYesNoConverter(viewModel.isAppHidden), default=Yes}" />
+        </LinearLayout>
 
         <Button
             android:layout_width="@dimen/wide_button_width"

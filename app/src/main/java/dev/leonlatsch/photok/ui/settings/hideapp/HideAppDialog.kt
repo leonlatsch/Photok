@@ -16,8 +16,9 @@
 
 package dev.leonlatsch.photok.ui.settings.hideapp
 
-import android.content.ComponentName
-import android.content.pm.PackageManager
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogHideAppBinding
@@ -27,46 +28,29 @@ import dev.leonlatsch.photok.ui.components.Dialogs
 @AndroidEntryPoint
 class HideAppDialog : BindableDialogFragment<DialogHideAppBinding>(R.layout.dialog_hide_app) {
 
-    override fun bind(binding: DialogHideAppBinding) {
-        super.bind(binding)
-        binding.context = this
+    private val viewModel: HideAppViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.updateState()
     }
 
     fun hideApp() {
-        Dialogs.showConfirmDialog(requireContext(), "DO u want to hide???") { _, _ ->
-            requireActivity().packageManager.setComponentEnabledSetting(
-                MAIN_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-            )
-            requireActivity().packageManager.setComponentEnabledSetting(
-                STEALTH_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
+        Dialogs.showConfirmDialog(requireContext(), "Hide???") { _, _ ->
+            viewModel.disableMainComponent()
         }
     }
 
     fun showApp() {
-        Dialogs.showConfirmDialog(requireContext(), "DO u want to show???") { _, _ ->
-            requireActivity().packageManager.setComponentEnabledSetting(
-                MAIN_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
-            requireActivity().packageManager.setComponentEnabledSetting(
-                STEALTH_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-            )
+        Dialogs.showConfirmDialog(requireContext(), "Show???") { _, _ ->
+            viewModel.enableMainComponent()
         }
     }
 
-    companion object {
-        private val MAIN_LAUNCHER_COMPONENT =
-            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.MainLauncher")
 
-        private val STEALTH_LAUNCHER_COMPONENT =
-            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.StealthLauncher")
+    override fun bind(binding: DialogHideAppBinding) {
+        super.bind(binding)
+        binding.context = this
+        binding.viewModel = viewModel
     }
 }
