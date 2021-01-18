@@ -63,10 +63,18 @@
             app:useSimpleSummaryProvider="true" />
 
         <Preference
-            android:icon="@drawable/ic_dialpad"
+            android:icon="@drawable/ic_app_blocking"
             android:key="action_hide_app"
             android:summary="Hide Photok and only launch it from dial."
             android:title="Hide App" />
+
+        <EditTextPreference
+            android:defaultValue="1337"
+            android:icon="@drawable/ic_dialpad"
+            android:inputType="number"
+            android:key="security^dialLaunchCode"
+            android:summary="Secret code to launch Photok from phone dialer."
+            android:title="Secret Launch Code" />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -20,10 +20,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -82,6 +84,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 requireActivity().supportFragmentManager
             )
         }
+
+        addActionTo(KEY_ACTION_HIDE_APP) {
+            HideAppDialog().show(childFragmentManager)
+        }
+
+        findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)?.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        }
     }
 
     private fun setupAdvancedCategory() {
@@ -105,10 +115,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Intent.createChooser(intent, "Select Backup File"),
                 REQ_BACKUP
             )
-        }
-
-        addActionTo(KEY_ACTION_HIDE_APP) {
-            HideAppDialog().show(childFragmentManager)
         }
     }
 

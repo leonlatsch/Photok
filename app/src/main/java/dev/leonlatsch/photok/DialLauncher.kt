@@ -16,10 +16,10 @@
 
 package dev.leonlatsch.photok
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.di.DaggerBroadcastReceiver
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.MainActivity
 import javax.inject.Inject
@@ -31,14 +31,15 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class DialLauncher : BroadcastReceiver() {
+class DialLauncher : DaggerBroadcastReceiver() {
 
     @Inject
     lateinit var config: Config
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
         context ?: return
-        if (intent?.data?.host == "1234") { // Use from config
+        if (intent?.data?.host == config.securityDialLaunchCode) { // Use from config
             val launchIntent = Intent(context, MainActivity::class.java)
             launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(launchIntent)

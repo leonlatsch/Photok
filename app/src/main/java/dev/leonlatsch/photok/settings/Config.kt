@@ -57,9 +57,9 @@ class Config(context: Context) {
         get() = getIntFromString(SECURITY_LOCK_TIMEOUT, SECURITY_LOCK_TIMEOUT_DEFAULT)
         set(value) = putString(SECURITY_LOCK_TIMEOUT, value.toString())
 
-    var securityDialLaunchCode: Int
-        get() = getInt(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
-        set(value) = putInt(SECURITY_DIAL_LAUNCH_CODE, value)
+    var securityDialLaunchCode: String?
+        get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
+        set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
 
 
     // region put/get methods
@@ -143,6 +143,6 @@ class Config(context: Context) {
         const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000
 
         const val SECURITY_DIAL_LAUNCH_CODE = "security^dialLaunchCode"
-        const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = 1337
+        const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
     }
 }
