@@ -39,7 +39,7 @@ class DialLauncher : DaggerBroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         context ?: return
-        if (intent?.data?.host == config.securityDialLaunchCode) { // Use from config
+        if (intent?.data?.host == config.securityDialLaunchCode) {
             val launchIntent = Intent(context, MainActivity::class.java)
             launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(launchIntent)

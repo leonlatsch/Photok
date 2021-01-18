@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import dev.leonlatsch.photok.ui.components.base.BaseDialogFragment
 
 /**
  * Base for all Dialogs that use Bindings.

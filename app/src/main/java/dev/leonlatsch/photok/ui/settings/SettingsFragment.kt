@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.settings.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.ui.settings.hideapp.HideAppDialog
+import javax.inject.Inject
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -51,6 +52,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
     private var toolbar: Toolbar? = null
+
+    @Inject
+    lateinit var config: Config
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,18 +84,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupSecurityCategory() {
         addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
             val dialog = ChangePasswordDialog()
-            dialog.show(
-                requireActivity().supportFragmentManager
-            )
+            dialog.show(requireActivity().supportFragmentManager)
         }
 
         addActionTo(KEY_ACTION_HIDE_APP) {
             HideAppDialog().show(childFragmentManager)
         }
 
-        findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)?.setOnBindEditTextListener {
-            it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        }
+        configurePhoneDialPreference()
     }
 
     private fun setupAdvancedCategory() {
@@ -156,6 +156,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         addActionTo(KEY_ACTION_ABOUT) {
             findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
+        }
+    }
+
+    private fun configurePhoneDialPreference() {
+        val dialPreference = findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)
+        dialPreference?.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        }
+        addCallbackTo<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE) {
+            val code = it as String
+            config.securityDialLaunchCode = if (code.isEmpty()) {
+                Config.SECURITY_DIAL_LAUNCH_CODE_DEFAULT
+            } else {
+                code
+            }
         }
     }
 

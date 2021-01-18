@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

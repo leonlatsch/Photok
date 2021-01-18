@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import dev.leonlatsch.photok.ui.components.base.BaseActivity
 
 /**
  * Abstract class for Activities with binding context.

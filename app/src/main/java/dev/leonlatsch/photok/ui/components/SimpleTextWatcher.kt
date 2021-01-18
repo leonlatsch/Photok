@@ -14,22 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.di
+package dev.leonlatsch.photok.ui.components
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import android.text.TextWatcher
 
-/**
- * Workaround class for injecting into broadcast receiver.
- * This should be remove, once hilt fixes this.
- * Ensures super call to [onReceive].
- *
- * More information: https://github.com/google/dagger/issues/1918#issuecomment-644057247
- *
- * @since 1.2.0
- * @author Leon Latsch
- */
-abstract class DaggerBroadcastReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {}
+abstract class SimpleTextWatcher : TextWatcher {
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 }
