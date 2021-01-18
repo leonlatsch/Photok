@@ -42,5 +42,11 @@
             android:onClick="@{() -> context.hideApp()}"
             android:text="Hide Photok" />
 
+        <Button
+            android:layout_width="@dimen/wide_button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="@{() -> context.showApp()}"
+            android:text="Show Photok" />
+
     </LinearLayout>
 </layout>

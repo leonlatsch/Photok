@@ -35,7 +35,27 @@ class HideAppDialog : BindableDialogFragment<DialogHideAppBinding>(R.layout.dial
     fun hideApp() {
         Dialogs.showConfirmDialog(requireContext(), "DO u want to hide???") { _, _ ->
             requireActivity().packageManager.setComponentEnabledSetting(
-                LAUNCHER_COMPONENT,
+                MAIN_LAUNCHER_COMPONENT,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+            requireActivity().packageManager.setComponentEnabledSetting(
+                STEALTH_LAUNCHER_COMPONENT,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
+    }
+
+    fun showApp() {
+        Dialogs.showConfirmDialog(requireContext(), "DO u want to show???") { _, _ ->
+            requireActivity().packageManager.setComponentEnabledSetting(
+                MAIN_LAUNCHER_COMPONENT,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+            requireActivity().packageManager.setComponentEnabledSetting(
+                STEALTH_LAUNCHER_COMPONENT,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP
             )
@@ -43,7 +63,10 @@ class HideAppDialog : BindableDialogFragment<DialogHideAppBinding>(R.layout.dial
     }
 
     companion object {
-        private val LAUNCHER_COMPONENT =
+        private val MAIN_LAUNCHER_COMPONENT =
             ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.MainLauncher")
+
+        private val STEALTH_LAUNCHER_COMPONENT =
+            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.StealthLauncher")
     }
 }
