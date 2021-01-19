@@ -108,17 +108,17 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
+
     <string name="settings_category_app">App</string>
     <string name="settings_app_design_title">Erscheinungsbild</string>
     <string name="settings_app_design_system_default">System Standard</string>
     <string name="settings_app_design_system_light">Hell</string>
     <string name="settings_app_design_system_dark">Dunkel</string>
-    <string name="settings_reset_title">Safe zurücksetzen</string>
-    <string name="settings_reset_summary">Daten löschen und Passwort zurücksetzen</string>
-    <string name="settings_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
+
     <string name="settings_category_gallery">Galerie</string>
-    <string name="settings_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
+    <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
+
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
@@ -128,14 +128,19 @@
     <string name="settings_security_timeout_five_minute">5 Minuten</string>
     <string name="settings_security_timeout_ten_minute">10 Minuten</string>
     <string name="settings_security_timeout_never">Niemals</string>
-    <string name="settings_allow_screenshots_title">Erlaube Screenshots</string>
-    <string name="settings_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
-    <string name="settings_change_password_title">Passwort ändern</string>
-    <string name="settings_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
+    <string name="settings_security_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
+    <string name="settings_security_change_password_title">Passwort ändern</string>
+    <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
+
     <string name="settings_category_advanced">Erweitert</string>
     <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>
-    <string name="settings_backup_title">Backup</string>
-    <string name="settings_backup_summary">Erstelle ein Backup von deinem Safe</string>
+    <string name="settings_advanced_reset_title">Safe zurücksetzen</string>
+    <string name="settings_advanced_reset_summary">Daten löschen und Passwort zurücksetzen</string>
+    <string name="settings_advanced_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Erstelle ein Backup von deinem Safe</string>
+
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
     <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>

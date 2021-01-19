@@ -107,17 +107,17 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
+
     <string name="settings_category_app">应用程序</string>
-    <string name="settings_app_design_title">设计</string> 
-    <string name="settings_app_design_system_default">系统默认</string> 
-    <string name="settings_app_design_system_light">浅色</string> 
-    <string name="settings_app_design_system_dark">深色</string> 
-    <string name="settings_reset_title">重置照片保险库</string>
-    <string name="settings_reset_summary">抹去数据并重置密码</string>
-    <string name="settings_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
+    <string name="settings_app_design_title">设计</string>
+    <string name="settings_app_design_system_default">系统默认</string>
+    <string name="settings_app_design_system_light">浅色</string>
+    <string name="settings_app_design_system_dark">深色</string>
+
     <string name="settings_category_gallery">图库</string>
-    <string name="settings_auto_fullscreen_title">自动全屏</string>
-    <string name="settings_auto_fullscreen_summary">打开照片时进入全屏模式</string>
+    <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
+    <string name="settings_gallery_auto_fullscreen_summary">打开照片时进入全屏模式</string>
+
     <string name="settings_category_security">安全</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定照片库</string>
@@ -127,14 +127,19 @@
     <string name="settings_security_timeout_five_minute">5 分钟</string>
     <string name="settings_security_timeout_ten_minute">10 分钟</string>
     <string name="settings_security_timeout_never">永不</string>
-    <string name="settings_allow_screenshots_title">允许截屏</string>
-    <string name="settings_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
-    <string name="settings_change_password_title">更改密码</string>
-    <string name="settings_change_password_summary">更改你的密码</string>
+    <string name="settings_security_allow_screenshots_title">允许截屏</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
+    <string name="settings_security_change_password_title">更改密码</string>
+    <string name="settings_security_change_password_summary">更改你的密码</string>
+
     <string name="settings_category_advanced">高级设置</string>
     <string name="settings_category_advanced_summary">小心使用</string>
-    <string name="settings_backup_title">备份</string>
-    <string name="settings_backup_summary">创建照片保险库的备份</string>
+    <string name="settings_advanced_reset_title">重置照片保险库</string>
+    <string name="settings_advanced_reset_summary">抹去数据并重置密码</string>
+    <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
+    <string name="settings_advanced_backup_title">备份</string>
+    <string name="settings_advanced_backup_summary">创建照片保险库的备份</string>
+
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>

@@ -107,17 +107,17 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Configurações</string>
+
     <string name="settings_category_app">App</string>
     <string name="settings_app_design_title">Design</string>
     <string name="settings_app_design_system_default">Adaptado do sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
     <string name="settings_app_design_system_dark">Escuro</string>
-    <string name="settings_reset_title">Restaurar o cofre</string>
-    <string name="settings_reset_summary">Excluir os dados e redefinir a senha</string>
-    <string name="settings_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+
     <string name="settings_category_gallery">Galeria</string>
-    <string name="settings_auto_fullscreen_title">Tela completa automaticamente</string>
-    <string name="settings_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
+    <string name="settings_gallery_auto_fullscreen_title">Tela completa automaticamente</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
+
     <string name="settings_category_security">Segurança</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloqueio automático após determinado tempo em segundo plano</string>
@@ -127,14 +127,19 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_allow_screenshots_title">Permitir as capturas da tela</string>
-    <string name="settings_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
-    <string name="settings_change_password_title">Alterar a senha</string>
-    <string name="settings_change_password_summary">Alterar sua senha</string>
+    <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
+    <string name="settings_security_change_password_title">Alterar a senha</string>
+    <string name="settings_security_change_password_summary">Alterar sua senha</string>
+
     <string name="settings_category_advanced">Avançado</string>
     <string name="settings_category_advanced_summary">Use com cuidado</string>
-    <string name="settings_backup_title">Backup</string>
-    <string name="settings_backup_summary">Criar um backup do seu cofre</string>
+    <string name="settings_advanced_reset_title">Restaurar o cofre</string>
+    <string name="settings_advanced_reset_summary">Excluir os dados e redefinir a senha</string>
+    <string name="settings_advanced_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Criar um backup do seu cofre</string>
+
     <string name="settings_other_title">Outros</string>
     <string name="settings_other_feedback_title">Feedback</string>
     <string name="settings_other_feedback_summary">Envie-me um e-mail com o feedback</string>

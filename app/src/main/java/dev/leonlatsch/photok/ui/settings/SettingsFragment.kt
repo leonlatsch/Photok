@@ -98,7 +98,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         addActionTo(KEY_ACTION_RESET) {
             Dialogs.showConfirmDialog(
                 requireContext(),
-                getString(R.string.settings_reset_confirmation)
+                getString(R.string.settings_advanced_reset_confirmation)
             ) { _, _ ->
                 viewModel.resetComponents()
             }
