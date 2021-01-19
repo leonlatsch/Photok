@@ -171,6 +171,7 @@
     <string name="hide_app_status_label">Photok is currently:</string>
     <string name="hide_app_status_visible">VISIBLE</string>
     <string name="hide_app_status_hidden">HIDDEN</string>
+    <string name="hide_app_app_name_stealth">Phone</string>
     <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string>
     <string name="hide_app_confirm_show">Do you want to show Photok again?</string>
     <string name="hide_app_hint">* Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string>

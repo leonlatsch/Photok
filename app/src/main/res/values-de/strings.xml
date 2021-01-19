@@ -172,6 +172,7 @@
     <string name="hide_app_status_label">Photok ist momentan:</string>
     <string name="hide_app_status_visible">SICHTBAR</string>
     <string name="hide_app_status_hidden">VERSTECKT</string>
+    <string name="hide_app_app_name_stealth">Telefon</string>
     <string name="hide_app_confirm_hide">Willst du Photok wirklich verstecken?</string>
     <string name="hide_app_confirm_show">Willst du Photok wieder anzeigen?</string>
     <string name="hide_app_hint">* Sobald es versteckt ist, kannst Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
