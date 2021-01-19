@@ -20,10 +20,13 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -36,6 +39,8 @@ import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.settings.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.ui.settings.hideapp.ToggleAppVisibilityDialog
+import javax.inject.Inject
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -49,6 +54,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val viewModel: SettingsViewModel by viewModels()
     private var toolbar: Toolbar? = null
 
+    @Inject
+    lateinit var config: Config
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,14 +69,37 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
+        setupAppCategory()
+        setupSecurityCategory()
+        setupAdvancedCategory()
+        setupOtherCategory()
+    }
+
+
+    private fun setupAppCategory() {
         addCallbackTo<ListPreference>(Config.SYSTEM_DESIGN) {
             setAppDesign(it as String)
         }
+    }
 
+    private fun setupSecurityCategory() {
+        addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
+            val dialog = ChangePasswordDialog()
+            dialog.show(childFragmentManager)
+        }
+
+        addActionTo(KEY_ACTION_HIDE_APP) {
+            ToggleAppVisibilityDialog().show(childFragmentManager)
+        }
+
+        configurePhoneDialPreference()
+    }
+
+    private fun setupAdvancedCategory() {
         addActionTo(KEY_ACTION_RESET) {
             Dialogs.showConfirmDialog(
                 requireContext(),
-                getString(R.string.settings_reset_confirmation)
+                getString(R.string.settings_advanced_reset_confirmation)
             ) { _, _ ->
                 viewModel.resetComponents()
             }
@@ -86,15 +117,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 REQ_BACKUP
             )
         }
+    }
 
-        addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
-            val dialog = ChangePasswordDialog()
-            dialog.show(
-                requireActivity().supportFragmentManager,
-                ChangePasswordDialog::class.qualifiedName
-            )
-        }
-
+    private fun setupOtherCategory() {
         addActionTo(KEY_ACTION_FEEDBACK) {
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
@@ -135,6 +160,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun configurePhoneDialPreference() {
+        val dialPreference = findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)
+        dialPreference?.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            it.addTextChangedListener { editable ->
+                if (editable?.length!! < 1) {
+                    it.setText(0.toString())
+                }
+            }
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_BACKUP && resultCode == Activity.RESULT_OK) {
@@ -172,6 +209,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"

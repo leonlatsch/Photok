@@ -14,28 +14,22 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.di
 
-import androidx.databinding.ViewDataBinding
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 
 /**
- * Interface for all bindable base ui components.
+ * Workaround class for injecting into broadcast receiver.
+ * This should be remove, once hilt fixes this.
+ * Ensures super call to [onReceive].
  *
- * @since 1.0.0
+ * More information: https://github.com/google/dagger/issues/1918#issuecomment-644057247
+ *
+ * @since 1.2.0
  * @author Leon Latsch
  */
-interface Bindable<BindingType : ViewDataBinding> {
-
-
-    /**
-     * Binding instance. Contains all Views and Variables in a layout.
-     */
-    var binding: BindingType
-
-    /**
-     * Used to insert bindings.
-     * @sample dev.leonlatsch.photok.ui.components.BindableActivity.bind
-     */
-    fun bind(binding: BindingType)
-
+abstract class DaggerBroadcastReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {}
 }

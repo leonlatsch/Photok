@@ -34,8 +34,8 @@
             android:defaultValue="true"
             android:icon="@drawable/ic_fullscreen"
             android:key="gallery^fullscreen.auto"
-            android:summary="@string/settings_auto_fullscreen_summary"
-            android:title="@string/settings_auto_fullscreen_title" />
+            android:summary="@string/settings_gallery_auto_fullscreen_summary"
+            android:title="@string/settings_gallery_auto_fullscreen_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_security">
@@ -43,14 +43,14 @@
             android:defaultValue="false"
             android:icon="@drawable/ic_screen_lock"
             android:key="security^allowScreenshots"
-            android:summary="@string/settings_allow_screenshots_summary"
-            android:title="@string/settings_allow_screenshots_title" />
+            android:summary="@string/settings_security_allow_screenshots_summary"
+            android:title="@string/settings_security_allow_screenshots_title" />
 
         <Preference
             android:icon="@drawable/ic_key"
             android:key="action_change_password"
-            android:summary="@string/settings_change_password_summary"
-            android:title="@string/settings_change_password_title" />
+            android:summary="@string/settings_security_change_password_summary"
+            android:title="@string/settings_security_change_password_title" />
 
         <ListPreference
             android:defaultValue="300000"
@@ -61,6 +61,23 @@
             android:summary="@string/settings_security_timeout_summary"
             android:title="@string/settings_security_timeout_title"
             app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:dialogLayout="@layout/dialog_edit_text_preference_secret_code"
+            android:defaultValue="1337"
+            android:dialogMessage="@string/settings_security_launch_code_message"
+            android:icon="@drawable/ic_dialpad"
+            android:inputType="number"
+            android:key="security^dialLaunchCode"
+            android:summary="@string/settings_security_launch_code_summary"
+            android:title="@string/settings_security_launch_code_title" />
+
+        <Preference
+            android:icon="@drawable/ic_app_blocking"
+            android:key="action_hide_app"
+            android:summary="@string/settings_security_hide_app_summary"
+            android:title="@string/settings_security_hide_app_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -70,14 +87,14 @@
         <Preference
             android:icon="@drawable/ic_warning"
             android:key="action_reset_safe"
-            android:summary="@string/settings_reset_summary"
-            android:title="@string/settings_reset_title" />
+            android:summary="@string/settings_advanced_reset_summary"
+            android:title="@string/settings_advanced_reset_title" />
 
         <Preference
             android:icon="@drawable/ic_save_as"
             android:key="action_backup_safe"
-            android:summary="@string/settings_backup_summary"
-            android:title="@string/settings_backup_title" />
+            android:summary="@string/settings_advanced_backup_summary"
+            android:title="@string/settings_advanced_backup_title" />
 
     </PreferenceCategory>
 

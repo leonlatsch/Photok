@@ -25,7 +25,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBackupUnlockBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 /**
  * Dialog for unlocking a backup.

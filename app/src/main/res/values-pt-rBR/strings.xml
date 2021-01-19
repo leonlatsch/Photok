@@ -107,18 +107,22 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Configurações</string>
+
     <string name="settings_category_app">App</string>
     <string name="settings_app_design_title">Design</string>
     <string name="settings_app_design_system_default">Adaptado do sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
     <string name="settings_app_design_system_dark">Escuro</string>
-    <string name="settings_reset_title">Restaurar o cofre</string>
-    <string name="settings_reset_summary">Excluir os dados e redefinir a senha</string>
-    <string name="settings_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+
     <string name="settings_category_gallery">Galeria</string>
-    <string name="settings_auto_fullscreen_title">Tela completa automaticamente</string>
-    <string name="settings_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
+    <string name="settings_gallery_auto_fullscreen_title">Tela completa automaticamente</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
+
     <string name="settings_category_security">Segurança</string>
+    <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
+    <string name="settings_security_change_password_title">Alterar a senha</string>
+    <string name="settings_security_change_password_summary">Alterar sua senha</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloqueio automático após determinado tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -127,14 +131,20 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_allow_screenshots_title">Permitir as capturas da tela</string>
-    <string name="settings_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
-    <string name="settings_change_password_title">Alterar a senha</string>
-    <string name="settings_change_password_summary">Alterar sua senha</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+
     <string name="settings_category_advanced">Avançado</string>
     <string name="settings_category_advanced_summary">Use com cuidado</string>
-    <string name="settings_backup_title">Backup</string>
-    <string name="settings_backup_summary">Criar um backup do seu cofre</string>
+    <string name="settings_advanced_reset_title">Restaurar o cofre</string>
+    <string name="settings_advanced_reset_summary">Excluir os dados e redefinir a senha</string>
+    <string name="settings_advanced_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Criar um backup do seu cofre</string>
+
     <string name="settings_other_title">Outros</string>
     <string name="settings_other_feedback_title">Feedback</string>
     <string name="settings_other_feedback_summary">Envie-me um e-mail com o feedback</string>
@@ -164,6 +174,20 @@
     <string name="change_password_button">Alterar a senha</string>
     <string name="change_password_confirm_message">Um backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todas as suas fotos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Foto(s) sendo criptografada(s) de novo…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
+    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
+    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
+    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
+    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">Próximo</string>

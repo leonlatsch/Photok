@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.R
 
 /**
@@ -41,4 +42,9 @@ abstract class BaseDialogFragment : DialogFragment() {
         view.background =
             ResourcesCompat.getDrawable(resources, R.drawable.bg_dialog_round, null)
     }
+
+    /**
+     * Call [show] with qualified classname as tag.
+     */
+    fun show(fragmentManager: FragmentManager) = show(fragmentManager, this::class.qualifiedName)
 }

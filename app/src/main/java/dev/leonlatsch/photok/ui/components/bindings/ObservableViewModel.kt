@@ -49,7 +49,7 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
     /**
      * Add callback to [valueChangeRegistry]
      */
-    fun addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
+    fun <T> addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
         valueChangeRegistry.addValueCallback(callback)
 
     /**
@@ -99,5 +99,11 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
                 }
             }
         })
+    }
+
+    /**
+     * Used for setting up the viewModel. Can be overridden.
+     */
+    open fun setup() {
     }
 }

@@ -46,7 +46,6 @@ class CreditsAdapter(
         )
     }
 
-
     override fun onBindViewHolder(holder: CreditEntryViewHolder, position: Int) {
         holder.bindTo(creditEntries[position])
     }

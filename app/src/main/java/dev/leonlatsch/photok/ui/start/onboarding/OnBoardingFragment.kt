@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOnboardingBinding
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 import javax.inject.Inject
 
 /**
