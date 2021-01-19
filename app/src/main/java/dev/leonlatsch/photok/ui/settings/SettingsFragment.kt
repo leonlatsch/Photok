@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.preference.EditTextPreference
@@ -161,16 +162,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun configurePhoneDialPreference() {
         val dialPreference = findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)
-        dialPreference?.text = config.securityDialLaunchCode
         dialPreference?.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        }
-        addCallbackTo<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE) {
-            val code = it as String
-            config.securityDialLaunchCode = if (code.isEmpty()) {
-                Config.SECURITY_DIAL_LAUNCH_CODE_DEFAULT
-            } else {
-                code
+            it.addTextChangedListener { editable ->
+                if (editable?.length!! < 1) {
+                    it.setText(0.toString())
+                }
             }
         }
     }

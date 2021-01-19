@@ -57,6 +57,9 @@ class ToggleAppVisibilityDialog :
             .commit()
     }
 
+    /**
+     * Ask for confirmation and run viewModel.toggleMainComponent.
+     */
     fun toggleAppVisibility() {
         Dialogs.showConfirmDialog(requireContext(), viewModel.confirmText) { _, _ ->
             viewModel.toggleMainComponent()

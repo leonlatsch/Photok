@@ -69,7 +69,6 @@
             android:icon="@drawable/ic_dialpad"
             android:inputType="number"
             android:key="security^dialLaunchCode"
-            android:persistent="false"
             android:summary="@string/settings_security_launch_code_summary"
             android:title="@string/settings_security_launch_code_title" />
 
