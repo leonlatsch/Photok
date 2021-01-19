@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogValidateBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
 
 /**

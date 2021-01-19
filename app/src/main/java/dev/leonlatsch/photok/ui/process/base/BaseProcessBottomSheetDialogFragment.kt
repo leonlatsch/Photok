@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.other.vanish
-import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment
 
 /**
  * Abstract base for all process dialogs.

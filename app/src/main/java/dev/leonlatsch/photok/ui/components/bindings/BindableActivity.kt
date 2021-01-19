@@ -14,40 +14,32 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.bindings
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.components.base.BaseActivity
 
 /**
- * Base for all BottomSheetDialogs that use data binding.
- *
- * @param BindingType The type of the generated binding
- * @param layout The layout resource id
+ * Abstract class for Activities with binding context.
+ * Inflates layout file and sets binding of type [BindingType].
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-abstract class BindableBottomSheetDialogFragment<BindingType : ViewDataBinding>(
+abstract class BindableActivity<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
-) : BottomSheetDialogFragment(), Bindable<BindingType> {
+) : BaseActivity(), Bindable<BindingType> {
 
     final override lateinit var binding: BindingType
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, layout, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = DataBindingUtil.setContentView(this, layout)
         bind(binding)
-        return binding.root
     }
 
     override fun bind(binding: BindingType) {

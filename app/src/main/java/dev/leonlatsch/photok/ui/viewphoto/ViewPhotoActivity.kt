@@ -28,8 +28,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject

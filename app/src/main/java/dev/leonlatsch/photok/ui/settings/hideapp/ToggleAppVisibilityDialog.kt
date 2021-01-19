@@ -23,8 +23,8 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogToggleAppVisibilityBinding
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 /**
  * Dialog to toggle the visibility of the app icon.

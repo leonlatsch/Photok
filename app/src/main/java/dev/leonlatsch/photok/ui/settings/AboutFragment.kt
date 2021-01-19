@@ -23,9 +23,8 @@ import android.view.View
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
-import dev.leonlatsch.photok.ui.components.BindableFragment
-import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.Dialogs.showLicensesDialog
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
  * Fragment to display a info about the app and some links.

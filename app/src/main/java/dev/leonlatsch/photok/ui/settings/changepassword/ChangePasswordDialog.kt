@@ -28,8 +28,8 @@ import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.security.PasswordUtils
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 import dev.leonlatsch.photok.ui.process.ReEncryptBottomSheetDialogFragment
 
 /**

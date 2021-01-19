@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.bindings
 
 import androidx.databinding.ViewDataBinding
 
@@ -34,7 +34,7 @@ interface Bindable<BindingType : ViewDataBinding> {
 
     /**
      * Used to insert bindings.
-     * @sample dev.leonlatsch.photok.ui.components.BindableActivity.bind
+     * @sample dev.leonlatsch.photok.ui.components.bindings.BindableActivity.bind
      */
     fun bind(binding: BindingType)
 

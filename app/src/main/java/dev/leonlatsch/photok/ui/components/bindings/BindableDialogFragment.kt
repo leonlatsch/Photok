@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.components.bindings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +24,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import dev.leonlatsch.photok.ui.components.base.BaseDialogFragment
-import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 
 /**
  * Base for all Dialogs that use Bindings.

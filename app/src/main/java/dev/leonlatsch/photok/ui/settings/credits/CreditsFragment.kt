@@ -26,7 +26,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentCreditsBinding
-import dev.leonlatsch.photok.ui.components.BindableFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
  * Fragment for displaying credits for icons and contributors.
