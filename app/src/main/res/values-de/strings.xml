@@ -166,6 +166,17 @@
     <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
 
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Photok verstecken</string>
+    <string name="hide_app_title_show">Photok zeigen</string>
+    <string name="hide_app_status_label">Photok ist momentan:</string>
+    <string name="hide_app_status_visible">SICHTBAR</string>
+    <string name="hide_app_status_hidden">VERSTECKT</string>
+    <string name="hide_app_confirm_hide">Willst du Photok wirklich verstecken?</string>
+    <string name="hide_app_confirm_show">Willst du Photok wieder anzeigen?</string>
+    <string name="hide_app_hint">* Sobald es versteckt ist, kannst Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
+    <string name="hide_app_hint_current_code">Momentaner Start-Code:</string>
+
     <!-- ON BOARDING -->
     <string name="onboarding_next">Weiter</string>
     <string name="onboarding_finish">Fertig</string>

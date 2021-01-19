@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_gap"
-                android:text="Photok is currently:" />
+                android:text="@string/hide_app_status_label" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="* Once hidden, Photok can only be launched from the phone dialpad, with your secrec launch code."
+            android:text="@string/hide_app_hint"
             android:textAlignment="center"
             android:textColor="@color/secondaryTextColor"
             android:visibility="@{viewModel.hintVisibility}" />
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_gap"
-                android:text="Current launch code:"
+                android:text="@string/hide_app_hint_current_code"
                 android:textColor="@color/secondaryTextColor" />
 
             <TextView

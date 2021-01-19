@@ -165,6 +165,17 @@
     <string name="change_password_confirm_message">Um backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todas as suas fotos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Foto(s) sendo criptografada(s) de novo…</string>
 
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string>
+    <string name="hide_app_title_show">Show Photok</string>
+    <string name="hide_app_status_label">Photok is currently:</string>
+    <string name="hide_app_status_visible">VISIBLE</string>
+    <string name="hide_app_status_hidden">HIDDEN</string>
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string>
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string>
+    <string name="hide_app_hint">* Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string>
+
     <!-- ON BOARDING -->
     <string name="onboarding_next">Próximo</string>
     <string name="onboarding_finish">Concluir</string>

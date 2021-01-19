@@ -165,6 +165,17 @@
     <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有照片！你想继续吗？</string>
     <string name="change_password_reencrypting">重新加密照片中……</string>
 
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string>
+    <string name="hide_app_title_show">Show Photok</string>
+    <string name="hide_app_status_label">Photok is currently:</string>
+    <string name="hide_app_status_visible">VISIBLE</string>
+    <string name="hide_app_status_hidden">HIDDEN</string>
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string>
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string>
+    <string name="hide_app_hint">* Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string>
+
     <!-- ON BOARDING -->
     <string name="onboarding_next">下一步</string>
     <string name="onboarding_finish">完成</string>

@@ -23,6 +23,7 @@ import android.view.View
 import androidx.databinding.Bindable
 import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.formatLaunchCode
 import dev.leonlatsch.photok.settings.Config
@@ -40,14 +41,14 @@ class ToggleAppVisibilityViewModel @ViewModelInject constructor(
 ) : ObservableViewModel(app) {
 
     @get:Bindable
-    var title: String = String.empty //TODO: Use String resource
+    var title: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.title, value)
         }
 
     @get:Bindable
-    var buttonText: String = String.empty // TODO: replace with string resource
+    var buttonText: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.buttonText, value)
@@ -72,17 +73,17 @@ class ToggleAppVisibilityViewModel @ViewModelInject constructor(
     override fun setup() {
         super.setup()
         if (isMainComponentDisabled()) {
-            title = "Show Photok"//TODO: Use String resource
-            buttonText = "Show Photok"
-            currentState = "HIDDEN"
+            title = app.getString(R.string.hide_app_title_show)
+            buttonText = app.getString(R.string.hide_app_title_show)
+            currentState = app.getString(R.string.hide_app_status_hidden)
             hintVisibility = View.GONE
-            confirmText = "Show boi?"
+            confirmText = app.getString(R.string.hide_app_confirm_show)
         } else {
-            title = "Hide Photok"//TODO: Use String resource
-            buttonText = "Hide Photok"
-            currentState = "VISIBLE"
+            title = app.getString(R.string.hide_app_title_hide)
+            buttonText = app.getString(R.string.hide_app_title_hide)
+            currentState = app.getString(R.string.hide_app_status_visible)
             hintVisibility = View.VISIBLE
-            confirmText = "Hide boi?"
+            confirmText = app.getString(R.string.hide_app_confirm_hide)
         }
     }
 
@@ -125,6 +126,9 @@ class ToggleAppVisibilityViewModel @ViewModelInject constructor(
         return enabledSetting == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
     }
 
+    /**
+     * Constructs a displayable secret launch code.
+     */
     fun secretLaunchCode() = formatLaunchCode(config.securityDialLaunchCode)
 
     companion object {
