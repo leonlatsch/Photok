@@ -64,8 +64,3 @@ fun setAppDesign(design: String?) {
     nightMode ?: return
     AppCompatDelegate.setDefaultNightMode(nightMode)
 }
-
-/**
- * Turn 1337 into *#*#1773#*#*.
- */
-fun formatLaunchCode(code: String?) = "*#*#$code#*#*"

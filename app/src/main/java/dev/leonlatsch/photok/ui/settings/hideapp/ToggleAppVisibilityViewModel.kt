@@ -25,7 +25,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.empty
-import dev.leonlatsch.photok.other.formatLaunchCode
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 
@@ -129,7 +128,9 @@ class ToggleAppVisibilityViewModel @ViewModelInject constructor(
     /**
      * Constructs a displayable secret launch code.
      */
-    fun secretLaunchCode() = formatLaunchCode(config.securityDialLaunchCode)
+    fun secretLaunchCode() = app.getString(R.string.settings_security_launch_code_prefix) +
+            config.securityDialLaunchCode +
+            app.getString(R.string.settings_security_launch_code_suffix)
 
     companion object {
         private val MAIN_LAUNCHER_COMPONENT =

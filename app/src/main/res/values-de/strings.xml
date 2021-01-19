@@ -134,6 +134,9 @@
     <string name="settings_security_timeout_never">Niemals</string>
     <string name="settings_security_launch_code_title">Geheimer Start-Code</string>
     <string name="settings_security_launch_code_summary">Geheimer Code um Photok von der Wahltastatur aus zu starten.</string>
+    <string name="settings_security_launch_code_message">Gib *#*#{dein code]#*#* in die Wahltastatur ein, um Photok zu starten.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">App Verstecken</string>
     <string name="settings_security_hide_app_summary">Verstecket App Icon aus dem App Menu.</string>
 
@@ -184,7 +187,7 @@
     <string name="hide_app_app_name_stealth">Telefon</string>
     <string name="hide_app_confirm_hide">Willst du Photok wirklich verstecken?</string>
     <string name="hide_app_confirm_show">Willst du Photok wieder anzeigen?</string>
-    <string name="hide_app_hint">* Sobald es versteckt ist, kannst Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
+    <string name="hide_app_hint">Sobald es versteckt ist, kannst Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
     <string name="hide_app_hint_current_code">Momentaner Start-Code:</string>
 
     <!-- ON BOARDING -->

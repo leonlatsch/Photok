@@ -63,8 +63,9 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
+            android:dialogLayout="@layout/dialog_edit_text_preference_secret_code"
             android:defaultValue="1337"
-            android:dialogMessage="Enter *#*#[your code]#*#* in phone dialer to launch Photok."
+            android:dialogMessage="@string/settings_security_launch_code_message"
             android:icon="@drawable/ic_dialpad"
             android:inputType="number"
             android:key="security^dialLaunchCode"
