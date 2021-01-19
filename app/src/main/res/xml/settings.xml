@@ -73,7 +73,6 @@
             android:title="Secret Launch Code" />
 
         <Preference
-            android:dependency="security^dialLaunchCode"
             android:icon="@drawable/ic_app_blocking"
             android:key="action_hide_app"
             android:summary="Hide Photok icon from apps."

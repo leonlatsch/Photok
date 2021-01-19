@@ -38,7 +38,7 @@ import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.settings.changepassword.ChangePasswordDialog
-import dev.leonlatsch.photok.ui.settings.hideapp.HideAppDialog
+import dev.leonlatsch.photok.ui.settings.hideapp.ToggleAppVisibilityDialog
 import javax.inject.Inject
 
 /**
@@ -84,11 +84,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupSecurityCategory() {
         addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
             val dialog = ChangePasswordDialog()
-            dialog.show(requireActivity().supportFragmentManager)
+            dialog.show(childFragmentManager)
         }
 
         addActionTo(KEY_ACTION_HIDE_APP) {
-            HideAppDialog().show(childFragmentManager)
+            ToggleAppVisibilityDialog().show(childFragmentManager)
         }
 
         configurePhoneDialPreference()
@@ -161,6 +161,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun configurePhoneDialPreference() {
         val dialPreference = findPreference<EditTextPreference>(Config.SECURITY_DIAL_LAUNCH_CODE)
+        dialPreference?.text = config.securityDialLaunchCode
         dialPreference?.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         }

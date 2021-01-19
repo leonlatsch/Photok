@@ -24,6 +24,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import dev.leonlatsch.photok.ui.components.base.BaseDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 
 /**
  * Base for all Dialogs that use Bindings.
@@ -48,6 +49,13 @@ abstract class BindableDialogFragment<BindingType : ViewDataBinding>(
         binding = DataBindingUtil.inflate(inflater, layout, container, false)
         bind(binding)
         return binding.root
+    }
+
+    /**
+     * When called, this fragment will call setup() on its viewModel
+     */
+    fun useViewModel(viewModel: ObservableViewModel) {
+        viewModel.setup()
     }
 
     override fun bind(binding: BindingType) {
