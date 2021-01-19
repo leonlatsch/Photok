@@ -120,6 +120,10 @@
     <string name="settings_gallery_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
 
     <string name="settings_category_security">Seguridad</string>
+    <string name="settings_security_allow_screenshots_title">Permitir capturas de pantalla</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
+    <string name="settings_security_change_password_title">Cambiar contraseña</string>
+    <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
     <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
     <string name="settings_security_timeout_immediately">Inmediatamente</string>
@@ -128,10 +132,10 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_allow_screenshots_title">Permitir capturas de pantalla</string>
-    <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
-    <string name="settings_security_change_password_title">Cambiar contraseña</string>
-    <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
 
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>

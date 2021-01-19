@@ -120,6 +120,10 @@
     <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
 
     <string name="settings_category_security">Sicherheit</string>
+    <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
+    <string name="settings_security_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
+    <string name="settings_security_change_password_title">Passwort ändern</string>
+    <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
@@ -128,10 +132,10 @@
     <string name="settings_security_timeout_five_minute">5 Minuten</string>
     <string name="settings_security_timeout_ten_minute">10 Minuten</string>
     <string name="settings_security_timeout_never">Niemals</string>
-    <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
-    <string name="settings_security_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
-    <string name="settings_security_change_password_title">Passwort ändern</string>
-    <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_security_launch_code_title">Geheimer Start-Code</string>
+    <string name="settings_security_launch_code_summary">Geheimer Code um Photok von der Wahltastatur aus zu starten.</string>
+    <string name="settings_security_hide_app_title">App Verstecken</string>
+    <string name="settings_security_hide_app_summary">Verstecket App Icon aus dem App Menu.</string>
 
     <string name="settings_category_advanced">Erweitert</string>
     <string name="settings_category_advanced_summary">Vorsichtig verwenden</string>

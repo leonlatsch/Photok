@@ -119,6 +119,10 @@
     <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
 
     <string name="settings_category_security">Segurança</string>
+    <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
+    <string name="settings_security_change_password_title">Alterar a senha</string>
+    <string name="settings_security_change_password_summary">Alterar sua senha</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloqueio automático após determinado tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -127,10 +131,10 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
-    <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
-    <string name="settings_security_change_password_title">Alterar a senha</string>
-    <string name="settings_security_change_password_summary">Alterar sua senha</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
 
     <string name="settings_category_advanced">Avançado</string>
     <string name="settings_category_advanced_summary">Use com cuidado</string>

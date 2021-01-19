@@ -119,6 +119,10 @@
     <string name="settings_gallery_auto_fullscreen_summary">打开照片时进入全屏模式</string>
 
     <string name="settings_category_security">安全</string>
+    <string name="settings_security_allow_screenshots_title">允许截屏</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
+    <string name="settings_security_change_password_title">更改密码</string>
+    <string name="settings_security_change_password_summary">更改你的密码</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定照片库</string>
     <string name="settings_security_timeout_immediately">立即</string>
@@ -127,10 +131,10 @@
     <string name="settings_security_timeout_five_minute">5 分钟</string>
     <string name="settings_security_timeout_ten_minute">10 分钟</string>
     <string name="settings_security_timeout_never">永不</string>
-    <string name="settings_security_allow_screenshots_title">允许截屏</string>
-    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
-    <string name="settings_security_change_password_title">更改密码</string>
-    <string name="settings_security_change_password_summary">更改你的密码</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
 
     <string name="settings_category_advanced">高级设置</string>
     <string name="settings_category_advanced_summary">小心使用</string>
