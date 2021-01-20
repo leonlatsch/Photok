@@ -5,6 +5,7 @@
 - New third party page
 - New credits page
 - Brazilian Portuguese translation
+- Bug fixes
 
 ### 1.1.3
 - Improve darkmode
