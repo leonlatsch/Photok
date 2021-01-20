@@ -99,13 +99,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(adapter.itemCount + itemCount)
-        }
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+            togglePlaceholder(adapter.itemCount)
 
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(adapter.itemCount - itemCount)
-        }
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
+            togglePlaceholder(adapter.itemCount)
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
