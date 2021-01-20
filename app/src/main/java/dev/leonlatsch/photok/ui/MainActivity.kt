@@ -67,7 +67,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
         getBaseApplication().rawApplicationState.observe(this, {
             if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
-                importShared()
+                confirmAndStartImportShared()
             }
         })
 
@@ -99,35 +99,40 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         }
     }
 
+    private fun confirmAndStartImportShared() {
+        Dialogs.showConfirmDialog(
+            this,
+            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
+        ) { _, _ ->
+            importShared()
+        }
+
+    }
+
     /**
      * Start importing after the overview of photos.
      */
     @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
     fun importShared() {
-        Dialogs.showConfirmDialog(
-            this,
-            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
-        ) { _, _ ->
-            if (EasyPermissions.hasPermissions(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
-                sharedDataCache.let {
-                    ImportBottomSheetDialogFragment(it).show(
-                        supportFragmentManager,
-                        ImportBottomSheetDialogFragment::class.qualifiedName
-                    )
-                }
-                sharedDataCache = arrayListOf()
-            } else {
-                EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.import_permission_rationale),
-                    REQ_PERM_SHARED_IMPORT,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+        if (EasyPermissions.hasPermissions(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            sharedDataCache.let {
+                ImportBottomSheetDialogFragment(it).show(
+                    supportFragmentManager,
+                    ImportBottomSheetDialogFragment::class.qualifiedName
                 )
             }
+            sharedDataCache = arrayListOf()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_SHARED_IMPORT,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
         }
     }
 
