@@ -75,7 +75,7 @@ tasks.register("updateTranslations") {
     } // READ strings.xml
 
     if (badges.isNotEmpty()) {
-        val readmeString = String(java.io.FileInputStream(File("README.MD")).readBytes())
+        val readmeString = String(java.io.FileInputStream(File("README.md")).readBytes())
         val readmeLines = readmeString.split("\n")
 
         var beginIndex = 0
