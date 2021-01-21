@@ -56,12 +56,12 @@ tasks.register("updateTranslations") {
                     }
                     val localeName = dir.name.replace("values-", "")
                     val percentage = (strings.toDouble() / enStrings.toDouble()) * 100
-                    val template = "https://img.shields.io/badge/{locale}-{percentage}-{color}"
+                    val template = "https://img.shields.io/badge/{locale}-{percentage}{color}"
                     val color = when {
-                        percentage > 99 -> "brightgreen"
-                        percentage > 75 -> "yellow"
-                        percentage > 50 -> "orange"
-                        percentage > 0 -> "red"
+                        percentage > 99 -> "25-brightgreen"
+                        percentage > 75 -> "25-yellow"
+                        percentage > 50 -> "25-orange"
+                        percentage > 0 -> "25-red"
                         else -> "lightgrey"
                     }
                     val badge = template
