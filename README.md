@@ -34,10 +34,10 @@ Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/
 ## Translations
 Base language is english and is always 100%.
 <!-- BEGIN-TRANSLATIONS -->
-![](https://img.shields.io/badge/Portuguese%20(Brazil)-86%25-yellow)
-![](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![](https://img.shields.io/badge/Spanish-86%25-yellow)
-![](https://img.shields.io/badge/German-100%25-brightgreen)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-86%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
+![Spanish](https://img.shields.io/badge/Spanish-86%25-yellow)
+![German](https://img.shields.io/badge/German-100%25-brightgreen)
 <!-- END-TRANSLATIONS -->
 
 LICENSE
