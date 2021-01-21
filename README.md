@@ -33,10 +33,10 @@ Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/
 
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
-![](https://img.shields.io/badge/de-100%25-brightgreen)
-![](https://img.shields.io/badge/es-86%25-yellow)
 ![](https://img.shields.io/badge/pt--rBR-86%25-yellow)
 ![](https://img.shields.io/badge/zh--rCN-100%25-brightgreen)
+![](https://img.shields.io/badge/es-86%25-yellow)
+![](https://img.shields.io/badge/de-100%25-brightgreen)
 <!-- END-TRANSLATIONS -->
 
 LICENSE
