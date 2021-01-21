@@ -99,6 +99,7 @@ tasks.register("updateTranslations") {
         val suffixStrings = readmeLines.subList(endIndex, readmeLines.size - 1)
 
         var badgeString = ""
+        badgeString += "![English](https://img.shields.io/badge/English-100%25-brightgreen)\n" // Hard code add english
         badges.forEach {
             badgeString += "$it\n"
         }

@@ -32,7 +32,6 @@ Alternative 1: [Direct Download APK](https://github.com/leonlatsch/Photok/releas
 Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
 ## Translations
-Base language is english and is always 100%.
 <!-- BEGIN-TRANSLATIONS -->
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-86%25-yellow)
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
