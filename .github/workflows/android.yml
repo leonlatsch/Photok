@@ -26,6 +26,10 @@ jobs:
       run: ./gradlew updateTranslations
     - name: push
       uses: actions-x/commit@v2
+      with:
+        name: Translation Updater
+        message: Update Translation Badges in README.md
+        files: README.md
         
   build:
     runs-on: ubuntu-18.04
