@@ -131,11 +131,11 @@
     <string name="settings_security_timeout_five_minute">5 分钟</string>
     <string name="settings_security_timeout_ten_minute">10 分钟</string>
     <string name="settings_security_timeout_never">永不</string>
-    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_title">秘密启动代码</string>
+    <string name="settings_security_launch_code_summary">从拨号器启动 Photok 的秘密代码</string>
+    <string name="settings_security_launch_code_message">在拨号器中输入 *#*#[your code]#*#* 来启动 Photok</string>
+    <string name="settings_security_hide_app_title">隐藏应用</string>
+    <string name="settings_security_hide_app_summary">在应用抽屉中隐藏应用图标</string>
 
     <string name="settings_category_advanced">高级设置</string>
     <string name="settings_category_advanced_summary">小心使用</string>
@@ -161,7 +161,7 @@
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">贡献者</string>
-    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
+    <string name="credits_contributors_hint">访问 Github 上的 Photok 代码库查看所有贡献者</string>
     <string name="credits_icons_title">图标</string>
 
     <!-- CHANGE PASSWORD -->
@@ -176,18 +176,18 @@
     <string name="change_password_reencrypting">重新加密照片中……</string>
 
     <!-- HIDE APP -->
-    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
-    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
-    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
-    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
-    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="hide_app_title_hide">隐藏 Photok</string>
+    <string name="hide_app_title_show">显示 Photok</string>
+    <string name="hide_app_status_label">Photok 当前状态：</string>
+    <string name="hide_app_status_visible">可见</string>
+    <string name="hide_app_status_hidden">隐藏</string>
+    <string name="hide_app_app_name_stealth">电话</string>
+    <string name="hide_app_confirm_hide">你真想隐藏 Photok 吗？</string>
+    <string name="hide_app_confirm_show">你想再次显示 Photok 吗？</string>
+    <string name="hide_app_hint">一旦隐藏起来，Photok 只能用你的秘密启动代码从手机拨号器启动。</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
+    <string name="hide_app_hint_current_code">当前启动代码：</string>
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">下一步</string>
