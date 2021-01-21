@@ -56,7 +56,8 @@ tasks.register("updateTranslations") {
                     }
                     val localeName = dir.name.replace("values-", "")
                     val percentage = (strings.toDouble() / enStrings.toDouble()) * 100
-                    val template = "https://img.shields.io/badge/{locale}-{percentage}{color}"
+                    val template =
+                        "![{alt-locale}](https://img.shields.io/badge/{locale}-{percentage}{color})"
                     val color = when {
                         percentage > 99 -> "25-brightgreen"
                         percentage > 75 -> "25-yellow"
@@ -68,6 +69,7 @@ tasks.register("updateTranslations") {
                         .getDisplayName(Locale.US)
                     val badge = template
                         .replace("{locale}", localeDisplay.replace(" ", "%20"))
+                        .replace("{alt-locale}", localeDisplay)
                         .replace("{percentage}", "${percentage.toInt()}%")
                         .replace("{color}", color)
                     badges.add(badge)
@@ -98,7 +100,7 @@ tasks.register("updateTranslations") {
 
         var badgeString = ""
         badges.forEach {
-            badgeString += "![]($it)\n"
+            badgeString += "$it\n"
         }
 
         var newReadmeString = ""
