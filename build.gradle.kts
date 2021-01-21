@@ -1,3 +1,5 @@
+import java.util.*
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     val kotlinVersion = "1.4.21"
@@ -37,8 +39,6 @@ tasks.register("updateTranslations") {
         }
     }
 
-    println()
-
     val badges = arrayListOf<String>()
     File(resPath).walk().forEach { dir ->
         if (dir.isDirectory &&
@@ -64,8 +64,10 @@ tasks.register("updateTranslations") {
                         percentage > 0 -> "25-red"
                         else -> "lightgrey"
                     }
+                    val localeDisplay = Locale.forLanguageTag(localeName.replace("-r", "-"))
+                        .getDisplayName(Locale.US)
                     val badge = template
-                        .replace("{locale}", localeName.replace("-", "--"))
+                        .replace("{locale}", localeDisplay.replace(" ", "%20"))
                         .replace("{percentage}", "${percentage.toInt()}%")
                         .replace("{color}", color)
                     badges.add(badge)
