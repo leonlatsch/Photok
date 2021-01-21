@@ -31,6 +31,13 @@ Alternative 1: [Direct Download APK](https://github.com/leonlatsch/Photok/releas
 
 Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
+## Translations
+<!-- BEGIN-TRANSLATIONS -->
+![](https://img.shields.io/badge/de-100%-brightgreen)
+![](https://img.shields.io/badge/es-86%-yellow)
+![](https://img.shields.io/badge/pt--rBR-86%-yellow)
+![](https://img.shields.io/badge/zh--rCN-100%-brightgreen)
+<!-- END-TRANSLATIONS -->
 
 LICENSE
 =======
