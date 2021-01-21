@@ -17,6 +17,15 @@ jobs:
           java-version: 11
       - name: Test with Gradle
         run: ./gradlew test
+  update-translation:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Update from Resources
+      run: ./gradlew updateTranslations
+    - name: push
+      uses: actions-x/commit@v2
         
   build:
     runs-on: ubuntu-18.04
