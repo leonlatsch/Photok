@@ -48,16 +48,19 @@ tasks.register("updateTranslations") {
             dir.walk().forEach { stringsFile ->
                 if (stringsFile.name == "strings.xml") {
                     var strings = 0
+                    var author = "UNKNOWN"
                     val lines = String(java.io.FileInputStream(stringsFile).readBytes()).split("\n")
                     for (line in lines) {
                         if (line.contains("<string") && !line.contains("TODO")) {
                             strings++
+                        } else if (line.contains("MAINTAINED BY")) {
+                            author = line.substring(line.indexOf("(") + 1, line.indexOf(")"))
                         }
                     }
                     val localeName = dir.name.replace("values-", "")
                     val percentage = (strings.toDouble() / enStrings.toDouble()) * 100
                     val template =
-                        "![{alt-locale}](https://img.shields.io/badge/{locale}-{percentage}{color})"
+                        "![{alt-locale}](https://img.shields.io/badge/{locale}-{percentage}{color})\nMaintained by {author}\n\n"
                     val color = when {
                         percentage > 99 -> "25-brightgreen"
                         percentage > 75 -> "25-yellow"
@@ -72,6 +75,7 @@ tasks.register("updateTranslations") {
                         .replace("{alt-locale}", localeDisplay)
                         .replace("{percentage}", "${percentage.toInt()}%")
                         .replace("{color}", color)
+                        .replace("{author}", author)
                     badges.add(badge)
                 }
             }
@@ -99,9 +103,9 @@ tasks.register("updateTranslations") {
         val suffixStrings = readmeLines.subList(endIndex, readmeLines.size - 1)
 
         var badgeString = ""
-        badgeString += "![English](https://img.shields.io/badge/English-100%25-brightgreen)\n" // Hard code add english
+        badgeString += "![English](https://img.shields.io/badge/English-100%25-brightgreen)\nMaintained by @leonlatsch\n\n" // Hard code add english
         badges.forEach {
-            badgeString += "$it\n"
+            badgeString += it
         }
 
         var newReadmeString = ""
