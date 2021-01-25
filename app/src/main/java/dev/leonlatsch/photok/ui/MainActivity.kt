@@ -76,8 +76,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.galleryFragment -> binding.mainAppBarLayout.show()
-                    else -> binding.mainAppBarLayout.hide()
+                    R.id.galleryFragment -> binding.mainToolbar.show()
+                    else -> binding.mainToolbar.hide()
                 }
             }
     }

@@ -128,8 +128,9 @@
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
         <item name="android:textColor">@color/textColor</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">15sp</item>
     </style>
 
