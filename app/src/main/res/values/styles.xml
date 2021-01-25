@@ -32,7 +32,7 @@
 
         <!-- Action Mode -->
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="actionModeBackground">@color/background</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButtonStyle</item>
 
@@ -59,7 +59,7 @@
     </style>
 
     <style name="ActionModeCloseButtonStyle">
-        <item name="tint">@android:color/white</item>
+        <item name="tint">@color/textColor</item>
     </style>
 
     <!-- TEXT VIEW -->
@@ -145,10 +145,6 @@
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorSecondary">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-    </style>
-
-    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">@color/background</item>
     </style>
 
     <!-- BOTTOM SHEET DIALOG -->

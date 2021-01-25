@@ -41,8 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/PopupThemeOverlay">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/toolbarTitle"
@@ -71,7 +70,5 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/main_nav_graph" />
         </FrameLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
