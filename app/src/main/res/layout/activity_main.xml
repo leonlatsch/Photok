@@ -33,10 +33,10 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mainToolbar"
-            android:paddingTop="@dimen/small_gap"
-            android:paddingBottom="@dimen/small_gap"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
+            android:paddingTop="@dimen/small_gap"
+            android:paddingBottom="@dimen/small_gap"
             android:theme="@style/toolbarStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
