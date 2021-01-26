@@ -90,12 +90,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      * Called by ui.
      */
     fun onDetails() {
-        val detailsBottomSheetDialog =
-            DetailsBottomSheetDialog(viewModel.currentPhoto)
-        detailsBottomSheetDialog.show(
-            supportFragmentManager,
-            DetailsBottomSheetDialog::class.qualifiedName
-        )
+        DetailsBottomSheetDialog(viewModel.currentPhoto).show(supportFragmentManager)
     }
 
     /**

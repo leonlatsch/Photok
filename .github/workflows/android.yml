@@ -2,8 +2,7 @@ name: Android Build CI
 
 on:
   push:
-    branches: 
-      - master
+    branches:
       - develop
 
 jobs:

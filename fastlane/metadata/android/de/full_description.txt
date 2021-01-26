@@ -9,6 +9,8 @@ Photos ist komplett kostenlos, open source und beinhaltet keine Werbung.
 - exportiere Fotos zurück in deine Galerie
 - ändere dein Passwort
 - erstelle und stelle Backups wieder her
+- senden an Photok
+- app Icon verstecken
 
 <b>Vorteile</b>
 

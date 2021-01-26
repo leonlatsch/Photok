@@ -17,7 +17,7 @@ android {
         minSdkVersion(24)
         targetSdkVersion(30)
         versionCode = 9
-        versionName = "1.2.0-dev"
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -55,6 +55,8 @@ dependencies {
     val roomVersion = "2.3.0-alpha04"
     val coroutinesVersion = "1.3.7"
     val pagingVersion = "3.0.0-alpha11"
+    val daggerVersion = "2.29.1"
+    val hiltVersion = "2.29.1-alpha"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
@@ -90,12 +92,12 @@ dependencies {
     implementation("com.jakewharton.timber:timber:4.7.1")
 
     // Dagger Core
-    implementation("com.google.dagger:dagger:2.28.3")
-    kapt("com.google.dagger:dagger-compiler:2.28.3")
+    implementation("com.google.dagger:dagger:$daggerVersion")
+    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.28.3-alpha")
-    kapt("com.google.dagger:hilt-android-compiler:2.28.3-alpha")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02")
     kapt("androidx.hilt:hilt-compiler:1.0.0-alpha02")

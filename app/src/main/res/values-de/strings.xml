@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
     <string name="gallery_add_from_gallery">Aus Galerie</string>
     <string name="gallery_add_from_backup">Aus Backup</string>
+    <string name="gallery_all_photos_label">Alle Fotos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
@@ -155,7 +156,7 @@
     <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>
     <string name="settings_other_feedback_mail_subject">Feedback zu Photok</string>
     <string name="settings_other_feedback_mail_body">Schreibe ein Feedback zu Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">Quellcode</string>
     <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

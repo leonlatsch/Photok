@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_add_from_gallery">Desde la Galería</string>
     <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -153,7 +154,7 @@
     <string name="settings_other_feedback_summary">Envíame un correo electrónico con comentarios</string>
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">Código fuente</string>
     <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

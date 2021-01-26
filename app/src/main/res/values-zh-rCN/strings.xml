@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">你的库里没有照片</string>
     <string name="gallery_add_from_gallery">从系统图库</string>
     <string name="gallery_add_from_backup">从备份文件</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
@@ -152,7 +153,7 @@
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

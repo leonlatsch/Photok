@@ -75,18 +75,13 @@ class ValidateBackupDialogFragment(
      * Called by ui.
      */
     fun onRestoreAndUnlock() {
-        UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
-            dismiss()
-            val restoreDialog =
+        val unlockDialog =
+            UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
+                dismiss()
                 RestoreBackupBottomSheetDialogFragment(uri, viewModel.metaData!!, origPassword)
-            restoreDialog.show(
-                requireActivity().supportFragmentManager,
-                RestoreBackupBottomSheetDialogFragment::class.qualifiedName
-            )
-        }.show(
-            requireActivity().supportFragmentManager,
-            UnlockBackupDialogFragment::class.qualifiedName
-        )
+                    .show(requireActivity().supportFragmentManager)
+            }
+        unlockDialog.show(requireActivity().supportFragmentManager)
     }
 
     override fun bind(binding: DialogValidateBackupBinding) {
