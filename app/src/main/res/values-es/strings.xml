@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_add_from_gallery">Desde la Galería</string>
     <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>

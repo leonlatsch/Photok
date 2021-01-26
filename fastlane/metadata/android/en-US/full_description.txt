@@ -9,6 +9,8 @@ Photok is completely free, open source, and contains no ads.
 - export photos back to your gallery
 - change your password
 - create and Restore backups
+- share to Photok
+- hide app icon
 
 <b>Benefits</b>
 

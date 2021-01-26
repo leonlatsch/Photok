@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">Não há fotos em seu cofre</string>
     <string name="gallery_add_from_gallery">Da galeria</string>
     <string name="gallery_add_from_backup">Do backup</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>

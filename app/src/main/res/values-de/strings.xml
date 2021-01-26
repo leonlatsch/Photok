@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
     <string name="gallery_add_from_gallery">Aus Galerie</string>
     <string name="gallery_add_from_backup">Aus Backup</string>
+    <string name="gallery_all_photos_label">Alle Fotos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
