@@ -123,6 +123,9 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
     }
 }
 
+/**
+ * Show a DialogFragment with its simple class name as tag.
+ */
 fun DialogFragment.show(fragmentManager: FragmentManager) {
     this.show(fragmentManager, this::class.simpleName)
 }
