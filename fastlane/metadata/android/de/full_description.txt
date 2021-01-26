@@ -4,16 +4,16 @@ Photos ist komplett kostenlos, open source und beinhaltet keine Werbung.
 
 <b>Funktionen</b>
 
-- Importiere Fotos aus deine Galerie
-- Komplett funktionale In-App-Galerie.
-- Exportiere Fotos zurück in deine Galerie
-- Ändere dein Passwort
-- Erstelle und stelle Backups wieder her
+- importiere Fotos aus deiner Galerie
+- komplett funktionale In-App-Galerie.
+- exportiere Fotos zurück in deine Galerie
+- ändere dein Passwort
+- erstelle und stelle Backups wieder her
 
 <b>Vorteile</b>
 
-- Verstecke deine sensiblen Fotos vor Anderen
-- Schütze deine Fotos vor Datendiebstahl
+- verstecke deine sensiblen Fotos vor Anderen
+- schütze deine Fotos vor Datendiebstahl
 
 Photok auf GitHub: https://github.com/leonlatsch/Photok
 

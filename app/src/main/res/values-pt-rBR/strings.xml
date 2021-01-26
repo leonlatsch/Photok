@@ -16,6 +16,8 @@
   -->
 
 <resources>
+    <!-- MAINTAINED BY: (@mezysinc) -->
+
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">Direitos autorais \u00A9 2020 Leon Latsch</string>

@@ -16,6 +16,8 @@
   -->
 
 <resources>
+    <!-- MAINTAINED BY: (@sr093906) -->
+
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">版权所有 \u00A9 2020 Leon Latsch</string>
