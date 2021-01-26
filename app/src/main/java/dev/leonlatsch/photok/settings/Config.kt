@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -56,6 +56,10 @@ class Config(context: Context) {
     var securityLockTimeout: Int
         get() = getIntFromString(SECURITY_LOCK_TIMEOUT, SECURITY_LOCK_TIMEOUT_DEFAULT)
         set(value) = putString(SECURITY_LOCK_TIMEOUT, value.toString())
+
+    var securityDialLaunchCode: String?
+        get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
+        set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
 
 
     // region put/get methods
@@ -127,7 +131,7 @@ class Config(context: Context) {
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 
         /**
-         * Password hash to check when unlockung.
+         * Password hash to check when unlocking.
          */
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
@@ -137,5 +141,8 @@ class Config(context: Context) {
          */
         const val SECURITY_LOCK_TIMEOUT = "security^lockTimeout"
         const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000
+
+        const val SECURITY_DIAL_LAUNCH_CODE = "security^dialLaunchCode"
+        const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
     }
 }

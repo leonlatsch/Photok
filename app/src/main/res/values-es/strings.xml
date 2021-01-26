@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020 Leon Latsch
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
   -->
 
 <resources>
+    <!-- MAINTAINED BY: (@Ismael034) -->
+
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
@@ -35,6 +37,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)…</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
+    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
@@ -58,6 +61,7 @@
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_add_from_gallery">Desde la Galería</string>
     <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -107,18 +111,22 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
+
     <string name="settings_category_app">Aplicación</string>
     <string name="settings_app_design_title">Diseño</string>
     <string name="settings_app_design_system_default">Por defecto del sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
-    <string name="settings_app_design_system_dark">Oscuro</string> 
-    <string name="settings_reset_title">Restablecer baúl</string>
-    <string name="settings_reset_summary">Borrar datos y restablecer contraseña</string>
-    <string name="settings_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
+    <string name="settings_app_design_system_dark">Oscuro</string>
+
     <string name="settings_category_gallery">Galería</string>
-    <string name="settings_auto_fullscreen_title">Pantalla completa automática</string>
-    <string name="settings_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
+    <string name="settings_gallery_auto_fullscreen_title">Pantalla completa automática</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
+
     <string name="settings_category_security">Seguridad</string>
+    <string name="settings_security_allow_screenshots_title">Permitir capturas de pantalla</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
+    <string name="settings_security_change_password_title">Cambiar contraseña</string>
+    <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
     <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
     <string name="settings_security_timeout_immediately">Inmediatamente</string>
@@ -127,25 +135,38 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_allow_screenshots_title">Permitir capturas de pantalla</string>
-    <string name="settings_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
-    <string name="settings_change_password_title">Cambiar contraseña</string>
-    <string name="settings_change_password_summary">Cambia tu contraseña</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
-    <string name="settings_backup_title">Copia de Seguridad</string>
-    <string name="settings_backup_summary">Crea una copia de seguridad de tu baúl</string>
+    <string name="settings_advanced_reset_title">Restablecer baúl</string>
+    <string name="settings_advanced_reset_summary">Borrar datos y restablecer contraseña</string>
+    <string name="settings_advanced_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
+    <string name="settings_advanced_backup_title">Copia de Seguridad</string>
+    <string name="settings_advanced_backup_summary">Crea una copia de seguridad de tu baúl</string>
+
     <string name="settings_other_title">Otros</string>
     <string name="settings_other_feedback_title">Sugerencias</string>
     <string name="settings_other_feedback_summary">Envíame un correo electrónico con comentarios</string>
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">Código fuente</string>
     <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Sobre Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Cambiar contraseña</string>
@@ -157,6 +178,20 @@
     <string name="change_password_button">Cambiar contraseña</string>
     <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
+    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
+    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
+    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
+    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">Siguiente</string>

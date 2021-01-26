@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@
 package dev.leonlatsch.photok
 
 import android.app.Application
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
+import android.content.Intent
+import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
-import dev.leonlatsch.photok.other.restartAppLifecycle
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.StartActivity
+import dev.leonlatsch.photok.ui.MainActivity
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,7 +39,16 @@ class BaseApplication : Application(), LifecycleObserver {
     @Inject
     lateinit var config: Config
 
+    @Inject
+    lateinit var encryptionManager: EncryptionManager
+
     private var wentToBackgroundAt = 0L
+
+    val rawApplicationState = MutableLiveData(ApplicationState.LOCKED)
+
+    var applicationState: ApplicationState
+        get() = rawApplicationState.value!!
+        set(value) = rawApplicationState.postValue(value)
 
     override fun onCreate() {
         super.onCreate()
@@ -52,7 +59,7 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
-     * Launch [StartActivity] when app was ON_STOP for at least the configured time.
+     * Call [lockApp] when app was ON_STOP for at least the configured time.
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForeground() {
@@ -65,7 +72,7 @@ class BaseApplication : Application(), LifecycleObserver {
             && wentToBackgroundAt != 0L
             && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
         ) {
-            restartAppLifecycle(this)
+            lockApp()
         }
     }
 
@@ -75,6 +82,17 @@ class BaseApplication : Application(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackground() {
         wentToBackgroundAt = System.currentTimeMillis()
+    }
+
+    /**
+     * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
+     */
+    fun lockApp() {
+        encryptionManager.reset()
+        applicationState = ApplicationState.LOCKED
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     companion object {

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~   Copyright 2020 Leon Latsch
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -16,10 +15,14 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dev.leonlatsch.photok">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:name=".BaseApplication"
@@ -30,26 +33,75 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
-        <activity
-            android:name=".ui.StartActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+        <activity-alias
+            android:name=".MainLauncher"
+            android:targetActivity=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
 
-        <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask" />
+        <activity-alias
+            android:name=".StealthLauncher"
+            android:enabled="false"
+            android:icon="@drawable/ic_phone"
+            android:label="@string/hide_app_app_name_stealth"
+            android:roundIcon="@drawable/ic_phone"
+            android:targetActivity=".ui.settings.hideapp.ForwardDialerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".SendLauncher"
+            android:targetActivity=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity android:name=".ui.MainActivity" />
 
         <activity
             android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:launchMode="singleTask"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".ui.settings.hideapp.ForwardDialerActivity"
+            android:theme="@style/AppTheme" />
+
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <receiver android:name=".DialLauncher">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+                <data android:scheme="android_secret_code" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

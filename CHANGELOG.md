@@ -1,3 +1,12 @@
+### 1.2.0
+- Feature: Share to Photok
+- Feature: Hide Photok
+- New third party page
+- New credits page
+- New Toolbar design
+- Brazilian Portuguese translation
+- Bug fixes
+
 ### 1.1.3
 - Improve darkmode
 - Update third party software

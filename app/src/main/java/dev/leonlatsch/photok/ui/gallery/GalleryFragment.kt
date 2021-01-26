@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -38,8 +39,8 @@ import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
-import dev.leonlatsch.photok.ui.components.BindableFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
@@ -75,7 +76,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
             false
-        viewModel.photos
 
         adapter = PhotoAdapter(
             requireContext(),
@@ -99,21 +99,17 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(adapter.itemCount + itemCount)
-        }
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+            togglePlaceholder(adapter.itemCount)
 
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            togglePlaceholder(adapter.itemCount - itemCount)
-        }
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
+            togglePlaceholder(adapter.itemCount)
     }
 
-    private fun getColCount(): Int {
-        return when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> 4
-            Configuration.ORIENTATION_LANDSCAPE -> 8
-            else -> 4
-        }
+    private fun getColCount() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> 4
+        Configuration.ORIENTATION_LANDSCAPE -> 8
+        else -> 4
     }
 
     private fun togglePlaceholder(itemCount: Int) {
@@ -190,11 +186,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * Called by ui.
      */
     fun startDelete() {
-        val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
-        deleteDialog.show(
-            requireActivity().supportFragmentManager,
-            DeleteBottomSheetDialogFragment::class.qualifiedName
-        )
+        DeleteBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
         adapter.disableSelection()
     }
 
@@ -208,13 +200,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         if (EasyPermissions.hasPermissions(
                 requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
-            exportDialog.show(
-                requireActivity().supportFragmentManager,
-                ExportBottomSheetDialogFragment::class.qualifiedName
-            )
+            ExportBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
             adapter.disableSelection()
         } else {
             EasyPermissions.requestPermissions(
@@ -236,20 +224,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 extractDataFromResult(images, data)
             }
             if (images.size > 0) {
-                val importDialog = ImportBottomSheetDialogFragment(images)
-                importDialog.show(
-                    requireActivity().supportFragmentManager,
-                    ImportBottomSheetDialogFragment::class.qualifiedName
-                )
+                ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
             }
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 data.data ?: return
-                val restoreDialog = ValidateBackupDialogFragment(data.data!!)
-                restoreDialog.show(
-                    requireActivity().supportFragmentManager,
-                    ValidateBackupDialogFragment::class.qualifiedName
-                )
+                ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
             }
         }
     }

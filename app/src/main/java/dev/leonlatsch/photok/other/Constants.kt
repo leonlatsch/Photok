@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -28,3 +28,4 @@ const val INTENT_PHOTO_ID = "intent.photo.id"
 const val REQ_PERM_IMPORT = 10
 const val REQ_PERM_EXPORT = 11
 const val REQ_PERM_RESTORE = 12
+const val REQ_PERM_SHARED_IMPORT = 13

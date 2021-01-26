@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
     /**
      * Add callback to [valueChangeRegistry]
      */
-    fun addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
+    fun <T> addOnPropertyValueChangedCallback(callback: PropertyChangedValueCallback) =
         valueChangeRegistry.addValueCallback(callback)
 
     /**
@@ -99,5 +99,11 @@ abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Ob
                 }
             }
         })
+    }
+
+    /**
+     * Used for setting up the viewModel. Can be overridden.
+     */
+    open fun setup() {
     }
 }

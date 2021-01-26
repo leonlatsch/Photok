@@ -4,22 +4,18 @@ Photok is completely free, open source, and contains no ads.
 
 <b>Features</b>
 
-- Import photos from your gallery
-- Fully functional in app gallery 
-- Export photos back to your gallery
-- Change your password
-- Create and Restore backups
+- import photos from your gallery
+- fully functional in app gallery
+- export photos back to your gallery
+- change your password
+- create and Restore backups
+- share to Photok
+- hide app icon
 
 <b>Benefits</b>
 
-- Hide your sensitive photos from others
-- Protect your photos from data theft
-
-<b>Upcoming Features</b>
-
-- Fingerprint unlock
-- Backup in cloud
-- Darkmode
+- hide your sensitive photos from others
+- protect your photos from data theft
 
 Photok on GitHub: https://github.com/leonlatsch/Photok
 

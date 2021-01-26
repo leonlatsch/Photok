@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020 Leon Latsch
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
   -->
 
 <resources>
+    <!-- MAINTAINED BY: (@sr093906) -->
+
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">版权所有 \u00A9 2020 Leon Latsch</string>
@@ -35,6 +37,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">正在导入照片……</string>
     <string name="import_permission_rationale">Photok 需要访问你的存储来导入照片</string>
+    <string name="import_sharted_question">你想导入 %1$d 张照片吗？</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">创建你的密码</string>
@@ -58,6 +61,7 @@
     <string name="gallery_placeholder">你的库里没有照片</string>
     <string name="gallery_add_from_gallery">从系统图库</string>
     <string name="gallery_add_from_backup">从备份文件</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
@@ -106,18 +110,22 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
+
     <string name="settings_category_app">应用程序</string>
-    <string name="settings_app_design_title">设计</string> 
-    <string name="settings_app_design_system_default">系统默认</string> 
-    <string name="settings_app_design_system_light">浅色</string> 
-    <string name="settings_app_design_system_dark">深色</string> 
-    <string name="settings_reset_title">重置照片保险库</string>
-    <string name="settings_reset_summary">抹去数据并重置密码</string>
-    <string name="settings_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
+    <string name="settings_app_design_title">设计</string>
+    <string name="settings_app_design_system_default">系统默认</string>
+    <string name="settings_app_design_system_light">浅色</string>
+    <string name="settings_app_design_system_dark">深色</string>
+
     <string name="settings_category_gallery">图库</string>
-    <string name="settings_auto_fullscreen_title">自动全屏</string>
-    <string name="settings_auto_fullscreen_summary">打开照片时进入全屏模式</string>
+    <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
+    <string name="settings_gallery_auto_fullscreen_summary">打开照片时进入全屏模式</string>
+
     <string name="settings_category_security">安全</string>
+    <string name="settings_security_allow_screenshots_title">允许截屏</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
+    <string name="settings_security_change_password_title">更改密码</string>
+    <string name="settings_security_change_password_summary">更改你的密码</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定照片库</string>
     <string name="settings_security_timeout_immediately">立即</string>
@@ -126,25 +134,38 @@
     <string name="settings_security_timeout_five_minute">5 分钟</string>
     <string name="settings_security_timeout_ten_minute">10 分钟</string>
     <string name="settings_security_timeout_never">永不</string>
-    <string name="settings_allow_screenshots_title">允许截屏</string>
-    <string name="settings_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
-    <string name="settings_change_password_title">更改密码</string>
-    <string name="settings_change_password_summary">更改你的密码</string>
+    <string name="settings_security_launch_code_title">秘密启动代码</string>
+    <string name="settings_security_launch_code_summary">从拨号器启动 Photok 的秘密代码</string>
+    <string name="settings_security_launch_code_message">在拨号器中输入 *#*#[your code]#*#* 来启动 Photok</string>
+    <string name="settings_security_hide_app_title">隐藏应用</string>
+    <string name="settings_security_hide_app_summary">在应用抽屉中隐藏应用图标</string>
+
     <string name="settings_category_advanced">高级设置</string>
     <string name="settings_category_advanced_summary">小心使用</string>
-    <string name="settings_backup_title">备份</string>
-    <string name="settings_backup_summary">创建照片保险库的备份</string>
+    <string name="settings_advanced_reset_title">重置照片保险库</string>
+    <string name="settings_advanced_reset_summary">抹去数据并重置密码</string>
+    <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
+    <string name="settings_advanced_backup_title">备份</string>
+    <string name="settings_advanced_backup_summary">创建照片保险库的备份</string>
+
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
-    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
-    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">致谢</string>
+    <string name="settings_other_credits_summary">贡献者和致谢</string>
     <string name="settings_other_about_title">关于</string>
     <string name="settings_other_about_summary">有关 Photok 的信息</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">贡献者</string>
+    <string name="credits_contributors_hint">访问 Github 上的 Photok 代码库查看所有贡献者</string>
+    <string name="credits_icons_title">图标</string>
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">更改你的密码</string>
@@ -156,6 +177,20 @@
     <string name="change_password_button">更改Miami</string>
     <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有照片！你想继续吗？</string>
     <string name="change_password_reencrypting">重新加密照片中……</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">隐藏 Photok</string>
+    <string name="hide_app_title_show">显示 Photok</string>
+    <string name="hide_app_status_label">Photok 当前状态：</string>
+    <string name="hide_app_status_visible">可见</string>
+    <string name="hide_app_status_hidden">隐藏</string>
+    <string name="hide_app_app_name_stealth">电话</string>
+    <string name="hide_app_confirm_hide">你真想隐藏 Photok 吗？</string>
+    <string name="hide_app_confirm_show">你想再次显示 Photok 吗？</string>
+    <string name="hide_app_hint">一旦隐藏起来，Photok 只能用你的秘密启动代码从手机拨号器启动。</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="hide_app_hint_current_code">当前启动代码：</string>
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">下一步</string>

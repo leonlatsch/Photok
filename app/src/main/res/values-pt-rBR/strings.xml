@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2020-2021 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+    <!-- MAINTAINED BY: (@mezysinc) -->
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Direitos autorais \u00A9 2020 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Carregando …</string>
+    <string name="common_password">Senha</string>
+    <string name="common_delete">Excluir</string>
+    <string name="common_export">Exportar</string>
+    <string name="common_error">Houve um erro. Por favor, tente de novo.</string>
+    <string name="common_yes">Sim</string>
+    <string name="common_no">Não</string>
+    <string name="common_ok">OK</string>
+    <string name="common_are_you_sure">Tem certeza?</string>
+
+    <!-- IMPORT -->>
+    <string name="import_importing">Importando foto(s)…</string>
+    <string name="import_permission_rationale">Photok precisa acessar seu armazenamento, para importar fotos.</string>
+    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Criar sua senha</string>
+    <string name="setup_enter_password">Digitar sua senha</string>
+    <string name="setup_confirm_password">Confirmar sua senha</string>
+    <string name="setup_password_strength_label">Força da senha:</string>
+    <string name="setup_button">Criar</string>
+    <string name="setup_password_strength_weak">Fraca</string>
+    <string name="setup_password_strength_moderate">Moderada</string>
+    <string name="setup_password_strength_strong">Forte</string>
+    <string name="setup_password_match_warning">\u26A0 Senhas não correspondem</string>
+    <string name="setupSetup">Configurar</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Desbloquear seu cofre</string>
+    <string name="unlock_enter_password">Digitar a senha</string>
+    <string name="unlock_button">Desbloquear</string>
+    <string name="unlock_wrong_password">\u26A0 Senha incorreta</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">Não há fotos em seu cofre</string>
+    <string name="gallery_add_from_gallery">Da galeria</string>
+    <string name="gallery_add_from_backup">Do backup</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
+
+    <!-- PROCESS -->
+    <string name="process_close">Fechar</string>
+    <string name="process_abort">Cancelar</string>
+    <string name="process_finished">Concluído</string>
+    <string name="process_initialize">Preparando…</string>
+    <string name="process_aborted">Cancelado</string>
+    <string name="process_failures_occurred">\u26A0 Alguns elementos não puderam ser processados</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Detalhes</string>
+    <string name="view_photo_detail_file_name_label">Nome do arquivo:</string>
+    <string name="view_photo_detail_import_at_label">Importado em:</string>
+    <string name="view_photo_detail_file_type_label">Tipo de arquivo:</string>
+    <string name="view_photo_detail_size_label">Tamanho do arquivo:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Bloquear</string>
+    <string name="menu_main_settings">Configurações</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Selecionar tudo</string>
+    <string name="menu_ms_delete">Excluir</string>
+    <string name="menu_ms_export">Exportar</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d a(s) foto(s)?</string>
+    <string name="delete_are_you_sure_this">Tem certeza que quer <b>excluir</b> este foto?</string>
+    <string name="delete_deleting">Excluindo a(s) foto(s)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d a(s) fotos(s), de volta à sua galeria?</string>
+    <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este foto, de volta à sua galeria?</string>
+    <string name="export_exporting">Exportando a(s) foto(s)…</string>
+    <string name="export_permission_rationale">O Photok precisa acessar seu armazenamento, para exportar as fotos.</string>
+    <string name="export_finished">Exportado</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Versão:</string>
+    <string name="about_developed_by">Desenvolvido por:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Software de terceiros</string>
+    <string name="about_privacy_policy">Política de Privacidade</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Configurações</string>
+
+    <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Design</string>
+    <string name="settings_app_design_system_default">Adaptado do sistema</string>
+    <string name="settings_app_design_system_light">Claro</string>
+    <string name="settings_app_design_system_dark">Escuro</string>
+
+    <string name="settings_category_gallery">Galeria</string>
+    <string name="settings_gallery_auto_fullscreen_title">Tela completa automaticamente</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir uma foto</string>
+
+    <string name="settings_category_security">Segurança</string>
+    <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
+    <string name="settings_security_change_password_title">Alterar a senha</string>
+    <string name="settings_security_change_password_summary">Alterar sua senha</string>
+    <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
+    <string name="settings_security_timeout_summary">Bloqueio automático após determinado tempo em segundo plano</string>
+    <string name="settings_security_timeout_immediately">Imediatamente</string>
+    <string name="settings_security_timeout_one_minute">1 minuto</string>
+    <string name="settings_security_timeout_two_minute">2 minutos</string>
+    <string name="settings_security_timeout_five_minute">5 minutos</string>
+    <string name="settings_security_timeout_ten_minute">10 minutos</string>
+    <string name="settings_security_timeout_never">Nunca</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+
+    <string name="settings_category_advanced">Avançado</string>
+    <string name="settings_category_advanced_summary">Use com cuidado</string>
+    <string name="settings_advanced_reset_title">Restaurar o cofre</string>
+    <string name="settings_advanced_reset_summary">Excluir os dados e redefinir a senha</string>
+    <string name="settings_advanced_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Criar um backup do seu cofre</string>
+
+    <string name="settings_other_title">Outros</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Envie-me um e-mail com o feedback</string>
+    <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
+    <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
+    <string name="settings_other_sourcecode_title">Código fonte</string>
+    <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
+    <string name="settings_other_about_title">Sobre</string>
+    <string name="settings_other_about_summary">Informações sobre o Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
+    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
+    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Alterar sua senha</string>
+    <string name="change_password_old_password">Senha antiga</string>
+    <string name="change_password_new_password">Senha nova</string>
+    <string name="change_password_check">Verificar</string>
+    <string name="change_password_enter_new_password">Digitar sua nova senha</string>
+    <string name="change_password_confirm_new_password">Confirmar sua nova senha</string>
+    <string name="change_password_button">Alterar a senha</string>
+    <string name="change_password_confirm_message">Um backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todas as suas fotos de novo! Você quer continuar?</string>
+    <string name="change_password_reencrypting">Foto(s) sendo criptografada(s) de novo…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
+    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
+    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
+    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
+    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
+    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_finish">Concluir</string>
+    <string name="onboarding_skip"><u>Pular</u></string>
+
+    <string name="onboarding_slide1_title">Bem-vindo ao</string>
+    <string name="onboarding_slide1_description">Um lugar seguro para suas fotos.</string>
+    <string name="onboarding_slide2_title">Criar uma senha</string>
+    <string name="onboarding_slide2_description">Criar uma senha segura. Sua senha é usada para criptografar suas fotos diretamente no seu celular.</string>
+    <string name="onboarding_slide3_title">Comece a importar</string>
+    <string name="onboarding_slide3_description">Comece a importar suas fotos e mantenha-as longe de pessoas não autorizadas.\nDepois disso, você pode apagá-las da sua galeria.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Criando o backup…</string>
+    <string name="backup_restore_title">Restaurando o backup</string>
+    <string name="backup_restore_details_created_at">Criado em:</string>
+    <string name="backup_restore_details_photos_contained">Fotos incluindas:</string>
+    <string name="backup_restore_details_compatible">Compatível:</string>
+    <string name="backup_restore_button">Desbloquear e restaurar</string>
+    <string name="backup_restore_invalid_file">\u26A0 O arquivo inválido</string>
+    <string name="backup_restore_processing">Restaurando o backup…</string>
+    <string name="backup_unlock_title">Desbloquear o backup</string>
+</resources>

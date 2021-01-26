@@ -1,5 +1,5 @@
 <!--
-  ~   Copyright 2020 Leon Latsch
+  ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -28,10 +28,11 @@
         <item name="textColorAlertDialogListItem">@color/textColor</item>
         <item name="android:textColorHint">@color/secondaryTextColor</item>
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:listDivider">@color/secondaryTextColor</item>
 
         <!-- Action Mode -->
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="actionModeBackground">@color/background</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButtonStyle</item>
 
@@ -44,6 +45,11 @@
         <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
     </style>
 
+    <style name="AppTheme.ActionBar" parent="AppTheme">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
     <!-- Theme for Splash Screen, will be set back to AppTheme before activity.onCreate() -->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -53,13 +59,14 @@
     </style>
 
     <style name="ActionModeCloseButtonStyle">
-        <item name="tint">@android:color/white</item>
+        <item name="tint">@color/textColor</item>
     </style>
 
     <!-- TEXT VIEW -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:scrollbarSize">0dp</item>
     </style>
 
     <style name="LightDetailTextViewStyle" parent="TextViewStyle">
@@ -122,19 +129,22 @@
     <!-- TOOLBAR -->
     <style name="toolbarStyle" parent="AppTheme">
         <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorSecondary">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="darkToolbarStyle" parent="toolbarStyle">
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="transparentToolbarStyle" parent="toolbarStyle">
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorSecondary">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-    </style>
-
-    <style name="PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">@color/background</item>
     </style>
 
     <!-- BOTTOM SHEET DIALOG -->

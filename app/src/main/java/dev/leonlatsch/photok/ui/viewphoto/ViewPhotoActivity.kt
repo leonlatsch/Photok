@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,8 +28,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.components.BindableActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -47,6 +47,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
 
     @Inject
     override lateinit var config: Config
+
+    private var systemUiVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +71,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
                 binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
             }, {
-                toggleSystemUI(window) // On clicked
+                toggleSystemUI() // On clicked
             })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
@@ -88,12 +90,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      * Called by ui.
      */
     fun onDetails() {
-        val detailsBottomSheetDialog =
-            DetailsBottomSheetDialog(viewModel.currentPhoto)
-        detailsBottomSheetDialog.show(
-            supportFragmentManager,
-            DetailsBottomSheetDialog::class.qualifiedName
-        )
+        DetailsBottomSheetDialog(viewModel.currentPhoto).show(supportFragmentManager)
     }
 
     /**
@@ -121,7 +118,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
@@ -154,22 +151,32 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         else -> false
     }
 
+    @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
         window.statusBarColor = getColor(android.R.color.black)
         window.navigationBarColor = getColor(android.R.color.black)
 
-        window.decorView.setOnSystemUiVisibilityChangeListener {
-            if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                binding.viewPhotoAppBarLayout.show()
+        window.addSystemUIVisibilityListener {
+            systemUiVisible = it
+            if (it) {
+                binding.viewPhotoToolbar.show()
                 binding.viewPhotoBottomToolbarLayout.show()
             } else {
-                binding.viewPhotoAppBarLayout.hide()
+                binding.viewPhotoToolbar.hide()
                 binding.viewPhotoBottomToolbarLayout.hide()
             }
         }
 
         if (config.galleryAutoFullscreen) { // Hide system ui if configured
-            toggleSystemUI(window)
+            toggleSystemUI()
+        }
+    }
+
+    private fun toggleSystemUI() {
+        if (systemUiVisible) {
+            hideSystemUI()
+        } else {
+            showSystemUI()
         }
     }
 
