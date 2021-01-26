@@ -23,7 +23,9 @@ import android.view.View
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.BaseApplication
 
 /**
@@ -119,4 +121,8 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
             visibilityListener((it and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0)
         }
     }
+}
+
+fun DialogFragment.show(fragmentManager: FragmentManager) {
+    this.show(fragmentManager, this::class.simpleName)
 }
