@@ -56,6 +56,7 @@ dependencies {
     val coroutinesVersion = "1.3.7"
     val pagingVersion = "3.0.0-alpha11"
     val daggerVersion = "2.29.1"
+    val hiltVersion = "2.29.1-alpha"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
@@ -95,8 +96,8 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:$daggerVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$daggerVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02")
     kapt("androidx.hilt:hilt-compiler:1.0.0-alpha02")
