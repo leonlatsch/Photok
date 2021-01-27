@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -63,4 +65,11 @@ fun setAppDesign(design: String?) {
 
     nightMode ?: return
     AppCompatDelegate.setDefaultNightMode(nightMode)
+}
+
+fun openUrl(context: Context, url: String?) {
+    url ?: return
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    context.startActivity(intent)
 }

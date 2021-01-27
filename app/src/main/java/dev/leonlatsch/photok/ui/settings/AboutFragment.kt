@@ -20,10 +20,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
-import dev.leonlatsch.photok.ui.components.Dialogs.showLicensesDialog
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -57,7 +57,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        showLicensesDialog(requireActivity())
+        findNavController().navigate(R.id.action_aboutFragment_to_ossLicensesFragment)
     }
 
     /**

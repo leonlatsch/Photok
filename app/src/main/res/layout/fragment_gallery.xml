@@ -76,11 +76,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/galleryAllPhotosTitle"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/small_gap"
-                android:text="All Photos" />
+                android:text="@string/gallery_all_photos_label" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/galleryPhotoGrid"

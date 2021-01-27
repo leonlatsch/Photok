@@ -6,7 +6,7 @@ plugins {
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
-apply(plugin = "com.google.android.gms.oss-licenses-plugin")
+apply(plugin = "com.jaredsburrows.license")
 
 android {
     compileSdkVersion(30)
@@ -16,8 +16,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 9
-        versionName = "1.2.0"
+        versionCode = 10
+        versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -119,9 +119,6 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
-
-    // OSS Licenses
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")

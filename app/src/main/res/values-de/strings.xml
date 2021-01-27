@@ -48,7 +48,7 @@
     <string name="setup_password_strength_weak">Schwach</string>
     <string name="setup_password_strength_moderate">Moderat</string>
     <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht über ein</string>
+    <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht überein</string>
     <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
@@ -156,7 +156,7 @@
     <string name="settings_other_feedback_summary">Sende ein Feedback über Photok</string>
     <string name="settings_other_feedback_mail_subject">Feedback zu Photok</string>
     <string name="settings_other_feedback_mail_body">Schreibe ein Feedback zu Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">hello@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
     <string name="settings_other_sourcecode_title">Quellcode</string>
     <string name="settings_other_sourcecode_summary">Beteilige dich an Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
