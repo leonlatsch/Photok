@@ -25,6 +25,12 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
+/**
+ * Fragment for displaying open source licenses.
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 class OssLicensesFragment :
     BindableFragment<FragmentOssLicensesBinding>(R.layout.fragment_oss_licenses) {
 
