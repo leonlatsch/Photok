@@ -6,7 +6,7 @@ plugins {
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
-apply(plugin = "com.google.android.gms.oss-licenses-plugin")
+apply(plugin = "com.jaredsburrows.license")
 
 android {
     compileSdkVersion(30)
@@ -119,9 +119,6 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
-
-    // OSS Licenses
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
