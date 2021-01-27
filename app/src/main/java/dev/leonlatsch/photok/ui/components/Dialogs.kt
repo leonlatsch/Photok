@@ -57,8 +57,4 @@ object Dialogs {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
-
-    fun showLicensesDialog(context: Context) {
-        //
-    }
 }

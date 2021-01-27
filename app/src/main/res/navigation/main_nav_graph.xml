@@ -49,7 +49,13 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="dev.leonlatsch.photok.ui.settings.AboutFragment"
-        android:label="AboutFragment" />
+        android:label="AboutFragment">
+        <action
+            android:id="@+id/action_aboutFragment_to_ossLicensesFragment"
+            app:destination="@id/ossLicensesFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
+    </fragment>
     <fragment
         android:id="@+id/setupFragment"
         android:name="dev.leonlatsch.photok.ui.setup.SetupFragment"
@@ -120,4 +126,8 @@
         android:id="@+id/creditsFragment"
         android:name="dev.leonlatsch.photok.ui.settings.credits.CreditsFragment"
         android:label="CreditsFragment" />
+    <fragment
+        android:id="@+id/ossLicensesFragment"
+        android:name="dev.leonlatsch.photok.ui.settings.thirdparty.OssLicensesFragment"
+        android:label="OssLicensesFragment" />
 </navigation>
