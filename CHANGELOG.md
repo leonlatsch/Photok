@@ -1,3 +1,6 @@
+### 1.2.2
+- UI Fixes
+
 ### 1.2.1
 - Replace third party page
 - UI Fixes
