@@ -1,3 +1,8 @@
+### 1.2.1
+- Replace third party page
+- UI Fixes
+- Bug Fixes
+
 ### 1.2.0
 - Feature: Share to Photok
 - Feature: Hide Photok
