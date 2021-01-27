@@ -42,11 +42,11 @@ Maintained by @leonlatsch
 ![Spanish](https://img.shields.io/badge/Spanish-85%25-yellow)
 Maintained by @Ismael034
 
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-85%25-yellow)
-Maintained by @mezysinc
-
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-99%25-brightgreen)
 Maintained by @sr093906
+
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-85%25-yellow)
+Maintained by @mezysinc
 
 <!-- END-TRANSLATIONS -->
 
