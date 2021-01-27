@@ -41,7 +41,7 @@ class OssLicensesFragment :
             requireActivity().onBackPressed()
         }
 
-        requireActivity().assets.open("licenseReleaseReport.json").let {
+        requireActivity().assets.open(LICENSE_REPORT_FILE).let {
             val json = String(it.readBytes())
             val listType = object : TypeToken<ArrayList<OssEntry?>?>() {}.type
             val licenses: ArrayList<OssEntry> = Gson().fromJson(json, listType)
@@ -50,5 +50,9 @@ class OssLicensesFragment :
             binding.ossRecycler.layoutManager = layoutManager
             binding.ossRecycler.adapter = OssAdapter(licenses)
         }
+    }
+
+    companion object {
+        const val LICENSE_REPORT_FILE = "licenseReleaseReport.json"
     }
 }
