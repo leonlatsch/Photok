@@ -76,6 +76,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/galleryAllPhotosTitle"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

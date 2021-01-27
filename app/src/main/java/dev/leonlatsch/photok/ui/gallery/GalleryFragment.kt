@@ -114,8 +114,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private fun togglePlaceholder(itemCount: Int) {
         val visibility = if (itemCount > 0) {
+            binding.galleryAllPhotosTitle.show()
             View.GONE
         } else {
+            binding.galleryAllPhotosTitle.hide()
             View.VISIBLE
         }
         placeholderVisibility.postValue(visibility)
