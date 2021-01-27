@@ -120,6 +120,9 @@ dependencies {
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
 
+    // Androidx ExifInterface
+    implementation("androidx.exifinterface", "exifinterface", "1.3.0-alpha01")
+
     implementation(fileTree("libs").matching {
         include("*.jar")
     })

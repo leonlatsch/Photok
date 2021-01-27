@@ -18,13 +18,15 @@ package dev.leonlatsch.photok.ui.viewphoto
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.normalizeExifOrientation
+import dev.leonlatsch.photok.other.runOnMain
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -76,14 +78,21 @@ class PhotoViewHolder(
     }
 
     private fun loadPhoto() {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             val photoBytes = photoRepository.readPhotoFileFromInternal(context, photoId)
             if (photoBytes == null) {
                 Timber.d("Error loading photo data for photo: $photoId")
                 return@launch
             }
-            val bitmap = BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.size)
-            Handler(context.mainLooper).post {
+
+            val bitmap = normalizeExifOrientation(
+                BitmapFactory.decodeByteArray(
+                    photoBytes,
+                    0,
+                    photoBytes.size
+                ), photoBytes
+            )
+            runOnMain {
                 imageView.setImageBitmap(bitmap)
             }
         }
