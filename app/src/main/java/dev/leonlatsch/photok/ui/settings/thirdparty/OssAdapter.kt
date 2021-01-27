@@ -21,6 +21,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 
+/**
+ * Adapter for oss page.
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 class OssAdapter(
     private val ossEntries: List<OssEntry>
 ) : RecyclerView.Adapter<OssViewHolder>() {

@@ -18,6 +18,12 @@ package dev.leonlatsch.photok.ui.settings.thirdparty
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Sub entry for license information from json.
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 data class OssLicenseSubEntry(
     val license: String,
     @SerializedName("license_url") val licenseUrl: String

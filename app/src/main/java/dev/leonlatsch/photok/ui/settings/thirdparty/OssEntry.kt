@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.ui.settings.thirdparty
 
+/**
+ * Entry for representing a open source project.
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 data class OssEntry(
     val project: String,
     val description: String,

@@ -25,6 +25,12 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
+/**
+ * Fragment for displaying open source licenses.
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 class OssLicensesFragment :
     BindableFragment<FragmentOssLicensesBinding>(R.layout.fragment_oss_licenses) {
 
@@ -35,7 +41,7 @@ class OssLicensesFragment :
             requireActivity().onBackPressed()
         }
 
-        requireActivity().assets.open("licenseReleaseReport.json").let {
+        requireActivity().assets.open(LICENSE_REPORT_FILE).let {
             val json = String(it.readBytes())
             val listType = object : TypeToken<ArrayList<OssEntry?>?>() {}.type
             val licenses: ArrayList<OssEntry> = Gson().fromJson(json, listType)
@@ -44,5 +50,9 @@ class OssLicensesFragment :
             binding.ossRecycler.layoutManager = layoutManager
             binding.ossRecycler.adapter = OssAdapter(licenses)
         }
+    }
+
+    companion object {
+        const val LICENSE_REPORT_FILE = "licenseReleaseReport.json"
     }
 }

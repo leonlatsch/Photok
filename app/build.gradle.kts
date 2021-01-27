@@ -16,8 +16,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 11
-        versionName = "1.2.2"
+        versionCode = 12
+        versionName = "1.2.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -119,6 +119,9 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
+
+    // Androidx ExifInterface
+    implementation("androidx.exifinterface", "exifinterface", "1.3.0-alpha01")
 
     implementation(fileTree("libs").matching {
         include("*.jar")

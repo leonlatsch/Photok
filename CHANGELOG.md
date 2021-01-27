@@ -1,3 +1,7 @@
+### 1.2.3
+- UI Fixes
+- Fix exif orientation bug
+
 ### 1.2.2
 - UI Fixes
 

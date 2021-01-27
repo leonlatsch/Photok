@@ -159,10 +159,10 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         window.addSystemUIVisibilityListener {
             systemUiVisible = it
             if (it) {
-                binding.viewPhotoToolbar.show()
+                binding.viewPhotoAppBarLayout.show()
                 binding.viewPhotoBottomToolbarLayout.show()
             } else {
-                binding.viewPhotoToolbar.hide()
+                binding.viewPhotoAppBarLayout.hide()
                 binding.viewPhotoBottomToolbarLayout.hide()
             }
         }

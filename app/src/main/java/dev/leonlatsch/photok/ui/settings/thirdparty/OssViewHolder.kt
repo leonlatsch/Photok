@@ -24,6 +24,12 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
 
+/**
+ * View Holder for displaying a [OssEntry].
+ *
+ * @since 1.2.1
+ * @author Leon Latsch
+ */
 class OssViewHolder(
     private val context: Context,
     view: View
@@ -35,7 +41,6 @@ class OssViewHolder(
     private val license = itemView.findViewById<AppCompatTextView>(R.id.itemOssLicense)
 
     private val licenseDetails = itemView.findViewById<LinearLayout>(R.id.itemOssDetails)
-    private val details = itemView.findViewById<LinearLayout>(R.id.itemOssDetails)
     private val packageName = itemView.findViewById<AppCompatTextView>(R.id.itemOssPackageName)
 
     fun bindTo(ossEntry: OssEntry) {
