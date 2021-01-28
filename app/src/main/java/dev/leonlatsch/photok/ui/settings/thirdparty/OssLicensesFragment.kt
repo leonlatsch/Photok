@@ -18,9 +18,6 @@ package dev.leonlatsch.photok.ui.settings.thirdparty
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
@@ -41,15 +38,7 @@ class OssLicensesFragment :
             requireActivity().onBackPressed()
         }
 
-        requireActivity().assets.open(LICENSE_REPORT_FILE).let {
-            val json = String(it.readBytes())
-            val listType = object : TypeToken<ArrayList<OssEntry?>?>() {}.type
-            val licenses: ArrayList<OssEntry> = Gson().fromJson(json, listType)
-
-            val layoutManager = LinearLayoutManager(requireContext())
-            binding.ossRecycler.layoutManager = layoutManager
-            binding.ossRecycler.adapter = OssAdapter(licenses)
-        }
+        binding.ossRecycler.initialize(LICENSE_REPORT_FILE)
     }
 
     companion object {

@@ -22,6 +22,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
         <item name="android:textColorPrimary">@color/textColor</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:actionMenuTextColor">@color/textColor</item>
