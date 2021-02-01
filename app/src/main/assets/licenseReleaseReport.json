@@ -1493,6 +1493,23 @@
     "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.1"
   },
   {
+    "project": "leonlatsch/OssLicenseView",
+    "description": "A android view for open source Licenses.",
+    "version": "1.1.0",
+    "developers": [
+      "Leon Latsch"
+    ],
+    "url": "https://github.com/leonlatsch/OssLicenseView",
+    "year": "2021",
+    "licenses": [
+      {
+        "license": "Apache License 2.0",
+        "license_url": "https://api.github.com/licenses/apache-2.0"
+      }
+    ],
+    "dependency": "com.github.leonlatsch:OssLicenseView:1.1.0"
+  },
+  {
     "project": "LiveData Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027livedata-core\u0027 artifact",
     "version": "2.2.0",
