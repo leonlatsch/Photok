@@ -16,8 +16,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 12
-        versionName = "1.2.3"
+        versionCode = 13
+        versionName = "2.0.0-dev"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -82,8 +82,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.3")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -99,8 +99,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02")
-    kapt("androidx.hilt:hilt-compiler:1.0.0-alpha02")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt("androidx.hilt:hilt-compiler:1.0.0-alpha03")
 
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.1.0")
