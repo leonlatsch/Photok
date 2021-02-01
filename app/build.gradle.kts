@@ -124,7 +124,7 @@ dependencies {
     implementation("androidx.exifinterface", "exifinterface", "1.3.0-alpha01")
 
     // Display OSS Licenses
-    implementation("com.github.leonlatsch:OssLicenseView:1.0.0")
+    implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
