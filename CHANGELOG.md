@@ -1,7 +1,44 @@
+### 2.0.0 (under development)
+- Feature: Collections
+- Feature: Import videos
+- Feature: Password attempts
+
+### 1.2.3
+- UI Fixes
+- Fix exif orientation bug
+
+### 1.2.2
+- UI Fixes
+
+### 1.2.1
+- Replace third party page
+- UI Fixes
+- Bug Fixes
+
+### 1.2.0
+- Feature: Share to Photok
+- Feature: Hide Photok
+- New third party page
+- New credits page
+- New Toolbar design
+- Brazilian Portuguese translation
+- Bug fixes
+
+### 1.1.3
+- Improve darkmode
+- Update third party software
+
+### 1.1.2
+- Fixed more visual issues
+
+### 1.1.1
+- Fixed visual issue
+
 ### 1.1.0
 - New Feature: Darkmode
 - Simple Chinese Translation
 - Fixed Backup Compatibility Check
+- Fixed Info icon size
 
 ### 1.0.3
 - Improve spanish translation

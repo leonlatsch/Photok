@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogValidateBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.components.BindableDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
 
 /**
@@ -75,18 +75,13 @@ class ValidateBackupDialogFragment(
      * Called by ui.
      */
     fun onRestoreAndUnlock() {
-        UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
-            dismiss()
-            val restoreDialog =
+        val unlockDialog =
+            UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
+                dismiss()
                 RestoreBackupBottomSheetDialogFragment(uri, viewModel.metaData!!, origPassword)
-            restoreDialog.show(
-                requireActivity().supportFragmentManager,
-                RestoreBackupBottomSheetDialogFragment::class.qualifiedName
-            )
-        }.show(
-            requireActivity().supportFragmentManager,
-            UnlockBackupDialogFragment::class.qualifiedName
-        )
+                    .show(requireActivity().supportFragmentManager)
+            }
+        unlockDialog.show(requireActivity().supportFragmentManager)
     }
 
     override fun bind(binding: DialogValidateBackupBinding) {

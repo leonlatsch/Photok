@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import android.view.View
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBottomSheetDetailsBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.ui.components.BindableBottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment
 
 /**
  * Bottom Sheet Dialog for the photo details.

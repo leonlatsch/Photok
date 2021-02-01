@@ -1,0 +1,38 @@
+[
+  {
+    "contribution": "Main programming and designing, maintaining of the project",
+    "name": "Leon Latsch",
+    "contact": "dev.leonlatsch@gmail.com",
+    "website": "https://leonlatsch.dev"
+  },
+  {
+    "contribution": "Maintaining spanish translation",
+    "name": "Ismael",
+    "contact": "ismael034@correo.ugr.es",
+    "website": "https://github.com/Ismael034"
+  },
+  {
+    "contribution": "ptbr translation",
+    "name": "mezysinc",
+    "contact": "@mezysinc on github",
+    "website": "https://github.com/mezysinc"
+  },
+  {
+    "contribution": "Doing some stuff",
+    "name": "Michael Rittmeister",
+    "contact": "michael@rittmeister.in",
+    "website": "https://rittmeister.in"
+  },
+  {
+    "contribution": "Proposing ideas and reporting bugs",
+    "name": "Robert",
+    "contact": "Robert2077@protonmail.com",
+    "website": "https://github.com/fux0r2009"
+  },
+  {
+    "contribution": "pair-programming and emotional support",
+    "name": "Luke Jake",
+    "contact": "@comparesheriff on Github",
+    "website": "https://github.com/comparesheriff"
+  }
+]

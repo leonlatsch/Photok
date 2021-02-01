@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
-import dev.leonlatsch.photok.ui.components.BindableFragment
-import dev.leonlatsch.photok.ui.components.Dialogs
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
  * Fragment to display a info about the app and some links.
@@ -57,7 +57,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * * Open the third party in new activity.
      */
     fun openThirdPartySoftware() {
-        Dialogs.showLicensesDialog(requireActivity())
+        findNavController().navigate(R.id.action_aboutFragment_to_ossLicensesFragment)
     }
 
     /**

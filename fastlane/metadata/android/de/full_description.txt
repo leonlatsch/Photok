@@ -2,23 +2,20 @@ Photok ist eine kostenloser Foto-Safe. Es speichert deine Fotos verschlüsselt a
 Es benutzt Technologien wie AES-256 encryption standard oder bcrypt, um deine Fotos zu sichern.
 Photos ist komplett kostenlos, open source und beinhaltet keine Werbung.
 
--- Funktionen --
+<b>Funktionen</b>
 
-- Importiere Fotos aus deine Galerie
-- Komplett funktionale In-App-Galerie.
-- Exportiere Fotos zurück in deine Galerie
-- Ändere dein Passwort
-- Erstelle und stelle Backups wieder her
+- importiere Fotos aus deiner Galerie
+- komplett funktionale In-App-Galerie.
+- exportiere Fotos zurück in deine Galerie
+- ändere dein Passwort
+- erstelle und stelle Backups wieder her
+- senden an Photok
+- app Icon verstecken
 
--- Vorteile --
+<b>Vorteile</b>
 
-- Verstecke deine sensiblen Fotos vor Anderen
-- Schütze deine Fotos vor Datendiebstahl
-
--- Kommende Funktionen --
-- Fingerprint Unlock
-- Backup in der Cloud
-- Darkmode
+- verstecke deine sensiblen Fotos vor Anderen
+- schütze deine Fotos vor Datendiebstahl
 
 Photok auf GitHub: https://github.com/leonlatsch/Photok
 

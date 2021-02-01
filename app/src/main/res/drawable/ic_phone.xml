@@ -1,0 +1,31 @@
+<!--
+  ~   Copyright 2020-2021 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#6AAF50"
+        android:pathData="M256,256m-256,0a256,256 0,1 1,512 0a256,256 0,1 1,-512 0" />
+    <path
+        android:fillColor="#4D8538"
+        android:pathData="M135.693,102.206l-0.008,0.004c-29.639,15.464 -42.074,51.222 -28.494,81.77c19.547,43.975 45.793,84.198 77.468,119.423l23.939,23.939l159.073,159.073c39.82,-19.335 73.863,-48.69 98.876,-84.783l-58.697,-58.697c-2.262,-3.334 -5.169,-6.299 -8.681,-8.681L177.747,112.833C168.453,99.138 150.365,94.55 135.693,102.206z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M349.593,300.614c-8.192,-5.559 -18.954,-5.531 -27.116,0.071l-11.752,8.066c-13.09,8.984 -30.498,8.496 -43.08,-1.187c-11.858,-9.127 -23.176,-18.913 -33.924,-29.283c-10.371,-10.748 -20.156,-22.065 -29.283,-33.924c-9.684,-12.581 -10.171,-29.989 -1.187,-43.08l8.066,-11.752c5.601,-8.162 5.63,-18.924 0.071,-27.116l-33.64,-49.575c-9.293,-13.694 -27.381,-18.282 -42.054,-10.627l-0.009,0.004c-29.639,15.464 -42.074,51.222 -28.494,81.77c19.547,43.975 45.793,84.198 77.468,119.423l23.939,23.939c35.226,31.674 75.449,57.921 119.423,77.468c30.549,13.58 66.306,1.145 81.77,-28.494l0.004,-0.009c7.655,-14.672 3.068,-32.761 -10.627,-42.054L349.593,300.614z" />
+</vector>

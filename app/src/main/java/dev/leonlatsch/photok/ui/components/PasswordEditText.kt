@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -146,6 +146,9 @@ class PasswordEditText @JvmOverloads constructor(
         const val INPUT_TYPE_TEXT = 1
     }
 
+    /**
+     * Adapters for custom xml fields.
+     */
     object BindingAdapters {
         /**
          * Binding Adapter for "textValue".
