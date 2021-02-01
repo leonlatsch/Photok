@@ -17,9 +17,12 @@
 package dev.leonlatsch.photok.ui.gallery
 
 import android.app.Application
+import android.view.View
+import androidx.databinding.Bindable
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import javax.inject.Inject
@@ -37,6 +40,20 @@ class GalleryViewModel @Inject constructor(
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {
 
+    @get:Bindable
+    var placeholderVisibility: Int = View.VISIBLE
+        set(value) {
+            field = value
+            notifyChange(BR.placeholderVisibility, value)
+        }
+
+    @get:Bindable
+    var labelsVisibility: Int = View.GONE
+        set(value) {
+            field = value
+            notifyChange(BR.labelsVisibility, value)
+        }
+
     val photos = Pager(
         PagingConfig(
             pageSize = PAGE_SIZE,
@@ -45,6 +62,16 @@ class GalleryViewModel @Inject constructor(
     ) {
         photoRepository.getAllPaged()
     }.flow
+
+    fun togglePlaceholder(itemCount: Int) {
+        if (itemCount > 0) {
+            labelsVisibility = View.VISIBLE
+            placeholderVisibility = View.GONE
+        } else {
+            placeholderVisibility = View.VISIBLE
+            labelsVisibility = View.GONE
+        }
+    }
 
     companion object {
         private const val PAGE_SIZE = 100

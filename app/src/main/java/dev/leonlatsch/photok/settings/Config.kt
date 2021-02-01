@@ -27,36 +27,61 @@ import android.content.SharedPreferences
  */
 class Config(context: Context) {
 
-    private val preferences: SharedPreferences
+    private val preferences: SharedPreferences = context.getSharedPreferences(FILE_NAME, MODE)
 
-    init {
-        preferences = context.getSharedPreferences(FILE_NAME, MODE)
-    }
-
+    /**
+     * Determines if the app has started before.
+     */
     var systemFirstStart: Boolean
         get() = getBoolean(SYSTEM_FIRST_START, SYSTEM_FIRST_START_DEFAULT)
         set(value) = putBoolean(SYSTEM_FIRST_START, value)
 
+    /**
+     * The version code of the last app version.
+     * Updates after showing new features.
+     */
+    var systemLastVersionCode: Int
+        get() = getInt(SYSTEM_LAST_VERSION_CODE, SYSTEM_LAST_VERSION_CODE_DEFAULT)
+        set(value) = putInt(SYSTEM_LAST_VERSION_CODE, value)
+
+    /**
+     * Sets the app design to "light", "dark" or "system"
+     */
     var systemDesign: String?
         get() = getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT)
         set(value) = putString(SYSTEM_DESIGN, value!!)
 
+    /**
+     * Determines if the full screen photo view, should hide the system ui at start.
+     */
     var galleryAutoFullscreen: Boolean
         get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
         set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
 
+    /**
+     * Determines if screenshots should be allowed.
+     */
     var securityAllowScreenshots: Boolean
         get() = getBoolean(SECURITY_ALLOW_SCREENSHOTS, SECURITY_ALLOW_SCREENSHOTS_DEFAULT)
         set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
 
+    /**
+     * Password hash to check when unlocking.
+     */
     var securityPassword: String?
         get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
         set(value) = putString(SECURITY_PASSWORD, value!!)
 
+    /**
+     * Timeout to auto lock when in background.
+     */
     var securityLockTimeout: Int
         get() = getIntFromString(SECURITY_LOCK_TIMEOUT, SECURITY_LOCK_TIMEOUT_DEFAULT)
         set(value) = putString(SECURITY_LOCK_TIMEOUT, value.toString())
 
+    /**
+     * Launch code to launch from phone dialer.
+     */
     var securityDialLaunchCode: String?
         get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
         set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
@@ -106,39 +131,29 @@ class Config(context: Context) {
          */
         const val MODE = Context.MODE_PRIVATE
 
-        /**
-         * Determines if the app has started before.
-         */
+
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT = true
 
-        /**
-         * Sets the app design to "light", "dark" or "system"
-         */
+        const val SYSTEM_LAST_VERSION_CODE = "system^lastVersionCode"
+        const val SYSTEM_LAST_VERSION_CODE_DEFAULT = 0
+
         const val SYSTEM_DESIGN = "system^design"
         const val SYSTEM_DESIGN_DEFAULT = "system"
 
-        /**
-         * Determines if the full screen photo view, should hide the system ui at start.
-         */
+
         const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
         const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
 
-        /**
-         * Determines if screenshots should be allowed.
-         */
+
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 
-        /**
-         * Password hash to check when unlocking.
-         */
+
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
 
-        /**
-         * Timeout to auto lock when in background-
-         */
+
         const val SECURITY_LOCK_TIMEOUT = "security^lockTimeout"
         const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000
 

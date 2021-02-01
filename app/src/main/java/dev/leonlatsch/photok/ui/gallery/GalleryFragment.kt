@@ -28,7 +28,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,12 +58,6 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
-    // region binding properties
-
-    var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
-
-    // endregion
-
     private val viewModel: GalleryViewModel by viewModels()
 
     private lateinit var adapter: PhotoAdapter
@@ -72,22 +65,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
-        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
-            false
-
-        adapter = PhotoAdapter(
-            requireContext(),
-            viewModel.photoRepository,
-            this::showFullSize,
-            viewLifecycleOwner
-        )
-        adapter.registerAdapterDataObserver(onAdapterDataObserver)
-        binding.galleryPhotoGrid.adapter = adapter
-        lifecycleScope.launch {
-            viewModel.photos.collectLatest { adapter.submitData(it) }
-        }
+        setupGridView()
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
@@ -98,12 +76,31 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         })
     }
 
+    private fun setupGridView() {
+        binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
+        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+            false
+
+        adapter = PhotoAdapter(
+            requireContext(),
+            viewModel.photoRepository,
+            this::showFullSize,
+            viewLifecycleOwner
+        )
+
+        adapter.registerAdapterDataObserver(onAdapterDataObserver)
+        binding.galleryPhotoGrid.adapter = adapter
+        lifecycleScope.launch {
+            viewModel.photos.collectLatest { adapter.submitData(it) }
+        }
+    }
+
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(adapter.itemCount)
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(adapter.itemCount)
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
@@ -112,16 +109,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         else -> 4
     }
 
-    private fun togglePlaceholder(itemCount: Int) {
-        val visibility = if (itemCount > 0) {
-            binding.galleryAllPhotosTitle.show()
-            View.GONE
-        } else {
-            binding.galleryAllPhotosTitle.hide()
-            View.VISIBLE
-        }
-        placeholderVisibility.postValue(visibility)
-    }
 
     /**
      * Starts the photo import.
@@ -321,6 +308,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun bind(binding: FragmentGalleryBinding) {
         super.bind(binding)
         binding.context = this
+        binding.viewModel = viewModel
     }
 
     companion object {

@@ -21,6 +21,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.ui.gallery.GalleryViewModel" />
+
+        <variable
             name="context"
             type="dev.leonlatsch.photok.ui.gallery.GalleryFragment" />
     </data>
@@ -38,7 +42,7 @@
             android:layout_margin="30dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{context.placeholderVisibility}"
+            android:visibility="@{viewModel.placeholderVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +80,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:visibility="@{viewModel.labelsVisibility}"
                 android:id="@+id/galleryAllPhotosTitle"
                 style="@style/LabelTextViewStyle"
                 android:layout_width="wrap_content"
