@@ -17,8 +17,8 @@
 package dev.leonlatsch.photok.ui.settings
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.empty
@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel for Operations started from Settings.
@@ -33,7 +34,8 @@ import kotlinx.coroutines.launch
  * @author Leon Latsch
  * @since 1.0.0
  */
-class SettingsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager,

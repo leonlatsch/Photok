@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
+import javax.inject.Inject
 
 /**
  * ViewModel for restoring photos from a backup file.
@@ -33,7 +34,8 @@ import java.util.zip.ZipInputStream
  * @since 1.0.0
  * @author Leon Latsch
  */
-class RestoreBackupViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RestoreBackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager

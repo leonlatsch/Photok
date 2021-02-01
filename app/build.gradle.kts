@@ -55,8 +55,8 @@ dependencies {
     val roomVersion = "2.3.0-alpha04"
     val coroutinesVersion = "1.3.7"
     val pagingVersion = "3.0.0-alpha11"
-    val daggerVersion = "2.29.1"
-    val hiltVersion = "2.29.1-alpha"
+    val daggerVersion = "2.31"
+    val hiltVersion = "2.31-alpha"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")

@@ -19,8 +19,8 @@ package dev.leonlatsch.photok.ui.backup
 import android.app.Application
 import android.net.Uri
 import androidx.databinding.Bindable
-import androidx.hilt.lifecycle.ViewModelInject
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.getFileName
@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import java.util.zip.ZipInputStream
+import javax.inject.Inject
 
 /**
  * ViewModel for loading and validating a backup file.
@@ -38,7 +39,8 @@ import java.util.zip.ZipInputStream
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ValidateBackupViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ValidateBackupViewModel @Inject constructor(
     private val app: Application
 ) : ObservableViewModel(app) {
 

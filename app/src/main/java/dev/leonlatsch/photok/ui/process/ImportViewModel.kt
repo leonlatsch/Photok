@@ -18,13 +18,14 @@ package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import java.util.*
+import javax.inject.Inject
 
 /**
  * View model to handle importing photos.
@@ -32,7 +33,8 @@ import java.util.*
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ImportViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ImportViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Uri>(app) {

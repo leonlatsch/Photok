@@ -17,13 +17,14 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import org.mindrot.jbcrypt.BCrypt
+import javax.inject.Inject
 
 /**
  * ViewModel for re-encrypting photos with a new password.
@@ -32,7 +33,8 @@ import org.mindrot.jbcrypt.BCrypt
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ReEncryptViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ReEncryptViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config,
