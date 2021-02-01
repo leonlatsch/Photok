@@ -19,12 +19,17 @@ package dev.leonlatsch.photok.ui.gallery
 import android.app.Application
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.runOnMain
+import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -37,7 +42,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     app: Application,
-    val photoRepository: PhotoRepository
+    val photoRepository: PhotoRepository,
+    private val config: Config
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -63,6 +69,9 @@ class GalleryViewModel @Inject constructor(
         photoRepository.getAllPaged()
     }.flow
 
+    /**
+     * Toggle the placeholder and label visibilities.
+     */
     fun togglePlaceholder(itemCount: Int) {
         if (itemCount > 0) {
             labelsVisibility = View.VISIBLE
@@ -70,6 +79,13 @@ class GalleryViewModel @Inject constructor(
         } else {
             placeholderVisibility = View.VISIBLE
             labelsVisibility = View.GONE
+        }
+    }
+
+    fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
+        if (config.systemLastVersionCode < BuildConfig.VERSION_CODE) {
+            runOnMain(onNewsPresent)
+            config.systemLastVersionCode = BuildConfig.VERSION_CODE
         }
     }
 

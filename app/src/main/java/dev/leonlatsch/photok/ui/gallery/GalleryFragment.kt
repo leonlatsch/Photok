@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.other.NewsDialog
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
@@ -74,6 +75,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 actionMode?.finish()
             }
         })
+
+        viewModel.runIfNews {
+            NewsDialog().show(requireActivity().supportFragmentManager)
+        }
     }
 
     private fun setupGridView() {
