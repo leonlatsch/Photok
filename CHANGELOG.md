@@ -1,3 +1,8 @@
+### 2.0.0 (under development)
+- Feature: Collections
+- Feature: Import videos
+- Feature: Password attempts
+
 ### 1.2.3
 - UI Fixes
 - Fix exif orientation bug
