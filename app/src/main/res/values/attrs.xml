@@ -16,10 +16,6 @@
 
 <resources>
     <declare-styleable name="PasswordEditText">
-        <attr name="password_edit_text_hint" format="reference" />
-    </declare-styleable>
-    <declare-styleable name="NewsLabel">
-        <attr name="news_label_title" format="string|reference" />
-        <attr name="news_label_summary" format="string|reference" />
+        <attr name="PasswordEditTextHint" format="reference" />
     </declare-styleable>
 </resources>

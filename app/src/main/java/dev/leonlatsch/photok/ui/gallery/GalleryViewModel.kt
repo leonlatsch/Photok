@@ -84,9 +84,10 @@ class GalleryViewModel @Inject constructor(
 
     fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
         if (config.systemLastVersionCode < BuildConfig.VERSION_CODE) {
-            runOnMain(onNewsPresent)
+            // TODO: Important! Move here
             config.systemLastVersionCode = BuildConfig.VERSION_CODE
         }
+        runOnMain(onNewsPresent) // TODO: Important! Move in if. This is just a test. Do not merge!
     }
 
     companion object {

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.other
+package dev.leonlatsch.photok.ui.news
 
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogNewsBinding
