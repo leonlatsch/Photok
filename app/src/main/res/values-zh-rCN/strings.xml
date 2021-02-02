@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <!-- 维护者： (@sr093906) -->
+    <!-- MAINTAINED BY： (@sr093906) -->
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
@@ -61,7 +61,7 @@
     <string name="gallery_placeholder">你的库里没有照片</string>
     <string name="gallery_add_from_gallery">从系统图库</string>
     <string name="gallery_add_from_backup">从备份文件</string>
-    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
+    <string name="gallery_all_photos_label">所有照片</string>
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
