@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogNewsBinding
+import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_news) {
@@ -40,6 +41,11 @@ class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_new
         binding.newsRecycler.adapter = NewsAdapter(titles, summaries)
 
         binding.newsVersion.text = BuildConfig.VERSION_NAME
+    }
+
+    fun openChangelog() {
+        val url = getString(R.string.news_changelog_url, BuildConfig.VERSION_NAME)
+        openUrl(requireContext(), url)
     }
 
     override fun bind(binding: DialogNewsBinding) {

@@ -22,7 +22,7 @@ android {
             "int",
             "FEATURE_VERSION_CODE",
             "1"
-        ) // Increase for new major or minor version
+        ) // Increase for new major or minor version. NEVER decrease!
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

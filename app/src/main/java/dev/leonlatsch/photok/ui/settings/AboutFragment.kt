@@ -52,11 +52,13 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_about_news, menu)
+        inflater.inflate(R.menu.menu_about, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        NewsDialog().show(childFragmentManager)
+        when (item.itemId) {
+            R.id.menuAboutNews -> NewsDialog().show(childFragmentManager)
+        }
         return true
     }
 

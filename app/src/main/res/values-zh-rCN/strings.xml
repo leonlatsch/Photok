@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">版权所有 \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">版权所有 \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -108,6 +108,7 @@
     <string name="about_third_party">第三方软件</string>
     <string name="about_privacy_policy">隐私政策</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">News</string><!-- TODO: Translate -->
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
@@ -215,4 +216,20 @@
     <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
     <string name="backup_restore_processing">还原备份中……</string>
     <string name="backup_unlock_title">解锁备份</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">New in</string><!-- TODO: Translate -->
+    <string name="news_view_changelog">View Changelog</string><!-- TODO: Translate -->
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+    <string name="news_title_1">Feature: Collections</string><!-- TODO: Translate -->
+    <string name="news_summary_1">Manage photos in collections</string><!-- TODO: Translate -->
+
+    <string name="news_title_2">Feature: Import videos</string><!-- TODO: Translate -->
+    <string name="news_summary_2">Import videos to Photok</string><!-- TODO: Translate -->
+
+    <string name="news_title_3">Feature: Password attempts</string><!-- TODO: Translate -->
+    <string name="news_summary_3">Reset Photok on bruteforce attacks</string><!-- TODO: Translate -->
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

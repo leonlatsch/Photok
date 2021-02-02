@@ -18,8 +18,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuAboutNews"
         android:icon="@drawable/ic_outline_campaign"
-        android:title="News"
+        android:title="@string/about_menu_news"
         app:showAsAction="always">
 
     </item>

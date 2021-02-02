@@ -45,15 +45,15 @@
         <item>dark</item>
     </string-array>
 
-    <string-array name="newsTitles">
-        <item>Feature: Collections</item>
-        <item>Feature: Import videos</item>
-        <item>Feature: Password attempts</item>
+    <string-array name="newsTitles"> <!-- holds up to 4 new features -->
+        <item>@string/news_title_1</item>
+        <item>@string/news_title_2</item>
+        <item>@string/news_title_3</item>
     </string-array>
 
     <string-array name="newsSummaries">
-        <item>Manage photos in clollections!</item>
-        <item>Import videos to Photok!</item>
-        <item>Clear the safe on bruteforce attacks</item>
+        <item>@string/news_summary_1</item>
+        <item>@string/news_summary_2</item>
+        <item>@string/news_summary_3</item>
     </string-array>
 </resources>
