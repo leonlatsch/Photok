@@ -33,6 +33,7 @@
     <string name="common_no">否</string>
     <string name="common_ok">好</string>
     <string name="common_are_you_sure">你确定吗？</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
     <string name="import_importing">正在导入照片……</string>

@@ -13,18 +13,20 @@
   ~   See the License for the specific language governing permissions and
   ~   limitations under the License.
   -->
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/LinearDialogStyle"
+        android:gravity="start"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:minWidth="@dimen/dialog_min_width">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <dev.leonlatsch.photok.ui.other.NewsLabel
             android:layout_height="wrap_content"
-            android:text="news eyyyyyy" />
+            app:news_label_summary="@string/onboarding_next"
+            android:layout_width="wrap_content"
+            app:news_label_title="@string/app_name" />
 
     </LinearLayout>
 </layout>

@@ -33,6 +33,7 @@
     <string name="common_no">Nein</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Foto(s)…</string>
