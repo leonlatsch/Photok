@@ -25,6 +25,12 @@ import dev.leonlatsch.photok.databinding.DialogNewsBinding
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
+/**
+ * Dialog for displaying new features.
+ *
+ * @since 2.0.0
+ * @author Leon Latsch
+ */
 class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,6 +49,9 @@ class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_new
         binding.newsVersion.text = BuildConfig.VERSION_NAME
     }
 
+    /**
+     * Open the github release with the current version name.
+     */
     fun openChangelog() {
         val url = getString(R.string.news_changelog_url, BuildConfig.VERSION_NAME)
         openUrl(requireContext(), url)

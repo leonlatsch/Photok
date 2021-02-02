@@ -21,11 +21,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 
+/**
+ * ViewHolder for displaying news. Used by [NewsAdapter].
+ *
+ * @since 2.0.0
+ * @author Leon Latsch
+ */
 class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val titleTextView = itemView.findViewById<TextView>(R.id.itemNewsTitle)
     private val summaryTextView = itemView.findViewById<TextView>(R.id.itemNewsSummary)
 
+    /**
+     * Bind [title] and [summary] to the view.
+     */
     fun bindTo(title: String, summary: String) {
         titleTextView.text = title
         summaryTextView.text = summary

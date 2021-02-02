@@ -82,6 +82,9 @@ class GalleryViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Run the [onNewsPresent] if the app was just updated.
+     */
     fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
         if (config.systemLastFeatureVersionCode < BuildConfig.FEATURE_VERSION_CODE) {
             runOnMain(onNewsPresent)

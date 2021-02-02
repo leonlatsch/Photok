@@ -21,6 +21,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 
+/**
+ * Adapter for news entries in the [NewsDialog].
+ *
+ * @since 2.0.0
+ * @author Leon Latsch
+ */
 class NewsAdapter(
     private val titles: Array<String>,
     private val summaries: Array<String>
