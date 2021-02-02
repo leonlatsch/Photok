@@ -20,18 +20,12 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.view.ActionMode
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
@@ -57,9 +51,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -72,14 +63,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         })
 
         dispatchIntent()
-
-        binding.mainNavHostFragment.findNavController()
-            .addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.galleryFragment -> binding.mainToolbar.show()
-                    else -> binding.mainToolbar.hide()
-                }
-            }
     }
 
     private fun dispatchIntent() {
@@ -134,30 +117,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
-    }
-
-    /**
-     * Starts the action mode on mainToolbar.
-     */
-    fun startActionMode(callback: ActionMode.Callback): ActionMode? =
-        startSupportActionMode(callback)
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuMainItemSettings -> {
-            binding.mainNavHostFragment.findNavController()
-                .navigate(R.id.action_galleryFragment_to_settingsFragment)
-            true
-        }
-        R.id.menuMainItemLock -> {
-            getBaseApplication().lockApp()
-            true
-        }
-        else -> false
     }
 
     override fun bind(binding: ActivityMainBinding) {

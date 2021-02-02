@@ -24,11 +24,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -66,11 +68,13 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        setToolbar(binding.galleryToolbar)
         setupGridView()
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
-                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
+                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
@@ -112,6 +116,22 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         Configuration.ORIENTATION_PORTRAIT -> 4
         Configuration.ORIENTATION_LANDSCAPE -> 8
         else -> 4
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuMainItemSettings -> {
+            findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            true
+        }
+        R.id.menuMainItemLock -> {
+            requireActivity().getBaseApplication().lockApp()
+            true
+        }
+        else -> false
     }
 
 

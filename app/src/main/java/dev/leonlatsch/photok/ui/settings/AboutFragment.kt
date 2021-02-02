@@ -19,13 +19,16 @@ package dev.leonlatsch.photok.ui.settings
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.news.NewsDialog
 
 /**
  * Fragment to display a info about the app and some links.
@@ -40,15 +43,21 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+        setToolbar(binding.aboutToolbar)
         binding.aboutToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
-        setHasOptionsMenu(true)
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_about_news, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        NewsDialog().show(childFragmentManager)
+        return true
     }
 
     /**
