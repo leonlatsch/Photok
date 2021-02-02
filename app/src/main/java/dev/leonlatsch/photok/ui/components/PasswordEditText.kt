@@ -30,6 +30,7 @@ import androidx.databinding.adapters.ListenerUtil
 import androidx.databinding.adapters.TextViewBindingAdapter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.PasswordEditTextBinding
+import dev.leonlatsch.photok.ui.components.bindings.Bindable
 
 /**
  * Custom Edit Text for Passwords.
@@ -52,9 +53,9 @@ class PasswordEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet?,
     defStyle: Int = 0
-) : ConstraintLayout(context, attrs, defStyle) {
+) : ConstraintLayout(context, attrs, defStyle), Bindable<PasswordEditTextBinding> {
 
-    private lateinit var binding: PasswordEditTextBinding
+    override lateinit var binding: PasswordEditTextBinding
 
     private val onShowPasswordClickListener = OnClickListener {
         val origTf = binding.passwordEditTextValue.typeface
@@ -100,7 +101,7 @@ class PasswordEditText @JvmOverloads constructor(
                 this,
                 true
             )
-            binding.onShowPasswordClickListener = onShowPasswordClickListener
+            bind(binding)
             binding.root
         }
 
@@ -108,7 +109,7 @@ class PasswordEditText @JvmOverloads constructor(
             val styledAttrs = context.obtainStyledAttributes(it, R.styleable.PasswordEditText, 0, 0)
             val hint = resources.getText(
                 styledAttrs.getResourceId(
-                    R.styleable.PasswordEditText_password_edit_text_hint,
+                    R.styleable.PasswordEditText_PasswordEditTextHint,
                     R.string.setup_enter_password
                 )
             )
@@ -122,6 +123,10 @@ class PasswordEditText @JvmOverloads constructor(
             val letterSpacing = if (it.isNullOrEmpty()) 0f else 0.4f
             binding.passwordEditTextValue.letterSpacing = letterSpacing
         }
+    }
+
+    override fun bind(binding: PasswordEditTextBinding) {
+        binding.onShowPasswordClickListener = onShowPasswordClickListener
     }
 
     private fun setHint(hint: String) {

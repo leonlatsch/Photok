@@ -1,0 +1,70 @@
+<!--
+  ~   Copyright 2020-2021 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="504.449"
+    android:viewportHeight="504.449">
+    <path
+        android:fillColor="#ffe278"
+        android:pathData="m147.463,253.799s-39.498,-47.789 -38.548,-60.535l-24.391,69.688 -0.888,29.812 -13.321,10.788 -17.937,51.248 -0.435,28.517 -12.348,8.006 -39.595,113.126 113.203,-99.061 65.64,-79.782v-0.001z" />
+    <path
+        android:fillColor="#ffc178"
+        android:pathData="m248.521,357.061 l-69.678,-31.455 -178.843,178.843 113.31,-39.658 9.198,-12.766 28.221,-0.332 51.117,-17.89 11.838,-13.69 33.26,-2.095 64.239,-22.483z" />
+    <path
+        android:fillColor="#ffe278"
+        android:pathData="m391.155,182.398l89.994,-60.032l16.65,24.96l-89.994,60.032z" />
+    <path
+        android:fillColor="#ff8b8b"
+        android:pathData="m295.953,98.402l44.978,-89.957l26.82,13.41l-44.978,89.957z" />
+    <path
+        android:fillColor="#ff8b8b"
+        android:pathData="m376.229,357.6l16.649,-24.959l44.998,30.017l-16.649,24.959z" />
+    <path
+        android:fillColor="#ffe278"
+        android:pathData="m116.984,83.278l24.96,-16.65l30.016,44.997l-24.96,16.65z" />
+    <path
+        android:fillColor="#be4dd8"
+        android:pathData="m141.553,362.896c-27.769,-27.768 -31.748,-47.68 -57.029,-99.945l-14.21,40.6c5.366,10.765 17.116,47.648 50.026,80.559z" />
+    <path
+        android:fillColor="#7a3db4"
+        android:pathData="m201.846,433.803 l45.098,-15.784c-20.02,-8.663 -67.695,-17.428 -105.391,-55.122l-21.213,21.213c36.501,36.5 79.497,48.719 81.506,49.693z" />
+    <path
+        android:fillColor="#ff6378"
+        android:pathData="m92.547,411.902c-19.133,-19.133 -26.984,-36.727 -40.17,-57.104l-12.783,36.522c2.29,3.392 12.471,22.525 31.739,41.794z" />
+    <path
+        android:fillColor="#ff3d7d"
+        android:pathData="m113.31,464.791 l37.419,-13.098c-14.678,-9.18 -36.493,-18.103 -58.182,-39.791l-21.213,21.213c19.805,19.805 41.312,31.232 41.976,31.676z" />
+    <path
+        android:fillColor="#ffc178"
+        android:pathData="m275.056,229.393c-26.522,-26.523 -57.022,-47.831 -85.881,-59.999 -31.904,-13.451 -56.881,-13.451 -70.331,-0.001s-13.45,38.427 0.002,70.33c12.168,28.859 33.476,59.359 59.998,85.882v0.001l49.91,-35.768z" />
+    <path
+        android:fillColor="#ff936b"
+        android:pathData="m335.056,385.606c13.45,-13.45 13.45,-38.428 -0.001,-70.332 -12.168,-28.858 -33.476,-59.358 -59.998,-85.881l-96.213,96.213c26.523,26.522 57.023,47.83 85.881,59.997 31.903,13.453 56.88,13.454 70.331,0.003z" />
+    <path
+        android:fillColor="#76e2f8"
+        android:pathData="m478.843,4.392 l-255,255 10.607,10.607 134.019,-119.876 120.981,-135.123z" />
+    <path
+        android:fillColor="#4bb9ec"
+        android:pathData="m234.416,270.004l254.961,-254.961l10.605,10.605l-254.961,254.961z" />
+    <path
+        android:fillColor="#c6ea4b"
+        android:pathData="m478.754,241.219c-16.09,-10.609 -36.271,-12.41 -53.984,-4.818l-151.228,64.812 11.816,27.574 151.229,-64.811c8.543,-3.662 17.894,-2.827 25.652,2.289 17.59,11.6 15.771,37.687 -2.806,46.972l-6.692,3.347 13.417,26.833 6.692,-3.346c19.491,-9.746 31.6,-29.337 31.599,-51.129 0,-19.273 -9.604,-37.113 -25.695,-47.723z" />
+    <path
+        android:fillColor="#be4dd8"
+        android:pathData="m175.662,219.091 l64.813,-151.229c3.662,-8.543 2.827,-17.894 -2.29,-25.652 -11.607,-17.606 -37.692,-15.755 -46.972,2.805l-3.346,6.693 -26.833,-13.417 3.346,-6.692c9.745,-19.492 29.336,-31.599 51.128,-31.599 19.272,0 37.112,9.604 47.722,25.695 10.61,16.09 12.411,36.271 4.819,53.985l-64.811,151.228z" />
+</vector>
