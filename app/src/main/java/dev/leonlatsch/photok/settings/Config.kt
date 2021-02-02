@@ -40,9 +40,9 @@ class Config(context: Context) {
      * The version code of the last app version.
      * Updates after showing new features.
      */
-    var systemLastVersionCode: Int
-        get() = getInt(SYSTEM_LAST_VERSION_CODE, SYSTEM_LAST_VERSION_CODE_DEFAULT)
-        set(value) = putInt(SYSTEM_LAST_VERSION_CODE, value)
+    var systemLastFeatureVersionCode: Int
+        get() = getInt(SYSTEM_LAST_FEATURE_VERSION_CODE, SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT)
+        set(value) = putInt(SYSTEM_LAST_FEATURE_VERSION_CODE, value)
 
     /**
      * Sets the app design to "light", "dark" or "system"
@@ -135,8 +135,8 @@ class Config(context: Context) {
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT = true
 
-        const val SYSTEM_LAST_VERSION_CODE = "system^lastVersionCode"
-        const val SYSTEM_LAST_VERSION_CODE_DEFAULT = 0
+        const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
+        const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
 
         const val SYSTEM_DESIGN = "system^design"
         const val SYSTEM_DESIGN_DEFAULT = "system"

@@ -44,4 +44,16 @@
         <item>light</item>
         <item>dark</item>
     </string-array>
+
+    <string-array name="newsTitles">
+        <item>Feature: Collections</item>
+        <item>Feature: Import videos</item>
+        <item>Feature: Password attempts</item>
+    </string-array>
+
+    <string-array name="newsSummaries">
+        <item>Manage photos in clollections!</item>
+        <item>Import videos to Photok!</item>
+        <item>Clear the safe on bruteforce attacks</item>
+    </string-array>
 </resources>

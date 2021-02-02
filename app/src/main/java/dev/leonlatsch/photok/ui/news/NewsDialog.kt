@@ -16,9 +16,34 @@
 
 package dev.leonlatsch.photok.ui.news
 
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogNewsBinding
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_news) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val titles = resources.getStringArray(R.array.newsTitles)
+        val summaries = resources.getStringArray(R.array.newsSummaries)
+
+        val fixLayoutManager = object : LinearLayoutManager(requireContext()) {
+            override fun canScrollVertically() = false
+        }
+
+        binding.newsRecycler.layoutManager = fixLayoutManager
+        binding.newsRecycler.adapter = NewsAdapter(titles, summaries)
+
+        binding.newsVersion.text = BuildConfig.VERSION_NAME
+    }
+
+    override fun bind(binding: DialogNewsBinding) {
+        super.bind(binding)
+        binding.context = this
+    }
 }

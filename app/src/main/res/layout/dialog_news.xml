@@ -15,22 +15,76 @@
   -->
 <layout>
 
+    <data>
+
+        <variable
+            name="context"
+            type="dev.leonlatsch.photok.ui.news.NewsDialog" />
+    </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/LinearDialogStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:minWidth="@dimen/dialog_min_width">
 
-        <TextView
-            style="@style/LabelTextViewStyle"
-            android:layout_width="wrap_content"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:text="New Features" />
+            android:layout_width="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:rotationY="180"
+                android:src="@drawable/ic_party_popper" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/big_gap"
+                android:layout_marginEnd="@dimen/big_gap"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New in" />
+
+                <TextView
+                    style="@style/AppNameTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-14dp"
+                    android:text="@string/app_name"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:id="@+id/newsVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_party_popper" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginBottom="@dimen/small_gap" />
+
+        <Button
+            android:layout_width="@dimen/small_button_width"
+            android:layout_height="@dimen/button_height"
+            android:onClick="@{() -> context.dismiss()}"
+            android:text="@string/common_ok" />
 
     </LinearLayout>
 </layout>

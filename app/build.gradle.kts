@@ -18,6 +18,11 @@ android {
         targetSdkVersion(30)
         versionCode = 13
         versionName = "2.0.0-dev"
+        buildConfigField(
+            "int",
+            "FEATURE_VERSION_CODE",
+            "1"
+        ) // Increase for new major or minor version
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
