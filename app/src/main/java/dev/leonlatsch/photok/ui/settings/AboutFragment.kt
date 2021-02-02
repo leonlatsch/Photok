@@ -16,14 +16,15 @@
 
 package dev.leonlatsch.photok.ui.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
+import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -42,15 +43,19 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
         binding.aboutToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_about_news, menu)
     }
 
     /**
      * Open the website in new activity.
      */
     fun openWebsite() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(getString(R.string.about_website_url))
-        startActivity(intent)
+        openUrl(requireContext(), getString(R.string.about_website_url))
     }
 
     /**
@@ -64,9 +69,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the privacy policy in new activity.
      */
     fun openPrivacyPolicy() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(getString(R.string.about_privacy_policy_url))
-        startActivity(intent)
+        openUrl(requireContext(), getString(R.string.about_privacy_policy_url))
     }
 
     override fun bind(binding: FragmentAboutBinding) {
