@@ -14,31 +14,34 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components.base
+package dev.leonlatsch.photok.ui.settings.thirdparty
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.DialogFragment
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
- * Base for all Dialog Fragments.
- * Sets drawables for rounded corners.
+ * Fragment for displaying open source licenses.
  *
- * @since 1.0.0
+ * @since 1.2.1
  * @author Leon Latsch
  */
-abstract class BaseDialogFragment : DialogFragment() {
+class OssLicensesFragment :
+    BindableFragment<FragmentOssLicensesBinding>(R.layout.fragment_oss_licenses) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set necessary drawables for rounded corners
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        view.background =
-            ResourcesCompat.getDrawable(resources, R.drawable.bg_dialog_round, null)
+        binding.ossToolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
+        binding.ossRecycler.initialize(LICENSE_REPORT_FILE)
+    }
+
+    companion object {
+        const val LICENSE_REPORT_FILE = "licenseReleaseReport.json"
     }
 }

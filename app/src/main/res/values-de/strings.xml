@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020-2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -48,7 +48,7 @@
     <string name="setup_password_strength_weak">Schwach</string>
     <string name="setup_password_strength_moderate">Moderat</string>
     <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht über ein</string>
+    <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht überein</string>
     <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
     <string name="gallery_add_from_gallery">Aus Galerie</string>
     <string name="gallery_add_from_backup">Aus Backup</string>
+    <string name="gallery_all_photos_label">Alle Fotos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>

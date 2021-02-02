@@ -75,13 +75,9 @@ class ChangePasswordDialog :
                         requireContext(),
                         getString(R.string.change_password_confirm_message)
                     ) { _, _ ->
-                        val reEncryptDialog = ReEncryptBottomSheetDialogFragment(
+                        ReEncryptBottomSheetDialogFragment(
                             viewModel.newPassword
-                        )
-                        reEncryptDialog.show(
-                            requireActivity().supportFragmentManager,
-                            ReEncryptBottomSheetDialogFragment::class.qualifiedName
-                        )
+                        ).show(requireActivity().supportFragmentManager)
                         dismiss()
                     }
                 }

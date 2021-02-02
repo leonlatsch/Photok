@@ -17,11 +17,12 @@
 package dev.leonlatsch.photok.ui.gallery
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import javax.inject.Inject
 
 /**
  * ViewModel for the Gallery.
@@ -30,7 +31,8 @@ import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
  * @since 1.0.0
  * @author Leon Latsch
  */
-class GalleryViewModel @ViewModelInject constructor(
+@HiltViewModel
+class GalleryViewModel @Inject constructor(
     app: Application,
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {

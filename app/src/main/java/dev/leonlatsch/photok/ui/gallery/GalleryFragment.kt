@@ -114,8 +114,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private fun togglePlaceholder(itemCount: Int) {
         val visibility = if (itemCount > 0) {
+            binding.galleryAllPhotosTitle.show()
             View.GONE
         } else {
+            binding.galleryAllPhotosTitle.hide()
             View.VISIBLE
         }
         placeholderVisibility.postValue(visibility)
@@ -186,11 +188,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * Called by ui.
      */
     fun startDelete() {
-        val deleteDialog = DeleteBottomSheetDialogFragment(adapter.getAllSelected())
-        deleteDialog.show(
-            requireActivity().supportFragmentManager,
-            DeleteBottomSheetDialogFragment::class.qualifiedName
-        )
+        DeleteBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
         adapter.disableSelection()
     }
 
@@ -206,11 +204,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            val exportDialog = ExportBottomSheetDialogFragment(adapter.getAllSelected())
-            exportDialog.show(
-                requireActivity().supportFragmentManager,
-                ExportBottomSheetDialogFragment::class.qualifiedName
-            )
+            ExportBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
             adapter.disableSelection()
         } else {
             EasyPermissions.requestPermissions(
@@ -232,20 +226,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 extractDataFromResult(images, data)
             }
             if (images.size > 0) {
-                val importDialog = ImportBottomSheetDialogFragment(images)
-                importDialog.show(
-                    requireActivity().supportFragmentManager,
-                    ImportBottomSheetDialogFragment::class.qualifiedName
-                )
+                ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
             }
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 data.data ?: return
-                val restoreDialog = ValidateBackupDialogFragment(data.data!!)
-                restoreDialog.show(
-                    requireActivity().supportFragmentManager,
-                    ValidateBackupDialogFragment::class.qualifiedName
-                )
+                ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
             }
         }
     }

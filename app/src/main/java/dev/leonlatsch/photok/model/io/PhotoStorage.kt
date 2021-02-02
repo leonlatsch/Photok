@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.other.normalizeExifOrientation
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -159,8 +160,15 @@ class PhotoStorage @Inject constructor(
         password: String? = null
     ): Boolean {
         return try {
+            val normalizedFullBitmap = normalizeExifOrientation(
+                BitmapFactory.decodeByteArray(
+                    origBytes,
+                    0,
+                    origBytes.size
+                ), origBytes
+            )
             val thumbnail = ThumbnailUtils.extractThumbnail(
-                BitmapFactory.decodeByteArray(origBytes, 0, origBytes.size),
+                normalizedFullBitmap,
                 THUMBNAIL_SIZE,
                 THUMBNAIL_SIZE
             )

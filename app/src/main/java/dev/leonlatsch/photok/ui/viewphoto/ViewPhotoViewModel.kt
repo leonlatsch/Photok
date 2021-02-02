@@ -18,14 +18,15 @@ package dev.leonlatsch.photok.ui.viewphoto
 
 import android.app.Application
 import androidx.databinding.Bindable
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel for loading the full size photo to [ViewPhotoActivity].
@@ -33,7 +34,8 @@ import kotlinx.coroutines.launch
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ViewPhotoViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ViewPhotoViewModel @Inject constructor(
     private val app: Application,
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {

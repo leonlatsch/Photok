@@ -1,9 +1,26 @@
-### 1.2.0 (under development)
+### 2.0.0 (under development)
+- Feature: Collections
+- Feature: Import videos
+- Feature: Password attempts
+
+### 1.2.3
+- UI Fixes
+- Fix exif orientation bug
+
+### 1.2.2
+- UI Fixes
+
+### 1.2.1
+- Replace third party page
+- UI Fixes
+- Bug Fixes
+
+### 1.2.0
 - Feature: Share to Photok
-- Feature: Albums (under development)
 - Feature: Hide Photok
 - New third party page
 - New credits page
+- New Toolbar design
 - Brazilian Portuguese translation
 - Bug fixes
 

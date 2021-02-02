@@ -18,12 +18,14 @@ package dev.leonlatsch.photok.ui.start
 
 import android.app.Application
 import androidx.databinding.Bindable
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 
 /**
  * ViewModel to check the application state.
@@ -32,7 +34,8 @@ import kotlinx.coroutines.launch
  * @since 1.0.0
  * @author Leon Latsch
  */
-class SplashScreenViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashScreenViewModel @Inject constructor(
     app: Application,
     private val config: Config
 ) : ObservableViewModel(app) {

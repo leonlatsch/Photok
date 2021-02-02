@@ -87,15 +87,6 @@
             android:name=".ui.settings.hideapp.ForwardDialerActivity"
             android:theme="@style/AppTheme" />
 
-
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/AppTheme.ActionBar" />
-
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/AppTheme.ActionBar" />
-
         <receiver android:name=".DialLauncher">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />

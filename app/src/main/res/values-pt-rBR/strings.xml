@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Direitos autorais \u00A9 2020 Leon Latsch</string>
+    <string name="common_copyright_notice">Direitos autorais \u00A9 2020-2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">Não há fotos em seu cofre</string>
     <string name="gallery_add_from_gallery">Da galeria</string>
     <string name="gallery_add_from_backup">Do backup</string>
+    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>

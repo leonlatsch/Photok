@@ -90,12 +90,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      * Called by ui.
      */
     fun onDetails() {
-        val detailsBottomSheetDialog =
-            DetailsBottomSheetDialog(viewModel.currentPhoto)
-        detailsBottomSheetDialog.show(
-            supportFragmentManager,
-            DetailsBottomSheetDialog::class.qualifiedName
-        )
+        DetailsBottomSheetDialog(viewModel.currentPhoto).show(supportFragmentManager)
     }
 
     /**
@@ -164,10 +159,10 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         window.addSystemUIVisibilityListener {
             systemUiVisible = it
             if (it) {
-                binding.viewPhotoToolbar.show()
+                binding.viewPhotoAppBarLayout.show()
                 binding.viewPhotoBottomToolbarLayout.show()
             } else {
-                binding.viewPhotoToolbar.hide()
+                binding.viewPhotoAppBarLayout.hide()
                 binding.viewPhotoBottomToolbarLayout.hide()
             }
         }

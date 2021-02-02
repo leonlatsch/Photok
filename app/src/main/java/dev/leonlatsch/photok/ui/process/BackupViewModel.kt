@@ -18,9 +18,9 @@ package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.Config
@@ -30,6 +30,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import javax.inject.Inject
 
 /**
  * ViewModel to create a backup.
@@ -38,7 +39,8 @@ import java.util.zip.ZipOutputStream
  * @since 1.0.0
  * @author Leon Latsch
  */
-class BackupViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config

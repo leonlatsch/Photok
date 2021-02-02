@@ -1,0 +1,1663 @@
+[
+  {
+    "project": "Activity",
+    "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.activity:activity:1.1.0"
+  },
+  {
+    "project": "Activity",
+    "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.savedstate:savedstate:1.0.0"
+  },
+  {
+    "project": "Activity Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027activity\u0027 artifact",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.activity:activity-ktx:1.1.0"
+  },
+  {
+    "project": "Android AppCompat Library v7",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.appcompat:appcompat:1.2.0"
+  },
+  {
+    "project": "Android Arch-Common",
+    "description": "Android Arch-Common",
+    "version": "2.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.arch.core:core-common:2.1.0"
+  },
+  {
+    "project": "Android Arch-Runtime",
+    "description": "Android Arch-Runtime",
+    "version": "2.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.arch.core:core-runtime:2.1.0"
+  },
+  {
+    "project": "Android ConstraintLayout",
+    "description": "ConstraintLayout for Android",
+    "version": "2.0.4",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://tools.android.com",
+    "year": "2007",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.constraintlayout:constraintlayout:2.0.4"
+  },
+  {
+    "project": "Android ConstraintLayout Solver",
+    "description": "Solver for ConstraintLayout",
+    "version": "2.0.4",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://tools.android.com",
+    "year": "2007",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.constraintlayout:constraintlayout-solver:2.0.4"
+  },
+  {
+    "project": "Android DB",
+    "description": "Android DB",
+    "version": "2.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.sqlite:sqlite:2.1.0"
+  },
+  {
+    "project": "Android Lifecycle Extensions",
+    "description": "Android Lifecycle Extensions",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-extensions:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2019",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle LiveData",
+    "description": "Android Lifecycle LiveData",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle LiveData Core",
+    "description": "Android Lifecycle LiveData Core",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle Process",
+    "description": "Android Lifecycle Process",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-process:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle Runtime",
+    "description": "Android Lifecycle Runtime",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle Service",
+    "description": "Android Lifecycle Service",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-service:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle ViewModel",
+    "description": "Android Lifecycle ViewModel",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle ViewModel Hilt Extension",
+    "description": "Android Lifecycle ViewModel Hilt Extension",
+    "version": "1.0.0-alpha02",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2020",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
+  },
+  {
+    "project": "Android Lifecycle ViewModel Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle ViewModel with SavedState",
+    "description": "Android Lifecycle ViewModel",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"
+  },
+  {
+    "project": "Android Lifecycle-Common",
+    "description": "Android Lifecycle-Common",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-common:2.2.0"
+  },
+  {
+    "project": "Android Navigation Common",
+    "description": "Android Navigation-Common",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-common:2.3.2"
+  },
+  {
+    "project": "Android Navigation Common Kotlin Extensions",
+    "description": "Android Navigation-Common-Ktx",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-common-ktx:2.3.2"
+  },
+  {
+    "project": "Android Navigation Fragment",
+    "description": "Android Navigation-Fragment",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-fragment:2.3.2"
+  },
+  {
+    "project": "Android Navigation Fragment Kotlin Extensions",
+    "description": "Android Navigation-Fragment-Ktx",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-fragment-ktx:2.3.2"
+  },
+  {
+    "project": "Android Navigation Runtime",
+    "description": "Android Navigation-Runtime",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-runtime:2.3.2"
+  },
+  {
+    "project": "Android Navigation Runtime Kotlin Extensions",
+    "description": "Android Navigation-Runtime-Ktx",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-runtime-ktx:2.3.2"
+  },
+  {
+    "project": "Android Navigation UI",
+    "description": "Android Navigation-UI",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-ui:2.3.2"
+  },
+  {
+    "project": "Android Navigation UI Kotlin Extensions",
+    "description": "Android Navigation-UI-Ktx",
+    "version": "2.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.navigation:navigation-ui-ktx:2.3.2"
+  },
+  {
+    "project": "Android Paging-Common",
+    "description": "Android Paging-Common",
+    "version": "3.0.0-alpha11",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/paging#3.0.0-alpha11",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.paging:paging-common:3.0.0-alpha11"
+  },
+  {
+    "project": "Android Paging-Common Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027paging-common\u0027 artifact",
+    "version": "3.0.0-alpha11",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/paging#3.0.0-alpha11",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.paging:paging-common-ktx:3.0.0-alpha11"
+  },
+  {
+    "project": "Android Paging-Runtime",
+    "description": "Android Paging-Runtime",
+    "version": "3.0.0-alpha11",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/paging#3.0.0-alpha11",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.paging:paging-runtime:3.0.0-alpha11"
+  },
+  {
+    "project": "Android Paging-Runtime Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027paging-runtime\u0027 artifact",
+    "version": "3.0.0-alpha11",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/paging#3.0.0-alpha11",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.paging:paging-runtime-ktx:3.0.0-alpha11"
+  },
+  {
+    "project": "Android Preferences KTX",
+    "description": "Kotlin extensions for preferences",
+    "version": "1.1.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.preference:preference-ktx:1.1.1"
+  },
+  {
+    "project": "Android Resources Library",
+    "description": "The Resources Library is a static library that you can add to your Android application in order to use resource APIs that backport the latest APIs to older versions of the platform. Compatible on devices running API 14 or later.",
+    "version": "1.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2019",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.appcompat:appcompat-resources:1.2.0"
+  },
+  {
+    "project": "Android Room Kotlin Extensions",
+    "description": "Android Room Kotlin Extensions",
+    "version": "2.3.0-alpha04",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.3.0-alpha04",
+    "year": "2019",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.room:room-ktx:2.3.0-alpha04"
+  },
+  {
+    "project": "Android Room-Common",
+    "description": "Android Room-Common",
+    "version": "2.3.0-alpha04",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.3.0-alpha04",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.room:room-common:2.3.0-alpha04"
+  },
+  {
+    "project": "Android Room-Runtime",
+    "description": "Android Room-Runtime",
+    "version": "2.3.0-alpha04",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.3.0-alpha04",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.room:room-runtime:2.3.0-alpha04"
+  },
+  {
+    "project": "Android Support AnimatedVectorDrawable",
+    "description": "Android Support AnimatedVectorDrawable",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.vectordrawable:vectordrawable-animated:1.1.0"
+  },
+  {
+    "project": "Android Support CardView v7",
+    "description": "Android Support CardView v7",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.cardview:cardview:1.0.0"
+  },
+  {
+    "project": "Android Support ExifInterface",
+    "description": "Android Support ExifInterface",
+    "version": "1.3.0-alpha01",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2016",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.exifinterface:exifinterface:1.3.0-alpha01"
+  },
+  {
+    "project": "Android Support Library Annotations",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2013",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.annotation:annotation:1.1.0"
+  },
+  {
+    "project": "Android Support Library Async Layout Inflater",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+  },
+  {
+    "project": "Android Support Library collections",
+    "description": "Standalone efficient collections.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.collection:collection:1.1.0"
+  },
+  {
+    "project": "Android Support Library compat",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.core:core:1.3.2"
+  },
+  {
+    "project": "Android Support Library Coordinator Layout",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+  },
+  {
+    "project": "Android Support Library core UI",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.legacy:legacy-support-core-ui:1.0.0"
+  },
+  {
+    "project": "Android Support Library core utils",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.legacy:legacy-support-core-utils:1.0.0"
+  },
+  {
+    "project": "Android Support Library Cursor Adapter",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.cursoradapter:cursoradapter:1.0.0"
+  },
+  {
+    "project": "Android Support Library Custom View",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.customview:customview:1.1.0"
+  },
+  {
+    "project": "Android Support Library Custom View",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+  },
+  {
+    "project": "Android Support Library Document File",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.documentfile:documentfile:1.0.0"
+  },
+  {
+    "project": "Android Support Library Drawer Layout",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.1.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.drawerlayout:drawerlayout:1.1.1"
+  },
+  {
+    "project": "Android Support Library fragment",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.2.4",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.fragment:fragment:1.2.4"
+  },
+  {
+    "project": "Android Support Library Interpolators",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.interpolator:interpolator:1.0.0"
+  },
+  {
+    "project": "Android Support Library loader",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.loader:loader:1.0.0"
+  },
+  {
+    "project": "Android Support Library Local Broadcast Manager",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+  },
+  {
+    "project": "Android Support Library Print",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.print:print:1.0.0"
+  },
+  {
+    "project": "Android Support Library Sliding Pane Layout",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.slidingpanelayout:slidingpanelayout:1.0.0"
+  },
+  {
+    "project": "Android Support Library View Pager",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.viewpager:viewpager:1.0.0"
+  },
+  {
+    "project": "Android Support RecyclerView v7",
+    "description": "Android Support RecyclerView v7",
+    "version": "1.2.0-alpha04",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2014",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.recyclerview:recyclerview:1.2.0-alpha04"
+  },
+  {
+    "project": "Android Support SQLite - Framework Implementation",
+    "description": "The implementation of Support SQLite library using the framework code.",
+    "version": "2.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.sqlite:sqlite-framework:2.1.0"
+  },
+  {
+    "project": "Android Support VectorDrawable",
+    "description": "Android Support VectorDrawable",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.vectordrawable:vectordrawable:1.1.0"
+  },
+  {
+    "project": "Android Transition Support Library",
+    "description": "Android Transition Support Library",
+    "version": "1.3.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2016",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.transition:transition:1.3.0"
+  },
+  {
+    "project": "AndroidX Hilt Extension Annotations",
+    "description": "AndroidX Hilt Extension Annotations",
+    "version": "1.0.0-alpha02",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "year": "2020",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.hilt:hilt-common:1.0.0-alpha02"
+  },
+  {
+    "project": "AndroidX Preference",
+    "description": "AndroidX Preference",
+    "version": "1.1.1",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.preference:preference:1.1.1"
+  },
+  {
+    "project": "AndroidX Widget ViewPager2",
+    "description": "AndroidX Widget ViewPager2",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2017",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.viewpager2:viewpager2:1.0.0"
+  },
+  {
+    "project": "Collections Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027collection\u0027 artifact",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.collection:collection-ktx:1.1.0"
+  },
+  {
+    "project": "Core Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027core\u0027 artifact",
+    "version": "1.3.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.core:core-ktx:1.3.2"
+  },
+  {
+    "project": "Dagger",
+    "description": "A fast dependency injector for Android and Java.",
+    "version": "2.29.1",
+    "developers": [],
+    "url": "https://github.com/google/dagger",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.dagger:dagger:2.29.1"
+  },
+  {
+    "project": "Dagger Lint Rules AAR Distribution",
+    "description": "A fast dependency injector for Android and Java.",
+    "version": "2.29.1",
+    "developers": [],
+    "url": "https://github.com/google/dagger",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.dagger:dagger-lint-aar:2.29.1"
+  },
+  {
+    "project": "Data Binding Base Library",
+    "description": "Shared library between Data Binding runtime lib and compiler",
+    "version": "4.1.2",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/studio",
+    "year": "2007",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.databinding:databinding-common:4.1.2"
+  },
+  {
+    "project": "databinding-adapters",
+    "description": null,
+    "version": "4.1.2",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.databinding:databinding-adapters:4.1.2"
+  },
+  {
+    "project": "databinding-runtime",
+    "description": null,
+    "version": "4.1.2",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.databinding:databinding-runtime:4.1.2"
+  },
+  {
+    "project": "EasyPermissions",
+    "description": "A wrapper library for basic Android M system permissions logic",
+    "version": "3.0.0",
+    "developers": [
+      "Google"
+    ],
+    "url": "https://github.com/googlesamples/easypermissions",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "pub.devrel:easypermissions:3.0.0"
+  },
+  {
+    "project": "FindBugs-jsr305",
+    "description": "JSR305 Annotations for Findbugs",
+    "version": "3.0.1",
+    "developers": [],
+    "url": "http://findbugs.sourceforge.net/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.code.findbugs:jsr305:3.0.1"
+  },
+  {
+    "project": "FloatingActionButton",
+    "description": "Floating Action Button for Android based on Material Design specification",
+    "version": "1.10.1",
+    "developers": [
+      "Jerzy Chalupski"
+    ],
+    "url": "https://github.com/futuresimple/android-floating-action-button",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://github.com/futuresimple/android-floating-action-button/blob/master/LICENSE.txt"
+      }
+    ],
+    "dependency": "com.getbase:floatingactionbutton:1.10.1"
+  },
+  {
+    "project": "Fragment Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027fragment\u0027 artifact",
+    "version": "1.2.4",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.fragment:fragment-ktx:1.2.4"
+  },
+  {
+    "project": "Gson",
+    "description": null,
+    "version": "2.8.6",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.code.gson:gson:2.8.6"
+  },
+  {
+    "project": "Hilt Android",
+    "description": "A fast dependency injector for Android and Java.",
+    "version": "2.29.1-alpha",
+    "developers": [],
+    "url": "https://github.com/google/dagger",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.dagger:hilt-android:2.29.1-alpha"
+  },
+  {
+    "project": "Hilt Core",
+    "description": "A fast dependency injector for Android and Java.",
+    "version": "2.29.1-alpha",
+    "developers": [],
+    "url": "https://github.com/google/dagger",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.dagger:hilt-core:2.29.1-alpha"
+  },
+  {
+    "project": "javax.inject",
+    "description": "The javax.inject API",
+    "version": "1",
+    "developers": [],
+    "url": "http://code.google.com/p/atinject/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "javax.inject:javax.inject:1"
+  },
+  {
+    "project": "jBCrypt",
+    "description": "OpenBSD-style Blowfish password hashing for Java",
+    "version": "0.4",
+    "developers": [
+      "Damien Miller"
+    ],
+    "url": "https://github.com/djmdjm/jBCrypt",
+    "year": null,
+    "licenses": [
+      {
+        "license": "ISC",
+        "license_url": "https://opensource.org/licenses/isc-license"
+      }
+    ],
+    "dependency": "org.mindrot:jbcrypt:0.4"
+  },
+  {
+    "project": "JetBrains Java Annotations",
+    "description": "A set of annotations used for code inspection support and code documentation.",
+    "version": "16.0.1",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/JetBrains/java-annotations",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/license/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains:annotations:16.0.1"
+  },
+  {
+    "project": "JSR-250 Common Annotations for the JavaTM Platform",
+    "description": "JSR-250 Reference Implementation by Glassfish",
+    "version": "1.0",
+    "developers": [],
+    "url": "http://jcp.org/aboutJava/communityprocess/final/jsr250/index.html",
+    "year": null,
+    "licenses": [
+      {
+        "license": "COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0",
+        "license_url": "https://glassfish.dev.java.net/public/CDDLv1.0.html"
+      }
+    ],
+    "dependency": "javax.annotation:jsr250-api:1.0"
+  },
+  {
+    "project": "Kotlin Stdlib",
+    "description": "Kotlin Standard Library for JVM",
+    "version": "1.4.21",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
+  },
+  {
+    "project": "Kotlin Stdlib Common",
+    "description": "Kotlin Common Standard Library",
+    "version": "1.4.21",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.4.21"
+  },
+  {
+    "project": "kotlinx-coroutines-android",
+    "description": "Coroutines support libraries for Kotlin",
+    "version": "1.4.1",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/Kotlin/kotlinx.coroutines",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
+  },
+  {
+    "project": "kotlinx-coroutines-core",
+    "description": "Coroutines support libraries for Kotlin",
+    "version": "1.4.1",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "https://github.com/Kotlin/kotlinx.coroutines",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.1"
+  },
+  {
+    "project": "leonlatsch/OssLicenseView",
+    "description": "A android view for open source Licenses.",
+    "version": "1.1.0",
+    "developers": [
+      "Leon Latsch"
+    ],
+    "url": "https://github.com/leonlatsch/OssLicenseView",
+    "year": "2021",
+    "licenses": [
+      {
+        "license": "Apache License 2.0",
+        "license_url": "https://api.github.com/licenses/apache-2.0"
+      }
+    ],
+    "dependency": "com.github.leonlatsch:OssLicenseView:1.1.0"
+  },
+  {
+    "project": "LiveData Core Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027livedata-core\u0027 artifact",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0"
+  },
+  {
+    "project": "LiveData Kotlin Extensions",
+    "description": "Kotlin extensions for \u0027livedata\u0027 artifact",
+    "version": "2.2.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+  },
+  {
+    "project": "Material Components for Android",
+    "description": "Material Components for Android is a static library that you can add to your Android application in order to use APIs that provide implementations of the Material Design specification. Compatible on devices running API 14 or later.",
+    "version": "1.0.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.android.material:material:1.0.0"
+  },
+  {
+    "project": "MikeOrtiz/TouchImageView",
+    "description": "Adds touch functionality to Android ImageView.",
+    "version": "3.0.1",
+    "developers": [
+      "Michael Ortiz"
+    ],
+    "url": "https://github.com/MikeOrtiz/TouchImageView",
+    "year": "2011",
+    "licenses": [
+      {
+        "license": "MIT License",
+        "license_url": "https://api.github.com/licenses/mit"
+      }
+    ],
+    "dependency": "com.github.MikeOrtiz:TouchImageView:3.0.1"
+  },
+  {
+    "project": "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
+    "description": "Kotlin Android Extensions Runtime",
+    "version": "1.3.72",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.3.72"
+  },
+  {
+    "project": "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
+    "description": "Kotlin Standard Library JDK 7 extension",
+    "version": "1.3.72",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+  },
+  {
+    "project": "Timber",
+    "description": "No-nonsense injectable logging.",
+    "version": "4.7.1",
+    "developers": [
+      "Jake Wharton"
+    ],
+    "url": "https://github.com/JakeWharton/timber",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.jakewharton.timber:timber:4.7.1"
+  },
+  {
+    "project": "VersionedParcelable",
+    "description": "Provides a stable but relatively compact binary serialization format that can be passed across processes or persisted safely.",
+    "version": "1.1.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "http://developer.android.com/tools/extras/support-library.html",
+    "year": "2018",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.versionedparcelable:versionedparcelable:1.1.0"
+  },
+  {
+    "project": "viewbinding",
+    "description": null,
+    "version": "4.1.2",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.databinding:viewbinding:4.1.2"
+  }
+]

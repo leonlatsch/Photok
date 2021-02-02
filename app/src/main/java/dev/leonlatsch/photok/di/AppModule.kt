@@ -21,7 +21,6 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.model.database.PhotokDatabase
@@ -31,7 +30,7 @@ import dev.leonlatsch.photok.settings.Config
 import javax.inject.Singleton
 
 /**
- * Hilt Module for [ApplicationComponent].
+ * Hilt Module for [SingletonComponent].
  *
  * @since 1.0.0
  * @author Leon Latsch

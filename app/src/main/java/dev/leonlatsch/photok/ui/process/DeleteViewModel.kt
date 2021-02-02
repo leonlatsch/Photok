@@ -17,10 +17,11 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
+import javax.inject.Inject
 
 /**
  * ViewModel for deleting multiple photos.
@@ -28,7 +29,8 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
  * @since 1.0.0
  * @author Leon Latsch
  */
-class DeleteViewModel @ViewModelInject constructor(
+@HiltViewModel
+class DeleteViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {

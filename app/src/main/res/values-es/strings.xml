@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020-2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -37,7 +37,7 @@
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)…</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
-    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
+    <string name="import_sharted_question">¿Quieres importar %1$d foto(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
@@ -61,6 +61,7 @@
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_add_from_gallery">Desde la Galería</string>
     <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
+    <string name="gallery_all_photos_label">Todas las Fotos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -134,11 +135,11 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_title">Código Secreto de Lanzamiento</string>
+    <string name="settings_security_launch_code_summary">Código secreto para lanzar Photok desde la app de teléfono.</string>
+    <string name="settings_security_launch_code_message">Introduce *#*#[tu código]#*#* en la app de teléfono para lanzar Photok.</string>
+    <string name="settings_security_hide_app_title">Ocultar App</string>
+    <string name="settings_security_hide_app_summary">Ocultar el icono de la app de el cajón de aplicaciones.</string>
 
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
@@ -157,15 +158,15 @@
     <string name="settings_other_sourcecode_title">Código fuente</string>
     <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
-    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
-    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_title">Créditos</string>
+    <string name="settings_other_credits_summary">Contribuyentes y créditos</string>
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Sobre Photok</string>
 
     <!-- CREDITS -->
-    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
-    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
-    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
+    <string name="credits_contributors_title">Contribuyentes</string>
+    <string name="credits_contributors_hint">Visita Photok en GitHub para ver todos los contribuyentes</string>
+    <string name="credits_icons_title">Iconos</string>
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Cambiar contraseña</string>
@@ -179,18 +180,18 @@
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
 
     <!-- HIDE APP -->
-    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
-    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
-    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
-    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
-    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="hide_app_title_hide">Ocultar Photok</string>
+    <string name="hide_app_title_show">Mostrar Photok</string>
+    <string name="hide_app_status_label">Photok está ahora mismo:</string>
+    <string name="hide_app_status_visible">VISIBLE</string>
+    <string name="hide_app_status_hidden">OCULTO</string>
+    <string name="hide_app_app_name_stealth">Teléfono</string>
+    <string name="hide_app_confirm_hide">¿Realmente quieres ocultar Photok?</string>
+    <string name="hide_app_confirm_show">¿Realmente quieres mostar Photok again?</string>
+    <string name="hide_app_hint">Una vez oculto, Photok solo podrá ser lanzado desde el teclado de la app de teléfono, con tu pin secreto.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
+    <string name="hide_app_hint_current_code">Código de lanzamiento actual:</string>
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">Siguiente</string>

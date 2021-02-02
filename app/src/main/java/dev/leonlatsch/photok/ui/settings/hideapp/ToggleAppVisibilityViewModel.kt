@@ -21,12 +21,13 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.view.View
 import androidx.databinding.Bindable
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import javax.inject.Inject
 
 /**
  * ViewModel for the HideAppDialog. Holds a state.
@@ -34,7 +35,8 @@ import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
  * @since 1.2.0
  * @author Leon Latsch
  */
-class ToggleAppVisibilityViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ToggleAppVisibilityViewModel @Inject constructor(
     private val app: Application,
     private val config: Config
 ) : ObservableViewModel(app) {
