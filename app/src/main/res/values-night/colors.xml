@@ -22,6 +22,7 @@
 
     <!-- Components -->
     <color name="background">#1a1a1a</color>
+    <color name="componentBackground">#181818</color>
     <color name="textColor">#fafafa</color>
     <color name="secondaryTextColor">#B3B3B3</color>
     <color name="appTitleColor">@android:color/white</color>
