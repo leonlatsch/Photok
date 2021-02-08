@@ -33,7 +33,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
@@ -87,8 +86,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private fun setupGridView() {
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
-        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
-            false
 
         adapter = PhotoAdapter(
             requireContext(),
@@ -141,7 +138,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * May request permission READ_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_IMPORT)
+    @AfterPermissionGranted(REQ_PERM_IMPORT_PHOTOS)
     fun startImport() {
         if (EasyPermissions.hasPermissions(
                 requireContext(),
@@ -160,7 +157,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             EasyPermissions.requestPermissions(
                 this,
                 getString(R.string.import_permission_rationale),
-                REQ_PERM_IMPORT,
+                REQ_PERM_IMPORT_PHOTOS,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
@@ -334,10 +331,5 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         super.bind(binding)
         binding.context = this
         binding.viewModel = viewModel
-    }
-
-    companion object {
-        const val REQ_CONTENT_PHOTOS = 0
-        const val REQ_CONTENT_BACKUP = 1
     }
 }

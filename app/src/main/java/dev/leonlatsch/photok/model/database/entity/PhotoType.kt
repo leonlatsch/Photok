@@ -26,10 +26,11 @@ import dev.leonlatsch.photok.other.empty
  * @author Leon Latsch
  */
 enum class PhotoType(val value: Int, val mimeType: String) {
-    UNDEFINED(0,  String.empty),
+    UNDEFINED(0, String.empty),
     PNG(1, "image/png"),
     JPEG(2, "image/jpeg"),
-    GIF(3, "image/gif");
+    GIF(3, "image/gif"),
+    MP4(4, "video/gif");
 
     companion object {
         /**
