@@ -16,27 +16,121 @@
 
 package dev.leonlatsch.photok.ui.gallery
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
+import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
+import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
+import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
+import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment
+import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
+import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
 class ImportMenuDialog :
     BindableBottomSheetDialogFragment<DialogImportMenuBinding>(R.layout.dialog_import_menu) {
 
+    /**
+     * Starts the photo import.
+     * Starts a chooser for images.
+     * May request permission READ_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
+    @AfterPermissionGranted(REQ_PERM_IMPORT_PHOTOS)
+    fun startSelectPhotos() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResultAndIgnoreTimer(
+                Intent.createChooser(intent, "Select Photos"),
+                REQ_CONTENT_PHOTOS
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_IMPORT_PHOTOS,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    /**
+     * Start restoring a backup.
+     * Requests permission and shows [ValidateBackupDialogFragment].
+     */
+    @AfterPermissionGranted(REQ_PERM_RESTORE)
+    fun startSelectBackup() {
+        if (EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "application/zip"
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResultAndIgnoreTimer(
+                Intent.createChooser(intent, "Select Backup"),
+                REQ_CONTENT_BACKUP
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_permission_rationale),
+                REQ_PERM_RESTORE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
+            val images = mutableListOf<Uri>()
+            if (data != null) {
+                getImportUris(images, data)
+            }
+            if (images.size > 0) {
+                ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
+                dismiss()
+            }
+        } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                data.data ?: return
+                ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
+                dismiss()
+            }
+        }
+    }
+
+    private fun getImportUris(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
+        if (data.clipData != null) {
+            val count = data.clipData!!.itemCount
+            for (i in 0 until count) {
+                val imageUri = data.clipData!!.getItemAt(i).uri
+                images.add(imageUri)
+            }
+        } else if (data.data != null) {
+            val imageUri = data.data!!
+            images.add(imageUri)
+        }
+        return images
+    }
+
     override fun bind(binding: DialogImportMenuBinding) {
         super.bind(binding)
         binding.context = this
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     companion object {

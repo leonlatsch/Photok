@@ -119,9 +119,6 @@ dependencies {
     // MikeOritz/TouchImageView - Zoomable Image View
     implementation("com.github.MikeOrtiz:TouchImageView:3.0.1")
 
-    // Floating Action Menu
-    implementation("com.getbase:floatingactionbutton:1.10.1")
-
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
 
