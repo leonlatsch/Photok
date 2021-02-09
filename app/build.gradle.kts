@@ -16,7 +16,7 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 13
+        versionCode = 14
         versionName = "2.0.0-dev"
         buildConfigField(
             "int",
