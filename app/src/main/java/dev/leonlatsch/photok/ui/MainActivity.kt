@@ -22,6 +22,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.view.ActionMode
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,10 +51,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
 
+    private val viewModel: MainViewModel by viewModels()
+
     @Inject
     override lateinit var config: Config
-
-    private var sharedDataCache: ArrayList<Uri> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +67,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onPostCreate(savedInstanceState)
 
         getBaseApplication().rawApplicationState.observe(this, {
-            if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
+            if (it == ApplicationState.UNLOCKED && viewModel.sharedDataCache.isNotEmpty()) {
                 confirmAndStartImportShared()
             }
         })
-
-        dispatchIntent()
 
         binding.mainNavHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
@@ -82,18 +81,23 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
     }
 
+    override fun onResume() {
+        super.onResume()
+        dispatchIntent()
+    }
+
     private fun dispatchIntent() {
         when (intent.action) {
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uri != null) {
-                    sharedDataCache.add(uri)
+                    viewModel.sharedDataCache.add(uri)
                 }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uris != null) {
-                    sharedDataCache.addAll(uris)
+                    viewModel.sharedDataCache.addAll(uris)
                 }
             }
         }
@@ -102,7 +106,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     private fun confirmAndStartImportShared() {
         Dialogs.showConfirmDialog(
             this,
-            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
+            String.format(
+                getString(R.string.import_sharted_question),
+                viewModel.sharedDataCache.size
+            )
         ) { _, _ ->
             importShared()
         }
@@ -119,13 +126,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            sharedDataCache.let {
+            viewModel.sharedDataCache.let {
                 ImportBottomSheetDialogFragment(it).show(
                     supportFragmentManager,
                     ImportBottomSheetDialogFragment::class.qualifiedName
                 )
             }
-            sharedDataCache = arrayListOf()
+            viewModel.clearSharedDataCache()
         } else {
             EasyPermissions.requestPermissions(
                 this,
