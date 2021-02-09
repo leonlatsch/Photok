@@ -1,5 +1,5 @@
 ### 1.2.4
-- Fix crash when creating thumbnail
+- Fix crash when creating thumbnail fails
 - Fix not importing shared data
 
 ### 1.2.3
