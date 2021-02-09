@@ -126,14 +126,4 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.bind(binding)
         binding.context = this
     }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
 }
