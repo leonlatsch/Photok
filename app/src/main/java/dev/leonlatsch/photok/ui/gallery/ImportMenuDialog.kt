@@ -32,6 +32,12 @@ import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
+/**
+ * BottomSheetDialog for showing import options and starting import Dialogs.
+ *
+ * @since 2.0.0
+ * @author Leon Latsch
+ */
 class ImportMenuDialog :
     BindableBottomSheetDialogFragment<DialogImportMenuBinding>(R.layout.dialog_import_menu) {
 

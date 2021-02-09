@@ -100,6 +100,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    /**
+     * Show [ImportMenuDialog].
+     * Called by ui.
+     */
     fun showImportMenu() {
         ImportMenuDialog().show(childFragmentManager)
     }
