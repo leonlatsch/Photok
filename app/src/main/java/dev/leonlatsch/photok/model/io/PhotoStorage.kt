@@ -178,6 +178,7 @@ class PhotoStorage @Inject constructor(
             val thumbnailBytes = outputStream.toByteArray()
 
             val encryptedBytes = dynamicEncryptBytes(thumbnailBytes, password)
+            encryptedBytes ?: return false
 
             insertAndOpenInternalFile(context, Photo.internalThumbnailFileName(uuid)) {
                 it?.write(encryptedBytes)
