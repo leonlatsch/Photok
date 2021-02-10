@@ -71,6 +71,10 @@ class ImportMenuDialog :
         }
     }
 
+    fun startSelectVideos() {
+
+    }
+
     /**
      * Start restoring a backup.
      * Requests permission and shows [ValidateBackupDialogFragment].
