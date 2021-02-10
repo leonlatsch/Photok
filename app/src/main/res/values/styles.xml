@@ -96,12 +96,6 @@
         <item name="android:textSize">62sp</item>
     </style>
 
-    <!-- FAB -->
-    <style name="FabLabelStyle">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@drawable/bg_fab_label</item>
-    </style>
-
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">@font/raleway_regular</item>
