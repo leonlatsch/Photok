@@ -59,9 +59,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">There are no photos in your safe</string>
-    <string name="gallery_add_from_gallery">From Gallery</string>
-    <string name="gallery_add_from_backup">From Backup</string>
     <string name="gallery_all_photos_label">All photos</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string>
+    <string name="import_menu_photos">Photos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Add media items to Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>

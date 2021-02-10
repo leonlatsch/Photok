@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Photos" />
+                    android:text="@string/import_menu_photos" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Videos" />
+                    android:text="@string/import_menu_videos" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Backup" />
+                    android:text="@string/import_menu_backup" />
             </LinearLayout>
 
         </LinearLayout>
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_gap"
-            android:text="Select what you want to import"
+            android:text="@string/import_menu_hint"
             android:textColor="@color/secondaryTextColor" />
     </LinearLayout>
 </layout>

@@ -60,9 +60,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
-    <string name="gallery_add_from_gallery">Desde la Galería</string>
-    <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
     <string name="gallery_all_photos_label">Todas las Fotos</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
+    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
+    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
+    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
+    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
