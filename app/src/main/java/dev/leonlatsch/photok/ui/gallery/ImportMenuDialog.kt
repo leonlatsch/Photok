@@ -23,14 +23,14 @@ import android.net.Uri
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
+import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_VIDEOS
 import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
+import dev.leonlatsch.photok.ui.components.Chooser
 import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * BottomSheetDialog for showing import options and starting import Dialogs.
@@ -48,60 +48,43 @@ class ImportMenuDialog :
      * Called by ui.
      */
     @AfterPermissionGranted(REQ_PERM_IMPORT_PHOTOS)
-    fun startSelectPhotos() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Photos"),
-                REQ_CONTENT_PHOTOS
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_permission_rationale),
-                REQ_PERM_IMPORT_PHOTOS,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
-    }
+    fun startSelectPhotos() = Chooser.Builder()
+        .message("Select Photos")
+        .mimeType("image/*")
+        .allowMultiple()
+        .requestCode(REQ_CONTENT_PHOTOS)
+        .permissionCode(REQ_PERM_IMPORT_PHOTOS)
+        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        .show(this)
 
-    fun startSelectVideos() {
-
-    }
+    /**
+     * Start the video import.
+     * Starts a chooser for videos.
+     * May request permission READ_EXTERNAL_STORAGE.
+     * Called by ui.
+     */
+    @AfterPermissionGranted(REQ_PERM_IMPORT_VIDEOS)
+    fun startSelectVideos() = Chooser.Builder()
+        .message("Select Videos")
+        .mimeType("video/*")
+        .allowMultiple()
+        .requestCode(REQ_CONTENT_VIDEOS)
+        .permissionCode(REQ_PERM_IMPORT_VIDEOS)
+        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        .show(this)
 
     /**
      * Start restoring a backup.
      * Requests permission and shows [ValidateBackupDialogFragment].
      */
     @AfterPermissionGranted(REQ_PERM_RESTORE)
-    fun startSelectBackup() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "application/zip"
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Backup"),
-                REQ_CONTENT_BACKUP
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_permission_rationale),
-                REQ_PERM_RESTORE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
-    }
+    fun startSelectBackup() = Chooser.Builder()
+        .message("Select Backup")
+        .mimeType("application/zip")
+        .requestCode(REQ_CONTENT_BACKUP)
+        .permissionCode(REQ_PERM_RESTORE)
+        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        .show(this)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
