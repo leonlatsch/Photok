@@ -90,35 +90,40 @@ class ImportMenuDialog :
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
-            val images = mutableListOf<Uri>()
-            if (data != null) {
-                getImportUris(images, data)
-            }
-            if (images.size > 0) {
-                ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
-            }
+            dispatchPhotoImportRequest(data)
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                data.data ?: return
-                ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
-            }
+            dispatchBackupImportRequest(data)
         }
 
         dismiss()
     }
 
-    private fun getImportUris(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
+    private fun dispatchPhotoImportRequest(data: Intent?) = data?.let {
+        val photoUris = resolveUrisFromIntent(it)
+        if (photoUris.isNotEmpty()) {
+            ImportBottomSheetDialogFragment(photoUris).show(requireActivity().supportFragmentManager)
+        }
+    }
+
+    private fun dispatchBackupImportRequest(data: Intent?) = data?.let {
+        it.data?.let { uri ->
+            ValidateBackupDialogFragment(uri).show(requireActivity().supportFragmentManager)
+        }
+    }
+
+    private fun resolveUrisFromIntent(data: Intent): MutableList<Uri> {
+        val uris = mutableListOf<Uri>()
         if (data.clipData != null) {
             val count = data.clipData!!.itemCount
             for (i in 0 until count) {
-                val imageUri = data.clipData!!.getItemAt(i).uri
-                images.add(imageUri)
+                val uri = data.clipData!!.getItemAt(i).uri
+                uris.add(uri)
             }
         } else if (data.data != null) {
-            val imageUri = data.data!!
-            images.add(imageUri)
+            val uri = data.data!!
+            uris.add(uri)
         }
-        return images
+        return uris
     }
 
     override fun bind(binding: DialogImportMenuBinding) {
