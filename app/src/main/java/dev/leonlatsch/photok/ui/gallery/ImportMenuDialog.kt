@@ -96,15 +96,15 @@ class ImportMenuDialog :
             }
             if (images.size > 0) {
                 ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
-                dismiss()
             }
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 data.data ?: return
                 ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
-                dismiss()
             }
         }
+
+        dismiss()
     }
 
     private fun getImportUris(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
