@@ -93,6 +93,8 @@ class ImportMenuDialog :
             dispatchPhotoImportRequest(data)
         } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
             dispatchBackupImportRequest(data)
+        } else if (requestCode == REQ_CONTENT_VIDEOS && resultCode == Activity.RESULT_OK) {
+            dispatchVideosImportRequest(data)
         }
 
         dismiss()
@@ -109,6 +111,11 @@ class ImportMenuDialog :
         it.data?.let { uri ->
             ValidateBackupDialogFragment(uri).show(requireActivity().supportFragmentManager)
         }
+    }
+
+    private fun dispatchVideosImportRequest(data: Intent?) = data?.let {
+        val videoUris = resolveUrisFromIntent(it)
+        println(videoUris)
     }
 
     private fun resolveUrisFromIntent(data: Intent): MutableList<Uri> {
