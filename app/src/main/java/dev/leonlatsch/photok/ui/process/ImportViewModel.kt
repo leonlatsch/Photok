@@ -46,6 +46,7 @@ class ImportViewModel @Inject constructor(
             "image/png" -> PhotoType.PNG
             "image/jpeg" -> PhotoType.JPEG
             "image/gif" -> PhotoType.GIF
+            "video/mp4" -> PhotoType.MP4
             else -> PhotoType.UNDEFINED
         }
         if (type == PhotoType.UNDEFINED) {

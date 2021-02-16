@@ -115,7 +115,9 @@ class ImportMenuDialog :
 
     private fun dispatchVideosImportRequest(data: Intent?) = data?.let {
         val videoUris = resolveUrisFromIntent(it)
-        println(videoUris)
+        if (videoUris.isNotEmpty()) {
+            ImportBottomSheetDialogFragment(videoUris).show(requireActivity().supportFragmentManager)
+        }
     }
 
     private fun resolveUrisFromIntent(data: Intent): MutableList<Uri> {
