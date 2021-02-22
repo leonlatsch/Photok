@@ -98,10 +98,9 @@ class PhotoRepository @Inject constructor(
     // region WRITE
 
     /**
-     * Safely insert a photo to the database and write its bytes to the filesystem.
-     * Handles IOErrors.
+     * Import a photo from a url.
      *
-     * @return true, if everything was successfully inserted and written to io.
+     * Collects meta data and calls [safeCreatePhoto].
      */
     suspend fun safeImportPhoto(context: Context, externalUri: Uri): Boolean {
         val type = when (context.contentResolver.getType(externalUri)) {
@@ -123,6 +122,12 @@ class PhotoRepository @Inject constructor(
         return safeCreatePhoto(context, photo, origBytes)
     }
 
+    /**
+     * Safely insert a photo to the database and write its bytes to the filesystem.
+     * Handles IOErrors.
+     *
+     * @return true, if everything was successfully inserted and written to io.
+     */
     suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
         var success = photoStorage.writePhotoFile(context, photo, bytes)
         if (success) {

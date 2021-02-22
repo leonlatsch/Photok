@@ -22,7 +22,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import com.bumptech.glide.Glide
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
@@ -159,13 +158,11 @@ class PhotoStorage @Inject constructor(
         password: String? = null
     ): Boolean {
         return try {
-//            val normalizedFullBitmap = normalizeExifOrientation(origBytes)
             val thumbnail = Glide.with(context)
                 .load(origBytes)
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.color.gray)
-                .thumbnail(0.3f)
+                .thumbnail(THUMBNAIL_SIZE_MULTIPLIER)
                 .into(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                 .get()
 
@@ -176,7 +173,7 @@ class PhotoStorage @Inject constructor(
             val encryptedBytes = dynamicEncryptBytes(thumbnailBytes, password)
             encryptedBytes ?: return false
 
-            insertAndOpenInternalFile(context, photo.internalFileName) {
+            insertAndOpenInternalFile(context, photo.internalThumbnailFileName) {
                 it?.write(encryptedBytes)
             }
             true
@@ -196,5 +193,6 @@ class PhotoStorage @Inject constructor(
 
     companion object {
         private const val THUMBNAIL_SIZE = 128
+        private const val THUMBNAIL_SIZE_MULTIPLIER = 1f
     }
 }
