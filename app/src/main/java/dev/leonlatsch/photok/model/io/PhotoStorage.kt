@@ -20,13 +20,10 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.media.ThumbnailUtils
 import android.net.Uri
-import android.util.Size
 import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.other.normalizeExifOrientation
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -138,7 +135,6 @@ class PhotoStorage @Inject constructor(
         context: Context,
         photo: Photo,
         bytes: ByteArray,
-        externalUri: Uri,
         password: String? = null
     ): Boolean {
         return try {
@@ -149,7 +145,7 @@ class PhotoStorage @Inject constructor(
                 it?.write(encryptedBytes)
             }
 
-            createThumbnail(context, photo, bytes, externalUri, password)
+            createThumbnail(context, photo, bytes, password)
         } catch (e: IOException) {
             Timber.d("Error writing photo data for id: ${photo.uuid} $e")
             false
@@ -160,27 +156,18 @@ class PhotoStorage @Inject constructor(
         context: Context,
         photo: Photo,
         origBytes: ByteArray,
-        externalUri: Uri,
         password: String? = null
     ): Boolean {
         return try {
-            val normalizedFullBitmap = normalizeExifOrientation(origBytes)
-            val thumbnail = ThumbnailUtils.extractThumbnail(
-                normalizedFullBitmap,
-                THUMBNAIL_SIZE,
-                THUMBNAIL_SIZE
-            )
-
-            Glide.with(context)
-                .load(externalUri)
+//            val normalizedFullBitmap = normalizeExifOrientation(origBytes)
+            val thumbnail = Glide.with(context)
+                .load(origBytes)
+                .asBitmap()
                 .centerCrop()
                 .placeholder(R.color.gray)
-                .thumbnail(THUMBNAIL_SIZE.toFloat())
-            context.contentResolver.loadThumbnail(
-                externalUri,
-                Size(THUMBNAIL_SIZE, THUMBNAIL_SIZE),
-                null
-            )
+                .thumbnail(0.3f)
+                .into(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+                .get()
 
             val outputStream = ByteArrayOutputStream()
             thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)

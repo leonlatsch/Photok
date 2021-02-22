@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -85,13 +84,7 @@ class PhotoViewHolder(
                 return@launch
             }
 
-            val bitmap = normalizeExifOrientation(
-                BitmapFactory.decodeByteArray(
-                    photoBytes,
-                    0,
-                    photoBytes.size
-                ), photoBytes
-            )
+            val bitmap = normalizeExifOrientation(photoBytes)
             runOnMain {
                 imageView.setImageBitmap(bitmap)
             }

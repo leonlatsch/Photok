@@ -120,7 +120,11 @@ class PhotoRepository @Inject constructor(
 
         val photo = Photo(fileName, System.currentTimeMillis(), type, origBytes.size.toLong())
 
-        var success = photoStorage.writePhotoFile(context, photo, origBytes, externalUri)
+        return safeCreatePhoto(context, photo, origBytes)
+    }
+
+    suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
+        var success = photoStorage.writePhotoFile(context, photo, bytes)
         if (success) {
             val photoId = insert(photo)
             success = photoId != -1L
@@ -171,7 +175,7 @@ class PhotoRepository @Inject constructor(
      * Read a photo's raw bytes.
      * Used similar as [readPhotoFileFromInternal]
      */
-    fun readRawPhotoFileFromInternal(context: Context, photo: Photo): ByteArray? =
+    fun readRawPhotoFileFromInternal(context: Context, photo: Photo): ByteArray =
         photoStorage.readRawFile(context, photo.internalFileName)
 
     /**

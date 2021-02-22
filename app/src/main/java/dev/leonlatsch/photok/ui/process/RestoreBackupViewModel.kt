@@ -77,7 +77,7 @@ class RestoreBackupViewModel @Inject constructor(
         val decryptedBytes = encryptionManager.decrypt(origBytes, origPassword)
         decryptedBytes ?: return
 
-        photoRepository.safeImportPhoto(app, newPhoto, decryptedBytes)
+        photoRepository.safeCreatePhoto(app, newPhoto, decryptedBytes)
 
         currentEntry = inputStream?.nextEntry
     }

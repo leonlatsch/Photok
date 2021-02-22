@@ -60,10 +60,6 @@ class BackupViewModel @Inject constructor(
 
     override suspend fun processItem(item: Photo) {
         val rawData = photoRepository.readRawPhotoFileFromInternal(app, item)
-        if (rawData == null) {
-            failuresOccurred = true
-            return
-        }
 
         val success = writeZipEntry(item.internalFileName, rawData)
         if (success) {
