@@ -23,9 +23,12 @@ import android.net.Uri
 import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.PhotoStorage
+import dev.leonlatsch.photok.other.getFileName
 import timber.log.Timber
 import java.io.IOException
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -100,8 +103,24 @@ class PhotoRepository @Inject constructor(
      *
      * @return true, if everything was successfully inserted and written to io.
      */
-    suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
-        var success = photoStorage.writePhotoFile(context, photo.uuid, bytes)
+    suspend fun safeImportPhoto(context: Context, externalUri: Uri): Boolean {
+        val type = when (context.contentResolver.getType(externalUri)) {
+            "image/png" -> PhotoType.PNG
+            "image/jpeg" -> PhotoType.JPEG
+            "image/gif" -> PhotoType.GIF
+            "video/mp4" -> PhotoType.MP4
+            else -> return false
+        }
+
+        val fileName =
+            getFileName(context.contentResolver, externalUri) ?: UUID.randomUUID().toString()
+
+        val origBytes = readPhotoFileFromExternal(context.contentResolver, externalUri)
+        origBytes ?: return false
+
+        val photo = Photo(fileName, System.currentTimeMillis(), type, origBytes.size.toLong())
+
+        var success = photoStorage.writePhotoFile(context, photo, origBytes, externalUri)
         if (success) {
             val photoId = insert(photo)
             success = photoId != -1L
@@ -115,10 +134,10 @@ class PhotoRepository @Inject constructor(
      */
     fun writePhotoFile(
         context: Context,
-        uuid: String,
+        photo: Photo,
         bytes: ByteArray,
         password: String? = null
-    ): Boolean = photoStorage.writePhotoFile(context, uuid, bytes, password)
+    ): Boolean = photoStorage.writePhotoFile(context, photo, bytes, password)
 
     // endregion
 
@@ -130,7 +149,10 @@ class PhotoRepository @Inject constructor(
      * @param contentResolver Reads the file system
      * @param imageUri The uri to the original file
      */
-    fun readPhotoFileFromExternal(contentResolver: ContentResolver, imageUri: Uri): ByteArray? =
+    private fun readPhotoFileFromExternal(
+        contentResolver: ContentResolver,
+        imageUri: Uri
+    ): ByteArray? =
         photoStorage.readFileFromExternal(contentResolver, imageUri)
 
     /**

@@ -20,6 +20,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Handler
@@ -83,7 +84,8 @@ fun openUrl(context: Context, url: String?) {
  * Reset all orientation exif tags for creating thumbnails
  * and displaying photos with exif data properly.
  */
-fun normalizeExifOrientation(bitmap: Bitmap, bytesWithExif: ByteArray): Bitmap {
+fun normalizeExifOrientation(bytesWithExif: ByteArray): Bitmap {
+    val bitmap = BitmapFactory.decodeByteArray(bytesWithExif, 0, bytesWithExif.size)
     val orientation = ExifInterface(ByteArrayInputStream(bytesWithExif)).getAttributeInt(
         ExifInterface.TAG_ORIENTATION,
         ExifInterface.ORIENTATION_NORMAL

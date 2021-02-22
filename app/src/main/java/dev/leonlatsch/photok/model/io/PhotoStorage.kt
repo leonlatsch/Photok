@@ -20,9 +20,11 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.util.Size
+import com.bumptech.glide.Glide
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.normalizeExifOrientation
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -134,43 +136,50 @@ class PhotoStorage @Inject constructor(
      */
     fun writePhotoFile(
         context: Context,
-        uuid: String,
+        photo: Photo,
         bytes: ByteArray,
+        externalUri: Uri,
         password: String? = null
     ): Boolean {
         return try {
             val encryptedBytes = dynamicEncryptBytes(bytes, password)
             encryptedBytes ?: return false
 
-            insertAndOpenInternalFile(context, Photo.internalFileName(uuid)) {
+            insertAndOpenInternalFile(context, photo.internalFileName) {
                 it?.write(encryptedBytes)
             }
 
-            createThumbnail(context, uuid, bytes, password)
+            createThumbnail(context, photo, bytes, externalUri, password)
         } catch (e: IOException) {
-            Timber.d("Error writing photo data for id: $uuid $e")
+            Timber.d("Error writing photo data for id: ${photo.uuid} $e")
             false
         }
     }
 
     private fun createThumbnail(
         context: Context,
-        uuid: String,
+        photo: Photo,
         origBytes: ByteArray,
+        externalUri: Uri,
         password: String? = null
     ): Boolean {
         return try {
-            val normalizedFullBitmap = normalizeExifOrientation(
-                BitmapFactory.decodeByteArray(
-                    origBytes,
-                    0,
-                    origBytes.size
-                ), origBytes
-            )
+            val normalizedFullBitmap = normalizeExifOrientation(origBytes)
             val thumbnail = ThumbnailUtils.extractThumbnail(
                 normalizedFullBitmap,
                 THUMBNAIL_SIZE,
                 THUMBNAIL_SIZE
+            )
+
+            Glide.with(context)
+                .load(externalUri)
+                .centerCrop()
+                .placeholder(R.color.gray)
+                .thumbnail(THUMBNAIL_SIZE.toFloat())
+            context.contentResolver.loadThumbnail(
+                externalUri,
+                Size(THUMBNAIL_SIZE, THUMBNAIL_SIZE),
+                null
             )
 
             val outputStream = ByteArrayOutputStream()
@@ -180,12 +189,12 @@ class PhotoStorage @Inject constructor(
             val encryptedBytes = dynamicEncryptBytes(thumbnailBytes, password)
             encryptedBytes ?: return false
 
-            insertAndOpenInternalFile(context, Photo.internalThumbnailFileName(uuid)) {
+            insertAndOpenInternalFile(context, photo.internalFileName) {
                 it?.write(encryptedBytes)
             }
             true
         } catch (e: IOException) {
-            Timber.d("Error creating Thumbnail for id: $uuid: $e")
+            Timber.d("Error creating Thumbnail for id: ${photo.uuid}: $e")
             false
         }
     }

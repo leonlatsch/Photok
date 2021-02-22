@@ -19,12 +19,8 @@ package dev.leonlatsch.photok.ui.process
 import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -40,28 +36,7 @@ class ImportViewModel @Inject constructor(
 ) : BaseProcessViewModel<Uri>(app) {
 
     override suspend fun processItem(item: Uri) {
-        val fileName = getFileName(app.contentResolver, item) ?: UUID.randomUUID().toString()
-
-        val type = when (app.contentResolver.getType(item)) {
-            "image/png" -> PhotoType.PNG
-            "image/jpeg" -> PhotoType.JPEG
-            "image/gif" -> PhotoType.GIF
-            "video/mp4" -> PhotoType.MP4
-            else -> PhotoType.UNDEFINED
-        }
-        if (type == PhotoType.UNDEFINED) {
-            failuresOccurred = true
-            return
-        }
-
-        val bytes = photoRepository.readPhotoFileFromExternal(app.contentResolver, item)
-        if (bytes == null) { // Cloud not read file
-            failuresOccurred = true
-            return
-        }
-
-        val photo = Photo(fileName, System.currentTimeMillis(), type, bytes.size.toLong())
-        val success = photoRepository.safeCreatePhoto(app, photo, bytes)
+        val success = photoRepository.safeImportPhoto(app, item)
         if (!success) {
             failuresOccurred = true
         }

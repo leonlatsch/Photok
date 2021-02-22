@@ -128,6 +128,9 @@ dependencies {
     // Display OSS Licenses
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:3.7.0")
+
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
