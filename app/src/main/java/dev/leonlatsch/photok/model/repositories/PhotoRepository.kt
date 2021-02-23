@@ -173,7 +173,7 @@ class PhotoRepository @Inject constructor(
     suspend fun readPhotoFileFromInternal(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
         uuid ?: return null
-        return photoStorage.readAndDecryptFile(context, Photo.internalFileName(uuid))
+        return photoStorage.readAndDecryptInternalFile(context, Photo.internalFileName(uuid))
     }
 
     /**
@@ -181,7 +181,7 @@ class PhotoRepository @Inject constructor(
      * Used similar as [readPhotoFileFromInternal]
      */
     fun readRawPhotoFileFromInternal(context: Context, photo: Photo): ByteArray =
-        photoStorage.readRawFile(context, photo.internalFileName)
+        photoStorage.readInternalFile(context, photo.internalFileName)
 
     /**
      * Read and decrypt a photo's thumbnail from internal storage.
@@ -189,7 +189,10 @@ class PhotoRepository @Inject constructor(
     suspend fun readPhotoThumbnailFromInternal(context: Context, id: Int): ByteArray? {
         val uuid = getUUID(id)
         uuid ?: return null
-        return photoStorage.readAndDecryptFile(context, Photo.internalThumbnailFileName(uuid))
+        return photoStorage.readAndDecryptInternalFile(
+            context,
+            Photo.internalThumbnailFileName(uuid)
+        )
     }
 
     // endregion
@@ -223,8 +226,8 @@ class PhotoRepository @Inject constructor(
      * @return true, if photo and thumbnail could be deleted
      */
     fun deletePhotoFiles(context: Context, uuid: String): Boolean {
-        return (photoStorage.deleteFile(context, Photo.internalFileName(uuid))
-                && photoStorage.deleteFile(context, Photo.internalThumbnailFileName(uuid)))
+        return (photoStorage.deleteInternalFile(context, Photo.internalFileName(uuid))
+                && photoStorage.deleteInternalFile(context, Photo.internalThumbnailFileName(uuid)))
     }
 
 

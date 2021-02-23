@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import javax.inject.Inject
@@ -43,7 +44,7 @@ class PhotoStorage @Inject constructor(
     /**
      * Delete a file in internal storage.
      */
-    fun deleteFile(context: Context, fileName: String): Boolean {
+    fun deleteInternalFile(context: Context, fileName: String): Boolean {
         val success = context.deleteFile(fileName)
         if (!success) {
             Timber.d("Error deleting file: $fileName")
@@ -52,9 +53,23 @@ class PhotoStorage @Inject constructor(
     }
 
     /**
+     * Read and decrypt a file from internal storage using [readInternalFile].
+     * Used [EncryptionManager] for decryption.
+     */
+    fun readAndDecryptInternalFile(context: Context, fileName: String): ByteArray? {
+        return try {
+            val encryptedBytes = readInternalFile(context, fileName)
+            encryptionManager.decrypt(encryptedBytes)
+        } catch (e: IOException) {
+            Timber.d("Error reading file: $fileName $e")
+            null
+        }
+    }
+
+    /**
      * Read a file from internal storage.
      */
-    fun readRawFile(context: Context, fileName: String): ByteArray {
+    fun readInternalFile(context: Context, fileName: String): ByteArray {
         return try {
             val fileInputStream = context.openFileInput(fileName)
             val encryptedBytes = fileInputStream.readBytes()
@@ -62,20 +77,6 @@ class PhotoStorage @Inject constructor(
         } catch (e: IOException) {
             Timber.d("Error reading file: $fileName $e")
             throw e
-        }
-    }
-
-    /**
-     * Read and decrypt a file from internal storage using [readRawFile].
-     * Used [EncryptionManager] for decryption.
-     */
-    fun readAndDecryptFile(context: Context, fileName: String): ByteArray? {
-        return try {
-            val encryptedBytes = readRawFile(context, fileName)
-            encryptionManager.decrypt(encryptedBytes)
-        } catch (e: IOException) {
-            Timber.d("Error reading file: $fileName $e")
-            null
         }
     }
 
@@ -98,10 +99,10 @@ class PhotoStorage @Inject constructor(
      * Insert a file to internal storage and pass the output stream to the [operation].
      * @see insertAndOpenExternalFile
      */
-    fun insertAndOpenInternalFile(
+    private fun insertAndOpenInternalFile(
         context: Context,
         fileName: String,
-        operation: (outputStream: OutputStream?) -> Unit
+        operation: (outputStream: FileOutputStream) -> Unit
     ) {
         context.openFileOutput(fileName, Context.MODE_PRIVATE).use(operation)
     }
@@ -123,7 +124,7 @@ class PhotoStorage @Inject constructor(
      * Also create a thumbnail for it using [PhotoStorage.createThumbnail].
      *
      * @param context used to write file.
-     * @param uuid used for the file name.
+     * @param photo used for the file name.
      * @param bytes the photo data to save.
      *
      * @return false if any error happened
@@ -141,7 +142,7 @@ class PhotoStorage @Inject constructor(
             encryptedBytes ?: return false
 
             insertAndOpenInternalFile(context, photo.internalFileName) {
-                it?.write(encryptedBytes)
+                it.write(encryptedBytes)
             }
 
             createThumbnail(context, photo, bytes, password)
@@ -162,7 +163,6 @@ class PhotoStorage @Inject constructor(
                 .load(origBytes)
                 .asBitmap()
                 .centerCrop()
-                .thumbnail(THUMBNAIL_SIZE_MULTIPLIER)
                 .into(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                 .get()
 
@@ -174,7 +174,7 @@ class PhotoStorage @Inject constructor(
             encryptedBytes ?: return false
 
             insertAndOpenInternalFile(context, photo.internalThumbnailFileName) {
-                it?.write(encryptedBytes)
+                it.write(encryptedBytes)
             }
             true
         } catch (e: IOException) {
@@ -193,6 +193,5 @@ class PhotoStorage @Inject constructor(
 
     companion object {
         private const val THUMBNAIL_SIZE = 128
-        private const val THUMBNAIL_SIZE_MULTIPLIER = 1f
     }
 }
