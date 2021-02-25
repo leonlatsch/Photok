@@ -218,18 +218,18 @@
     <string name="backup_unlock_title">解锁备份</string>
 
     <!-- NEWS -->
-    <string name="news_new_in_title">New in</string><!-- TODO: Translate -->
-    <string name="news_view_changelog">View Changelog</string><!-- TODO: Translate -->
+    <string name="news_new_in_title">新功能</string>
+    <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
-    <string name="news_title_1">Feature: Collections</string><!-- TODO: Translate -->
-    <string name="news_summary_1">Manage photos in collections</string><!-- TODO: Translate -->
+    <string name="news_title_1">功能：集锦</string>
+    <string name="news_summary_1">管理集锦中的照片</string>
 
-    <string name="news_title_2">Feature: Import videos</string><!-- TODO: Translate -->
-    <string name="news_summary_2">Import videos to Photok</string><!-- TODO: Translate -->
+    <string name="news_title_2">功能：导入视频</string>
+    <string name="news_summary_2">导入视频到 Photok</string>
 
-    <string name="news_title_3">Feature: Password attempts</string><!-- TODO: Translate -->
-    <string name="news_summary_3">Reset Photok on bruteforce attacks</string><!-- TODO: Translate -->
+    <string name="news_title_3">功能：密码尝试</string>
+    <string name="news_summary_3">遭遇暴力破解攻击时重置 Photok</string>
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">空</string>
+    <string name="news_summary_4">空</string>
 </resources>
