@@ -24,12 +24,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -41,6 +42,7 @@ import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.news.NewsDialog
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
@@ -59,12 +61,6 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
-    // region binding properties
-
-    var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
-
-    // endregion
-
     private val viewModel: GalleryViewModel by viewModels()
 
     private lateinit var adapter: PhotoAdapter
@@ -72,7 +68,24 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        setToolbar(binding.galleryToolbar)
+        setupGridView()
 
+        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+            if (it) {
+                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
+            } else {
+                actionMode?.finish()
+            }
+        })
+
+        viewModel.runIfNews {
+            NewsDialog().show(requireActivity().supportFragmentManager)
+        }
+    }
+
+    private fun setupGridView() {
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
         (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
             false
@@ -83,27 +96,20 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             this::showFullSize,
             viewLifecycleOwner
         )
+
         adapter.registerAdapterDataObserver(onAdapterDataObserver)
         binding.galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
         }
-
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
-            if (it) {
-                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
-            } else {
-                actionMode?.finish()
-            }
-        })
     }
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(adapter.itemCount)
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(adapter.itemCount)
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
@@ -112,16 +118,22 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         else -> 4
     }
 
-    private fun togglePlaceholder(itemCount: Int) {
-        val visibility = if (itemCount > 0) {
-            binding.galleryAllPhotosTitle.show()
-            View.GONE
-        } else {
-            binding.galleryAllPhotosTitle.hide()
-            View.VISIBLE
-        }
-        placeholderVisibility.postValue(visibility)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuMainItemSettings -> {
+            findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            true
+        }
+        R.id.menuMainItemLock -> {
+            requireActivity().getBaseApplication().lockApp()
+            true
+        }
+        else -> false
+    }
+
 
     /**
      * Starts the photo import.
@@ -321,6 +333,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun bind(binding: FragmentGalleryBinding) {
         super.bind(binding)
         binding.context = this
+        binding.viewModel = viewModel
     }
 
     companion object {

@@ -44,4 +44,16 @@
         <item>light</item>
         <item>dark</item>
     </string-array>
+
+    <string-array name="newsTitles"> <!-- holds up to 4 new features -->
+        <item>@string/news_title_1</item>
+        <item>@string/news_title_2</item>
+        <item>@string/news_title_3</item>
+    </string-array>
+
+    <string-array name="newsSummaries">
+        <item>@string/news_summary_1</item>
+        <item>@string/news_summary_2</item>
+        <item>@string/news_summary_3</item>
+    </string-array>
 </resources>

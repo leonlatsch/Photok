@@ -2,6 +2,12 @@
 - Feature: Collections
 - Feature: Import videos
 - Feature: Password attempts
+- New features get introduces with a news dialog
+- UI design changes
+
+### 1.2.4
+- Fix crash when creating thumbnail fails
+- Fix not importing shared data
 
 ### 1.2.3
 - UI Fixes

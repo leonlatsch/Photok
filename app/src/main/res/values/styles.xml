@@ -70,7 +70,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="LabelTextViewStyle">
+    <style name="LabelTextViewStyle" parent="TextViewStyle">
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:textStyle">bold</item>
     </style>

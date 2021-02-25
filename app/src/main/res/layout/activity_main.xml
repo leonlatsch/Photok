@@ -31,36 +31,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/mainToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:paddingTop="@dimen/small_gap"
-            android:paddingBottom="@dimen/small_gap"
-            android:theme="@style/toolbarStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/toolbarTitle"
-                style="@style/AppNameTitleStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/app_name"
-                android:textSize="40sp" />
-
-        </androidx.appcompat.widget.Toolbar>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainToolbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/mainNavHostFragment"

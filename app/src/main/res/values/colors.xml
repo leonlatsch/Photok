@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +22,7 @@
 
     <!-- Components -->
     <color name="background">#FAFAFA</color>
+    <color name="componentBackground">#F2F2F2</color>
     <color name="textColor">@android:color/black</color>
     <color name="secondaryTextColor">#737373</color>
     <color name="appTitleColor">@android:color/black</color>

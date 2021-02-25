@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -32,6 +32,7 @@
     <string name="common_no">No</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Are you sure?</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
     <string name="import_importing">Importing Photo(s)…</string>
@@ -106,6 +107,7 @@
     <string name="about_third_party">Third Party Software</string>
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">News</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
@@ -213,4 +215,20 @@
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>
     <string name="backup_unlock_title">Unlock Backup</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">New in</string>
+    <string name="news_view_changelog">View Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+    <string name="news_title_1">Feature: Collections</string>
+    <string name="news_summary_1">Manage photos in collections</string>
+
+    <string name="news_title_2">Feature: Import videos</string>
+    <string name="news_summary_2">Import videos to Photok</string>
+
+    <string name="news_title_3">Feature: Password attempts</string>
+    <string name="news_summary_3">Reset Photok on bruteforce attacks</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

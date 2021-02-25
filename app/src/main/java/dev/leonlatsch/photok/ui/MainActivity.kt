@@ -20,18 +20,13 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.view.ActionMode
-import androidx.navigation.findNavController
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
@@ -50,36 +45,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
 
+    private val viewModel: MainViewModel by viewModels()
+
     @Inject
     override lateinit var config: Config
-
-    private var sharedDataCache: ArrayList<Uri> = arrayListOf()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
         getBaseApplication().rawApplicationState.observe(this, {
-            if (it == ApplicationState.UNLOCKED && sharedDataCache.isNotEmpty()) {
+            if (it == ApplicationState.UNLOCKED && viewModel.sharedDataCache.isNotEmpty()) {
                 confirmAndStartImportShared()
             }
         })
+    }
 
+    override fun onResume() {
+        super.onResume()
         dispatchIntent()
-
-        binding.mainNavHostFragment.findNavController()
-            .addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.galleryFragment -> binding.mainToolbar.show()
-                    else -> binding.mainToolbar.hide()
-                }
-            }
     }
 
     private fun dispatchIntent() {
@@ -87,13 +70,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uri != null) {
-                    sharedDataCache.add(uri)
+                    viewModel.sharedDataCache.add(uri)
                 }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uris != null) {
-                    sharedDataCache.addAll(uris)
+                    viewModel.sharedDataCache.addAll(uris)
                 }
             }
         }
@@ -102,7 +85,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     private fun confirmAndStartImportShared() {
         Dialogs.showConfirmDialog(
             this,
-            String.format(getString(R.string.import_sharted_question), sharedDataCache.size)
+            String.format(
+                getString(R.string.import_sharted_question),
+                viewModel.sharedDataCache.size
+            )
         ) { _, _ ->
             importShared()
         }
@@ -119,13 +105,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            sharedDataCache.let {
+            viewModel.sharedDataCache.let {
                 ImportBottomSheetDialogFragment(it).show(
                     supportFragmentManager,
                     ImportBottomSheetDialogFragment::class.qualifiedName
                 )
             }
-            sharedDataCache = arrayListOf()
+            viewModel.clearSharedDataCache()
         } else {
             EasyPermissions.requestPermissions(
                 this,
@@ -134,30 +120,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
-    }
-
-    /**
-     * Starts the action mode on mainToolbar.
-     */
-    fun startActionMode(callback: ActionMode.Callback): ActionMode? =
-        startSupportActionMode(callback)
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuMainItemSettings -> {
-            binding.mainNavHostFragment.findNavController()
-                .navigate(R.id.action_galleryFragment_to_settingsFragment)
-            true
-        }
-        R.id.menuMainItemLock -> {
-            getBaseApplication().lockApp()
-            true
-        }
-        else -> false
     }
 
     override fun bind(binding: ActivityMainBinding) {

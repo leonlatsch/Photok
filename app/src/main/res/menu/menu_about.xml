@@ -14,11 +14,15 @@
   ~   limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/componentBackground" />
-            <corners android:radius="5dp" />
-        </shape>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuAboutNews"
+        android:icon="@drawable/ic_outline_campaign"
+        android:title="@string/about_menu_news"
+        app:showAsAction="always">
+
     </item>
-</selector>
+
+</menu>

@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Direitos autorais \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Direitos autorais \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -33,11 +33,12 @@
     <string name="common_no">Não</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Tem certeza?</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)…</string>
     <string name="import_permission_rationale">Photok precisa acessar seu armazenamento, para importar fotos.</string>
-    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string><!-- TODO: Translate -->
+    <string name="import_sharted_question">Você quer importar %1$d foto(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Criar sua senha</string>
@@ -61,7 +62,7 @@
     <string name="gallery_placeholder">Não há fotos em seu cofre</string>
     <string name="gallery_add_from_gallery">Da galeria</string>
     <string name="gallery_add_from_backup">Do backup</string>
-    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
+    <string name="gallery_all_photos_label">Todas as fotos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>
@@ -75,7 +76,7 @@
     <string name="view_photo_detail_title">Detalhes</string>
     <string name="view_photo_detail_file_name_label">Nome do arquivo:</string>
     <string name="view_photo_detail_import_at_label">Importado em:</string>
-    <string name="view_photo_detail_file_type_label">Tipo de arquivo:</string>
+    <string name="view_photo_detail_file_type_label">Tipo do arquivo:</string>
     <string name="view_photo_detail_size_label">Tamanho do arquivo:</string>
 
     <!-- MAIN MENU -->
@@ -83,7 +84,7 @@
     <string name="menu_main_settings">Configurações</string>
 
     <!-- MULTI SELECT MENU -->
-    <string name="menu_ms_select_all">Selecionar tudo</string>
+    <string name="menu_ms_select_all">Selecionar todo</string>
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
 
@@ -96,7 +97,7 @@
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d a(s) fotos(s), de volta à sua galeria?</string>
     <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este foto, de volta à sua galeria?</string>
     <string name="export_exporting">Exportando a(s) foto(s)…</string>
-    <string name="export_permission_rationale">O Photok precisa acessar seu armazenamento, para exportar as fotos.</string>
+    <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar as fotos.</string>
     <string name="export_finished">Exportado</string>
 
     <!-- ABOUT -->
@@ -107,6 +108,7 @@
     <string name="about_third_party">Software de terceiros</string>
     <string name="about_privacy_policy">Política de Privacidade</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Novidades</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Configurações</string>
@@ -127,18 +129,18 @@
     <string name="settings_security_change_password_title">Alterar a senha</string>
     <string name="settings_security_change_password_summary">Alterar sua senha</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
-    <string name="settings_security_timeout_summary">Bloqueio automático após determinado tempo em segundo plano</string>
+    <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
     <string name="settings_security_timeout_one_minute">1 minuto</string>
     <string name="settings_security_timeout_two_minute">2 minutos</string>
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_launch_code_title">Secret Launch Code</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string><!-- TODO: Translate -->
-    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_title">Hide App</string><!-- TODO: Translate -->
-    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string><!-- TODO: Translate -->
+    <string name="settings_security_launch_code_title">Código de iniciação secreta</string>
+    <string name="settings_security_launch_code_summary">Código secreto para iniciar o Photok direto do discador.</string>
+    <string name="settings_security_launch_code_message">Digite *#*#[seu código]#*#* em discador para iniciar o Photok.</string>
+    <string name="settings_security_hide_app_title">Ocultar o App</string>
+    <string name="settings_security_hide_app_summary">Ocultar ícone do App da gaveta dos aplicativos.</string>
 
     <string name="settings_category_advanced">Avançado</string>
     <string name="settings_category_advanced_summary">Use com cuidado</string>
@@ -157,15 +159,15 @@
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
-    <string name="settings_other_credits_title">Credits</string><!-- TODO: Translate -->
-    <string name="settings_other_credits_summary">Contributors and credits</string><!-- TODO: Translate -->
+    <string name="settings_other_credits_title">Créditos</string>
+    <string name="settings_other_credits_summary">Colaboradores e créditos</string>
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Informações sobre o Photok</string>
 
     <!-- CREDITS -->
-    <string name="credits_contributors_title">Contributors</string><!-- TODO: Translate -->
-    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string><!-- TODO: Translate -->
-    <string name="credits_icons_title">Icons</string><!-- TODO: Translate -->
+    <string name="credits_contributors_title">Colaboradores</string>
+    <string name="credits_contributors_hint">Visite o Photok em GitHub para ver todos os colaboradores</string>
+    <string name="credits_icons_title">Ícones</string>
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Alterar sua senha</string>
@@ -179,18 +181,18 @@
     <string name="change_password_reencrypting">Foto(s) sendo criptografada(s) de novo…</string>
 
     <!-- HIDE APP -->
-    <string name="hide_app_title_hide">Hide Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_title_show">Show Photok</string><!-- TODO: Translate -->
-    <string name="hide_app_status_label">Photok is currently:</string><!-- TODO: Translate -->
-    <string name="hide_app_status_visible">VISIBLE</string><!-- TODO: Translate -->
-    <string name="hide_app_status_hidden">HIDDEN</string><!-- TODO: Translate -->
-    <string name="hide_app_app_name_stealth">Phone</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string><!-- TODO: Translate -->
-    <string name="hide_app_confirm_show">Do you want to show Photok again?</string><!-- TODO: Translate -->
-    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dialpad, with your secret launch code.</string><!-- TODO: Translate -->
+    <string name="hide_app_title_hide">Ocultar o Photok</string>
+    <string name="hide_app_title_show">Mostrar o Photok</string>
+    <string name="hide_app_status_label">Photok é atualmente:</string>
+    <string name="hide_app_status_visible">VISÍVEL</string>
+    <string name="hide_app_status_hidden">OCULTO</string>
+    <string name="hide_app_app_name_stealth">Telefone</string>
+    <string name="hide_app_confirm_hide">Você realmente quer ocultar o Photok?</string>
+    <string name="hide_app_confirm_show">Você quer mostrar o Photok de novo?</string>
+    <string name="hide_app_hint">Uma vez ocultado, o Photok só pode ser iniciado via discador, com o código secreto.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="hide_app_hint_current_code">Current launch code:</string><!-- TODO: Translate -->
+    <string name="hide_app_hint_current_code">Código de iniciação atual:</string>
 
     <!-- ON BOARDING -->
     <string name="onboarding_next">Próximo</string>
@@ -211,7 +213,23 @@
     <string name="backup_restore_details_photos_contained">Fotos incluindas:</string>
     <string name="backup_restore_details_compatible">Compatível:</string>
     <string name="backup_restore_button">Desbloquear e restaurar</string>
-    <string name="backup_restore_invalid_file">\u26A0 O arquivo inválido</string>
+    <string name="backup_restore_invalid_file">\u26A0 O arquivo é inválido</string>
     <string name="backup_restore_processing">Restaurando o backup…</string>
     <string name="backup_unlock_title">Desbloquear o backup</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Novo em</string>
+    <string name="news_view_changelog">Ver o changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+    <string name="news_title_1">Funcionalidade: Coleções</string>
+    <string name="news_summary_1">Gerenciar fotos em coleções</string>
+
+    <string name="news_title_2">Funcionalidade: Importar vídeos</string>
+    <string name="news_summary_2">Importar vídeos ao Photok</string>
+
+    <string name="news_title_3">Funcionalidade: Tentativas de senha</string>
+    <string name="news_summary_3">Redefinir o Photok na tentativa de ataque via força bruta</string>
+
+    <string name="news_title_4">VAZIO</string>
+    <string name="news_summary_4">VAZIO</string>
 </resources>
