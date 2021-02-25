@@ -159,8 +159,9 @@ class PhotoStorage @Inject constructor(
     ): Boolean {
         return try {
             val thumbnail = Glide.with(context)
-                .load(origBytes)
                 .asBitmap()
+                .load(origBytes)
+
                 .centerCrop()
                 .thumbnail(THUMBNAIL_SIZE_MULTIPLIER)
                 .into(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
