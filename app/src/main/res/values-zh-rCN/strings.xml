@@ -108,7 +108,7 @@
     <string name="about_third_party">第三方软件</string>
     <string name="about_privacy_policy">隐私政策</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
-    <string name="about_menu_news">News</string><!-- TODO: Translate -->
+    <string name="about_menu_news">新功能</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
