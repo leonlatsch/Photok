@@ -26,7 +26,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.runOnMain
+import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
@@ -87,7 +87,7 @@ class GalleryViewModel @Inject constructor(
      */
     fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
         if (config.systemLastFeatureVersionCode < BuildConfig.FEATURE_VERSION_CODE) {
-            runOnMain(onNewsPresent)
+            onMain(onNewsPresent)
             config.systemLastFeatureVersionCode = BuildConfig.FEATURE_VERSION_CODE
         }
     }

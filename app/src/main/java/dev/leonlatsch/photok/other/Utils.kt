@@ -54,7 +54,7 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
 /**
  * Post a [operation] to the main looper.
  */
-fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
+fun onMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
 
 /**
  * Update the app design.

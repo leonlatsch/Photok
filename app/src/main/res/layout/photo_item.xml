@@ -20,12 +20,33 @@
     android:layout_height="wrap_content"
     android:padding="0.5dp">
 
-    <ImageView
-        android:id="@+id/photoItemImageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/photoItemImageContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:src="@color/gray" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/photoItemImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:src="@color/gray" />
+
+        <ImageView
+            android:id="@+id/photoItemVideoIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_videocam"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:tint="@color/lightGray" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <CheckBox
         android:id="@+id/photoItemCheckBox"
@@ -41,18 +62,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
-    <ImageView
-        android:id="@+id/photoItemVideoIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_videocam"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
-        app:tint="@color/lightGray" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

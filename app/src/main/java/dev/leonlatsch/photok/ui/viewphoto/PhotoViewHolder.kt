@@ -24,7 +24,7 @@ import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.normalizeExifOrientation
-import dev.leonlatsch.photok.other.runOnMain
+import dev.leonlatsch.photok.other.onMain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -85,7 +85,7 @@ class PhotoViewHolder(
             }
 
             val bitmap = normalizeExifOrientation(photoBytes)
-            runOnMain {
+            onMain {
                 imageView.setImageBitmap(bitmap)
             }
         }

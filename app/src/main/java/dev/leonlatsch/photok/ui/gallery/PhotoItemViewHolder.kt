@@ -17,20 +17,21 @@
 package dev.leonlatsch.photok.ui.gallery
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.setPadding
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.runOnMain
+import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.other.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -57,6 +58,8 @@ class PhotoItemViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.photo_item, parent, false)
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
+    private val imageContainer: ConstraintLayout =
+        itemView.findViewById(R.id.photoItemImageContainer)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
     private val videoIcon: ImageView = itemView.findViewById(R.id.photoItemVideoIcon)
 
@@ -161,7 +164,7 @@ class PhotoItemViewHolder(
         val padding = if (isSelected) 20 else 0
 
         checkBox.isChecked = isSelected
-        imageView.setPadding(padding)
+        imageContainer.setPadding(padding)
     }
 
     private fun setItemChecked(checked: Boolean) {
@@ -185,10 +188,12 @@ class PhotoItemViewHolder(
                 Timber.d("Error loading thumbnail for photo: $photo.id")
                 return@launch
             }
-            val thumbnailBitmap =
-                BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.size)
-            runOnMain { // Set thumbnail in main thread
-                imageView.setImageBitmap(thumbnailBitmap)
+
+            onMain {
+                Glide.with(context)
+                    .asBitmap()
+                    .load(thumbnailBytes)
+                    .into(imageView)
             }
         }
     }
