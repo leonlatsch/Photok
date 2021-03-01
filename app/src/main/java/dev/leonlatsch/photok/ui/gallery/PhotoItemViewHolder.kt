@@ -27,6 +27,7 @@ import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.runOnMain
@@ -57,6 +58,7 @@ class PhotoItemViewHolder(
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
     private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
+    private val videoIcon: ImageView = itemView.findViewById(R.id.photoItemVideoIcon)
 
     var photo: Photo? = null
     private lateinit var adapter: PhotoAdapter
@@ -67,6 +69,11 @@ class PhotoItemViewHolder(
     fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
         this.photo = photo
         this.adapter = adapter
+
+        if (photo?.type == PhotoType.MP4) {
+            videoIcon.show()
+        }
+
         imageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
                 // If the item clicked is the last selected item

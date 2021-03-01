@@ -69,7 +69,7 @@ class Chooser {
     /**
      * Class to build a [Chooser].
      */
-    class Builder() {
+    class Builder {
 
         private val chooser = Chooser()
 
