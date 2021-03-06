@@ -168,13 +168,22 @@ class PhotoRepository @Inject constructor(
      * Read and decrypt a photo's bytes from internal storage.
      *
      * @param context To open the file
-     * @param id The photo's uuid
+     * @param photo The photo
      */
-    suspend fun readPhotoFileFromInternal(context: Context, id: Int): ByteArray? {
-        val uuid = getUUID(id)
+    suspend fun readPhotoFileFromInternal(context: Context, photo: Photo): ByteArray? {
+        val uuid = getUUID(photo.id!!)
         uuid ?: return null
-        return photoStorage.readAndDecryptInternalFile(context, Photo.internalFileName(uuid))
+        return readPhotoFileFromInternal(context, uuid)
     }
+
+    /**
+     * Read and decrypt a photo's bytes from internal storage.
+     *
+     * @param context To open the file
+     * @param uuid the photos uuid
+     */
+    fun readPhotoFileFromInternal(context: Context, uuid: String): ByteArray? =
+        photoStorage.readAndDecryptInternalFile(context, Photo.internalFileName(uuid))
 
     /**
      * Read a photo's raw bytes.
@@ -243,7 +252,7 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun exportPhoto(context: Context, photo: Photo): Boolean {
         return try {
-            val bytes = readPhotoFileFromInternal(context, photo.id!!)
+            val bytes = readPhotoFileFromInternal(context, photo)
             bytes ?: return false
 
             val contentValues = ContentValues()

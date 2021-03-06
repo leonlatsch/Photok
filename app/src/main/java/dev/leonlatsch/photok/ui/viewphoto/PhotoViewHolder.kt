@@ -17,14 +17,22 @@
 package dev.leonlatsch.photok.ui.viewphoto
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.ByteArrayDataSource
+import com.google.android.exoplayer2.upstream.DataSource
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.normalizeExifOrientation
-import dev.leonlatsch.photok.other.onMain
+import dev.leonlatsch.photok.other.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,6 +61,7 @@ class PhotoViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
     private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
+    private val videoPlayer: PlayerView = itemView.findViewById(R.id.photoVideoPlayer)
     var photoId: Int = 0
 
     /**
@@ -72,22 +81,58 @@ class PhotoViewHolder(
         imageView.setOnClickListener {
             onClick()
         }
+        videoPlayer.setOnClickListener {
+            onClick()
+        }
 
         loadPhoto()
     }
 
     private fun loadPhoto() {
         GlobalScope.launch(Dispatchers.IO) {
-            val photoBytes = photoRepository.readPhotoFileFromInternal(context, photoId)
+            val photo = photoRepository.get(photoId)
+            val photoBytes = photoRepository.readPhotoFileFromInternal(context, photo)
             if (photoBytes == null) {
                 Timber.d("Error loading photo data for photo: $photoId")
                 return@launch
             }
 
-            val bitmap = normalizeExifOrientation(photoBytes)
-            onMain {
-                imageView.setImageBitmap(bitmap)
+            when (photo.type) {
+                PhotoType.MP4 -> {
+                    onMain {
+                        videoPlayer.show()
+                        imageView.hide()
+
+                        val player = SimpleExoPlayer.Builder(context).build()
+                        videoPlayer.player = player
+                        player.setMediaSource(createVideoMediaSource(photoBytes))
+                        player.prepare()
+                        player.playWhenReady = true
+                    }
+                }
+                else -> {
+                    onMain {
+                        videoPlayer.hide()
+                        imageView.show()
+                    }
+
+                    val bitmap = normalizeExifOrientation(photoBytes)
+                    onMain {
+                        imageView.setImageBitmap(bitmap)
+                    }
+                }
             }
         }
+    }
+
+    private fun createVideoMediaSource(bytes: ByteArray): MediaSource {
+        val dataSource = ByteArrayDataSource(bytes)
+
+        val factory = DataSource.Factory {
+            dataSource
+        }
+
+        return ProgressiveMediaSource.Factory(factory)
+            .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
     }
 }
