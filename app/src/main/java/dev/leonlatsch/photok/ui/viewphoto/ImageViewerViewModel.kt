@@ -35,7 +35,7 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @HiltViewModel
-class ViewPhotoViewModel @Inject constructor(
+class ImageViewerViewModel @Inject constructor(
     private val app: Application,
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {

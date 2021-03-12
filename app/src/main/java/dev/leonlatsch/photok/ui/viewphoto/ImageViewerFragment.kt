@@ -20,48 +20,51 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.activity.viewModels
+import android.view.View
+import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.ActivityViewPhotoBinding
+import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
-import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
+import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 /**
- * Activity to view a photo in full screen mode.
+ * Fragment to display photos in full size.
  *
- * @since 1.0.0
+ * @since 2.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.activity_view_photo) {
+class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
 
-    private val viewModel: ViewPhotoViewModel by viewModels()
-
-    @Inject
-    override lateinit var config: Config
+    private val viewModel: ImageViewerViewModel by viewModels()
 
     private var systemUiVisible = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    @Inject
+    lateinit var config: Config
 
-        setSupportActionBar(binding.viewPhotoToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
+        setToolbar(binding.viewPhotoToolbar)
+        binding.viewPhotoToolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
         initializeSystemUI()
 
-        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
+        binding.viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDetails(position)
             }
@@ -75,8 +78,8 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
             })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
-            val photoId = intent.extras?.get(INTENT_PHOTO_ID)
-            val startingAt = if (photoId != null && photoId is Int?) {
+            val photoId = arguments?.getInt(INTENT_PHOTO_ID)
+            val startingAt = if (photoId != null && photoId != -1) {
                 ids.indexOf(photoId)
             } else {
                 0
@@ -90,7 +93,7 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      * Called by ui.
      */
     fun onDetails() {
-        DetailsBottomSheetDialog(viewModel.currentPhoto).show(supportFragmentManager)
+        DetailsBottomSheetDialog(viewModel.currentPhoto).show(childFragmentManager)
     }
 
     /**
@@ -98,11 +101,11 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
      * Called by ui.
      */
     fun onDelete() {
-        Dialogs.showConfirmDialog(this, getString(R.string.delete_are_you_sure_this)) { _, _ ->
+        Dialogs.showConfirmDialog(requireContext(), getString(R.string.delete_are_you_sure_this)) { _, _ ->
             viewModel.deletePhoto({ // onSuccess
-                finish()
+                requireActivity().onBackPressed()
             }, { // onError
-                Dialogs.showLongToast(this, getString(R.string.common_error))
+                Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
             })
         }
     }
@@ -115,16 +118,16 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
     @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
         if (EasyPermissions.hasPermissions(
-                this,
+                requireContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            Dialogs.showConfirmDialog(this, getString(R.string.export_are_you_sure_this)) { _, _ ->
+            Dialogs.showConfirmDialog(requireContext(), getString(R.string.export_are_you_sure_this)) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
-                    Dialogs.showShortToast(this, getString(R.string.export_finished))
+                    Dialogs.showShortToast(requireContext(), getString(R.string.export_finished))
                 }, { // onError
-                    Dialogs.showLongToast(this, getString(R.string.common_error))
+                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
                 })
             }
         } else {
@@ -138,25 +141,12 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_view_photo, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuViewPhotoInfo -> {
-            onDetails()
-            true
-        }
-        else -> false
-    }
-
     @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
-        window.statusBarColor = getColor(android.R.color.black)
-        window.navigationBarColor = getColor(android.R.color.black)
+        requireActivity().window.statusBarColor = getColor(requireContext(), android.R.color.black)
+        requireActivity().window.navigationBarColor = getColor(requireContext(), android.R.color.black)
 
-        window.addSystemUIVisibilityListener {
+        requireActivity().window.addSystemUIVisibilityListener {
             systemUiVisible = it
             if (it) {
                 binding.viewPhotoAppBarLayout.show()
@@ -172,32 +162,29 @@ class ViewPhotoActivity : BindableActivity<ActivityViewPhotoBinding>(R.layout.ac
         }
     }
 
-    private fun toggleSystemUI() {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_view_photo, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuViewPhotoInfo -> {
+            onDetails()
+            true
+        }
+        else -> false
+    }
+
+    private fun toggleSystemUI() { // TODO: Reset on navigate back
         if (systemUiVisible) {
-            hideSystemUI()
+            requireActivity().hideSystemUI()
         } else {
-            showSystemUI()
+            requireActivity().showSystemUI()
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun bind(binding: ActivityViewPhotoBinding) {
+    override fun bind(binding: FragmentImageViewerBinding) {
         super.bind(binding)
-        binding.viewModel = viewModel
         binding.context = this
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+        binding.viewModel = viewModel
     }
 }

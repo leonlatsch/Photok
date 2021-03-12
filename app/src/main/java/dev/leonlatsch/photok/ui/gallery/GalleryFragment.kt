@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.ui.gallery
 
 import android.Manifest
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +25,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -44,7 +44,6 @@ import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 import dev.leonlatsch.photok.ui.news.NewsDialog
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -172,9 +171,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private fun openPhoto(id: Int) {
-        val intent = Intent(requireActivity(), ViewPhotoActivity::class.java)
-        intent.putExtra(INTENT_PHOTO_ID, id)
-        startActivity(intent)
+        val args = bundleOf(INTENT_PHOTO_ID to id)
+        findNavController().navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
     }
 
     private val actionModeCallback = object : ActionMode.Callback {

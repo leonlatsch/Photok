@@ -79,11 +79,6 @@
         <activity android:name=".ui.MainActivity" />
 
         <activity
-            android:name=".ui.viewphoto.ViewPhotoActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name=".ui.settings.hideapp.ForwardDialerActivity"
             android:theme="@style/AppTheme" />
 
