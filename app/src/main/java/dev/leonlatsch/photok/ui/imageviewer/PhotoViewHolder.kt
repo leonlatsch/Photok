@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
 import kotlinx.coroutines.Dispatchers
@@ -66,15 +67,6 @@ class PhotoViewHolder(
         id ?: return
         photoId = id
 
-        imageView.setOnTouchImageViewListener(object : TouchImageView.OnTouchImageViewListener {
-            override fun onMove() {
-                onZoomed(imageView.isZoomed)
-            }
-        })
-        imageView.setOnClickListener {
-            onClick()
-        }
-
         loadPhoto()
     }
 
@@ -87,21 +79,15 @@ class PhotoViewHolder(
                 return@launch
             }
 
-            val bitmap = if (photo.type.isVideo) {
-                imageView.isZoomEnabled = false
-                playButton.show()
-                playButton.setOnClickListener {
-                    // TODO: Navigate to video player
-                }
+            initUiElements(photo.type)
 
+            val bitmap = if (photo.type.isVideo) {
                 Glide.with(context)
                     .asBitmap()
                     .load(photoBytes)
                     .submit()
                     .get()
             } else {
-                playButton.hide()
-
                 normalizeExifOrientation(photoBytes)
             }
 
@@ -109,6 +95,28 @@ class PhotoViewHolder(
                 imageView.setImageBitmap(bitmap)
             }
 
+        }
+    }
+
+    private fun initUiElements(photoType: PhotoType) = onMain {
+        imageView.setOnClickListener {
+            onClick()
+        }
+
+        if (photoType.isVideo) {
+            imageView.isZoomEnabled = false
+            playButton.show()
+            playButton.setOnClickListener {
+                // TODO: Navigate to video player
+            }
+        } else {
+            playButton.hide()
+
+            imageView.setOnTouchImageViewListener(object : TouchImageView.OnTouchImageViewListener {
+                override fun onMove() {
+                    onZoomed(imageView.isZoomed)
+                }
+            })
         }
     }
 }

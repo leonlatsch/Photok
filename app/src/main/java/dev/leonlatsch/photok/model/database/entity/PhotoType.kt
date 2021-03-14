@@ -25,12 +25,15 @@ import dev.leonlatsch.photok.other.empty
  * @since 1.0.0
  * @author Leon Latsch
  */
-enum class PhotoType(val value: Int, val mimeType: String) {
+enum class PhotoType(
+    val value: Int,
+    val mimeType: String)
+{
     UNDEFINED(0, String.empty),
     PNG(1, "image/png"),
     JPEG(2, "image/jpeg"),
     GIF(3, "image/gif"),
-    MP4(4, "video/gif"),
+    MP4(4, "video/mp4"),
     MPEG(5, "video/mpeg");
 
     val isVideo: Boolean
