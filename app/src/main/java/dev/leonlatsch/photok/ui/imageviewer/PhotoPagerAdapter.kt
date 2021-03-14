@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.viewphoto
+package dev.leonlatsch.photok.ui.imageviewer
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -135,11 +135,18 @@
         android:label="OssLicensesFragment" />
     <fragment
         android:id="@+id/imageViewerFragment"
-        android:name="dev.leonlatsch.photok.ui.viewphoto.ImageViewerFragment"
+        android:name="dev.leonlatsch.photok.ui.imageviewer.ImageViewerFragment"
         android:label="ImageViewerFragment" >
         <argument
             android:name="photo_id"
             android:defaultValue="-1"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="dev.leonlatsch.photok.ui.imageviewer.VideoPlayerFragment"
+        android:label="VideoPlayerFragment" />
 </navigation>

@@ -14,21 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.viewphoto
+package dev.leonlatsch.photok.ui.imageviewer
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.ByteArrayDataSource
-import com.google.android.exoplayer2.upstream.DataSource
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -61,7 +54,7 @@ class PhotoViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
     private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
-    private val videoPlayer: PlayerView = itemView.findViewById(R.id.photoVideoPlayer)
+    private val playButton: ImageView = itemView.findViewById(R.id.photoPlayButton)
     var photoId: Int = 0
 
     /**
@@ -81,9 +74,6 @@ class PhotoViewHolder(
         imageView.setOnClickListener {
             onClick()
         }
-        videoPlayer.setOnClickListener {
-            onClick()
-        }
 
         loadPhoto()
     }
@@ -97,43 +87,28 @@ class PhotoViewHolder(
                 return@launch
             }
 
-            if (photo.type.isVideo) {
-                onMain {
-                    videoPlayer.show()
-                    imageView.hide()
-
-                    val player = SimpleExoPlayer.Builder(context).build()
-                    videoPlayer.player = player
-                    player.setMediaSource(createVideoMediaSource(photoBytes))
-                    player.prepare()
-                    player.playWhenReady = true
+            val bitmap = if (photo.type.isVideo) {
+                imageView.isZoomEnabled = false
+                playButton.show()
+                playButton.setOnClickListener {
+                    // TODO: Navigate to video player
                 }
+
+                Glide.with(context)
+                    .asBitmap()
+                    .load(photoBytes)
+                    .submit()
+                    .get()
             } else {
-                onMain {
-                    videoPlayer.hide()
-                    imageView.show()
-                }
+                playButton.hide()
 
-                val bitmap = normalizeExifOrientation(photoBytes)
-                onMain {
-                    Glide.with(context)
-                        .asBitmap()
-                        .load(bitmap)
-                        .into(imageView)
-                }
+                normalizeExifOrientation(photoBytes)
+            }
+
+            onMain {
+                imageView.setImageBitmap(bitmap)
             }
 
         }
-    }
-
-    private fun createVideoMediaSource(bytes: ByteArray): MediaSource {
-        val dataSource = ByteArrayDataSource(bytes)
-
-        val factory = DataSource.Factory {
-            dataSource
-        }
-
-        return ProgressiveMediaSource.Factory(factory)
-            .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
     }
 }
