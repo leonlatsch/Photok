@@ -89,23 +89,22 @@ class ImportMenuDialog :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
-            dispatchPhotoImportRequest(data)
-        } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
-            dispatchBackupImportRequest(data)
-        } else if (requestCode == REQ_CONTENT_VIDEOS && resultCode == Activity.RESULT_OK) {
-            dispatchVideosImportRequest(data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQ_CONTENT_PHOTOS -> dispatchPhotoImportRequest(data)
+                REQ_CONTENT_VIDEOS -> dispatchVideosImportRequest(data)
+                REQ_CONTENT_BACKUP -> dispatchBackupImportRequest(data)
+            }
         }
 
         dismiss()
     }
 
-    private fun dispatchPhotoImportRequest(data: Intent?) = data?.let {
-        val photoUris = resolveUrisFromIntent(it)
-        if (photoUris.isNotEmpty()) {
-            ImportBottomSheetDialogFragment(photoUris).show(requireActivity().supportFragmentManager)
-        }
-    }
+    private fun dispatchPhotoImportRequest(data: Intent?) =
+        dispatchMediaElementsImportRequest(data)
+
+    private fun dispatchVideosImportRequest(data: Intent?) =
+        dispatchMediaElementsImportRequest(data)
 
     private fun dispatchBackupImportRequest(data: Intent?) = data?.let {
         it.data?.let { uri ->
@@ -113,10 +112,10 @@ class ImportMenuDialog :
         }
     }
 
-    private fun dispatchVideosImportRequest(data: Intent?) = data?.let {
-        val videoUris = resolveUrisFromIntent(it)
-        if (videoUris.isNotEmpty()) {
-            ImportBottomSheetDialogFragment(videoUris).show(requireActivity().supportFragmentManager)
+    private fun dispatchMediaElementsImportRequest(data: Intent?) = data?.let {
+        val mediaUris = resolveUrisFromIntent(it)
+        if (mediaUris.isNotEmpty()) {
+            ImportBottomSheetDialogFragment(mediaUris).show(requireActivity().supportFragmentManager)
         }
     }
 

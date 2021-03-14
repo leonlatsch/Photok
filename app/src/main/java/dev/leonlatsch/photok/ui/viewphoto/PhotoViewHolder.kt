@@ -21,6 +21,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -30,7 +31,6 @@ import com.google.android.exoplayer2.upstream.ByteArrayDataSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
 import kotlinx.coroutines.Dispatchers
@@ -97,31 +97,32 @@ class PhotoViewHolder(
                 return@launch
             }
 
-            when (photo.type) {
-                PhotoType.MP4 -> {
-                    onMain {
-                        videoPlayer.show()
-                        imageView.hide()
+            if (photo.type.isVideo) {
+                onMain {
+                    videoPlayer.show()
+                    imageView.hide()
 
-                        val player = SimpleExoPlayer.Builder(context).build()
-                        videoPlayer.player = player
-                        player.setMediaSource(createVideoMediaSource(photoBytes))
-                        player.prepare()
-                        player.playWhenReady = true
-                    }
+                    val player = SimpleExoPlayer.Builder(context).build()
+                    videoPlayer.player = player
+                    player.setMediaSource(createVideoMediaSource(photoBytes))
+                    player.prepare()
+                    player.playWhenReady = true
                 }
-                else -> {
-                    onMain {
-                        videoPlayer.hide()
-                        imageView.show()
-                    }
+            } else {
+                onMain {
+                    videoPlayer.hide()
+                    imageView.show()
+                }
 
-                    val bitmap = normalizeExifOrientation(photoBytes)
-                    onMain {
-                        imageView.setImageBitmap(bitmap)
-                    }
+                val bitmap = normalizeExifOrientation(photoBytes)
+                onMain {
+                    Glide.with(context)
+                        .asBitmap()
+                        .load(bitmap)
+                        .into(imageView)
                 }
             }
+
         }
     }
 

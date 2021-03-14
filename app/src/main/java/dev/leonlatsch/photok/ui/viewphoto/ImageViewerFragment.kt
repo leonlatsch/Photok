@@ -40,7 +40,7 @@ import javax.inject.Inject
 /**
  * Fragment to display photos in full size.
  *
- * @since 2.0.0
+ * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint

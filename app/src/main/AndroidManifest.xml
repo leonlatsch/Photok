@@ -33,6 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
+        <!-- MAIN LAUNCHER: Starts the app -->
         <activity-alias
             android:name=".MainLauncher"
             android:targetActivity=".ui.MainActivity">
@@ -43,6 +44,7 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- STEALTH LAUNCHER: Replaces main launcher and starts the phone app -->
         <activity-alias
             android:name=".StealthLauncher"
             android:enabled="false"
@@ -57,6 +59,7 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- SEND LAUNCHER: Receives photos and videos as send to -->
         <activity-alias
             android:name=".SendLauncher"
             android:targetActivity=".ui.MainActivity">
@@ -66,13 +69,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="image/*" />
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="video/*"/>
             </intent-filter>
         </activity-alias>
 

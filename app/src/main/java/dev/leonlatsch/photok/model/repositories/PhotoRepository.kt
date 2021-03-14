@@ -104,10 +104,11 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun safeImportPhoto(context: Context, externalUri: Uri): Boolean {
         val type = when (context.contentResolver.getType(externalUri)) {
-            "image/png" -> PhotoType.PNG
-            "image/jpeg" -> PhotoType.JPEG
-            "image/gif" -> PhotoType.GIF
-            "video/mp4" -> PhotoType.MP4
+            PhotoType.PNG.mimeType -> PhotoType.PNG
+            PhotoType.JPEG.mimeType -> PhotoType.JPEG
+            PhotoType.GIF.mimeType -> PhotoType.GIF
+            PhotoType.MP4.mimeType -> PhotoType.MP4
+            PhotoType.MPEG.mimeType -> PhotoType.MPEG
             else -> return false
         }
 

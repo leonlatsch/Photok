@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.onMain
@@ -73,7 +72,7 @@ class PhotoItemViewHolder(
         this.photo = photo
         this.adapter = adapter
 
-        if (photo?.type == PhotoType.MP4) {
+        if (photo?.type!!.isVideo) {
             videoIcon.show()
         }
 

@@ -30,7 +30,14 @@ enum class PhotoType(val value: Int, val mimeType: String) {
     PNG(1, "image/png"),
     JPEG(2, "image/jpeg"),
     GIF(3, "image/gif"),
-    MP4(4, "video/gif");
+    MP4(4, "video/gif"),
+    MPEG(5, "video/mpeg");
+
+    val isVideo: Boolean
+        get() = when (value) {
+            4, 5 -> true
+            else -> false
+        }
 
     companion object {
         /**
