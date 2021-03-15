@@ -32,7 +32,9 @@
             app:exitAnim="@anim/slide_to_bottom" />
         <action
             android:id="@+id/action_galleryFragment_to_imageViewerFragment"
-            app:destination="@id/imageViewerFragment" />
+            app:destination="@id/imageViewerFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -143,10 +145,14 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
-            app:destination="@id/videoPlayerFragment" />
+            app:destination="@id/videoPlayerFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/videoPlayerFragment"
         android:name="dev.leonlatsch.photok.ui.imageviewer.VideoPlayerFragment"
-        android:label="VideoPlayerFragment" />
+        android:label="VideoPlayerFragment">
+        <argument android:name="video_bytes" />
+    </fragment>
 </navigation>

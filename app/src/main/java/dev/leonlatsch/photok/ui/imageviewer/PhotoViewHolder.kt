@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +50,8 @@ class PhotoViewHolder(
     private val context: Context,
     private val photoRepository: PhotoRepository,
     private val onZoomed: (zoomed: Boolean) -> Unit,
-    private val onClick: () -> Unit
+    private val onClick: () -> Unit,
+    private val onPlayVideo: (videoBytes: ByteArray) -> Unit
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
@@ -79,7 +80,7 @@ class PhotoViewHolder(
                 return@launch
             }
 
-            initUiElements(photo.type)
+            initUiElements(photo, photoBytes)
 
             val bitmap = if (photo.type.isVideo) {
                 Glide.with(context)
@@ -98,16 +99,16 @@ class PhotoViewHolder(
         }
     }
 
-    private fun initUiElements(photoType: PhotoType) = onMain {
+    private fun initUiElements(photo: Photo, bytes: ByteArray) = onMain {
         imageView.setOnClickListener {
             onClick()
         }
 
-        if (photoType.isVideo) {
+        if (photo.type.isVideo) {
             imageView.isZoomEnabled = false
             playButton.show()
             playButton.setOnClickListener {
-                // TODO: Navigate to video player
+                onPlayVideo(bytes)
             }
         } else {
             playButton.hide()

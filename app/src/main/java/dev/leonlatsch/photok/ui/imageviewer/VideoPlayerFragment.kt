@@ -17,13 +17,17 @@
 package dev.leonlatsch.photok.ui.imageviewer
 
 import android.net.Uri
+import android.os.Bundle
+import android.view.View
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.ByteArrayDataSource
 import com.google.android.exoplayer2.upstream.DataSource
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
+import dev.leonlatsch.photok.other.INTENT_VIDEO_BYTES
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -32,23 +36,30 @@ import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
  * @since 2.0.0
  * @author Leon Latsch
  */
-class VideoPlayerFragment : BindableFragment<FragmentVideoPlayerBinding>(R.layout.fragment_video_player){
+class VideoPlayerFragment :
+    BindableFragment<FragmentVideoPlayerBinding>(R.layout.fragment_video_player) {
 
     override fun bind(binding: FragmentVideoPlayerBinding) {
         super.bind(binding)
         binding.context = this
     }
 
-    /*
-    videoPlayer.show()
-                    imageView.hide()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-                    val player = SimpleExoPlayer.Builder(context).build()
-                    videoPlayer.player = player
-                    player.setMediaSource(createVideoMediaSource(photoBytes))
-                    player.prepare()
-                    player.playWhenReady = true
-     */
+        val player = SimpleExoPlayer.Builder(requireContext())
+            .setUseLazyPreparation(true)
+            .build()
+
+        binding.vieoPlayerView.player = player
+
+        val videoBytes = arguments?.getByteArray(INTENT_VIDEO_BYTES)
+        videoBytes ?: requireActivity().onBackPressed()
+
+        player.setMediaSource(createVideoMediaSource(videoBytes!!))
+        player.prepare()
+        player.playWhenReady = true
+    }
 
     private fun createVideoMediaSource(bytes: ByteArray): MediaSource {
         val dataSource = ByteArrayDataSource(bytes)

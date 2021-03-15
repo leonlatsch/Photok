@@ -35,11 +35,12 @@ class PhotoPagerAdapter(
     private val photos: List<Int>,
     private val photoRepository: PhotoRepository,
     private val onZoomed: (zoomed: Boolean) -> Unit,
-    private val onClick: () -> Unit
+    private val onClick: () -> Unit,
+    private val onPlayVideo: (videoBytes: ByteArray) -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder =
-        PhotoViewHolder(parent, parent.context, photoRepository, onZoomed, onClick)
+        PhotoViewHolder(parent, parent.context, photoRepository, onZoomed, onClick, onPlayVideo)
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         holder.bindTo(photos[position])
