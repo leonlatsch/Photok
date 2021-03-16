@@ -236,8 +236,8 @@ class PhotoRepository @Inject constructor(
      * @return true, if photo and thumbnail could be deleted
      */
     fun deletePhotoFiles(context: Context, uuid: String): Boolean {
-        return (photoStorage.deleteInternalFile(context, Photo.internalFileName(uuid))
-                && photoStorage.deleteInternalFile(context, Photo.internalThumbnailFileName(uuid)))
+        return (photoStorage.internalDeleteFile(context, Photo.internalFileName(uuid))
+                && photoStorage.internalDeleteFile(context, Photo.internalThumbnailFileName(uuid)))
     }
 
 

@@ -25,10 +25,11 @@ import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.io.OutputStream
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
 import javax.inject.Inject
 
 /**
@@ -41,157 +42,152 @@ class PhotoStorage @Inject constructor(
     private val encryptionManager: EncryptionManager
 ) {
 
+    // region internal
+
+    /**
+     * Opens a [CipherInputStream] for an internal file.
+     */
+    fun internalOpenEncryptedFileInput(
+        context: Context,
+        fileName: String,
+        password: String? = null
+    ): CipherInputStream? =
+        try {
+            val inputStream = context.openFileInput(fileName)
+            encryptionManager.createCipherInputStream(inputStream, password)
+        } catch (e: IOException) {
+            Timber.d("Error opening internal file: $fileName: $e")
+            null
+        }
+
+    /**
+     * Opens a [InputStream] for an internal file.
+     */
+    fun internalOpenFileInput(context: Context, fileName: String): InputStream? =
+        try {
+            context.openFileInput(fileName)
+        } catch (e: IOException) {
+            Timber.d("Error opening internal file: $fileName: $e")
+            null
+        }
+
+    /**
+     * Opens a [CipherOutputStream] for an internal file.
+     */
+    fun internalOpenEncryptedFileOutput(
+        context: Context,
+        fileName: String,
+        password: String? = null
+    ): CipherOutputStream? =
+        try {
+            val outputStream = context.openFileOutput(fileName, INTERNAL_FILE_MODE)
+            encryptionManager.createCipherOutputStream(outputStream, password)
+        } catch (e: IOException) {
+            Timber.d("Error opening internal file: $fileName: $e")
+            null
+        }
+
+    /**
+     * Opens a [OutputStream] for an internal file.
+     */
+    fun internalOpenFileOutput(context: Context, fileName: String): OutputStream? =
+        try {
+            context.openFileOutput(fileName, INTERNAL_FILE_MODE)
+        } catch (e: IOException) {
+            Timber.d("Error opening internal file: $fileName: $e")
+            null
+        }
+
     /**
      * Delete a file in internal storage.
      */
-    fun deleteInternalFile(context: Context, fileName: String): Boolean {
+    fun internalDeleteFile(context: Context, fileName: String): Boolean {
         val success = context.deleteFile(fileName)
         if (!success) {
-            Timber.d("Error deleting file: $fileName")
+            Timber.d("Error deleting internal file: $fileName")
         }
+
         return success
-    }
-
-    /**
-     * Read and decrypt a file from internal storage using [readInternalFile].
-     * Used [EncryptionManager] for decryption.
-     */
-    fun readAndDecryptInternalFile(context: Context, fileName: String): ByteArray? {
-        return try {
-            val encryptedBytes = readInternalFile(context, fileName)
-            encryptionManager.decrypt(encryptedBytes)
-        } catch (e: IOException) {
-            Timber.d("Error reading file: $fileName $e")
-            null
-        }
-    }
-
-    /**
-     * Read a file from internal storage.
-     */
-    fun readInternalFile(context: Context, fileName: String): ByteArray {
-        return try {
-            val fileInputStream = context.openFileInput(fileName)
-            val encryptedBytes = fileInputStream.readBytes()
-            encryptedBytes
-        } catch (e: IOException) {
-            Timber.d("Error reading file: $fileName $e")
-            throw e
-        }
-    }
-
-    /**
-     * Insert a photo to an external content uri and pass the output stream to the [operation].
-     * @see insertAndOpenInternalFile
-     */
-    fun insertAndOpenExternalFile(
-        contentResolver: ContentResolver,
-        contentValues: ContentValues,
-        destination: Uri,
-        operation: (outputStream: OutputStream?) -> Unit
-    ) {
-        val uri = contentResolver.insert(destination, contentValues)
-        uri ?: return
-        return contentResolver.openOutputStream(uri).use(operation)
-    }
-
-    /**
-     * Insert a file to internal storage and pass the output stream to the [operation].
-     * @see insertAndOpenExternalFile
-     */
-    private fun insertAndOpenInternalFile(
-        context: Context,
-        fileName: String,
-        operation: (outputStream: FileOutputStream) -> Unit
-    ) {
-        context.openFileOutput(fileName, Context.MODE_PRIVATE).use(operation)
-    }
-
-    /**
-     * Read a file from external storage.
-     */
-    fun readFileFromExternal(contentResolver: ContentResolver, fileUri: Uri): ByteArray? {
-        return try {
-            contentResolver.openInputStream(fileUri)?.readBytes()
-        } catch (e: IOException) {
-            Timber.d("Error opening input stream for uri: $fileUri $e")
-            null
-        }
-    }
-
-    /**
-     * Write a [ByteArray] of a photo to the filesystem.
-     * Also create a thumbnail for it using [PhotoStorage.createThumbnail].
-     *
-     * @param context used to write file.
-     * @param photo used for the file name.
-     * @param bytes the photo data to save.
-     *
-     * @return false if any error happened
-     *
-     * @since 1.0.0
-     */
-    fun writePhotoFile(
-        context: Context,
-        photo: Photo,
-        bytes: ByteArray,
-        password: String? = null
-    ): Boolean {
-        return try {
-            val encryptedBytes = dynamicEncryptBytes(bytes, password)
-            encryptedBytes ?: return false
-
-            insertAndOpenInternalFile(context, photo.internalFileName) {
-                it.write(encryptedBytes)
-            }
-
-            createThumbnail(context, photo, bytes, password)
-        } catch (e: IOException) {
-            Timber.d("Error writing photo data for id: ${photo.uuid} $e")
-            false
-        }
     }
 
     private fun createThumbnail(
         context: Context,
         photo: Photo,
-        origBytes: ByteArray,
+        extFileUri: Uri,
         password: String? = null
-    ): Boolean {
-        return try {
-            val thumbnail = Glide.with(context)
-                .asBitmap()
-                .load(origBytes)
-                .centerCrop()
-                .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-                .get()
+    ) {
+        val thumbnail = Glide.with(context)
+            .asBitmap()
+            .load(extFileUri)
+            .centerCrop()
+            .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+            .get()
 
-            val outputStream = ByteArrayOutputStream()
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            val thumbnailBytes = outputStream.toByteArray()
-
-            val encryptedBytes = dynamicEncryptBytes(thumbnailBytes, password)
-            encryptedBytes ?: return false
-
-            insertAndOpenInternalFile(context, photo.internalThumbnailFileName) {
-                it.write(encryptedBytes)
-            }
-            true
-        } catch (e: IOException) {
-            Timber.d("Error creating Thumbnail for id: ${photo.uuid}: $e")
-            false
+        internalOpenEncryptedFileOutput(context, photo.internalThumbnailFileName, password).use {
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
     }
 
-    private fun dynamicEncryptBytes(bytes: ByteArray, password: String?): ByteArray? {
-        return if (password == null) {
-            encryptionManager.encrypt(bytes)
-        } else {
-            encryptionManager.encrypt(bytes, password)
+    // endregion
+
+    // region external
+
+    /**
+     * Opens a [InputStream] on an external file.
+     */
+    fun externalOpenFileInput(contentResolver: ContentResolver, fileUri: Uri): InputStream? =
+        try {
+            contentResolver.openInputStream(fileUri)
+        } catch (e: IOException) {
+            Timber.d("Error opening external file at $fileUri: $e")
+            null
+        }
+
+    /**
+     * Opens a [OutputStream] on an external file.
+     */
+    fun externalOpenFileOutput(
+        contentResolver: ContentResolver,
+        contentValues: ContentValues,
+        destinationUri: Uri
+    ): OutputStream? {
+        return try {
+            val externalUrl = contentResolver.insert(destinationUri, contentValues) ?: return null
+            contentResolver.openOutputStream(externalUrl)
+        } catch (e: IOException) {
+            Timber.d("Error opening external file at $destinationUri: $e")
+            null
+        }
+    }
+
+    // endregion
+
+    /**
+     * Write a [InputStream] to a [OutputStream] with a buffer.
+     *
+     * @return true, if stream was successfully copied
+     */
+    fun writeBuffered(inputStream: InputStream, outputStream: OutputStream): Boolean {
+        val buffer = ByteArray(BUFFER_SIZE)
+        var len: Int
+
+        return try {
+            len = inputStream.read(buffer)
+            while (len != -1) {
+                outputStream.write(buffer, 0, len)
+                len = inputStream.read(buffer)
+            }
+
+            true
+        } catch (e: IOException) {
+            Timber.d("Error copying streams: $e")
+            false
         }
     }
 
     companion object {
         private const val THUMBNAIL_SIZE = 128
+        private const val BUFFER_SIZE = 1024
+        private const val INTERNAL_FILE_MODE = Context.MODE_PRIVATE
     }
 }

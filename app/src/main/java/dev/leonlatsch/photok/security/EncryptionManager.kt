@@ -20,10 +20,14 @@ import dev.leonlatsch.photok.other.AES
 import dev.leonlatsch.photok.other.AES_ALGORITHM
 import dev.leonlatsch.photok.other.SHA_256
 import timber.log.Timber
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
 import java.security.MessageDigest
 import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
@@ -141,6 +145,85 @@ class EncryptionManager {
             cipher.doFinal(bytes)
         } catch (e: GeneralSecurityException) {
             Timber.d("Error decrypting bytes: $e")
+            null
+        }
+    }
+
+    /**
+     * Turn a [InputStream] into an [CipherInputStream] with the stored [encryptionKey] or
+     * an encryption key generated from the [password] if given.
+     *
+     * @param password if not null, this will be used for decrypting
+     */
+    fun createCipherInputStream(
+        origInputStream: InputStream,
+        password: String? = null
+    ): CipherInputStream? {
+        return if (isReady) try {
+            val cipher = if (password == null) {
+                createCipher(Cipher.DECRYPT_MODE)
+            } else {
+                createCipher(Cipher.DECRYPT_MODE, password)
+            }
+
+            CipherInputStream(origInputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted input stream: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Turn a [OutputStream] into an [CipherOutputStream] with the stored [encryptionKey] or
+     * an encryption key generated from the [password] if given.
+     *
+     * @param password if not null, this will be used for encrypting
+     */
+    fun createCipherOutputStream(
+        origOutputStream: OutputStream,
+        password: String? = null
+    ): CipherOutputStream? {
+        return if (isReady) try {
+            val cipher = if (password == null) {
+                createCipher(Cipher.ENCRYPT_MODE)
+            } else {
+                createCipher(Cipher.ENCRYPT_MODE, password)
+            }
+
+            CipherOutputStream(origOutputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted output stream: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+    private fun createCipher(mode: Int, password: String): Cipher? {
+        val key = genSecKey(password)
+        val iv = genIv(password)
+
+        return createCipher(mode, key, iv)
+    }
+
+    private fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
+
+    private fun createCipher(
+        mode: Int,
+        secretKeySpec: SecretKeySpec?,
+        ivParam: IvParameterSpec?
+    ): Cipher? {
+        return if (isReady) try {
+            Cipher.getInstance(AES_ALGORITHM).apply {
+                init(mode, secretKeySpec, ivParam)
+            }
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error initializing cipher: $e")
+            null
+        } else {
+            Timber.d("EncryptionManager has to be ready to create a cipher")
             null
         }
     }
