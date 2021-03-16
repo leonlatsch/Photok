@@ -151,7 +151,7 @@
     </fragment>
     <fragment
         android:id="@+id/videoPlayerFragment"
-        android:name="dev.leonlatsch.photok.ui.imageviewer.VideoPlayerFragment"
+        android:name="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment"
         android:label="VideoPlayerFragment">
         <argument android:name="video_bytes" />
     </fragment>

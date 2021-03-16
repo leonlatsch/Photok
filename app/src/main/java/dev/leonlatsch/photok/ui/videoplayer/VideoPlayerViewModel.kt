@@ -14,51 +14,58 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.imageviewer
+package dev.leonlatsch.photok.ui.videoplayer
 
+import android.app.Application
 import android.net.Uri
-import android.os.Bundle
-import android.view.View
+import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.ByteArrayDataSource
 import com.google.android.exoplayer2.upstream.DataSource
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
-import dev.leonlatsch.photok.other.INTENT_VIDEO_BYTES
-import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
- * Fragment to play videos.
+ * ViewModel for playing videos.
  *
  * @since 2.0.0
  * @author Leon Latsch
  */
-class VideoPlayerFragment :
-    BindableFragment<FragmentVideoPlayerBinding>(R.layout.fragment_video_player) {
+@HiltViewModel
+class VideoPlayerViewModel @Inject constructor(
+    private val app: Application
+) : ObservableViewModel(app) {
 
-    override fun bind(binding: FragmentVideoPlayerBinding) {
-        super.bind(binding)
-        binding.context = this
-    }
+    var videoBytes: ByteArray? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    @get:Bindable
+    var player: SimpleExoPlayer? = null
+        set(value) {
+            field = value
+            notifyChange(BR.player, value)
+        }
 
-        val player = SimpleExoPlayer.Builder(requireContext())
-            .setUseLazyPreparation(true)
-            .build()
+    override fun setup() {
+        super.setup()
+        videoBytes ?: return
 
-        binding.vieoPlayerView.player = player
-
-        val videoBytes = arguments?.getByteArray(INTENT_VIDEO_BYTES)
-        videoBytes ?: requireActivity().onBackPressed()
-
-        player.setMediaSource(createVideoMediaSource(videoBytes!!))
-        player.prepare()
-        player.playWhenReady = true
+        viewModelScope.launch {
+            val newPlayer = SimpleExoPlayer.Builder(app)
+                .setUseLazyPreparation(true)
+                .build().apply {
+                    setMediaSource(createVideoMediaSource(videoBytes!!))
+                    prepare()
+                    playWhenReady = true
+                }
+            player = newPlayer
+        }
     }
 
     private fun createVideoMediaSource(bytes: ByteArray): MediaSource {
