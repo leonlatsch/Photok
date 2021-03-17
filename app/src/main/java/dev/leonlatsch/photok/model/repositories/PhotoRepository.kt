@@ -18,8 +18,10 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.content.ContentValues
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -118,10 +120,16 @@ class PhotoRepository @Inject constructor(
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(context.contentResolver, externalUri)
         val photo = Photo(fileName, System.currentTimeMillis(), type)
-
+        TODO("createThumbnail")
         return safeCreatePhoto(context, photo, inputStream)
     }
 
+    /**
+     * Writes and encrypts the [inputStream] into internal storage.
+     * Saves the [photo] afterwords.
+     *
+     * @return true, if everything worked
+     */
     suspend fun safeCreatePhoto(
         context: Context,
         photo: Photo,
@@ -146,10 +154,36 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
+    private fun createThumbnail(
+        context: Context,
+        photo: Photo,
+        extFileUri: Uri,
+        password: String? = null
+    ) {
+        val thumbnail = Glide.with(context)
+            .asBitmap()
+            .load(extFileUri)
+            .centerCrop()
+            .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+            .get()
+
+        encryptedStorageManager.internalOpenEncryptedFileOutput(
+            context,
+            photo.internalThumbnailFileName,
+            password
+        ).use {
+            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, it)
+        }
+    }
+
     // endregion
 
     // region READ
 
+    /**
+     * Loads the full size file stored for this photo as a [ByteArray].
+     * Use with caution!
+     */
     fun loadPhoto(context: Context, photo: Photo): ByteArray? {
         sync(context, photo)
 
@@ -159,6 +193,9 @@ class PhotoRepository @Inject constructor(
         return bytes
     }
 
+    /**
+     * Loads the full size thumbnail stored for this photo as a [ByteArray]
+     */
     fun loadThumbnail(context: Context, photo: Photo): ByteArray? {
         syncThumbnail(context, photo)
 
@@ -249,6 +286,9 @@ class PhotoRepository @Inject constructor(
 
     // endregion
 
+    /**
+     * Opens the inputStream for a photo.
+     */
     fun sync(context: Context, photo: Photo, password: String? = null) {
         val fullSizeInput = encryptedStorageManager.internalOpenEncryptedFileInput(
             context,
@@ -260,11 +300,17 @@ class PhotoRepository @Inject constructor(
 
     }
 
+    /**
+     * Closes and deletes the inputStream for a photo.
+     */
     fun deSync(photo: Photo) {
         photo.stream?.close()
         photo.stream = null
     }
 
+    /**
+     * Opens the inputStream for a photo thumbnail.
+     */
     fun syncThumbnail(context: Context, photo: Photo, password: String? = null) {
         val thumbnailInput = encryptedStorageManager.internalOpenEncryptedFileInput(
             context,
@@ -275,10 +321,17 @@ class PhotoRepository @Inject constructor(
         photo.thumbnailStream = thumbnailInput
     }
 
+    /**
+     * Closes and deletes the inputStream for a photo thumbnail.
+     */
     fun deSyncThumbnail(photo: Photo) {
         photo.thumbnailStream?.close()
         photo.thumbnailStream = null
     }
 
     // endregion
+
+    companion object {
+        private const val THUMBNAIL_SIZE = 128
+    }
 }

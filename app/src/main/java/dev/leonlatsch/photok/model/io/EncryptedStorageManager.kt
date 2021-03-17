@@ -19,10 +19,7 @@ package dev.leonlatsch.photok.model.io
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
-import com.bumptech.glide.Glide
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.IOException
@@ -110,24 +107,6 @@ class EncryptedStorageManager @Inject constructor(
         return success
     }
 
-    private fun createThumbnail(
-        context: Context,
-        photo: Photo,
-        extFileUri: Uri,
-        password: String? = null
-    ) {
-        val thumbnail = Glide.with(context)
-            .asBitmap()
-            .load(extFileUri)
-            .centerCrop()
-            .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-            .get()
-
-        internalOpenEncryptedFileOutput(context, photo.internalThumbnailFileName, password).use {
-            thumbnail.compress(Bitmap.CompressFormat.PNG, 100, it)
-        }
-    }
-
     // endregion
 
     // region external
@@ -189,7 +168,6 @@ class EncryptedStorageManager @Inject constructor(
     }
 
     companion object {
-        private const val THUMBNAIL_SIZE = 128
         private const val BUFFER_SIZE = 1024
         private const val INTERNAL_FILE_MODE = Context.MODE_PRIVATE
     }
