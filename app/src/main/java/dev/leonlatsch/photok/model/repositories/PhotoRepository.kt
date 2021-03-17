@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.model.repositories
 
-import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
@@ -24,10 +23,11 @@ import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.io.PhotoStorage
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.getFileName
 import timber.log.Timber
 import java.io.IOException
+import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
-    private val photoStorage: PhotoStorage
+    private val encryptedStorageManager: EncryptedStorageManager
 ) {
 
     // region DATABASE
@@ -115,23 +115,30 @@ class PhotoRepository @Inject constructor(
         val fileName =
             getFileName(context.contentResolver, externalUri) ?: UUID.randomUUID().toString()
 
-        val origBytes = readPhotoFileFromExternal(context.contentResolver, externalUri)
-        origBytes ?: return false
+        val inputStream =
+            encryptedStorageManager.externalOpenFileInput(context.contentResolver, externalUri)
+        val photo = Photo(fileName, System.currentTimeMillis(), type)
 
-        val photo = Photo(fileName, System.currentTimeMillis(), type, origBytes.size.toLong())
-
-        return safeCreatePhoto(context, photo, origBytes)
+        return safeCreatePhoto(context, photo, inputStream)
     }
 
-    /**
-     * Safely insert a photo to the database and write its bytes to the filesystem.
-     * Handles IOErrors.
-     *
-     * @return true, if everything was successfully inserted and written to io.
-     */
-    suspend fun safeCreatePhoto(context: Context, photo: Photo, bytes: ByteArray): Boolean {
-        var success = photoStorage.writePhotoFile(context, photo, bytes)
+    suspend fun safeCreatePhoto(
+        context: Context,
+        photo: Photo,
+        inputStream: InputStream?
+    ): Boolean {
+        val outputStream =
+            encryptedStorageManager.internalOpenEncryptedFileOutput(context, photo.internalFileName)
+
+        inputStream ?: return false
+        outputStream ?: return false
+
+        val fileLen = encryptedStorageManager.writeBuffered(inputStream, outputStream)
+        var success = fileLen != -1L
+
         if (success) {
+            photo.size = fileLen
+
             val photoId = insert(photo)
             success = photoId != -1L
         }
@@ -139,70 +146,26 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
-    /**
-     * @see PhotoStorage.writePhotoFile
-     */
-    fun writePhotoFile(
-        context: Context,
-        photo: Photo,
-        bytes: ByteArray,
-        password: String? = null
-    ): Boolean = photoStorage.writePhotoFile(context, photo, bytes, password)
-
     // endregion
 
     // region READ
 
-    /**
-     * Read a photo's bytes from external storage.
-     *
-     * @param contentResolver Reads the file system
-     * @param imageUri The uri to the original file
-     */
-    private fun readPhotoFileFromExternal(
-        contentResolver: ContentResolver,
-        imageUri: Uri
-    ): ByteArray? =
-        photoStorage.readFileFromExternal(contentResolver, imageUri)
+    fun loadPhoto(context: Context, photo: Photo): ByteArray? {
+        sync(context, photo)
 
-    /**
-     * Read and decrypt a photo's bytes from internal storage.
-     *
-     * @param context To open the file
-     * @param photo The photo
-     */
-    suspend fun readPhotoFileFromInternal(context: Context, photo: Photo): ByteArray? {
-        val uuid = getUUID(photo.id!!)
-        uuid ?: return null
-        return readPhotoFileFromInternal(context, uuid)
+        val bytes = photo.stream?.readBytes()
+
+        deSync(photo)
+        return bytes
     }
 
-    /**
-     * Read and decrypt a photo's bytes from internal storage.
-     *
-     * @param context To open the file
-     * @param uuid the photos uuid
-     */
-    fun readPhotoFileFromInternal(context: Context, uuid: String): ByteArray? =
-        photoStorage.readAndDecryptInternalFile(context, Photo.internalFileName(uuid))
+    fun loadThumbnail(context: Context, photo: Photo): ByteArray? {
+        syncThumbnail(context, photo)
 
-    /**
-     * Read a photo's raw bytes.
-     * Used similar as [readPhotoFileFromInternal]
-     */
-    fun readRawPhotoFileFromInternal(context: Context, photo: Photo): ByteArray =
-        photoStorage.readInternalFile(context, photo.internalFileName)
+        val bytes = photo.thumbnailStream?.readBytes()
 
-    /**
-     * Read and decrypt a photo's thumbnail from internal storage.
-     */
-    suspend fun readPhotoThumbnailFromInternal(context: Context, id: Int): ByteArray? {
-        val uuid = getUUID(id)
-        uuid ?: return null
-        return photoStorage.readAndDecryptInternalFile(
-            context,
-            Photo.internalThumbnailFileName(uuid)
-        )
+        deSyncThumbnail(photo)
+        return bytes
     }
 
     // endregion
@@ -215,13 +178,11 @@ class PhotoRepository @Inject constructor(
      * @return true, if the photo was successfully deleted on disk and in db.
      */
     suspend fun safeDeletePhoto(context: Context, photo: Photo): Boolean {
-        val uuid = photo.uuid
-
         val deletedElements = delete(photo)
         val success = deletedElements != -1
 
         if (success) {
-            deletePhotoFiles(context, uuid)
+            deletePhotoFiles(context, photo.uuid)
         }
 
         return success
@@ -236,8 +197,11 @@ class PhotoRepository @Inject constructor(
      * @return true, if photo and thumbnail could be deleted
      */
     fun deletePhotoFiles(context: Context, uuid: String): Boolean {
-        return (photoStorage.internalDeleteFile(context, Photo.internalFileName(uuid))
-                && photoStorage.internalDeleteFile(context, Photo.internalThumbnailFileName(uuid)))
+        return (encryptedStorageManager.internalDeleteFile(context, Photo.internalFileName(uuid))
+                && encryptedStorageManager.internalDeleteFile(
+            context,
+            Photo.internalThumbnailFileName(uuid)
+        ))
     }
 
 
@@ -251,10 +215,14 @@ class PhotoRepository @Inject constructor(
      * @param context To save the file
      * @param photo The Photo to be saved
      */
-    suspend fun exportPhoto(context: Context, photo: Photo): Boolean {
+    fun exportPhoto(context: Context, photo: Photo): Boolean {
         return try {
-            val bytes = readPhotoFileFromInternal(context, photo)
-            bytes ?: return false
+            val inputStream =
+                encryptedStorageManager.internalOpenEncryptedFileInput(
+                    context,
+                    photo.internalFileName
+                )
+            inputStream ?: return false
 
             val contentValues = ContentValues()
             contentValues.put(
@@ -263,18 +231,53 @@ class PhotoRepository @Inject constructor(
             )
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
 
-            photoStorage.insertAndOpenExternalFile(
+            val outputStream = encryptedStorageManager.externalOpenFileOutput(
                 context.contentResolver,
                 contentValues,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            ) {
-                it?.write(bytes)
-            }
-            true
+            )
+            outputStream ?: return false
+
+            val wrote = encryptedStorageManager.writeBuffered(inputStream, outputStream)
+
+            wrote != -1L
         } catch (e: IOException) {
             Timber.d("Error exporting file: ${photo.fileName}")
             false
         }
+    }
+
+    // endregion
+
+    fun sync(context: Context, photo: Photo, password: String? = null) {
+        val fullSizeInput = encryptedStorageManager.internalOpenEncryptedFileInput(
+            context,
+            photo.internalFileName,
+            password
+        ) ?: return
+
+        photo.stream = fullSizeInput
+
+    }
+
+    fun deSync(photo: Photo) {
+        photo.stream?.close()
+        photo.stream = null
+    }
+
+    fun syncThumbnail(context: Context, photo: Photo, password: String? = null) {
+        val thumbnailInput = encryptedStorageManager.internalOpenEncryptedFileInput(
+            context,
+            photo.internalThumbnailFileName,
+            password
+        ) ?: return
+
+        photo.thumbnailStream = thumbnailInput
+    }
+
+    fun deSyncThumbnail(photo: Photo) {
+        photo.thumbnailStream?.close()
+        photo.thumbnailStream = null
     }
 
     // endregion

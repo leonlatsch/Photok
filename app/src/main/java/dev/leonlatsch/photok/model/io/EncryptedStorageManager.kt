@@ -33,12 +33,12 @@ import javax.crypto.CipherOutputStream
 import javax.inject.Inject
 
 /**
- * Storage Manager for photos in internal and external storage.
+ * Manages automatic encrypted internal storage.
  *
- * @since 1.0.0
+ * @since 2.0.0
  * @author Leon Latsch
  */
-class PhotoStorage @Inject constructor(
+class EncryptedStorageManager @Inject constructor(
     private val encryptionManager: EncryptionManager
 ) {
 
@@ -165,23 +165,26 @@ class PhotoStorage @Inject constructor(
     /**
      * Write a [InputStream] to a [OutputStream] with a buffer.
      *
-     * @return true, if stream was successfully copied
+     * @return then copied length or -1 if errors occurred
      */
-    fun writeBuffered(inputStream: InputStream, outputStream: OutputStream): Boolean {
+    fun writeBuffered(inputStream: InputStream, outputStream: OutputStream): Long {
         val buffer = ByteArray(BUFFER_SIZE)
-        var len: Int
+        var bufferedLen: Int
+        var totalLen = -1L
 
         return try {
-            len = inputStream.read(buffer)
-            while (len != -1) {
-                outputStream.write(buffer, 0, len)
-                len = inputStream.read(buffer)
+            bufferedLen = inputStream.read(buffer)
+            while (bufferedLen != -1) {
+                totalLen += bufferedLen
+
+                outputStream.write(buffer, 0, bufferedLen)
+                bufferedLen = inputStream.read(buffer)
             }
 
-            true
+            totalLen
         } catch (e: IOException) {
             Timber.d("Error copying streams: $e")
-            false
+            -1L
         }
     }
 

@@ -17,8 +17,10 @@
 package dev.leonlatsch.photok.model.database.entity
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
+import java.io.InputStream
 import java.util.*
 
 /**
@@ -32,15 +34,26 @@ data class Photo(
     @Expose val fileName: String,
     var importedAt: Long,
     @Expose val type: PhotoType,
-    @Expose val size: Long,
+    @Expose var size: Long = 0L,
     @Expose val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 ) {
+    @Ignore
+    var stream: InputStream? = null
+    @Ignore
+    var thumbnailStream: InputStream? = null
+
     val internalFileName: String
         get() = internalFileName(uuid)
 
     val internalThumbnailFileName: String
         get() = internalThumbnailFileName(uuid)
+
+    val isSynced: Boolean
+        get() = stream != null
+
+    val isThumbnailSynced: Boolean
+        get() = thumbnailStream != null
 
     companion object {
         /**
