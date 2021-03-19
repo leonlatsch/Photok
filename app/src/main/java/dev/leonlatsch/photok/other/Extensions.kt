@@ -27,6 +27,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.BaseApplication
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * Sets the visibility to [View.VISIBLE]
@@ -128,4 +133,20 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
  */
 fun DialogFragment.show(fragmentManager: FragmentManager) {
     this.show(fragmentManager, this::class.simpleName)
+}
+
+/**
+ * Schedule a InputStream to be closed by the [Dispatchers.IO]
+ * For use in suspend fun.
+ */
+fun InputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
+    close()
+}
+
+/**
+ * Schedule a OutputStream to be closed by the [Dispatchers.IO].
+ * For use in suspend fun.
+ */
+fun OutputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
+    close()
 }

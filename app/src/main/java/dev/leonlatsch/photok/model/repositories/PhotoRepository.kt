@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.other.lazyClose
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -121,20 +122,22 @@ class PhotoRepository @Inject constructor(
             encryptedStorageManager.externalOpenFileInput(context.contentResolver, externalUri)
         val photo = Photo(fileName, System.currentTimeMillis(), type)
 
-        return safeCreatePhoto(context, photo, inputStream)
+        val created = safeCreatePhoto(context, photo, inputStream)
+        inputStream?.lazyClose()
+        return created
     }
 
     /**
      * Writes and encrypts the [source] into internal storage.
      * Saves the [photo] afterwords.
+     * It is up to the caller to close the [source].
      *
      * @return true, if everything worked
      */
     suspend fun safeCreatePhoto(
         context: Context,
         photo: Photo,
-        source: InputStream?,
-        password: String? = null
+        source: InputStream?
     ): Boolean {
         val encryptedDestination =
             encryptedStorageManager.internalOpenEncryptedFileOutput(context, photo.internalFileName)
@@ -148,14 +151,13 @@ class PhotoRepository @Inject constructor(
         if (success) {
             photo.size = fileLen
 
-            createThumbnail(context, photo, source, password)
+            createThumbnail(context, photo, source)
 
             val photoId = insert(photo)
             success = photoId != -1L
         }
 
-        source.close()
-        encryptedDestination.close()
+        encryptedDestination.lazyClose()
 
         return success
     }
@@ -163,8 +165,7 @@ class PhotoRepository @Inject constructor(
     private fun createThumbnail(
         context: Context,
         photo: Photo,
-        fullSizeInputStream: InputStream,
-        password: String? = null
+        fullSizeInputStream: InputStream
     ) {
         val thumbnail = Glide.with(context)
             .asBitmap()
@@ -175,8 +176,7 @@ class PhotoRepository @Inject constructor(
 
         encryptedStorageManager.internalOpenEncryptedFileOutput(
             context,
-            photo.internalThumbnailFileName,
-            password
+            photo.internalThumbnailFileName
         ).use {
             thumbnail.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
@@ -225,7 +225,7 @@ class PhotoRepository @Inject constructor(
         val success = deletedElements != -1
 
         if (success) {
-            deletePhotoFiles(context, photo.uuid)
+            deleteInternalPhotoData(context, photo.uuid)
         }
 
         return success
@@ -239,13 +239,23 @@ class PhotoRepository @Inject constructor(
      *
      * @return true, if photo and thumbnail could be deleted
      */
-    fun deletePhotoFiles(context: Context, uuid: String): Boolean {
-        return (encryptedStorageManager.internalDeleteFile(context, Photo.internalFileName(uuid))
-                && encryptedStorageManager.internalDeleteFile(
+    fun deleteInternalPhotoData(context: Context, uuid: String): Boolean =
+        (encryptedStorageManager.internalDeleteFile(
+            context,
+            Photo.internalFileName(uuid)
+        ) && encryptedStorageManager.internalDeleteFile(
             context,
             Photo.internalThumbnailFileName(uuid)
         ))
-    }
+
+    fun deleteTempPhotoCaches(context: Context, photo: Photo): Boolean =
+        (encryptedStorageManager.internalDeleteFile(
+            context,
+            photo.internalCachedFileName
+        ) && encryptedStorageManager.internalDeleteFile(
+            context,
+            photo.internalCachedThumbnailFileName
+        ))
 
 
     // endregion

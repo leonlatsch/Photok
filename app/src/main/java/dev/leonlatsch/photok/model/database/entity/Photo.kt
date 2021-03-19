@@ -40,6 +40,7 @@ data class Photo(
 ) {
     @Ignore
     var stream: InputStream? = null
+
     @Ignore
     var thumbnailStream: InputStream? = null
 
@@ -48,6 +49,12 @@ data class Photo(
 
     val internalThumbnailFileName: String
         get() = internalThumbnailFileName(uuid)
+
+    val internalCachedFileName: String
+        get() = ".cache~$internalFileName"
+
+    val internalCachedThumbnailFileName: String
+        get() = ".cache~$internalThumbnailFileName"
 
     val isSynced: Boolean
         get() = stream != null

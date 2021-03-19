@@ -107,6 +107,15 @@ class EncryptedStorageManager @Inject constructor(
         return success
     }
 
+    /**
+     * Rename a file in internal storage.
+     */
+    fun internalRenameFile(context: Context, currentFileName: String, newFileName: String) {
+        val currentFile = context.getFileStreamPath(currentFileName)
+        val newFile = context.getFileStreamPath(newFileName)
+        currentFile.renameTo(newFile)
+    }
+
     // endregion
 
     // region external

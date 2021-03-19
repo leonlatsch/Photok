@@ -28,6 +28,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.exifinterface.media.ExifInterface
+import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -131,3 +132,7 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray): Bitmap {
         bitmap
     }
 }
+
+fun createGson() = GsonBuilder()
+    .excludeFieldsWithoutExposeAnnotation()
+    .create()

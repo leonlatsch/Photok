@@ -21,6 +21,7 @@ import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
@@ -41,7 +42,7 @@ class RestoreBackupViewModel @Inject constructor(
     private val encryptionManager: EncryptionManager
 ) : BaseProcessViewModel<Photo>(app) {
 
-    private var inputStream: ZipInputStream? = null
+    private var zipInputStream: ZipInputStream? = null
     private var currentEntry: ZipEntry? = null
 
     lateinit var zipUri: Uri
@@ -50,14 +51,15 @@ class RestoreBackupViewModel @Inject constructor(
 
     override suspend fun preProcess() {
         createStream()
-        currentEntry = inputStream?.nextEntry
+        currentEntry = zipInputStream?.nextEntry
         super.preProcess()
     }
 
     override suspend fun processItem(item: Photo) {
+        zipInputStream ?: return
         currentEntry ?: return
         if (currentEntry!!.name == BackupMetaData.FILE_NAME) {
-            currentEntry = inputStream?.nextEntry
+            currentEntry = zipInputStream?.nextEntry
             currentEntry ?: return
         }
 
@@ -71,19 +73,16 @@ class RestoreBackupViewModel @Inject constructor(
             metaPhoto.size
         )
 
-        val origBytes = readBytesFromZip()
-        origBytes ?: return
+        val encryptedInputStream =
+            encryptionManager.createCipherInputStream(zipInputStream!!, origPassword)
 
-        val decryptedBytes = encryptionManager.decrypt(origBytes, origPassword)
-        decryptedBytes ?: return
+        photoRepository.safeCreatePhoto(app, newPhoto, encryptedInputStream)
 
-        photoRepository.safeCreatePhoto(app, newPhoto, decryptedBytes)
-
-        currentEntry = inputStream?.nextEntry
+        currentEntry = zipInputStream?.nextEntry
     }
 
     override suspend fun postProcess() {
-        closeStream()
+        zipInputStream?.lazyClose()
         super.postProcess()
     }
 
@@ -96,18 +95,8 @@ class RestoreBackupViewModel @Inject constructor(
         return null
     }
 
-    private fun readBytesFromZip(): ByteArray? = inputStream?.readBytes()
-
-    private fun closeStream() {
-        inputStream?.close()
-    }
-
     private fun createStream() {
         val input = app.contentResolver.openInputStream(zipUri)
-        inputStream = if (input != null) {
-            ZipInputStream(input)
-        } else {
-            null
-        }
+        zipInputStream = ZipInputStream(input)
     }
 }
