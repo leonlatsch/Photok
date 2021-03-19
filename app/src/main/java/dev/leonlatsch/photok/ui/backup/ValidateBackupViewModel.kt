@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.backup
 import android.app.Application
 import android.net.Uri
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
@@ -26,7 +27,6 @@ import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -81,12 +81,13 @@ class ValidateBackupViewModel @Inject constructor(
     /**
      * Load and Validate a backup file. Fill [metaData].
      */
-    fun loadAndValidateBackup(uri: Uri) = GlobalScope.launch(Dispatchers.IO) {
+    fun loadAndValidateBackup(uri: Uri) = viewModelScope.launch(Dispatchers.IO) {
         var photoFiles = 0
 
         // Load backup
         createStream(uri)?.use { stream ->
             zipFileName = getFileName(app.contentResolver, uri)
+
             var ze = stream.nextEntry
             while (ze != null) {
                 if (ze.name == BackupMetaData.FILE_NAME) {
@@ -95,7 +96,7 @@ class ValidateBackupViewModel @Inject constructor(
                     metaData = Gson().fromJson(string, BackupMetaData::class.java)
                     validateBackupVersion()
 
-                } else {
+                } else if (ze.name.endsWith(".photok")) {
                     photoFiles++
                 }
 

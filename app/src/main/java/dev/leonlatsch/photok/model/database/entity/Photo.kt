@@ -50,11 +50,11 @@ data class Photo(
     val internalThumbnailFileName: String
         get() = internalThumbnailFileName(uuid)
 
-    val internalCachedFileName: String
-        get() = ".cache~$internalFileName"
+    val internalTmpFileName: String
+        get() = ".tmp~$internalFileName"
 
-    val internalCachedThumbnailFileName: String
-        get() = ".cache~$internalThumbnailFileName"
+    val internalTmpThumbnailFileName: String
+        get() = ".tmp~$internalThumbnailFileName"
 
     val isSynced: Boolean
         get() = stream != null

@@ -51,7 +51,7 @@ class PhotoRepository @Inject constructor(
     /**
      * @see PhotoDao.insert
      */
-    private suspend fun insert(photo: Photo) = photoDao.insert(photo)
+    suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
     /**
      * @see PhotoDao.delete
@@ -105,8 +105,8 @@ class PhotoRepository @Inject constructor(
      *
      * Collects meta data and calls [safeCreatePhoto].
      */
-    suspend fun safeImportPhoto(context: Context, externalUri: Uri): Boolean {
-        val type = when (context.contentResolver.getType(externalUri)) {
+    suspend fun safeImportPhoto(context: Context, sourceUri: Uri): Boolean {
+        val type = when (context.contentResolver.getType(sourceUri)) {
             PhotoType.PNG.mimeType -> PhotoType.PNG
             PhotoType.JPEG.mimeType -> PhotoType.JPEG
             PhotoType.GIF.mimeType -> PhotoType.GIF
@@ -116,13 +116,13 @@ class PhotoRepository @Inject constructor(
         }
 
         val fileName =
-            getFileName(context.contentResolver, externalUri) ?: UUID.randomUUID().toString()
+            getFileName(context.contentResolver, sourceUri) ?: UUID.randomUUID().toString()
 
         val inputStream =
-            encryptedStorageManager.externalOpenFileInput(context.contentResolver, externalUri)
+            encryptedStorageManager.externalOpenFileInput(context.contentResolver, sourceUri)
         val photo = Photo(fileName, System.currentTimeMillis(), type)
 
-        val created = safeCreatePhoto(context, photo, inputStream)
+        val created = safeCreatePhoto(context, photo, inputStream, sourceUri)
         inputStream?.lazyClose()
         return created
     }
@@ -131,45 +131,56 @@ class PhotoRepository @Inject constructor(
      * Writes and encrypts the [source] into internal storage.
      * Saves the [photo] afterwords.
      * It is up to the caller to close the [source].
+     * Does create a thumbnail, IF [origUri] is specified.
      *
      * @return true, if everything worked
      */
     suspend fun safeCreatePhoto(
         context: Context,
         photo: Photo,
-        source: InputStream?
+        source: InputStream?,
+        origUri: Uri? = null
     ): Boolean {
-        val encryptedDestination =
-            encryptedStorageManager.internalOpenEncryptedFileOutput(context, photo.internalFileName)
-
-        source ?: return false
-        encryptedDestination ?: return false
-
-        val fileLen = source.copyTo(encryptedDestination)
+        val fileLen = createPhotoFile(context, photo, source)
         var success = fileLen != -1L
 
         if (success) {
             photo.size = fileLen
 
-            createThumbnail(context, photo, source)
+            if (origUri != null) {
+                createThumbnail(context, photo, origUri)
+            }
 
             val photoId = insert(photo)
             success = photoId != -1L
         }
 
-        encryptedDestination.lazyClose()
-
         return success
     }
 
-    private fun createThumbnail(
-        context: Context,
-        photo: Photo,
-        fullSizeInputStream: InputStream
-    ) {
+    fun createPhotoFile(context: Context, photo: Photo, source: InputStream?): Long {
+        val encryptedDestination =
+            encryptedStorageManager.internalOpenEncryptedFileOutput(context, photo.internalFileName)
+
+        source ?: return -1L
+        encryptedDestination ?: return -1L
+
+        val fileLen = source.copyTo(encryptedDestination)
+        encryptedDestination.lazyClose()
+
+        return fileLen
+    }
+
+    private fun createThumbnail(context: Context, photo: Photo, sourceUri: Uri) =
+        internalCreateThumbnail(context, photo, sourceUri)
+
+    fun createThumbnail(context: Context, photo: Photo, bytes: ByteArray) =
+        internalCreateThumbnail(context, photo, bytes)
+
+    private fun internalCreateThumbnail(context: Context, photo: Photo, obj: Any) {
         val thumbnail = Glide.with(context)
             .asBitmap()
-            .load(fullSizeInputStream)
+            .load(obj)
             .centerCrop()
             .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
             .get()
@@ -180,6 +191,10 @@ class PhotoRepository @Inject constructor(
         ).use {
             thumbnail.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
+    }
+
+    private fun createVideoPreview() {
+        TODO()
     }
 
     // endregion
@@ -246,15 +261,6 @@ class PhotoRepository @Inject constructor(
         ) && encryptedStorageManager.internalDeleteFile(
             context,
             Photo.internalThumbnailFileName(uuid)
-        ))
-
-    fun deleteTempPhotoCaches(context: Context, photo: Photo): Boolean =
-        (encryptedStorageManager.internalDeleteFile(
-            context,
-            photo.internalCachedFileName
-        ) && encryptedStorageManager.internalDeleteFile(
-            context,
-            photo.internalCachedThumbnailFileName
         ))
 
 

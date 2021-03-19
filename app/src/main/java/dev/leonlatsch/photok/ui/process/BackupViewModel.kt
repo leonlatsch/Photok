@@ -86,7 +86,15 @@ class BackupViewModel @Inject constructor(
 
     private fun writePhotoToZipEntry(photo: Photo): Boolean {
         photoRepository.sync(app, photo)
-        return writeZipEntry(photo.internalFileName, photo.stream)
+        photoRepository.syncThumbnail(app, photo)
+
+        val fileSuccess = writeZipEntry(photo.internalFileName, photo.stream)
+        val thumbnailSuccess = writeZipEntry(photo.internalThumbnailFileName, photo.thumbnailStream)
+
+        photoRepository.deSync(photo)
+        photoRepository.deSyncThumbnail(photo)
+
+        return fileSuccess && thumbnailSuccess
     }
 
     private fun writeZipEntry(fileName: String, inputStream: InputStream?): Boolean {

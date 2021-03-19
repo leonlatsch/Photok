@@ -20,6 +20,7 @@ import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -39,7 +40,8 @@ import javax.inject.Inject
 class RestoreBackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val encryptionManager: EncryptionManager
+    private val encryptionManager: EncryptionManager,
+    private val encryptedStorageManager: EncryptedStorageManager
 ) : BaseProcessViewModel<Photo>(app) {
 
     private var zipInputStream: ZipInputStream? = null
@@ -51,42 +53,70 @@ class RestoreBackupViewModel @Inject constructor(
 
     override suspend fun preProcess() {
         createStream()
-        currentEntry = zipInputStream?.nextEntry
+        zipInputStream ?: cancel()
+        nextEntry()
         super.preProcess()
     }
 
     override suspend fun processItem(item: Photo) {
-        zipInputStream ?: return
+        currentEntry ?: return
+        skipIfMetaEntry()
+        currentEntry ?: return
+
+        copyEntryToInternalStorage()
+
+        nextEntry()
+        currentEntry ?: return
+
+        copyEntryToInternalStorage()
+
+        nextEntry()
+    }
+
+    private fun skipIfMetaEntry() {
         currentEntry ?: return
         if (currentEntry!!.name == BackupMetaData.FILE_NAME) {
-            currentEntry = zipInputStream?.nextEntry
-            currentEntry ?: return
+            nextEntry()
         }
+    }
 
-        val metaPhoto = findPhotoByFilename(currentEntry!!.name)
-        metaPhoto ?: return
-
-        val newPhoto = Photo(
-            metaPhoto.fileName,
-            System.currentTimeMillis(),
-            metaPhoto.type,
-            metaPhoto.size
-        )
-
-        val encryptedInputStream =
+    private fun copyEntryToInternalStorage() {
+        val zipEntryInputStream =
             encryptionManager.createCipherInputStream(zipInputStream!!, origPassword)
+        val encryptedOutputStream =
+            encryptedStorageManager.internalOpenEncryptedFileOutput(app, currentEntry!!.name)
 
-        photoRepository.safeCreatePhoto(app, newPhoto, encryptedInputStream)
+        zipEntryInputStream ?: return
+        encryptedOutputStream ?: return
 
-        currentEntry = zipInputStream?.nextEntry
+        zipEntryInputStream.copyTo(encryptedOutputStream)
+        encryptedOutputStream.lazyClose()
+    }
+
+    private suspend fun insertMeta() {
+        metaData.photos.forEach {
+            val newPhoto = Photo(
+                it.fileName,
+                System.currentTimeMillis(),
+                it.type,
+                it.size,
+                it.uuid
+            )
+            photoRepository.insert(newPhoto)
+        }
     }
 
     override suspend fun postProcess() {
         zipInputStream?.lazyClose()
+        insertMeta()
         super.postProcess()
     }
 
-    private fun findPhotoByFilename(fileName: String): Photo? {
+    private fun nextEntry() {
+        currentEntry = zipInputStream?.nextEntry
+    }
+
+    private fun findPhoto(fileName: String): Photo? {
         items.forEach {
             if (it.internalFileName == fileName) {
                 return it

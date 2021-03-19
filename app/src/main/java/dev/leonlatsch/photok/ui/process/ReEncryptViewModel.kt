@@ -56,24 +56,24 @@ class ReEncryptViewModel @Inject constructor(
         photoRepository.sync(app, item)
         photoRepository.syncThumbnail(app, item)
 
-        val cachedStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
+        val tmpStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
             app,
-            item.internalCachedFileName,
+            item.internalTmpFileName,
             newPassword
         )
-        val cachedThumbnailStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
+        val tmpThumbnailStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
             app,
-            item.internalCachedThumbnailFileName,
+            item.internalTmpThumbnailFileName,
             newPassword
         )
 
-        if (cachedStream == null || cachedThumbnailStream == null) {
+        if (tmpStream == null || tmpThumbnailStream == null) {
             failuresOccurred = true
             return
         }
 
-        val cacheWrote = item.stream?.copyTo(cachedStream)
-        val thumbnailCacheWrote = item.thumbnailStream?.copyTo(cachedThumbnailStream)
+        val cacheWrote = item.stream?.copyTo(tmpStream)
+        val thumbnailCacheWrote = item.thumbnailStream?.copyTo(tmpThumbnailStream)
 
         if (cacheWrote == -1L && thumbnailCacheWrote == -1L) {
             failuresOccurred = true
@@ -83,20 +83,20 @@ class ReEncryptViewModel @Inject constructor(
         photoRepository.deSync(item)
         photoRepository.deSyncThumbnail(item)
 
-        cachedStream.lazyClose()
-        cachedThumbnailStream.lazyClose()
+        tmpStream.lazyClose()
+        tmpThumbnailStream.lazyClose()
 
         photoRepository.deleteInternalPhotoData(app, item.uuid)
 
         encryptedStorageManager.internalRenameFile(
             app,
-            item.internalCachedFileName,
+            item.internalTmpFileName,
             item.internalFileName
         )
         encryptedStorageManager.internalRenameFile(
             app,
-            item.internalCachedThumbnailFileName,
-            item.internalCachedThumbnailFileName
+            item.internalTmpThumbnailFileName,
+            item.internalTmpThumbnailFileName
         )
     }
 
