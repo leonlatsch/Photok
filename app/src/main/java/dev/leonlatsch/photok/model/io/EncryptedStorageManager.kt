@@ -141,32 +141,6 @@ class EncryptedStorageManager @Inject constructor(
 
     // endregion
 
-    /**
-     * Write a [InputStream] to a [OutputStream] with a buffer.
-     *
-     * @return then copied length or -1 if errors occurred
-     */
-    fun writeBuffered(inputStream: InputStream, outputStream: OutputStream): Long {
-        val buffer = ByteArray(BUFFER_SIZE)
-        var bufferedLen: Int
-        var totalLen = -1L
-
-        return try {
-            bufferedLen = inputStream.read(buffer)
-            while (bufferedLen != -1) {
-                totalLen += bufferedLen
-
-                outputStream.write(buffer, 0, bufferedLen)
-                bufferedLen = inputStream.read(buffer)
-            }
-
-            totalLen
-        } catch (e: IOException) {
-            Timber.d("Error copying streams: $e")
-            -1L
-        }
-    }
-
     companion object {
         private const val BUFFER_SIZE = 1024
         private const val INTERNAL_FILE_MODE = Context.MODE_PRIVATE

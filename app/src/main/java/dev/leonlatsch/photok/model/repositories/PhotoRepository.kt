@@ -120,12 +120,12 @@ class PhotoRepository @Inject constructor(
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(context.contentResolver, externalUri)
         val photo = Photo(fileName, System.currentTimeMillis(), type)
-        TODO("createThumbnail")
+
         return safeCreatePhoto(context, photo, inputStream)
     }
 
     /**
-     * Writes and encrypts the [inputStream] into internal storage.
+     * Writes and encrypts the [source] into internal storage.
      * Saves the [photo] afterwords.
      *
      * @return true, if everything worked
@@ -133,23 +133,29 @@ class PhotoRepository @Inject constructor(
     suspend fun safeCreatePhoto(
         context: Context,
         photo: Photo,
-        inputStream: InputStream?
+        source: InputStream?,
+        password: String? = null
     ): Boolean {
-        val outputStream =
+        val encryptedDestination =
             encryptedStorageManager.internalOpenEncryptedFileOutput(context, photo.internalFileName)
 
-        inputStream ?: return false
-        outputStream ?: return false
+        source ?: return false
+        encryptedDestination ?: return false
 
-        val fileLen = encryptedStorageManager.writeBuffered(inputStream, outputStream)
+        val fileLen = source.copyTo(encryptedDestination)
         var success = fileLen != -1L
 
         if (success) {
             photo.size = fileLen
 
+            createThumbnail(context, photo, source, password)
+
             val photoId = insert(photo)
             success = photoId != -1L
         }
+
+        source.close()
+        encryptedDestination.close()
 
         return success
     }
@@ -157,12 +163,12 @@ class PhotoRepository @Inject constructor(
     private fun createThumbnail(
         context: Context,
         photo: Photo,
-        extFileUri: Uri,
+        fullSizeInputStream: InputStream,
         password: String? = null
     ) {
         val thumbnail = Glide.with(context)
             .asBitmap()
-            .load(extFileUri)
+            .load(fullSizeInputStream)
             .centerCrop()
             .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
             .get()
@@ -275,7 +281,7 @@ class PhotoRepository @Inject constructor(
             )
             outputStream ?: return false
 
-            val wrote = encryptedStorageManager.writeBuffered(inputStream, outputStream)
+            val wrote = inputStream.copyTo(outputStream)
 
             wrote != -1L
         } catch (e: IOException) {
