@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.ui.backup
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,7 +72,10 @@ class RestoreBackupDialogFragment(
                     binding.restoreButton.hide()
                 }
                 RestoreState.FINISHED -> {
-                    Dialogs.showLongToast(requireContext(), "TODO")
+                    Dialogs.showLongToast(requireContext(), "FINISHED")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        dismiss()
+                    }, 2000)
                 }
             }
         }

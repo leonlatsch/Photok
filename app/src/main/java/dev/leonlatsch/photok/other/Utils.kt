@@ -85,7 +85,8 @@ fun openUrl(context: Context, url: String?) {
  * Reset all orientation exif tags for creating thumbnails
  * and displaying photos with exif data properly.
  */
-fun normalizeExifOrientation(bytesWithExif: ByteArray): Bitmap {
+fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
+    bytesWithExif ?: return null
     val bitmap = BitmapFactory.decodeByteArray(bytesWithExif, 0, bytesWithExif.size)
     val orientation = ExifInterface(ByteArrayInputStream(bytesWithExif)).getAttributeInt(
         ExifInterface.TAG_ORIENTATION,

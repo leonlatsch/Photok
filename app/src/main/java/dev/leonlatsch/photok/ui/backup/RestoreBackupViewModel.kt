@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.BufferedInputStream
 import java.io.IOException
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -149,6 +150,7 @@ class RestoreBackupViewModel @Inject constructor(
             var ze = stream.nextEntry
             while (ze != null) {
                 if (ze.name == BackupMetaData.FILE_NAME) {
+                    ze = stream.nextEntry
                     continue
                 }
 
@@ -160,7 +162,11 @@ class RestoreBackupViewModel @Inject constructor(
                 encryptedZipEntryStream ?: continue
                 encryptedOutputStream ?: continue
 
-                encryptedZipEntryStream.copyTo(encryptedOutputStream)
+                try {
+                    encryptedZipEntryStream.copyTo(encryptedOutputStream)
+                } catch (e: IOException) {
+                    Timber.d(e)
+                }
                 encryptedOutputStream.lazyClose()
 
                 ze = stream.nextEntry
@@ -177,6 +183,8 @@ class RestoreBackupViewModel @Inject constructor(
 
                 photoRepository.insert(newPhoto)
             }
+
+            restoreState = RestoreState.FINISHED
         }
     }
 
@@ -188,7 +196,7 @@ class RestoreBackupViewModel @Inject constructor(
             null
         }
         return if (inputStream != null) {
-            ZipInputStream(inputStream)
+            ZipInputStream(BufferedInputStream(inputStream))
         } else {
             null
         }

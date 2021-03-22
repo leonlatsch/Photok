@@ -92,6 +92,8 @@ class PhotoViewHolder(
                 normalizeExifOrientation(photoBytes)
             }
 
+            bitmap ?: return@launch
+
             onMain {
                 imageView.setImageBitmap(bitmap)
             }
