@@ -157,7 +157,7 @@ class RestoreBackupViewModel @Inject constructor(
                 val encryptedZipInput =
                     encryptionManager.createCipherInputStream(stream, origPassword)
                 val internalOutputStream =
-                    encryptedStorageManager.internalOpenFileOutput(app, ".cache~${ze.name}")
+                    encryptedStorageManager.internalOpenEncryptedFileOutput(app, ze.name)
 
                 if (encryptedZipInput == null || internalOutputStream == null) {
                     ze = stream.nextEntry
