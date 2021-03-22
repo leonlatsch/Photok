@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_VIDEOS
 import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
+import dev.leonlatsch.photok.ui.backup.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.Chooser
 import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
@@ -75,7 +75,7 @@ class ImportMenuDialog :
 
     /**
      * Start restoring a backup.
-     * Requests permission and shows [ValidateBackupDialogFragment].
+     * Requests permission and shows [RestoreBackupDialogFragment].
      */
     @AfterPermissionGranted(REQ_PERM_RESTORE)
     fun startSelectBackup() = Chooser.Builder()
@@ -108,7 +108,7 @@ class ImportMenuDialog :
 
     private fun dispatchBackupImportRequest(data: Intent?) = data?.let {
         it.data?.let { uri ->
-            ValidateBackupDialogFragment(uri).show(requireActivity().supportFragmentManager)
+            RestoreBackupDialogFragment(uri).show(requireActivity().supportFragmentManager)
         }
     }
 

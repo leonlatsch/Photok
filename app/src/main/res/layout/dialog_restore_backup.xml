@@ -22,11 +22,11 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment" />
+            type="dev.leonlatsch.photok.ui.backup.RestoreBackupDialogFragment" />
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.backup.ValidateBackupViewModel" />
+            type="dev.leonlatsch.photok.ui.backup.RestoreBackupViewModel" />
 
     </data>
 

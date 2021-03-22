@@ -23,10 +23,15 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.other.launchIO
+import dev.leonlatsch.photok.other.lazyClose
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -40,8 +45,11 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @HiltViewModel
-class ValidateBackupViewModel @Inject constructor(
-    private val app: Application
+class RestoreBackupViewModel @Inject constructor(
+    private val app: Application,
+    private val photoRepository: PhotoRepository,
+    private val encryptionManager: EncryptionManager,
+    private val encryptedStorageManager: EncryptedStorageManager
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -78,15 +86,18 @@ class ValidateBackupViewModel @Inject constructor(
             notifyChange(BR.backupCompatible, value)
         }
 
+    private lateinit var fileUri: Uri
+
     /**
      * Load and Validate a backup file. Fill [metaData].
      */
-    fun loadAndValidateBackup(uri: Uri) = viewModelScope.launch(Dispatchers.IO) {
+    fun loadAndValidateBackup(uri: Uri) = viewModelScope.launchIO {
         var photoFiles = 0
+        fileUri = uri
 
         // Load backup
-        createStream(uri)?.use { stream ->
-            zipFileName = getFileName(app.contentResolver, uri)
+        createStream(fileUri)?.use { stream ->
+            zipFileName = getFileName(app.contentResolver, fileUri)
 
             var ze = stream.nextEntry
             while (ze != null) {
@@ -115,7 +126,7 @@ class ValidateBackupViewModel @Inject constructor(
 
     }
 
-    private fun validateBackupVersion() {
+    private fun validateBackupVersion() = viewModelScope.launch {
         metaData?.let {
             val version =
                 if (it.backupVersion == 0) { // Old method with string "version", seen as version 1
@@ -127,6 +138,45 @@ class ValidateBackupViewModel @Inject constructor(
             backupCompatible = version == BackupMetaData.CURRENT_BACKUP_VERSION
         } ?: run {
             backupCompatible = false
+        }
+    }
+
+    fun restoreBackup(origPassword: String) = viewModelScope.launchIO {
+        restoreState = RestoreState.RESTORING
+
+        createStream(fileUri)?.use { stream ->
+
+            var ze = stream.nextEntry
+            while (ze != null) {
+                if (ze.name == BackupMetaData.FILE_NAME) {
+                    continue
+                }
+
+                val encryptedZipEntryStream =
+                    encryptionManager.createCipherInputStream(stream, origPassword)
+                val encryptedOutputStream =
+                    encryptedStorageManager.internalOpenEncryptedFileOutput(app, ze.name)
+
+                encryptedZipEntryStream ?: continue
+                encryptedOutputStream ?: continue
+
+                encryptedZipEntryStream.copyTo(encryptedOutputStream)
+                encryptedOutputStream.lazyClose()
+
+                ze = stream.nextEntry
+            }
+
+            metaData?.photos?.forEach {
+                val newPhoto = Photo(
+                    it.fileName,
+                    System.currentTimeMillis(),
+                    it.type,
+                    it.size,
+                    it.uuid
+                )
+
+                photoRepository.insert(newPhoto)
+            }
         }
     }
 

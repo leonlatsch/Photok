@@ -27,9 +27,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.BaseApplication
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -150,3 +148,8 @@ fun InputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
 fun OutputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
     close()
 }
+
+fun CoroutineScope.launchIO(
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+): Job = launch(Dispatchers.IO, start, block)
