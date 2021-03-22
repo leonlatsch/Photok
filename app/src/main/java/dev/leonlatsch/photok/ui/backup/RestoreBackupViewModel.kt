@@ -26,13 +26,9 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.empty
-import dev.leonlatsch.photok.other.getFileName
-import dev.leonlatsch.photok.other.launchIO
-import dev.leonlatsch.photok.other.lazyClose
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.IOException
@@ -74,20 +70,21 @@ class RestoreBackupViewModel @Inject constructor(
      * File name of the zip.
      */
     @get:Bindable
-    var zipFileName: String? = String.empty
+    var zipFileName: String = String.empty
         set(value) {
             field = value
             notifyChange(BR.zipFileName, value)
         }
 
     @get:Bindable
-    var backupCompatible: Boolean = false
+    var backupSize: Long = 0
         set(value) {
             field = value
-            notifyChange(BR.backupCompatible, value)
+            notifyChange(BR.backupSize, value)
         }
 
     private lateinit var fileUri: Uri
+    private var backupVersion = -1
 
     /**
      * Load and Validate a backup file. Fill [metaData].
@@ -98,7 +95,7 @@ class RestoreBackupViewModel @Inject constructor(
 
         // Load backup
         createStream(fileUri)?.use { stream ->
-            zipFileName = getFileName(app.contentResolver, fileUri)
+            zipFileName = getFileName(app.contentResolver, fileUri) ?: String.empty
 
             var ze = stream.nextEntry
             while (ze != null) {
@@ -106,7 +103,8 @@ class RestoreBackupViewModel @Inject constructor(
                     val bytes = stream.readBytes()
                     val string = String(bytes)
                     metaData = Gson().fromJson(string, BackupMetaData::class.java)
-                    validateBackupVersion()
+                    backupVersion = getVersion()
+
 
                 } else if (ze.name.endsWith(".photok")) {
                     photoFiles++
@@ -117,7 +115,10 @@ class RestoreBackupViewModel @Inject constructor(
         }
 
         // Validate backup
-        if (metaData?.photos?.size == photoFiles) {
+        if (metaData?.photos?.size == photoFiles
+            && BackupMetaData.VALID_BACKUP_VERSIONS.contains(backupVersion)
+        ) {
+            backupSize = getFileSize(app.contentResolver, fileUri)
             restoreState = RestoreState.FILE_VALID
         }
 
@@ -127,62 +128,73 @@ class RestoreBackupViewModel @Inject constructor(
 
     }
 
-    private fun validateBackupVersion() = viewModelScope.launch {
+    private fun getVersion(): Int {
         metaData?.let {
-            val version =
-                if (it.backupVersion == 0) { // Old method with string "version", seen as version 1
-                    1
-                } else {
-                    it.backupVersion
-                }
-
-            backupCompatible = version == BackupMetaData.CURRENT_BACKUP_VERSION
-        } ?: run {
-            backupCompatible = false
+            return if (it.backupVersion == 0) { // Treat legacy version 0 as 1
+                1
+            } else {
+                it.backupVersion
+            }
         }
+
+        return -1
     }
 
+    /**
+     * Restore the validated backup with the original password.
+     */
     fun restoreBackup(origPassword: String) = viewModelScope.launchIO {
         restoreState = RestoreState.RESTORING
 
-        createStream(fileUri)?.use { stream ->
-
-            var ze = stream.nextEntry
-            while (ze != null) {
-                if (ze.name == BackupMetaData.FILE_NAME) {
-                    ze = stream.nextEntry
-                    continue
-                }
-
-                val encryptedZipInput =
-                    encryptionManager.createCipherInputStream(stream, origPassword)
-                val internalOutputStream =
-                    encryptedStorageManager.internalOpenEncryptedFileOutput(app, ze.name)
-
-                if (encryptedZipInput == null || internalOutputStream == null) {
-                    ze = stream.nextEntry
-                    continue
-                }
-
-                encryptedZipInput.copyTo(internalOutputStream)
-                internalOutputStream.lazyClose()
-
-                ze = stream.nextEntry
-            }
-
-            metaData?.photos?.forEach {
-                val newPhoto = Photo(
-                    it.fileName,
-                    System.currentTimeMillis(),
-                    it.type,
-                    it.size,
-                    it.uuid
-                )
-
-                photoRepository.insert(newPhoto)
+        createStream(fileUri)?.use {
+            when (backupVersion) {
+                1 -> restoreVersion1(it, origPassword)
+                2 -> restoreVersion2(it, origPassword)
             }
 
             restoreState = RestoreState.FINISHED
+        }
+    }
+
+    private suspend fun restoreVersion1(stream: ZipInputStream, origPassword: String) {
+        TODO()
+    }
+
+    private suspend fun restoreVersion2(stream: ZipInputStream, origPassword: String) {
+        var ze = stream.nextEntry
+
+        while (ze != null) {
+            if (ze.name == BackupMetaData.FILE_NAME) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            val encryptedZipInput =
+                encryptionManager.createCipherInputStream(stream, origPassword)
+            val internalOutputStream =
+                encryptedStorageManager.internalOpenEncryptedFileOutput(app, ze.name)
+
+            if (encryptedZipInput == null || internalOutputStream == null) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            encryptedZipInput.copyTo(internalOutputStream)
+            internalOutputStream.lazyClose()
+
+            ze = stream.nextEntry
+        }
+
+        metaData?.photos?.forEach {
+            val newPhoto = Photo(
+                it.fileName,
+                System.currentTimeMillis(),
+                it.type,
+                it.size,
+                it.uuid
+            )
+
+            photoRepository.insert(newPhoto)
         }
     }
 

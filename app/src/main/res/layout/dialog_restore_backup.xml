@@ -107,7 +107,7 @@
                 android:layout_row="2"
                 android:layout_column="0"
                 android:singleLine="true"
-                android:text="@string/backup_restore_details_compatible" />
+                android:text="Size:" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_row="2"
                 android:layout_column="1"
                 android:singleLine="true"
-                android:text="@{BindingConverters.INSTANCE.boolYesNoConverter(viewModel.backupCompatible), default=value}" />
+                android:text="@{BindingConverters.INSTANCE.formatByteSizeConverter(viewModel.backupSize), default=value}" />
         </GridLayout>
 
 
@@ -126,7 +126,6 @@
             android:minWidth="@dimen/wide_button_width"
             android:onClick="@{() -> context.onRestoreAndUnlock()}"
             android:text="@string/backup_restore_button"
-            android:enabled="@{viewModel.backupCompatible}"
             android:visibility="gone" />
 
 

@@ -18,8 +18,6 @@ package dev.leonlatsch.photok.ui.backup
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +26,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 /**
@@ -67,15 +64,15 @@ class RestoreBackupDialogFragment(
                     binding.restoreProgressIndicator.hide()
                 }
                 RestoreState.RESTORING -> {
+                    viewModel.zipFileName = getString(R.string.backup_restore_processing)
                     binding.restoreProgressIndicator.show()
                     binding.restoreDetails.hide()
                     binding.restoreButton.hide()
                 }
                 RestoreState.FINISHED -> {
-                    Dialogs.showLongToast(requireContext(), "FINISHED")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        dismiss()
-                    }, 2000)
+                    viewModel.zipFileName = getString(R.string.process_finished)
+                    binding.restoreProgressIndicator.hide()
+                    binding.restoreCloseButton.show()
                 }
             }
         }

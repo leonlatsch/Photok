@@ -52,6 +52,14 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     return null
 }
 
+fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
+    contentResolver.openFileDescriptor(uri, "r")?.use {
+        return it.statSize
+    }
+
+    return -1L
+}
+
 /**
  * Post a [operation] to the main looper.
  */
