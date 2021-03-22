@@ -322,6 +322,11 @@ class PhotoRepository @Inject constructor(
 
     }
 
+    fun syncRaw(context: Context, photo: Photo) {
+        val rawInput = context.openFileInput(photo.internalFileName)
+        photo.stream = rawInput
+    }
+
     /**
      * Closes and deletes the inputStream for a photo.
      */
@@ -341,6 +346,11 @@ class PhotoRepository @Inject constructor(
         ) ?: return
 
         photo.thumbnailStream = thumbnailInput
+    }
+
+    fun syncRawThumbnail(context: Context, photo: Photo) {
+        val rawThumbnailInput = context.openFileInput(photo.internalThumbnailFileName)
+        photo.thumbnailStream = rawThumbnailInput
     }
 
     /**
