@@ -96,7 +96,7 @@ class ReEncryptViewModel @Inject constructor(
         encryptedStorageManager.internalRenameFile(
             app,
             item.internalTmpThumbnailFileName,
-            item.internalTmpThumbnailFileName
+            item.internalThumbnailFileName
         )
     }
 
