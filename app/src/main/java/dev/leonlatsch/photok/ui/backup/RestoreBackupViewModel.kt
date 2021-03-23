@@ -94,10 +94,7 @@ class RestoreBackupViewModel @Inject constructor(
         var photoFiles = 0
         fileUri = uri
 
-        // Load backup
         createStream(fileUri)?.use { stream ->
-            zipFileName = getFileName(app.contentResolver, fileUri) ?: String.empty
-
             var ze = stream.nextEntry
             while (ze != null) {
                 if (ze.name == BackupMetaData.FILE_NAME) {
@@ -115,6 +112,8 @@ class RestoreBackupViewModel @Inject constructor(
             }
         }
 
+        zipFileName = getFileName(app.contentResolver, fileUri) ?: String.empty
+
         // Validate backup
         if (metaData?.photos?.size == photoFiles
             && BackupMetaData.VALID_BACKUP_VERSIONS.contains(backupVersion)
@@ -126,7 +125,6 @@ class RestoreBackupViewModel @Inject constructor(
         if (restoreState == RestoreState.INITIALIZE) {
             restoreState = RestoreState.FILE_INVALID
         }
-
     }
 
     private fun getVersion(): Int {

@@ -215,9 +215,11 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
     <string name="backup_restore_title">Backup wiederherstellen</string>
+    <string name="backup_restore_validating">Überprüfe Backup…</string>
     <string name="backup_restore_details_created_at">Erstellt am:</string>
     <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
     <string name="backup_restore_details_compatible">Kompatibel:</string>
+    <string name="backup_restore_details_size">Größe:</string>
     <string name="backup_restore_button">Entsperren und wiederherstellen</string>
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>

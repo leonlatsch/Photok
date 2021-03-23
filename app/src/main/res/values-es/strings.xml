@@ -215,9 +215,11 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
     <string name="backup_restore_title">Restaurar copia de seguridad</string>
+    <string name="backup_restore_validating">Validating backup…</string><!-- TODO: Translate -->
     <string name="backup_restore_details_created_at">Creado el:</string>
     <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_details_size">Size:</string> <!-- TODO: Translate -->
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>

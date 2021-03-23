@@ -213,10 +213,12 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
-    <string name="backup_restore_title">还原备份</string>
+    <string name="backup_restore_title">还原备份</string><!-- TODO: Translate -->
+    <string name="backup_restore_validating">Validating backup…</string>
     <string name="backup_restore_details_created_at">创建于:</string>
     <string name="backup_restore_details_photos_contained">包含的照片:</string>
     <string name="backup_restore_details_compatible">兼容性:</string>
+    <string name="backup_restore_details_size">Size:</string><!-- TODO: Translate -->
     <string name="backup_restore_button">解锁并还原</string>
     <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
     <string name="backup_restore_processing">还原备份中……</string>

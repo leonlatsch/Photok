@@ -77,6 +77,7 @@ class RestoreBackupDialogFragment(
             }
         }
 
+        viewModel.zipFileName = getString(R.string.backup_restore_validating)
         viewModel.loadAndValidateBackup(uri)
     }
 

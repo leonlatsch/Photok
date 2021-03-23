@@ -39,7 +39,7 @@
             style="@style/BigTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Import" />
+            android:text="@string/import_menu_title" />
 
 
         <LinearLayout
