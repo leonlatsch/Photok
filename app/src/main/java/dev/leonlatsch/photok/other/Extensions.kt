@@ -58,6 +58,8 @@ fun View.vanish() {
 val String.Companion.empty: String
     get() = ""
 
+fun String.remove(str: String): String = replace(str, String.empty)
+
 /**
  * Get the "application" as [BaseApplication] from any activity.
  */

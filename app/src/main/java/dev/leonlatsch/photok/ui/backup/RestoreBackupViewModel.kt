@@ -32,6 +32,7 @@ import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.IOException
+import java.util.*
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -161,6 +162,7 @@ class RestoreBackupViewModel @Inject constructor(
     }
 
     private suspend fun restoreVersion2(stream: ZipInputStream, origPassword: String) {
+        val newUUIDs = mutableMapOf<String, String>()
         var ze = stream.nextEntry
 
         while (ze != null) {
@@ -169,10 +171,17 @@ class RestoreBackupViewModel @Inject constructor(
                 continue
             }
 
+            val oldUUID = ze.name.remove(".photok").remove(".tn")
+            val newUUID = newUUIDs[oldUUID] ?: UUID.randomUUID().toString()
+            newUUIDs[oldUUID] = newUUID
+
             val encryptedZipInput =
                 encryptionManager.createCipherInputStream(stream, origPassword)
             val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(app, ze.name)
+                encryptedStorageManager.internalOpenEncryptedFileOutput(
+                    app,
+                    ze.name.replace(oldUUID, newUUID)
+                )
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry
@@ -186,15 +195,18 @@ class RestoreBackupViewModel @Inject constructor(
         }
 
         metaData?.photos?.forEach {
-            val newPhoto = Photo(
-                it.fileName,
-                System.currentTimeMillis(),
-                it.type,
-                it.size,
-                it.uuid
-            )
+            val uuid = newUUIDs[it.uuid]
+            if (uuid != null) {
+                val newPhoto = Photo(
+                    it.fileName,
+                    System.currentTimeMillis(),
+                    it.type,
+                    it.size,
+                    uuid
+                )
 
-            photoRepository.insert(newPhoto)
+                photoRepository.insert(newPhoto)
+            }
         }
     }
 
