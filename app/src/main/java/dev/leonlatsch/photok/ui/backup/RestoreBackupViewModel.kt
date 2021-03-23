@@ -158,7 +158,50 @@ class RestoreBackupViewModel @Inject constructor(
     }
 
     private suspend fun restoreVersion1(stream: ZipInputStream, origPassword: String) {
-        TODO()
+        var ze = stream.nextEntry
+
+        while (ze != null) {
+            val optPhoto = metaData?.photos?.stream()?.filter {
+                it.internalFileName == ze.name
+            }?.findFirst()!!
+
+            if (!optPhoto.isPresent) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            val oldPhoto = optPhoto.get()
+
+            val newPhoto = Photo(
+                oldPhoto.fileName,
+                System.currentTimeMillis(),
+                oldPhoto.type,
+                oldPhoto.size,
+                UUID.randomUUID().toString()
+            )
+
+            val encryptedZipInput =
+                encryptionManager.createCipherInputStream(stream, origPassword)
+            val internalOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
+                app,
+                newPhoto.internalFileName
+            )
+
+            if (encryptedZipInput == null || internalOutputStream == null) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            // Read whole file here, because there are no thumbnails in a v1 backup.
+            val bytes = encryptedZipInput.readBytes()
+            encryptedZipInput.copyTo(internalOutputStream)
+            internalOutputStream.lazyClose()
+
+            photoRepository.createThumbnail(app, newPhoto, bytes)
+            photoRepository.insert(newPhoto)
+
+            ze = stream.nextEntry
+        }
     }
 
     private suspend fun restoreVersion2(stream: ZipInputStream, origPassword: String) {
