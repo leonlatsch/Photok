@@ -4,6 +4,7 @@
 - Feature: Password attempts
 - New features get introduces with a news dialog
 - UI design changes
+- Performance improvements
 
 ### 1.2.4
 - Fix crash when creating thumbnail fails

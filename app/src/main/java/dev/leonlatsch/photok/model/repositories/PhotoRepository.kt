@@ -171,36 +171,25 @@ class PhotoRepository @Inject constructor(
         return fileLen
     }
 
-    private fun createThumbnail(context: Context, photo: Photo, sourceUri: Uri) {
+    private fun createThumbnail(context: Context, photo: Photo, sourceUri: Uri) =
+        internalCreateThumbnail(context, photo, sourceUri)
+
+    fun createThumbnail(context: Context, photo: Photo, bytes: ByteArray) =
+        internalCreateThumbnail(context, photo, bytes)
+
+    private fun internalCreateThumbnail(context: Context, photo: Photo, obj: Any?) {
         val thumbnail = Glide.with(context)
             .asBitmap()
-            .load(sourceUri)
+            .load(obj)
             .centerCrop()
             .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
             .get()
 
-        storeThumbnail(context, photo, thumbnail)
-    }
-
-
-    fun createThumbnail(context: Context, photo: Photo, bytes: ByteArray) {
-
-        val thumbnail = Glide.with(context)
-            .asBitmap()
-            .load(bytes)
-            .centerCrop()
-            .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-            .get()
-
-        storeThumbnail(context, photo, thumbnail)
-    }
-
-    private fun storeThumbnail(context: Context, photo: Photo, thumbnail: Bitmap?) {
         encryptedStorageManager.internalOpenEncryptedFileOutput(
             context,
             photo.internalThumbnailFileName
         ).use {
-            thumbnail?.compress(Bitmap.CompressFormat.PNG, 100, it)
+            thumbnail?.compress(Bitmap.CompressFormat.JPEG, 100, it)
         }
     }
 

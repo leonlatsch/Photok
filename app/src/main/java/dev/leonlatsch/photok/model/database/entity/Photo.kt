@@ -56,12 +56,6 @@ data class Photo(
     val internalTmpThumbnailFileName: String
         get() = ".tmp~$internalThumbnailFileName"
 
-    val isSynced: Boolean
-        get() = stream != null
-
-    val isThumbnailSynced: Boolean
-        get() = thumbnailStream != null
-
     companion object {
         /**
          * Get FileName for internal files and backup files.
