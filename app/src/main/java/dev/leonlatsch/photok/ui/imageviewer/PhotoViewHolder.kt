@@ -20,6 +20,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ortiz.touchview.TouchImageView
@@ -51,7 +53,7 @@ class PhotoViewHolder(
     private val photoRepository: PhotoRepository,
     private val onZoomed: (zoomed: Boolean) -> Unit,
     private val onClick: () -> Unit,
-    private val onPlayVideo: (videoBytes: ByteArray) -> Unit
+    private val navController: NavController
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
@@ -74,22 +76,27 @@ class PhotoViewHolder(
     private fun loadPhoto() {
         GlobalScope.launch(Dispatchers.IO) {
             val photo = photoRepository.get(photoId)
-            val photoBytes = photoRepository.loadPhoto(photo)
-            if (photoBytes == null) {
+
+            val data = if (photo.type.isVideo) {
+                photoRepository.loadVideoPreview(photo)
+            } else {
+                photoRepository.loadPhoto(photo)
+            }
+            if (data == null) {
                 Timber.d("Error loading photo data for photo: $photoId")
                 return@launch
             }
 
-            initUiElements(photo, photoBytes)
+            initUiElements(photo)
 
             val bitmap = if (photo.type.isVideo) {
                 Glide.with(context)
                     .asBitmap()
-                    .load(photoBytes)
+                    .load(data)
                     .submit()
                     .get()
             } else {
-                normalizeExifOrientation(photoBytes)
+                normalizeExifOrientation(data)
             }
 
             bitmap ?: return@launch
@@ -101,7 +108,7 @@ class PhotoViewHolder(
         }
     }
 
-    private fun initUiElements(photo: Photo, bytes: ByteArray) = onMain {
+    private fun initUiElements(photo: Photo) = onMain {
         imageView.setOnClickListener {
             onClick()
         }
@@ -110,7 +117,7 @@ class PhotoViewHolder(
             imageView.isZoomEnabled = false
             playButton.show()
             playButton.setOnClickListener {
-                onPlayVideo(bytes)
+                openVideoPlayer(photo)
             }
         } else {
             playButton.hide()
@@ -121,5 +128,13 @@ class PhotoViewHolder(
                 }
             })
         }
+    }
+
+    private fun openVideoPlayer(photo: Photo) {
+        val args = bundleOf(INTENT_PHOTO_ID to photo.id)
+        navController.navigate(
+            R.id.action_imageViewerFragment_to_videoPlayerFragment,
+            args
+        )
     }
 }

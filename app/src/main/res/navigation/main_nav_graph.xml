@@ -153,6 +153,9 @@
         android:id="@+id/videoPlayerFragment"
         android:name="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment"
         android:label="VideoPlayerFragment">
-        <argument android:name="video_bytes" />
+        <argument
+            android:name="video"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 </navigation>

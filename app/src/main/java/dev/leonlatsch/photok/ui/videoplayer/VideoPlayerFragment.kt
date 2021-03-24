@@ -19,10 +19,9 @@ package dev.leonlatsch.photok.ui.videoplayer
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.google.android.exoplayer2.SimpleExoPlayer
-import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
+import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -39,11 +38,19 @@ class VideoPlayerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        useViewModel(viewModel)
-
-        viewModel.addOnPropertyChange<SimpleExoPlayer>(BR.player) {
-            binding.vieoPlayerView.player = it
+        binding.videoPlayerToolbar.setNavigationOnClickListener {
+            viewModel.closePlayer()
+            requireActivity().onBackPressed()
         }
+
+
+        val photoId = arguments?.get(INTENT_PHOTO_ID)
+        if (photoId == null || photoId !is Int) {
+            requireActivity().onBackPressed()
+            return
+        }
+
+        viewModel.setupPlayer(photoId)
     }
 
     override fun bind(binding: FragmentVideoPlayerBinding) {

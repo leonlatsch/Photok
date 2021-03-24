@@ -13,22 +13,41 @@
   ~   See the License for the specific language governing permissions and
   ~   limitations under the License.
   -->
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="context"
             type="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/vieoPlayerView"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/viewPhotoAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@android:color/black">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/videoPlayerToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/darkToolbarStyle"
+                app:navigationIcon="@drawable/ic_back">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <SurfaceView
+            android:id="@+id/videoSurface"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

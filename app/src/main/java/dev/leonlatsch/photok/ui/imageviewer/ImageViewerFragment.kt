@@ -24,7 +24,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -73,17 +72,12 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
         })
 
         viewModel.preloadData { ids ->
-            val photoPagerAdapter = PhotoPagerAdapter(ids, viewModel.photoRepository, {
-                binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
-            }, { // ON CLICK
-                toggleSystemUI()
-            }, { // ON PLAY VIDEO
-                val args = bundleOf(INTENT_VIDEO_BYTES to it)
-                findNavController().navigate(
-                    R.id.action_imageViewerFragment_to_videoPlayerFragment,
-                    args
-                )
-            })
+            val photoPagerAdapter =
+                PhotoPagerAdapter(ids, viewModel.photoRepository, findNavController(), {
+                    binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+                }, { // ON CLICK
+                    toggleSystemUI()
+                })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
             val photoId = arguments?.getInt(INTENT_PHOTO_ID)

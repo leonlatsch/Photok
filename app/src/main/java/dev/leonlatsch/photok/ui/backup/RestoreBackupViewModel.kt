@@ -29,6 +29,8 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.IOException
@@ -90,7 +92,7 @@ class RestoreBackupViewModel @Inject constructor(
     /**
      * Load and Validate a backup file. Fill [metaData].
      */
-    fun loadAndValidateBackup(uri: Uri) = viewModelScope.launchIO {
+    fun loadAndValidateBackup(uri: Uri) = viewModelScope.launch(Dispatchers.IO) {
         var photoFiles = 0
         fileUri = uri
 
@@ -142,7 +144,7 @@ class RestoreBackupViewModel @Inject constructor(
     /**
      * Restore the validated backup with the original password.
      */
-    fun restoreBackup(origPassword: String) = viewModelScope.launchIO {
+    fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
         createStream(fileUri)?.use {
@@ -210,7 +212,7 @@ class RestoreBackupViewModel @Inject constructor(
                 continue
             }
 
-            val oldUUID = ze.name.remove(".photok").remove(".tn")
+            val oldUUID = ze.name.remove(".photok").remove(".tn").remove(".vp")
             val newUUID = newUUIDs[oldUUID] ?: UUID.randomUUID().toString()
             newUUIDs[oldUUID] = newUUID
 
