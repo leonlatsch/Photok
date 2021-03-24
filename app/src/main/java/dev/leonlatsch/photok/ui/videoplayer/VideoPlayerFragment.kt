@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.videoplayer
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
@@ -30,6 +31,8 @@ import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
  * @since 2.0.0
  * @author Leon Latsch
  */
+
+@AndroidEntryPoint
 class VideoPlayerFragment :
     BindableFragment<FragmentVideoPlayerBinding>(R.layout.fragment_video_player) {
 

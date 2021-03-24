@@ -36,7 +36,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ReEncryptViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config,
     private val encryptionManager: EncryptionManager,
