@@ -17,10 +17,8 @@
 package dev.leonlatsch.photok.model.database.entity
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
-import java.io.InputStream
 import java.util.*
 
 /**
@@ -38,11 +36,6 @@ data class Photo(
     @Expose val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 ) {
-    @Ignore
-    var stream: InputStream? = null
-
-    @Ignore
-    var thumbnailStream: InputStream? = null
 
     val internalFileName: String
         get() = internalFileName(uuid)
@@ -50,11 +43,8 @@ data class Photo(
     val internalThumbnailFileName: String
         get() = internalThumbnailFileName(uuid)
 
-    val internalTmpFileName: String
-        get() = ".tmp~$internalFileName"
-
-    val internalTmpThumbnailFileName: String
-        get() = ".tmp~$internalThumbnailFileName"
+    val internalVideoPreviewFileName: String
+        get() = internalVideoPreviewFileName(uuid)
 
     companion object {
         /**
@@ -68,5 +58,7 @@ data class Photo(
          * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.tn
          */
         fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
+
+        fun internalVideoPreviewFileName(uuid: String) = "${uuid}.photok.vp"
     }
 }

@@ -31,12 +31,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ImportViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Uri>(app) {
 
     override suspend fun processItem(item: Uri) {
-        val success = photoRepository.safeImportPhoto(app, item)
+        val success = photoRepository.safeImportPhoto(item)
         if (!success) {
             failuresOccurred = true
         }

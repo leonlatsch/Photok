@@ -36,7 +36,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ImageViewerViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {
 
@@ -79,7 +79,7 @@ class ImageViewerViewModel @Inject constructor(
             currentPhoto ?: return@launch
             currentPhoto!!.id ?: return@launch
 
-            val success = photoRepository.safeDeletePhoto(app, currentPhoto!!)
+            val success = photoRepository.safeDeletePhoto(currentPhoto!!)
             if (success) onSuccess() else onError()
         }
 
@@ -94,7 +94,7 @@ class ImageViewerViewModel @Inject constructor(
             currentPhoto ?: return@launch
             currentPhoto!!.id ?: return@launch
 
-            val success = photoRepository.exportPhoto(app, currentPhoto!!)
+            val success = photoRepository.exportPhoto(currentPhoto!!)
             if (success) onSuccess() else onError()
         }
 }

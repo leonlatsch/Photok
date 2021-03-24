@@ -21,7 +21,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
@@ -53,51 +52,20 @@ class ReEncryptViewModel @Inject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        photoRepository.sync(app, item)
-        photoRepository.syncThumbnail(app, item)
+        val fileSuccess = encryptedStorageManager.reEncryptFile(item.internalFileName, newPassword)
+        val thumbnailSuccess =
+            encryptedStorageManager.reEncryptFile(item.internalThumbnailFileName, newPassword)
 
-        val tmpStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
-            app,
-            item.internalTmpFileName,
-            newPassword
-        )
-        val tmpThumbnailStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
-            app,
-            item.internalTmpThumbnailFileName,
-            newPassword
-        )
-
-        if (tmpStream == null || tmpThumbnailStream == null) {
-            failuresOccurred = true
-            return
+        val videoPreviewSuccess = if (item.type.isVideo) {
+            encryptedStorageManager.reEncryptFile(item.internalVideoPreviewFileName, newPassword)
+        } else {
+            true // Just set true, since it can be ignored
         }
 
-        val cacheWrote = item.stream?.copyTo(tmpStream)
-        val thumbnailCacheWrote = item.thumbnailStream?.copyTo(tmpThumbnailStream)
-
-        if (cacheWrote == -1L && thumbnailCacheWrote == -1L) {
-            failuresOccurred = true
+        if (!fileSuccess || !thumbnailSuccess || !videoPreviewSuccess) {
+            failuresOccurred()
             return
         }
-
-        photoRepository.deSync(item)
-        photoRepository.deSyncThumbnail(item)
-
-        tmpStream.lazyClose()
-        tmpThumbnailStream.lazyClose()
-
-        photoRepository.deleteInternalPhotoData(app, item.uuid)
-
-        encryptedStorageManager.internalRenameFile(
-            app,
-            item.internalTmpFileName,
-            item.internalFileName
-        )
-        encryptedStorageManager.internalRenameFile(
-            app,
-            item.internalTmpThumbnailFileName,
-            item.internalThumbnailFileName
-        )
     }
 
     override suspend fun postProcess() {

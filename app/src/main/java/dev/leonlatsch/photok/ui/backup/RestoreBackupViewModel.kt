@@ -189,10 +189,10 @@ class RestoreBackupViewModel @Inject constructor(
             // Read whole file here, because there are no thumbnails in a v1 backup.
             val bytes = encryptedZipInput.readBytes()
 
-            val success = photoRepository.createPhotoFile(app, newPhoto, encryptedZipInput) != -1L
+            val success = photoRepository.createPhotoFile(newPhoto, encryptedZipInput) != -1L
 
             if (success) {
-                photoRepository.createThumbnail(app, newPhoto, bytes)
+                photoRepository.createThumbnail(newPhoto, bytes)
                 photoRepository.insert(newPhoto)
             }
 
@@ -218,7 +218,6 @@ class RestoreBackupViewModel @Inject constructor(
                 encryptionManager.createCipherInputStream(stream, origPassword)
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(
-                    app,
                     ze.name.replace(oldUUID, newUUID)
                 )
 

@@ -74,7 +74,7 @@ class PhotoViewHolder(
     private fun loadPhoto() {
         GlobalScope.launch(Dispatchers.IO) {
             val photo = photoRepository.get(photoId)
-            val photoBytes = photoRepository.loadPhoto(context, photo)
+            val photoBytes = photoRepository.loadPhoto(photo)
             if (photoBytes == null) {
                 Timber.d("Error loading photo data for photo: $photoId")
                 return@launch

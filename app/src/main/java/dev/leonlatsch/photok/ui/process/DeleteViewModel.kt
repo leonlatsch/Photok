@@ -31,7 +31,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DeleteViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {
 
@@ -41,7 +41,7 @@ class DeleteViewModel @Inject constructor(
             return
         }
 
-        val success = photoRepository.safeDeletePhoto(app, item)
+        val success = photoRepository.safeDeletePhoto(item)
         if (!success) {
             failuresOccurred = true
         }

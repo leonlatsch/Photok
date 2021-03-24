@@ -31,12 +31,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ExportViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {
 
     override suspend fun processItem(item: Photo) {
-        val result = photoRepository.exportPhoto(app, item)
+        val result = photoRepository.exportPhoto(item)
         if (!result) {
             failuresOccurred = true
         }

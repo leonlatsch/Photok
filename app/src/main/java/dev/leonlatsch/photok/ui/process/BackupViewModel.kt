@@ -21,6 +21,7 @@ import android.net.Uri
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.createGson
 import dev.leonlatsch.photok.other.lazyClose
@@ -46,11 +47,12 @@ import javax.inject.Inject
 class BackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
+    private val encryptedStorageManager: EncryptedStorageManager,
     private val config: Config
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
-    lateinit var zipOutputStream: ZipOutputStream
+    private lateinit var zipOutputStream: ZipOutputStream
     private var backedUpPhotos = arrayListOf<Photo>()
     private val gson: Gson = createGson()
 
@@ -85,16 +87,26 @@ class BackupViewModel @Inject constructor(
     }
 
     private fun writePhotoToZipEntry(photo: Photo): Boolean {
-        photoRepository.syncRaw(app, photo)
-        photoRepository.syncRawThumbnail(app, photo)
+        val input = encryptedStorageManager.internalOpenFileInput(photo.internalFileName)
+        val fileSuccess = writeZipEntry(photo.internalFileName, input)
+        input?.lazyClose()
 
-        val fileSuccess = writeZipEntry(photo.internalFileName, photo.stream)
-        val thumbnailSuccess = writeZipEntry(photo.internalThumbnailFileName, photo.thumbnailStream)
+        val thumbnailInput =
+            encryptedStorageManager.internalOpenFileInput(photo.internalThumbnailFileName)
+        val thumbnailSuccess = writeZipEntry(photo.internalThumbnailFileName, thumbnailInput)
+        thumbnailInput?.lazyClose()
 
-        photoRepository.deSync(photo)
-        photoRepository.deSyncThumbnail(photo)
+        val videoPreviewSuccess = if (photo.type.isVideo) {
+            val videoPreviewInput =
+                encryptedStorageManager.internalOpenFileInput(photo.internalVideoPreviewFileName)
+            val success = writeZipEntry(photo.internalVideoPreviewFileName, videoPreviewInput)
+            videoPreviewInput?.lazyClose()
+            success
+        } else {
+            true // Just set true, since it can be ignored
+        }
 
-        return fileSuccess && thumbnailSuccess
+        return fileSuccess && thumbnailSuccess && videoPreviewSuccess
     }
 
     private fun writeZipEntry(fileName: String, inputStream: InputStream?): Boolean {
