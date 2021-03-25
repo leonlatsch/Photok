@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.ui.videoplayer
 
 import android.app.Application
 import android.media.MediaPlayer
+import android.view.SurfaceHolder
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,7 +38,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class VideoPlayerViewModel @Inject constructor(
-    app: Application,
+    private val app: Application,
     private val photoRepository: PhotoRepository,
     private val encryptedStorageManager: EncryptedStorageManager
 ) : ObservableViewModel(app) {
@@ -49,7 +50,7 @@ class VideoPlayerViewModel @Inject constructor(
             notifyChange(BR.player, value)
         }
 
-    fun setupPlayer(photoId: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun setupPlayer(photoId: Int, holder: SurfaceHolder) = viewModelScope.launch(Dispatchers.IO) {
         val photo = photoRepository.get(photoId)
 
         val videoInput =
@@ -58,8 +59,8 @@ class VideoPlayerViewModel @Inject constructor(
 
         player = MediaPlayer().apply {
             setDataSource(EncryptedVideoMediaDataSource(videoInput))
-            prepare()
-            start()
+            setDisplay(holder)
+            prepareAsync()
         }
     }
 

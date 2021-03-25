@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.ui.videoplayer
 import android.media.MediaDataSource
 import java.io.InputStream
 
+
 /**
  * [MediaDataSource] implementation for a [InputStream].
  *
@@ -29,13 +30,30 @@ class EncryptedVideoMediaDataSource(
     private val inputStream: InputStream
 ) : MediaDataSource() {
 
+    private var lastReadEndPosition = 0L
+    private val streamLength = inputStream.available()
+
     override fun readAt(position: Long, buffer: ByteArray?, offset: Int, size: Int): Int {
-        val read = inputStream.read(buffer)
-        if (read > size) {
+        var s = size
+        if (position >= streamLength) return -1
+
+        if (position + size > streamLength) s -= position.toInt() + size - streamLength
+
+        if (position < lastReadEndPosition) {
+            inputStream.close()
+            lastReadEndPosition = 0
             return -1
+//            `is` = getNewCopyOfInputStreamSomeHow() //new FileInputStream(mediaFile) for example.
         }
 
-        return read
+        val skipped: Long = inputStream.skip(position - lastReadEndPosition)
+        return if (skipped == position - lastReadEndPosition) {
+            val bytesRead: Int = inputStream.read(buffer, offset, size)
+            lastReadEndPosition = position + bytesRead
+            bytesRead
+        } else {
+            -1
+        }
 
 
         /*

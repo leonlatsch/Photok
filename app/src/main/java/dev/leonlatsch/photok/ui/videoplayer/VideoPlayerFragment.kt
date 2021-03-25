@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.ui.videoplayer
 
 import android.os.Bundle
+import android.view.SurfaceHolder
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +54,23 @@ class VideoPlayerFragment :
             return
         }
 
-        viewModel.setupPlayer(photoId)
+        binding.videoView.holder.addCallback(object : SurfaceHolder.Callback {
+            override fun surfaceCreated(holder: SurfaceHolder) {
+                viewModel.setupPlayer(photoId, holder)
+            }
+
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
+            }
+
+            override fun surfaceDestroyed(holder: SurfaceHolder) {
+                viewModel.closePlayer()
+            }
+        })
     }
 
     override fun bind(binding: FragmentVideoPlayerBinding) {
