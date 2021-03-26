@@ -25,9 +25,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.lazyClose
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import javax.inject.Inject
 
 /**
@@ -43,6 +47,9 @@ class VideoPlayerViewModel @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager
 ) : ObservableViewModel(app) {
 
+    private lateinit var tmpFile: File
+    private lateinit var tmpInput: FileInputStream
+
     @get:Bindable
     var player: MediaPlayer? = null
         set(value) {
@@ -57,15 +64,27 @@ class VideoPlayerViewModel @Inject constructor(
             encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
         videoInput ?: return@launch
 
+        tmpFile = File.createTempFile(".tmp~${photo.uuid}", ".${photo.type}", app.cacheDir)
+        val tmpOutput = FileOutputStream(tmpFile)
+
+        videoInput.copyTo(tmpOutput)
+        videoInput.lazyClose()
+        tmpOutput.lazyClose()
+
+        tmpInput = FileInputStream(tmpFile)
+
         player = MediaPlayer().apply {
-            setDataSource(EncryptedVideoMediaDataSource(videoInput))
+            setDataSource(tmpInput.fd)
             setDisplay(holder)
-            prepareAsync()
+            prepare()
+            start()
         }
     }
 
     fun closePlayer() = viewModelScope.launch(Dispatchers.IO) {
         player?.release()
         player = null
+        tmpInput.close()
+        tmpFile.delete()
     }
 }

@@ -68,7 +68,7 @@ class VideoPlayerFragment :
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-                viewModel.closePlayer()
+//                viewModel.closePlayer()
             }
         })
     }

@@ -34,10 +34,10 @@ class EncryptedVideoMediaDataSource(
     private val streamLength = inputStream.available()
 
     override fun readAt(position: Long, buffer: ByteArray?, offset: Int, size: Int): Int {
-        var s = size
-        if (position >= streamLength) return -1
+//        if (position >= streamLength) return -1
 
-        if (position + size > streamLength) s -= position.toInt() + size - streamLength
+//        if (position + size > streamLength) s -= position.toInt() + size - streamLength
+
 
         if (position < lastReadEndPosition) {
             inputStream.close()
