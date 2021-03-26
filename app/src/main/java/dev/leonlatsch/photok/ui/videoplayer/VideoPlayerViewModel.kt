@@ -23,6 +23,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.lazyClose
@@ -47,8 +48,8 @@ class VideoPlayerViewModel @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager
 ) : ObservableViewModel(app) {
 
-    private lateinit var tmpFile: File
-    private lateinit var tmpInput: FileInputStream
+    private var tmpFile: File? = null
+    private var tmpInput: FileInputStream? = null
 
     @get:Bindable
     var player: MediaPlayer? = null
@@ -60,11 +61,23 @@ class VideoPlayerViewModel @Inject constructor(
     fun setupPlayer(photoId: Int, holder: SurfaceHolder) = viewModelScope.launch(Dispatchers.IO) {
         val photo = photoRepository.get(photoId)
 
+        createVideoCache(photo)
+
+        player = MediaPlayer().apply {
+            setDataSource(tmpInput?.fd)
+            setDisplay(holder)
+            prepare()
+            start()
+        }
+    }
+
+    private fun createVideoCache(photo: Photo) {
         val videoInput =
             encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
-        videoInput ?: return@launch
 
-        tmpFile = File.createTempFile(".tmp~${photo.uuid}", ".${photo.type}", app.cacheDir)
+        videoInput ?: return
+
+        tmpFile = File.createTempFile(photo.uuid, ".${photo.type}", app.cacheDir)
         val tmpOutput = FileOutputStream(tmpFile)
 
         videoInput.copyTo(tmpOutput)
@@ -72,19 +85,12 @@ class VideoPlayerViewModel @Inject constructor(
         tmpOutput.lazyClose()
 
         tmpInput = FileInputStream(tmpFile)
-
-        player = MediaPlayer().apply {
-            setDataSource(tmpInput.fd)
-            setDisplay(holder)
-            prepare()
-            start()
-        }
     }
 
     fun closePlayer() = viewModelScope.launch(Dispatchers.IO) {
         player?.release()
         player = null
-        tmpInput.close()
-        tmpFile.delete()
+        tmpInput?.close()
+        tmpFile?.delete()
     }
 }

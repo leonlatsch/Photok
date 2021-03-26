@@ -16,14 +16,18 @@
 
 package dev.leonlatsch.photok.ui.videoplayer
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -41,9 +45,9 @@ class VideoPlayerFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.videoPlayerBufferIndicator.show()
 
         binding.videoPlayerToolbar.setNavigationOnClickListener {
-            viewModel.closePlayer()
             requireActivity().onBackPressed()
         }
 
@@ -68,9 +72,13 @@ class VideoPlayerFragment :
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-//                viewModel.closePlayer()
+                viewModel.closePlayer()
             }
         })
+
+        viewModel.addOnPropertyChange<MediaPlayer?>(BR.player) {
+            binding.videoPlayerBufferIndicator.hide()
+        }
     }
 
     override fun bind(binding: FragmentVideoPlayerBinding) {

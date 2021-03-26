@@ -13,7 +13,8 @@
   ~   See the License for the specific language governing permissions and
   ~   limitations under the License.
   -->
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -22,32 +23,53 @@
             type="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/viewPhotoAppBarLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@android:color/black">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/videoPlayerToolbar"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/viewPhotoAppBarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:theme="@style/darkToolbarStyle"
-                app:navigationIcon="@drawable/ic_back">
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@android:color/black">
 
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/videoPlayerToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:theme="@style/darkToolbarStyle"
+                    app:navigationIcon="@drawable/ic_back">
 
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
 
-    </LinearLayout>
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/videoPlayerBufferIndicator"
+            style="@style/BigTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decrypting..."
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
