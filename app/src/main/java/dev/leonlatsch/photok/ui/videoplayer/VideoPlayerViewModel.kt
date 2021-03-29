@@ -17,22 +17,25 @@
 package dev.leonlatsch.photok.ui.videoplayer
 
 import android.app.Application
-import android.media.MediaPlayer
-import android.view.SurfaceHolder
+import android.net.Uri
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.lazyClose
+import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
 import javax.inject.Inject
 
 /**
@@ -52,39 +55,34 @@ class VideoPlayerViewModel @Inject constructor(
     private var tmpInput: FileInputStream? = null
 
     @get:Bindable
-    var player: MediaPlayer? = null
+    var player: SimpleExoPlayer? = null
         set(value) {
             field = value
             notifyChange(BR.player, value)
         }
 
-    fun setupPlayer(photoId: Int, holder: SurfaceHolder) = viewModelScope.launch(Dispatchers.IO) {
+    fun setupPlayer(photoId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val photo = photoRepository.get(photoId)
 
-        createVideoCache(photo)
-
-        player = MediaPlayer().apply {
-            setDataSource(tmpInput?.fd)
-            setDisplay(holder)
-            prepare()
-            start()
+        player = SimpleExoPlayer.Builder(app).build()
+        player!!.apply {
+            onMain {
+                setMediaSource(createMediaSource(photo))
+                prepare()
+                playWhenReady = true
+            }
         }
     }
 
-    private fun createVideoCache(photo: Photo) {
-        val videoInput =
-            encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
+    private fun createMediaSource(photo: Photo): MediaSource {
+        val dataSource = EncryptedDataSource(encryptedStorageManager, photo.internalFileName)
 
-        videoInput ?: return
+        val factory = DataSource.Factory {
+            dataSource
+        }
 
-        tmpFile = File.createTempFile(photo.uuid, ".${photo.type}", app.cacheDir)
-        val tmpOutput = FileOutputStream(tmpFile)
-
-        videoInput.copyTo(tmpOutput)
-        videoInput.lazyClose()
-        tmpOutput.lazyClose()
-
-        tmpInput = FileInputStream(tmpFile)
+        return ProgressiveMediaSource.Factory(factory)
+            .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
     }
 
     fun closePlayer() = viewModelScope.launch(Dispatchers.IO) {

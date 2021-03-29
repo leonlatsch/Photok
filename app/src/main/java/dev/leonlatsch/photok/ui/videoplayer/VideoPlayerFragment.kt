@@ -16,18 +16,15 @@
 
 package dev.leonlatsch.photok.ui.videoplayer
 
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.SurfaceHolder
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.google.android.exoplayer2.SimpleExoPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -45,12 +42,15 @@ class VideoPlayerFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.videoPlayerBufferIndicator.show()
 
         binding.videoPlayerToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
+        viewModel.addOnPropertyChange<SimpleExoPlayer?>(BR.player) {
+            it ?: return@addOnPropertyChange
+            binding.playerView.player = it
+        }
 
         val photoId = arguments?.get(INTENT_PHOTO_ID)
         if (photoId == null || photoId !is Int) {
@@ -58,31 +58,16 @@ class VideoPlayerFragment :
             return
         }
 
-        binding.videoView.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                viewModel.setupPlayer(photoId, holder)
-            }
-
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int
-            ) {
-            }
-
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                viewModel.closePlayer()
-            }
-        })
-
-        viewModel.addOnPropertyChange<MediaPlayer?>(BR.player) {
-            binding.videoPlayerBufferIndicator.hide()
-        }
+        viewModel.setupPlayer(photoId)
     }
 
     override fun bind(binding: FragmentVideoPlayerBinding) {
         super.bind(binding)
         binding.context = this
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.closePlayer()
     }
 }
