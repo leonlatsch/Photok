@@ -34,8 +34,6 @@ import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileInputStream
 import javax.inject.Inject
 
 /**
@@ -50,9 +48,6 @@ class VideoPlayerViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val encryptedStorageManager: EncryptedStorageManager
 ) : ObservableViewModel(app) {
-
-    private var tmpFile: File? = null
-    private var tmpInput: FileInputStream? = null
 
     @get:Bindable
     var player: SimpleExoPlayer? = null
@@ -85,10 +80,11 @@ class VideoPlayerViewModel @Inject constructor(
             .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
     }
 
-    fun closePlayer() = viewModelScope.launch(Dispatchers.IO) {
-        player?.release()
-        player = null
-        tmpInput?.close()
-        tmpFile?.delete()
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.launch(Dispatchers.IO) {
+            player?.release()
+            player = null
+        }
     }
 }
