@@ -258,7 +258,7 @@ class PhotoRepository @Inject constructor(
         val success = deletedElements != -1
 
         if (success) {
-            deleteInternalPhotoData(photo.uuid)
+            deleteInternalPhotoData(photo)
         }
 
         return success
@@ -271,12 +271,10 @@ class PhotoRepository @Inject constructor(
      *
      * @return true, if photo and thumbnail could be deleted
      */
-    fun deleteInternalPhotoData(uuid: String): Boolean =
-        (encryptedStorageManager.internalDeleteFile(
-            Photo.internalFileName(uuid)
-        ) && encryptedStorageManager.internalDeleteFile(
-            Photo.internalThumbnailFileName(uuid)
-        ))
+    fun deleteInternalPhotoData(photo: Photo): Boolean =
+        encryptedStorageManager.internalDeleteFile(photo.internalFileName)
+                && encryptedStorageManager.internalDeleteFile(photo.internalThumbnailFileName)
+                && (!photo.type.isVideo || encryptedStorageManager.internalDeleteFile(photo.internalVideoPreviewFileName))
 
 
     // endregion

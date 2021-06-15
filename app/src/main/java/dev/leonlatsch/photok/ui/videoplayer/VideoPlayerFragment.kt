@@ -65,9 +65,4 @@ class VideoPlayerFragment :
         super.bind(binding)
         binding.context = this
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.closePlayer()
-    }
 }

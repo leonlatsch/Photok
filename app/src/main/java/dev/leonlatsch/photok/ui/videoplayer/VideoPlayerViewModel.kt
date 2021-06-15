@@ -22,15 +22,17 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.FileDataSource
+import com.google.android.exoplayer2.upstream.crypto.AesCipherDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,7 +48,7 @@ import javax.inject.Inject
 class VideoPlayerViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val encryptedStorageManager: EncryptedStorageManager
+    private val encryptionManager: EncryptionManager
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -59,25 +61,35 @@ class VideoPlayerViewModel @Inject constructor(
     fun setupPlayer(photoId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val photo = photoRepository.get(photoId)
 
-        player = SimpleExoPlayer.Builder(app).build()
+        player = SimpleExoPlayer.Builder(app)
+            .setMediaSourceFactory(createMediaSourceFactory())
+            .build()
         player!!.apply {
             onMain {
-                setMediaSource(createMediaSource(photo))
+                setMediaItem(createMediaItem(photo))
                 prepare()
                 playWhenReady = true
             }
         }
     }
 
-    private fun createMediaSource(photo: Photo): MediaSource {
-        val dataSource = EncryptedDataSource(encryptedStorageManager, photo.internalFileName)
+    private fun createMediaSourceFactory(): MediaSourceFactory {
+        val aesDataSource = AesCipherDataSource(encryptionManager.encodedKey, FileDataSource())
 
         val factory = DataSource.Factory {
-            dataSource
+            aesDataSource
         }
 
         return ProgressiveMediaSource.Factory(factory)
-            .createMediaSource(MediaItem.fromUri(Uri.EMPTY))
+    }
+
+    private fun createMediaItem(photo: Photo): MediaItem {
+        val uri = Uri.fromFile(app.getFileStreamPath(photo.internalFileName).canonicalFile)
+
+        return MediaItem.Builder()
+            .setMimeType(photo.type.mimeType)
+            .setUri(uri)
+            .build()
     }
 
     override fun onCleared() {

@@ -132,8 +132,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
 
     // Exoplayer
-    implementation("com.google.android.exoplayer:exoplayer-core:2.13.2")
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.13.2")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.14.0")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.14.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")

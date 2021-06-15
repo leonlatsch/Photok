@@ -45,6 +45,9 @@ class EncryptionManager {
 
     var isReady: Boolean = false
 
+    val encodedKey: ByteArray
+        get() = encryptionKey!!.encoded
+
     /**
      * Initialize the [SecretKeySpec] with a [password].
      * Uses the [password] to create a SHA-256 hash binary that is used to create [SecretKeySpec].
@@ -135,7 +138,7 @@ class EncryptionManager {
         return createCipher(mode, key, iv)
     }
 
-    private fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
+    fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
 
     private fun createCipher(
         mode: Int,
