@@ -56,6 +56,9 @@ class VideoPlayerViewModel @Inject constructor(
             notifyChange(BR.player, value)
         }
 
+    /**
+     * Create and prepare the [player] to play the passed video.
+     */
     fun setupPlayer(photoId: Int) = viewModelScope.launch(Dispatchers.IO) {
         val photo = photoRepository.get(photoId)
 

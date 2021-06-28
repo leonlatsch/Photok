@@ -23,8 +23,16 @@ import com.google.android.exoplayer2.upstream.TransferListener
 import dev.leonlatsch.photok.other.forceSkip
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.File
+import java.io.IOException
 import javax.crypto.CipherInputStream
 
+/**
+ * DataSource to process AES/GCM/Encrypted Video.
+ * Uses [CipherInputStream.forceSkip] extension to be able to skip.
+ *
+ * @since 2.0.0
+ * @author Leon Latsch
+ */
 class AesDataSource(
     private val encryptionManager: EncryptionManager
 ) : DataSource {
@@ -45,6 +53,7 @@ class AesDataSource(
         return dataSpec.length
     }
 
+    @Throws(IOException::class)
     override fun read(target: ByteArray, offset: Int, length: Int): Int =
         if (length == 0) {
             0
