@@ -25,8 +25,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.FileDataSource
-import com.google.android.exoplayer2.upstream.crypto.AesCipherDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -74,7 +72,7 @@ class VideoPlayerViewModel @Inject constructor(
     }
 
     private fun createMediaSourceFactory(): MediaSourceFactory {
-        val aesDataSource = AesCipherDataSource(encryptionManager.encodedKey, FileDataSource())
+        val aesDataSource = AesDataSource(encryptionManager)
 
         val factory = DataSource.Factory {
             aesDataSource
@@ -94,9 +92,7 @@ class VideoPlayerViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        viewModelScope.launch(Dispatchers.IO) {
-            player?.release()
-            player = null
-        }
+        player?.release()
+        player = null
     }
 }

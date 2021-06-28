@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -79,8 +80,11 @@ class ImageViewerViewModel @Inject constructor(
             currentPhoto ?: return@launch
             currentPhoto!!.id ?: return@launch
 
-            val success = photoRepository.safeDeletePhoto(currentPhoto!!)
-            if (success) onSuccess() else onError()
+            photoRepository.safeDeletePhoto(currentPhoto!!).let {
+                onMain {
+                    if (it) onSuccess() else onError()
+                }
+            }
         }
 
     /**
