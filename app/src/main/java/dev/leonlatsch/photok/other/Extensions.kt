@@ -61,6 +61,9 @@ fun View.vanish() {
 val String.Companion.empty: String
     get() = ""
 
+/**
+ * Remove a sequence from a string.
+ */
 fun String.remove(str: String): String = replace(str, String.empty)
 
 /**

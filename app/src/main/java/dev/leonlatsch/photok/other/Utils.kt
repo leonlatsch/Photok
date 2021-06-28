@@ -52,6 +52,9 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
     return null
 }
 
+/**
+ * Get the size of a file in bytes
+ */
 fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
     contentResolver.openFileDescriptor(uri, "r")?.use {
         return it.statSize
@@ -142,6 +145,9 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
     }
 }
 
+/**
+ * Create a Gson object with preferences.
+ */
 fun createGson() = GsonBuilder()
     .excludeFieldsWithoutExposeAnnotation()
     .create()

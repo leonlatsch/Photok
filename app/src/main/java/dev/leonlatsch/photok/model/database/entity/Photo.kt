@@ -59,6 +59,10 @@ data class Photo(
          */
         fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
 
+        /**
+         * Get FileName for video previews.
+         * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.vp
+         */
         fun internalVideoPreviewFileName(uuid: String) = "${uuid}.photok.vp"
     }
 }

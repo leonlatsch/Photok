@@ -138,6 +138,9 @@ class EncryptionManager {
         return createCipher(mode, key, iv)
     }
 
+    /**
+     * Create a cipher with local stored encryption key.
+     */
     fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
 
     private fun createCipher(

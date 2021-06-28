@@ -156,6 +156,9 @@ class PhotoRepository @Inject constructor(
         return success
     }
 
+    /**
+     * Create the internal file for a photo.
+     */
     fun createPhotoFile(photo: Photo, source: InputStream?): Long {
         val encryptedDestination =
             encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalFileName)
@@ -172,6 +175,9 @@ class PhotoRepository @Inject constructor(
     private fun createThumbnail(photo: Photo, sourceUri: Uri) =
         internalCreateThumbnail(photo, sourceUri)
 
+    /**
+     * Create a thumbnail from raw bytes.
+     */
     fun createThumbnail(photo: Photo, bytes: ByteArray) =
         internalCreateThumbnail(photo, bytes)
 
