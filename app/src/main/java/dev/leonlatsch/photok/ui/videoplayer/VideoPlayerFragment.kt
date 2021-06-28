@@ -33,7 +33,6 @@ import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
  * @since 2.0.0
  * @author Leon Latsch
  */
-
 @AndroidEntryPoint
 class VideoPlayerFragment :
     BindableFragment<FragmentVideoPlayerBinding>(R.layout.fragment_video_player) {
@@ -58,6 +57,7 @@ class VideoPlayerFragment :
             return
         }
 
+        viewModel.releasePlayer() // Release the player just in case
         viewModel.setupPlayer(photoId)
     }
 

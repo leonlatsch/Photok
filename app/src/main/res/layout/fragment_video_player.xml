@@ -50,6 +50,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.exoplayer2.ui.PlayerView
+            app:show_buffering="always"
             android:id="@+id/playerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

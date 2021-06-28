@@ -93,9 +93,16 @@ class VideoPlayerViewModel @Inject constructor(
             .build()
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    /**
+     * Release the current player
+     */
+    fun releasePlayer() {
         player?.release()
         player = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        releasePlayer()
     }
 }
