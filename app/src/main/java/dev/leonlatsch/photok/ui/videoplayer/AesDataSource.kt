@@ -20,6 +20,7 @@ import android.net.Uri
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.TransferListener
+import dev.leonlatsch.photok.other.forceSkip
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.File
 import javax.crypto.CipherInputStream
@@ -37,6 +38,9 @@ class AesDataSource(
 
         val file = File(uri.path!!).canonicalFile
         inputStream = encryptionManager.createCipherInputStream(file.inputStream())
+        if (dataSpec.position != 0L) {
+            inputStream?.forceSkip(dataSpec.position)
+        }
 
         return dataSpec.length
     }
