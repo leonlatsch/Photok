@@ -23,7 +23,7 @@
             type="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
@@ -34,10 +34,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/viewPhotoAppBarLayout"
+            android:id="@+id/videoPlayerAppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@android:color/black">
+            android:background="@color/transparent_black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/videoPlayerToolbar"
@@ -50,10 +53,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.exoplayer2.ui.PlayerView
-            app:show_buffering="always"
             android:id="@+id/playerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            app:show_buffering="always" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

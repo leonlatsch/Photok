@@ -34,10 +34,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.MainActivity
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
@@ -68,6 +65,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         setHasOptionsMenu(true)
         setToolbar(binding.galleryToolbar)
         setupGridView()
+
+        requireActivityAs(MainActivity::class).onOrientationChanged = {
+            setupGridView()
+        }
 
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
@@ -225,6 +226,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         override fun onDestroyActionMode(mode: ActionMode?) {
             adapter.disableSelection()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivityAs(MainActivity::class).onOrientationChanged = {} // Reset
     }
 
     override fun bind(binding: FragmentGalleryBinding) {

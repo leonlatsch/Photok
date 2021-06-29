@@ -25,10 +25,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.other.vanish
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.base.BaseActivity
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
@@ -68,7 +65,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
-        (requireActivity() as BaseActivity).hideKeyboard()
+        requireActivityAs(BaseActivity::class).hideKeyboard()
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {

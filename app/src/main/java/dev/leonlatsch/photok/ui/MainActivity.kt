@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.ui
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -49,6 +50,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     @Inject
     override lateinit var config: Config
+
+    var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -92,7 +95,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         ) { _, _ ->
             importShared()
         }
-
     }
 
     /**
@@ -120,6 +122,12 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        onOrientationChanged(newConfig.orientation)
     }
 
     override fun bind(binding: ActivityMainBinding) {

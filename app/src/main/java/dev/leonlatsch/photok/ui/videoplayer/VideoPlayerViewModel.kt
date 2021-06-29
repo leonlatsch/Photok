@@ -59,18 +59,22 @@ class VideoPlayerViewModel @Inject constructor(
     /**
      * Create and prepare the [player] to play the passed video.
      */
-    fun setupPlayer(photoId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val photo = photoRepository.get(photoId)
+    fun setupPlayer(photoId: Int) {
+        releasePlayer()
 
-        player = SimpleExoPlayer.Builder(app)
-            .setMediaSourceFactory(createMediaSourceFactory())
-            .build()
-        player!!.apply {
-            onMain {
-                setMediaItem(createMediaItem(photo))
-                prepare()
-                playWhenReady = true
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            val photo = photoRepository.get(photoId)
+
+            player = SimpleExoPlayer.Builder(app)
+                .setMediaSourceFactory(createMediaSourceFactory())
+                .build()
+                .apply {
+                    onMain {
+                        setMediaItem(createMediaItem(photo))
+                        prepare()
+                        playWhenReady = true
+                    }
+                }
         }
     }
 

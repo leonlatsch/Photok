@@ -76,12 +76,14 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="image/*"/>
-                <data android:mimeType="video/*"/>
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
             </intent-filter>
         </activity-alias>
 
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|screenSize" />
 
         <activity
             android:name=".ui.settings.hideapp.ForwardDialerActivity"

@@ -51,13 +51,17 @@ class VideoPlayerFragment :
             binding.playerView.player = it
         }
 
+        binding.playerView.setControllerVisibilityListener {
+            binding.videoPlayerAppBarLayout.visibility = it
+        }
+        binding.playerView.showController()
+
         val photoId = arguments?.get(INTENT_PHOTO_ID)
         if (photoId == null || photoId !is Int) {
             requireActivity().onBackPressed()
             return
         }
 
-        viewModel.releasePlayer() // Release the player just in case
         viewModel.setupPlayer(photoId)
     }
 

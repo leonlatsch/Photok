@@ -176,12 +176,17 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
         else -> false
     }
 
-    private fun toggleSystemUI() { // TODO: Reset on navigate back
+    private fun toggleSystemUI() {
         if (systemUiVisible) {
             requireActivity().hideSystemUI()
         } else {
             requireActivity().showSystemUI()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().showSystemUI()
     }
 
     override fun bind(binding: FragmentImageViewerBinding) {
