@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.other.lazyClose
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 import java.util.*
 import javax.inject.Inject
 
@@ -298,27 +299,44 @@ class PhotoRepository @Inject constructor(
                 encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
             inputStream ?: return false
 
-            val contentValues = ContentValues()
-            contentValues.put(
-                MediaStore.Images.Media.DISPLAY_NAME,
-                "photok_export_${photo.fileName}"
-            )
-            contentValues.put(MediaStore.Images.Media.MIME_TYPE, photo.type.mimeType)
-
-            val outputStream = encryptedStorageManager.externalOpenFileOutput(
-                app.contentResolver,
-                contentValues,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
+            val outputStream = createExternalOutputStream(photo)
             outputStream ?: return false
 
             val wrote = inputStream.copyTo(outputStream)
+            outputStream.lazyClose()
 
             wrote != -1L
         } catch (e: IOException) {
             Timber.d("Error exporting file: ${photo.fileName}")
             false
         }
+    }
+
+    private fun createExternalOutputStream(photo: Photo): OutputStream? {
+        val mediaColName: String
+        val mediaColMimeType: String
+        val externalUri: Uri
+
+        if (photo.type.isVideo) {
+            mediaColName = MediaStore.Video.Media.DISPLAY_NAME
+            mediaColMimeType = MediaStore.Video.Media.MIME_TYPE
+            externalUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        } else {
+            mediaColName = MediaStore.Images.Media.DISPLAY_NAME
+            mediaColMimeType = MediaStore.Images.Media.MIME_TYPE
+            externalUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+
+        val contentValues = ContentValues().apply {
+            put(mediaColName, "photok_export_${photo.fileName}")
+            put(mediaColMimeType, photo.type.mimeType)
+        }
+
+        return encryptedStorageManager.externalOpenFileOutput(
+            app.contentResolver,
+            contentValues,
+            externalUri
+        )
     }
 
     // endregion
