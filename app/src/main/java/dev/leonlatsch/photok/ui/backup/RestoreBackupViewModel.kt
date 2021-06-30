@@ -33,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.BufferedInputStream
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.util.*
 import java.util.zip.ZipInputStream
@@ -191,7 +192,9 @@ class RestoreBackupViewModel @Inject constructor(
             // Read whole file here, because there are no thumbnails in a v1 backup.
             val bytes = encryptedZipInput.readBytes()
 
-            val success = photoRepository.createPhotoFile(newPhoto, encryptedZipInput) != -1L
+            val fullBytesInputStream = ByteArrayInputStream(bytes)
+            val success = photoRepository.createPhotoFile(newPhoto, fullBytesInputStream) != -1L
+            fullBytesInputStream.lazyClose()
 
             if (success) {
                 photoRepository.createThumbnail(newPhoto, bytes)
