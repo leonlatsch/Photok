@@ -17,7 +17,7 @@ android {
         minSdkVersion(24)
         targetSdkVersion(30)
         versionCode = 14
-        versionName = "2.0.0-dev"
+        versionName = "1.3.0-snapshot"
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",

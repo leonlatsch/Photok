@@ -228,15 +228,16 @@
     <string name="news_new_in_title">Novo em</string>
     <string name="news_view_changelog">Ver o changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
-    <string name="news_title_1">Funcionalidade: Coleções</string>
-    <string name="news_summary_1">Gerenciar fotos em coleções</string>
 
-    <string name="news_title_2">Funcionalidade: Importar vídeos</string>
-    <string name="news_summary_2">Importar vídeos ao Photok</string>
+    <string name="news_title_1">Feature: Import videos</string><!-- TODO: Translate -->
+    <string name="news_summary_1">Import videos to Photok</string><!-- TODO: Translate -->
 
-    <string name="news_title_3">Funcionalidade: Tentativas de senha</string>
-    <string name="news_summary_3">Redefinir o Photok na tentativa de ataque via força bruta</string>
+    <string name="news_title_2">Feature: News Dialog</string><!-- TODO: Translate -->
+    <string name="news_summary_2">Get notified about new features</string><!-- TODO: Translate -->
 
-    <string name="news_title_4">VAZIO</string>
-    <string name="news_summary_4">VAZIO</string>
+    <string name="news_title_3">Performance Improvements</string><!-- TODO: Translate -->
+    <string name="news_summary_3">Many performance improvements for Photok</string><!-- TODO: Translate -->
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

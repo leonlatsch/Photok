@@ -229,14 +229,15 @@
     <string name="news_new_in_title">Neu bei</string>
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
-    <string name="news_title_1">Funktion: Alben</string>
-    <string name="news_summary_1">Organisiere Fotos in Alben</string>
 
-    <string name="news_title_2">Funktion: Importiere Videos</string>
-    <string name="news_summary_2">Importiere Videos in Photok</string>
+    <string name="news_title_1">Funktion: Videos importieren</string>
+    <string name="news_summary_1">Importiere Videos in Photok</string>
 
-    <string name="news_title_3">Funktion: Passwort Versuche</string>
-    <string name="news_summary_3">Photok bei Bruteforce-Attacken zurücksetzen</string>
+    <string name="news_title_2">Funktion: Neuigkeiten</string>
+    <string name="news_summary_2">Werde über neue Funktionen benachrichtigt</string>
+
+    <string name="news_title_3">Verbesserte Leistung</string>
+    <string name="news_summary_3">Verbesserte Leistung für Photok</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
