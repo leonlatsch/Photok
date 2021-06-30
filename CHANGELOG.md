@@ -1,7 +1,5 @@
-### 2.0.0 (under development)
-- Feature: Collections
+### 1.3.0 (under development)
 - Feature: Import videos
-- Feature: Password attempts
 - New features get introduces with a news dialog
 - UI design changes
 - Performance improvements
