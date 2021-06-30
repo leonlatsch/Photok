@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.ui.backup
 
 /**
- * Enum for state of [ValidateBackupDialogFragment]
+ * Enum for state of [RestoreBackupDialogFragment]
  *
  * @since 1.0.0
  * @author Leon Latsch
@@ -25,5 +25,7 @@ package dev.leonlatsch.photok.ui.backup
 enum class RestoreState {
     INITIALIZE,
     FILE_VALID,
-    FILE_INVALID
+    FILE_INVALID,
+    RESTORING,
+    FINISHED
 }

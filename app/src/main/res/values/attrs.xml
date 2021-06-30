@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +16,6 @@
 
 <resources>
     <declare-styleable name="PasswordEditText">
-        <attr name="password_edit_text_hint" format="reference"/>
+        <attr name="PasswordEditTextHint" format="reference" />
     </declare-styleable>
 </resources>

@@ -17,10 +17,11 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
+import javax.inject.Inject
 
 /**
  * ViewModel for exporting multiple photos.
@@ -28,13 +29,14 @@ import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ExportViewModel @ViewModelInject constructor(
-    private val app: Application,
+@HiltViewModel
+class ExportViewModel @Inject constructor(
+    app: Application,
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {
 
     override suspend fun processItem(item: Photo) {
-        val result = photoRepository.exportPhoto(app, item)
+        val result = photoRepository.exportPhoto(item)
         if (!result) {
             failuresOccurred = true
         }

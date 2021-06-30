@@ -18,8 +18,9 @@ package dev.leonlatsch.photok.ui
 
 import android.app.Application
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
+import javax.inject.Inject
 
 /**
  * ViewModel for the main activity.
@@ -27,7 +28,8 @@ import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
  * @since 1.2.4
  * @author Leon Latsch
  */
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     app: Application
 ) : ObservableViewModel(app) {
 

@@ -156,4 +156,11 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
 
         progressPercent = (current * 100) / elementsToProcess
     }
+
+    /**
+     * Sets [failuresOccurred] to true
+     */
+    fun failuresOccurred() {
+        failuresOccurred = true
+    }
 }

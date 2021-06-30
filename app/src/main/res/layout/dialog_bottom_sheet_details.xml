@@ -20,7 +20,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.viewphoto.DetailsBottomSheetDialog" />
+            type="dev.leonlatsch.photok.ui.imageviewer.DetailsBottomSheetDialog" />
 
         <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
     </data>

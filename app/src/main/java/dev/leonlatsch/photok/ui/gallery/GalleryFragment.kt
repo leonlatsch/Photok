@@ -17,34 +17,30 @@
 package dev.leonlatsch.photok.ui.gallery
 
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.view.ActionMode
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.MainActivity
-import dev.leonlatsch.photok.ui.backup.ValidateBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.news.NewsDialog
 import dev.leonlatsch.photok.ui.process.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.ui.process.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.ui.process.ImportBottomSheetDialogFragment
-import dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -59,12 +55,6 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
-    // region binding properties
-
-    var placeholderVisibility: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
-
-    // endregion
-
     private val viewModel: GalleryViewModel by viewModels()
 
     private lateinit var adapter: PhotoAdapter
@@ -72,115 +62,46 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        setToolbar(binding.galleryToolbar)
+        setupGridView()
 
+        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+            if (it) {
+                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
+            } else {
+                actionMode?.finish()
+            }
+        })
+
+        viewModel.runIfNews {
+            NewsDialog().show(requireActivity().supportFragmentManager)
+        }
+    }
+
+    private fun setupGridView() {
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
-        (binding.galleryPhotoGrid.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
-            false
 
         adapter = PhotoAdapter(
             requireContext(),
             viewModel.photoRepository,
-            this::showFullSize,
+            this::openPhoto,
             viewLifecycleOwner
         )
+
         adapter.registerAdapterDataObserver(onAdapterDataObserver)
         binding.galleryPhotoGrid.adapter = adapter
         lifecycleScope.launch {
             viewModel.photos.collectLatest { adapter.submitData(it) }
         }
-
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
-            if (it) {
-                actionMode = (activity as MainActivity).startActionMode(actionModeCallback)
-            } else {
-                actionMode?.finish()
-            }
-        })
-    }
-
-    private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
-
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
-            togglePlaceholder(adapter.itemCount)
-    }
-
-    private fun getColCount() = when (resources.configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> 4
-        Configuration.ORIENTATION_LANDSCAPE -> 8
-        else -> 4
-    }
-
-    private fun togglePlaceholder(itemCount: Int) {
-        val visibility = if (itemCount > 0) {
-            binding.galleryAllPhotosTitle.show()
-            View.GONE
-        } else {
-            binding.galleryAllPhotosTitle.hide()
-            View.VISIBLE
-        }
-        placeholderVisibility.postValue(visibility)
     }
 
     /**
-     * Starts the photo import.
-     * Starts a chooser for images.
-     * May request permission READ_EXTERNAL_STORAGE.
+     * Show [ImportMenuDialog].
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_IMPORT)
-    fun startImport() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            binding.galleryActionMenu.collapse()
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Photos"),
-                REQ_CONTENT_PHOTOS
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_permission_rationale),
-                REQ_PERM_IMPORT,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    /**
-     * Start restoring a backup.
-     * Requests permission and shows [ValidateBackupDialogFragment].
-     */
-    @AfterPermissionGranted(REQ_PERM_RESTORE)
-    fun startRestore() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            binding.galleryActionMenu.collapse()
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "application/zip"
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Backup"),
-                REQ_CONTENT_BACKUP
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_permission_rationale),
-                REQ_PERM_RESTORE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
+    fun showImportMenu() {
+        ImportMenuDialog().show(childFragmentManager)
     }
 
     /**
@@ -216,44 +137,39 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+            viewModel.togglePlaceholder(adapter.itemCount)
 
-        // Result from select photos for import
-        if (requestCode == REQ_CONTENT_PHOTOS && resultCode == Activity.RESULT_OK) {
-            val images = mutableListOf<Uri>()
-            if (data != null) {
-                extractDataFromResult(images, data)
-            }
-            if (images.size > 0) {
-                ImportBottomSheetDialogFragment(images).show(requireActivity().supportFragmentManager)
-            }
-        } else if (requestCode == REQ_CONTENT_BACKUP && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                data.data ?: return
-                ValidateBackupDialogFragment(data.data!!).show(requireActivity().supportFragmentManager)
-            }
-        }
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
+            viewModel.togglePlaceholder(adapter.itemCount)
     }
 
-    private fun extractDataFromResult(images: MutableList<Uri>, data: Intent): MutableList<Uri> {
-        if (data.clipData != null) {
-            val count = data.clipData!!.itemCount
-            for (i in 0 until count) {
-                val imageUri = data.clipData!!.getItemAt(i).uri
-                images.add(imageUri)
-            }
-        } else if (data.data != null) {
-            val imageUri = data.data!!
-            images.add(imageUri)
-        }
-        return images
+    private fun getColCount() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> 4
+        Configuration.ORIENTATION_LANDSCAPE -> 8
+        else -> 4
     }
 
-    private fun showFullSize(id: Int) {
-        val intent = Intent(requireActivity(), ViewPhotoActivity::class.java)
-        intent.putExtra(INTENT_PHOTO_ID, id)
-        startActivity(intent)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuMainItemSettings -> {
+            findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
+            true
+        }
+        R.id.menuMainItemLock -> {
+            requireActivity().getBaseApplication().lockApp()
+            true
+        }
+        else -> false
+    }
+
+    private fun openPhoto(id: Int) {
+        val args = bundleOf(INTENT_PHOTO_ID to id)
+        findNavController().navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
     }
 
     private val actionModeCallback = object : ActionMode.Callback {
@@ -308,23 +224,21 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    override fun onResume() {
+        super.onResume()
+        requireActivityAs(MainActivity::class).onOrientationChanged = {
+            setupGridView()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivityAs(MainActivity::class).onOrientationChanged = {} // Reset
     }
 
     override fun bind(binding: FragmentGalleryBinding) {
         super.bind(binding)
         binding.context = this
-    }
-
-    companion object {
-        const val REQ_CONTENT_PHOTOS = 0
-        const val REQ_CONTENT_BACKUP = 1
+        binding.viewModel = viewModel
     }
 }

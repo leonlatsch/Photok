@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.ui.components.base.BaseFragment
 
 /**
  * Base for all fragments that use data binding.
@@ -36,7 +36,7 @@ import androidx.fragment.app.Fragment
  */
 abstract class BindableFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
-) : Fragment(), Bindable<BindingType> {
+) : BaseFragment(), Bindable<BindingType> {
 
     final override lateinit var binding: BindingType
 
@@ -52,6 +52,13 @@ abstract class BindableFragment<BindingType : ViewDataBinding>(
         binding = DataBindingUtil.inflate(inflater, layout, container, false)
         bind(binding)
         return binding.root
+    }
+
+    /**
+     * When called, this fragment will call setup() on its viewModel
+     */
+    fun useViewModel(viewModel: ObservableViewModel) {
+        viewModel.setup()
     }
 
     /**

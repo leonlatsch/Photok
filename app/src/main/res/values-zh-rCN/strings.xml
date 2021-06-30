@@ -16,11 +16,11 @@
   -->
 
 <resources>
-    <!-- MAINTAINED BY: (@sr093906) -->
+    <!-- MAINTAINED BY： (@sr093906) -->
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">版权所有 \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">版权所有 \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -33,9 +33,10 @@
     <string name="common_no">否</string>
     <string name="common_ok">好</string>
     <string name="common_are_you_sure">你确定吗？</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
-    <string name="import_importing">正在导入照片……</string>
+    <string name="import_importing">正在导入照片</string>
     <string name="import_permission_rationale">Photok 需要访问你的存储来导入照片</string>
     <string name="import_sharted_question">你想导入 %1$d 张照片吗？</string>
 
@@ -59,9 +60,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">你的库里没有照片</string>
-    <string name="gallery_add_from_gallery">从系统图库</string>
-    <string name="gallery_add_from_backup">从备份文件</string>
-    <string name="gallery_all_photos_label">All Photos</string><!-- TODO: Translate -->
+    <string name="gallery_all_photos_label">所有照片</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
+    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
+    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
+    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
+    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
@@ -107,6 +113,7 @@
     <string name="about_third_party">第三方软件</string>
     <string name="about_privacy_policy">隐私政策</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">新功能</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
@@ -206,12 +213,31 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
-    <string name="backup_restore_title">还原备份</string>
+    <string name="backup_restore_title">还原备份</string><!-- TODO: Translate -->
+    <string name="backup_restore_validating">Validating backup…</string>
     <string name="backup_restore_details_created_at">创建于:</string>
     <string name="backup_restore_details_photos_contained">包含的照片:</string>
     <string name="backup_restore_details_compatible">兼容性:</string>
+    <string name="backup_restore_details_size">Size:</string><!-- TODO: Translate -->
     <string name="backup_restore_button">解锁并还原</string>
     <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
     <string name="backup_restore_processing">还原备份中……</string>
     <string name="backup_unlock_title">解锁备份</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">新功能</string>
+    <string name="news_view_changelog">查看变更记录</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+
+    <string name="news_title_1">Feature: Import videos</string><!-- TODO: Translate -->
+    <string name="news_summary_1">Import videos to Photok</string><!-- TODO: Translate -->
+
+    <string name="news_title_2">Feature: News Dialog</string><!-- TODO: Translate -->
+    <string name="news_summary_2">Get notified about new features</string><!-- TODO: Translate -->
+
+    <string name="news_title_3">Performance Improvements</string><!-- TODO: Translate -->
+    <string name="news_summary_3">Many performance improvements for Photok</string><!-- TODO: Translate -->
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

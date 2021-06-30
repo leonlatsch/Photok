@@ -22,7 +22,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.runOnMain
+import dev.leonlatsch.photok.other.onMain
 
 /**
  * Holds Dialogs and Toast presets.
@@ -37,7 +37,7 @@ object Dialogs {
         title: String,
         onPositiveButtonClicked: DialogInterface.OnClickListener
     ) {
-        runOnMain {
+        onMain {
             AlertDialog.Builder(context)
                 .setMessage(HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY))
                 .setPositiveButton(R.string.common_yes, onPositiveButtonClicked)
@@ -47,13 +47,13 @@ object Dialogs {
     }
 
     fun showLongToast(context: Context, message: String) {
-        runOnMain {
+        onMain {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
     }
 
     fun showShortToast(context: Context, message: String) {
-        runOnMain {
+        onMain {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }

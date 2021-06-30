@@ -28,7 +28,7 @@
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/about_third_party" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <dev.leonlatsch.osslicenseview.OssLicenseView
             android:id="@+id/ossRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

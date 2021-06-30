@@ -1,3 +1,9 @@
+### 1.3.0
+- Feature: Import videos
+- New features get introduces with a news dialog
+- UI design changes
+- Performance improvements
+
 ### 1.2.4
 - Fix crash when creating thumbnail fails
 - Fix not importing shared data

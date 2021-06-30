@@ -16,15 +16,19 @@
 
 package dev.leonlatsch.photok.ui.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
+import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.news.NewsDialog
 
 /**
  * Fragment to display a info about the app and some links.
@@ -39,18 +43,30 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+        setToolbar(binding.aboutToolbar)
         binding.aboutToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_about, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuAboutNews -> NewsDialog().show(childFragmentManager)
+        }
+        return true
     }
 
     /**
      * Open the website in new activity.
      */
     fun openWebsite() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(getString(R.string.about_website_url))
-        startActivity(intent)
+        openUrl(requireContext(), getString(R.string.about_website_url))
     }
 
     /**
@@ -64,9 +80,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the privacy policy in new activity.
      */
     fun openPrivacyPolicy() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(getString(R.string.about_privacy_policy_url))
-        startActivity(intent)
+        openUrl(requireContext(), getString(R.string.about_privacy_policy_url))
     }
 
     override fun bind(binding: FragmentAboutBinding) {

@@ -20,6 +20,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Handler
@@ -27,6 +28,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.exifinterface.media.ExifInterface
+import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -51,9 +53,20 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
 }
 
 /**
+ * Get the size of a file in bytes
+ */
+fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
+    contentResolver.openFileDescriptor(uri, "r")?.use {
+        return it.statSize
+    }
+
+    return -1L
+}
+
+/**
  * Post a [operation] to the main looper.
  */
-fun runOnMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
+fun onMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
 
 /**
  * Update the app design.
@@ -83,7 +96,9 @@ fun openUrl(context: Context, url: String?) {
  * Reset all orientation exif tags for creating thumbnails
  * and displaying photos with exif data properly.
  */
-fun normalizeExifOrientation(bitmap: Bitmap, bytesWithExif: ByteArray): Bitmap {
+fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
+    bytesWithExif ?: return null
+    val bitmap = BitmapFactory.decodeByteArray(bytesWithExif, 0, bytesWithExif.size)
     val orientation = ExifInterface(ByteArrayInputStream(bytesWithExif)).getAttributeInt(
         ExifInterface.TAG_ORIENTATION,
         ExifInterface.ORIENTATION_NORMAL
@@ -129,3 +144,10 @@ fun normalizeExifOrientation(bitmap: Bitmap, bytesWithExif: ByteArray): Bitmap {
         bitmap
     }
 }
+
+/**
+ * Create a Gson object with preferences.
+ */
+fun createGson() = GsonBuilder()
+    .excludeFieldsWithoutExposeAnnotation()
+    .create()

@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -32,11 +32,12 @@
     <string name="common_no">No</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Are you sure?</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
-    <string name="import_importing">Importing Photo(s)…</string>
-    <string name="import_permission_rationale">Photok needs to access your storage, to import photos.</string>
-    <string name="import_sharted_question">Do you want to import %1$d photo(s)?</string>
+    <string name="import_importing">Importing File(s)</string>
+    <string name="import_permission_rationale">Photok needs to access your storage, to import files.</string>
+    <string name="import_sharted_question">Do you want to import %1$d file(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Create your password</string>
@@ -57,10 +58,15 @@
     <string name="unlock_wrong_password">\u26A0 Wrong password</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">There are no photos in your safe</string>
-    <string name="gallery_add_from_gallery">From Gallery</string>
-    <string name="gallery_add_from_backup">From Backup</string>
-    <string name="gallery_all_photos_label">All photos</string>
+    <string name="gallery_placeholder">There are no files in your safe</string>
+    <string name="gallery_all_photos_label">All files</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string>
+    <string name="import_menu_photos">Photos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Add media items to Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>
@@ -87,15 +93,15 @@
     <string name="menu_ms_export">Export</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d photo(s)?</string>
-    <string name="delete_are_you_sure_this">Are you sure, you want to <b>delete</b> this photo?</string>
-    <string name="delete_deleting">Deleting photo(s)…</string>
+    <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>
+    <string name="delete_are_you_sure_this">Are you sure, you want to <b>delete</b> this files?</string>
+    <string name="delete_deleting">Deleting file(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d photos(s), back to your gallery?</string>
-    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this photo, back to your gallery?</string>
-    <string name="export_exporting">Exporting photo(s)…</string>
-    <string name="export_permission_rationale">Photok needs to access your storage, to export photos.</string>
+    <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery?</string>
+    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery?</string>
+    <string name="export_exporting">Exporting file(s)…</string>
+    <string name="export_permission_rationale">Photok needs to access your storage, to export files.</string>
     <string name="export_finished">Exported</string>
 
     <!-- ABOUT -->
@@ -106,6 +112,7 @@
     <string name="about_third_party">Third Party Software</string>
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">News</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
@@ -118,7 +125,7 @@
 
     <string name="settings_category_gallery">Gallery</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto Fullscreen</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Enter fullscreen mode when opening a photo</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Enter fullscreen mode when opening a file</string>
 
     <string name="settings_category_security">Security</string>
     <string name="settings_security_allow_screenshots_title">Allow Screenshots</string>
@@ -176,8 +183,8 @@
     <string name="change_password_enter_new_password">Enter your new password</string>
     <string name="change_password_confirm_new_password">Confirm your new password</string>
     <string name="change_password_button">Change Password</string>
-    <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your photos! Do you want to continue?</string>
-    <string name="change_password_reencrypting">Re-encrypting photo(s)…</string>
+    <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
+    <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Hide Photok</string>
@@ -206,11 +213,30 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creating backup…</string>
     <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_validating">Validating backup…</string>
     <string name="backup_restore_details_created_at">Created at:</string>
-    <string name="backup_restore_details_photos_contained">Contained Photos:</string>
+    <string name="backup_restore_details_photos_contained">Contained Files:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_details_size">Size:</string>
     <string name="backup_restore_button">Unlock and Restore</string>
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>
     <string name="backup_unlock_title">Unlock Backup</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">New in</string>
+    <string name="news_view_changelog">View Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+
+    <string name="news_title_1">Feature: Import videos</string>
+    <string name="news_summary_1">Import videos to Photok</string>
+
+    <string name="news_title_2">Feature: News Dialog</string>
+    <string name="news_summary_2">Get notified about new features</string>
+
+    <string name="news_title_3">Performance Improvements</string>
+    <string name="news_summary_3">Many performance improvements for Photok</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

@@ -23,6 +23,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import dev.leonlatsch.photok.R
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Base for all Dialog Fragments.
@@ -40,5 +41,15 @@ abstract class BaseDialogFragment : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         view.background =
             ResourcesCompat.getDrawable(resources, R.drawable.bg_dialog_round, null)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward result to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

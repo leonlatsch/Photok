@@ -18,8 +18,8 @@ package dev.leonlatsch.photok.ui.unlock
 
 import android.app.Application
 import androidx.databinding.Bindable
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
+import javax.inject.Inject
 
 /**
  * ViewModel for unlocking the safe.
@@ -36,7 +37,8 @@ import org.mindrot.jbcrypt.BCrypt
  * @since 1.0.0
  * @author Leon Latsch
  */
-class UnlockViewModel @ViewModelInject constructor(
+@HiltViewModel
+class UnlockViewModel @Inject constructor(
     app: Application,
     private val config: Config,
     val encryptionManager: EncryptionManager

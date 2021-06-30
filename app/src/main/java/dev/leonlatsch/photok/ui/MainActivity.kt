@@ -18,21 +18,17 @@ package dev.leonlatsch.photok.ui
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.view.ActionMode
-import androidx.navigation.findNavController
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableActivity
@@ -56,11 +52,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     @Inject
     override lateinit var config: Config
 
+    var onOrientationChanged: (Int) -> Unit = {} // Init empty
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -71,14 +67,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 confirmAndStartImportShared()
             }
         })
-
-        binding.mainNavHostFragment.findNavController()
-            .addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.galleryFragment -> binding.mainToolbar.show()
-                    else -> binding.mainToolbar.hide()
-                }
-            }
     }
 
     override fun onResume() {
@@ -113,7 +101,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         ) { _, _ ->
             importShared()
         }
-
     }
 
     /**
@@ -143,42 +130,14 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         }
     }
 
-    /**
-     * Starts the action mode on mainToolbar.
-     */
-    fun startActionMode(callback: ActionMode.Callback): ActionMode? =
-        startSupportActionMode(callback)
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuMainItemSettings -> {
-            binding.mainNavHostFragment.findNavController()
-                .navigate(R.id.action_galleryFragment_to_settingsFragment)
-            true
-        }
-        R.id.menuMainItemLock -> {
-            getBaseApplication().lockApp()
-            true
-        }
-        else -> false
+        onOrientationChanged(newConfig.orientation)
     }
 
     override fun bind(binding: ActivityMainBinding) {
         super.bind(binding)
         binding.context = this
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

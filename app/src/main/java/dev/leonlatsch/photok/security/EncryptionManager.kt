@@ -20,10 +20,14 @@ import dev.leonlatsch.photok.other.AES
 import dev.leonlatsch.photok.other.AES_ALGORITHM
 import dev.leonlatsch.photok.other.SHA_256
 import timber.log.Timber
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
 import java.security.MessageDigest
 import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
@@ -40,6 +44,9 @@ class EncryptionManager {
     private var ivParameterSpec: IvParameterSpec? = null
 
     var isReady: Boolean = false
+
+    val encodedKey: ByteArray
+        get() = encryptionKey!!.encoded
 
     /**
      * Initialize the [SecretKeySpec] with a [password].
@@ -72,17 +79,26 @@ class EncryptionManager {
         isReady = false
     }
 
-
     /**
-     * Encrypt a [ByteArray] with the stored [SecretKeySpec].
+     * Turn a [InputStream] into an [CipherInputStream] with the stored [encryptionKey] or
+     * an encryption key generated from the [password] if given.
+     *
+     * @param password if not null, this will be used for decrypting
      */
-    fun encrypt(bytes: ByteArray): ByteArray? {
+    fun createCipherInputStream(
+        origInputStream: InputStream,
+        password: String? = null
+    ): CipherInputStream? {
         return if (isReady) try {
-            val cipher = Cipher.getInstance(AES_ALGORITHM)
-            cipher.init(Cipher.ENCRYPT_MODE, encryptionKey, ivParameterSpec)
-            cipher.doFinal(bytes)
+            val cipher = if (password == null) {
+                createCipher(Cipher.DECRYPT_MODE)
+            } else {
+                createCipher(Cipher.DECRYPT_MODE, password)
+            }
+
+            CipherInputStream(origInputStream, cipher)
         } catch (e: GeneralSecurityException) {
-            Timber.d("Error encrypting bytes: $e")
+            Timber.d("Error creating encrypted input stream: $e")
             null
         } else {
             null
@@ -90,57 +106,57 @@ class EncryptionManager {
     }
 
     /**
-     * Decrypt a [ByteArray] with the stored [SecretKeySpec]
+     * Turn a [OutputStream] into an [CipherOutputStream] with the stored [encryptionKey] or
+     * an encryption key generated from the [password] if given.
+     *
+     * @param password if not null, this will be used for encrypting
      */
-    fun decrypt(encryptedBytes: ByteArray): ByteArray? {
+    fun createCipherOutputStream(
+        origOutputStream: OutputStream,
+        password: String? = null
+    ): CipherOutputStream? {
         return if (isReady) try {
-            val cipher = Cipher.getInstance(AES_ALGORITHM)
-            cipher.init(Cipher.DECRYPT_MODE, encryptionKey, ivParameterSpec)
-            cipher.doFinal(encryptedBytes)
+            val cipher = if (password == null) {
+                createCipher(Cipher.ENCRYPT_MODE)
+            } else {
+                createCipher(Cipher.ENCRYPT_MODE, password)
+            }
+
+            CipherOutputStream(origOutputStream, cipher)
         } catch (e: GeneralSecurityException) {
-            Timber.d("Error decrypting bytes: $e")
+            Timber.d("Error creating encrypted output stream: $e")
             null
         } else {
             null
         }
     }
 
-    /**
-     * Encrypt [bytes] with a specific password.
-     * USE WITH CAUTION!
-     * Used by re-encrypt dialog.
-     */
-    fun encrypt(bytes: ByteArray, password: String): ByteArray? {
-        return try {
-            val key = genSecKey(password)
-            val iv = genIv(password)
+    private fun createCipher(mode: Int, password: String): Cipher? {
+        val key = genSecKey(password)
+        val iv = genIv(password)
 
-            val cipher = Cipher.getInstance(AES_ALGORITHM)
-            cipher.init(Cipher.ENCRYPT_MODE, key, iv)
-
-            cipher.doFinal(bytes)
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error encrypting bytes: $e")
-            null
-        }
+        return createCipher(mode, key, iv)
     }
 
     /**
-     * Encrypt [bytes] with a specific password.
-     * USE WITH CAUTION!
-     * Used by re-encrypt dialog.
+     * Create a cipher with local stored encryption key.
      */
-    fun decrypt(bytes: ByteArray, password: String): ByteArray? {
-        return try {
-            val key = genSecKey(password)
-            val iv = genIv(password)
+    fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
 
-            val cipher = Cipher.getInstance(AES_ALGORITHM)
-            cipher.init(Cipher.DECRYPT_MODE, key, iv)
-
-            cipher.doFinal(bytes)
+    private fun createCipher(
+        mode: Int,
+        secretKeySpec: SecretKeySpec?,
+        ivParam: IvParameterSpec?
+    ): Cipher? {
+        return if (isReady) try {
+            Cipher.getInstance(AES_ALGORITHM).apply {
+                init(mode, secretKeySpec, ivParam)
+            }
         } catch (e: GeneralSecurityException) {
-            Timber.d("Error decrypting bytes: $e")
+            Timber.d("Error initializing cipher: $e")
+            null
+        } else {
+            Timber.d("EncryptionManager has to be ready to create a cipher")
             null
         }
     }

@@ -17,13 +17,15 @@
 package dev.leonlatsch.photok.ui.process
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import org.mindrot.jbcrypt.BCrypt
+import javax.inject.Inject
 
 /**
  * ViewModel for re-encrypting photos with a new password.
@@ -32,11 +34,13 @@ import org.mindrot.jbcrypt.BCrypt
  * @since 1.0.0
  * @author Leon Latsch
  */
-class ReEncryptViewModel @ViewModelInject constructor(
-    private val app: Application,
+@HiltViewModel
+class ReEncryptViewModel @Inject constructor(
+    app: Application,
     private val photoRepository: PhotoRepository,
     private val config: Config,
-    private val encryptionManager: EncryptionManager
+    private val encryptionManager: EncryptionManager,
+    private val encryptedStorageManager: EncryptedStorageManager
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var newPassword: String
@@ -48,17 +52,19 @@ class ReEncryptViewModel @ViewModelInject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        val bytes = photoRepository.readPhotoFileFromInternal(app, item.id!!)
-        if (bytes == null) {
-            failuresOccurred = true
-            return
+        val fileSuccess = encryptedStorageManager.reEncryptFile(item.internalFileName, newPassword)
+        val thumbnailSuccess =
+            encryptedStorageManager.reEncryptFile(item.internalThumbnailFileName, newPassword)
+
+        val videoPreviewSuccess = if (item.type.isVideo) {
+            encryptedStorageManager.reEncryptFile(item.internalVideoPreviewFileName, newPassword)
+        } else {
+            true // Just set true, since it can be ignored
         }
 
-        photoRepository.deletePhotoFiles(app, item.uuid)
-
-        val result = photoRepository.writePhotoFile(app, item.uuid, bytes, newPassword)
-        if (!result) {
-            failuresOccurred = true
+        if (!fileSuccess || !thumbnailSuccess || !videoPreviewSuccess) {
+            failuresOccurred()
+            return
         }
     }
 

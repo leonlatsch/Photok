@@ -20,7 +20,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2021 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -33,11 +33,12 @@
     <string name="common_no">Nein</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
+    <string name="common_bullet">•</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importiere Foto(s)…</string>
-    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu importieren.</string>
-    <string name="import_sharted_question">Willst du %1$d Fototos importieren?</string>
+    <string name="import_importing">Importiere Dateien</string>
+    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Dateien zu importieren.</string>
+    <string name="import_sharted_question">Willst du %1$d Dateien importieren?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Erstelle dein Passwort</string>
@@ -58,10 +59,15 @@
     <string name="unlock_wrong_password">\u26A0 Falsches Passwort</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
-    <string name="gallery_add_from_gallery">Aus Galerie</string>
-    <string name="gallery_add_from_backup">Aus Backup</string>
-    <string name="gallery_all_photos_label">Alle Fotos</string>
+    <string name="gallery_placeholder">In deinem Safe sind kein Dateien</string>
+    <string name="gallery_all_photos_label">Alle Dateien</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Importieren</string>
+    <string name="import_menu_photos">Fotos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Füge Medienelemente zu Photok hinzu…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
@@ -88,14 +94,14 @@
     <string name="menu_ms_export">Exportieren</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) <b>löschen</b> willst?</string>
-    <string name="delete_are_you_sure_this">Bist du sicher, dass du dieses Foto <b>löschen</b> willst?</string>
-    <string name="delete_deleting">Lösche foto(s)…</string>
+    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>
+    <string name="delete_are_you_sure_this">Bist du sicher, dass du diese Datei <b>löschen</b> willst?</string>
+    <string name="delete_deleting">Lösche Dateien…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s), zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_exporting">Exportiere Foto(s)…</string>
+    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_exporting">Exportiere Dateien…</string>
     <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
     <string name="export_finished">Exportiert</string>
 
@@ -107,6 +113,7 @@
     <string name="about_third_party">Drittanbietersoftware</string>
     <string name="about_privacy_policy">Datenschutzerklärung</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Neuigkeiten</string>
 
 
     <!-- SETTINGS -->
@@ -120,7 +127,7 @@
 
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen einer Datei</string>
 
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
@@ -178,8 +185,8 @@
     <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
     <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
     <string name="change_password_button">Passwort ändern</string>
-    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
-    <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
+    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
+    <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok verstecken</string>
@@ -190,7 +197,7 @@
     <string name="hide_app_app_name_stealth">Telefon</string>
     <string name="hide_app_confirm_hide">Willst du Photok wirklich verstecken?</string>
     <string name="hide_app_confirm_show">Willst du Photok wieder anzeigen?</string>
-    <string name="hide_app_hint">Sobald es versteckt ist, kannst Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
+    <string name="hide_app_hint">Sobald es versteckt ist, kann Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
     <string name="hide_app_hint_current_code">Momentaner Start-Code:</string>
 
     <!-- ON BOARDING -->
@@ -208,11 +215,30 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
     <string name="backup_restore_title">Backup wiederherstellen</string>
+    <string name="backup_restore_validating">Überprüfe Backup…</string>
     <string name="backup_restore_details_created_at">Erstellt am:</string>
     <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
     <string name="backup_restore_details_compatible">Kompatibel:</string>
+    <string name="backup_restore_details_size">Größe:</string>
     <string name="backup_restore_button">Entsperren und wiederherstellen</string>
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>
     <string name="backup_unlock_title">Backup Entsperren</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Neu bei</string>
+    <string name="news_view_changelog">Changelog ansehen</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+
+    <string name="news_title_1">Funktion: Videos importieren</string>
+    <string name="news_summary_1">Importiere Videos in Photok</string>
+
+    <string name="news_title_2">Funktion: Neuigkeiten</string>
+    <string name="news_summary_2">Werde über neue Funktionen benachrichtigt</string>
+
+    <string name="news_title_3">Verbesserte Leistung</string>
+    <string name="news_summary_3">Verbesserte Leistung für Photok</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
 </resources>

@@ -21,113 +21,123 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.ui.gallery.GalleryViewModel" />
+
+        <variable
             name="context"
             type="dev.leonlatsch.photok.ui.gallery.GalleryFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        tools:context=".ui.gallery.GalleryFragment">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/galleryPlaceholder"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/galleryToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{context.placeholderVisibility}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:paddingTop="@dimen/small_gap"
+            android:paddingBottom="@dimen/small_gap"
+            android:theme="@style/toolbarStyle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:alpha="0.3"
-                android:src="@drawable/ic_vault_colored" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/raleway_bold"
-                android:text="@string/gallery_placeholder"
-                android:textAlignment="center"
-                android:textColor="@color/dotUnselectedColor"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/small_gap"
-            android:layout_marginEnd="@dimen/small_gap"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/galleryAllPhotosTitle"
-                style="@style/LabelTextViewStyle"
+                android:id="@+id/toolbarTitle"
+                style="@style/AppNameTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/small_gap"
-                android:text="@string/gallery_all_photos_label" />
+                android:layout_gravity="center_horizontal"
+                android:text="@string/app_name"
+                android:textSize="40sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/galleryPhotoGrid"
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            tools:context=".ui.gallery.GalleryFragment">
+
+            <LinearLayout
+                android:id="@+id/galleryPlaceholder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:layout_margin="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.placeholderVisibility}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseCompoundDrawables">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/ic_vault_colored" />
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/galleryActionMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_addButtonColorNormal="@color/colorPrimary"
-            app:fab_addButtonColorPressed="@color/colorPrimaryDark"
-            app:fab_labelStyle="@style/FabLabelStyle"
-            app:fab_labelsPosition="left"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98">
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="@string/gallery_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/dotUnselectedColor"
+                    android:textSize="20sp" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/galleryActionMenuBackup"
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/small_gap"
+                android:layout_marginEnd="@dimen/small_gap"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/galleryAllPhotosTitle"
+                    style="@style/LabelTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/small_gap"
+                    android:text="@string/gallery_all_photos_label"
+                    android:visibility="@{viewModel.labelsVisibility}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/galleryPhotoGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical" />
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> context.startRestore()}"
-                app:fab_colorNormal="@color/colorPrimaryDark"
-                app:fab_colorPressed="@android:color/darker_gray"
-                app:fab_icon="@drawable/ic_backup_restore"
-                app:fab_size="mini"
-                app:fab_title="@string/gallery_add_from_backup" />
+                android:onClick="@{() -> context.showImportMenu()}"
+                android:src="@drawable/ic_add"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.96"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.98" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/galleryActionMenuGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{() -> context.startImport()}"
-                app:fab_colorNormal="@color/colorPrimaryDark"
-                app:fab_colorPressed="@android:color/darker_gray"
-                app:fab_icon="@drawable/ic_image_search"
-                app:fab_size="mini"
-                app:fab_title="@string/gallery_add_from_gallery" />
-
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
