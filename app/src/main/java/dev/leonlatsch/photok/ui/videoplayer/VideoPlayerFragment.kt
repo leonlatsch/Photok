@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.hideSystemUI
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**
@@ -41,6 +42,7 @@ class VideoPlayerFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().hideSystemUI()
 
         binding.videoPlayerToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
