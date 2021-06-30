@@ -36,9 +36,9 @@
     <string name="common_bullet">•</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importiere Foto(s)…</string>
-    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu importieren.</string>
-    <string name="import_sharted_question">Willst du %1$d Fototos importieren?</string>
+    <string name="import_importing">Importiere Dateien…</string>
+    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Dateien zu importieren.</string>
+    <string name="import_sharted_question">Willst du %1$d Dateien importieren?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Erstelle dein Passwort</string>
@@ -59,8 +59,8 @@
     <string name="unlock_wrong_password">\u26A0 Falsches Passwort</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
-    <string name="gallery_all_photos_label">Alle Fotos</string>
+    <string name="gallery_placeholder">In deinem Safe sind kein Dateien</string>
+    <string name="gallery_all_photos_label">Alle Dateien</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>
@@ -94,14 +94,14 @@
     <string name="menu_ms_export">Exportieren</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Foto(s) <b>löschen</b> willst?</string>
-    <string name="delete_are_you_sure_this">Bist du sicher, dass du dieses Foto <b>löschen</b> willst?</string>
-    <string name="delete_deleting">Lösche foto(s)…</string>
+    <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>
+    <string name="delete_are_you_sure_this">Bist du sicher, dass du diese Datei <b>löschen</b> willst?</string>
+    <string name="delete_deleting">Lösche Dateien…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Foto(s), zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_are_you_sure_this">Bist du sicher, dass du dieses Foto, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_exporting">Exportiere Foto(s)…</string>
+    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_exporting">Exportiere Dateien…</string>
     <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
     <string name="export_finished">Exportiert</string>
 
@@ -127,7 +127,7 @@
 
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen eines Fotos</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen einer Datei</string>
 
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
@@ -185,8 +185,8 @@
     <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
     <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
     <string name="change_password_button">Passwort ändern</string>
-    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Fotos neu verschlüsselt werden! Willst du fortfahren?</string>
-    <string name="change_password_reencrypting">Foto(s) neu verschlüsseln…</string>
+    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
+    <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok verstecken</string>
@@ -206,7 +206,7 @@
     <string name="onboarding_skip"><u>Überspringen</u></string>
 
     <string name="onboarding_slide1_title">Willkommen bei</string>
-    <string name="onboarding_slide1_description">Ein sicherer Ort für deine Fotos.</string>
+    <string name="onboarding_slide1_description">Ein sicherer Ort für deine Dateien.</string>
     <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
     <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
     <string name="onboarding_slide3_title">Fang an zu importieren</string>
