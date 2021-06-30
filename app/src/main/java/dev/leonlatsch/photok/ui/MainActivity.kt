@@ -22,6 +22,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
@@ -52,6 +53,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override lateinit var config: Config
 
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
+    }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
