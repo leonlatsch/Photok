@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.databinding
 
-import dev.leonlatsch.photok.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,9 +63,6 @@ object BindingConverters {
     }
 
     fun toStringConverter(obj: Any?) = obj.toString()
-
-    fun boolYesNoConverter(bool: Boolean): Int =
-        if (bool) R.string.common_yes else R.string.common_no
 
     fun upperCaseConverter(str: String?): String? = str?.toUpperCase(Locale.ROOT)
 }

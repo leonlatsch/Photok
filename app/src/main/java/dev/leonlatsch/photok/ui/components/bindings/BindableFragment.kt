@@ -55,6 +55,13 @@ abstract class BindableFragment<BindingType : ViewDataBinding>(
     }
 
     /**
+     * When called, this fragment will call setup() on its viewModel
+     */
+    fun useViewModel(viewModel: ObservableViewModel) {
+        viewModel.setup()
+    }
+
+    /**
      * Inserts the Bindings. Always call super.insertBindings() to set lifecycle owner.
      */
     override fun bind(binding: BindingType) {

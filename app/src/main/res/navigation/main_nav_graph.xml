@@ -30,6 +30,11 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
+        <action
+            android:id="@+id/action_galleryFragment_to_imageViewerFragment"
+            app:destination="@id/imageViewerFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -130,4 +135,27 @@
         android:id="@+id/ossLicensesFragment"
         android:name="dev.leonlatsch.photok.ui.settings.thirdparty.OssLicensesFragment"
         android:label="OssLicensesFragment" />
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="dev.leonlatsch.photok.ui.imageviewer.ImageViewerFragment"
+        android:label="ImageViewerFragment" >
+        <argument
+            android:name="photo_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment"
+        android:label="VideoPlayerFragment">
+        <argument
+            android:name="video"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

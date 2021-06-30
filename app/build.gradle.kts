@@ -64,8 +64,8 @@ dependencies {
     val hiltVersion = "2.31-alpha"
 
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -83,12 +83,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.4")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -105,10 +105,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("androidx.hilt:hilt-compiler:1.0.0-alpha03")
+    kapt("androidx.hilt:hilt-compiler:1.0.0-beta01")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.1.0")
+    implementation("androidx.activity:activity-ktx:1.2.1")
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
@@ -119,9 +119,6 @@ dependencies {
     // MikeOritz/TouchImageView - Zoomable Image View
     implementation("com.github.MikeOrtiz:TouchImageView:3.0.1")
 
-    // Floating Action Menu
-    implementation("com.getbase:floatingactionbutton:1.10.1")
-
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
 
@@ -130,6 +127,13 @@ dependencies {
 
     // Display OSS Licenses
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+
+    // Exoplayer
+    implementation("com.google.android.exoplayer:exoplayer-core:2.14.0")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.14.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")

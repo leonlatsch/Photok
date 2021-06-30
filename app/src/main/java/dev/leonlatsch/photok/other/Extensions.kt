@@ -23,10 +23,18 @@ import android.view.View
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.BaseApplication
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.InputStream
+import java.io.OutputStream
+import javax.crypto.CipherInputStream
+import kotlin.reflect.KClass
 
 /**
  * Sets the visibility to [View.VISIBLE]
@@ -56,9 +64,29 @@ val String.Companion.empty: String
     get() = ""
 
 /**
+ * Remove a sequence from a string.
+ */
+fun String.remove(str: String): String = replace(str, String.empty)
+
+/**
  * Get the "application" as [BaseApplication] from any activity.
  */
 fun Activity.getBaseApplication(): BaseApplication = application as BaseApplication
+
+/**
+ * Require the parent activity as a specific type to avoid casting.
+ *
+ * @see Fragment.requireActivity
+ */
+@Suppress("UNCHECKED_CAST")
+fun <T : AppCompatActivity> Fragment.requireActivityAs(clazz: KClass<T>): T {
+    val activity = requireActivity()
+    return try {
+        activity as T
+    } catch (e: ClassCastException) {
+        throw IllegalArgumentException("$activity is not of type ${clazz.simpleName}")
+    }
+}
 
 /**
  * Extension for starting an activity for result and disable lock timer in [BaseApplication].
@@ -128,4 +156,34 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
  */
 fun DialogFragment.show(fragmentManager: FragmentManager) {
     this.show(fragmentManager, this::class.simpleName)
+}
+
+/**
+ * Schedule a InputStream to be closed by the [Dispatchers.IO]
+ * For use in suspend fun.
+ */
+fun InputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
+    close()
+}
+
+/**
+ * Schedule a OutputStream to be closed by the [Dispatchers.IO].
+ * For use in suspend fun.
+ */
+fun OutputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
+    close()
+}
+
+/**
+ * Skip bytes by reading them to a specific point.
+ * This is needed in GCM because the Authorisation Tag wont match when bytes are really skipped.
+ */
+fun CipherInputStream.forceSkip(bytesToSkip: Long): Long {
+    var processedBytes = 0L
+    while (processedBytes < bytesToSkip) {
+        read()
+        processedBytes++
+    }
+
+    return processedBytes
 }

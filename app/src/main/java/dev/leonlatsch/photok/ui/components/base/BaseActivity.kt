@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.Config
+import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Base for all activities.
@@ -51,5 +52,15 @@ abstract class BaseActivity : AppCompatActivity() {
     fun hideKeyboard() {
         val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Forward result to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

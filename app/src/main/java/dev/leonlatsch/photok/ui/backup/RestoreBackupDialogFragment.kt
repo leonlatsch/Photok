@@ -23,11 +23,10 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.DialogValidateBackupBinding
+import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.hide
 import dev.leonlatsch.photok.other.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
-import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
 
 /**
  * Dialog for loading and validating a backup file.
@@ -36,11 +35,11 @@ import dev.leonlatsch.photok.ui.process.RestoreBackupBottomSheetDialogFragment
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ValidateBackupDialogFragment(
+class RestoreBackupDialogFragment(
     private val uri: Uri
-) : BindableDialogFragment<DialogValidateBackupBinding>(R.layout.dialog_validate_backup) {
+) : BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
-    private val viewModel: ValidateBackupViewModel by viewModels()
+    private val viewModel: RestoreBackupViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,9 +63,21 @@ class ValidateBackupDialogFragment(
                     binding.restoreCloseButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
+                RestoreState.RESTORING -> {
+                    viewModel.zipFileName = getString(R.string.backup_restore_processing)
+                    binding.restoreProgressIndicator.show()
+                    binding.restoreDetails.hide()
+                    binding.restoreButton.hide()
+                }
+                RestoreState.FINISHED -> {
+                    viewModel.zipFileName = getString(R.string.process_finished)
+                    binding.restoreProgressIndicator.hide()
+                    binding.restoreCloseButton.show()
+                }
             }
         }
 
+        viewModel.zipFileName = getString(R.string.backup_restore_validating)
         viewModel.loadAndValidateBackup(uri)
     }
 
@@ -77,14 +88,12 @@ class ValidateBackupDialogFragment(
     fun onRestoreAndUnlock() {
         val unlockDialog =
             UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
-                dismiss()
-                RestoreBackupBottomSheetDialogFragment(uri, viewModel.metaData!!, origPassword)
-                    .show(requireActivity().supportFragmentManager)
+                viewModel.restoreBackup(origPassword)
             }
         unlockDialog.show(requireActivity().supportFragmentManager)
     }
 
-    override fun bind(binding: DialogValidateBackupBinding) {
+    override fun bind(binding: DialogRestoreBackupBinding) {
         super.bind(binding)
         binding.context = this
         binding.viewModel = viewModel

@@ -22,7 +22,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.empty
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
@@ -38,7 +37,6 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val encryptionManager: EncryptionManager,
     private val config: Config
 ) : ObservableViewModel(app) {
 
@@ -46,9 +44,9 @@ class SettingsViewModel @Inject constructor(
      * Reset all components and call [BaseApplication.lockApp]
      */
     fun resetComponents() = viewModelScope.launch {
-        val uuids = photoRepository.getAllUUIDs()
-        for (uuid in uuids) {
-            photoRepository.deletePhotoFiles(app, uuid)
+        val allPhotos = photoRepository.getAll()
+        for (photo in allPhotos) {
+            photoRepository.deleteInternalPhotoData(photo)
         }
         photoRepository.deleteAll()
 

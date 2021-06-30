@@ -60,9 +60,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">In deinem Safe sind kein Fotos</string>
-    <string name="gallery_add_from_gallery">Aus Galerie</string>
-    <string name="gallery_add_from_backup">Aus Backup</string>
     <string name="gallery_all_photos_label">Alle Fotos</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Importieren</string>
+    <string name="import_menu_photos">Fotos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Füge Medienelemente zu Photok hinzu…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
@@ -210,9 +215,11 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
     <string name="backup_restore_title">Backup wiederherstellen</string>
+    <string name="backup_restore_validating">Überprüfe Backup…</string>
     <string name="backup_restore_details_created_at">Erstellt am:</string>
     <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
     <string name="backup_restore_details_compatible">Kompatibel:</string>
+    <string name="backup_restore_details_size">Größe:</string>
     <string name="backup_restore_button">Entsperren und wiederherstellen</string>
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>

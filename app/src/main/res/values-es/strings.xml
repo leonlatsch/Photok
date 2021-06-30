@@ -60,9 +60,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
-    <string name="gallery_add_from_gallery">Desde la Galería</string>
-    <string name="gallery_add_from_backup">Desde una Copia de Seguridad</string>
     <string name="gallery_all_photos_label">Todas las Fotos</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
+    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
+    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
+    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
+    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -210,9 +215,11 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
     <string name="backup_restore_title">Restaurar copia de seguridad</string>
+    <string name="backup_restore_validating">Validating backup…</string><!-- TODO: Translate -->
     <string name="backup_restore_details_created_at">Creado el:</string>
     <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_details_size">Size:</string> <!-- TODO: Translate -->
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>

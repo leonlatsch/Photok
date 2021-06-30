@@ -59,9 +59,14 @@
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">There are no photos in your safe</string>
-    <string name="gallery_add_from_gallery">From Gallery</string>
-    <string name="gallery_add_from_backup">From Backup</string>
     <string name="gallery_all_photos_label">All photos</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string>
+    <string name="import_menu_photos">Photos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Add media items to Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>
@@ -208,9 +213,11 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creating backup…</string>
     <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_validating">Validating backup…</string>
     <string name="backup_restore_details_created_at">Created at:</string>
     <string name="backup_restore_details_photos_contained">Contained Photos:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_details_size">Size:</string>
     <string name="backup_restore_button">Unlock and Restore</string>
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>

@@ -32,15 +32,19 @@ data class Photo(
     @Expose val fileName: String,
     var importedAt: Long,
     @Expose val type: PhotoType,
-    @Expose val size: Long,
+    @Expose var size: Long = 0L,
     @Expose val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 ) {
+
     val internalFileName: String
         get() = internalFileName(uuid)
 
     val internalThumbnailFileName: String
         get() = internalThumbnailFileName(uuid)
+
+    val internalVideoPreviewFileName: String
+        get() = internalVideoPreviewFileName(uuid)
 
     companion object {
         /**
@@ -54,5 +58,11 @@ data class Photo(
          * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.tn
          */
         fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
+
+        /**
+         * Get FileName for video previews.
+         * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.vp
+         */
+        fun internalVideoPreviewFileName(uuid: String) = "${uuid}.photok.vp"
     }
 }

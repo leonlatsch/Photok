@@ -19,15 +19,19 @@ package dev.leonlatsch.photok.ui.process
 import android.app.Application
 import android.net.Uri
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.createGson
+import dev.leonlatsch.photok.other.lazyClose
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel
 import timber.log.Timber
+import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -43,13 +47,14 @@ import javax.inject.Inject
 class BackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
+    private val encryptedStorageManager: EncryptedStorageManager,
     private val config: Config
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
-    lateinit var outputStream: ZipOutputStream
+    private lateinit var zipOutputStream: ZipOutputStream
     private var backedUpPhotos = arrayListOf<Photo>()
-    private val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    private val gson: Gson = createGson()
 
     override suspend fun preProcess() {
         items = photoRepository.getAll()
@@ -59,13 +64,7 @@ class BackupViewModel @Inject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        val rawData = photoRepository.readRawPhotoFileFromInternal(app, item)
-        if (rawData == null) {
-            failuresOccurred = true
-            return
-        }
-
-        val success = writeZipEntry(item.internalFileName, rawData)
+        val success = writePhotoToZipEntry(item)
         if (success) {
             backedUpPhotos.add(item)
         } else {
@@ -75,33 +74,53 @@ class BackupViewModel @Inject constructor(
 
     override suspend fun postProcess() {
         val details = BackupMetaData(config.securityPassword!!, backedUpPhotos)
-        val jsonString = gson.toJson(details)
-        writeZipEntry(BackupMetaData.FILE_NAME, jsonString.toByteArray())
+        val metaBytes = gson.toJson(details).toByteArray()
+        writeZipEntry(BackupMetaData.FILE_NAME, ByteArrayInputStream(metaBytes))
 
-        closeZipFile()
+        zipOutputStream.lazyClose()
         super.postProcess()
     }
 
     private fun openZipFile() {
         val out = app.contentResolver.openOutputStream(uri)
-        outputStream = ZipOutputStream(out)
-
+        zipOutputStream = ZipOutputStream(out)
     }
 
-    private fun writeZipEntry(fileName: String, data: ByteArray): Boolean {
+    private fun writePhotoToZipEntry(photo: Photo): Boolean {
+        val input = encryptedStorageManager.internalOpenFileInput(photo.internalFileName)
+        val fileSuccess = writeZipEntry(photo.internalFileName, input)
+        input?.lazyClose()
+
+        val thumbnailInput =
+            encryptedStorageManager.internalOpenFileInput(photo.internalThumbnailFileName)
+        val thumbnailSuccess = writeZipEntry(photo.internalThumbnailFileName, thumbnailInput)
+        thumbnailInput?.lazyClose()
+
+        val videoPreviewSuccess = if (photo.type.isVideo) {
+            val videoPreviewInput =
+                encryptedStorageManager.internalOpenFileInput(photo.internalVideoPreviewFileName)
+            val success = writeZipEntry(photo.internalVideoPreviewFileName, videoPreviewInput)
+            videoPreviewInput?.lazyClose()
+            success
+        } else {
+            true // Just set true, since it can be ignored
+        }
+
+        return fileSuccess && thumbnailSuccess && videoPreviewSuccess
+    }
+
+    private fun writeZipEntry(fileName: String, inputStream: InputStream?): Boolean {
+        inputStream ?: return false
+
         return try {
             val entry = ZipEntry(fileName)
-            outputStream.putNextEntry(entry)
-            outputStream.write(data)
-            outputStream.closeEntry()
+            zipOutputStream.putNextEntry(entry)
+            inputStream.copyTo(zipOutputStream)
+            zipOutputStream.closeEntry()
             true
         } catch (e: IOException) {
             Timber.d("Cloud not write to backup: $e")
             false
         }
-    }
-
-    private fun closeZipFile() {
-        outputStream.close()
     }
 }

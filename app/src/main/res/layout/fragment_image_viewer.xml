@@ -17,17 +17,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.viewphoto.ViewPhotoActivity">
+    tools:context=".ui.imageviewer.ViewPhotoActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoViewModel" />
+            type="dev.leonlatsch.photok.ui.imageviewer.ImageViewerViewModel" />
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.viewphoto.ViewPhotoActivity" />
+            type="dev.leonlatsch.photok.ui.imageviewer.ImageViewerFragment" />
     </data>
 
     <RelativeLayout
@@ -47,7 +47,8 @@
                 android:id="@+id/viewPhotoToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/darkToolbarStyle">
+                android:theme="@style/darkToolbarStyle"
+                app:navigationIcon="@drawable/ic_back">
 
                 <TextView
                     android:layout_width="match_parent"

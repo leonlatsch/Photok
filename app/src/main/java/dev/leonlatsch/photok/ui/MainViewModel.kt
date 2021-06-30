@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.ui
 
 import android.app.Application
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import javax.inject.Inject

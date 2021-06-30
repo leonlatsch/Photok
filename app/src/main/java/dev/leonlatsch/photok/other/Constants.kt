@@ -25,7 +25,8 @@ const val AES_ALGORITHM = "AES/GCM/NoPadding"
 const val INTENT_PHOTO_ID = "intent.photo.id"
 
 // Permissions
-const val REQ_PERM_IMPORT = 10
-const val REQ_PERM_EXPORT = 11
-const val REQ_PERM_RESTORE = 12
-const val REQ_PERM_SHARED_IMPORT = 13
+const val REQ_PERM_IMPORT_PHOTOS = 10
+const val REQ_PERM_IMPORT_VIDEOS = 11
+const val REQ_PERM_EXPORT = 12
+const val REQ_PERM_RESTORE = 13
+const val REQ_PERM_SHARED_IMPORT = 14

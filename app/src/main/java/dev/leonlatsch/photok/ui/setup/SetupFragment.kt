@@ -26,10 +26,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
-import dev.leonlatsch.photok.other.empty
-import dev.leonlatsch.photok.other.getBaseApplication
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.base.BaseActivity
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
@@ -92,7 +89,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
     }
 
     private fun finishSetup() {
-        (requireActivity() as BaseActivity).hideKeyboard()
+        requireActivityAs(BaseActivity::class).hideKeyboard()
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
