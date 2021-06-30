@@ -1,4 +1,4 @@
-### 1.3.0 (under development)
+### 1.3.0
 - Feature: Import videos
 - New features get introduces with a news dialog
 - UI design changes
