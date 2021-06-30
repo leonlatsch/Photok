@@ -36,7 +36,7 @@
     <string name="common_bullet">•</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importiere Dateien…</string>
+    <string name="import_importing">Importiere Dateien</string>
     <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Dateien zu importieren.</string>
     <string name="import_sharted_question">Willst du %1$d Dateien importieren?</string>
 
