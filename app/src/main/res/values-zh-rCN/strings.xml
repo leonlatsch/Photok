@@ -36,7 +36,7 @@
     <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
-    <string name="import_importing">正在导入照片……</string>
+    <string name="import_importing">正在导入照片</string>
     <string name="import_permission_rationale">Photok 需要访问你的存储来导入照片</string>
     <string name="import_sharted_question">你想导入 %1$d 张照片吗？</string>
 

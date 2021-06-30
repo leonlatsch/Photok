@@ -74,6 +74,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                 ProcessState.PROCESSING -> {
                     binding.processItemsProgressIndicatorLayout.show()
                     binding.processPercentLayout.show()
+                    binding.processProcessingIndicator.show()
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
@@ -98,6 +99,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
         isCancelable = true
         binding.processCloseButton.show()
         binding.processAbortButton.hide()
+        binding.processProcessingIndicator.hide()
         if (viewModel.failuresOccurred) {
             binding.processFailuresWarnMessage.show()
         }

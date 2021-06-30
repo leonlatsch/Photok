@@ -187,6 +187,8 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().showSystemUI()
+        requireActivity().window.statusBarColor = getColor(requireContext(), R.color.colorPrimary)
+        requireActivity().window.navigationBarColor = getColor(requireContext(), R.color.background)
     }
 
     override fun bind(binding: FragmentImageViewerBinding) {

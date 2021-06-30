@@ -55,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_gap"
-            android:fontFamily="@font/raleway_black"
-            android:text="@{BindingConverters.INSTANCE.upperCaseConverter(viewModel.zipFileName)}" />
+            android:fontFamily="@font/nunito_sans_black"
+            android:text="@{BindingConverters.INSTANCE.upperCaseConverter(viewModel.zipFileName)}"
+            android:textAlignment="center" />
 
         <GridLayout
             android:id="@+id/restoreDetails"

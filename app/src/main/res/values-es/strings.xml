@@ -36,7 +36,7 @@
     <string name="common_bullet">•</string>
 
     <!-- IMPORT -->>
-    <string name="import_importing">Importando foto(s)…</string>
+    <string name="import_importing">Importando foto(s)</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
     <string name="import_sharted_question">¿Quieres importar %1$d foto(s)?</string>
 

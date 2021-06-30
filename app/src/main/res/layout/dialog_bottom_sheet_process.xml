@@ -65,6 +65,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="5dp" />
+
+                <ProgressBar
+                    android:id="@+id/processProcessingIndicator"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
 
