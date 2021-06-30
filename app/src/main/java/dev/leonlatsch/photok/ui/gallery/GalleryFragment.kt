@@ -66,10 +66,6 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         setToolbar(binding.galleryToolbar)
         setupGridView()
 
-        requireActivityAs(MainActivity::class).onOrientationChanged = {
-            setupGridView()
-        }
-
         adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
                 actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
@@ -228,8 +224,15 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        requireActivityAs(MainActivity::class).onOrientationChanged = {
+            setupGridView()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
         requireActivityAs(MainActivity::class).onOrientationChanged = {} // Reset
     }
 
