@@ -63,11 +63,11 @@
     <string name="gallery_all_photos_label">所有照片</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
-    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
-    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
-    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
-    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
+    <string name="import_menu_title">导入</string>
+    <string name="import_menu_photos">照片</string>
+    <string name="import_menu_videos">视频</string>
+    <string name="import_menu_backup">备份</string>
+    <string name="import_menu_hint">添加媒体项目到 Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
@@ -157,7 +157,7 @@
 
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
-    <string name="settings_other_feedback_summary">S给我发送一封带反馈的电子邮件</string>
+    <string name="settings_other_feedback_summary">给我发送一封带反馈的电子邮件</string>
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
@@ -213,12 +213,12 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
-    <string name="backup_restore_title">还原备份</string><!-- TODO: Translate -->
-    <string name="backup_restore_validating">Validating backup…</string>
+    <string name="backup_restore_title">还原备份</string>
+    <string name="backup_restore_validating">验证备份中…</string>
     <string name="backup_restore_details_created_at">创建于:</string>
     <string name="backup_restore_details_photos_contained">包含的照片:</string>
     <string name="backup_restore_details_compatible">兼容性:</string>
-    <string name="backup_restore_details_size">Size:</string><!-- TODO: Translate -->
+    <string name="backup_restore_details_size">大小:</string>
     <string name="backup_restore_button">解锁并还原</string>
     <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
     <string name="backup_restore_processing">还原备份中……</string>
@@ -229,14 +229,14 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
 
-    <string name="news_title_1">Feature: Import videos</string><!-- TODO: Translate -->
-    <string name="news_summary_1">Import videos to Photok</string><!-- TODO: Translate -->
+    <string name="news_title_1">功能：导入视频</string>
+    <string name="news_summary_1">导入视频到 Photok</string>
 
-    <string name="news_title_2">Feature: News Dialog</string><!-- TODO: Translate -->
-    <string name="news_summary_2">Get notified about new features</string><!-- TODO: Translate -->
+    <string name="news_title_2">功能: 消息对话框</string>
+    <string name="news_summary_2">获取新功能通知</string>
 
-    <string name="news_title_3">Performance Improvements</string><!-- TODO: Translate -->
-    <string name="news_summary_3">Many performance improvements for Photok</string><!-- TODO: Translate -->
+    <string name="news_title_3">性能改善</string>
+    <string name="news_summary_3">Photok 的许多性能改进</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
