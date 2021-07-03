@@ -45,7 +45,7 @@ Maintained by @leonlatsch
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-92%25-yellow)
 Maintained by @mezysinc
 
-![Spanish](https://img.shields.io/badge/Spanish-90%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
 Maintained by @Ismael034
 
 <!-- END-TRANSLATIONS -->
