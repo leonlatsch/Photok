@@ -63,11 +63,11 @@
     <string name="gallery_all_photos_label">Todas las Fotos</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
-    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
-    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
-    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
-    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
+    <string name="import_menu_title">Importar</string>
+    <string name="import_menu_photos">Fotos</string>
+    <string name="import_menu_videos">Vídeos</string>
+    <string name="import_menu_backup">Copia de seguridad</string>
+    <string name="import_menu_hint">Añadir elementos multimedia a Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -113,7 +113,7 @@
     <string name="about_third_party">Software de terceros</string>
     <string name="about_privacy_policy">Política de Privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
-    <string name="about_menu_news">News</string><!-- TODO: Translate -->
+    <string name="about_menu_news">Novedades</string>
 
 
     <!-- SETTINGS -->
@@ -215,29 +215,29 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
     <string name="backup_restore_title">Restaurar copia de seguridad</string>
-    <string name="backup_restore_validating">Validating backup…</string><!-- TODO: Translate -->
+    <string name="backup_restore_validating">Validando copia de seguridad…</string>
     <string name="backup_restore_details_created_at">Creado el:</string>
     <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
-    <string name="backup_restore_details_size">Size:</string> <!-- TODO: Translate -->
+    <string name="backup_restore_details_size">Tamaño:</string> 
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
     <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
 
     <!-- NEWS -->
-    <string name="news_new_in_title">New in</string> <!-- TODO: Translate -->
-    <string name="news_view_changelog">View Changelog</string><!-- TODO: Translate -->
+    <string name="news_new_in_title">Novedades en</string>
+    <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
 
-    <string name="news_title_1">Feature: Import videos</string><!-- TODO: Translate -->
-    <string name="news_summary_1">Import videos to Photok</string><!-- TODO: Translate -->
+    <string name="news_title_1">Característica: Importar videos</string>
+    <string name="news_summary_1">Importar videos a Photok</string>
 
-    <string name="news_title_2">Feature: News Dialog</string><!-- TODO: Translate -->
-    <string name="news_summary_2">Get notified about new features</string><!-- TODO: Translate -->
+    <string name="news_title_2">Característica: Diálogo de novedades</string>
+    <string name="news_summary_2">Recibe notificaciones sobre nuevas características</string>
 
-    <string name="news_title_3">Performance Improvements</string><!-- TODO: Translate -->
-    <string name="news_summary_3">Many performance improvements for Photok</string><!-- TODO: Translate -->
+    <string name="news_title_3">Mejoras de rendimiento</string>
+    <string name="news_summary_3">Muchas mejoras de rendimiento para Photok</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
