@@ -63,11 +63,11 @@
     <string name="gallery_all_photos_label">Todas as fotos</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Import</string><!-- TODO: Translate -->
-    <string name="import_menu_photos">Photos</string><!-- TODO: Translate -->
-    <string name="import_menu_videos">Videos</string><!-- TODO: Translate -->
-    <string name="import_menu_backup">Backup</string><!-- TODO: Translate -->
-    <string name="import_menu_hint">Add media items to Photok…</string><!-- TODO: Translate -->
+    <string name="import_menu_title">Importar</string>
+    <string name="import_menu_photos">Fotos</string>
+    <string name="import_menu_videos">Vídeos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Adicionar itens de mídia ao Photok…</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>
@@ -89,18 +89,18 @@
     <string name="menu_main_settings">Configurações</string>
 
     <!-- MULTI SELECT MENU -->
-    <string name="menu_ms_select_all">Selecionar todo</string>
+    <string name="menu_ms_select_all">Selecionar tudo</string>
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d a(s) foto(s)?</string>
-    <string name="delete_are_you_sure_this">Tem certeza que quer <b>excluir</b> este foto?</string>
+    <string name="delete_are_you_sure_this">Tem certeza que quer <b>excluir</b> esta foto?</string>
     <string name="delete_deleting">Excluindo a(s) foto(s)…</string>
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d a(s) fotos(s), de volta à sua galeria?</string>
-    <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este foto, de volta à sua galeria?</string>
+    <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> esta foto, de volta à sua galeria?</string>
     <string name="export_exporting">Exportando a(s) foto(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar as fotos.</string>
     <string name="export_finished">Exportado</string>
@@ -145,15 +145,15 @@
     <string name="settings_security_launch_code_summary">Código secreto para iniciar o Photok direto do discador.</string>
     <string name="settings_security_launch_code_message">Digite *#*#[seu código]#*#* em discador para iniciar o Photok.</string>
     <string name="settings_security_hide_app_title">Ocultar o App</string>
-    <string name="settings_security_hide_app_summary">Ocultar ícone do App da gaveta dos aplicativos.</string>
+    <string name="settings_security_hide_app_summary">Ocultar o ícone do App de menu dos aplicativos.</string>
 
     <string name="settings_category_advanced">Avançado</string>
     <string name="settings_category_advanced_summary">Use com cuidado</string>
-    <string name="settings_advanced_reset_title">Restaurar o cofre</string>
+    <string name="settings_advanced_reset_title">Resetar o cofre</string>
     <string name="settings_advanced_reset_summary">Excluir os dados e redefinir a senha</string>
-    <string name="settings_advanced_reset_confirmation">Você REALMENTE quer redefinir seu cofre? Todos os dados serão perdidos!</string>
+    <string name="settings_advanced_reset_confirmation">Você REALMENTE quer resetar seu cofre? Todos os dados serão perdidos!</string>
     <string name="settings_advanced_backup_title">Backup</string>
-    <string name="settings_advanced_backup_summary">Criar um backup do seu cofre</string>
+    <string name="settings_advanced_backup_summary">Criar um Backup do seu cofre</string>
 
     <string name="settings_other_title">Outros</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -171,7 +171,7 @@
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">Colaboradores</string>
-    <string name="credits_contributors_hint">Visite o Photok em GitHub para ver todos os colaboradores</string>
+    <string name="credits_contributors_hint">Visite o Photok no GitHub para ver todos os colaboradores</string>
     <string name="credits_icons_title">Ícones</string>
 
     <!-- CHANGE PASSWORD -->
@@ -182,7 +182,7 @@
     <string name="change_password_enter_new_password">Digitar sua nova senha</string>
     <string name="change_password_confirm_new_password">Confirmar sua nova senha</string>
     <string name="change_password_button">Alterar a senha</string>
-    <string name="change_password_confirm_message">Um backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todas as suas fotos de novo! Você quer continuar?</string>
+    <string name="change_password_confirm_message">Um Backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todas as suas fotos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Foto(s) sendo criptografada(s) de novo…</string>
 
     <!-- HIDE APP -->
@@ -212,32 +212,32 @@
     <string name="onboarding_slide3_description">Comece a importar suas fotos e mantenha-as longe de pessoas não autorizadas.\nDepois disso, você pode apagá-las da sua galeria.</string>
 
     <!-- BACKUP -->
-    <string name="backup_processing_title">Criando o backup…</string>
-    <string name="backup_restore_title">Restaurando o backup</string>
-    <string name="backup_restore_validating">Validating backup…</string><!-- TODO: Translate -->
+    <string name="backup_processing_title">Criando o Backup…</string>
+    <string name="backup_restore_title">Restaurando o Backup</string>
+    <string name="backup_restore_validating">Validando o Backup…</string>
     <string name="backup_restore_details_created_at">Criado em:</string>
     <string name="backup_restore_details_photos_contained">Fotos incluindas:</string>
     <string name="backup_restore_details_compatible">Compatível:</string>
-    <string name="backup_restore_details_size">Size:</string><!-- TODO: Translate -->
+    <string name="backup_restore_details_size">Tamanho:</string>
     <string name="backup_restore_button">Desbloquear e restaurar</string>
     <string name="backup_restore_invalid_file">\u26A0 O arquivo é inválido</string>
-    <string name="backup_restore_processing">Restaurando o backup…</string>
-    <string name="backup_unlock_title">Desbloquear o backup</string>
+    <string name="backup_restore_processing">Restaurando o Backup…</string>
+    <string name="backup_unlock_title">Desbloquear o Backup</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novo em</string>
-    <string name="news_view_changelog">Ver o changelog</string>
+    <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
 
-    <string name="news_title_1">Feature: Import videos</string><!-- TODO: Translate -->
-    <string name="news_summary_1">Import videos to Photok</string><!-- TODO: Translate -->
+    <string name="news_title_1">Funcionalidade: Importar vídeos</string>
+    <string name="news_summary_1">Importar vídeos ao Photok</string>
 
-    <string name="news_title_2">Feature: News Dialog</string><!-- TODO: Translate -->
-    <string name="news_summary_2">Get notified about new features</string><!-- TODO: Translate -->
+    <string name="news_title_2">Funcionalidade: Diálogo de notícias</string>
+    <string name="news_summary_2">Seja notificado sobre as novas funcionalidades</string>
 
-    <string name="news_title_3">Performance Improvements</string><!-- TODO: Translate -->
-    <string name="news_summary_3">Many performance improvements for Photok</string><!-- TODO: Translate -->
+    <string name="news_title_3">Melhorias de desempenho</string>
+    <string name="news_summary_3">Muitas melhorias de desempenho no Photok</string>
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">SEM_CONTEÚDO</string>
+    <string name="news_summary_4">SEM_CONTEÚDO</string>
 </resources>
