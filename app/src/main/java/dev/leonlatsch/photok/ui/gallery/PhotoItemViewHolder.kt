@@ -72,7 +72,9 @@ class PhotoItemViewHolder(
         this.photo = photo
         this.adapter = adapter
 
-        if (photo?.type!!.isVideo) {
+        photo ?: return
+
+        if (photo.type.isVideo) {
             videoIcon.show()
         }
 
