@@ -23,10 +23,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.empty
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
-import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -40,8 +39,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
     app: Application,
-    private val config: Config,
-    val encryptionManager: EncryptionManager
+    val encryptionManager: EncryptionManager,
+    private val passwordManager: PasswordManager
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -67,8 +66,7 @@ class UnlockViewModel @Inject constructor(
     fun unlock() = viewModelScope.launch {
         unlockState = UnlockState.CHECKING
 
-        val savedPassword = config.securityPassword
-        unlockState = if (BCrypt.checkpw(password, savedPassword)) {
+        unlockState = if (passwordManager.checkPassword(password)) {
             encryptionManager.initialize(password)
             UnlockState.UNLOCKED
         } else {

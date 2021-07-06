@@ -87,9 +87,9 @@ class PhotoRepository @Inject constructor(
     suspend fun getAllIds() = photoDao.getAllIds()
 
     /**
-     * @see PhotoDao.getAllUUIDs
+     * @see PhotoDao.countAll
      */
-    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
+    suspend fun countAll() = photoDao.countAll()
 
     // endregion
 
@@ -274,7 +274,7 @@ class PhotoRepository @Inject constructor(
     /**
      * Delete a photos bytes and thumbnail bytes on the filesystem.
      *
-     * @param uuid UUID of the photo to delete
+     * @param photo the photo to delete
      *
      * @return true, if photo and thumbnail could be deleted
      */
