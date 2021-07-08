@@ -1,6 +1,7 @@
 ### 1.3.1
 - Updates translations
 - Fixed bug with changing password with empty safe
+- Technical improvements
 
 ### 1.3.0
 - Feature: Import videos
