@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.Config

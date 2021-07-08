@@ -20,7 +20,7 @@ import android.net.Uri
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.TransferListener
-import dev.leonlatsch.photok.other.forceSkip
+import dev.leonlatsch.photok.other.extensions.forceSkip
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.File
 import java.io.IOException

@@ -28,7 +28,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
-import dev.leonlatsch.photok.other.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.bindings.BindableActivity

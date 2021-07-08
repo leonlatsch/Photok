@@ -46,13 +46,19 @@ class BaseApplication : Application(), LifecycleObserver {
 
     val rawApplicationState = MutableLiveData(ApplicationState.LOCKED)
 
+    private var ignoreNextTimeout = false
+
     var applicationState: ApplicationState
         get() = rawApplicationState.value!!
         set(value) = rawApplicationState.postValue(value)
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
         setAppDesign(config.systemDesign)
@@ -85,6 +91,13 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     /**
+     * Ignore next check for lock timeout.
+     */
+    fun ignoreNextTimeout() {
+        ignoreNextTimeout = true
+    }
+
+    /**
      * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
      */
     fun lockApp() {
@@ -93,16 +106,5 @@ class BaseApplication : Application(), LifecycleObserver {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-    }
-
-    companion object {
-        private var ignoreNextTimeout = false
-
-        /**
-         * Ignore next check for lock timeout.
-         */
-        fun ignoreNextTimeout() {
-            ignoreNextTimeout = true
-        }
     }
 }

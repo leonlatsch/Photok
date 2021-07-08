@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.settings.Config
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject

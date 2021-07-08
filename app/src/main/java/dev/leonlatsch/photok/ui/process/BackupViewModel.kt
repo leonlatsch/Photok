@@ -24,7 +24,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.createGson
-import dev.leonlatsch.photok.other.lazyClose
+import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.backup.BackupMetaData
 import dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel

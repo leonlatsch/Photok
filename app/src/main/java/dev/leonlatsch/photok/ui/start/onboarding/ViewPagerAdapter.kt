@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.ui.start.onboarding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 
 /**
  * Adapter for ViewPager with Fragments.

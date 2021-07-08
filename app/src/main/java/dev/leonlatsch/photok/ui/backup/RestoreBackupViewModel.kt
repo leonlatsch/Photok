@@ -26,7 +26,11 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.other.extensions.lazyClose
+import dev.leonlatsch.photok.other.extensions.remove
+import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.other.getFileSize
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
