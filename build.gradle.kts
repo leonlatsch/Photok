@@ -8,9 +8,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.1")
+        classpath("com.android.tools.build:gradle:4.2.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.2")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
         classpath("com.jaredsburrows:gradle-license-plugin:0.8.90")
         // NOTE: Do not place your application dependencies here; they belong
