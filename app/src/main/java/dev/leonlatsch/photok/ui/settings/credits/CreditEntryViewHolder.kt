@@ -23,7 +23,7 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 
 /**
  * ViewHolder for showing a [CreditEntry] in a Recycler View.

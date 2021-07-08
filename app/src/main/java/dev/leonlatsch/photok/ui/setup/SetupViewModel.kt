@@ -21,13 +21,12 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
-import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
-import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -41,7 +40,7 @@ import javax.inject.Inject
 class SetupViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
-    private val config: Config
+    private val passwordManager: PasswordManager
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -79,13 +78,12 @@ class SetupViewModel @Inject constructor(
     fun savePassword() = viewModelScope.launch {
         setupState = SetupState.LOADING
 
-        if (validateBothPasswords()) {
-            val hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt())
-            config.securityPassword = hashedPassword
+        setupState = if (validateBothPasswords()) {
+            passwordManager.storePassword(password)
             encryptionManager.initialize(this@SetupViewModel.password)
-            setupState = SetupState.FINISHED
+            SetupState.FINISHED
         } else {
-            setupState = SetupState.SETUP
+            SetupState.SETUP
         }
     }
 

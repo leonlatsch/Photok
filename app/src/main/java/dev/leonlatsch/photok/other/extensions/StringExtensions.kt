@@ -14,21 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings.changepassword
+package dev.leonlatsch.photok.other.extensions
 
 /**
- * Enum to indicate the state of [ChangePasswordDialog]
- *
- * @since 1.0.0
- * @author Leon Latsch
+ * Returns an empty string.
  */
-enum class ChangePasswordState {
-    START,
-    CHECKING_OLD,
-    OLD_VALID,
-    OLD_INVALID,
-    NEW_VALID,
-    NEW_INVALID,
-    RE_ENCRYPT_NEEDED,
-    RE_ENCRYPT_NOT_NEEDED
-}
+val String.Companion.empty: String
+    get() = ""
+
+/**
+ * Remove a sequence from a string.
+ */
+fun String.remove(str: String): String = replace(str, String.empty)

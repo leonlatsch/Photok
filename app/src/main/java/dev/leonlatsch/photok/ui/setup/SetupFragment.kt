@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
-import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.other.extensions.*
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.components.base.BaseActivity
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment

@@ -750,11 +750,11 @@
   {
     "project": "Android Support Library compat",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.5.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.6.0",
     "year": "2015",
     "licenses": [
       {
@@ -762,7 +762,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core:1.5.0"
+    "dependency": "androidx.core:core:1.6.0"
   },
   {
     "project": "Android Support Library Coordinator Layout",
@@ -1175,7 +1175,7 @@
   {
     "project": "androidx.databinding.databinding-common",
     "description": "Shared library between Data Binding runtime lib and compiler",
-    "version": "4.2.1",
+    "version": "4.2.2",
     "developers": [
       "The Android Open Source Project"
     ],
@@ -1187,7 +1187,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.databinding:databinding-common:4.2.1"
+    "dependency": "androidx.databinding:databinding-common:4.2.2"
   },
   {
     "project": "Collections Kotlin Extensions",
@@ -1209,11 +1209,11 @@
   {
     "project": "Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027core\u0027 artifact",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.5.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.6.0",
     "year": "2018",
     "licenses": [
       {
@@ -1221,7 +1221,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core-ktx:1.5.0"
+    "dependency": "androidx.core:core-ktx:1.6.0"
   },
   {
     "project": "Dagger",
@@ -1256,7 +1256,7 @@
   {
     "project": "databinding-adapters",
     "description": null,
-    "version": "4.2.1",
+    "version": "4.2.2",
     "developers": [],
     "url": null,
     "year": null,
@@ -1266,12 +1266,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.databinding:databinding-adapters:4.2.1"
+    "dependency": "androidx.databinding:databinding-adapters:4.2.2"
   },
   {
     "project": "databinding-runtime",
     "description": null,
-    "version": "4.2.1",
+    "version": "4.2.2",
     "developers": [],
     "url": null,
     "year": null,
@@ -1281,7 +1281,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.databinding:databinding-runtime:4.2.1"
+    "dependency": "androidx.databinding:databinding-runtime:4.2.2"
   },
   {
     "project": "EasyPermissions",
@@ -1371,11 +1371,11 @@
   {
     "project": "Experimental annotation",
     "description": "Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental annotation lint checks, this annotation provides functional parity with Kotlin\u0027s Experimental annotation.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx",
+    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.1.0",
     "year": "2019",
     "licenses": [
       {
@@ -1383,7 +1383,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.annotation:annotation-experimental:1.0.0"
+    "dependency": "androidx.annotation:annotation-experimental:1.1.0"
   },
   {
     "project": "FindBugs-jsr305",
@@ -1643,7 +1643,7 @@
   {
     "project": "Kotlin Stdlib",
     "description": "Kotlin Standard Library for JVM",
-    "version": "1.4.31",
+    "version": "1.5.10",
     "developers": [
       "Kotlin Team"
     ],
@@ -1655,12 +1655,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.4.31"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.5.10"
   },
   {
     "project": "Kotlin Stdlib Common",
     "description": "Kotlin Common Standard Library",
-    "version": "1.4.31",
+    "version": "1.5.10",
     "developers": [
       "Kotlin Team"
     ],
@@ -1672,7 +1672,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.4.31"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10"
   },
   {
     "project": "kotlinx-coroutines-android",
@@ -1881,7 +1881,7 @@
   {
     "project": "viewbinding",
     "description": null,
-    "version": "4.2.1",
+    "version": "4.2.2",
     "developers": [],
     "url": null,
     "year": null,
@@ -1891,6 +1891,6 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.databinding:viewbinding:4.2.1"
+    "dependency": "androidx.databinding:viewbinding:4.2.2"
   }
 ]

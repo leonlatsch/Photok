@@ -24,8 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
-import dev.leonlatsch.photok.other.hide
-import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.ui.components.bindings.BindableDialogFragment
 
 /**

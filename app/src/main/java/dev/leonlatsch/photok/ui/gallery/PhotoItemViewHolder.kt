@@ -29,9 +29,9 @@ import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.hide
+import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.onMain
-import dev.leonlatsch.photok.other.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -72,7 +72,9 @@ class PhotoItemViewHolder(
         this.photo = photo
         this.adapter = adapter
 
-        if (photo?.type!!.isVideo) {
+        photo ?: return
+
+        if (photo.type.isVideo) {
             videoIcon.show()
         }
 

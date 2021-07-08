@@ -21,10 +21,10 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.ui.components.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
-import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -35,7 +35,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class UnlockBackupViewModel @Inject constructor(
-    app: Application
+    app: Application,
+    private val passwordManager: PasswordManager
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -50,6 +51,7 @@ class UnlockBackupViewModel @Inject constructor(
      */
     fun verifyPassword(backupPassword: String, result: (valid: Boolean) -> Unit) =
         viewModelScope.launch {
-            result(BCrypt.checkpw(password, backupPassword))
+            val valid = passwordManager.checkPassword(password, backupPassword)
+            result(valid)
         }
 }

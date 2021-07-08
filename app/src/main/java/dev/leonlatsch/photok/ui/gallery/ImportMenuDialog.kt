@@ -25,7 +25,7 @@ import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_VIDEOS
 import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
-import dev.leonlatsch.photok.other.show
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.ui.backup.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.ui.components.Chooser
 import dev.leonlatsch.photok.ui.components.bindings.BindableBottomSheetDialogFragment

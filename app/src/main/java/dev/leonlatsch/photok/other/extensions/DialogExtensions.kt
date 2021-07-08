@@ -14,21 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings.changepassword
+package dev.leonlatsch.photok.other.extensions
+
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 
 /**
- * Enum to indicate the state of [ChangePasswordDialog]
- *
- * @since 1.0.0
- * @author Leon Latsch
+ * Show a DialogFragment with its simple class name as tag.
  */
-enum class ChangePasswordState {
-    START,
-    CHECKING_OLD,
-    OLD_VALID,
-    OLD_INVALID,
-    NEW_VALID,
-    NEW_INVALID,
-    RE_ENCRYPT_NEEDED,
-    RE_ENCRYPT_NOT_NEEDED
+fun DialogFragment.show(fragmentManager: FragmentManager) {
+    this.show(fragmentManager, this::class.simpleName)
 }

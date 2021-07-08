@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.ui.components
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.ui.components.Chooser.Builder
 import pub.devrel.easypermissions.EasyPermissions
 

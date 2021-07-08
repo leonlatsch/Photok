@@ -33,9 +33,9 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.other.setAppDesign
-import dev.leonlatsch.photok.other.show
-import dev.leonlatsch.photok.other.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.settings.Config
 import dev.leonlatsch.photok.ui.components.Dialogs
 import dev.leonlatsch.photok.ui.process.BackupBottomSheetDialogFragment

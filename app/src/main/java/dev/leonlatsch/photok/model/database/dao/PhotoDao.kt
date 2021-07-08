@@ -91,8 +91,8 @@ interface PhotoDao {
     suspend fun getUUIDForPhoto(id: Int): String?
 
     /**
-     * Get all UUIDs.
+     * Count all photos.
      */
-    @Query("SELECT uuid FROM photo")
-    suspend fun getAllUUIDs(): List<String>
+    @Query("SELECT COUNT(*) FROM photo")
+    suspend fun countAll(): Int
 }

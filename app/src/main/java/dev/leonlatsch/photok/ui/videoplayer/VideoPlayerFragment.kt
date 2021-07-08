@@ -25,7 +25,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
-import dev.leonlatsch.photok.other.hideSystemUI
+import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.ui.components.bindings.BindableFragment
 
 /**

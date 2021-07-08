@@ -14,21 +14,27 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.settings.changepassword
+package dev.leonlatsch.photok.other.extensions
+
+import android.view.View
 
 /**
- * Enum to indicate the state of [ChangePasswordDialog]
- *
- * @since 1.0.0
- * @author Leon Latsch
+ * Sets the visibility to [View.VISIBLE]
  */
-enum class ChangePasswordState {
-    START,
-    CHECKING_OLD,
-    OLD_VALID,
-    OLD_INVALID,
-    NEW_VALID,
-    NEW_INVALID,
-    RE_ENCRYPT_NEEDED,
-    RE_ENCRYPT_NOT_NEEDED
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
+
+/**
+ * Sets the visibility to [View.GONE]
+ */
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+/**
+ * Sets the visibility to [View.INVISIBLE]
+ */
+fun View.vanish() {
+    this.visibility = View.INVISIBLE
 }

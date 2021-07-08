@@ -26,8 +26,8 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
-import dev.leonlatsch.photok.other.lazyClose
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -87,9 +87,9 @@ class PhotoRepository @Inject constructor(
     suspend fun getAllIds() = photoDao.getAllIds()
 
     /**
-     * @see PhotoDao.getAllUUIDs
+     * @see PhotoDao.countAll
      */
-    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
+    suspend fun countAll() = photoDao.countAll()
 
     // endregion
 
@@ -274,7 +274,7 @@ class PhotoRepository @Inject constructor(
     /**
      * Delete a photos bytes and thumbnail bytes on the filesystem.
      *
-     * @param uuid UUID of the photo to delete
+     * @param photo the photo to delete
      *
      * @return true, if photo and thumbnail could be deleted
      */

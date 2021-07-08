@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.model.database.entity
 
-import dev.leonlatsch.photok.other.empty
+import dev.leonlatsch.photok.other.extensions.empty
 
 /**
  * Enum for [Photo.type].

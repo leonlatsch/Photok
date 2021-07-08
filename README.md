@@ -36,16 +36,16 @@ Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 Maintained by @leonlatsch
 
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-92%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 Maintained by @sr093906
 
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 Maintained by @leonlatsch
 
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-92%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-100%25-brightgreen)
 Maintained by @mezysinc
 
-![Spanish](https://img.shields.io/badge/Spanish-90%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
 Maintained by @Ismael034
 
 <!-- END-TRANSLATIONS -->
