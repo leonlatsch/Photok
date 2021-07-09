@@ -42,6 +42,9 @@ enum class PhotoType(
             else -> false
         }
 
+    val isGif: Boolean
+        get() = value == 3
+
     companion object {
         /**
          * Create a [PhotoType] from its Int value.

@@ -227,7 +227,7 @@
     <!-- NEWS -->
     <string name="news_new_in_title">新功能</string>
     <string name="news_view_changelog">查看变更记录</string>
-    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <string name="news_title_1">功能：导入视频</string>
     <string name="news_summary_1">导入视频到 Photok</string>

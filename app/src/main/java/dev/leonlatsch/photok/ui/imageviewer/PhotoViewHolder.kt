@@ -91,22 +91,31 @@ class PhotoViewHolder(
 
             initUiElements(photo)
 
-            val bitmap = if (photo.type.isVideo) {
-                Glide.with(context)
-                    .asBitmap()
-                    .load(data)
-                    .submit()
-                    .get()
+            if (photo.type.isGif) {
+                onMain {
+                    Glide.with(context)
+                        .asGif()
+                        .load(data)
+                        .into(imageView)
+                }
             } else {
-                normalizeExifOrientation(data)
+
+                val bitmap = if (photo.type.isVideo) {
+                    Glide.with(context)
+                        .asBitmap()
+                        .load(data)
+                        .submit()
+                        .get()
+                } else {
+                    normalizeExifOrientation(data)
+                }
+
+                bitmap ?: return@launch
+
+                onMain {
+                    imageView.setImageBitmap(bitmap)
+                }
             }
-
-            bitmap ?: return@launch
-
-            onMain {
-                imageView.setImageBitmap(bitmap)
-            }
-
         }
     }
 
