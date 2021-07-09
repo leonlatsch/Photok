@@ -227,7 +227,7 @@
     <!-- NEWS -->
     <string name="news_new_in_title">Novo em</string>
     <string name="news_view_changelog">Ver registro de mudanças</string>
-    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases/tag/%1$s</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <string name="news_title_1">Funcionalidade: Importar vídeos</string>
     <string name="news_summary_1">Importar vídeos ao Photok</string>

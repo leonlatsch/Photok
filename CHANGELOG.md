@@ -1,3 +1,6 @@
+### 1.3.2
+- Gifs are now being played
+
 ### 1.3.1
 - Updates translations
 - Fixed bug with changing password with empty safe

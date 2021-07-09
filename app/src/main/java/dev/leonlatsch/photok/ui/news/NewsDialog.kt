@@ -53,7 +53,7 @@ class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_new
      * Open the github release with the current version name.
      */
     fun openChangelog() {
-        val url = getString(R.string.news_changelog_url, BuildConfig.VERSION_NAME)
+        val url = getString(R.string.news_changelog_url)
         openUrl(requireContext(), url)
     }
 
