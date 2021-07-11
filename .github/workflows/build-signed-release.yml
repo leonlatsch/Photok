@@ -73,7 +73,7 @@ jobs:
           mv ${{ steps.sign_apk.outputs.signedReleaseFile }} Photok-${{ github.event.inputs.version }}-standalone.apk
 
       - name: Zip Artifacts
-        run: zip Photok-${{ github.event.inputs.version }}.zip Photok-{{ github.event.inputs.version }}-gplay.aab Photok-{{ github.event.inputs.version }}-standalone.apk
+        run: zip Photok-${{ github.event.inputs.version }}.zip Photok-${{ github.event.inputs.version }}-gplay.aab Photok-${{ github.event.inputs.version }}-standalone.apk
 
       # Upload to Nextcloud
       - name: Create Release Directory on Nextcloud
