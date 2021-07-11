@@ -10,7 +10,6 @@ apply(plugin = "com.jaredsburrows.license")
 
 android {
     compileSdkVersion(30)
-    buildToolsVersion("29.0.3")
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
