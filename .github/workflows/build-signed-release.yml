@@ -1,4 +1,4 @@
-name: Build Signed Release
+name: Build and Upload Signed Release
 
 on: 
   workflow_dispatch:
@@ -74,5 +74,5 @@ jobs:
       - name: Create Release Directory on Nextcloud
         run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
 
-      - name: Upload AAB to Nextcloud
+      - name: Upload Artifacts to Nextcloud
         run: curl -T Photok-${{ github.event.inputs.version }}.zip -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}.zip
