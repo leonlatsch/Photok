@@ -68,9 +68,9 @@ jobs:
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
 
       - name: Rename Artifacts
-        run:
-          - mv ${{ steps.sign_aab.outputs.signedReleaseFile }} Photok-{{ github.event.inputs.version }}-gplay.aab
-          - mv ${{ steps.sign_apk.outputs.signedReleaseFile }} Photok-{{ github.event.inputs.version }}-standalone.apk
+        run: |
+          mv ${{ steps.sign_aab.outputs.signedReleaseFile }} Photok-{{ github.event.inputs.version }}-gplay.aab
+          mv ${{ steps.sign_apk.outputs.signedReleaseFile }} Photok-{{ github.event.inputs.version }}-standalone.apk
 
       - name: Zip Artifacts
         run: zip Photok-${{ github.event.inputs.version }}.zip Photok-{{ github.event.inputs.version }}-gplay.aab Photok-{{ github.event.inputs.version }}-standalone.apk
