@@ -20,11 +20,11 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.settings.hideapp.ToggleAppVisibilityDialog" />
+            type="dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog" />
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.settings.hideapp.ToggleAppVisibilityViewModel" />
+            type="dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityViewModel" />
 
         <import type="dev.leonlatsch.photok.databinding.BindingConverters" />
     </data>

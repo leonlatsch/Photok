@@ -19,7 +19,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.news.NewsDialog" />
+            type="dev.leonlatsch.photok.news.ui.NewsDialog" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -21,7 +21,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.settings.AboutFragment" />
+            type="dev.leonlatsch.photok.settings.ui.AboutFragment" />
     </data>
 
     <LinearLayout

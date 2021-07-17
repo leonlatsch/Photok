@@ -26,7 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.settings.Config
+import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
 
 /**

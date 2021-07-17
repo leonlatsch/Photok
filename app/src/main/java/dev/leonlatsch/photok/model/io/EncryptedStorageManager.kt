@@ -33,7 +33,7 @@ import javax.inject.Inject
 /**
  * Manages automatic encrypted internal storage.
  *
- * @since 2.0.0
+ * @since 1.3.0
  * @author Leon Latsch
  */
 class EncryptedStorageManager @Inject constructor(

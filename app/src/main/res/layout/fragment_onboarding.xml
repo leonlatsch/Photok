@@ -22,13 +22,13 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.start.onboarding.OnBoardingFragment" />
+            type="dev.leonlatsch.photok.onboarding.ui.OnBoardingFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.start.onboarding.OnBoardingFragment">
+        tools:context=".onboarding.ui.OnBoardingFragment">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/onBoardingViewPager"

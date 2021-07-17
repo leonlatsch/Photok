@@ -20,8 +20,8 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.di.DaggerBroadcastReceiver
-import dev.leonlatsch.photok.settings.Config
-import dev.leonlatsch.photok.ui.MainActivity
+import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
 /**

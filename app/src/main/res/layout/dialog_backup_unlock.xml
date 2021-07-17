@@ -21,11 +21,11 @@
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.backup.UnlockBackupViewModel" />
+            type="dev.leonlatsch.photok.backup.ui.UnlockBackupViewModel" />
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.backup.UnlockBackupDialogFragment" />
+            type="dev.leonlatsch.photok.backup.ui.UnlockBackupDialogFragment" />
     </data>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:layout_marginBottom="@dimen/small_gap"
             android:text="@string/backup_unlock_title" />
 
-        <dev.leonlatsch.photok.ui.components.PasswordEditText
+        <dev.leonlatsch.photok.uicomponnets.PasswordEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:textValue="@={viewModel.password}" />
