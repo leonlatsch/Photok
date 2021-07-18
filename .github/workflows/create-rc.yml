@@ -1,4 +1,4 @@
-name: Create RC Branch
+name: Create Release Candidate
 
 on: 
   workflow_dispatch:
