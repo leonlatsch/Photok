@@ -30,7 +30,7 @@ jobs:
           java-version: 11
       
       - name: Update Version
-        run: ci/updateVersion.sh ${{ github.event.inputs.version }}
+        run: ./gradlew updateVersion -Pversion=x.x.x
       
       - name: Commit and Push
         uses: actions-x/commit@v2
@@ -38,4 +38,4 @@ jobs:
           name: Release Bot
           branch: release/${{ github.event.inputs.version }}
           message: Update version to ${{ github.event.inputs.version }}
-          files: app/build.gradle.kts
+          files: gradle.properties

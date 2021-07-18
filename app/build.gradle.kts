@@ -4,6 +4,9 @@ plugins {
     kotlin("kapt")
 }
 
+val photokVersionName: String by project
+val photokVersionCode: String by project
+
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 apply(plugin = "com.jaredsburrows.license")
@@ -15,8 +18,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 16
-        versionName = "1.3.2"
+        versionCode = photokVersionCode.toInt()
+        versionName = photokVersionName
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",
