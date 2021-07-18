@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  create-release-branch:
+  create-release-candidate:
     runs-on: ubuntu-18.04
     
     steps:
@@ -39,3 +39,24 @@ jobs:
           branch: release/${{ github.event.inputs.version }}
           message: Update version to ${{ github.event.inputs.version }}
           files: gradle.properties
+          
+      - name: Create Release PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: master
+          branch: release/${{ github.event.inputs.version }}
+          title: "Release: ${{ github.event.inputs.version }}"
+          body: |
+            ## Release PR ${{ github.event.inputs.version }}
+            
+            Release Version ${{ github.event.inputs.version }}
+            
+            **Checklist BEFOORE release:**
+            - [ ] Build runs
+            - [ ] Tests run
+            - [ ] All Features are working as expected
+            - [ ] Update works
+            - [ ] Version was updated by actions bot
+          
+          assignees: leonlatsch
+          labels: release
