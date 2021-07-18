@@ -1,6 +1,6 @@
 name: Create RC Branch
 
-on:
+on: 
   workflow_dispatch:
     inputs:
       version:
