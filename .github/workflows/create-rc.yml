@@ -13,7 +13,8 @@ jobs:
     
     steps:
     
-      - uses: peterjgrainger/action-create-branch@v2.0.1
+      - name: "Create branch: release/${{ github.event.inputs.version }}"
+        uses: peterjgrainger/action-create-branch@v2.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -48,6 +49,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: release
           pr_assignee: leonlatsch
+          pr_reviewer: leonlatsch
+          pr_milestone: ${{ github.event.inputs.version }}
           pr_title: "Release: ${{ github.event.inputs.version }}"
           pr_body: |
             ## Release PR ${{ github.event.inputs.version }}
