@@ -41,12 +41,15 @@ jobs:
           files: gradle.properties
           
       - name: Create Release PR
-        uses: peter-evans/create-pull-request@v3
+        uses: repo-sync/pull-request@v2
         with:
-          base: master
-          branch: release/${{ github.event.inputs.version }}
-          title: "Release: ${{ github.event.inputs.version }}"
-          body: |
+          source_branch: release/${{ github.event.inputs.version }}
+          destination_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: release
+          pr_assignee: leonlatsch
+          pr_title: "Release: ${{ github.event.inputs.version }}"
+          pr_body: |
             ## Release PR ${{ github.event.inputs.version }}
             
             Release Version ${{ github.event.inputs.version }}
@@ -57,6 +60,3 @@ jobs:
             - [ ] All Features are working as expected
             - [ ] Update works
             - [ ] Version was updated by actions bot
-          
-          assignees: leonlatsch
-          labels: release
