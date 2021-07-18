@@ -9,7 +9,7 @@ on:
 
 jobs:
   create-release-branch:
-    runs-on: ubuntu-18.4
+    runs-on: ubuntu-18.04
     
     steps:
     
