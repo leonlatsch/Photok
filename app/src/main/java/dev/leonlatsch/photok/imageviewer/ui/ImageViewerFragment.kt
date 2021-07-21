@@ -23,7 +23,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -147,8 +146,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
-        requireActivity().window.statusBarColor = getColor(requireContext(), android.R.color.black)
-        requireActivity().window.navigationBarColor = getColor(requireContext(), android.R.color.black)
+        requireActivity().window.setStatusBarColorRes(android.R.color.black)
 
         requireActivity().window.addSystemUIVisibilityListener {
             systemUiVisible = it
@@ -189,8 +187,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().showSystemUI()
-        requireActivity().window.statusBarColor = getColor(requireContext(), R.color.colorPrimary)
-        requireActivity().window.navigationBarColor = getColor(requireContext(), R.color.background)
+        requireActivity().window.setStatusBarColorRes(R.color.colorPrimary)
     }
 
     override fun bind(binding: FragmentImageViewerBinding) {

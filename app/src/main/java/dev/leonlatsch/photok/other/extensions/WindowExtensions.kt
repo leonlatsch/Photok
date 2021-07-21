@@ -20,6 +20,8 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowInsets
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 
 /**
  * Compat method for adding a [visibilityListener] to the system ui.
@@ -38,4 +40,12 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
             visibilityListener((it and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0)
         }
     }
+}
+
+fun Window.setStatusBarColorRes(@ColorRes colorRes: Int) {
+    statusBarColor = ContextCompat.getColor(context, colorRes)
+}
+
+fun Window.setNavBarColorRes(@ColorRes colorRes: Int) {
+    navigationBarColor = ContextCompat.getColor(context, colorRes)
 }

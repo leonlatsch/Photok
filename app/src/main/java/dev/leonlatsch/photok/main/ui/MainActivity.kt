@@ -22,7 +22,6 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
@@ -30,6 +29,7 @@ import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
@@ -56,7 +56,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
+        window.setNavBarColorRes(android.R.color.black)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
