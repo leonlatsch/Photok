@@ -17,12 +17,14 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import dev.leonlatsch.photok.databinding.PhotoItemBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlin.reflect.KFunction1
@@ -60,8 +62,10 @@ class PhotoAdapter(
         holderItem.bindTo(this, getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder =
-        PhotoItemViewHolder(parent, context, photoRepository)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder {
+        val binding = PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PhotoItemViewHolder(binding, photoRepository)
+    }
 
     /**
      * Called by ui. On Click.

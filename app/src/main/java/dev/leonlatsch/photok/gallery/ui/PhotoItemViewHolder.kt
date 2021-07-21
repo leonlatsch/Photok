@@ -16,17 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.setPadding
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.PhotoItemBinding
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.hide
@@ -42,25 +36,16 @@ import timber.log.Timber
  * Uses multi selection logic in [PhotoAdapter].
  * Loads the thumbnail
  *
- * @param parent The parent [ViewGroup]
- * @param context Required by [photoRepository]
+ * @param binding
  * @param photoRepository Used to load the thumbnail
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 class PhotoItemViewHolder(
-    parent: ViewGroup,
-    private val context: Context,
+    private val binding: PhotoItemBinding,
     private val photoRepository: PhotoRepository
-) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.photo_item, parent, false)
-) {
-    private val imageView: ImageView = itemView.findViewById(R.id.photoItemImageView)
-    private val imageContainer: ConstraintLayout =
-        itemView.findViewById(R.id.photoItemImageContainer)
-    private val checkBox: CheckBox = itemView.findViewById(R.id.photoItemCheckBox)
-    private val videoIcon: ImageView = itemView.findViewById(R.id.photoItemVideoIcon)
+) : RecyclerView.ViewHolder(binding.root) {
 
     var photo: Photo? = null
     private lateinit var adapter: PhotoAdapter
@@ -68,17 +53,19 @@ class PhotoItemViewHolder(
     /**
      * Binds the parent adapter and the photo to the ViewHolder.
      */
-    fun bindTo(adapter: PhotoAdapter, photo: Photo?) {
-        this.photo = photo
+    fun bindTo(adapter: PhotoAdapter, photoItem: Photo?) {
+        this.photo = photoItem
         this.adapter = adapter
 
         photo ?: return
 
-        if (photo.type.isVideo) {
-            videoIcon.show()
+        if (photo!!.type.isVideo) {
+            binding.photoItemVideoIcon.show()
+        } else {
+            binding.photoItemVideoIcon.hide()
         }
 
-        imageView.setOnClickListener {
+        binding.photoItemImageView.setOnClickListener {
             if (adapter.isMultiSelectMode.value!!) {
                 // If the item clicked is the last selected item
                 if (adapter.isLastSelectedItem(layoutPosition)) {
@@ -92,7 +79,7 @@ class PhotoItemViewHolder(
             }
         }
 
-        imageView.setOnLongClickListener {
+        binding.photoItemImageView.setOnLongClickListener {
             if (!adapter.isMultiSelectMode.value!!) {
                 adapter.enableSelection()
                 setItemChecked(true)
@@ -102,9 +89,9 @@ class PhotoItemViewHolder(
 
         adapter.isMultiSelectMode.observe(adapter.lifecycleOwner, {
             if (it) { // When selection gets enabled, show the checkbox
-                checkBox.show()
+                binding.photoItemCheckBox.show()
             } else {
-                checkBox.hide()
+                binding.photoItemCheckBox.hide()
             }
         })
 
@@ -164,8 +151,8 @@ class PhotoItemViewHolder(
         val isSelected = adapter.isItemSelected(layoutPosition)
         val padding = if (isSelected) 20 else 0
 
-        checkBox.isChecked = isSelected
-        imageContainer.setPadding(padding)
+        binding.photoItemCheckBox.isChecked = isSelected
+        binding.photoItemImageContainer.setPadding(padding)
     }
 
     private fun setItemChecked(checked: Boolean) {
@@ -180,6 +167,7 @@ class PhotoItemViewHolder(
 
     /**
      * Load the thumbnail for the [photo].
+     * TODO: Move this somewhere else. Data should not be loaded in the view layer
      */
     private fun loadThumbnail() {
         GlobalScope.launch(Dispatchers.IO) {
@@ -192,10 +180,10 @@ class PhotoItemViewHolder(
             }
 
             onMain {
-                Glide.with(context)
+                Glide.with(binding.root.context)
                     .asBitmap()
                     .load(thumbnailBytes)
-                    .into(imageView)
+                    .into(binding.photoItemImageView)
             }
         }
     }

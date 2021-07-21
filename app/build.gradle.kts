@@ -61,7 +61,7 @@ android {
 dependencies {
     val roomVersion = "2.3.0"
     val coroutinesVersion = "1.3.7"
-    val pagingVersion = "3.0.0-alpha11"
+    val pagingVersion = "3.0.1"
     val daggerVersion = "2.31"
     val hiltVersion = "2.31-alpha"
 
