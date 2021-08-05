@@ -26,6 +26,28 @@ allprojects {
     }
 }
 
+tasks.register("updateVersion") {
+    val version: String? by project
+    version ?: throw GradleException("Not version provided")
+
+    val file = file("gradle.properties")
+    if (file.canRead()) {
+        val properties = Properties().apply {
+            load(file.inputStream())
+        }
+
+        val oldVersionCode: String = properties["photokVersionCode"] as String
+        val newVersionCode: String = oldVersionCode.toInt().inc().toString()
+
+        properties["photokVersionName"] = version!!
+        properties["photokVersionCode"] = newVersionCode
+
+        properties.store(file.writer(), null)
+    } else {
+        throw GradleException("${file.name} not readable")
+    }
+}
+
 tasks.register("updateTranslations") {
     val resPath = "app/src/main/res"
     val bytes = java.io.FileInputStream(File("$resPath/values/strings.xml")).readBytes()

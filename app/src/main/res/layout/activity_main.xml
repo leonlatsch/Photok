@@ -22,14 +22,14 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.MainActivity" />
+            type="dev.leonlatsch.photok.main.ui.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        tools:context=".main.ui.MainActivity">
 
         <FrameLayout
             android:layout_width="match_parent"

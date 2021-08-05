@@ -18,13 +18,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.setup.SetupFragment">
+    tools:context=".setup.ui.SetupFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.setup.SetupViewModel" />
+            type="dev.leonlatsch.photok.setup.ui.SetupViewModel" />
     </data>
 
     <FrameLayout
@@ -71,14 +71,14 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="20dp">
 
-                <dev.leonlatsch.photok.ui.components.PasswordEditText
+                <dev.leonlatsch.photok.uicomponnets.PasswordEditText
                     android:id="@+id/setupPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:PasswordEditTextHint="@string/setup_enter_password"
                     app:textValue="@={viewModel.password}" />
 
-                <dev.leonlatsch.photok.ui.components.PasswordEditText
+                <dev.leonlatsch.photok.uicomponnets.PasswordEditText
                     android:id="@+id/setupConfirmPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

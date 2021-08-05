@@ -17,17 +17,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.imageviewer.ViewPhotoActivity">
+    tools:context=".main.imageviewer.ViewPhotoActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.imageviewer.ImageViewerViewModel" />
+            type="dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel" />
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.imageviewer.ImageViewerFragment" />
+            type="dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragment" />
     </data>
 
     <RelativeLayout

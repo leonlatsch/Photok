@@ -1,0 +1,64 @@
+name: Create Release Candidate
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release Version'
+        required: true
+
+jobs:
+  create-release-candidate:
+    runs-on: ubuntu-18.04
+    
+    steps:
+    
+      - name: "Create branch: release/${{ github.event.inputs.version }}"
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: release/${{ github.event.inputs.version }}
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: release/${{ github.event.inputs.version }}
+      
+      - name: Set up SDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      
+      - name: Update Version
+        run: ./gradlew updateVersion -Pversion=x.x.x
+      
+      - name: Commit and Push
+        uses: actions-x/commit@v2
+        with:
+          name: Release Bot
+          branch: release/${{ github.event.inputs.version }}
+          message: Update version to ${{ github.event.inputs.version }}
+          files: gradle.properties
+          
+      - name: Create Release PR
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: release/${{ github.event.inputs.version }}
+          destination_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: release
+          pr_assignee: leonlatsch
+          pr_reviewer: leonlatsch
+          pr_title: "Release: ${{ github.event.inputs.version }}"
+          pr_body: |
+            ## Release PR ${{ github.event.inputs.version }}
+            
+            Release Version ${{ github.event.inputs.version }}
+            
+            **Checklist BEFOORE release:**
+            - [ ] Build runs
+            - [ ] Tests run
+            - [ ] All Features are working as expected
+            - [ ] Update works
+            - [ ] Version was updated by actions bot

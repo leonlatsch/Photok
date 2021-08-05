@@ -22,11 +22,11 @@
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.gallery.GalleryViewModel" />
+            type="dev.leonlatsch.photok.gallery.ui.GalleryViewModel" />
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.gallery.GalleryFragment" />
+            type="dev.leonlatsch.photok.gallery.ui.GalleryFragment" />
     </data>
 
     <LinearLayout
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
-            tools:context=".ui.gallery.GalleryFragment">
+            tools:context=".gallery.ui.GalleryFragment">
 
             <LinearLayout
                 android:id="@+id/galleryPlaceholder"

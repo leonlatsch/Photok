@@ -4,20 +4,22 @@ plugins {
     kotlin("kapt")
 }
 
+val photokVersionName: String by project
+val photokVersionCode: String by project
+
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 apply(plugin = "com.jaredsburrows.license")
 
 android {
     compileSdkVersion(30)
-    buildToolsVersion("29.0.3")
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = 16
-        versionName = "1.3.2"
+        versionCode = photokVersionCode.toInt()
+        versionName = photokVersionName
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",
@@ -57,9 +59,9 @@ android {
 }
 
 dependencies {
-    val roomVersion = "2.3.0-alpha04"
+    val roomVersion = "2.3.0"
     val coroutinesVersion = "1.3.7"
-    val pagingVersion = "3.0.0-alpha11"
+    val pagingVersion = "3.0.1"
     val daggerVersion = "2.31"
     val hiltVersion = "2.31-alpha"
 

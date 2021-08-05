@@ -21,7 +21,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.gallery.ImportMenuDialog" />
+            type="dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog" />
     </data>
 
     <LinearLayout

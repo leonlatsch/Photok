@@ -29,14 +29,13 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
         <!-- MAIN LAUNCHER: Starts the app -->
         <activity-alias
             android:name=".MainLauncher"
-            android:targetActivity=".ui.MainActivity">
+            android:targetActivity=".main.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +50,7 @@
             android:icon="@drawable/ic_phone"
             android:label="@string/hide_app_app_name_stealth"
             android:roundIcon="@drawable/ic_phone"
-            android:targetActivity=".ui.settings.hideapp.ForwardDialerActivity">
+            android:targetActivity=".settings.ui.hideapp.ForwardDialerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,7 +61,7 @@
         <!-- SEND LAUNCHER: Receives photos and videos as send to -->
         <activity-alias
             android:name=".SendLauncher"
-            android:targetActivity=".ui.MainActivity">
+            android:targetActivity=".main.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -82,11 +81,11 @@
         </activity-alias>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".main.ui.MainActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name=".ui.settings.hideapp.ForwardDialerActivity"
+            android:name=".settings.ui.hideapp.ForwardDialerActivity"
             android:theme="@style/AppTheme" />
 
         <receiver android:name=".DialLauncher">

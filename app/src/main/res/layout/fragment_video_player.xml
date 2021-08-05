@@ -20,7 +20,7 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.videoplayer.VideoPlayerFragment" />
+            type="dev.leonlatsch.photok.videoplayer.ui.VideoPlayerFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -22,11 +22,11 @@
 
         <variable
             name="context"
-            type="dev.leonlatsch.photok.ui.process.base.BaseProcessBottomSheetDialogFragment" />
+            type="dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment" />
 
         <variable
             name="viewModel"
-            type="dev.leonlatsch.photok.ui.process.base.BaseProcessViewModel" />
+            type="dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel" />
 
     </data>
 
