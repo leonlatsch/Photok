@@ -31,7 +31,7 @@ jobs:
           java-version: 11
       
       - name: Update Version
-        run: ./gradlew updateVersion -Pversion=x.x.x
+        run: ./gradlew updateVersion -Pversion=${{ github.event.inputs.version }}
       
       - name: Commit and Push
         uses: actions-x/commit@v2
