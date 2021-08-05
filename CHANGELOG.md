@@ -1,3 +1,7 @@
+### 1.3.3
+- Update dependencies
+- New app icon
+
 ### 1.3.2
 - Gifs are now being played
 
