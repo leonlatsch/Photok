@@ -6,9 +6,10 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2021)
 
-## README
-- [🇳🇱 Dutch](README.nl.md)
 Encrypt your photos on your device and keep them safe from others.
+
+## README
+- [🇳🇱 Dutch](README.nl.md)          
 
 ## About
 Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
