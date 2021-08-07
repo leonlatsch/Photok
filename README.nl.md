@@ -6,10 +6,10 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2021)
 
+Versleutel uw foto's op uw apparaat en houd ze veilig voor anderen.
+
 ## README
 - [🇬🇧 Engels](README.md)
-
-Versleutel uw foto's op uw apparaat en houd ze veilig voor anderen.
 
 ## Over
 Photok is een gratis Photo-Safe. Het slaat uw foto's versleuteld op uw apparaat op en verbergt ze voor anderen.
