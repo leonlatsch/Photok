@@ -8,7 +8,6 @@
 
 ## README
 - [🇳🇱 Dutch](README.nl.md)
-
 Encrypt your photos on your device and keep them safe from others.
 
 ## About
