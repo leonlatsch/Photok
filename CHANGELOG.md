@@ -1,3 +1,6 @@
+### IN DEV
+- Add Dutch translation
+
 ### 1.3.3
 - Update dependencies
 - New app icon
