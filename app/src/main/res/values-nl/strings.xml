@@ -54,7 +54,7 @@
     <string name="process_close">Sluit</string>
     <string name="process_abort">Afbreken</string>
     <string name="process_finished">Afgewerkt</string>
-    <string name="process_initialize">Voorbereiden...</string>
+    <string name="process_initialize">Voorbereiden…</string>
     <string name="process_aborted">Afgebroken</string>
     <string name="process_failures_occurred">\u26A0 Sommige elementen konden niet verwerkt worden</string>
 
@@ -186,11 +186,11 @@
     <string name="onboarding_skip"><u>Overslaan</u></string>
 
     <string name="onboarding_slide1_title">Welkom bij</string>
-    <string name="onboarding_slide1_description">Een veilige plek voor uw foto's.</string>
+    <string name="onboarding_slide1_description">Een veilige plek voor uw foto\'s.</string>
     <string name="onboarding_slide2_title">Maak een wachtwoord</string>
-    <string name="onboarding_slide2_description">Maak een veilig wachtwoord aan. Uw wachtwoord wordt gebruikt om uw foto's rechtstreeks op uw telefoon te versleutelen.</string>
+    <string name="onboarding_slide2_description">Maak een veilig wachtwoord aan. Uw wachtwoord wordt gebruikt om uw foto\'s rechtstreeks op uw telefoon te versleutelen.</string>
     <string name="onboarding_slide3_title">Begin met importeren</string>
-    <string name="onboarding_slide3_description">Begin met het importeren van uw foto's en bewaar ze veilig voor anderen. Daarna kunt u ze verwijderen in uw galerij.</string>
+    <string name="onboarding_slide3_description">Begin met het importeren van uw foto\'s en bewaar ze veilig voor anderen. Daarna kunt u ze verwijderen in uw galerij.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Back-up maken…</string>
@@ -210,8 +210,8 @@
     <string name="news_view_changelog">Bekijk changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Functie: Video's importeren</string>
-    <string name="news_summary_1">Video's importeren naar Photok</string>
+    <string name="news_title_1">Functie: Video\'s importeren</string>
+    <string name="news_summary_1">Video\'s importeren naar Photok</string>
 
     <string name="news_title_2">Functie: Nieuws Dialoog</string>
     <string name="news_summary_2">Ontvang bericht over nieuwe functies</string>
