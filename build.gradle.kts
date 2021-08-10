@@ -8,7 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
+        classpath("com.android.tools.build:gradle:7.0.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
@@ -36,11 +36,11 @@ tasks.register("updateVersion") {
             load(file.inputStream())
         }
 
-        val oldVersionCode: String = properties["photokVersionCode"] as String
+        val oldVersionCode: String = properties["appVersionCode"] as String
         val newVersionCode: String = oldVersionCode.toInt().inc().toString()
 
-        properties["photokVersionName"] = version!!
-        properties["photokVersionCode"] = newVersionCode
+        properties["appVersionName"] = version!!
+        properties["appVersionCode"] = newVersionCode
 
         properties.store(file.writer(), null)
     } else {

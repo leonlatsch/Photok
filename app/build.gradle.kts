@@ -4,8 +4,8 @@ plugins {
     kotlin("kapt")
 }
 
-val photokVersionName: String by project
-val photokVersionCode: String by project
+val appVersionName: String by project
+val appVersionCode: String by project
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
@@ -18,8 +18,8 @@ android {
         applicationId = "dev.leonlatsch.photok"
         minSdkVersion(24)
         targetSdkVersion(30)
-        versionCode = photokVersionCode.toInt()
-        versionName = photokVersionName
+        versionCode = appVersionCode.toInt()
+        versionName = appVersionName
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",
