@@ -1,0 +1,11 @@
+@startuml
+entity "photo" as photo {
+* id: number
+--
+* fileName: text
+* importedAt: number
+* type: number
+* size: number
+* uuid: text
+}
+@enduml
