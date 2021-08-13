@@ -22,6 +22,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
+private const val LICENSE_REPORT_FILE = "open_source_licenses.json"
+
 /**
  * Fragment for displaying open source licenses.
  *
@@ -39,9 +41,5 @@ class OssLicensesFragment :
         }
 
         binding.ossRecycler.initialize(LICENSE_REPORT_FILE)
-    }
-
-    companion object {
-        const val LICENSE_REPORT_FILE = "licenseReleaseReport.json"
     }
 }

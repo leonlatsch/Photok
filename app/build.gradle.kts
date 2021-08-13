@@ -1,5 +1,8 @@
+import com.android.sdklib.AndroidVersion.VersionCodes
+
 plugins {
     id("com.android.application")
+    id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
 }
@@ -9,15 +12,14 @@ val appVersionCode: String by project
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
-apply(plugin = "com.jaredsburrows.license")
 
 android {
-    compileSdkVersion(30)
+    compileSdk = VersionCodes.R
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
-        minSdkVersion(24)
-        targetSdkVersion(30)
+        minSdk = VersionCodes.N
+        targetSdk = VersionCodes.R
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
         buildConfigField(
@@ -56,6 +58,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+licenseReport {
+    copyCsvReportToAssets = false
+    copyHtmlReportToAssets = false
+    copyJsonReportToAssets = true
 }
 
 dependencies {

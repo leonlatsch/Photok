@@ -87,5 +87,4 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
         super.bind(binding)
         binding.context = this
     }
-
 }
