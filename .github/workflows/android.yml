@@ -1,9 +1,6 @@
 name: Android Build CI
 
-on:
-  push:
-    branches:
-      - develop
+on: push
 
 jobs:
   test:
@@ -16,19 +13,6 @@ jobs:
           java-version: 11
       - name: Test with Gradle
         run: ./gradlew test
-  update-translation:
-    runs-on: ubuntu-18.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Update from Resources
-      run: ./gradlew updateTranslations
-    - name: push
-      uses: actions-x/commit@v2
-      with:
-        name: Translation Updater
-        message: Update Translation Badges in README.md
-        files: README.md
         
   build:
     runs-on: ubuntu-18.04

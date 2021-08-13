@@ -1,0 +1,28 @@
+name: Update Translation Badges
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  update-translation-badges:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Update Translation Badges
+        run: ./gradlew updateTranslations
+
+      - name: Commit and Push
+        uses: actions-x/commit@v2
+        with:
+          name: Translation Badges Updater
+          message: Update Translation Badges in README.md
+          files: README.md
