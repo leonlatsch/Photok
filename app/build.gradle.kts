@@ -33,6 +33,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += "room.incremental" to "true"
+                arguments += "room.schemaLocation" to "$projectDir/schemas"
             }
         }
     }
@@ -67,7 +68,7 @@ licenseReport {
 }
 
 dependencies {
-    val roomVersion = "2.3.0"
+    val roomVersion = "2.4.0-alpha04"
     val coroutinesVersion = "1.3.7"
     val pagingVersion = "3.0.1"
     val daggerVersion = "2.31"

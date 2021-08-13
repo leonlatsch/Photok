@@ -170,7 +170,7 @@ class PhotoItemViewHolder(
      * TODO: Move this somewhere else. Data should not be loaded in the view layer
      */
     private fun loadThumbnail() {
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) { // TODO: Change me. Do not run me in global scope
             photo ?: return@launch
 
             val thumbnailBytes = photoRepository.loadThumbnail(photo!!)

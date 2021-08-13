@@ -32,7 +32,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 @Database(
     entities = [Photo::class],
     version = VERSION,
-    exportSchema = false
+    exportSchema = true,
 )
 @TypeConverters(Converters::class)
 abstract class PhotokDatabase : RoomDatabase() {
