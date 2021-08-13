@@ -1,11 +1,20 @@
 @startuml
 entity "photo" as photo {
-* id: number
+* **id: number <<generated>>**
 --
 * fileName: text
 * importedAt: number
 * type: number
 * size: number
 * uuid: text
+* collection <<FK>>
 }
+
+entity "collection" as collection {
+* **id: number <<generated>>**
+--
+* name: text
+}
+
+photo }|--o| collection
 @enduml
