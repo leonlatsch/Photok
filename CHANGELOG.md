@@ -1,4 +1,4 @@
-### IN DEV
+### 1.3.4
 - Add Dutch translation
 
 ### 1.3.3
