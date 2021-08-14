@@ -8,7 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
+        classpath("com.android.tools.build:gradle:7.0.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
@@ -36,11 +36,11 @@ tasks.register("updateVersion") {
             load(file.inputStream())
         }
 
-        val oldVersionCode: String = properties["photokVersionCode"] as String
+        val oldVersionCode: String = properties["appVersionCode"] as String
         val newVersionCode: String = oldVersionCode.toInt().inc().toString()
 
-        properties["photokVersionName"] = version!!
-        properties["photokVersionCode"] = newVersionCode
+        properties["appVersionName"] = version!!
+        properties["appVersionCode"] = newVersionCode
 
         properties.store(file.writer(), null)
     } else {
@@ -82,7 +82,7 @@ tasks.register("updateTranslations") {
                     val localeName = dir.name.replace("values-", "")
                     val percentage = (strings.toDouble() / enStrings.toDouble()) * 100
                     val template =
-                        "![{alt-locale}](https://img.shields.io/badge/{locale}-{percentage}{color})\nMaintained by {author}\n\n"
+                        "![{alt-locale}](https://img.shields.io/badge/{locale}-{percentage}{color})\n"
                     val color = when {
                         percentage > 99 -> "25-brightgreen"
                         percentage > 75 -> "25-yellow"
@@ -97,7 +97,6 @@ tasks.register("updateTranslations") {
                         .replace("{alt-locale}", localeDisplay)
                         .replace("{percentage}", "${percentage.toInt()}%")
                         .replace("{color}", color)
-                        .replace("{author}", author)
                     badges.add(badge)
                 }
             }
@@ -127,7 +126,7 @@ tasks.register("updateTranslations") {
         val suffixStrings = readmeLines.subList(endIndex, readmeLines.size - 1)
 
         var badgeString = ""
-        badgeString += "![English](https://img.shields.io/badge/English-100%25-brightgreen)\nMaintained by @leonlatsch\n\n" // Hard code add english
+        badgeString += "![English](https://img.shields.io/badge/English-100%25-brightgreen)\n" // Hard code add english
         badges.forEach {
             badgeString += it
         }

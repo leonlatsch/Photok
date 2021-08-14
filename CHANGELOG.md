@@ -1,3 +1,7 @@
+### 1.3.4
+- Add Dutch translation
+- Timer when hiding Photok for better usability
+
 ### 1.3.3
 - Update dependencies
 - New app icon

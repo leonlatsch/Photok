@@ -1,25 +1,27 @@
+import com.android.sdklib.AndroidVersion.VersionCodes
+
 plugins {
     id("com.android.application")
+    id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
 }
 
-val photokVersionName: String by project
-val photokVersionCode: String by project
+val appVersionName: String by project
+val appVersionCode: String by project
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
-apply(plugin = "com.jaredsburrows.license")
 
 android {
-    compileSdkVersion(30)
+    compileSdk = VersionCodes.R
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
-        minSdkVersion(24)
-        targetSdkVersion(30)
-        versionCode = photokVersionCode.toInt()
-        versionName = photokVersionName
+        minSdk = VersionCodes.N
+        targetSdk = VersionCodes.R
+        versionCode = appVersionCode.toInt()
+        versionName = appVersionName
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",
@@ -56,6 +58,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+licenseReport {
+    copyCsvReportToAssets = false
+    copyHtmlReportToAssets = false
+    copyJsonReportToAssets = true
 }
 
 dependencies {
@@ -110,7 +118,7 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.2.3")
+    implementation("androidx.activity:activity-ktx:1.3.1")
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
@@ -134,15 +142,15 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
 
     // Exoplayer
-    implementation("com.google.android.exoplayer:exoplayer-core:2.14.1")
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.14.1")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.14.2")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.14.2")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
     implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     testImplementation("junit:junit:4.13.1")
