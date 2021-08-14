@@ -70,6 +70,7 @@
         <Button
             android:layout_width="@dimen/wide_button_width"
             android:layout_height="@dimen/button_height"
+            android:enabled="@{viewModel.buttonEnabled}"
             android:onClick="@{() -> context.toggleAppVisibility()}"
             android:text="@{viewModel.buttonText, default=Button}" />
 
