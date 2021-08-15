@@ -106,8 +106,6 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      */
     suspend fun safeImportPhoto(sourceUri: Uri): Boolean {
-        val collectionWithPhotos = collectionDao.getCollectionWithPhotos(1)
-        Timber.d(collectionWithPhotos.toString())
         val type = when (app.contentResolver.getType(sourceUri)) {
             PhotoType.PNG.mimeType -> PhotoType.PNG
             PhotoType.JPEG.mimeType -> PhotoType.JPEG
