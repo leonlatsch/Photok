@@ -53,6 +53,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCollectionDao(database: PhotokDatabase) = database.getCollectionDao()
+
+    @Provides
+    @Singleton
     fun provideConfig(@ApplicationContext app: Context) = Config(app)
 
     @Provides

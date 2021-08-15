@@ -22,7 +22,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import com.bumptech.glide.Glide
+import dev.leonlatsch.photok.model.database.dao.CollectionDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
+import dev.leonlatsch.photok.model.database.entity.Collection
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
@@ -44,6 +46,7 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
+    private val collectionDao: CollectionDao,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application
 ) {
@@ -103,6 +106,8 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      */
     suspend fun safeImportPhoto(sourceUri: Uri): Boolean {
+        val collectionWithPhotos = collectionDao.getCollectionWithPhotos(1)
+        Timber.d(collectionWithPhotos.toString())
         val type = when (app.contentResolver.getType(sourceUri)) {
             PhotoType.PNG.mimeType -> PhotoType.PNG
             PhotoType.JPEG.mimeType -> PhotoType.JPEG
@@ -117,7 +122,7 @@ class PhotoRepository @Inject constructor(
 
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(sourceUri)
-        val photo = Photo(fileName, System.currentTimeMillis(), type)
+        val photo = Photo(fileName, System.currentTimeMillis(), type, collectionId = 1)
 
         val created = safeCreatePhoto(photo, inputStream, sourceUri)
         inputStream?.lazyClose()
