@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.model.database.dao
 
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Collection
-import dev.leonlatsch.photok.model.database.relation.CollectionWithPhotos
 
 @Dao
 interface CollectionDao {
@@ -37,8 +36,4 @@ interface CollectionDao {
 
     @Query("SELECT * FROM collection")
     suspend fun getAll(): List<Collection>
-
-    @Transaction
-    @Query("SELECT * FROM collection WHERE id = :collectionId")
-    suspend fun getCollectionWithPhotos(collectionId: Int): CollectionWithPhotos
 }
