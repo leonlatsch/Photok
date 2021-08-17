@@ -89,6 +89,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:onClick="@{() -> viewModel.unlock()}"
+                android:onLongClick="@{() -> viewModel.debugUnlock()}"
                 android:text="@string/unlock_button" />
 
         </LinearLayout>
