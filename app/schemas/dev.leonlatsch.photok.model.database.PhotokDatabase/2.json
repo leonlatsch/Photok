@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "dd2687a3525a7dfee36a28170b16f193",
+    "identityHash": "edc9263aebd4d6e9bcb0096242b6f1c4",
     "entities": [
       {
         "tableName": "photo",
@@ -62,11 +62,17 @@
       },
       {
         "tableName": "collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `cover` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cover",
+            "columnName": "cover",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -90,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd2687a3525a7dfee36a28170b16f193')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'edc9263aebd4d6e9bcb0096242b6f1c4')"
     ]
   }
 }

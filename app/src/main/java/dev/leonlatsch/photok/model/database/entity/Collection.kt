@@ -22,5 +22,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "collection")
 data class Collection(
     val name: String,
+    val cover: String,
     @PrimaryKey(autoGenerate = true) val id: Int? = null
-)
+) {
+    val coverFileName: String
+        get() = Photo.internalThumbnailFileName(cover)
+}
