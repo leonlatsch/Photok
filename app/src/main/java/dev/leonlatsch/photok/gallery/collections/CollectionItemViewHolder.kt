@@ -14,27 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.dao
+package dev.leonlatsch.photok.gallery.collections
 
-import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.recyclerview.widget.RecyclerView
+import dev.leonlatsch.photok.databinding.ItemCollectionBinding
 import dev.leonlatsch.photok.model.database.entity.Collection
 
-@Dao
-interface CollectionDao {
+class CollectionItemViewHolder(
+    private val binding: ItemCollectionBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(collection: Collection): Long
+    fun bindTo(collection: Collection?) {
+        collection ?: return
 
-    @Delete
-    suspend fun delete(collection: Collection): Int
-
-    @Query("DELETE FROM collection")
-    suspend fun deleteAll()
-
-    @Query("SELECT * FROM collection WHERE id = :collectionId")
-    suspend fun get(collectionId: Int): Collection
-
-    @Query("SELECT * FROM collection")
-    fun getAllPaged(): PagingSource<Int, Collection>
+        binding.collection = collection
+    }
 }

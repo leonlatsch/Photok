@@ -46,7 +46,6 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
-    private val collectionDao: CollectionDao,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application
 ) {
@@ -83,8 +82,6 @@ class PhotoRepository @Inject constructor(
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
-    fun getAllInCollection(collection: Collection) = photoDao.getAllPagedSortedInCollection(collection.id!!)
-
     /**
      * @see PhotoDao.getAllIds
      */
@@ -94,6 +91,8 @@ class PhotoRepository @Inject constructor(
      * @see PhotoDao.countAll
      */
     suspend fun countAll() = photoDao.countAll()
+
+    fun getAllInCollection(collection: Collection) = photoDao.getAllPagedSortedInCollection(collection.id!!)
 
     // endregion
 

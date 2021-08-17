@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.Manifest
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -30,14 +31,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
+import dev.leonlatsch.photok.gallery.collections.CollectionAdapter
 import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.model.database.entity.Collection
 import dev.leonlatsch.photok.news.ui.NewsDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
@@ -62,16 +66,18 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private val viewModel: GalleryViewModel by viewModels()
 
-    private lateinit var adapter: PhotoAdapter
+    private lateinit var gridAdapter: PhotoAdapter
+    private lateinit var collectionAdapter: CollectionAdapter
     private var actionMode: ActionMode? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setToolbar(binding.galleryToolbar)
+        setupCollectionsDrawer()
         setupGridView()
 
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+        gridAdapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
                 actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
             } else {
@@ -84,20 +90,31 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    private fun setupCollectionsDrawer() = with(binding.galleryCollectionsDrawer) {
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        collectionAdapter = CollectionAdapter()
+        adapter = collectionAdapter
+
+        lifecycleScope.launch {
+            viewModel.collections.collectLatest { collectionAdapter.submitData(it) }
+        }
+    }
+
     private fun setupGridView() {
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
 
-        adapter = PhotoAdapter(
+        gridAdapter = PhotoAdapter(
             requireContext(),
             viewModel.photoRepository,
             this::openPhoto,
             viewLifecycleOwner
         )
 
-        adapter.registerAdapterDataObserver(onAdapterDataObserver)
-        binding.galleryPhotoGrid.adapter = adapter
+        gridAdapter.registerAdapterDataObserver(onAdapterDataObserver)
+        binding.galleryPhotoGrid.adapter = gridAdapter
         lifecycleScope.launch {
-            viewModel.photos.collectLatest { adapter.submitData(it) }
+            viewModel.photos.collectLatest { gridAdapter.submitData(it) }
         }
     }
 
@@ -114,8 +131,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * Called by ui.
      */
     fun startDelete() {
-        DeleteBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
-        adapter.disableSelection()
+        DeleteBottomSheetDialogFragment(gridAdapter.getAllSelected()).show(requireActivity().supportFragmentManager)
+        gridAdapter.disableSelection()
     }
 
     /**
@@ -130,8 +147,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            ExportBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
-            adapter.disableSelection()
+            ExportBottomSheetDialogFragment(gridAdapter.getAllSelected()).show(requireActivity().supportFragmentManager)
+            gridAdapter.disableSelection()
         } else {
             EasyPermissions.requestPermissions(
                 this,
@@ -144,10 +161,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
-            viewModel.togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(gridAdapter.itemCount)
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
-            viewModel.togglePlaceholder(adapter.itemCount)
+            viewModel.togglePlaceholder(gridAdapter.itemCount)
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
@@ -189,7 +206,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             when (item?.itemId) {
                 R.id.menuMsAll -> {
                     lifecycleScope.launch {
-                        adapter.selectAll()
+                        gridAdapter.selectAll()
                     }
                     true
                 }
@@ -199,7 +216,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                             requireContext(),
                             String.format(
                                 getString(R.string.delete_are_you_sure),
-                                adapter.selectedItems.size
+                                gridAdapter.selectedItems.size
                             )
                         ) { _, _ -> // On positive button clicked
                             startDelete()
@@ -213,7 +230,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                             requireContext(),
                             String.format(
                                 getString(R.string.export_are_you_sure),
-                                adapter.selectedItems.size
+                                gridAdapter.selectedItems.size
                             )
                         ) { _, _ -> // On positive button clicked
                             startExport()
@@ -225,7 +242,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
-            adapter.disableSelection()
+            gridAdapter.disableSelection()
         }
     }
 

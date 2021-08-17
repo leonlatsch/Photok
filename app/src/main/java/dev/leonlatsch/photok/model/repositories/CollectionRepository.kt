@@ -14,27 +14,23 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.dao
+package dev.leonlatsch.photok.model.repositories
 
-import androidx.paging.PagingSource
-import androidx.room.*
+import dev.leonlatsch.photok.model.database.dao.CollectionDao
 import dev.leonlatsch.photok.model.database.entity.Collection
+import javax.inject.Inject
 
-@Dao
-interface CollectionDao {
+class CollectionRepository @Inject constructor(
+    private val collectionDao: CollectionDao,
+) {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(collection: Collection): Long
+    suspend fun insert(collection: Collection) = collectionDao.insert(collection)
 
-    @Delete
-    suspend fun delete(collection: Collection): Int
+    suspend fun delete(collection: Collection) = collectionDao.delete(collection)
 
-    @Query("DELETE FROM collection")
-    suspend fun deleteAll()
+    suspend fun deleteAll() = collectionDao.deleteAll()
 
-    @Query("SELECT * FROM collection WHERE id = :collectionId")
-    suspend fun get(collectionId: Int): Collection
+    suspend fun get(id: Int) = collectionDao.get(id)
 
-    @Query("SELECT * FROM collection")
-    fun getAllPaged(): PagingSource<Int, Collection>
+    fun getAllCollectionsPaged() = collectionDao.getAllPaged()
 }
