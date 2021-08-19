@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.gallery.ui
 
 import androidx.core.view.setPadding
 import androidx.databinding.ObservableList
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.databinding.PhotoItemBinding
@@ -27,7 +29,6 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.onMain
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -44,6 +45,7 @@ import timber.log.Timber
  */
 class PhotoItemViewHolder(
     private val binding: PhotoItemBinding,
+    private val lifecycleOwner: LifecycleOwner,
     private val photoRepository: PhotoRepository
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -170,7 +172,7 @@ class PhotoItemViewHolder(
      * TODO: Move this somewhere else. Data should not be loaded in the view layer
      */
     private fun loadThumbnail() {
-        GlobalScope.launch(Dispatchers.IO) { // TODO: Change me. Do not run me in global scope
+        lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             photo ?: return@launch
 
             val thumbnailBytes = photoRepository.loadThumbnail(photo!!)

@@ -64,7 +64,7 @@ class PhotoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoItemViewHolder {
         val binding = PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PhotoItemViewHolder(binding, photoRepository)
+        return PhotoItemViewHolder(binding, lifecycleOwner, photoRepository)
     }
 
     /**

@@ -1,8 +1,10 @@
 ![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/leonlatsch/Photok?include_prereleases&label=version)
+[![GitHub release](https://img.shields.io/github/v/release/leonlatsch/Photok.svg?logo=github&label=GitHub)](https://github.com/leonlatsch/Photok/releases/latest)
+[![Google Play](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=white&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Ddev.leonlatsch.photok%26l%3DGoogle%2520Play%26m%3D%24version)](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
+[![F-Droid](https://img.shields.io/f-droid/v/dev.leonlatsch.photok.svg?logo=f-droid&label=F-Droid)](https://f-droid.org/packages/dev.leonlatsch.photok/)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/leonlatsch/Photok/Android%20Build%20CI)
-![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)
+[![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2021)
 
@@ -26,10 +28,11 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 [<img src="https://f-droid.org/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/dev.leonlatsch.photok/)
-      
-Alternative 1: [Direct Download APK](https://github.com/leonlatsch/Photok/releases/latest)
+[<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" 
+      alt="Get it on GitHub" 
+      height="75">](https://github.com/moneytoo/Player/releases/latest)
 
-Alternative 2: [F-Droid (IzzyOnDroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
+Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)**
 
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
