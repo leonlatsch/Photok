@@ -21,6 +21,8 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.other.DEBUG_PASSWORD
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
@@ -102,4 +104,17 @@ class SetupViewModel @Inject constructor(
      * @see PasswordUtils.validatePasswords
      */
     fun validateBothPasswords() = PasswordUtils.validatePasswords(password, confirmPassword)
+
+    fun debugSetup(): Boolean {
+        viewModelScope.launch {
+            if (BuildConfig.DEBUG) {
+                setupState = SetupState.LOADING
+
+                passwordManager.storePassword(DEBUG_PASSWORD)
+                encryptionManager.initialize(DEBUG_PASSWORD)
+                setupState = SetupState.FINISHED
+            }
+        }
+        return true
+    }
 }

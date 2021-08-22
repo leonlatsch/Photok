@@ -22,6 +22,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.other.DEBUG_PASSWORD
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
@@ -78,7 +79,7 @@ class UnlockViewModel @Inject constructor(
     fun debugUnlock(): Boolean {
         viewModelScope.launch {
             if (BuildConfig.DEBUG) {
-                encryptionManager.initialize("abc123")
+                encryptionManager.initialize(DEBUG_PASSWORD)
                 unlockState = UnlockState.UNLOCKED
             }
         }

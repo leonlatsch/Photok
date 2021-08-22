@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,16 +41,17 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:onLongClick="@{() -> viewModel.debugSetup()}"
                 android:textAlignment="center" />
 
             <TextView
-                android:text="@string/setupSetup"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:layout_marginBottom="30dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:text="@string/setupSetup"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <TextView
                 style="@style/VeryBigTextViewStyle"
@@ -83,8 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_gap"
-                    app:PasswordEditTextHint="@string/setup_confirm_password"
                     android:visibility="gone"
+                    app:PasswordEditTextHint="@string/setup_confirm_password"
                     app:textValue="@={viewModel.confirmPassword}" />
 
                 <LinearLayout
