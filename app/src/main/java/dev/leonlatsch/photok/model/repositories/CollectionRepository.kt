@@ -26,6 +26,8 @@ class CollectionRepository @Inject constructor(
 
     suspend fun insert(collection: Collection) = collectionDao.insert(collection)
 
+    suspend fun update(collection: Collection) = collectionDao.update(collection)
+
     suspend fun delete(collection: Collection) = collectionDao.delete(collection)
 
     suspend fun deleteAll() = collectionDao.deleteAll()
