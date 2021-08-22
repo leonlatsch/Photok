@@ -105,6 +105,10 @@ class SetupViewModel @Inject constructor(
      */
     fun validateBothPasswords() = PasswordUtils.validatePasswords(password, confirmPassword)
 
+    /**
+     * Setup the app with [DEBUG_PASSWORD].
+     * Only works in debug builds.
+     */
     fun debugSetup(): Boolean {
         viewModelScope.launch {
             if (BuildConfig.DEBUG) {

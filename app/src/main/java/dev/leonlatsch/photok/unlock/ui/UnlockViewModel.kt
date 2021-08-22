@@ -76,6 +76,10 @@ class UnlockViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Unlock the app with [DEBUG_PASSWORD].
+     * Only works in debug builds.
+     */
     fun debugUnlock(): Boolean {
         viewModelScope.launch {
             if (BuildConfig.DEBUG) {
