@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.Manifest
 import android.content.res.Configuration
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -36,12 +35,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.gallery.collections.CollectionAdapter
+import dev.leonlatsch.photok.gallery.ui.collections.CollectionAdapter
 import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.MainActivity
-import dev.leonlatsch.photok.model.database.entity.Collection
 import dev.leonlatsch.photok.news.ui.NewsDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT

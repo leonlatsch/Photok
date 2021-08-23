@@ -26,6 +26,7 @@ const val INTENT_PHOTO_ID = "intent.photo.id"
 
 // Debug
 const val DEBUG_PASSWORD = "abc123"
+val NOTHING = {}
 
 // Permissions
 const val REQ_PERM_IMPORT_PHOTOS = 10

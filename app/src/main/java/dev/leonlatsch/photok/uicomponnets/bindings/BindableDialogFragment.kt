@@ -58,6 +58,6 @@ abstract class BindableDialogFragment<BindingType : ViewDataBinding>(
     }
 
     override fun bind(binding: BindingType) {
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 }

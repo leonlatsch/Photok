@@ -51,6 +51,6 @@ abstract class BindableBottomSheetDialogFragment<BindingType : ViewDataBinding>(
     }
 
     override fun bind(binding: BindingType) {
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 }

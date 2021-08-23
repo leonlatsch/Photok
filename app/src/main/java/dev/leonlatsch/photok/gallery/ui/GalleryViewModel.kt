@@ -25,13 +25,11 @@ import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.model.database.entity.Collection
 import dev.leonlatsch.photok.model.repositories.CollectionRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

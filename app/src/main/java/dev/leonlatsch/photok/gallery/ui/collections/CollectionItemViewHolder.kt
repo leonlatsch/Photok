@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.collections
+package dev.leonlatsch.photok.gallery.ui.collections
 
 import androidx.recyclerview.widget.RecyclerView
 import dev.leonlatsch.photok.databinding.ItemCollectionBinding
