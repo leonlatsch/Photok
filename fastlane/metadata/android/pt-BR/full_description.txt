@@ -1,0 +1,22 @@
+O Photok é um protetor de fotos que as armazena criptografadas em seu dispositivo e as deixa escondidas de outros.
+O App usa tecnologias como AES-256 ou bcrypt, para manter suas fotos seguras.
+O Photok é completamente gratuito, de software livre e não contém anúncios.
+
+<b>Funcionalidades</b>
+
+- importe fotos de sua galeria
+- totalmente funcional em app de galeria
+- exporte fotos de volta para sua galeria
+- mude sua senha
+- faça e restaure backups à vontade
+- compartilhe com Photok
+- oculte o ícone do App
+
+<b>Benefícios</b>
+
+- esconda suas fotos pessoais de terceiros
+- proteja suas fotos contra roubo de dados
+
+Photok no GitHub: https://github.com/leonlatsch/Photok
+
+Ícones feitos por <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> e <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> de <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
