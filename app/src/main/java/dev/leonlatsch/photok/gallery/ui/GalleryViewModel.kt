@@ -18,16 +18,16 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.app.Application
 import android.view.View
-import androidx.databinding.Bindable
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.gallery.ui.nav.NavigationEvent
 import dev.leonlatsch.photok.model.repositories.CollectionRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.onMain
+import dev.leonlatsch.photok.lifecycle.SingleLiveEvent
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
@@ -48,19 +48,13 @@ class GalleryViewModel @Inject constructor(
     private val config: Config
 ) : ObservableViewModel(app) {
 
-    @get:Bindable
-    var placeholderVisibility: Int = View.VISIBLE
-        set(value) {
-            field = value
-            notifyChange(BR.placeholderVisibility, value)
-        }
+    val navigationEvent = SingleLiveEvent<NavigationEvent>()
 
-    @get:Bindable
-    var labelsVisibility: Int = View.GONE
-        set(value) {
-            field = value
-            notifyChange(BR.labelsVisibility, value)
-        }
+    var placeholderVisibility = ObservableInt(View.VISIBLE)
+
+    val photoGridVisibility = ObservableInt(View.VISIBLE)
+
+    val collectionsVisibility = ObservableInt(View.VISIBLE)
 
     val photos = Pager(
         PagingConfig(pageSize = PAGE_SIZE, maxSize = MAX_SIZE)
@@ -74,25 +68,35 @@ class GalleryViewModel @Inject constructor(
         collectionRepository.getAllCollectionsPaged()
     }.flow
 
-    /**
-     * Toggle the placeholder and label visibilities.
-     */
-    fun togglePlaceholder(itemCount: Int) {
-        if (itemCount > 0) {
-            labelsVisibility = View.VISIBLE
-            placeholderVisibility = View.GONE
+    fun updatePlaceholder(photoCount: Int) {
+        if (photoCount > 0) {
+            photoGridVisibility.set(View.VISIBLE)
+            placeholderVisibility.set(View.GONE)
         } else {
-            placeholderVisibility = View.VISIBLE
-            labelsVisibility = View.GONE
+            photoGridVisibility.set(View.GONE)
+            placeholderVisibility.set(View.VISIBLE)
         }
     }
 
-    /**
-     * Run the [onNewsPresent] if the app was just updated.
-     */
-    fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
+    fun updateCollections(collectionCount: Int) {
+        if (collectionCount > 0) {
+            collectionsVisibility.set(View.VISIBLE)
+        } else {
+            collectionsVisibility.set(View.GONE)
+        }
+    }
+
+    fun navigateImportDialog() = viewModelScope.launch {
+        navigationEvent.value = NavigationEvent.ShowImportMenu
+    }
+
+    fun navigateAddCollectionDialog() = viewModelScope.launch {
+        navigationEvent.value = NavigationEvent.ShowAddCollectionDialog
+    }
+
+    fun checkAndShowNewsDialog() = viewModelScope.launch {
         if (config.systemLastFeatureVersionCode < BuildConfig.FEATURE_VERSION_CODE) {
-            onMain(onNewsPresent)
+            navigationEvent.value = NavigationEvent.ShowNewsDialog
             config.systemLastFeatureVersionCode = BuildConfig.FEATURE_VERSION_CODE
         }
     }

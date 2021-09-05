@@ -36,11 +36,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
 import dev.leonlatsch.photok.gallery.ui.collections.CollectionAdapter
-import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
+import dev.leonlatsch.photok.gallery.ui.nav.GalleryNavigator
 import dev.leonlatsch.photok.main.ui.MainActivity
-import dev.leonlatsch.photok.news.ui.NewsDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
@@ -52,6 +51,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
 /**
  * Fragment for displaying a gallery.
@@ -68,12 +68,15 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     private lateinit var collectionAdapter: CollectionAdapter
     private var actionMode: ActionMode? = null
 
+    @Inject
+    lateinit var galleryNavigator: GalleryNavigator
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setToolbar(binding.galleryToolbar)
         setupCollectionsDrawer()
-        setupGridView()
+        setupPhotoGrid()
 
         gridAdapter.isMultiSelectMode.observe(viewLifecycleOwner, {
             if (it) {
@@ -83,9 +86,11 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             }
         })
 
-        viewModel.runIfNews {
-            NewsDialog().show(requireActivity().supportFragmentManager)
+        viewModel.navigationEvent.observe(viewLifecycleOwner) {
+            galleryNavigator.navigate(it, this)
         }
+
+        viewModel.checkAndShowNewsDialog()
     }
 
     private fun setupCollectionsDrawer() = with(binding.galleryCollectionsDrawer) {
@@ -94,12 +99,16 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         collectionAdapter = CollectionAdapter()
         adapter = collectionAdapter
 
+        collectionAdapter.registerAdapterDataObserver(collectionAdapterDataObserver)
+
         lifecycleScope.launch {
             viewModel.collections.collectLatest { collectionAdapter.submitData(it) }
         }
+
+        updateCollections()
     }
 
-    private fun setupGridView() {
+    private fun setupPhotoGrid() {
         binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
 
         gridAdapter = PhotoAdapter(
@@ -109,19 +118,14 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             viewLifecycleOwner
         )
 
-        gridAdapter.registerAdapterDataObserver(onAdapterDataObserver)
+        gridAdapter.registerAdapterDataObserver(gridAdapterDataObserver)
         binding.galleryPhotoGrid.adapter = gridAdapter
+
         lifecycleScope.launch {
             viewModel.photos.collectLatest { gridAdapter.submitData(it) }
         }
-    }
 
-    /**
-     * Show [ImportMenuDialog].
-     * Called by ui.
-     */
-    fun showImportMenu() {
-        ImportMenuDialog().show(childFragmentManager)
+        updatePlaceholder()
     }
 
     /**
@@ -129,7 +133,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
      * Called by ui.
      */
     fun startDelete() {
-        DeleteBottomSheetDialogFragment(gridAdapter.getAllSelected()).show(requireActivity().supportFragmentManager)
+        DeleteBottomSheetDialogFragment(gridAdapter.getAllSelected()).show(childFragmentManager)
         gridAdapter.disableSelection()
     }
 
@@ -157,12 +161,30 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
-    private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+    private val collectionAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            updateCollections()
+        }
+
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            updateCollections()
+        }
+    }
+
+    private val gridAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
-            viewModel.togglePlaceholder(gridAdapter.itemCount)
+            updatePlaceholder()
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
-            viewModel.togglePlaceholder(gridAdapter.itemCount)
+            updatePlaceholder()
+    }
+
+    private fun updateCollections() {
+        viewModel.updateCollections(collectionAdapter.itemCount)
+    }
+
+    private fun updatePlaceholder() {
+        viewModel.updatePlaceholder(gridAdapter.itemCount)
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
@@ -247,7 +269,8 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     override fun onResume() {
         super.onResume()
         requireActivityAs(MainActivity::class).onOrientationChanged = {
-            setupGridView()
+            setupPhotoGrid()
+            setupCollectionsDrawer()
         }
     }
 

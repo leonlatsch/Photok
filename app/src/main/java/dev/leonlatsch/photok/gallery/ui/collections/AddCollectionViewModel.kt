@@ -22,6 +22,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.lifecycle.SingleLiveEvent
 import dev.leonlatsch.photok.model.database.entity.Collection
 import dev.leonlatsch.photok.model.repositories.CollectionRepository
 import dev.leonlatsch.photok.other.extensions.empty
@@ -43,7 +44,7 @@ class AddCollectionViewModel @Inject constructor(
     private val collectionRepository: CollectionRepository
 ) : ObservableViewModel(app) {
 
-    val navigationEvent = MutableLiveData<AddCollectionNavigationEvent>()
+    val navigationEvent = SingleLiveEvent<AddCollectionNavigationEvent>()
 
     @Bindable
     var collectionName: String = String.empty

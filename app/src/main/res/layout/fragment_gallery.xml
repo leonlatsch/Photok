@@ -115,13 +115,14 @@
                     android:layout_marginTop="@dimen/medium_gap"
                     android:layout_marginBottom="@dimen/small_gap"
                     android:text="Collections"
-                    android:visibility="@{viewModel.labelsVisibility}" />
+                    android:visibility="@{viewModel.collectionsVisibility}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/galleryCollectionsDrawer"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.collectionsVisibility}" />
 
                 <TextView
                     android:id="@+id/galleryAllPhotosTitle"
@@ -131,25 +132,39 @@
                     android:layout_marginTop="@dimen/medium_gap"
                     android:layout_marginBottom="@dimen/small_gap"
                     android:text="@string/gallery_all_photos_label"
-                    android:visibility="@{viewModel.labelsVisibility}" />
+                    android:visibility="@{viewModel.photoGridVisibility}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/galleryPhotoGrid"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"
+                    android:visibility="@{viewModel.photoGridVisibility}" />
 
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> context.showImportMenu()}"
+                android:onClick="@{() -> viewModel.navigateImportDialog()}"
                 android:src="@drawable/ic_add"
                 android:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.96"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.98" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.navigateAddCollectionDialog()}"
+                android:src="@drawable/ic_add"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.08"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.98" />
