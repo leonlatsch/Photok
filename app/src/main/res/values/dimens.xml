@@ -32,6 +32,6 @@
     <dimen name="slight_round_corners_radius">8dp</dimen>
     <dimen name="toolbar_menu_margin_end">10dp</dimen>
 
-    <!-- DIALOGs -->
+    <!-- DIALOGS -->
     <dimen name="dialog_min_width">350dp</dimen>
 </resources>
