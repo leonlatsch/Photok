@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.news.newfeatures.ui.model.NewFeatureViewData
  * @since 1.3.0
  * @author Leon Latsch
  */
-class NewsViewHolder(
+class NewFeaturesViewHolder(
     private val binding: ItemNewsBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 

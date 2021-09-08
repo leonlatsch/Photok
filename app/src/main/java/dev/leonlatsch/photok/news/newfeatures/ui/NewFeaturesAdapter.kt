@@ -23,21 +23,21 @@ import dev.leonlatsch.photok.databinding.ItemNewsBinding
 import dev.leonlatsch.photok.news.newfeatures.ui.model.NewFeatureViewData
 
 /**
- * Adapter for news entries in the [NewsDialog].
+ * Adapter for news entries in the [NewFeaturesDialog].
  *
  * @since 1.3.0
  * @author Leon Latsch
  */
 class NewFeaturesAdapter(
     private val featureViewData: List<NewFeatureViewData>,
-) : RecyclerView.Adapter<NewsViewHolder>() {
+) : RecyclerView.Adapter<NewFeaturesViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewFeaturesViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context))
-        return NewsViewHolder(binding)
+        return NewFeaturesViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewFeaturesViewHolder, position: Int) {
         holder.bindTo(featureViewData[position])
     }
 

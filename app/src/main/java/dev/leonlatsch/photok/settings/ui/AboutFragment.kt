@@ -25,7 +25,7 @@ import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentAboutBinding
-import dev.leonlatsch.photok.news.newfeatures.ui.NewsDialog
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -57,7 +57,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuAboutNews -> NewsDialog().show(childFragmentManager)
+            R.id.menuAboutNews -> NewFeaturesDialog().show(childFragmentManager)
         }
         return true
     }

@@ -32,7 +32,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  * @since 1.3.0
  * @author Leon Latsch
  */
-class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_news) {
+class NewFeaturesDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
