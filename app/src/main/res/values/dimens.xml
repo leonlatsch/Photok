@@ -33,5 +33,5 @@
     <dimen name="toolbar_menu_margin_end">10dp</dimen>
 
     <!-- DIALOGs -->
-    <dimen name="dialog_min_width">400dp</dimen>
+    <dimen name="dialog_min_width">350dp</dimen>
 </resources>
