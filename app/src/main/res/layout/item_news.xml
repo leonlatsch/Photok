@@ -13,41 +13,44 @@
   ~   See the License for the specific language governing permissions and
   ~   limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/small_gap"
-    tools:ignore="HardcodedText">
+<layout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/small_gap"
-        android:text="@string/common_bullet" />
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="@dimen/small_gap"
+        tools:ignore="HardcodedText">
 
         <TextView
-            android:id="@+id/itemNewsTitle"
-            style="@style/LabelTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="The new feature" />
+            android:layout_marginEnd="@dimen/small_gap"
+            android:text="@string/common_bullet" />
 
-        <TextView
-            android:id="@+id/itemNewsSummary"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:text="Some description for the new feature"
-            android:textColor="@color/secondaryTextColor" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/itemNewsTitle"
+                style="@style/LabelTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="The new feature" />
+
+            <TextView
+                android:id="@+id/itemNewsSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Some description for the new feature"
+                android:textColor="@color/secondaryTextColor" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

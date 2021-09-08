@@ -38,7 +38,7 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.MainActivity
-import dev.leonlatsch.photok.news.ui.NewsDialog
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
@@ -80,7 +80,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         })
 
         viewModel.runIfNews {
-            NewsDialog().show(requireActivity().supportFragmentManager)
+            NewFeaturesDialog().show(requireActivity().supportFragmentManager)
         }
     }
 
