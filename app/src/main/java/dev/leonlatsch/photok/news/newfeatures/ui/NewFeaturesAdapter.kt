@@ -14,12 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.news.ui
+package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.databinding.ItemNewsBinding
+import dev.leonlatsch.photok.news.newfeatures.ui.model.NewFeatureViewData
 
 /**
  * Adapter for news entries in the [NewsDialog].
@@ -27,19 +28,18 @@ import dev.leonlatsch.photok.R
  * @since 1.3.0
  * @author Leon Latsch
  */
-class NewsAdapter(
-    private val titles: Array<String>,
-    private val summaries: Array<String>
+class NewFeaturesAdapter(
+    private val featureViewData: List<NewFeatureViewData>,
 ) : RecyclerView.Adapter<NewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder =
-        NewsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
-        )
-
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bindTo(titles[position], summaries[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context))
+        return NewsViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = titles.size
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        holder.bindTo(featureViewData[position])
+    }
+
+    override fun getItemCount(): Int = featureViewData.size
 }

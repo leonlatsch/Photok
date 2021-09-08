@@ -14,15 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.news.ui
+package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogNewsBinding
+import dev.leonlatsch.photok.news.newfeatures.ui.model.NewFeatureViewData
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.uicomponnets.FixLinearLayoutManager
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
 
 /**
@@ -36,15 +37,8 @@ class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_new
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val titles = resources.getStringArray(R.array.newsTitles)
-        val summaries = resources.getStringArray(R.array.newsSummaries)
-
-        val fixLayoutManager = object : LinearLayoutManager(requireContext()) {
-            override fun canScrollVertically() = false
-        }
-
-        binding.newsRecycler.layoutManager = fixLayoutManager
-        binding.newsRecycler.adapter = NewsAdapter(titles, summaries)
+        binding.newsRecycler.layoutManager = FixLinearLayoutManager(requireContext())
+        binding.newsRecycler.adapter = NewFeaturesAdapter(getNewFeaturesViewData())
 
         binding.newsVersion.text = BuildConfig.VERSION_NAME
     }
@@ -55,6 +49,21 @@ class NewsDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dialog_new
     fun openChangelog() {
         val url = getString(R.string.news_changelog_url)
         openUrl(requireContext(), url)
+    }
+
+    private fun getNewFeaturesViewData(): List<NewFeatureViewData> {
+        val titles = resources.getStringArray(R.array.newsTitles)
+        val summaries = resources.getStringArray(R.array.newsSummaries)
+
+        return if (titles.size == summaries.size) {
+            val viewDataList = mutableListOf<NewFeatureViewData>()
+            for (i in 0..titles.lastIndex) {
+                viewDataList.add(NewFeatureViewData(titles[i], summaries[i]))
+            }
+            viewDataList
+        } else {
+            listOf()
+        }
     }
 
     override fun bind(binding: DialogNewsBinding) {
