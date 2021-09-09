@@ -30,15 +30,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.gallery.ui.collections.CollectionAdapter
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.gallery.ui.nav.GalleryNavigator
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
@@ -51,7 +48,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
 
 /**
  * Fragment for displaying a gallery.
@@ -125,7 +121,12 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             viewModel.photos.collectLatest { gridAdapter.submitData(it) }
         }
 
-        updatePlaceholder()
+    /**
+     * Show [ImportMenuDialog].
+     * Called by ui.
+     */
+    fun showImportMenu() {
+        ImportMenuDialog().show(childFragmentManager)
     }
 
     /**
