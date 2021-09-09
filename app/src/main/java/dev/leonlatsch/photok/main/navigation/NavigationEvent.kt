@@ -14,17 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.splashscreen.ui
+package dev.leonlatsch.photok.main.navigation
 
-/**
- * Enum class to indicate application state.
- * Used in Splash Screen.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class AppStartState {
-    FIRST_START,
-    LOCKED,
-    SETUP
+sealed class NavigationEvent {
+    object OnBoarding : NavigationEvent()
+    object Unlock : NavigationEvent()
+    object Setup : NavigationEvent()
 }
