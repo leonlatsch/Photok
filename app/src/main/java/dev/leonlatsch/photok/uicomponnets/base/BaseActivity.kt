@@ -33,6 +33,7 @@ import pub.devrel.easypermissions.EasyPermissions
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         if (!config.securityAllowScreenshots) {
