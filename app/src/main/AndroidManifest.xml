@@ -28,14 +28,15 @@
         android:name=".BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme">
 
         <!-- MAIN LAUNCHER: Starts the app -->
         <activity-alias
             android:name=".MainLauncher"
+            android:exported="true"
             android:targetActivity=".main.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +49,7 @@
         <activity-alias
             android:name=".StealthLauncher"
             android:enabled="false"
+            android:exported="true"
             android:icon="@drawable/ic_phone"
             android:label="@string/hide_app_app_name_stealth"
             android:roundIcon="@drawable/ic_phone"
@@ -62,6 +64,7 @@
         <!-- SEND LAUNCHER: Receives photos and videos as send to -->
         <activity-alias
             android:name=".SendLauncher"
+            android:exported="true"
             android:targetActivity=".main.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -89,7 +92,9 @@
             android:name=".settings.ui.hideapp.ForwardDialerActivity"
             android:theme="@style/AppTheme" />
 
-        <receiver android:name=".DialLauncher">
+        <receiver
+            android:name=".DialLauncher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
                 <data android:scheme="android_secret_code" />
