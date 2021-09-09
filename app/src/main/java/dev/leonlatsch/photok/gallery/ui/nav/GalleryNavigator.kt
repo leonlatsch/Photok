@@ -18,11 +18,9 @@ package dev.leonlatsch.photok.gallery.ui.nav
 
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.GalleryFragment
-import dev.leonlatsch.photok.gallery.ui.PhotoAdapter
 import dev.leonlatsch.photok.gallery.ui.collections.AddCollectionBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
-import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
-import dev.leonlatsch.photok.news.ui.NewsDialog
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import javax.inject.Inject
 
@@ -37,7 +35,7 @@ class GalleryNavigator @Inject constructor() {
     }
 
     private fun navigateShowNewsDialog(fragmentManager: FragmentManager) {
-        NewsDialog().show(fragmentManager)
+        NewFeaturesDialog().show(fragmentManager)
     }
 
     private fun navigateShowImportMenu(fragmentManager: FragmentManager) {
