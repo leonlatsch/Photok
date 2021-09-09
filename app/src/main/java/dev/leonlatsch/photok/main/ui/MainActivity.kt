@@ -22,14 +22,11 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.navigation.MainNavigator
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
@@ -55,20 +52,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     @Inject
     override lateinit var config: Config
 
-    @Inject
-    lateinit var navigator: MainNavigator
-
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setNavBarColorRes(android.R.color.black)
-
-        viewModel.navigationEvent.observe(this) {
-            navigator.navigate(it, binding.mainNavHostFragment.findNavController())
-        }
-
-        viewModel.navigateToFirstScreen()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/galleryFragment"
@@ -101,6 +101,33 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="dev.leonlatsch.photok.splashscreen.ui.SplashScreenFragment"
+        android:label="SplashScreenFragment"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splashScreenFragment_to_unlockFragment"
+            app:destination="@id/unlockFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_setupFragment"
+            app:destination="@id/setupFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
         android:id="@+id/creditsFragment"
         android:name="dev.leonlatsch.photok.settings.ui.credits.CreditsFragment"
         android:label="CreditsFragment" />
@@ -111,7 +138,7 @@
     <fragment
         android:id="@+id/imageViewerFragment"
         android:name="dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragment"
-        android:label="ImageViewerFragment">
+        android:label="ImageViewerFragment" >
         <argument
             android:name="photo_id"
             android:defaultValue="-1"
@@ -131,25 +158,4 @@
             android:defaultValue="-1"
             app:argType="integer" />
     </fragment>
-    <action
-        android:id="@+id/action_global_onBoardingFragment"
-        app:destination="@id/onBoardingFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/slide_to_bottom"
-        app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true" />
-    <action
-        android:id="@+id/action_global_unlockFragment"
-        app:destination="@id/unlockFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/slide_to_bottom"
-        app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true" />
-    <action
-        android:id="@+id/action_global_setupFragment"
-        app:destination="@id/setupFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/slide_to_bottom"
-        app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true" />
 </navigation>

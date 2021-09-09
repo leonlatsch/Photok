@@ -18,13 +18,8 @@ package dev.leonlatsch.photok.main.ui
 
 import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.lifecycle.SingleLiveEvent
-import dev.leonlatsch.photok.main.navigation.NavigationEvent
-import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -35,32 +30,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    app: Application,
-    private val config: Config
+    app: Application
 ) : ObservableViewModel(app) {
 
     var sharedDataCache: ArrayList<Uri> = arrayListOf()
-
-    val navigationEvent = SingleLiveEvent<NavigationEvent>()
 
     /**
      * Reset [sharedDataCache].
      */
     fun clearSharedDataCache() {
         sharedDataCache = arrayListOf()
-    }
-
-    fun navigateToFirstScreen() = viewModelScope.launch {
-        if (config.systemFirstStart) {
-            navigationEvent.value = NavigationEvent.OnBoarding
-            return@launch
-        }
-
-        val password = config.securityPassword
-        navigationEvent.value = if (password.isNullOrEmpty()) {
-            NavigationEvent.Setup
-        } else {
-            NavigationEvent.Unlock
-        }
     }
 }
