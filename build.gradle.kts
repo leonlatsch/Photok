@@ -1,18 +1,16 @@
-import java.util.*
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val kotlinVersion = "1.4.21"
+    val kotlinVersion = "1.6.20"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath("com.android.tools.build:gradle:7.2.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
-        classpath("com.jaredsburrows:gradle-license-plugin:0.8.90")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.1")
+        classpath("com.jaredsburrows:gradle-license-plugin:0.9.0")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,7 +19,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven("https://jitpack.io")
     }
 }
