@@ -40,8 +40,8 @@ jobs:
         uses: github-actions-x/commit@v2.9
         with:
           name: Release Bot
-          branch: release/${{ github.event.inputs.version }}
-          message: Update version to ${{ github.event.inputs.version }} and update open source licenses
+          push-branch: release/${{ github.event.inputs.version }}
+          commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
           files: gradle.properties app/src/main/assets/open_source_licenses.json
           
       - name: Create Release PR
