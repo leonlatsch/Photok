@@ -21,7 +21,7 @@ jobs:
         run: ./gradlew updateTranslations
 
       - name: Commit and Push
-        uses: actions-x/commit@v2.9
+        uses: github-actions-x/commit@v2.9
         with:
           name: Translation Badges Updater
           message: Update Translation Badges in README.md

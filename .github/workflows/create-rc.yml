@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew licenseReleaseReport
       
       - name: Commit and Push
-        uses: actions-x/commit@v2.9
+        uses: github-actions-x/commit@v2.9
         with:
           name: Release Bot
           branch: release/${{ github.event.inputs.version }}
