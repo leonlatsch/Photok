@@ -14,12 +14,12 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = VersionCodes.S
+    compileSdk = 33 // Android 13
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdk = VersionCodes.N
-        targetSdk = VersionCodes.S
+        targetSdk = 33 // Android 13
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
         buildConfigField(
@@ -73,8 +73,8 @@ dependencies {
     val daggerVersion = "2.42"
 
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -93,12 +93,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -118,7 +118,7 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.4.0")
+    implementation("androidx.activity:activity-ktx:1.5.1")
 
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
@@ -142,14 +142,14 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
 
     // Exoplayer
-    implementation("com.google.android.exoplayer:exoplayer-core:2.17.1")
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.17.1")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.18.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.18.1")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
     implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.preference:preference-ktx:1.2.0")
 
