@@ -21,7 +21,7 @@ jobs:
           branch: release/${{ github.event.inputs.version }}
       
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: release/${{ github.event.inputs.version }}
       
@@ -37,11 +37,11 @@ jobs:
         run: ./gradlew licenseReleaseReport
       
       - name: Commit and Push
-        uses: actions-x/commit@v2
+        uses: github-actions-x/commit@v2.9
         with:
           name: Release Bot
-          branch: release/${{ github.event.inputs.version }}
-          message: Update version to ${{ github.event.inputs.version }} and update open source licenses
+          push-branch: release/${{ github.event.inputs.version }}
+          commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
           files: gradle.properties app/src/main/assets/open_source_licenses.json
           
       - name: Create Release PR

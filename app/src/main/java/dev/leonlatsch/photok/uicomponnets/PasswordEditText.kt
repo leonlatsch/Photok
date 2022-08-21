@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.uicomponnets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -206,6 +207,7 @@ class PasswordEditText @JvmOverloads constructor(
                     // No implementation needed
                 }
 
+                @SuppressLint("RestrictedApi")
                 override fun afterTextChanged(s: Editable) {
                     test?.let {
                         test.afterTextChanged(s)
