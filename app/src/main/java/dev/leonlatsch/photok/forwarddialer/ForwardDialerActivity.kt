@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2021 Leon Latsch
+ *   Copyright 2020-2022 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,11 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.ui.hideapp
+package dev.leonlatsch.photok.forwarddialer
 
-import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Forwarder Activity. Opens phone dialer and finishes.
@@ -26,13 +28,21 @@ import androidx.appcompat.app.AppCompatActivity
  * @since 1.2.0
  * @author Leon Latsch
  */
+@AndroidEntryPoint
 class ForwardDialerActivity : AppCompatActivity() {
+
+    private val viewModel: ForwardDialerViewModel by viewModels()
+
+    @Inject
+    lateinit var navigator: ForwardDialerNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val dialIntent = Intent(Intent.ACTION_DIAL)
-        dialIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(dialIntent)
-        finishAndRemoveTask()
+
+        viewModel.navigationEvent.observe(this) {
+            navigator.navigate(it, this)
+        }
+
+        viewModel.evaluateNavigation()
     }
 }

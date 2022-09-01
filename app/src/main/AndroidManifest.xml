@@ -23,6 +23,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
+<!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
 
     <application
         android:name=".BaseApplication"
@@ -53,7 +54,7 @@
             android:icon="@drawable/ic_phone"
             android:label="@string/hide_app_app_name_stealth"
             android:roundIcon="@drawable/ic_phone"
-            android:targetActivity=".settings.ui.hideapp.ForwardDialerActivity">
+            android:targetActivity=".forwarddialer.ForwardDialerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,7 +90,11 @@
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name=".settings.ui.hideapp.ForwardDialerActivity"
+            android:name=".forwarddialer.ForwardDialerActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".recoverymenu.RecoveryMenuActivity"
             android:theme="@style/AppTheme" />
 
         <receiver
