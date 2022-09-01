@@ -17,8 +17,6 @@
 package dev.leonlatsch.photok.settings.ui.hideapp
 
 import android.app.Application
-import android.content.ComponentName
-import android.content.pm.PackageManager
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
@@ -27,6 +25,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.hideapp.usecase.ToggleMainComponentUseCase
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -41,7 +40,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ToggleAppVisibilityViewModel @Inject constructor(
     private val app: Application,
-    private val config: Config
+    private val config: Config,
+    private val toggleMainComponentUseCase: ToggleMainComponentUseCase
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -83,7 +83,7 @@ class ToggleAppVisibilityViewModel @Inject constructor(
 
     override fun setup() {
         super.setup()
-        if (isMainComponentDisabled()) {
+        if (toggleMainComponentUseCase.isMainComponentDisabled()) {
             title = app.getString(R.string.hide_app_title_show)
             currentState = app.getString(R.string.hide_app_status_hidden)
             hintVisibility = View.GONE
@@ -100,44 +100,9 @@ class ToggleAppVisibilityViewModel @Inject constructor(
 
     }
 
-    /**
-     * Toggles the visibility.
-     * - Case a: Disables [MAIN_LAUNCHER_COMPONENT] enables [STEALTH_LAUNCHER_COMPONENT]
-     * - Case b: Disables [STEALTH_LAUNCHER_COMPONENT] enables [MAIN_LAUNCHER_COMPONENT]
-     */
-    fun toggleMainComponent() {
-        if (isMainComponentDisabled()) {
-            app.packageManager.setComponentEnabledSetting(
-                MAIN_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
-            app.packageManager.setComponentEnabledSetting(
-                STEALTH_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-            )
-        } else {
-            app.packageManager.setComponentEnabledSetting(
-                MAIN_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-            )
-            app.packageManager.setComponentEnabledSetting(
-                STEALTH_LAUNCHER_COMPONENT,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
-        }
-    }
+    fun toggleMainComponent() = toggleMainComponentUseCase()
 
-    /**
-     * Indicated if [MAIN_LAUNCHER_COMPONENT] is currently disabled.
-     */
-    fun isMainComponentDisabled(): Boolean {
-        val enabledSetting = app.packageManager.getComponentEnabledSetting(MAIN_LAUNCHER_COMPONENT)
-        return enabledSetting == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-    }
+    fun isMainComponentDisabled() = toggleMainComponentUseCase.isMainComponentDisabled()
 
     /**
      * Constructs a displayable secret launch code.
@@ -161,13 +126,5 @@ class ToggleAppVisibilityViewModel @Inject constructor(
         } else {
             app.getString(R.string.hide_app_title_hide)
         }
-    }
-
-    companion object {
-        private val MAIN_LAUNCHER_COMPONENT =
-            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.MainLauncher")
-
-        private val STEALTH_LAUNCHER_COMPONENT =
-            ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.StealthLauncher")
     }
 }

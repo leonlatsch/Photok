@@ -240,4 +240,9 @@
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
+    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
 </resources>
