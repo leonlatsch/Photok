@@ -45,8 +45,6 @@ class ForwardDialerViewModel @Inject constructor(
             config.timestampLastRecoveryStart = TIMESTAMP_LAST_RECOVERY_START_DEFAULT
         } else {
             config.timestampLastRecoveryStart = now
-
-            // TODO: Show toast
             navigateToDialer()
         }
 
