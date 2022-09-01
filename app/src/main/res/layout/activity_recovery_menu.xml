@@ -19,6 +19,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="dev.leonlatsch.photok.recoverymenu.RecoveryMenuViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,10 +29,66 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/headline"
+            style="@style/AppNameTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/subline"
+            style="@style/BigTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recovery Menu"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/headline"
+            app:layout_constraintStart_toStartOf="@id/headline"
+            app:layout_constraintTop_toBottomOf="@id/headline" />
+
+        <TextView
+            android:id="@+id/openPhotok"
+            android:layout_marginTop="22dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_chevron_right"
+            android:onClick="@{() -> viewModel.openPhotok()}"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="10dp"
+            android:text="Open Photok"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subline" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:drawableLeft="@drawable/ic_chevron_right"
+            android:onClick="@{() -> viewModel.resetHidePhotoSetting()}"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="10dp"
+            android:text="Reset Hide Photok Setting"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/openPhotok" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/common_copyright_notice"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

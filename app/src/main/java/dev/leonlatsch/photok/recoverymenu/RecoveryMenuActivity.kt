@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.recoverymenu
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityRecoveryMenuBinding
@@ -32,9 +33,21 @@ class RecoveryMenuActivity :
     @Inject
     override lateinit var config: Config
 
+    @Inject
+    lateinit var navigator: RecoveryMenuNavigator
+
+    private val viewModel: RecoveryMenuViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
 
+        viewModel.navigationEvent.observe(this) {
+            navigator.navigate(it, this)
+        }
+    }
 
+    override fun bind(binding: ActivityRecoveryMenuBinding) {
+        super.bind(binding)
+        binding.viewModel = viewModel
     }
 }
