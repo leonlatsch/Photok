@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.recoverymenu
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -38,8 +37,8 @@ class RecoveryMenuActivity :
 
     private val viewModel: RecoveryMenuViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         viewModel.navigationEvent.observe(this) {
             navigator.navigate(it, this)
