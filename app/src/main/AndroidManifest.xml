@@ -94,16 +94,8 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:exported="true"
             android:name=".recoverymenu.RecoveryMenuActivity"
-            android:label="Photok Recovery Menu"
-            android:theme="@style/AppTheme">
-            <intent-filter> <!-- TODO: REMOVE -->
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <receiver
             android:name=".DialLauncher"

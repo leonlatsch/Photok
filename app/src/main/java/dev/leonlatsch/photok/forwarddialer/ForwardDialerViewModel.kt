@@ -24,7 +24,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.data.Config.Companion.TIMESTAMP_LAST_RECOVERY_START_DEFAULT
 import javax.inject.Inject
 
-const val RECOVERY_MENU_MILLIS_THRESHOLD = 10000L // TODO: Change to 5000. 10000 is for testing
+const val RECOVERY_MENU_MILLIS_THRESHOLD = 5000L
 
 @HiltViewModel
 class ForwardDialerViewModel @Inject constructor(
