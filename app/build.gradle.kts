@@ -22,11 +22,6 @@ android {
         targetSdk = 33 // Android 13
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
-        buildConfigField(
-            "int",
-            "FEATURE_VERSION_CODE",
-            "1"
-        ) // Increase for new major or minor version. NEVER decrease!
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

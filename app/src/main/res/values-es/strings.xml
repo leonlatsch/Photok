@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020-2021 Leon Latsch
+  ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020–2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2022 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -218,7 +218,7 @@
     <string name="backup_restore_details_created_at">Creado el:</string>
     <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
-    <string name="backup_restore_details_size">Tamaño:</string> 
+    <string name="backup_restore_details_size">Tamaño:</string>
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
@@ -229,15 +229,20 @@
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Característica: Importar videos</string>
-    <string name="news_summary_1">Importar videos a Photok</string>
+    <string name="news_title_1">Feature: Recovery Menu</string> <!-- TODO -->
+    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string> <!-- TODO -->
 
-    <string name="news_title_2">Característica: Diálogo de novedades</string>
-    <string name="news_summary_2">Recibe notificaciones sobre nuevas características</string>
+    <string name="news_title_2">Mejoras de rendimiento</string>
+    <string name="news_summary_2">Muchas mejoras de rendimiento para Photok</string>
 
-    <string name="news_title_3">Mejoras de rendimiento</string>
-    <string name="news_summary_3">Muchas mejoras de rendimiento para Photok</string>
+    <string name="news_title_3">EMPTY</string>
+    <string name="news_summary_3">EMPTY</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
+    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
 </resources>

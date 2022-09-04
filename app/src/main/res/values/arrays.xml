@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020-2021 Leon Latsch
+  ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -48,12 +48,14 @@
     <string-array name="newsTitles"> <!-- holds up to 4 new features -->
         <item>@string/news_title_1</item>
         <item>@string/news_title_2</item>
-        <item>@string/news_title_3</item>
+        <!--        <item>@string/news_title_3</item>-->
+        <!--        <item>@string/news_title_4</item>-->
     </string-array>
 
     <string-array name="newsSummaries">
         <item>@string/news_summary_1</item>
         <item>@string/news_summary_2</item>
-        <item>@string/news_summary_3</item>
+        <!--        <item>@string/news_summary_3</item>-->
+        <!--        <item>@string/news_summary_4</item>-->
     </string-array>
 </resources>

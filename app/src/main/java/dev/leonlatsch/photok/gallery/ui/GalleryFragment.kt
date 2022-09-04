@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2021 Leon Latsch
+ *   Copyright 2020-2022 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -71,13 +71,13 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         setToolbar(binding.galleryToolbar)
         setupGridView()
 
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+        adapter.isMultiSelectMode.observe(viewLifecycleOwner) {
             if (it) {
                 actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
-        })
+        }
 
         viewModel.runIfNews {
             NewFeaturesDialog().show(requireActivity().supportFragmentManager)

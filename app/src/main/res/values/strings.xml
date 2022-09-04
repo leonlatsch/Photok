@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright 2020-2021 Leon Latsch
+  ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020–2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2022 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -227,15 +227,20 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Import videos</string>
-    <string name="news_summary_1">Import videos to Photok</string>
+    <string name="news_title_1">Feature: Recovery Menu</string>
+    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string>
 
-    <string name="news_title_2">Feature: News Dialog</string>
-    <string name="news_summary_2">Get notified about new features</string>
+    <string name="news_title_2">Performance Improvements</string>
+    <string name="news_summary_2">Many performance improvements for Photok</string>
 
-    <string name="news_title_3">Performance Improvements</string>
-    <string name="news_summary_3">Many performance improvements for Photok</string>
+    <string name="news_title_3">EMPTY</string>
+    <string name="news_summary_3">EMPTY</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Recovery Menu</string>
+    <string name="recovery_menu_item_open_photok">Open Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string>
 </resources>

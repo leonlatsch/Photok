@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright 2020-2021 Leon Latsch
+  ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@
             android:icon="@drawable/ic_phone"
             android:label="@string/hide_app_app_name_stealth"
             android:roundIcon="@drawable/ic_phone"
-            android:targetActivity=".settings.ui.hideapp.ForwardDialerActivity">
+            android:targetActivity=".forwarddialer.ForwardDialerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,7 +89,11 @@
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name=".settings.ui.hideapp.ForwardDialerActivity"
+            android:name=".forwarddialer.ForwardDialerActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".recoverymenu.RecoveryMenuActivity"
             android:theme="@style/AppTheme" />
 
         <receiver

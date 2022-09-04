@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright 2020-2021 Leon Latsch
+  ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
   ~   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Direitos autorais \u00A9 2020–2021 Leon Latsch</string>
+    <string name="common_copyright_notice">Direitos autorais \u00A9 2020–2022 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -228,15 +228,20 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Funcionalidade: Importar vídeos</string>
-    <string name="news_summary_1">Importar vídeos ao Photok</string>
+    <string name="news_title_1">Feature: Recovery Menu</string> <!-- TODO -->
+    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string> <!-- TODO -->
 
-    <string name="news_title_2">Funcionalidade: Diálogo de notícias</string>
-    <string name="news_summary_2">Seja notificado sobre as novas funcionalidades</string>
+    <string name="news_title_2">Melhorias de desempenho</string>
+    <string name="news_summary_2">Muitas melhorias de desempenho no Photok</string>
 
-    <string name="news_title_3">Melhorias de desempenho</string>
-    <string name="news_summary_3">Muitas melhorias de desempenho no Photok</string>
+    <string name="news_title_3">SEM_CONTEÚDO</string>
+    <string name="news_summary_3">SEM_CONTEÚDO</string>
 
     <string name="news_title_4">SEM_CONTEÚDO</string>
     <string name="news_summary_4">SEM_CONTEÚDO</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
+    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
 </resources>
