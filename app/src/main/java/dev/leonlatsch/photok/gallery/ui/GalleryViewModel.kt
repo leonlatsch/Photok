@@ -24,8 +24,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -86,9 +86,9 @@ class GalleryViewModel @Inject constructor(
      * Run the [onNewsPresent] if the app was just updated.
      */
     fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
-        if (config.systemLastFeatureVersionCode < BuildConfig.FEATURE_VERSION_CODE) {
+        if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
             onMain(onNewsPresent)
-            config.systemLastFeatureVersionCode = BuildConfig.FEATURE_VERSION_CODE
+            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
         }
     }
 

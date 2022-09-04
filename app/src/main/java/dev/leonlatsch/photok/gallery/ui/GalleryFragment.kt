@@ -71,13 +71,13 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         setToolbar(binding.galleryToolbar)
         setupGridView()
 
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner, {
+        adapter.isMultiSelectMode.observe(viewLifecycleOwner) {
             if (it) {
                 actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
             } else {
                 actionMode?.finish()
             }
-        })
+        }
 
         viewModel.runIfNews {
             NewFeaturesDialog().show(requireActivity().supportFragmentManager)
