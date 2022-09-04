@@ -25,7 +25,7 @@ android {
         buildConfigField(
             "int",
             "FEATURE_VERSION_CODE",
-            "1"
+            "2"
         ) // Increase for new major or minor version. NEVER decrease!
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
