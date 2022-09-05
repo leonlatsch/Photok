@@ -39,7 +39,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-97%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 ![Dutch](https://img.shields.io/badge/Dutch-97%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-97%25-yellow)
