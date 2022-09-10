@@ -35,6 +35,10 @@ class MainViewModel @Inject constructor(
 
     var sharedDataCache: ArrayList<Uri> = arrayListOf()
 
+    fun addUriToFromShareIntent(uri: Uri) {
+        sharedDataCache.find { it == uri } ?: sharedDataCache.add(uri)
+    }
+
     /**
      * Reset [sharedDataCache].
      */

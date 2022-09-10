@@ -61,17 +61,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
+        dispatchIntent()
 
-        getBaseApplication().rawApplicationState.observe(this, {
+        getBaseApplication().rawApplicationState.observe(this) {
             if (it == ApplicationState.UNLOCKED && viewModel.sharedDataCache.isNotEmpty()) {
                 confirmAndStartImportShared()
             }
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        dispatchIntent()
+        }
     }
 
     private fun dispatchIntent() {
@@ -79,13 +75,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             Intent.ACTION_SEND -> {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 if (uri != null) {
-                    viewModel.sharedDataCache.add(uri)
+                    viewModel.addUriToFromShareIntent(uri)
                 }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
-                if (uris != null) {
-                    viewModel.sharedDataCache.addAll(uris)
+                uris?.forEach { uri ->
+                    viewModel.addUriToFromShareIntent(uri)
                 }
             }
         }
