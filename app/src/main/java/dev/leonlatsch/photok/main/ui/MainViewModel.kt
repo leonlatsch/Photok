@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.main.ui
 import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import javax.inject.Inject
 
@@ -30,15 +31,17 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    app: Application
+    app: Application,
+    private val sharedUrisStore: SharedUrisStore,
 ) : ObservableViewModel(app) {
 
-    var sharedDataCache: ArrayList<Uri> = arrayListOf()
+    fun addUriToSharedUriStore(uri: Uri) = sharedUrisStore.safeAddUri(uri)
 
-    /**
-     * Reset [sharedDataCache].
-     */
-    fun clearSharedDataCache() {
-        sharedDataCache = arrayListOf()
+    fun consumeSharedUris(): List<Uri> {
+        val sharedUris = sharedUrisStore.getUris()
+        sharedUrisStore.clear()
+        return sharedUris
     }
+
+    fun getUriCountFromStore(): Int = sharedUrisStore.getUriCount()
 }

@@ -61,45 +61,40 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-
-        getBaseApplication().rawApplicationState.observe(this, {
-            if (it == ApplicationState.UNLOCKED && viewModel.sharedDataCache.isNotEmpty()) {
-                confirmAndStartImportShared()
-            }
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
         dispatchIntent()
-    }
 
-    private fun dispatchIntent() {
-        when (intent.action) {
-            Intent.ACTION_SEND -> {
-                val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
-                if (uri != null) {
-                    viewModel.sharedDataCache.add(uri)
-                }
-            }
-            Intent.ACTION_SEND_MULTIPLE -> {
-                val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
-                if (uris != null) {
-                    viewModel.sharedDataCache.addAll(uris)
+        getBaseApplication().rawApplicationState.observe(this) {
+            if (it == ApplicationState.UNLOCKED && viewModel.getUriCountFromStore() > 0) {
+                val urisToImport = viewModel.consumeSharedUris()
+
+                confirmImport(urisToImport) {
+                    startImportOfSharedUris(urisToImport)
                 }
             }
         }
     }
 
-    private fun confirmAndStartImportShared() {
+    private fun dispatchIntent() {
+        when (intent.action) {
+            Intent.ACTION_SEND -> intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let { uri ->
+                viewModel.addUriToSharedUriStore(uri)
+            }
+            Intent.ACTION_SEND_MULTIPLE ->
+                intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.forEach { uri ->
+                    viewModel.addUriToSharedUriStore(uri)
+                }
+        }
+    }
+
+    private fun confirmImport(urisToImport: List<Uri>, onImportConfirmed: () -> Unit) {
         Dialogs.showConfirmDialog(
             this,
             String.format(
                 getString(R.string.import_sharted_question),
-                viewModel.sharedDataCache.size
+                urisToImport.size
             )
         ) { _, _ ->
-            importShared()
+            onImportConfirmed()
         }
     }
 
@@ -107,19 +102,16 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
      * Start importing after the overview of photos.
      */
     @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
-    fun importShared() {
+    fun startImportOfSharedUris(urisToImport: List<Uri>) {
         if (EasyPermissions.hasPermissions(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
-            viewModel.sharedDataCache.let {
-                ImportBottomSheetDialogFragment(it).show(
-                    supportFragmentManager,
-                    ImportBottomSheetDialogFragment::class.qualifiedName
-                )
-            }
-            viewModel.clearSharedDataCache()
+            ImportBottomSheetDialogFragment(urisToImport).show(
+                supportFragmentManager,
+                ImportBottomSheetDialogFragment::class.qualifiedName
+            )
         } else {
             EasyPermissions.requestPermissions(
                 this,
