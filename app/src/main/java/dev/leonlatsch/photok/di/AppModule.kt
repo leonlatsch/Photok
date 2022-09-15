@@ -23,6 +23,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -58,4 +59,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideEncryptionManager() = EncryptionManager()
+
+    @Provides
+    @Singleton
+    fun provideSharedUrisStore() = SharedUrisStore()
 }
