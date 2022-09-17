@@ -34,5 +34,11 @@
     "name": "Luke Jake",
     "contact": "@comparesheriff on Github",
     "website": "https://github.com/comparesheriff"
+  },
+  {
+    "contribution": "French translation and reporting bugs",
+    "name": "Arnaud Gissinger",
+    "contact": "agissing@student.42.fr",
+    "website": "https://mathix.ninja"
   }
 ]
