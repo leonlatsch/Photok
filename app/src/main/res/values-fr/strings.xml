@@ -36,7 +36,7 @@
 
     <!-- IMPORT -->
     <string name="import_importing">Importation en cours</string>
-    <string name="import_permission_rationale">Photok a besoin d'accéder à votre espace de stockage pour importer des fichiers.</string>
+    <string name="import_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour importer des fichiers.</string>
     <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s) ?</string>
 
     <!-- SETUP -->
@@ -58,7 +58,7 @@
     <string name="unlock_wrong_password">\u26A0 Mauvais mot de passe</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">Il n'y a pas de fichier dans votre coffre-fort</string>
+    <string name="gallery_placeholder">Il n\'y a pas de fichier dans votre coffre-fort</string>
     <string name="gallery_all_photos_label">Tous les fichiers</string>
 
     <!-- IMPORT MENU -->
@@ -74,7 +74,7 @@
     <string name="process_finished">Terminé</string>
     <string name="process_initialize">Initialisation…</string>
     <string name="process_aborted">Annulé</string>
-    <string name="process_failures_occurred">\u26A0 Certains éléments n'ont pas pu être traités</string>
+    <string name="process_failures_occurred">\u26A0 Certains éléments n\'ont pas pu être traités</string>
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Détails</string>
@@ -101,7 +101,7 @@
     <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
     <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
     <string name="export_exporting">Exportation en cours…</string>
-    <string name="export_permission_rationale">Photok a besoin d'accéder à votre espace de stockage pour exporter des fichiers.</string>
+    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
 
     <!-- ABOUT -->
@@ -126,11 +126,11 @@
 
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Plein écran automatique</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran lors de l'ouverture d'un fichier</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran lors de l\'ouverture d\'un fichier</string>
 
     <string name="settings_category_security">Sécurité</string>
-    <string name="settings_security_allow_screenshots_title">Autoriser les captures d'écran</string>
-    <string name="settings_security_allow_screenshots_summary">Autorise la capture d'écran. Nécessite un redémarrage.</string>
+    <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
+    <string name="settings_security_allow_screenshots_summary">Autorise la capture d\'écran. Nécessite un redémarrage.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
     <string name="settings_security_change_password_summary">Changez votre mot de passe</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
@@ -142,12 +142,12 @@
     <string name="settings_security_timeout_ten_minute">10 Minutes</string>
     <string name="settings_security_timeout_never">Jamais</string>
     <string name="settings_security_launch_code_title">Code de démarrage secret</string>
-    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l'application téléphone.</string>
+    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l\'application téléphone.</string>
     <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="settings_security_hide_app_title">Masquer l'application</string>
-    <string name="settings_security_hide_app_summary">Masque l'icône de l'application du tiroir d'applications.</string>
+    <string name="settings_security_hide_app_title">Masquer l\'application</string>
+    <string name="settings_security_hide_app_summary">Masque l\'icône de l\'application du tiroir d\'applications.</string>
 
     <string name="settings_category_advanced">Avancé</string>
     <string name="settings_category_advanced_summary">Utiliser avec précaution</string>
@@ -196,7 +196,7 @@
     <string name="hide_app_app_name_stealth">Téléphone</string>
     <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok ?</string>
     <string name="hide_app_confirm_show">Voulez-vous montrer à nouveau Photok ?</string>
-    <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
+    <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
     <!-- ON BOARDING -->
@@ -212,7 +212,7 @@
     <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des autres.\nVous pourrez ensuite les supprimer de votre galerie.</string>
 
     <!-- BACKUP -->
-    <string name="backup_processing_title">Création d'une sauvegarde…</string>
+    <string name="backup_processing_title">Création d\'une sauvegarde…</string>
     <string name="backup_restore_title">Restaurer la sauvegarde</string>
     <string name="backup_restore_validating">Validation de la sauvegarde…</string>
     <string name="backup_restore_details_created_at">Créé le :</string>
@@ -244,5 +244,5 @@
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>
     <string name="recovery_menu_item_open_photok">Ouvrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Réinitialiser la visibilité de l'application</string>
+    <string name="recovery_subtitle_reset_hide_app">Réinitialiser la visibilité de l\'application</string>
 </resources>
