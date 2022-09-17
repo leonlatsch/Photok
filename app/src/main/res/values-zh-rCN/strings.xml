@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020-2022 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +15,7 @@
   -->
 
 <resources>
-
+    
     <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">版权所有 \u00A9 2020–2022 Leon Latsch</string>
@@ -228,10 +227,10 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Recovery Menu</string> <!-- TODO -->
-    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string> <!-- TODO -->
+    <string name="news_title_1">功能：恢复菜单</string>
+    <string name="news_summary_1">要了解新的恢复菜单，请访问 Photok 的 Github 页面</string>
 
-    <string name="news_title_2">性能改善</string>
+    <string name="news_title_2">性能改进</string>
     <string name="news_summary_2">Photok 的许多性能改进</string>
 
     <string name="news_title_3">EMPTY</string>
@@ -239,9 +238,9 @@
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
-
+    
     <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
-    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
+    <string name="recovery_subtitle">恢复菜单</string>
+    <string name="recovery_menu_item_open_photok">打开 Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">重置“隐藏应用”设置</string>
 </resources>
