@@ -93,7 +93,7 @@
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>
-    <string name="delete_are_you_sure_this">Are you sure, you want to <b>delete</b> this files?</string>
+    <string name="delete_are_you_sure_this">Are you sure, you want to <b>delete</b> this file?</string>
     <string name="delete_deleting">Deleting file(s)…</string>
 
     <!-- EXPORT -->
