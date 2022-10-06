@@ -47,7 +47,11 @@ class Chooser {
      * Or request the [permission]
      */
     fun show(fragment: Fragment) {
-        if (EasyPermissions.hasPermissions(fragment.requireContext(), permission)) {
+        if (permission == null || EasyPermissions.hasPermissions(
+                fragment.requireContext(),
+                permission
+            )
+        ) {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = mimeType
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, allowMultiple)
