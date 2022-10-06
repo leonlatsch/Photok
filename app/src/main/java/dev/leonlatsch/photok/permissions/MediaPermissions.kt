@@ -14,18 +14,21 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.permissions
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
+import android.Manifest
+import android.os.Build
 
-// Intent
-const val INTENT_PHOTO_ID = "intent.photo.id"
+fun getReadVideosPermission() =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        Manifest.permission.READ_MEDIA_VIDEO
+    } else {
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    }
 
-// Permissions
-const val REQ_PERM_IMPORT_PHOTOS = 10
-const val REQ_PERM_IMPORT_VIDEOS = 11
-const val REQ_PERM_EXPORT = 12
-const val REQ_PERM_SHARED_IMPORT = 14
+fun getReadImagesPermission() =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        Manifest.permission.READ_MEDIA_IMAGES
+    } else {
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    }

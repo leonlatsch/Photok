@@ -16,12 +16,12 @@
 
 package dev.leonlatsch.photok.main.ui
 
-import android.Manifest
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
@@ -30,9 +30,12 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragmen
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
+import dev.leonlatsch.photok.permissions.getReadImagesPermission
+import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
+import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -63,13 +66,19 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
 
-        getBaseApplication().rawApplicationState.observe(this) {
-            if (it == ApplicationState.UNLOCKED && viewModel.getUriCountFromStore() > 0) {
-                val urisToImport = viewModel.consumeSharedUris()
-
-                confirmImport(urisToImport) {
-                    startImportOfSharedUris(urisToImport)
+        lifecycleScope.launchWhenCreated {
+            viewModel.consumedUrisFromStore.collectLatest {
+                if (it.isNotEmpty()) {
+                    confirmImport(it.size) {
+                        startImportOfSharedUris()
+                    }
                 }
+            }
+        }
+
+        getBaseApplication().rawApplicationState.observe(this) {
+            if (it == ApplicationState.UNLOCKED) {
+                viewModel.consumeSharedUris()
             }
         }
     }
@@ -86,12 +95,12 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         }
     }
 
-    private fun confirmImport(urisToImport: List<Uri>, onImportConfirmed: () -> Unit) {
+    private fun confirmImport(amount: Int, onImportConfirmed: () -> Unit) {
         Dialogs.showConfirmDialog(
             this,
             String.format(
                 getString(R.string.import_sharted_question),
-                urisToImport.size
+                amount
             )
         ) { _, _ ->
             onImportConfirmed()
@@ -102,10 +111,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
      * Start importing after the overview of photos.
      */
     @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
-    fun startImportOfSharedUris(urisToImport: List<Uri>) {
+    fun startImportOfSharedUris() {
+        val urisToImport = viewModel.consumedUrisFromStore.value
+
         if (EasyPermissions.hasPermissions(
                 this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                getReadImagesPermission(),
+                getReadVideosPermission()
             )
         ) {
             ImportBottomSheetDialogFragment(urisToImport).show(
@@ -117,7 +129,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 this,
                 getString(R.string.import_permission_rationale),
                 REQ_PERM_SHARED_IMPORT,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                getReadImagesPermission(),
+                getReadVideosPermission()
             )
         }
     }
