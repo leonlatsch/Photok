@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.ui.importing
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -25,8 +24,9 @@ import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
 import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_VIDEOS
-import dev.leonlatsch.photok.other.REQ_PERM_RESTORE
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.permissions.getReadImagesPermission
+import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.uicomponnets.Chooser
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableBottomSheetDialogFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -53,7 +53,7 @@ class ImportMenuDialog :
         .allowMultiple()
         .requestCode(REQ_CONTENT_PHOTOS)
         .permissionCode(REQ_PERM_IMPORT_PHOTOS)
-        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        .permission(getReadImagesPermission())
         .show(this)
 
     /**
@@ -69,20 +69,17 @@ class ImportMenuDialog :
         .allowMultiple()
         .requestCode(REQ_CONTENT_VIDEOS)
         .permissionCode(REQ_PERM_IMPORT_VIDEOS)
-        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        .permission(getReadVideosPermission())
         .show(this)
 
     /**
      * Start restoring a backup.
      * Requests permission and shows [RestoreBackupDialogFragment].
      */
-    @AfterPermissionGranted(REQ_PERM_RESTORE)
     fun startSelectBackup() = Chooser.Builder()
         .message("Select Backup")
         .mimeType("application/zip")
         .requestCode(REQ_CONTENT_BACKUP)
-        .permissionCode(REQ_PERM_RESTORE)
-        .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
         .show(this)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

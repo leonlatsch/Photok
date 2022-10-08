@@ -31,7 +31,5 @@ class SharedUrisStore {
 
     fun getUris(): List<Uri> = sharedUris.toList()
 
-    fun getUriCount(): Int = sharedUris.size
-
     fun clear() = sharedUris.clear()
 }

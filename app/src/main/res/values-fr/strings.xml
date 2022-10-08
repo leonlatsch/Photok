@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2022 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Chargement…</string>
+    <string name="common_password">Mot de passe</string>
+    <string name="common_delete">Supprimer</string>
+    <string name="common_export">Exporter</string>
+    <string name="common_error">Une erreur est survenue. Veuillez réessayer.</string>
+    <string name="common_yes">Oui</string>
+    <string name="common_no">Non</string>
+    <string name="common_ok">OK</string>
+    <string name="common_are_you_sure">Êtes vous sûr?</string>
+    <string name="common_bullet">•</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Importation en cours</string>
+    <string name="import_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour importer des fichiers.</string>
+    <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s) ?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Créer votre mot de passe</string>
+    <string name="setup_enter_password">Entrer le mot de passe</string>
+    <string name="setup_confirm_password">Confirmer votre mot de passe</string>
+    <string name="setup_password_strength_label">Fiabilité du mot de passe :</string>
+    <string name="setup_button">Créer</string>
+    <string name="setup_password_strength_weak">Faible</string>
+    <string name="setup_password_strength_moderate">Modérée</string>
+    <string name="setup_password_strength_strong">Forte</string>
+    <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
+    <string name="setupSetup">Installer</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Déverrouiller votre coffre-fort</string>
+    <string name="unlock_enter_password">Entrer le mot de passe</string>
+    <string name="unlock_button">Déverrouiller</string>
+    <string name="unlock_wrong_password">\u26A0 Mauvais mot de passe</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">Il n\'y a pas de fichier dans votre coffre-fort</string>
+    <string name="gallery_all_photos_label">Tous les fichiers</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Importer</string>
+    <string name="import_menu_photos">Photos</string>
+    <string name="import_menu_videos">Vidéos</string>
+    <string name="import_menu_backup">Sauvegarde</string>
+    <string name="import_menu_hint">Ajouter des médias à Photok…</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Fermer</string>
+    <string name="process_abort">Annuler</string>
+    <string name="process_finished">Terminé</string>
+    <string name="process_initialize">Initialisation…</string>
+    <string name="process_aborted">Annulé</string>
+    <string name="process_failures_occurred">\u26A0 Certains éléments n\'ont pas pu être traités</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Détails</string>
+    <string name="view_photo_detail_file_name_label">Nom du fichier :</string>
+    <string name="view_photo_detail_import_at_label">Importé le :</string>
+    <string name="view_photo_detail_file_type_label">Type de fichier :</string>
+    <string name="view_photo_detail_size_label">Taille du fichier :</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Verrouiller</string>
+    <string name="menu_main_settings">Réglages</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Tout sélectionner</string>
+    <string name="menu_ms_delete">Supprimer</string>
+    <string name="menu_ms_export">Exporter</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Voulez-vous vraiment <b>supprimer</b> %1$d fichier(s) ?</string>
+    <string name="delete_are_you_sure_this">Voulez-vous vraiment <b>supprimer</b> ce fichier ?</string>
+    <string name="delete_deleting">Suppression en cours…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
+    <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
+    <string name="export_exporting">Exportation en cours…</string>
+    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour exporter des fichiers.</string>
+    <string name="export_finished">Exporté</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Version :</string>
+    <string name="about_developed_by">Développé par :</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Logiciel tiers</string>
+    <string name="about_privacy_policy">Politique de confidentialité</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Nouvelles</string>
+
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Réglages</string>
+
+    <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Thème</string>
+    <string name="settings_app_design_system_default">Défaut du système</string>
+    <string name="settings_app_design_system_light">Clair</string>
+    <string name="settings_app_design_system_dark">Sombre</string>
+
+    <string name="settings_category_gallery">Galerie</string>
+    <string name="settings_gallery_auto_fullscreen_title">Plein écran automatique</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran lors de l\'ouverture d\'un fichier</string>
+
+    <string name="settings_category_security">Sécurité</string>
+    <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
+    <string name="settings_security_allow_screenshots_summary">Autorise la capture d\'écran. Nécessite un redémarrage.</string>
+    <string name="settings_security_change_password_title">Changer le mot de passe</string>
+    <string name="settings_security_change_password_summary">Changez votre mot de passe</string>
+    <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
+    <string name="settings_security_timeout_summary">Se verrouille en arrière-plan après un certain temps</string>
+    <string name="settings_security_timeout_immediately">Immédiatement</string>
+    <string name="settings_security_timeout_one_minute">1 Minute</string>
+    <string name="settings_security_timeout_two_minute">2 Minutes</string>
+    <string name="settings_security_timeout_five_minute">5 Minutes</string>
+    <string name="settings_security_timeout_ten_minute">10 Minutes</string>
+    <string name="settings_security_timeout_never">Jamais</string>
+    <string name="settings_security_launch_code_title">Code de démarrage secret</string>
+    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l\'application téléphone.</string>
+    <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Masquer l\'application</string>
+    <string name="settings_security_hide_app_summary">Masque l\'icône de l\'application du tiroir d\'applications.</string>
+
+    <string name="settings_category_advanced">Avancé</string>
+    <string name="settings_category_advanced_summary">Utiliser avec précaution</string>
+    <string name="settings_advanced_reset_title">Réinitialiser le coffre-fort</string>
+    <string name="settings_advanced_reset_summary">Effacer les données et réinitialiser le mot de passe</string>
+    <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort ? Toutes les données seront perdues !</string>
+    <string name="settings_advanced_backup_title">Sauvegarde</string>
+    <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
+
+    <string name="settings_other_title">Autre</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Envoyez-moi un e-mail avec des commentaires</string>
+    <string name="settings_other_feedback_mail_subject">Photok Feedback</string>
+    <string name="settings_other_feedback_mail_body">Donnez votre avis sur Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_sourcecode_title">Code source</string>
+    <string name="settings_other_sourcecode_summary">Contribuer à Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Crédits</string>
+    <string name="settings_other_credits_summary">Contributeurs et crédits</string>
+    <string name="settings_other_about_title">À propos</string>
+    <string name="settings_other_about_summary">Informations sur Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributeurs</string>
+    <string name="credits_contributors_hint">Visitez Photok sur GitHub pour voir tous les contributeurs</string>
+    <string name="credits_icons_title">Icônes</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Changer votre mot de passe</string>
+    <string name="change_password_old_password">Ancien mot de passe</string>
+    <string name="change_password_new_password">Nouveau mot de passe</string>
+    <string name="change_password_check">Vérifier</string>
+    <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
+    <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
+    <string name="change_password_button">Changer le mot de passe</string>
+    <string name="change_password_confirm_message">Sauvegarde recommandée !<br /> Changer votre mot de passe nécessite de rechiffrer tous vos fichiers ! Voulez-vous continuer?</string>
+    <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Cacher Photok</string>
+    <string name="hide_app_title_show">Afficher Photok</string>
+    <string name="hide_app_status_label">Photok est actuellement :</string>
+    <string name="hide_app_status_visible">VISIBLE</string>
+    <string name="hide_app_status_hidden">CACHÉ</string>
+    <string name="hide_app_app_name_stealth">Téléphone</string>
+    <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok ?</string>
+    <string name="hide_app_confirm_show">Voulez-vous montrer à nouveau Photok ?</string>
+    <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
+    <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_finish">Terminer</string>
+    <string name="onboarding_skip"><u>Passer</u></string>
+
+    <string name="onboarding_slide1_title">Bienvenue sur</string>
+    <string name="onboarding_slide1_description">Un endroit sûr pour vos photos.</string>
+    <string name="onboarding_slide2_title">Créer un mot de passe</string>
+    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe sert à crypter vos photos directement sur votre téléphone.</string>
+    <string name="onboarding_slide3_title">Importez des photos</string>
+    <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des autres.\nVous pourrez ensuite les supprimer de votre galerie.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Création d\'une sauvegarde…</string>
+    <string name="backup_restore_title">Restaurer la sauvegarde</string>
+    <string name="backup_restore_validating">Validation de la sauvegarde…</string>
+    <string name="backup_restore_details_created_at">Créé le :</string>
+    <string name="backup_restore_details_photos_contained">Fichiers contenus :</string>
+    <string name="backup_restore_details_compatible">Compatible :</string>
+    <string name="backup_restore_details_size">Taille :</string>
+    <string name="backup_restore_button">Déverrouiller et restaurer</string>
+    <string name="backup_restore_invalid_file">\u26A0 Fichier non valide</string>
+    <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
+    <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Nouveautés dans</string>
+    <string name="news_view_changelog">Voir le Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">Fonctionnalité : Menu de récupération</string>
+    <string name="news_summary_1">Pour en savoir plus sur le nouveau menu de récupération, visitez la page GitHub de Photok</string>
+
+    <string name="news_title_2">Amélioration des performances</string>
+    <string name="news_summary_2">De nombreuses améliorations de performances pour Photok</string>
+
+    <string name="news_title_3">EMPTY</string>
+    <string name="news_summary_3">EMPTY</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Menu de récupération</string>
+    <string name="recovery_menu_item_open_photok">Ouvrir Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Réinitialiser la visibilité de l\'application</string>
+</resources>

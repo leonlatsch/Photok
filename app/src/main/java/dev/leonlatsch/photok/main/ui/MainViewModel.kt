@@ -21,6 +21,7 @@ import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 /**
@@ -35,13 +36,12 @@ class MainViewModel @Inject constructor(
     private val sharedUrisStore: SharedUrisStore,
 ) : ObservableViewModel(app) {
 
+    val consumedUrisFromStore = MutableStateFlow(emptyList<Uri>())
+
     fun addUriToSharedUriStore(uri: Uri) = sharedUrisStore.safeAddUri(uri)
 
-    fun consumeSharedUris(): List<Uri> {
-        val sharedUris = sharedUrisStore.getUris()
+    fun consumeSharedUris() {
+        consumedUrisFromStore.value = sharedUrisStore.getUris()
         sharedUrisStore.clear()
-        return sharedUris
     }
-
-    fun getUriCountFromStore(): Int = sharedUrisStore.getUriCount()
 }
