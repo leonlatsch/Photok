@@ -76,47 +76,53 @@ class PhotoViewHolder(
     }
 
     private fun loadPhoto() {
-        GlobalScope.launch(Dispatchers.IO) {
-            val photo = photoRepository.get(photoId)
+        try {
+            GlobalScope.launch(Dispatchers.IO) {
+                val photo = photoRepository.get(photoId)
 
-            val data = if (photo.type.isVideo) {
-                photoRepository.loadVideoPreview(photo)
-            } else {
-                photoRepository.loadPhoto(photo)
-            }
-            if (data == null) {
-                Timber.d("Error loading photo data for photo: $photoId")
-                return@launch
-            }
-
-            initUiElements(photo)
-
-            if (photo.type.isGif) {
-                onMain {
-                    Glide.with(context)
-                        .asGif()
-                        .load(data)
-                        .into(imageView)
-                }
-            } else {
-
-                val bitmap = if (photo.type.isVideo) {
-                    Glide.with(context)
-                        .asBitmap()
-                        .load(data)
-                        .submit()
-                        .get()
+                val data = if (photo.type.isVideo) {
+                    photoRepository.loadVideoPreview(photo)
                 } else {
-                    normalizeExifOrientation(data)
+                    photoRepository.loadPhoto(photo)
+                }
+                if (data == null) {
+                    Timber.d("Error loading photo data for photo: $photoId")
+                    return@launch
                 }
 
-                bitmap ?: return@launch
+                initUiElements(photo)
 
-                onMain {
-                    imageView.setImageBitmap(bitmap)
+                if (photo.type.isGif) {
+                    onMain {
+                        Glide.with(context)
+                            .asGif()
+                            .load(data)
+                            .into(imageView)
+                    }
+                } else {
+
+                    val bitmap = if (photo.type.isVideo) {
+                        Glide.with(context)
+                            .asBitmap()
+                            .load(data)
+                            .submit()
+                            .get()
+                    } else {
+                        normalizeExifOrientation(data)
+                    }
+
+                    bitmap ?: return@launch
+
+                    onMain {
+                        imageView.setImageBitmap(bitmap)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            Timber.d("Error loading your photo: $e")
+            return
         }
+
     }
 
     private fun initUiElements(photo: Photo) = onMain {
