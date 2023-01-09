@@ -1,7 +1,7 @@
 <resources>
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020–2022 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020-2023 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
