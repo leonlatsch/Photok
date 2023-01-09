@@ -49,7 +49,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 
 LICENSE
 =======
-    Copyright 2020-2022 Leon Latsch
+    Copyright 2020-2023 Leon Latsch
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
