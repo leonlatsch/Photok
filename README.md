@@ -1,12 +1,12 @@
 ![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
 [![GitHub release](https://img.shields.io/github/v/release/leonlatsch/Photok.svg?logo=github&label=GitHub)](https://github.com/leonlatsch/Photok/releases/latest)
-[![Google Play](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=white&url=https%3A%2F%2Fplayshields.herokuapp.com%2Fplay%3Fi%3Ddev.leonlatsch.photok%26l%3DGoogle%2520Play%26m%3D%24version)](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
+[![Google Play](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=green&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Ddev.leonlatsch.photok%26l%3DGPlay%26m%3D%24version)](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
 [![F-Droid](https://img.shields.io/f-droid/v/dev.leonlatsch.photok.svg?logo=f-droid&label=F-Droid)](https://f-droid.org/packages/dev.leonlatsch.photok/)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
-![Maintenance](https://img.shields.io/maintenance/yes/2022)
+![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
 Encrypt your photos on your device and keep them safe from others.
 
