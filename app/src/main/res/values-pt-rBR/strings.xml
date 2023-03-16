@@ -159,7 +159,7 @@
     <string name="settings_other_feedback_summary">Envie-me um e-mail com o feedback</string>
     <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
     <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">dev.leonlatsch@gmail.com</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
