@@ -1,16 +1,17 @@
-Photok ist eine kostenloser Foto-Safe. Es speichert deine Fotos verschlüsselt auf deinem Smartphone und versteckt sie vor fremden.
+Photok ist eine kostenloser Foto-Safe. Es speichert deine Fotos & Videos verschlüsselt auf deinem Smartphone und versteckt sie vor fremden.
 Es benutzt Technologien wie AES-256 encryption standard oder bcrypt, um deine Fotos zu sichern.
-Photos ist komplett kostenlos, open source und beinhaltet keine Werbung.
+Photos ist komplett kostenlos, open source und werbefrei.
 
 <b>Funktionen</b>
 
-- importiere Fotos aus deiner Galerie
+- importiere Fotos und Videos aus deiner Galerie
 - komplett funktionale In-App-Galerie.
 - exportiere Fotos zurück in deine Galerie
 - ändere dein Passwort
 - erstelle und stelle Backups wieder her
 - senden an Photok
 - app Icon verstecken
+- Wiederherstellungs Menu
 
 <b>Vorteile</b>
 

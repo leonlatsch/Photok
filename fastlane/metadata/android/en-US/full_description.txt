@@ -1,16 +1,17 @@
-Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
+Photok is a free Photo-Safe. It stores your photos & videos encrypted on your device and hides them from others.
 It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
-Photok is completely free, open source, and contains no ads.
+Photok is completely free, open source, and runs no ads.
 
 <b>Features</b>
 
-- import photos from your gallery
+- import photos and videosfrom your gallery
 - fully functional in app gallery
 - export photos back to your gallery
 - change your password
 - create and Restore backups
 - share to Photok
 - hide app icon
+- recovery menu
 
 <b>Benefits</b>
 
