@@ -44,6 +44,11 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
 
     compileOptions {
@@ -114,6 +119,12 @@ dependencies {
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.7.0")
 
+    // Compose
+    implementation(platform("androidx.compose:compose-bom:2023.04.00"))
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
 
@@ -134,6 +145,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.3.0")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.18.1")
