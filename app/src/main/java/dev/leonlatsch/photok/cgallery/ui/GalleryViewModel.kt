@@ -17,15 +17,29 @@
 package dev.leonlatsch.photok.cgallery.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class GalleryViewModel @Inject constructor() : ViewModel() {
+class GalleryViewModel @Inject constructor(
+    private val photoRepository: PhotoRepository,
+) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<GalleryUiState> = MutableStateFlow(GalleryUiState.Empty)
-    val uiState = _uiState.asStateFlow()
+    val uiState = photoRepository.observeAll().map { photos ->
+        if (photos.isEmpty()) {
+            GalleryUiState.Empty
+        } else {
+            GalleryUiState.Content(
+                photos = photos
+            )
+        }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 }

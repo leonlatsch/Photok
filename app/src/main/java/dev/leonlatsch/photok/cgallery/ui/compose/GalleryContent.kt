@@ -61,7 +61,6 @@ fun GalleryContent(uiState: GalleryUiState.Content) {
 }
 
 private val ImageSize = 25.dp
-private val ImagePadding = 2.dp
 
 @Composable
 private fun GalleryPhotoTile(photo: Photo) {
@@ -80,10 +79,10 @@ private fun GalleryPhotoTile(photo: Photo) {
         )
 
         Image(
-            painter = rememberEncryptedPhotoThumbnailPainter(photo),
+            painter = painterResource(R.drawable.ic_community),
             contentDescription = photo.fileName,
             modifier = Modifier
-                .fillMaxSize()
+                .size(ImageSize)
                 .constrainAs(imageRef) {
                     centerTo(parent)
                 }
@@ -94,7 +93,6 @@ private fun GalleryPhotoTile(photo: Photo) {
             contentDescription = null,
             tint = Color.LightGray,
             modifier = Modifier
-                .size(ImageSize)
                 .constrainAs(videoIconRef) {
                     bottom.linkTo(parent.bottom, margin = 2.dp)
                     start.linkTo(parent.start, margin = 2.dp)
@@ -118,5 +116,12 @@ private fun GalleryPhotoTile(photo: Photo) {
 @Preview
 @Composable
 fun GalleryContentPreview() {
-    GalleryContent(uiState = GalleryUiState.Content(listOf(Photo("", 0L, PhotoType.JPEG, 0L))))
+    GalleryContent(
+        uiState = GalleryUiState.Content(
+            listOf(
+                Photo("", 0L, PhotoType.JPEG, 0L),
+                Photo("", 0L, PhotoType.JPEG, 0L),
+            )
+        )
+    )
 }

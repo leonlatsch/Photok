@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.model.database.dao
 import androidx.paging.PagingSource
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Photo
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Data Access Object for [Photo] Entity.
@@ -77,6 +78,9 @@ interface PhotoDao {
      */
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
+
+    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
+    fun observeAllSortedByImportedAt(): Flow<List<Photo>>
 
     /**
      * Get all photo Ids.

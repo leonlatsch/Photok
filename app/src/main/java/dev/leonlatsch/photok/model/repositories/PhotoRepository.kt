@@ -80,6 +80,7 @@ class PhotoRepository @Inject constructor(
      */
     fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
 
+    fun observeAll() = photoDao.observeAllSortedByImportedAt()
 
     /**
      * @see PhotoDao.getAllIds

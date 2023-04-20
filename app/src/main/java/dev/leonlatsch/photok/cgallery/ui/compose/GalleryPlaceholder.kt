@@ -16,23 +16,11 @@
 
 package dev.leonlatsch.photok.cgallery.ui.compose
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
-import dev.leonlatsch.photok.cgallery.ui.GalleryViewModel
-import dev.leonlatsch.photok.cgallery.ui.compose.GalleryContent
 
 @Composable
-fun GalleryScreen(viewModel: GalleryViewModel) {
-
-    val uiState by viewModel.uiState.collectAsState()
-
-    MaterialTheme {
-        when (uiState) {
-            is GalleryUiState.Empty -> GalleryPlaceholder(uiState as GalleryUiState.Empty)
-            is GalleryUiState.Content -> GalleryContent(uiState as GalleryUiState.Content)
-        }
-    }
+fun GalleryPlaceholder(empty: GalleryUiState.Empty) {
+    Text(text = "Empty Placeholder for now")
 }

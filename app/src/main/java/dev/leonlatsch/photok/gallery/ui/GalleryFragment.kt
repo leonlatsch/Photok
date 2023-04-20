@@ -101,6 +101,10 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
         }
     }
 
+    fun navigateToNewGallery() {
+        findNavController().navigate(R.id.action_galleryFragment_to_cgalleryFragment)
+    }
+
     /**
      * Show [ImportMenuDialog].
      * Called by ui.

@@ -35,6 +35,9 @@
             app:destination="@id/imageViewerFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
+        <action
+            android:id="@+id/action_galleryFragment_to_cgalleryFragment"
+            app:destination="@id/cgalleryFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -158,4 +161,8 @@
             android:defaultValue="-1"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/cgalleryFragment"
+        android:name="dev.leonlatsch.photok.cgallery.ui.GalleryFragment"
+        android:label="GalleryFragment" />
 </navigation>
