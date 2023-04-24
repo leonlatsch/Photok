@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -60,7 +59,7 @@ fun GalleryContent(uiState: GalleryUiState.Content) {
     }
 }
 
-private val ImageSize = 25.dp
+private val VideoIconSize = 25.dp
 
 @Composable
 private fun GalleryPhotoTile(photo: Photo) {
@@ -70,29 +69,27 @@ private fun GalleryPhotoTile(photo: Photo) {
         val (videoIconRef, imageRef, checkboxRef) = createRefs()
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Gray)
-                .constrainAs(imageRef) {
-                    centerTo(parent)
-                }
-        )
-
-        Image(
-            painter = painterResource(R.drawable.ic_community),
-            contentDescription = photo.fileName,
-            modifier = Modifier
-                .size(ImageSize)
-                .constrainAs(imageRef) {
-                    centerTo(parent)
-                }
-        )
+            modifier = Modifier.constrainAs(imageRef) {
+                centerTo(parent)
+            }
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Gray)
+            )
+            Image(
+                painter = rememberEncryptedPhotoThumbnailPainter(photo),
+                contentDescription = photo.fileName,
+            )
+        }
 
         Icon(
             painter = painterResource(R.drawable.ic_videocam),
             contentDescription = null,
             tint = Color.LightGray,
             modifier = Modifier
+                .size(VideoIconSize)
                 .constrainAs(videoIconRef) {
                     bottom.linkTo(parent.bottom, margin = 2.dp)
                     start.linkTo(parent.start, margin = 2.dp)
@@ -119,6 +116,9 @@ fun GalleryContentPreview() {
     GalleryContent(
         uiState = GalleryUiState.Content(
             listOf(
+                Photo("", 0L, PhotoType.JPEG, 0L),
+                Photo("", 0L, PhotoType.JPEG, 0L),
+                Photo("", 0L, PhotoType.JPEG, 0L),
                 Photo("", 0L, PhotoType.JPEG, 0L),
                 Photo("", 0L, PhotoType.JPEG, 0L),
             )
