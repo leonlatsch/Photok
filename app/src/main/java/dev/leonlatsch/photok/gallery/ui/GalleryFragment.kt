@@ -143,11 +143,24 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
             viewModel.togglePlaceholder(adapter.itemCount)
+            updateFileAmount()
+        }
 
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int)  {
             viewModel.togglePlaceholder(adapter.itemCount)
+            updateFileAmount()
+        }
+    }
+
+    private fun updateFileAmount() {
+        if (adapter.itemCount == 0) {
+            binding.galleryAllPhotosAmount.visibility = View.GONE
+        } else {
+            binding.galleryAllPhotosAmount.visibility = View.VISIBLE
+            binding.galleryAllPhotosAmount.text = "(${adapter.itemCount})"
+        }
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {
