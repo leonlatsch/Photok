@@ -42,6 +42,7 @@ import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -156,9 +157,9 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
 
     private fun updateFileAmount() {
         if (adapter.itemCount == 0) {
-            binding.galleryAllPhotosAmount.visibility = View.GONE
+            binding.galleryAllPhotosAmount.hide()
         } else {
-            binding.galleryAllPhotosAmount.visibility = View.VISIBLE
+            binding.galleryAllPhotosAmount.show()
             binding.galleryAllPhotosAmount.text = "(${adapter.itemCount})"
         }
     }
