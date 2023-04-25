@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.lazyClose
+import dev.leonlatsch.photok.other.getFileHash
 import dev.leonlatsch.photok.other.getFileName
 import timber.log.Timber
 import java.io.IOException
@@ -69,6 +70,11 @@ class PhotoRepository @Inject constructor(
      * @see PhotoDao.get
      */
     suspend fun get(id: Int) = photoDao.get(id)
+
+    /**
+     * @see PhotoDao.getByHash
+     */
+    suspend fun getByHash(hash: Long) = photoDao.getByHash(hash)
 
     /**
      * @see PhotoDao.getAllSortedByImportedAt
@@ -117,14 +123,21 @@ class PhotoRepository @Inject constructor(
 
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(sourceUri)
-        val photo = Photo(fileName, System.currentTimeMillis(), type)
 
-        val created = safeCreatePhoto(photo, inputStream, sourceUri)
-        inputStream?.lazyClose()
+        val fileHash = getFileHash(app.contentResolver, sourceUri)
 
-        if (!created) {
-            return false
+        val fileExists = fileHash != null && getByHash(fileHash) != null
+        if (!fileExists) {
+            val photo = Photo(fileName, System.currentTimeMillis(), type, 0L, fileHash)
+
+            val created = safeCreatePhoto(photo, inputStream, sourceUri)
+
+            if (!created) {
+                inputStream?.lazyClose()
+                return false
+            }
         }
+        inputStream?.lazyClose()
 
         // TODO: only remove if selected by the user
         val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)

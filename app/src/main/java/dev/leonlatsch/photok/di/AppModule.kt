@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
+import dev.leonlatsch.photok.model.database.MIGRATION_1_2
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -46,7 +47,7 @@ object AppModule {
         app,
         PhotokDatabase::class.java,
         DATABASE_NAME
-    ).build()
+    ).addMigrations(MIGRATION_1_2).build()
 
     @Provides
     @Singleton

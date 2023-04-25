@@ -183,6 +183,7 @@ class RestoreBackupViewModel @Inject constructor(
                 System.currentTimeMillis(),
                 oldPhoto.type,
                 oldPhoto.size,
+                oldPhoto.hash,
                 UUID.randomUUID().toString()
             )
 
@@ -250,6 +251,7 @@ class RestoreBackupViewModel @Inject constructor(
                     System.currentTimeMillis(),
                     it.type,
                     it.size,
+                    it.hash,
                     uuid
                 )
 

@@ -33,6 +33,7 @@ data class Photo(
     var importedAt: Long,
     @Expose val type: PhotoType,
     @Expose var size: Long = 0L,
+    @Expose val hash: Long?,
     @Expose val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 ) {

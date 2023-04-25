@@ -38,7 +38,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 abstract class PhotokDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION = 1
+        const val VERSION = 2
         const val DATABASE_NAME = "photok.db"
     }
 

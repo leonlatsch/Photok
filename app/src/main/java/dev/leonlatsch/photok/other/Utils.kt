@@ -28,6 +28,9 @@ import android.os.Looper
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.exifinterface.media.ExifInterface
+import com.google.common.hash.Funnels
+import com.google.common.hash.Hashing
+import com.google.common.io.ByteStreams
 import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -61,6 +64,18 @@ fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
     }
 
     return -1L
+}
+
+/**
+ * Get the hash of a file
+ */
+fun getFileHash(contentResolver: ContentResolver, uri: Uri): Long? {
+    val hasher = Hashing.sha256().newHasher()
+    contentResolver.openInputStream(uri)?.use {
+        return ByteStreams.copy(it, Funnels.asOutputStream(hasher))
+    }
+
+    return null
 }
 
 /**

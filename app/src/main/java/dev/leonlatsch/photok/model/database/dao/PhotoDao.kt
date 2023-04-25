@@ -61,6 +61,14 @@ interface PhotoDao {
     suspend fun get(id: Int): Photo
 
     /**
+     * Get one [Photo] by [hash].
+     *
+     * @return the photo with [id]
+     */
+    @Query("SELECT * FROM photo WHERE hash = :hash")
+    suspend fun getByHash(hash: Long): Photo?
+
+    /**
      * Get all photos, ordered by imported At (desc).
      * Used for re-encrypting.
      *
