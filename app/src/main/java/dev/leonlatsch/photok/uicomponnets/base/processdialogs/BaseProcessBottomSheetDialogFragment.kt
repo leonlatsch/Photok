@@ -97,6 +97,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
 
     private fun enterFinishedOrAbortedState() {
         isCancelable = true
+        binding.processDeleteImportedButton.show()
         binding.processCloseButton.show()
         binding.processAbortButton.hide()
         binding.processProcessingIndicator.hide()

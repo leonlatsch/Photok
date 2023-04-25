@@ -121,7 +121,14 @@ class PhotoRepository @Inject constructor(
 
         val created = safeCreatePhoto(photo, inputStream, sourceUri)
         inputStream?.lazyClose()
-        return created
+
+        if (!created) {
+            return false
+        }
+
+        // TODO: only remove if selected by the user
+        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+        return deleted == true
     }
 
     /**

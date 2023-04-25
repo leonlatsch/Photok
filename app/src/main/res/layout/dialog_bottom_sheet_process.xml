@@ -175,6 +175,17 @@
                     android:onClick="@{() -> context.dismiss()}"
                     android:text="@string/process_close"
                     android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/processDeleteImportedButton"
+                    style="@style/buttonStyle"
+                    android:layout_width="@dimen/wide_button_width"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:onClick="@{() -> context.dismiss()}"
+                    android:text="@string/process_delete_imported"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>
