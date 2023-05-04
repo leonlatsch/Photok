@@ -70,7 +70,7 @@
     <!-- PROCESS -->
     <string name="process_close">Close</string>
     <string name="process_abort">Abort</string>
-    <string name="process_finished">Finished</string>y
+    <string name="process_finished">Finished</string>
     <string name="process_initialize">Preparing…</string>
     <string name="process_aborted">Aborted</string>
     <string name="process_failures_occurred">\u26A0 Some elements could not get processed</string>
