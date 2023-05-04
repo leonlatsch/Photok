@@ -18,10 +18,30 @@ package dev.leonlatsch.photok.model.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import dev.leonlatsch.photok.other.getFileHash
 
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE `photo` ADD COLUMN hash INTEGER;")
+        database.beginTransaction()
+
+        try {
+            database.execSQL("ALTER TABLE `photo` ADD COLUMN hash INTEGER;")
+
+            // get photo one by one and calculate hash
+            val cursor = database.query("SELECT * FROM photo")
+            while (cursor.moveToNext()) {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                // TODO: decrypt file
+                // TODO: calculate hash
+                // val hash = getFileHash(app.contextResolver)
+                val hash = 0L
+                database.execSQL("UPDATE photo SET hash = $hash WHERE id = $id")
+            }
+
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
+        }
     }
 }
