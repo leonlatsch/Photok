@@ -33,7 +33,7 @@
     <string name="common_are_you_sure">Are you sure?</string>
     <string name="common_bullet">•</string>
 
-    <!-- IMPORT -->>
+    <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>
     <string name="import_permission_rationale">Photok needs to access your storage, to import files.</string>
     <string name="import_sharted_question">Do you want to import %1$d file(s)?</string>
@@ -69,9 +69,8 @@
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>
-    <string name="process_delete_imported">Delete imported files</string>
     <string name="process_abort">Abort</string>
-    <string name="process_finished">Finished</string>y
+    <string name="process_finished">Finished</string>
     <string name="process_initialize">Preparing…</string>
     <string name="process_aborted">Aborted</string>
     <string name="process_failures_occurred">\u26A0 Some elements could not get processed</string>
