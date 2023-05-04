@@ -96,6 +96,19 @@
             android:summary="@string/settings_advanced_backup_summary"
             android:title="@string/settings_advanced_backup_title" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_delete"
+            android:key="advanced^deleteImportedFiles"
+            android:summary="@string/settings_advanced_delete_imported_summary"
+            android:title="@string/settings_advanced_delete_imported_title" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_arrow_forward"
+            android:key="advanced^skipDuplicates"
+            android:summary="@string/settings_advanced_skip_duplicates_summary"
+            android:title="@string/settings_advanced_skip_duplicates_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Other">

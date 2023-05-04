@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileHash
 import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.settings.data.Config
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -46,7 +47,8 @@ import javax.inject.Inject
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val app: Application
+    private val app: Application,
+    private val config: Config
 ) {
 
     // region DATABASE
@@ -127,11 +129,9 @@ class PhotoRepository @Inject constructor(
         val fileHash = getFileHash(app.contentResolver, sourceUri)
 
         val fileExists = fileHash != null && getByHash(fileHash) != null
-        if (!fileExists) {
+        if (!fileExists || !config.skipDuplicates) {
             val photo = Photo(fileName, System.currentTimeMillis(), type, 0L, fileHash)
-
             val created = safeCreatePhoto(photo, inputStream, sourceUri)
-
             if (!created) {
                 inputStream?.lazyClose()
                 return false
@@ -139,9 +139,12 @@ class PhotoRepository @Inject constructor(
         }
         inputStream?.lazyClose()
 
-        // TODO: only remove if selected by the user
-        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
-        return deleted == true
+        if (config.deleteImportedFiles) {
+            val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+            return deleted == true
+        }
+
+        return true
     }
 
     /**

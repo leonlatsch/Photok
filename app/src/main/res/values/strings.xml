@@ -69,7 +69,6 @@
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>
-    <string name="process_delete_imported">Delete imported files</string>
     <string name="process_abort">Abort</string>
     <string name="process_finished">Finished</string>y
     <string name="process_initialize">Preparing…</string>
@@ -155,6 +154,10 @@
     <string name="settings_advanced_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string>
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
+    <string name="settings_advanced_skip_duplicates_title">Skip duplicates</string>
+    <string name="settings_advanced_skip_duplicates_summary">Skip files which were already imported</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>

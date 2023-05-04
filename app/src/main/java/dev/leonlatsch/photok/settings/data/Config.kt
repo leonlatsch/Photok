@@ -86,6 +86,20 @@ class Config(context: Context) {
         get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
         set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
 
+    /**
+     * Determines if files should be deleted after importing them.
+     */
+    var deleteImportedFiles: Boolean
+        get() = getBoolean(ADVANCED_DELETE_IMPORTED_FILES, ADVANCED_DELETE_IMPORTED_FILES_DEFAULT)
+        set(value) = putBoolean(ADVANCED_DELETE_IMPORTED_FILES, value)
+
+    /**
+     * Determines if already imported files should be skipped from being imported again.
+     */
+    var skipDuplicates: Boolean
+        get() = getBoolean(ADVANCED_SKIP_DUPLICATES, ADVANCED_SKIP_DUPLICATES_DEFAULT)
+        set(value) = putBoolean(ADVANCED_SKIP_DUPLICATES, value)
+
     var timestampLastRecoveryStart: Long
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
@@ -171,6 +185,12 @@ class Config(context: Context) {
 
         const val SECURITY_DIAL_LAUNCH_CODE = "security^dialLaunchCode"
         const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
+
+        const val ADVANCED_DELETE_IMPORTED_FILES = "advanced^deleteImportedFiles"
+        const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = true
+
+        const val ADVANCED_SKIP_DUPLICATES = "advanced^skipDuplicates"
+        const val ADVANCED_SKIP_DUPLICATES_DEFAULT = true
 
         const val TIMESTAMP_LAST_RECOVERY_START = "internal^timestampLastRecoveryStart"
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L
