@@ -45,7 +45,8 @@ import javax.inject.Inject
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val app: Application
+    private val app: Application,
+    private val config: Config
 ) {
 
     // region DATABASE
@@ -126,9 +127,12 @@ class PhotoRepository @Inject constructor(
             return false
         }
 
-        // TODO: only remove if selected by the user
-        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
-        return deleted == true
+        if (config.deleteImportedFiles) {
+            val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+            return deleted == true
+        }
+
+        return true
     }
 
     /**
