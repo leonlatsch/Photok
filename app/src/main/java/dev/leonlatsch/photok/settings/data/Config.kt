@@ -174,7 +174,7 @@ class Config(context: Context) {
         const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
 
         const val ADVANCED_DELETE_IMPORTED_FILES = "advanced^deleteImportedFiles"
-        const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = true
+        const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = false
 
         const val TIMESTAMP_LAST_RECOVERY_START = "internal^timestampLastRecoveryStart"
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L
