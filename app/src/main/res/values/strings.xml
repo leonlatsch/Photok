@@ -33,7 +33,7 @@
     <string name="common_are_you_sure">Are you sure?</string>
     <string name="common_bullet">•</string>
 
-    <!-- IMPORT -->>
+    <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>
     <string name="import_permission_rationale">Photok needs to access your storage, to import files.</string>
     <string name="import_sharted_question">Do you want to import %1$d file(s)?</string>
@@ -154,6 +154,8 @@
     <string name="settings_advanced_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string>
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>

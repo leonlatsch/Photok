@@ -156,6 +156,8 @@
     <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort ? Toutes les données seront perdues !</string>
     <string name="settings_advanced_backup_title">Sauvegarde</string>
     <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
 
     <string name="settings_other_title">Autre</string>
     <string name="settings_other_feedback_title">Feedback</string>
