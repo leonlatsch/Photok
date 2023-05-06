@@ -97,7 +97,6 @@
             android:title="@string/settings_advanced_backup_title" />
 
         <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:icon="@drawable/ic_delete"
             android:key="advanced^deleteImportedFiles"
             android:summary="@string/settings_advanced_delete_imported_summary"
