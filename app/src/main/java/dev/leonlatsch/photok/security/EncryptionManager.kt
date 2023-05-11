@@ -16,18 +16,24 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.other.AES
-import dev.leonlatsch.photok.other.AES_ALGORITHM
-import dev.leonlatsch.photok.other.SHA_256
+import android.os.Build
+import android.security.keystore.KeyProperties
+import android.security.keystore.KeyProtection
+import androidx.annotation.RequiresApi
+import dev.leonlatsch.photok.other.*
+import org.gradle.internal.impldep.com.amazonaws.services.s3.internal.crypto.CryptoUtils
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
+import java.security.KeyStore
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
+import javax.crypto.SecretKey
+import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
@@ -40,9 +46,10 @@ import javax.crypto.spec.SecretKeySpec
  */
 class EncryptionManager {
 
-    private var encryptionKey: SecretKeySpec? = null
+    private var encryptionKey: SecretKey? = null
     private var ivParameterSpec: IvParameterSpec? = null
 
+    var useAndroidKeyStore = false
     var isReady: Boolean = false
 
     val encodedKey: ByteArray
@@ -62,7 +69,25 @@ class EncryptionManager {
         }
         try {
             encryptionKey = genSecKey(password)
-            ivParameterSpec = genIv(password)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                throw GeneralSecurityException("Android KeyStore is only supported on Android 8+")
+            }
+            ivParameterSpec = getIVSecureRandom(AES_ALGORITHM)
+            isReady = true
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error initializing EncryptionManager: $e")
+            isReady = false
+        }
+    }
+
+    fun initializeWithAndroidKeyStore() {
+        useAndroidKeyStore = true
+        try {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                throw GeneralSecurityException("Android KeyStore is only supported on Android 9+")
+            }
+            encryptionKey = getSecKeyFromAndroidKeyStore()
+            ivParameterSpec = getIVSecureRandom(AES_ALGORITHM)
             isReady = true
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
@@ -77,6 +102,7 @@ class EncryptionManager {
         encryptionKey = null
         ivParameterSpec = null
         isReady = false
+        useAndroidKeyStore = false
     }
 
     /**
@@ -133,7 +159,11 @@ class EncryptionManager {
 
     private fun createCipher(mode: Int, password: String): Cipher? {
         val key = genSecKey(password)
-        val iv = genIv(password)
+        val iv = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getIVSecureRandom(AES_ALGORITHM)
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
 
         return createCipher(mode, key, iv)
     }
@@ -141,16 +171,16 @@ class EncryptionManager {
     /**
      * Create a cipher with local stored encryption key.
      */
-    fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
+    private fun createCipher(mode: Int) = createCipher(mode, encryptionKey, ivParameterSpec)
 
     private fun createCipher(
         mode: Int,
-        secretKeySpec: SecretKeySpec?,
+        secretKeySpec: SecretKey?,
         ivParam: IvParameterSpec?
     ): Cipher? {
         return if (isReady) try {
             Cipher.getInstance(AES_ALGORITHM).apply {
-                init(mode, secretKeySpec, ivParam)
+                init(mode, secretKeySpec)
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing cipher: $e")
@@ -161,12 +191,43 @@ class EncryptionManager {
         }
     }
 
-    private fun genSecKey(password: String): SecretKeySpec {
+    private fun genSecKey(password: String): SecretKey {
         val md = MessageDigest.getInstance(SHA_256)
         val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
         return SecretKeySpec(bytes, AES)
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun getSecKeyFromAndroidKeyStore(): SecretKey {
+        val keyStore = KeyStore.getInstance(KEY_STORE).apply { load(null) }
+        if (!keyStore.containsAlias(KEY_STORE_KEY_ALIAS)) {
+            throw Exception("No private key exists in the android key-store!")
+        }
+
+        val entry = keyStore.getKey(KEY_STORE_KEY_ALIAS, null) as KeyStore.SecretKeyEntry
+        return entry.secretKey
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun importSecKeyIntoAndroidKeyStore() {
+        val keyStore = KeyStore.getInstance(KEY_STORE).apply { load(null) }
+
+        keyStore.setEntry(
+            KEY_STORE_KEY_ALIAS,
+            KeyStore.SecretKeyEntry(encryptionKey),
+            KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .setUserAuthenticationRequired(true)
+                .setUserAuthenticationParameters(
+                    0,
+                    KeyProperties.AUTH_BIOMETRIC_STRONG or KeyProperties.AUTH_DEVICE_CREDENTIAL
+                )
+                .build()
+        )
+    }
+
+    /*
     private fun genIv(password: String): IvParameterSpec {
         val iv = ByteArray(16)
         val charArray = password.toCharArray()
@@ -176,5 +237,15 @@ class EncryptionManager {
         }
 
         return IvParameterSpec(iv)
+    }
+    */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getIVSecureRandom(algorithm: String?): IvParameterSpec? {
+        val iv =
+            CryptoUtils.getRandomIVWithSize(
+                12
+            )
+        return GCMParameterSpec(128, iv)
     }
 }

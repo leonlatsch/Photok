@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.unlock.ui
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,9 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
+import java.security.SecureRandom
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
 /**
@@ -66,12 +71,21 @@ class UnlockViewModel @Inject constructor(
     fun unlock() = viewModelScope.launch {
         unlockState = UnlockState.CHECKING
 
-        unlockState = if (passwordManager.checkPassword(password)) {
+        val useAndroidKeyStore = false // TODO: get option from settings
+
+        unlockState = if (useAndroidKeyStore) {
+            encryptionManager.initializeWithAndroidKeyStore()
+            UnlockState.UNLOCKED
+        } else if (passwordManager.checkPassword(password)) {
             encryptionManager.initialize(password)
+
+            // TODO: handle error
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                encryptionManager.importSecKeyIntoAndroidKeyStore()
+            }
             UnlockState.UNLOCKED
         } else {
             UnlockState.LOCKED
         }
     }
-
 }

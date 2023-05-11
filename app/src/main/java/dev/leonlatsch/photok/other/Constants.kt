@@ -20,6 +20,8 @@ package dev.leonlatsch.photok.other
 const val SHA_256 = "SHA-256"
 const val AES = "AES"
 const val AES_ALGORITHM = "AES/GCM/NoPadding"
+const val KEY_STORE = "AndroidKeyStore"
+const val KEY_STORE_KEY_ALIAS = "photok"
 
 // Intent
 const val INTENT_PHOTO_ID = "intent.photo.id"
