@@ -21,7 +21,6 @@ import android.security.keystore.KeyProperties
 import android.security.keystore.KeyProtection
 import androidx.annotation.RequiresApi
 import dev.leonlatsch.photok.other.*
-import org.gradle.internal.impldep.com.amazonaws.services.s3.internal.crypto.CryptoUtils
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
@@ -69,10 +68,7 @@ class EncryptionManager {
         }
         try {
             encryptionKey = genSecKey(password)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                throw GeneralSecurityException("Android KeyStore is only supported on Android 8+")
-            }
-            ivParameterSpec = getIVSecureRandom(AES_ALGORITHM)
+            ivParameterSpec = genIv(AES_ALGORITHM)
             isReady = true
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
@@ -87,7 +83,7 @@ class EncryptionManager {
                 throw GeneralSecurityException("Android KeyStore is only supported on Android 9+")
             }
             encryptionKey = getSecKeyFromAndroidKeyStore()
-            ivParameterSpec = getIVSecureRandom(AES_ALGORITHM)
+            ivParameterSpec = genIv(AES_ALGORITHM)
             isReady = true
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
@@ -159,11 +155,7 @@ class EncryptionManager {
 
     private fun createCipher(mode: Int, password: String): Cipher? {
         val key = genSecKey(password)
-        val iv = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            getIVSecureRandom(AES_ALGORITHM)
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
+        val iv =    genIv(AES_ALGORITHM)
 
         return createCipher(mode, key, iv)
     }
@@ -180,7 +172,7 @@ class EncryptionManager {
     ): Cipher? {
         return if (isReady) try {
             Cipher.getInstance(AES_ALGORITHM).apply {
-                init(mode, secretKeySpec)
+                init(mode, secretKeySpec, ivParam)
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing cipher: $e")
@@ -216,8 +208,6 @@ class EncryptionManager {
             KEY_STORE_KEY_ALIAS,
             KeyStore.SecretKeyEntry(encryptionKey),
             KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                 .setUserAuthenticationRequired(true)
                 .setUserAuthenticationParameters(
                     0,
@@ -227,7 +217,6 @@ class EncryptionManager {
         )
     }
 
-    /*
     private fun genIv(password: String): IvParameterSpec {
         val iv = ByteArray(16)
         val charArray = password.toCharArray()
@@ -237,15 +226,5 @@ class EncryptionManager {
         }
 
         return IvParameterSpec(iv)
-    }
-    */
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getIVSecureRandom(algorithm: String?): IvParameterSpec? {
-        val iv =
-            CryptoUtils.getRandomIVWithSize(
-                12
-            )
-        return GCMParameterSpec(128, iv)
     }
 }

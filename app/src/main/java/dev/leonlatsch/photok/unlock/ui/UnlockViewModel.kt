@@ -80,9 +80,9 @@ class UnlockViewModel @Inject constructor(
             encryptionManager.initialize(password)
 
             // TODO: handle error
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 encryptionManager.importSecKeyIntoAndroidKeyStore()
-            }
+            }*/
             UnlockState.UNLOCKED
         } else {
             UnlockState.LOCKED
