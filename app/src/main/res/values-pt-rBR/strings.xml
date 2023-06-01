@@ -230,11 +230,11 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Recovery Menu</string> <!-- TODO -->
-    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string> <!-- TODO -->
+    <string name="news_title_1">Feature: Auto Delete</string> <!-- TODO -->
+    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">Melhorias de desempenho</string>
-    <string name="news_summary_2">Muitas melhorias de desempenho no Photok</string>
+    <string name="news_title_2">EMPTY</string>
+    <string name="news_summary_2">EMPTY</string>
 
     <string name="news_title_3">SEM_CONTEÚDO</string>
     <string name="news_summary_3">SEM_CONTEÚDO</string>
