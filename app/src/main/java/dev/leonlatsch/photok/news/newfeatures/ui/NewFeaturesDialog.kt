@@ -30,7 +30,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  * Increase for this Dialog to show on the next update.
  * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
  */
-const val FEATURE_VERSION_CODE = 2
+const val FEATURE_VERSION_CODE = 3
 
 /**
  * Dialog for displaying new features.
