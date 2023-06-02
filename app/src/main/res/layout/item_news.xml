@@ -39,14 +39,13 @@
                 style="@style/LabelTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="2"
                 android:text="The new feature" />
 
             <TextView
                 android:id="@+id/itemNewsSummary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:text="Some description for the new feature"
                 android:textColor="@color/secondaryTextColor" />
 
