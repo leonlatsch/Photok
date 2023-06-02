@@ -15,10 +15,10 @@
   -->
 
 <resources>
-
+    
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">版权所有 \u00A9 2020-2023 Leon Latsch</string>
+    <string name="common_copyright_notice">版权所有 \u00A9 2020–2023 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -33,7 +33,7 @@
     <string name="common_are_you_sure">你确定吗？</string>
     <string name="common_bullet">•</string>
 
-    <!-- IMPORT -->
+    <!-- IMPORT -->>
     <string name="import_importing">正在导入文件</string>
     <string name="import_permission_rationale">Photok 需要访问你的存储来导入文件</string>
     <string name="import_sharted_question">你想导入 %1$d 个文件吗？</string>
@@ -126,7 +126,7 @@
     <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
     <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
 
-    <string name="settings_category_security">安全</string>
+    <string name="settings_category_security">安全性</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
     <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
     <string name="settings_security_change_password_title">更改密码</string>
@@ -142,6 +142,8 @@
     <string name="settings_security_launch_code_title">秘密启动代码</string>
     <string name="settings_security_launch_code_summary">从拨号器启动 Photok 的秘密代码</string>
     <string name="settings_security_launch_code_message">在拨号器中输入 *#*#[your code]#*#* 来启动 Photok</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">隐藏应用</string>
     <string name="settings_security_hide_app_summary">在应用抽屉中隐藏应用图标</string>
 
@@ -152,8 +154,6 @@
     <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
     <string name="settings_advanced_backup_title">备份</string>
     <string name="settings_advanced_backup_summary">创建文件保险库的备份</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
 
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
@@ -229,18 +229,18 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Auto Delete</string> <!-- TODO -->
-    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
+    <string name="news_title_1">自动删除</string>
+    <string name="news_summary_1">要了解新的恢复菜单，请访问 Photok 的 Github 页面</string>
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">性能改进</string>
+    <string name="news_summary_2">Photok 的许多性能改进</string>
 
     <string name="news_title_3">EMPTY</string>
     <string name="news_summary_3">EMPTY</string>
 
     <string name="news_title_4">EMPTY</string>
     <string name="news_summary_4">EMPTY</string>
-
+    
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>
     <string name="recovery_menu_item_open_photok">打开 Photok</string>
