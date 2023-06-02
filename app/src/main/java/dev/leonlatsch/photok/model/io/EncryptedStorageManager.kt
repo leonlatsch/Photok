@@ -21,6 +21,7 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import androidx.documentfile.provider.DocumentFile
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.IOException
@@ -171,6 +172,18 @@ class EncryptedStorageManager @Inject constructor(
             null
         }
     }
+
+    /**
+     * Deletes an external file.
+     */
+    fun externalDeleteFile(fileUri: Uri): Boolean? =
+        try {
+            val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri);
+            srcDoc?.delete()
+        } catch (e: IOException) {
+            Timber.d("Error deleting external file at $fileUri: $e")
+            null
+        }
 
     // endregion
 

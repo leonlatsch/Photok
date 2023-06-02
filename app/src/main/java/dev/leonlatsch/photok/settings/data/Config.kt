@@ -86,10 +86,16 @@ class Config(context: Context) {
         get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
         set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
 
+    /**
+     * Determines if files should be deleted after importing them.
+     */
+    var deleteImportedFiles: Boolean
+        get() = getBoolean(ADVANCED_DELETE_IMPORTED_FILES, ADVANCED_DELETE_IMPORTED_FILES_DEFAULT)
+        set(value) = putBoolean(ADVANCED_DELETE_IMPORTED_FILES, value)
+
     var timestampLastRecoveryStart: Long
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
-
 
     // region put/get methods
 
@@ -143,7 +149,6 @@ class Config(context: Context) {
          */
         const val MODE = Context.MODE_PRIVATE
 
-
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT = true
 
@@ -153,24 +158,23 @@ class Config(context: Context) {
         const val SYSTEM_DESIGN = "system^design"
         const val SYSTEM_DESIGN_DEFAULT = "system"
 
-
         const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
         const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
-
 
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 
-
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
-
 
         const val SECURITY_LOCK_TIMEOUT = "security^lockTimeout"
         const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000
 
         const val SECURITY_DIAL_LAUNCH_CODE = "security^dialLaunchCode"
         const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
+
+        const val ADVANCED_DELETE_IMPORTED_FILES = "advanced^deleteImportedFiles"
+        const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = false
 
         const val TIMESTAMP_LAST_RECOVERY_START = "internal^timestampLastRecoveryStart"
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L

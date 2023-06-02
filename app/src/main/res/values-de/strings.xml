@@ -156,6 +156,8 @@
     <string name="settings_advanced_reset_confirmation">Wilst du deinen Safe WIRKLICH zurücksetzen? Alle Daten gehen verloren!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Erstelle ein Backup von deinem Safe</string>
+    <string name="settings_advanced_delete_imported_title">Lösche importierte Dateien</string>
+    <string name="settings_advanced_delete_imported_summary">Lösche Dateien nach dem Importieren</string>
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -229,11 +231,11 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Funktion: Wiederherstellungs Menu</string>
-    <string name="news_summary_1">Um mehr über das Wiederherstellungsmenu herauszufinden, besuche Photok\'s GitHub Seite</string>
+    <string name="news_title_1">Automatisches Löschen</string>
+    <string name="news_summary_1">Automatisches Löschen von Dateien beim importieren nach Photok.</string>
 
-    <string name="news_title_2">Verbesserte Leistung</string>
-    <string name="news_summary_2">Verbesserte Leistung für Photok</string>
+    <string name="news_title_2">EMPTY</string>
+    <string name="news_summary_2">EMPTY</string>
 
     <string name="news_title_3">EMPTY</string>
     <string name="news_summary_3">EMPTY</string>
