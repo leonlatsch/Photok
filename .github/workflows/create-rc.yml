@@ -65,3 +65,5 @@ jobs:
             - [ ] All Features are working as expected
             - [ ] Update works
             - [ ] Version was updated by actions bot
+
+            **DO NOT SQUASH THE COMMITS!**
