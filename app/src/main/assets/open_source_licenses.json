@@ -2,11 +2,11 @@
   {
     "project": "Activity",
     "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
-    "version": "1.5.1",
+    "version": "1.7.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.7.0",
     "year": "2018",
     "licenses": [
       {
@@ -14,16 +14,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity:1.5.1"
+    "dependency": "androidx.activity:activity:1.7.0"
   },
   {
     "project": "Activity Kotlin Extensions",
     "description": "Kotlin extensions for \u0027activity\u0027 artifact",
-    "version": "1.5.1",
+    "version": "1.7.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/activity#1.7.0",
     "year": "2018",
     "licenses": [
       {
@@ -31,7 +31,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.activity:activity-ktx:1.5.1"
+    "dependency": "androidx.activity:activity-ktx:1.7.0"
   },
   {
     "project": "Android App Startup Runtime",
@@ -53,11 +53,11 @@
   {
     "project": "Android AppCompat Library",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.5.0",
+    "version": "1.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.5.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1",
     "year": "2011",
     "licenses": [
       {
@@ -65,16 +65,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.appcompat:appcompat:1.5.0"
+    "dependency": "androidx.appcompat:appcompat:1.6.1"
   },
   {
     "project": "Android Arch-Common",
     "description": "Android Arch-Common",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0",
     "year": "2017",
     "licenses": [
       {
@@ -82,16 +82,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-common:2.1.0"
+    "dependency": "androidx.arch.core:core-common:2.2.0"
   },
   {
     "project": "Android Arch-Runtime",
     "description": "Android Arch-Runtime",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/arch-core#2.2.0",
     "year": "2017",
     "licenses": [
       {
@@ -99,7 +99,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.arch.core:core-runtime:2.1.0"
+    "dependency": "androidx.arch.core:core-runtime:2.2.0"
   },
   {
     "project": "Android ConstraintLayout",
@@ -138,11 +138,11 @@
   {
     "project": "Android DB",
     "description": "Android DB",
-    "version": "2.2.0",
+    "version": "2.3.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.2.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.1",
     "year": "2017",
     "licenses": [
       {
@@ -150,7 +150,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.sqlite:sqlite:2.2.0"
+    "dependency": "androidx.sqlite:sqlite:2.3.1"
   },
   {
     "project": "Android Emoji2 Compat",
@@ -206,11 +206,11 @@
   {
     "project": "Android Lifecycle Kotlin Extensions",
     "description": "Kotlin extensions for \u0027lifecycle\u0027 artifact",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2019",
     "licenses": [
       {
@@ -218,16 +218,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
   },
   {
     "project": "Android Lifecycle LiveData",
     "description": "Android Lifecycle LiveData",
-    "version": "2.2.0",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2017",
     "licenses": [
       {
@@ -235,16 +235,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata:2.2.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata:2.6.1"
   },
   {
     "project": "Android Lifecycle LiveData Core",
     "description": "Android Lifecycle LiveData Core",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2017",
     "licenses": [
       {
@@ -252,16 +252,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core:2.6.1"
   },
   {
     "project": "Android Lifecycle Process",
     "description": "Android Lifecycle Process",
-    "version": "2.4.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.4.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -269,16 +269,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-process:2.4.1"
+    "dependency": "androidx.lifecycle:lifecycle-process:2.6.1"
   },
   {
     "project": "Android Lifecycle Runtime",
     "description": "Android Lifecycle Runtime",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2017",
     "licenses": [
       {
@@ -286,16 +286,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-runtime:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-runtime:2.6.1"
   },
   {
     "project": "Android Lifecycle Service",
     "description": "Android Lifecycle Service",
-    "version": "2.2.0",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/topic/libraries/architecture/index.html",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -303,16 +303,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-service:2.2.0"
+    "dependency": "androidx.lifecycle:lifecycle-service:2.6.1"
   },
   {
     "project": "Android Lifecycle ViewModel",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2017",
     "licenses": [
       {
@@ -320,33 +320,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
-  },
-  {
-    "project": "Android Lifecycle ViewModel Hilt Extension",
-    "description": "Android Lifecycle ViewModel Hilt Extension",
-    "version": "1.0.0-alpha03",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/hilt#1.0.0-alpha03",
-    "year": "2020",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel:2.6.1"
   },
   {
     "project": "Android Lifecycle ViewModel Kotlin Extensions",
     "description": "Kotlin extensions for \u0027viewmodel\u0027 artifact",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -354,16 +337,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
   },
   {
     "project": "Android Lifecycle ViewModel with SavedState",
     "description": "Android Lifecycle ViewModel",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -371,16 +354,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
   },
   {
     "project": "Android Lifecycle-Common",
     "description": "Android Lifecycle-Common",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2017",
     "licenses": [
       {
@@ -388,16 +371,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-common:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-common:2.6.1"
   },
   {
     "project": "Android Navigation Common",
     "description": "Android Navigation-Common",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2017",
     "licenses": [
       {
@@ -405,16 +388,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-common:2.5.1"
+    "dependency": "androidx.navigation:navigation-common:2.5.3"
   },
   {
     "project": "Android Navigation Common Kotlin Extensions",
     "description": "Android Navigation-Common-Ktx",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2018",
     "licenses": [
       {
@@ -422,16 +405,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-common-ktx:2.5.1"
+    "dependency": "androidx.navigation:navigation-common-ktx:2.5.3"
   },
   {
     "project": "Android Navigation Fragment",
     "description": "Android Navigation-Fragment",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2017",
     "licenses": [
       {
@@ -439,16 +422,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-fragment:2.5.1"
+    "dependency": "androidx.navigation:navigation-fragment:2.5.3"
   },
   {
     "project": "Android Navigation Fragment Kotlin Extensions",
     "description": "Android Navigation-Fragment-Ktx",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2018",
     "licenses": [
       {
@@ -456,16 +439,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-fragment-ktx:2.5.1"
+    "dependency": "androidx.navigation:navigation-fragment-ktx:2.5.3"
   },
   {
     "project": "Android Navigation Runtime",
     "description": "Android Navigation-Runtime",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2017",
     "licenses": [
       {
@@ -473,16 +456,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-runtime:2.5.1"
+    "dependency": "androidx.navigation:navigation-runtime:2.5.3"
   },
   {
     "project": "Android Navigation Runtime Kotlin Extensions",
     "description": "Android Navigation-Runtime-Ktx",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2018",
     "licenses": [
       {
@@ -490,16 +473,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-runtime-ktx:2.5.1"
+    "dependency": "androidx.navigation:navigation-runtime-ktx:2.5.3"
   },
   {
     "project": "Android Navigation UI",
     "description": "Android Navigation-UI",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2018",
     "licenses": [
       {
@@ -507,16 +490,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-ui:2.5.1"
+    "dependency": "androidx.navigation:navigation-ui:2.5.3"
   },
   {
     "project": "Android Navigation UI Kotlin Extensions",
     "description": "Android Navigation-UI-Ktx",
-    "version": "2.5.1",
+    "version": "2.5.3",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/navigation#2.5.3",
     "year": "2018",
     "licenses": [
       {
@@ -524,7 +507,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.navigation:navigation-ui-ktx:2.5.1"
+    "dependency": "androidx.navigation:navigation-ui-ktx:2.5.3"
   },
   {
     "project": "Android Paging-Common",
@@ -631,11 +614,11 @@
   {
     "project": "Android Resources Library",
     "description": "The Resources Library is a static library that you can add to your Android application in order to use resource APIs that backport the latest APIs to older versions of the platform. Compatible on devices running API 14 or later.",
-    "version": "1.5.0",
+    "version": "1.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.5.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/appcompat#1.6.1",
     "year": "2019",
     "licenses": [
       {
@@ -643,16 +626,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.appcompat:appcompat-resources:1.5.0"
+    "dependency": "androidx.appcompat:appcompat-resources:1.6.1"
   },
   {
     "project": "Android Room Kotlin Extensions",
     "description": "Android Room Kotlin Extensions",
-    "version": "2.4.2",
+    "version": "2.5.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.4.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.1",
     "year": "2019",
     "licenses": [
       {
@@ -660,16 +643,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-ktx:2.4.2"
+    "dependency": "androidx.room:room-ktx:2.5.1"
   },
   {
     "project": "Android Room-Common",
     "description": "Android Room-Common",
-    "version": "2.4.2",
+    "version": "2.5.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.4.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.1",
     "year": "2017",
     "licenses": [
       {
@@ -677,16 +660,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-common:2.4.2"
+    "dependency": "androidx.room:room-common:2.5.1"
   },
   {
     "project": "Android Room-Runtime",
     "description": "Android Room-Runtime",
-    "version": "2.4.2",
+    "version": "2.5.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.4.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.1",
     "year": "2017",
     "licenses": [
       {
@@ -694,7 +677,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-runtime:2.4.2"
+    "dependency": "androidx.room:room-runtime:2.5.1"
   },
   {
     "project": "Android Support AnimatedVectorDrawable",
@@ -767,11 +750,11 @@
   {
     "project": "Android Support Library Annotations",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs.",
-    "version": "1.3.0",
+    "version": "1.1.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0",
+    "url": "http://developer.android.com/tools/extras/support-library.html",
     "year": "2013",
     "licenses": [
       {
@@ -779,7 +762,24 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.annotation:annotation:1.3.0"
+    "dependency": "androidx.annotation:annotation:1.1.0"
+  },
+  {
+    "project": "Android Support Library Annotations",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs.",
+    "version": "1.6.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.6.0",
+    "year": "2013",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.annotation:annotation-jvm:1.6.0"
   },
   {
     "project": "Android Support Library collections",
@@ -801,11 +801,11 @@
   {
     "project": "Android Support Library compat",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.8.0",
+    "version": "1.10.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.8.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.10.0",
     "year": "2015",
     "licenses": [
       {
@@ -813,7 +813,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core:1.8.0"
+    "dependency": "androidx.core:core:1.10.0"
   },
   {
     "project": "Android Support Library Coordinator Layout",
@@ -920,11 +920,11 @@
   {
     "project": "Android Support Library fragment",
     "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren\u0027t a part of the framework APIs. Compatible on devices running API 14 or later.",
-    "version": "1.5.1",
+    "version": "1.5.4",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/fragment#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/fragment#1.5.4",
     "year": "2011",
     "licenses": [
       {
@@ -932,7 +932,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.fragment:fragment:1.5.1"
+    "dependency": "androidx.fragment:fragment:1.5.4"
   },
   {
     "project": "Android Support Library Interpolators",
@@ -1073,11 +1073,11 @@
   {
     "project": "Android Support SQLite - Framework Implementation",
     "description": "The implementation of Support SQLite library using the framework code.",
-    "version": "2.2.0",
+    "version": "2.3.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.2.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.3.1",
     "year": "2017",
     "licenses": [
       {
@@ -1085,7 +1085,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.sqlite:sqlite-framework:2.2.0"
+    "dependency": "androidx.sqlite:sqlite-framework:2.3.1"
   },
   {
     "project": "Android Support VectorDrawable",
@@ -1141,7 +1141,7 @@
   {
     "project": "AndroidX Futures",
     "description": "Androidx implementation of Guava\u0027s ListenableFuture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "developers": [
       "The Android Open Source Project"
     ],
@@ -1153,24 +1153,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.concurrent:concurrent-futures:1.0.0"
-  },
-  {
-    "project": "AndroidX Hilt Extension Annotations",
-    "description": "AndroidX Hilt Extension Annotations",
-    "version": "1.0.0-alpha03",
-    "developers": [
-      "The Android Open Source Project"
-    ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/hilt#1.0.0-alpha03",
-    "year": "2020",
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "androidx.hilt:hilt-common:1.0.0-alpha03"
+    "dependency": "androidx.concurrent:concurrent-futures:1.1.0"
   },
   {
     "project": "AndroidX Preference",
@@ -1224,6 +1207,23 @@
     "dependency": "androidx.databinding:databinding-common:7.2.2"
   },
   {
+    "project": "androidx.profileinstaller:profileinstaller",
+    "description": "Allows libraries to prepopulate ahead of time compilation traces to be read by ART",
+    "version": "1.3.0",
+    "developers": [
+      "The Android Open Source Project"
+    ],
+    "url": "https://developer.android.com/jetpack/androidx/releases/profileinstaller#1.3.0",
+    "year": "2021",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "androidx.profileinstaller:profileinstaller:1.3.0"
+  },
+  {
     "project": "Collections Kotlin Extensions",
     "description": "Kotlin extensions for \u0027collection\u0027 artifact",
     "version": "1.1.0",
@@ -1243,11 +1243,11 @@
   {
     "project": "Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027core\u0027 artifact",
-    "version": "1.8.0",
+    "version": "1.10.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.8.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/core#1.10.0",
     "year": "2018",
     "licenses": [
       {
@@ -1255,12 +1255,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.core:core-ktx:1.8.0"
+    "dependency": "androidx.core:core-ktx:1.10.0"
   },
   {
     "project": "Dagger",
     "description": "A fast dependency injector for Android and Java.",
-    "version": "2.42",
+    "version": "2.45",
     "developers": [],
     "url": "https://github.com/google/dagger",
     "year": null,
@@ -1270,12 +1270,12 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.dagger:dagger:2.42"
+    "dependency": "com.google.dagger:dagger:2.45"
   },
   {
     "project": "Dagger Lint Rules AAR Distribution",
     "description": "A fast dependency injector for Android and Java.",
-    "version": "2.42",
+    "version": "2.45",
     "developers": [],
     "url": "https://github.com/google/dagger",
     "year": null,
@@ -1285,7 +1285,7 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.dagger:dagger-lint-aar:2.42"
+    "dependency": "com.google.dagger:dagger-lint-aar:2.45"
   },
   {
     "project": "databinding-adapters",
@@ -1471,11 +1471,11 @@
   {
     "project": "Experimental annotation",
     "description": "Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental annotation lint checks, this annotation provides functional parity with Kotlin\u0027s Experimental annotation.",
-    "version": "1.1.0",
+    "version": "1.3.0",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.1.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0",
     "year": "2019",
     "licenses": [
       {
@@ -1483,7 +1483,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.annotation:annotation-experimental:1.1.0"
+    "dependency": "androidx.annotation:annotation-experimental:1.3.0"
   },
   {
     "project": "FindBugs-jsr305",
@@ -1503,11 +1503,11 @@
   {
     "project": "Fragment Kotlin Extensions",
     "description": "Kotlin extensions for \u0027fragment\u0027 artifact",
-    "version": "1.5.1",
+    "version": "1.5.4",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/fragment#1.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/fragment#1.5.4",
     "year": "2018",
     "licenses": [
       {
@@ -1515,7 +1515,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.fragment:fragment-ktx:1.5.1"
+    "dependency": "androidx.fragment:fragment-ktx:1.5.4"
   },
   {
     "project": "Glide",
@@ -1664,7 +1664,7 @@
   {
     "project": "Hilt Android",
     "description": "A fast dependency injector for Android and Java.",
-    "version": "2.42",
+    "version": "2.45",
     "developers": [],
     "url": "https://github.com/google/dagger",
     "year": null,
@@ -1674,12 +1674,12 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.dagger:hilt-android:2.42"
+    "dependency": "com.google.dagger:hilt-android:2.45"
   },
   {
     "project": "Hilt Core",
     "description": "A fast dependency injector for Android and Java.",
-    "version": "2.42",
+    "version": "2.45",
     "developers": [],
     "url": "https://github.com/google/dagger",
     "year": null,
@@ -1689,7 +1689,7 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.google.dagger:hilt-core:2.42"
+    "dependency": "com.google.dagger:hilt-core:2.45"
   },
   {
     "project": "javax.inject",
@@ -1760,7 +1760,7 @@
   {
     "project": "Kotlin Stdlib",
     "description": "Kotlin Standard Library for JVM",
-    "version": "1.7.10",
+    "version": "1.8.20",
     "developers": [
       "Kotlin Team"
     ],
@@ -1772,12 +1772,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
   },
   {
     "project": "Kotlin Stdlib Common",
     "description": "Kotlin Common Standard Library",
-    "version": "1.7.10",
+    "version": "1.8.20",
     "developers": [
       "Kotlin Team"
     ],
@@ -1789,12 +1789,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.8.20"
   },
   {
     "project": "Kotlin Stdlib Jdk7",
     "description": "Kotlin Standard Library JDK 7 extension",
-    "version": "1.6.20",
+    "version": "1.8.20",
     "developers": [
       "Kotlin Team"
     ],
@@ -1806,12 +1806,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20"
   },
   {
     "project": "Kotlin Stdlib Jdk8",
     "description": "Kotlin Standard Library JDK 8 extension",
-    "version": "1.6.20",
+    "version": "1.8.20",
     "developers": [
       "Kotlin Team"
     ],
@@ -1823,12 +1823,12 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20"
   },
   {
     "project": "kotlinx-coroutines-android",
     "description": "Coroutines support libraries for Kotlin",
-    "version": "1.6.1",
+    "version": "1.6.4",
     "developers": [
       "JetBrains Team"
     ],
@@ -1840,12 +1840,12 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
   },
   {
     "project": "kotlinx-coroutines-core",
     "description": "Coroutines support libraries for Kotlin",
-    "version": "1.6.1",
+    "version": "1.6.4",
     "developers": [
       "JetBrains Team"
     ],
@@ -1857,7 +1857,7 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.1"
+    "dependency": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
   },
   {
     "project": "leonlatsch/OssLicenseView",
@@ -1879,11 +1879,11 @@
   {
     "project": "LiveData Core Kotlin Extensions",
     "description": "Kotlin extensions for \u0027livedata-core\u0027 artifact",
-    "version": "2.5.1",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.5.1",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -1891,16 +1891,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.5.1"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1"
   },
   {
     "project": "LiveData Kotlin Extensions",
     "description": "Kotlin extensions for \u0027livedata\u0027 artifact",
-    "version": "2.2.0",
+    "version": "2.6.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx",
+    "url": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.1",
     "year": "2018",
     "licenses": [
       {
@@ -1908,7 +1908,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    "dependency": "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
   },
   {
     "project": "Material Components for Android",
@@ -1926,23 +1926,6 @@
       }
     ],
     "dependency": "com.google.android.material:material:1.4.0-beta01"
-  },
-  {
-    "project": "MikeOrtiz/TouchImageView",
-    "description": "Adds touch functionality to Android ImageView.",
-    "version": "3.0.1",
-    "developers": [
-      "Michael Ortiz"
-    ],
-    "url": "https://github.com/MikeOrtiz/TouchImageView",
-    "year": "2011",
-    "licenses": [
-      {
-        "license": "MIT License",
-        "license_url": "https://api.github.com/licenses/mit"
-      }
-    ],
-    "dependency": "com.github.MikeOrtiz:TouchImageView:3.0.1"
   },
   {
     "project": "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
@@ -1964,11 +1947,11 @@
   {
     "project": "Room Paging",
     "description": "Room Paging integration",
-    "version": "2.4.2",
+    "version": "2.5.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.4.2",
+    "url": "https://developer.android.com/jetpack/androidx/releases/room#2.5.1",
     "year": "2021",
     "licenses": [
       {
@@ -1976,16 +1959,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.room:room-paging:2.4.2"
+    "dependency": "androidx.room:room-paging:2.5.1"
   },
   {
     "project": "Saved State",
     "description": "Android Lifecycle Saved State",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.1",
     "year": "2018",
     "licenses": [
       {
@@ -1993,16 +1976,16 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.savedstate:savedstate:1.2.0"
+    "dependency": "androidx.savedstate:savedstate:1.2.1"
   },
   {
     "project": "SavedState Kotlin Extensions",
     "description": "Kotlin extensions for \u0027savedstate\u0027 artifact",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "developers": [
       "The Android Open Source Project"
     ],
-    "url": "https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.0",
+    "url": "https://developer.android.com/jetpack/androidx/releases/savedstate#1.2.1",
     "year": "2020",
     "licenses": [
       {
@@ -2010,7 +1993,7 @@
         "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "androidx.savedstate:savedstate-ktx:1.2.0"
+    "dependency": "androidx.savedstate:savedstate-ktx:1.2.1"
   },
   {
     "project": "Timber",
@@ -2028,6 +2011,16 @@
       }
     ],
     "dependency": "com.jakewharton.timber:timber:4.7.1"
+  },
+  {
+    "project": "TouchImageView",
+    "description": null,
+    "version": "3.0.1",
+    "developers": [],
+    "url": null,
+    "year": null,
+    "licenses": [],
+    "dependency": "com.github.MikeOrtiz:TouchImageView:3.0.1"
   },
   {
     "project": "VersionedParcelable",

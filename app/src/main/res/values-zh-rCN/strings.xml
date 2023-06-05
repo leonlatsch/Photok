@@ -229,7 +229,7 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Auto Delete</string> <!-- TODO -->
+    <string name="news_title_1">Auto Delete</string> <!-- TODO -->
     <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
 
     <string name="news_title_2">EMPTY</string>

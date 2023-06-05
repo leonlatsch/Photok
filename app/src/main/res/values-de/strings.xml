@@ -231,7 +231,7 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Funktion: Automatisches Löschen</string>
+    <string name="news_title_1">Automatisches Löschen</string>
     <string name="news_summary_1">Automatisches Löschen von Dateien beim importieren nach Photok.</string>
 
     <string name="news_title_2">EMPTY</string>
