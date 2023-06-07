@@ -152,8 +152,8 @@
     <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
     <string name="settings_advanced_backup_title">备份</string>
     <string name="settings_advanced_backup_summary">创建文件保险库的备份</string>
-    <string name="settings_advanced_delete_imported_title">删除导入的文件</string> 
-    <string name="settings_advanced_delete_imported_summary">导入文件后删除它们</string> 
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
 
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
@@ -229,8 +229,8 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">自动删除</string> 
-    <string name="news_summary_1">导入文件到 Photok 时删除它们。</string> 
+    <string name="news_title_1">Auto Delete</string> <!-- TODO -->
+    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
 
     <string name="news_title_2">EMPTY</string>
     <string name="news_summary_2">EMPTY</string>
