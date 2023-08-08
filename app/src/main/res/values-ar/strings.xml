@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2023 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Loading …</string>
+    <string name="common_password">Password</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_export">Export</string>
+    <string name="common_error">There was an error. Please try again.</string>
+    <string name="common_yes">Yes</string>
+    <string name="common_no">No</string>
+    <string name="common_ok">OK</string>
+    <string name="common_are_you_sure">Are you sure?</string>
+    <string name="common_bullet">•</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Importing File(s)</string>
+    <string name="import_permission_rationale">Photok needs to access your storage, to import files.</string>
+    <string name="import_sharted_question">Do you want to import %1$d file(s)?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Create your password</string>
+    <string name="setup_enter_password">Enter your password</string>
+    <string name="setup_confirm_password">Confirm your password</string>
+    <string name="setup_password_strength_label">Password strength:</string>
+    <string name="setup_button">Create</string>
+    <string name="setup_password_strength_weak">Weak</string>
+    <string name="setup_password_strength_moderate">Moderate</string>
+    <string name="setup_password_strength_strong">Strong</string>
+    <string name="setup_password_match_warning">\u26A0 Passwords do not match</string>
+    <string name="setupSetup">Setup</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Unlock your safe</string>
+    <string name="unlock_enter_password">Enter password</string>
+    <string name="unlock_button">Unlock</string>
+    <string name="unlock_wrong_password">\u26A0 Wrong password</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">There are no files in your safe</string>
+    <string name="gallery_all_photos_label">All files</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Import</string>
+    <string name="import_menu_photos">Photos</string>
+    <string name="import_menu_videos">Videos</string>
+    <string name="import_menu_backup">Backup</string>
+    <string name="import_menu_hint">Add media items to Photok…</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Close</string>
+    <string name="process_abort">Abort</string>
+    <string name="process_finished">Finished</string>
+    <string name="process_initialize">Preparing…</string>
+    <string name="process_aborted">Aborted</string>
+    <string name="process_failures_occurred">\u26A0 Some elements could not get processed</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Details</string>
+    <string name="view_photo_detail_file_name_label">Filename:</string>
+    <string name="view_photo_detail_import_at_label">Imported at:</string>
+    <string name="view_photo_detail_file_type_label">File Type:</string>
+    <string name="view_photo_detail_size_label">File size:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Lock</string>
+    <string name="menu_main_settings">Settings</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Select All</string>
+    <string name="menu_ms_delete">Delete</string>
+    <string name="menu_ms_export">Export</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>
+    <string name="delete_are_you_sure_this">Are you sure, you want to <b>delete</b> this file?</string>
+    <string name="delete_deleting">Deleting file(s)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery?</string>
+    <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery?</string>
+    <string name="export_exporting">Exporting file(s)…</string>
+    <string name="export_permission_rationale">Photok needs to access your storage, to export files.</string>
+    <string name="export_finished">Exported</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Version:</string>
+    <string name="about_developed_by">Developed by:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Third Party Software</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">News</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Design</string>
+    <string name="settings_app_design_system_default">System Default</string>
+    <string name="settings_app_design_system_light">Light</string>
+    <string name="settings_app_design_system_dark">Dark</string>
+
+    <string name="settings_category_gallery">Gallery</string>
+    <string name="settings_gallery_auto_fullscreen_title">Auto Fullscreen</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Enter fullscreen mode when opening a file</string>
+
+    <string name="settings_category_security">Security</string>
+    <string name="settings_security_allow_screenshots_title">Allow Screenshots</string>
+    <string name="settings_security_allow_screenshots_summary">Allow taking screenshot. Requires restart.</string>
+    <string name="settings_security_change_password_title">Change Password</string>
+    <string name="settings_security_change_password_summary">Change your password</string>
+    <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
+    <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
+    <string name="settings_security_timeout_immediately">Immediately</string>
+    <string name="settings_security_timeout_one_minute">1 Minute</string>
+    <string name="settings_security_timeout_two_minute">2 Minutes</string>
+    <string name="settings_security_timeout_five_minute">5 Minutes</string>
+    <string name="settings_security_timeout_ten_minute">10 Minutes</string>
+    <string name="settings_security_timeout_never">Never</string>
+    <string name="settings_security_launch_code_title">Secret Launch Code</string>
+    <string name="settings_security_launch_code_summary">Secret code to launch Photok from the phone dialer.</string>
+    <string name="settings_security_launch_code_message">Enter *#*#[your code]#*#* in phone dialer to launch Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Hide App</string>
+    <string name="settings_security_hide_app_summary">Hide app icon from app drawer.</string>
+
+    <string name="settings_category_advanced">Advanced</string>
+    <string name="settings_category_advanced_summary">Use carefully</string>
+    <string name="settings_advanced_reset_title">Reset Safe</string>
+    <string name="settings_advanced_reset_summary">Wipe data and reset password</string>
+    <string name="settings_advanced_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string>
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
+
+    <string name="settings_other_title">Other</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Send me an email with feedback</string>
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_sourcecode_title">Source Code</string>
+    <string name="settings_other_sourcecode_summary">Contribute to Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Credits</string>
+    <string name="settings_other_credits_summary">Contributors and credits</string>
+    <string name="settings_other_about_title">About</string>
+    <string name="settings_other_about_summary">Information about Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Contributors</string>
+    <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string>
+    <string name="credits_icons_title">Icons</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Change your Password</string>
+    <string name="change_password_old_password">Old Password</string>
+    <string name="change_password_new_password">New Password</string>
+    <string name="change_password_check">Check</string>
+    <string name="change_password_enter_new_password">Enter your new password</string>
+    <string name="change_password_confirm_new_password">Confirm your new password</string>
+    <string name="change_password_button">Change Password</string>
+    <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
+    <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Hide Photok</string>
+    <string name="hide_app_title_show">Show Photok</string>
+    <string name="hide_app_status_label">Photok is currently:</string>
+    <string name="hide_app_status_visible">VISIBLE</string>
+    <string name="hide_app_status_hidden">HIDDEN</string>
+    <string name="hide_app_app_name_stealth">Phone</string>
+    <string name="hide_app_confirm_hide">Do you really want to hide Photok?</string>
+    <string name="hide_app_confirm_show">Do you want to show Photok again?</string>
+    <string name="hide_app_hint">Once hidden, Photok can only be launched from the phone dial pad, with your secret launch code.</string>
+    <string name="hide_app_hint_current_code">Current launch code:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Finish</string>
+    <string name="onboarding_skip"><u>Skip</u></string>
+
+    <string name="onboarding_slide1_title">Welcome to</string>
+    <string name="onboarding_slide1_description">A safe place for your photos.</string>
+    <string name="onboarding_slide2_title">Create a password</string>
+    <string name="onboarding_slide2_description">Create a secure password. Your password is used to encrypt your photos directly on your phone.</string>
+    <string name="onboarding_slide3_title">Start Importing</string>
+    <string name="onboarding_slide3_description">Start importing your photos and keep them safe from others.\nAfterwards you can delete them in your gallery.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Creating backup…</string>
+    <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_validating">Validating backup…</string>
+    <string name="backup_restore_details_created_at">Created at:</string>
+    <string name="backup_restore_details_photos_contained">Contained Files:</string>
+    <string name="backup_restore_details_compatible">Compatible:</string>
+    <string name="backup_restore_details_size">Size:</string>
+    <string name="backup_restore_button">Unlock and Restore</string>
+    <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
+    <string name="backup_restore_processing">Restoring Backup…</string>
+    <string name="backup_unlock_title">Unlock Backup</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">New in</string>
+    <string name="news_view_changelog">View Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">Auto Delete</string>
+    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string>
+
+    <string name="news_title_2">EMPTY</string>
+    <string name="news_summary_2">EMPTY</string>
+
+    <string name="news_title_3">EMPTY</string>
+    <string name="news_summary_3">EMPTY</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Recovery Menu</string>
+    <string name="recovery_menu_item_open_photok">Open Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string>
+</resources>
