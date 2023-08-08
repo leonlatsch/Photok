@@ -48,7 +48,7 @@
     <string name="setup_password_strength_moderate">معتدل </string>
     <string name="setup_password_strength_strong">قوي </string>
     <string name="setup_password_match_warning">\u26A0 كلمة المرور غير مطابقة </string>
-    <string name="setupSetup">يثبت </string>
+    <string name="setupSetup">تنصيب</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">افتح خزنتك </string>
@@ -61,8 +61,8 @@
     <string name="gallery_all_photos_label">كل الملفات </string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">يستورد </string>
-    <string name="import_menu_photos">الصور </string>
+    <string name="import_menu_title">استيراد الصور</string>
+    <string name="import_menu_photos">الصور</string>
     <string name="import_menu_videos">الفيديوهات</string>
     <string name="import_menu_backup">نسخ إحتياطي</string>
     <string name="import_menu_hint">إضافة عناصر الوسائط إلى Photok ... </string>
@@ -101,7 +101,7 @@
     <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
     <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
     <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
-    <string name="export_finished">صُدِرَ</string>
+    <string name="export_finished">تم التصدير</string>
 
     <!-- ABOUT -->
     <string name="about_version">إصدار:</string>
@@ -144,7 +144,7 @@
     <string name="settings_security_launch_code_message">أدخل * # * # [your code] # * # * في برنامج الهاتف لتشغيل Photok. </string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="settings_security_hide_app_title">التطبيق اخفاء</string>
+    <string name="settings_security_hide_app_title">اخفاء التطبيق</string>
     <string name="settings_security_hide_app_summary">إخفاء التطبيق من قائمة التطبيقات.</string>
 
     <string name="settings_category_advanced">متقدم</string>
