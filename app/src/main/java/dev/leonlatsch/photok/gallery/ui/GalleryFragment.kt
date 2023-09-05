@@ -42,6 +42,7 @@ import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -147,11 +148,24 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
     }
 
     private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
             viewModel.togglePlaceholder(adapter.itemCount)
+            updateFileAmount()
+        }
 
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) =
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int)  {
             viewModel.togglePlaceholder(adapter.itemCount)
+            updateFileAmount()
+        }
+    }
+
+    private fun updateFileAmount() {
+        if (adapter.itemCount == 0) {
+            binding.galleryAllPhotosAmount.hide()
+        } else {
+            binding.galleryAllPhotosAmount.show()
+            binding.galleryAllPhotosAmount.text = "(${adapter.itemCount})"
+        }
     }
 
     private fun getColCount() = when (resources.configuration.orientation) {

@@ -33,7 +33,7 @@
     <string name="common_are_you_sure">Are you sure?</string>
     <string name="common_bullet">•</string>
 
-    <!-- IMPORT -->>
+    <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>
     <string name="import_permission_rationale">Photok needs to access your storage, to import files.</string>
     <string name="import_sharted_question">Do you want to import %1$d file(s)?</string>
@@ -154,6 +154,8 @@
     <string name="settings_advanced_reset_confirmation">Do you REALLY want to reset your safe? All data will be lost!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
+    <string name="settings_advanced_delete_imported_title">Delete imported files</string>
+    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -227,11 +229,11 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Feature: Recovery Menu</string>
-    <string name="news_summary_1">To find out about the new recovery menu, visit Photok\'s GitHub Page</string>
+    <string name="news_title_1">Auto Delete</string>
+    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string>
 
-    <string name="news_title_2">Performance Improvements</string>
-    <string name="news_summary_2">Many performance improvements for Photok</string>
+    <string name="news_title_2">EMPTY</string>
+    <string name="news_summary_2">EMPTY</string>
 
     <string name="news_title_3">EMPTY</string>
     <string name="news_summary_3">EMPTY</string>
