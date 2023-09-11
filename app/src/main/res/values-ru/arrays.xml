@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <string-array name="timeoutStrings">
+        <item>@string/settings_security_timeout_immediately</item>
+        <item>@string/settings_security_timeout_one_minute</item>
+        <item>@string/settings_security_timeout_two_minute</item>
+        <item>@string/settings_security_timeout_five_minute</item>
+        <item>@string/settings_security_timeout_ten_minute</item>
+        <item>@string/settings_security_timeout_never</item>
+    </string-array>
+    <string-array name="timeouts">
+        <item>0</item>
+        <item>60000</item>
+        <item>120000</item>
+        <item>300000</item>
+        <item>600000</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="designStrings">
+        <item>@string/settings_app_design_system_default</item>
+        <item>@string/settings_app_design_system_light</item>
+        <item>@string/settings_app_design_system_dark</item>
+    </string-array>
+    <string-array name="design">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="newsTitles"> <!-- holds up to 4 new features -->
+        <item>@string/news_title_1</item>
+        <!--        <item>@string/news_title_2</item>-->
+        <!--        <item>@string/news_title_3</item>-->
+        <!--        <item>@string/news_title_4</item>-->
+    </string-array>
+
+    <string-array name="newsSummaries">
+        <item>@string/news_summary_1</item>
+        <!--        <item>@string/news_summary_2</item>-->
+        <!--        <item>@string/news_summary_3</item>-->
+        <!--        <item>@string/news_summary_4</item>-->
+    </string-array>
+</resources>

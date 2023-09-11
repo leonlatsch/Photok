@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+    <!-- BUTTON -->
+    <dimen name="small_button_width">100dp</dimen>
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="wide_button_width">200dp</dimen>
+    <dimen name="extra_wide_button_width">300dp</dimen>
+
+    <!-- GAPS -->
+    <dimen name="small_gap">6dp</dimen>
+    <dimen name="medium_gap">16dp</dimen>
+    <dimen name="big_gap">24dp</dimen>
+
+    <!-- CORNERS -->
+    <dimen name="round_corners_radius">18dp</dimen>
+    <dimen name="slight_round_corners_radius">8dp</dimen>
+    <dimen name="toolbar_menu_margin_end">10dp</dimen>
+
+    <!-- DIALOGS -->
+    <dimen name="dialog_min_width">350dp</dimen>
+</resources>
