@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2023 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Загрузка …</string>
+    <string name="common_password">Пароль</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_export">Экспорт</string>
+    <string name="common_error">Произошла ошибка. Попробуйте ещё раз.</string>
+    <string name="common_yes">Да</string>
+    <string name="common_no">Нет</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_are_you_sure">Вы уверены?</string>
+    <string name="common_bullet">•</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Импортирование файла(ов)</string>
+    <string name="import_permission_rationale">Photok требует доступ к вашему хранилищу, чтобы импортировать файлы.</string>
+    <string name="import_sharted_question">Вы хотите импортировать %1$d файл(ов)?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Создайте новый пароль</string>
+    <string name="setup_enter_password">Введите свой пароль</string>
+    <string name="setup_confirm_password">Подтвердите свой пароль</string>
+    <string name="setup_password_strength_label">Сложность пароля:</string>
+    <string name="setup_button">Создать</string>
+    <string name="setup_password_strength_weak">Слабая</string>
+    <string name="setup_password_strength_moderate">Средняя</string>
+    <string name="setup_password_strength_strong">Сильная</string>
+    <string name="setup_password_match_warning">\u26A0 Пароли не совпадают</string>
+    <string name="setupSetup">Настроить</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Разблокируйте свой сейф</string>
+    <string name="unlock_enter_password">Введите пароль</string>
+    <string name="unlock_button">Разблокировать</string>
+    <string name="unlock_wrong_password">\u26A0 Неправильный пароль</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">В вашем сейфе нет файлов</string>
+    <string name="gallery_all_photos_label">Все файлы</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">Импортировать</string>
+    <string name="import_menu_photos">Фото</string>
+    <string name="import_menu_videos">Видео</string>
+    <string name="import_menu_backup">Резервную копию</string>
+    <string name="import_menu_hint">Добавить медиа в Photok…</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Закрыть</string>
+    <string name="process_abort">Отменить</string>
+    <string name="process_finished">Готово</string>
+    <string name="process_initialize">Подготовка…</string>
+    <string name="process_aborted">Отменено</string>
+    <string name="process_failures_occurred">\u26A0 Некоторые элементы не могут быть обработаны</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Детали</string>
+    <string name="view_photo_detail_file_name_label">Наименование файла:</string>
+    <string name="view_photo_detail_import_at_label">Импортировано:</string>
+    <string name="view_photo_detail_file_type_label">Тип файла:</string>
+    <string name="view_photo_detail_size_label">Размер файла:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Заблокировать</string>
+    <string name="menu_main_settings">Настройки</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Выбрать всё</string>
+    <string name="menu_ms_delete">Удалить</string>
+    <string name="menu_ms_export">Экспорт</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>
+    <string name="delete_are_you_sure_this">Вы уверены, что хотите <b>удалить</b> этот файл?</string>
+    <string name="delete_deleting">Удаление файла(ов)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Вы уверены, что хотите <b>экспортировать</b> %1$d файл(ов) обратно в галерею?</string>
+    <string name="export_are_you_sure_this">Вы уверены, что хотите <b>экспортировать</b> этот файл в галерею?</string>
+    <string name="export_exporting">Экспортирование файла(ов)…</string>
+    <string name="export_permission_rationale">Photok требует доступ к вашему хранилищу для экспорта файлов.</string>
+    <string name="export_finished">Экспортировано</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Версия:</string>
+    <string name="about_developed_by">Разработано:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Стороннее программное обеспечение</string>
+    <string name="about_privacy_policy">Политика конфиденциальности</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Новости</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Настройки</string>
+
+    <string name="settings_category_app">Приложение</string>
+    <string name="settings_app_design_title">Дизайн</string>
+    <string name="settings_app_design_system_default">Системный</string>
+    <string name="settings_app_design_system_light">Светлый</string>
+    <string name="settings_app_design_system_dark">Тёмный</string>
+
+    <string name="settings_category_gallery">Галерея</string>
+    <string name="settings_gallery_auto_fullscreen_title">Автоматический полный экран</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Входить в полноэкранный режим при открытии файла</string>
+
+    <string name="settings_category_security">Безопасность</string>
+    <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>
+    <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
+    <string name="settings_security_change_password_title">Изменить пароль</string>
+    <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
+    <string name="settings_security_timeout_title">Автоматическая блокировка</string>
+    <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
+    <string name="settings_security_timeout_immediately">Немедленно</string>
+    <string name="settings_security_timeout_one_minute">1 минута</string>
+    <string name="settings_security_timeout_two_minute">2 минуты</string>
+    <string name="settings_security_timeout_five_minute">5 минут</string>
+    <string name="settings_security_timeout_ten_minute">10 минут</string>
+    <string name="settings_security_timeout_never">Никогда</string>
+    <string name="settings_security_launch_code_title">Секретный код запуска</string>
+    <string name="settings_security_launch_code_summary">Секретный код для запуска Photok из меню набора номера.</string>
+    <string name="settings_security_launch_code_message">Введите *#*#[ваш код]#*#* в меню набора номера для запуска Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Спрятать приложение</string>
+    <string name="settings_security_hide_app_summary">Спрятать приложение из лаунчера.</string>
+
+    <string name="settings_category_advanced">Расширенные</string>
+    <string name="settings_category_advanced_summary">Используйте с осторожностью</string>
+    <string name="settings_advanced_reset_title">Сбросить сейф</string>
+    <string name="settings_advanced_reset_summary">Удалить данные и сбросить пароль</string>
+    <string name="settings_advanced_reset_confirmation">Вы ДЕЙСТВИТЕЛЬНО хотите сбросить ваш сейф? Все данные будут потеряны!</string>
+    <string name="settings_advanced_backup_title">Резервное копирование</string>
+    <string name="settings_advanced_backup_summary">Сделать резервную копию вашего сейфа</string>
+    <string name="settings_advanced_delete_imported_title">Удалять импортированные файлы</string>
+    <string name="settings_advanced_delete_imported_summary">Удалять файлы после их импорта в сейф</string>
+
+    <string name="settings_other_title">Прочее</string>
+    <string name="settings_other_feedback_title">Обратная связь</string>
+    <string name="settings_other_feedback_summary">Отправить письмо мне с отзывом</string>
+    <string name="settings_other_feedback_mail_subject">Отзыв о Photok</string>
+    <string name="settings_other_feedback_mail_body">Напишите отзыв о Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_sourcecode_title">Исходный код</string>
+    <string name="settings_other_sourcecode_summary">Внести вклад в Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Титры</string>
+    <string name="settings_other_credits_summary">Вкладчики и титры</string>
+    <string name="settings_other_about_title">О приложении</string>
+    <string name="settings_other_about_summary">Информация о Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Вкладчики</string>
+    <string name="credits_contributors_hint">Посетите Photok на GitHub чтобы увидеть всех вкладчиков</string>
+    <string name="credits_icons_title">Иконки</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Изменить свой пароль</string>
+    <string name="change_password_old_password">Старый пароль</string>
+    <string name="change_password_new_password">Новый пароль</string>
+    <string name="change_password_check">Проверить</string>
+    <string name="change_password_enter_new_password">Введите ваш новый пароль</string>
+    <string name="change_password_confirm_new_password">Подтвердите ваш новый пароль</string>
+    <string name="change_password_button">Изменить пароль</string>
+    <string name="change_password_confirm_message">Советуем сделать резервную копию!<br /> Смена пароля требует повторного шифрования всех файлов! Хотите продолжить?</string>
+    <string name="change_password_reencrypting">Повторное шифрование файла(ов)…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Спрятать Photok</string>
+    <string name="hide_app_title_show">Показать Photok</string>
+    <string name="hide_app_status_label">Photok сейчас:</string>
+    <string name="hide_app_status_visible">ВИДЕН</string>
+    <string name="hide_app_status_hidden">СКРЫТ</string>
+    <string name="hide_app_app_name_stealth">Телефон</string>
+    <string name="hide_app_confirm_hide">Вы действительно хотите спрятать Photok?</string>
+    <string name="hide_app_confirm_show">Вы хотите показать Photok снова?</string>
+    <string name="hide_app_hint">После скрытия, Photok можно будет запустить только с панели набора номера, введя секретный код запуска.</string>
+    <string name="hide_app_hint_current_code">Текущий код запуска:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_finish">Завершить</string>
+    <string name="onboarding_skip"><u>Пропустить</u></string>
+
+    <string name="onboarding_slide1_title">Добро пожаловать в</string>
+    <string name="onboarding_slide1_description">Безопасное место для ваших фотографий.</string>
+    <string name="onboarding_slide2_title">Создайте пароль</string>
+    <string name="onboarding_slide2_description">Создайте безопасный пароль. Ваш пароль будет использован для шифрования ваших фото на данном устройстве.</string>
+    <string name="onboarding_slide3_title">Начните импортировать</string>
+    <string name="onboarding_slide3_description">Начните импортировать ваши фото и держите их в безопасности от других.\nПосле этого вы сможете удалить их из своей галереи.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Создание резервной копии…</string>
+    <string name="backup_restore_title">Восстановить из резервной копии</string>
+    <string name="backup_restore_validating">Проверка резервной копии…</string>
+    <string name="backup_restore_details_created_at">Создан:</string>
+    <string name="backup_restore_details_photos_contained">Содержающихся файлов:</string>
+    <string name="backup_restore_details_compatible">Совместим:</string>
+    <string name="backup_restore_details_size">Размер:</string>
+    <string name="backup_restore_button">Разблокировать and восстановить</string>
+    <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
+    <string name="backup_restore_processing">Восстановление резервной копии…</string>
+    <string name="backup_unlock_title">Разблокировать резервную копию</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Нововведения в</string>
+    <string name="news_view_changelog">Посмотреть список изменений</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">Автоматическое удаление</string>
+    <string name="news_summary_1">Автоматически удаляйте файлы после их импорта в Photok.</string>
+
+    <string name="news_title_2">EMPTY</string>
+    <string name="news_summary_2">EMPTY</string>
+
+    <string name="news_title_3">EMPTY</string>
+    <string name="news_summary_3">EMPTY</string>
+
+    <string name="news_title_4">EMPTY</string>
+    <string name="news_summary_4">EMPTY</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Меню восстановления</string>
+    <string name="recovery_menu_item_open_photok">Открыть Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Сбросить опцию скрытия приложения</string>
+</resources>
