@@ -36,12 +36,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.ImageLoader
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.cgallery.data.EncryptedImageFetcherFactory
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -78,9 +85,10 @@ private fun GalleryPhotoTile(photo: Photo) {
                     .fillMaxSize()
                     .background(Color.Gray)
             )
+
             Image(
-                painter = rememberEncryptedPhotoThumbnailPainter(photo),
-                contentDescription = photo.fileName,
+                painter = rememberEncryptedImagePainter(photo),
+                contentDescription = photo.fileName
             )
         }
 
@@ -123,5 +131,27 @@ fun GalleryContentPreview() {
                 Photo("", 0L, PhotoType.JPEG, 0L),
             )
         )
+    )
+}
+
+@Composable
+private fun rememberEncryptedImagePainter(photo: Photo): AsyncImagePainter {
+    val context = LocalContext.current
+    val photoRepository =
+        remember { (context.applicationContext as BaseApplication).photoRepository }
+
+    val imageLoader = remember {
+        ImageLoader.Builder(context)
+            .components {
+                add(EncryptedImageFetcherFactory(context, photoRepository))
+            }
+            .build()
+    }
+
+    return rememberAsyncImagePainter(
+        model = ImageRequest.Builder(context)
+            .data(photo)
+            .build(),
+        imageLoader = imageLoader
     )
 }
