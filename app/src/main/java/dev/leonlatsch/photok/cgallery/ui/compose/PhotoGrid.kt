@@ -41,12 +41,12 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
-import dev.leonlatsch.photok.model.database.entity.Photo
 
 @Composable
-fun PhotosGrid(photos: List<Photo>, selectionMode: Boolean) {
+fun PhotosGrid(photos: List<PhotoTile>, selectionMode: Boolean) {
     LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(it, selectionMode)
@@ -57,7 +57,7 @@ fun PhotosGrid(photos: List<Photo>, selectionMode: Boolean) {
 private val VideoIconSize = 20.dp
 
 @Composable
-private fun GalleryPhotoTile(photo: Photo, selectionMode: Boolean) {
+private fun GalleryPhotoTile(photoTile: PhotoTile, selectionMode: Boolean) {
     Box(modifier = Modifier.padding(.5.dp)) {
         val contentModifier = Modifier
             .fillMaxSize()
@@ -68,21 +68,21 @@ private fun GalleryPhotoTile(photo: Photo, selectionMode: Boolean) {
                 modifier = contentModifier.background(Color.Red)
             )
         } else {
-            val requestData = remember(photo) {
+            val requestData = remember(photoTile) {
                 EncryptedImageRequestData(
-                    photo.internalThumbnailFileName,
-                    photo.type.mimeType
+                    photoTile.internalThumbnailFileName,
+                    photoTile.type.mimeType
                 )
             }
 
             Image(
                 painter = rememberEncryptedImagePainter(requestData),
-                contentDescription = photo.fileName,
+                contentDescription = photoTile.fileName,
                 modifier = contentModifier
             )
         }
 
-        if (photo.type.isVideo) {
+        if (photoTile.type.isVideo) {
             Icon(
                 painter = painterResource(R.drawable.ic_videocam),
                 contentDescription = null,

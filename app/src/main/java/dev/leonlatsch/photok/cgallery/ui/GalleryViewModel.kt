@@ -39,7 +39,7 @@ class GalleryViewModel @Inject constructor(
         } else {
             GalleryUiState.Content(
                 selectionMode = false,
-                photos = photos
+                photos = photos.map { PhotoTile(it.fileName, it.type, it.uuid) }
             )
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)

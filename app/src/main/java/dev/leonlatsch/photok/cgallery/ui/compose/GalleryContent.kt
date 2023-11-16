@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
+import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
@@ -41,11 +42,11 @@ fun GalleryContentPreview() {
         uiState = GalleryUiState.Content(
             selectionMode = true,
             listOf(
-                Photo("", 0L, PhotoType.JPEG, 0L),
-                Photo("", 0L, PhotoType.MP4, 0L),
-                Photo("", 0L, PhotoType.GIF, 0L),
-                Photo("", 0L, PhotoType.PNG, 0L),
-                Photo("", 0L, PhotoType.MPEG, 0L),
+                PhotoTile("", PhotoType.JPEG, "1"),
+                PhotoTile("", PhotoType.MP4, "2"),
+                PhotoTile("", PhotoType.GIF, "3"),
+                PhotoTile("", PhotoType.MPEG, "4"),
+                PhotoTile("", PhotoType.PNG, "5"),
             )
         )
     )

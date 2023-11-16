@@ -14,23 +14,22 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui
+package dev.leonlatsch.photok.model.database.entity
 
-import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+/**
+ * Get FileName for internal files and backup files.
+ * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok
+ */
+fun internalFileName(uuid: String) = "${uuid}.photok"
 
-sealed class GalleryUiState {
-    object Empty : GalleryUiState()
-    data class Content(
-        val selectionMode: Boolean,
-        val photos: List<PhotoTile> // TODO: Use ui model not data model
-    ) : GalleryUiState()
-}
+/**
+ * Get FileName for internal thumbnails.
+ * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.tn
+ */
+fun internalThumbnailFileName(uuid: String) = "${uuid}.photok.tn"
 
-data class PhotoTile(
-    val fileName: String,
-    val type: PhotoType,
-    val uuid: String,
-) {
-    val internalThumbnailFileName = internalThumbnailFileName(uuid)
-}
+/**
+ * Get FileName for video previews.
+ * Sample: 923ae2b7-f056-453d-a3dc-264a08e58a07.photok.vp
+ */
+fun internalVideoPreviewFileName(uuid: String) = "${uuid}.photok.vp"
