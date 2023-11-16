@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -44,7 +45,7 @@ class BaseApplication : Application(), LifecycleObserver {
     lateinit var encryptionManager: EncryptionManager
 
     @Inject
-    lateinit var photoRepository: PhotoRepository
+    lateinit var encryptedStorageManager: EncryptedStorageManager
 
     private var wentToBackgroundAt = 0L
 

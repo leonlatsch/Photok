@@ -23,26 +23,29 @@ import coil.fetch.FetchResult
 import coil.fetch.Fetcher
 import coil.fetch.SourceResult
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.cgallery.data.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.security.EncryptionManager
 import okio.buffer
 import okio.source
 
 class EncryptedImageFetcher(
     @ApplicationContext private val context: Context,
-    private val photoRepository: PhotoRepository,
-    private val photo: Photo
+    private val encryptedStorageManager: EncryptedStorageManager,
+    private val requestData: EncryptedImageRequestData
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? {
-        val decryptedData = photoRepository.loadThumbnail(photo)
-        decryptedData ?: return null
+        val inputStream = encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
+        inputStream ?: return null
 
-        val imageSource = ImageSource(decryptedData.inputStream().source().buffer(), context)
+        val imageSource = ImageSource(inputStream.source().buffer(), context)
 
         return SourceResult(
             source = imageSource,
-            mimeType = photo.type.mimeType,
+            mimeType = requestData.mimeType,
             dataSource = DataSource.DISK
         )
     }

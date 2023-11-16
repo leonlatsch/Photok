@@ -21,6 +21,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -49,6 +50,7 @@ import coil.request.ImageRequest
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.data.EncryptedImageFetcherFactory
+import dev.leonlatsch.photok.cgallery.data.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -58,7 +60,7 @@ fun GalleryContent(uiState: GalleryUiState.Content) {
     Column {
         Text(text = stringResource(R.string.gallery_all_photos_label))
 
-        LazyVerticalGrid(columns = GridCells.Fixed(4)) {
+        LazyVerticalGrid(columns = GridCells.Fixed(4), modifier = Modifier.fillMaxWidth()) {
             items(uiState.photos, key = { it.uuid }) {
                 GalleryPhotoTile(it)
             }
@@ -83,12 +85,13 @@ private fun GalleryPhotoTile(photo: Photo) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Gray)
+                    .background(Color.Red)
             )
 
             Image(
-                painter = rememberEncryptedImagePainter(photo),
-                contentDescription = photo.fileName
+                painter = rememberEncryptedImagePainter(EncryptedImageRequestData(photo.internalThumbnailFileName, photo.type.mimeType)),
+                contentDescription = photo.fileName,
+                modifier = Modifier.size(100.dp)
             )
         }
 
@@ -135,22 +138,22 @@ fun GalleryContentPreview() {
 }
 
 @Composable
-private fun rememberEncryptedImagePainter(photo: Photo): AsyncImagePainter {
+private fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePainter {
     val context = LocalContext.current
-    val photoRepository =
-        remember { (context.applicationContext as BaseApplication).photoRepository }
+    val encryptedStorageManager =
+        remember { (context.applicationContext as BaseApplication).encryptedStorageManager }
 
     val imageLoader = remember {
         ImageLoader.Builder(context)
             .components {
-                add(EncryptedImageFetcherFactory(context, photoRepository))
+                add(EncryptedImageFetcherFactory(context, encryptedStorageManager))
             }
             .build()
     }
 
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
-            .data(photo)
+            .data(data)
             .build(),
         imageLoader = imageLoader
     )
