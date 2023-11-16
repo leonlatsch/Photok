@@ -53,13 +53,12 @@ class GalleryViewModel @Inject constructor(
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
             is GalleryUiEvent.OpenImportMenu -> TODO()
-            is GalleryUiEvent.OpenPhoto -> openPhoto(event)
+            is GalleryUiEvent.OpenPhoto -> eventsChannel.trySend(
+                GalleryNavigationEvent.OpenPhoto(
+                    event.item.uuid
+                )
+            )
         }
-    }
-
-    private fun openPhoto(event: GalleryUiEvent.OpenPhoto) {
-        val photoId = uiState.value
-        eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(event.item.uuid))
     }
 }
 

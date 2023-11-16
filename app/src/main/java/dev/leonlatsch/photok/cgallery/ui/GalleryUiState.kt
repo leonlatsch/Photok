@@ -23,7 +23,7 @@ sealed class GalleryUiState {
     object Empty : GalleryUiState()
     data class Content(
         val selectionMode: Boolean,
-        val photos: List<PhotoTile> // TODO: Use ui model not data model
+        val photos: List<PhotoTile>
     ) : GalleryUiState()
 }
 
