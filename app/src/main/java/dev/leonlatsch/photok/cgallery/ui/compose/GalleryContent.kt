@@ -16,16 +16,20 @@
 
 package dev.leonlatsch.photok.cgallery.ui.compose
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -76,14 +80,31 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 })
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(
-                modifier = Modifier.padding(start = 2.dp),
-                text = "${stringResource(R.string.gallery_all_photos_label)} (${uiState.photos.size})"
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            PhotosGrid(uiState.photos, uiState.selectionMode, handleUiEvent)
+        Box(
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            Column(modifier = Modifier.padding(paddingValues)) {
+                Spacer(modifier = Modifier.height(30.dp))
+                Text(
+                    modifier = Modifier.padding(start = 2.dp),
+                    text = "${stringResource(R.string.gallery_all_photos_label)} (${uiState.photos.size})"
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                PhotosGrid(uiState.photos, uiState.selectionMode, handleUiEvent)
+            }
+
+            FloatingActionButton(
+                onClick = { TODO() },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(12.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_add),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
         }
     }
 }
