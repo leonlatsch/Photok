@@ -22,16 +22,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
 import dev.leonlatsch.photok.cgallery.ui.PhotoTile
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 @Composable
-fun GalleryContent(uiState: GalleryUiState.Content) {
+fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEvent) -> Unit) {
     Column {
         Text(text = "${stringResource(R.string.gallery_all_photos_label)} (${uiState.photos.size})")
-        PhotosGrid(uiState.photos, uiState.selectionMode)
+        PhotosGrid(uiState.photos, uiState.selectionMode, handleUiEvent)
     }
 }
 
@@ -48,7 +48,8 @@ fun GalleryContentPreview() {
                 PhotoTile("", PhotoType.MPEG, "4"),
                 PhotoTile("", PhotoType.PNG, "5"),
             )
-        )
+        ),
+        handleUiEvent = {}
     )
 }
 

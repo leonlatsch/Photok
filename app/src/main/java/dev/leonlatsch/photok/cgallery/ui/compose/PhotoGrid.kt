@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.cgallery.ui.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,15 +42,20 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 
 @Composable
-fun PhotosGrid(photos: List<PhotoTile>, selectionMode: Boolean) {
+fun PhotosGrid(
+    photos: List<PhotoTile>,
+    selectionMode: Boolean,
+    handleUiEvent: (GalleryUiEvent) -> Unit
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
         items(photos, key = { it.uuid }) {
-            GalleryPhotoTile(it, selectionMode)
+            GalleryPhotoTile(it, selectionMode, onItemClicked = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) })
         }
     }
 }
@@ -57,8 +63,8 @@ fun PhotosGrid(photos: List<PhotoTile>, selectionMode: Boolean) {
 private val VideoIconSize = 20.dp
 
 @Composable
-private fun GalleryPhotoTile(photoTile: PhotoTile, selectionMode: Boolean) {
-    Box(modifier = Modifier.padding(.5.dp)) {
+private fun GalleryPhotoTile(photoTile: PhotoTile, selectionMode: Boolean, onItemClicked: () -> Unit) {
+    Box(modifier = Modifier.padding(.5.dp).clickable { onItemClicked() }) {
         val contentModifier = Modifier
             .fillMaxSize()
             .aspectRatio(1f)

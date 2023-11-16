@@ -43,4 +43,12 @@ class GalleryViewModel @Inject constructor(
             )
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
+
+    fun handleUiEvent(event: GalleryUiEvent) {
+        when (event) {
+            is GalleryUiEvent.OpenImportMenu -> TODO()
+            is GalleryUiEvent.OpenPhoto -> TODO()
+        }
+    }
 }
+

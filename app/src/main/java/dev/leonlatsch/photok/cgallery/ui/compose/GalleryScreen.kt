@@ -32,7 +32,10 @@ fun GalleryScreen(viewModel: GalleryViewModel) {
     MaterialTheme {
         when (uiState) {
             is GalleryUiState.Empty -> GalleryPlaceholder(uiState as GalleryUiState.Empty)
-            is GalleryUiState.Content -> GalleryContent(uiState as GalleryUiState.Content)
+            is GalleryUiState.Content -> GalleryContent(
+                uiState as GalleryUiState.Content,
+                handleUiEvent = { viewModel.handleUiEvent(it) }
+            )
         }
     }
 }
