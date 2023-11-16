@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.data.model
+package dev.leonlatsch.photok.imageloading.compose.model
 
 data class EncryptedImageRequestData(
     val internalFileName: String,

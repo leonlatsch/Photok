@@ -14,17 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.data
+package dev.leonlatsch.photok.imageloading.compose
 
 import android.content.Context
 import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.cgallery.data.model.EncryptedImageRequestData
-import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import javax.inject.Inject
 
 class EncryptedImageFetcherFactory @Inject constructor(

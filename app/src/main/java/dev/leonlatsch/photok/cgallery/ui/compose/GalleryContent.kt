@@ -37,21 +37,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import coil.ImageLoader
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.cgallery.data.EncryptedImageFetcherFactory
-import dev.leonlatsch.photok.cgallery.data.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
+import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
@@ -137,24 +131,3 @@ fun GalleryContentPreview() {
     )
 }
 
-@Composable
-private fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePainter {
-    val context = LocalContext.current
-    val encryptedStorageManager =
-        remember { (context.applicationContext as BaseApplication).encryptedStorageManager }
-
-    val imageLoader = remember {
-        ImageLoader.Builder(context)
-            .components {
-                add(EncryptedImageFetcherFactory(context, encryptedStorageManager))
-            }
-            .build()
-    }
-
-    return rememberAsyncImagePainter(
-        model = ImageRequest.Builder(context)
-            .data(data)
-            .build(),
-        imageLoader = imageLoader
-    )
-}
