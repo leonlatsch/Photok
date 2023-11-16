@@ -18,7 +18,9 @@ package dev.leonlatsch.photok.cgallery.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -28,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
+    @EncryptedImageLoader val encryptedImageLoader: ImageLoader
 ) : ViewModel() {
 
     val uiState = photoRepository.observeAll().map { photos ->

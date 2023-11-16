@@ -17,33 +17,21 @@
 package dev.leonlatsch.photok.imageloading.compose
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import coil.ImageLoader
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.imageLoader
 import coil.request.ImageRequest
-import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 
 @Composable
 fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePainter {
     val context = LocalContext.current
-    val encryptedStorageManager =
-        remember { (context.applicationContext as BaseApplication).encryptedStorageManager }
-
-    val imageLoader = remember {
-        ImageLoader.Builder(context)
-            .components {
-                add(EncryptedImageFetcherFactory(context, encryptedStorageManager))
-            }
-            .build()
-    }
 
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
             .build(),
-        imageLoader = imageLoader
+        imageLoader = LocalEncryptedImageLoader.current ?: LocalContext.current.imageLoader
     )
 }
