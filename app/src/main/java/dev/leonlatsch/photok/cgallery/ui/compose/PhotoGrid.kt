@@ -55,7 +55,11 @@ fun PhotosGrid(
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
         items(photos, key = { it.uuid }) {
-            GalleryPhotoTile(it, selectionMode, onItemClicked = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) })
+            GalleryPhotoTile(
+                photoTile = it,
+                selectionMode = selectionMode,
+                onItemClicked = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) }
+            )
         }
     }
 }
@@ -63,8 +67,14 @@ fun PhotosGrid(
 private val VideoIconSize = 20.dp
 
 @Composable
-private fun GalleryPhotoTile(photoTile: PhotoTile, selectionMode: Boolean, onItemClicked: () -> Unit) {
-    Box(modifier = Modifier.padding(.5.dp).clickable { onItemClicked() }) {
+private fun GalleryPhotoTile(
+    photoTile: PhotoTile,
+    selectionMode: Boolean,
+    onItemClicked: () -> Unit
+) {
+    Box(modifier = Modifier
+        .padding(.5.dp)
+        .clickable { onItemClicked() }) {
         val contentModifier = Modifier
             .fillMaxSize()
             .aspectRatio(1f)

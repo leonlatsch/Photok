@@ -32,6 +32,7 @@ fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePa
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
+            .placeholder(R.color.lightGray)
             .fallback(R.color.design_default_color_error)
             .error(R.color.design_default_color_error)
             .build(),
