@@ -38,6 +38,7 @@ class GalleryViewModel @Inject constructor(
             GalleryUiState.Empty
         } else {
             GalleryUiState.Content(
+                selectionMode = false,
                 photos = photos
             )
         }

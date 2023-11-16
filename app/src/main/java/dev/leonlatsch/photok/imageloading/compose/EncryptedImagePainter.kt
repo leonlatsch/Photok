@@ -22,6 +22,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.imageLoader
 import coil.request.ImageRequest
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 
 @Composable
@@ -31,6 +32,8 @@ fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePa
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
+            .fallback(R.color.design_default_color_error)
+            .error(R.color.design_default_color_error)
             .build(),
         imageLoader = LocalEncryptedImageLoader.current ?: LocalContext.current.imageLoader
     )

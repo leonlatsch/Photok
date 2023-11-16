@@ -20,5 +20,8 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 
 sealed class GalleryUiState {
     object Empty : GalleryUiState()
-    data class Content(val photos: List<Photo>) : GalleryUiState()
+    data class Content(
+        val selectionMode: Boolean,
+        val photos: List<Photo> // TODO: Use ui model not data model
+    ) : GalleryUiState()
 }

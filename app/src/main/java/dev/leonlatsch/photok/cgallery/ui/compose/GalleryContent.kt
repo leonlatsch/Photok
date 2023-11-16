@@ -16,116 +16,36 @@
 
 package dev.leonlatsch.photok.cgallery.ui.compose
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
-import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 @Composable
 fun GalleryContent(uiState: GalleryUiState.Content) {
     Column {
-        Text(text = stringResource(R.string.gallery_all_photos_label))
-
-        LazyVerticalGrid(columns = GridCells.Fixed(4), modifier = Modifier.fillMaxWidth()) {
-            items(uiState.photos, key = { it.uuid }) {
-                GalleryPhotoTile(it)
-            }
-        }
+        Text(text = "${stringResource(R.string.gallery_all_photos_label)} (${uiState.photos.size})")
+        PhotosGrid(uiState.photos, uiState.selectionMode)
     }
 }
 
-private val VideoIconSize = 25.dp
-
-@Composable
-private fun GalleryPhotoTile(photo: Photo) {
-    ConstraintLayout(
-        modifier = Modifier.padding(0.5.dp)
-    ) {
-        val (videoIconRef, imageRef, checkboxRef) = createRefs()
-
-        Box(
-            modifier = Modifier.constrainAs(imageRef) {
-                centerTo(parent)
-            }
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Red)
-            )
-
-            Image(
-                painter = rememberEncryptedImagePainter(EncryptedImageRequestData(photo.internalThumbnailFileName, photo.type.mimeType)),
-                contentDescription = photo.fileName,
-                modifier = Modifier.size(100.dp)
-            )
-        }
-
-        Icon(
-            painter = painterResource(R.drawable.ic_videocam),
-            contentDescription = null,
-            tint = Color.LightGray,
-            modifier = Modifier
-                .size(VideoIconSize)
-                .constrainAs(videoIconRef) {
-                    bottom.linkTo(parent.bottom, margin = 2.dp)
-                    start.linkTo(parent.start, margin = 2.dp)
-                }
-        )
-
-        var selected by remember { mutableStateOf(false) }
-
-        Checkbox(
-            checked = selected,
-            onCheckedChange = { selected = !selected },
-            modifier = Modifier.constrainAs(checkboxRef) {
-                top.linkTo(parent.top, margin = 2.dp)
-                start.linkTo(parent.start, margin = 2.dp)
-            }
-        )
-    }
-
-}
-
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun GalleryContentPreview() {
     GalleryContent(
         uiState = GalleryUiState.Content(
+            selectionMode = true,
             listOf(
                 Photo("", 0L, PhotoType.JPEG, 0L),
-                Photo("", 0L, PhotoType.JPEG, 0L),
-                Photo("", 0L, PhotoType.JPEG, 0L),
-                Photo("", 0L, PhotoType.JPEG, 0L),
-                Photo("", 0L, PhotoType.JPEG, 0L),
+                Photo("", 0L, PhotoType.MP4, 0L),
+                Photo("", 0L, PhotoType.GIF, 0L),
+                Photo("", 0L, PhotoType.PNG, 0L),
+                Photo("", 0L, PhotoType.MPEG, 0L),
             )
         )
     )
