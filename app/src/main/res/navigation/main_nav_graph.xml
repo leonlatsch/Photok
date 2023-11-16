@@ -143,9 +143,9 @@
         android:name="dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragment"
         android:label="ImageViewerFragment" >
         <argument
-            android:name="photo_id"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:name="photo_uuid"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
             app:destination="@id/videoPlayerFragment"

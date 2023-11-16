@@ -39,7 +39,7 @@ import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
@@ -183,15 +183,17 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
             findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
             true
         }
+
         R.id.menuMainItemLock -> {
             requireActivity().getBaseApplication().lockApp()
             true
         }
+
         else -> false
     }
 
-    private fun openPhoto(id: Int) {
-        val args = bundleOf(INTENT_PHOTO_ID to id)
+    private fun openPhoto(uuid: String) {
+        val args = bundleOf(INTENT_PHOTO_UUID to uuid)
         findNavController().navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
     }
 

@@ -29,7 +29,7 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.*
 import dev.leonlatsch.photok.settings.data.Config
@@ -72,18 +72,18 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             }
         })
 
-        viewModel.preloadData { ids ->
+        viewModel.preloadData { uuids ->
             val photoPagerAdapter =
-                PhotoPagerAdapter(ids, viewModel.photoRepository, findNavController(), {
+                PhotoPagerAdapter(uuids, viewModel.photoRepository, findNavController(), {
                     binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
                 }, { // ON CLICK
                     toggleSystemUI()
                 })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
-            val photoId = arguments?.getInt(INTENT_PHOTO_ID)
-            val startingAt = if (photoId != null && photoId != -1) {
-                ids.indexOf(photoId)
+            val photoId = arguments?.getString(INTENT_PHOTO_UUID)
+            val startingAt = if (!photoId.isNullOrEmpty()) {
+                uuids.indexOf(photoId)
             } else {
                 0
             }

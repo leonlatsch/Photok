@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
@@ -58,7 +58,7 @@ class VideoPlayerFragment :
         }
         binding.playerView.showController()
 
-        val photoId = arguments?.get(INTENT_PHOTO_ID)
+        val photoId = arguments?.get(INTENT_PHOTO_UUID)
         if (photoId == null || photoId !is Int) {
             requireActivity().onBackPressed()
             return

@@ -33,7 +33,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 /**
@@ -72,6 +72,8 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun get(id: Int) = photoDao.get(id)
 
+    suspend fun get(uuid: String) = photoDao.get(uuid)
+
     /**
      * @see PhotoDao.getAllSortedByImportedAt
      */
@@ -85,9 +87,9 @@ class PhotoRepository @Inject constructor(
     fun observeAll() = photoDao.observeAllSortedByImportedAt()
 
     /**
-     * @see PhotoDao.getAllIds
+     * @see PhotoDao.getAllUUIDs
      */
-    suspend fun getAllIds() = photoDao.getAllIds()
+    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
 
     /**
      * @see PhotoDao.countAll

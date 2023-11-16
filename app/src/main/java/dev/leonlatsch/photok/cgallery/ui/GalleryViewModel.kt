@@ -20,10 +20,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.cgallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -44,11 +47,19 @@ class GalleryViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
+    private val eventsChannel = Channel<GalleryNavigationEvent>()
+    val eventsFlow = eventsChannel.receiveAsFlow()
+
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
             is GalleryUiEvent.OpenImportMenu -> TODO()
-            is GalleryUiEvent.OpenPhoto -> TODO()
+            is GalleryUiEvent.OpenPhoto -> openPhoto(event)
         }
+    }
+
+    private fun openPhoto(event: GalleryUiEvent.OpenPhoto) {
+        val photoId = uiState.value
+        eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(event.item.uuid))
     }
 }
 
