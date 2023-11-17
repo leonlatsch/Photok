@@ -32,14 +32,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
@@ -56,19 +59,21 @@ fun PhotosGrid(
     handleUiEvent: (GalleryUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        modifier = modifier.fillMaxWidth(),
-        reverseLayout = true
-    ) {
-        items(photos, key = { it.uuid }) {
-            GalleryPhotoTile(
-                photoTile = it,
-                multiSelectionActive = multiSelectionState.isActive,
-                onClicked = { handleUiEvent(GalleryUiEvent.PhotoClicked(it)) },
-                selected = multiSelectionState.selectedItemUUIDs.contains(it.uuid),
-                onLongPress = { handleUiEvent(GalleryUiEvent.PhotoLongPressed(it)) }
-            )
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = modifier.fillMaxWidth(),
+            reverseLayout = true
+        ) {
+            items(photos, key = { it.uuid }) {
+                GalleryPhotoTile(
+                    photoTile = it,
+                    multiSelectionActive = multiSelectionState.isActive,
+                    onClicked = { handleUiEvent(GalleryUiEvent.PhotoClicked(it)) },
+                    selected = multiSelectionState.selectedItemUUIDs.contains(it.uuid),
+                    onLongPress = { handleUiEvent(GalleryUiEvent.PhotoLongPressed(it)) }
+                )
+            }
         }
     }
 }
