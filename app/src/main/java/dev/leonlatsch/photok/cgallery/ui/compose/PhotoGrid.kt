@@ -51,9 +51,14 @@ import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 fun PhotosGrid(
     photos: List<PhotoTile>,
     selectionMode: Boolean,
-    handleUiEvent: (GalleryUiEvent) -> Unit
+    handleUiEvent: (GalleryUiEvent) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.fillMaxWidth()) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = modifier.fillMaxWidth(),
+        reverseLayout = true
+    ) {
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(
                 photoTile = it,
