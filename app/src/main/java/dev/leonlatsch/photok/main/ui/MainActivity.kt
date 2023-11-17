@@ -21,6 +21,8 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -29,7 +31,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.ui.compose.MainMenu
+import dev.leonlatsch.photok.main.ui.navigation.MainMenu
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
@@ -90,6 +92,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         findNavController(R.id.mainNavHostFragment).addOnDestinationChangedListener { controller, destination, arguments ->
             val showMenu = FragmentsWithMenu.contains(destination.id)
             binding.mainMenuComposeContainer.isVisible = showMenu
+
+            viewModel.onDestinationChanged(destination.id)
         }
     }
 
@@ -156,7 +160,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.context = this
 
         binding.mainMenuComposeContainer.setContent {
-            MainMenu()
+            val uiState by viewModel.mainMenuUiState.collectAsState()
+
+            MainMenu(uiState) {
+                findNavController(R.id.mainNavHostFragment).navigate(it)
+            }
         }
     }
 }
