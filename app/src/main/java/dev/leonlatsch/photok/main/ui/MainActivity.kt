@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.main.ui.compose.MainMenu
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
@@ -144,5 +145,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun bind(binding: ActivityMainBinding) {
         super.bind(binding)
         binding.context = this
+
+        binding.mainMenuComposeContainer.setContent {
+            MainMenu()
+        }
     }
 }
