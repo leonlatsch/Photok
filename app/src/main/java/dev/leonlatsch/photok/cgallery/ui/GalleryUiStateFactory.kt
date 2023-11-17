@@ -14,9 +14,21 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.navigation
+package dev.leonlatsch.photok.cgallery.ui
 
-sealed interface GalleryNavigationEvent {
-    data class OpenPhoto(val photoUUID: String) : GalleryNavigationEvent
-    object OpenImportMenu : GalleryNavigationEvent
+import dev.leonlatsch.photok.model.database.entity.Photo
+import javax.inject.Inject
+
+class GalleryUiStateFactory @Inject constructor() {
+    fun create(photos: List<Photo>, multiSelectionState: MultiSelectionState): GalleryUiState {
+        return if (photos.isEmpty()) {
+            GalleryUiState.Empty
+        } else {
+            GalleryUiState.Content(
+                selectionMode = false,
+                photos = photos.map { PhotoTile(it.fileName, it.type, it.uuid) },
+                multiSelectionState,
+            )
+        }
+    }
 }

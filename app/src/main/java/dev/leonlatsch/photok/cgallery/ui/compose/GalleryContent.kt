@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
+import dev.leonlatsch.photok.cgallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import java.util.UUID
@@ -57,7 +58,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     ) {
         PhotosGrid(
             photos = uiState.photos,
-            selectionMode = uiState.selectionMode,
+            multiSelectionState = uiState.multiSelectionState,
             handleUiEvent = handleUiEvent,
             modifier = Modifier.fillMaxHeight()
         )
@@ -120,9 +121,13 @@ fun GalleryContentPreview() {
                 PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+            ),
+            multiSelectionState = MultiSelectionState(
+                isActive = false,
+                selectedItemUUIDs = listOf()
             )
         ),
-        handleUiEvent = {}
+        handleUiEvent = {},
     )
 }
 

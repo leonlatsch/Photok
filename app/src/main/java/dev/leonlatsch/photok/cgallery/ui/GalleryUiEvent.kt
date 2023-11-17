@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.cgallery.ui
 
 sealed interface GalleryUiEvent {
-    data class OpenPhoto(val item: PhotoTile) : GalleryUiEvent
+    data class PhotoClicked(val item: PhotoTile) : GalleryUiEvent
+    data class PhotoLongPressed(val item: PhotoTile) : GalleryUiEvent
     object OpenImportMenu : GalleryUiEvent
 }

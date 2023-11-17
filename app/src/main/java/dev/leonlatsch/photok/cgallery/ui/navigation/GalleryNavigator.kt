@@ -17,17 +17,29 @@
 package dev.leonlatsch.photok.cgallery.ui.navigation
 
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
+import dev.leonlatsch.photok.other.extensions.show
 import javax.inject.Inject
 
 class GalleryNavigator @Inject constructor() {
 
-    fun navigate(event: GalleryNavigationEvent, navController: NavController) {
+    fun navigate(
+        event: GalleryNavigationEvent,
+        navController: NavController,
+        fragmentManager: FragmentManager
+    ) {
         when (event) {
             is GalleryNavigationEvent.OpenPhoto -> navigateOpenPhoto(event.photoUUID, navController)
+            GalleryNavigationEvent.OpenImportMenu -> navigateOpenImportMenu(fragmentManager)
         }
+    }
+
+    private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
+        ImportMenuDialog().show(fragmentManager)
     }
 
     private fun navigateOpenPhoto(photoUUID: String, navController: NavController) {

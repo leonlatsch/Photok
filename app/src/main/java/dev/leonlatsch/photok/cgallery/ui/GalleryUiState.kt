@@ -23,9 +23,15 @@ sealed class GalleryUiState {
     object Empty : GalleryUiState()
     data class Content(
         val selectionMode: Boolean,
-        val photos: List<PhotoTile>
+        val photos: List<PhotoTile>,
+        val multiSelectionState: MultiSelectionState,
     ) : GalleryUiState()
 }
+
+data class MultiSelectionState(
+    val isActive: Boolean,
+    val selectedItemUUIDs: List<String>
+)
 
 data class PhotoTile(
     val fileName: String,

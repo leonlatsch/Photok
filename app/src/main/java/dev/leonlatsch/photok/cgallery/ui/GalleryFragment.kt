@@ -61,7 +61,7 @@ class GalleryFragment : Fragment() {
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
-                navigator.navigate(event, findNavController())
+                navigator.navigate(event, findNavController(), childFragmentManager)
             }
         }
     }

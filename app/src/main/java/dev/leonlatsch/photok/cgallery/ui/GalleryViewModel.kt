@@ -24,27 +24,30 @@ import dev.leonlatsch.photok.cgallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
-    @EncryptedImageLoader val encryptedImageLoader: ImageLoader
+    @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
+    private val galleryUiStateFactory: GalleryUiStateFactory,
 ) : ViewModel() {
 
-    val uiState = photoRepository.observeAll().map { photos ->
-        if (photos.isEmpty()) {
-            GalleryUiState.Empty
-        } else {
-            GalleryUiState.Content(
-                selectionMode = false,
-                photos = photos.map { PhotoTile(it.fileName, it.type, it.uuid) }
-            )
-        }
+    private val multiSelectionState =
+        MutableStateFlow(MultiSelectionState(isActive = false, listOf()))
+
+    val uiState: StateFlow<GalleryUiState> = combine(
+        photoRepository.observeAll(),
+        multiSelectionState
+    ) { photos, multiSelectionState ->
+        galleryUiStateFactory.create(photos, multiSelectionState)
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
@@ -52,12 +55,45 @@ class GalleryViewModel @Inject constructor(
 
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
-            is GalleryUiEvent.OpenImportMenu -> TODO()
-            is GalleryUiEvent.OpenPhoto -> eventsChannel.trySend(
-                GalleryNavigationEvent.OpenPhoto(
-                    event.item.uuid
+            is GalleryUiEvent.OpenImportMenu -> eventsChannel.trySend(GalleryNavigationEvent.OpenImportMenu)
+            is GalleryUiEvent.PhotoClicked -> onPhotoClicked(event.item)
+            is GalleryUiEvent.PhotoLongPressed -> onPhotoLongPressed(event.item)
+        }
+    }
+
+    private fun onPhotoLongPressed(item: PhotoTile) {
+        if (multiSelectionState.value.isActive.not()) {
+            multiSelectionState.update {
+                it.copy(
+                    isActive = true,
+                    selectedItemUUIDs = listOf(item.uuid)
                 )
-            )
+            }
+        }
+    }
+
+    private fun onPhotoClicked(item: PhotoTile) {
+        if (multiSelectionState.value.isActive.not()) {
+            eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(item.uuid))
+        } else {
+            if (multiSelectionState.value.selectedItemUUIDs.contains(item.uuid)) {
+                // Remove
+                multiSelectionState.update {
+                    it.copy(
+                        isActive = it.selectedItemUUIDs.size != 1,
+                        selectedItemUUIDs = it.selectedItemUUIDs.filterNot { selectedUUid ->
+                            selectedUUid == item.uuid
+                        },
+                    )
+                }
+            } else {
+                // Add
+                multiSelectionState.update {
+                    it.copy(
+                        selectedItemUUIDs = it.selectedItemUUIDs + listOf(item.uuid)
+                    )
+                }
+            }
         }
     }
 }
