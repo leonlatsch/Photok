@@ -64,6 +64,15 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.CancelMultiSelect -> onCancelMultiSelect()
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems()
             is GalleryUiEvent.OnExport -> onExportSelectedItems()
+            is GalleryUiEvent.SelectAll -> onSelectAll()
+        }
+    }
+
+    private fun onSelectAll() {
+        multiSelectionState.update {
+            it.copy(
+                isActive = true,
+                selectedItemUUIDs = photosFlow.value.map { photo -> photo.uuid })
         }
     }
 

@@ -18,9 +18,7 @@ package dev.leonlatsch.photok.cgallery.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -39,6 +37,7 @@ import dev.leonlatsch.photok.R
 @Composable
 fun GalleryInteractionsRow(
     onClose: () -> Unit,
+    onSelectAll: () -> Unit,
     onDelete: () -> Unit,
     onExport: () -> Unit,
     modifier: Modifier = Modifier
@@ -56,13 +55,18 @@ fun GalleryInteractionsRow(
                 tint = colorResource(R.color.appTitleColor)
             )
         }
+        TextButton(onClick = onSelectAll) {
+            Text(
+                text = stringResource(R.string.menu_ms_select_all),
+                color = colorResource(R.color.appTitleColor)
+            )
+        }
         TextButton(onClick = onDelete) {
             Text(
                 text = stringResource(R.string.common_delete),
                 color = colorResource(R.color.appTitleColor)
             )
         }
-        Spacer(modifier = Modifier.width(12.dp))
         TextButton(onClick = onExport) {
             Text(
                 text = stringResource(R.string.common_export),
@@ -77,6 +81,7 @@ fun GalleryInteractionsRow(
 private fun GalleryInteractionsPreview() {
     GalleryInteractionsRow(
         onClose = {},
+        onSelectAll = {},
         onDelete = {},
         onExport = {},
     )

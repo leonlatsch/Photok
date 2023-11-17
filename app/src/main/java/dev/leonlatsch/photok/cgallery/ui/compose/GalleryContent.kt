@@ -108,6 +108,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         ) {
             GalleryInteractionsRow(
                 onClose = { handleUiEvent(GalleryUiEvent.CancelMultiSelect) },
+                onSelectAll = { handleUiEvent(GalleryUiEvent.SelectAll) },
                 onDelete = { handleUiEvent(GalleryUiEvent.OnDelete) },
                 onExport = { handleUiEvent(GalleryUiEvent.OnExport) },
             )
