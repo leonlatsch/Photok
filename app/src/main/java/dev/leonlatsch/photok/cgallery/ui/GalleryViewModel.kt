@@ -35,16 +35,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    private val photoRepository: PhotoRepository,
+    photoRepository: PhotoRepository,
     @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val galleryUiStateFactory: GalleryUiStateFactory,
 ) : ViewModel() {
+
+    private val photosFlow = photoRepository.observeAll()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
     private val multiSelectionState =
         MutableStateFlow(MultiSelectionState(isActive = false, listOf()))
 
     val uiState: StateFlow<GalleryUiState> = combine(
-        photoRepository.observeAll(),
+        photosFlow,
         multiSelectionState
     ) { photos, multiSelectionState ->
         galleryUiStateFactory.create(photos, multiSelectionState)
@@ -58,7 +61,31 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OpenImportMenu -> eventsChannel.trySend(GalleryNavigationEvent.OpenImportMenu)
             is GalleryUiEvent.PhotoClicked -> onPhotoClicked(event.item)
             is GalleryUiEvent.PhotoLongPressed -> onPhotoLongPressed(event.item)
+            is GalleryUiEvent.CancelMultiSelect -> onCancelMultiSelect()
+            is GalleryUiEvent.OnDelete -> onDeleteSelectedItems()
+            is GalleryUiEvent.OnExport -> onExportSelectedItems()
         }
+    }
+
+    private fun onExportSelectedItems() {
+        val uuidsToExport = multiSelectionState.value.selectedItemUUIDs
+        eventsChannel.trySend(
+            GalleryNavigationEvent.StartExportDialog(
+                photosFlow.value.filter { uuidsToExport.contains(it.uuid) })
+        )
+        onCancelMultiSelect()
+    }
+
+    private fun onDeleteSelectedItems() {
+        val uuidsToDelete = multiSelectionState.value.selectedItemUUIDs
+        eventsChannel.trySend(GalleryNavigationEvent.StartDeleteDialog(
+            photosFlow.value.filter { uuidsToDelete.contains(it.uuid) }
+        ))
+        onCancelMultiSelect()
+    }
+
+    private fun onCancelMultiSelect() {
+        multiSelectionState.update { it.copy(isActive = false, selectedItemUUIDs = emptyList()) }
     }
 
     private fun onPhotoLongPressed(item: PhotoTile) {

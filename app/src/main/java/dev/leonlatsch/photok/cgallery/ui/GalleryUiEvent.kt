@@ -20,4 +20,7 @@ sealed interface GalleryUiEvent {
     data class PhotoClicked(val item: PhotoTile) : GalleryUiEvent
     data class PhotoLongPressed(val item: PhotoTile) : GalleryUiEvent
     object OpenImportMenu : GalleryUiEvent
+    object CancelMultiSelect : GalleryUiEvent
+    object OnDelete : GalleryUiEvent
+    object OnExport : GalleryUiEvent
 }

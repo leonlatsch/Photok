@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.cgallery.ui.compose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -84,16 +85,31 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 .padding(top = 12.dp)
         )
 
-        FloatingActionButton(
-            onClick = { TODO() },
+        AnimatedVisibility(
+            visible = uiState.multiSelectionState.isActive.not(),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_add),
-                contentDescription = null,
-                tint = Color.White
+            FloatingActionButton(onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) }) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_add),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+        }
+
+        AnimatedVisibility(
+            visible = uiState.multiSelectionState.isActive,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 24.dp),
+        ) {
+            GalleryInteractionsRow(
+                onClose = { handleUiEvent(GalleryUiEvent.CancelMultiSelect) },
+                onDelete = { handleUiEvent(GalleryUiEvent.OnDelete) },
+                onExport = { handleUiEvent(GalleryUiEvent.OnExport) },
             )
         }
     }
@@ -123,7 +139,7 @@ fun GalleryContentPreview() {
                 PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
             ),
             multiSelectionState = MultiSelectionState(
-                isActive = false,
+                isActive = true,
                 selectedItemUUIDs = listOf()
             )
         ),

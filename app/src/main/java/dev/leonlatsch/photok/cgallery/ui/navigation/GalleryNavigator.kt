@@ -21,6 +21,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
+import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
+import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.extensions.show
 import javax.inject.Inject
@@ -35,7 +38,24 @@ class GalleryNavigator @Inject constructor() {
         when (event) {
             is GalleryNavigationEvent.OpenPhoto -> navigateOpenPhoto(event.photoUUID, navController)
             GalleryNavigationEvent.OpenImportMenu -> navigateOpenImportMenu(fragmentManager)
+            is GalleryNavigationEvent.StartDeleteDialog -> navigateStartDeleteDialog(
+                event.photosToDelete,
+                fragmentManager
+            )
+
+            is GalleryNavigationEvent.StartExportDialog -> navigateStartExportDialog(
+                event.photosToExport,
+                fragmentManager
+            )
         }
+    }
+
+    private fun navigateStartExportDialog(photos: List<Photo>, fragmentManager: FragmentManager) {
+        ExportBottomSheetDialogFragment(photos).show(fragmentManager)
+    }
+
+    private fun navigateStartDeleteDialog(photos: List<Photo>, fragmentManager: FragmentManager) {
+        DeleteBottomSheetDialogFragment(photos).show(fragmentManager)
     }
 
     private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
