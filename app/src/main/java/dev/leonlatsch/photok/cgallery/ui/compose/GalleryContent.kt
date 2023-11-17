@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -54,7 +55,12 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     Box(
         modifier = Modifier.scrollable(scrollState, orientation = Orientation.Vertical)
     ) {
-        PhotosGrid(uiState.photos, uiState.selectionMode, handleUiEvent)
+        PhotosGrid(
+            photos = uiState.photos,
+            selectionMode = uiState.selectionMode,
+            handleUiEvent = handleUiEvent,
+            modifier = Modifier.fillMaxHeight()
+        )
 
         Box(
             modifier = Modifier

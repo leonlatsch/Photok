@@ -21,7 +21,9 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
@@ -40,6 +42,8 @@ import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+
+val FragmentsWithMenu = listOf(R.id.cgalleryFragment, R.id.settingsFragment)
 
 /**
  * The main Activity.
@@ -81,6 +85,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             if (it == ApplicationState.UNLOCKED) {
                 viewModel.consumeSharedUris()
             }
+        }
+
+        findNavController(R.id.mainNavHostFragment).addOnDestinationChangedListener { controller, destination, arguments ->
+            val showMenu = FragmentsWithMenu.contains(destination.id)
+            binding.mainMenuComposeContainer.isVisible = showMenu
         }
     }
 
