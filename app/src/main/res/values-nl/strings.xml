@@ -23,8 +23,8 @@
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Maak je wachtwoord aan</string>
-    <string name="setup_enter_password">Voer uw wachtwoord in</string>
-    <string name="setup_confirm_password">Bevestig uw wachtwoord</string>
+    <string name="setup_enter_password">Voer je wachtwoord in</string>
+    <string name="setup_confirm_password">Bevestig je wachtwoord</string>
     <string name="setup_password_strength_label">Wachtwoord sterkte:</string>
     <string name="setup_button">Creëren</string>
     <string name="setup_password_strength_weak">Zwak</string>
@@ -40,13 +40,13 @@
     <string name="unlock_wrong_password">\u26A0 Verkeerd wachtwoord</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">Er zijn geen bestanden in uw kluis</string>
+    <string name="gallery_placeholder">Er zijn geen bestanden in je kluis</string>
     <string name="gallery_all_photos_label">Alle bestanden</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>
-    <string name="import_menu_photos">Photos</string>
-    <string name="import_menu_videos">Video´s</string>
+    <string name="import_menu_photos">Foto\'s/string>
+    <string name="import_menu_videos">Video\'s</string>
     <string name="import_menu_backup">Back-up </string>
     <string name="import_menu_hint">Media-items toevoegen aan Photok…</string>
 
@@ -61,7 +61,7 @@
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>
     <string name="view_photo_detail_file_name_label">Bestandsnaam:</string>
-    <string name="view_photo_detail_import_at_label">Geïmporteerd bij:</string>
+    <string name="view_photo_detail_import_at_label">Geïmporteerd op:</string>
     <string name="view_photo_detail_file_type_label">Bestandstype:</string>
     <string name="view_photo_detail_size_label">Bestandsgrootte:</string>
 
@@ -75,15 +75,15 @@
     <string name="menu_ms_export">Exporteren</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Weet u zeker dat u %1$d bestand(en) wilt <b>verwijderen</b>?</string>
-    <string name="delete_are_you_sure_this">Weet u zeker dat u deze bestanden wilt <b>verwijderen</b>?</string>
+    <string name="delete_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>verwijderen</b>?</string>
+    <string name="delete_are_you_sure_this">Weet je zeker dat je deze bestanden wilt <b>verwijderen</b>?</string>
     <string name="delete_deleting">Bestand(en) verwijderen…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Weet u zeker dat u %1$d bestand(en) wilt <b>exporteren</b>, terug naar uw galerij?</string>
-    <string name="export_are_you_sure_this">Weet u zeker dat u dit bestand wilt <b>exporteren</b> naar uw galerij?</string>
+    <string name="export_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>exporteren</b>, terug naar uw galerij?</string>
+    <string name="export_are_you_sure_this">Weet je zeker dat je dit bestand wilt <b>exporteren</b> naar je galerij?</string>
     <string name="export_exporting">Bestand(en) exporteren…</string>
-    <string name="export_permission_rationale">Photok heeft toegang nodig tot uw opslag om bestanden te exporteren.</string>
+    <string name="export_permission_rationale">Photok heeft toegang nodig tot je opslag om bestanden te exporteren.</string>
     <string name="export_finished">Geëxporteerd</string>
 
     <!-- ABOUT -->
@@ -113,8 +113,8 @@
     <string name="settings_security_allow_screenshots_title">Screenshots toestaan</string>
     <string name="settings_security_allow_screenshots_summary">Sta het maken van screenshots toe. Opnieuw opstarten vereist.</string>
     <string name="settings_security_change_password_title">Wijzig Wachtwoord</string>
-    <string name="settings_security_change_password_summary">Wijzig uw wachtwoord</string>
-    <string name="settings_security_timeout_title">Automatische vergrendeltime-out</string>
+    <string name="settings_security_change_password_summary">Wijzig je wachtwoord</string>
+    <string name="settings_security_timeout_title">Automatische vergrendel time-out</string>
     <string name="settings_security_timeout_summary">Automatische vergrendeling na bepaalde tijd op de achtergrond </string>
     <string name="settings_security_timeout_immediately">Onmiddellijk</string>
     <string name="settings_security_timeout_one_minute">1 Minuut</string>
@@ -128,23 +128,23 @@
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Verberg App</string>
-    <string name="settings_security_hide_app_summary">Verberg app icoon van app lade.</string>
+    <string name="settings_security_hide_app_summary">Verbergt app icoon van apps-overzicht.</string>
 
     <string name="settings_category_advanced">Geavanceerd</string>
     <string name="settings_category_advanced_summary">Wees voorzichtig.</string>
-    <string name="settings_advanced_reset_title">Reset Veilig</string>
+    <string name="settings_advanced_reset_title">Reset veilig</string>
     <string name="settings_advanced_reset_summary">Wissen van gegevens en opnieuw instellen van wachtwoord</string>
     <string name="settings_advanced_reset_confirmation">Wil je ECHT je kluis resetten? Alle gegevens zullen verloren gaan!</string>
-    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_title">Back-up</string>
     <string name="settings_advanced_backup_summary">Maak een back-up van uw kluis</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_title">Verwijder geïmporteerde bestanden</string>
+    <string name="settings_advanced_delete_imported_summary">Verwijder bestanden na het importeren</string>
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
     <string name="settings_other_feedback_summary">Stuur me een e-mail met feedback</string>
-    <string name="settings_other_feedback_mail_subject">eedback naar Photok</string>
-    <string name="settings_other_feedback_mail_body">Schrijf een feedback over Photok :)</string>
+    <string name="settings_other_feedback_mail_subject">Feedback naar Photok</string>
+    <string name="settings_other_feedback_mail_body">Schrijf feedback over Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
     <string name="settings_other_sourcecode_title">Broncode</string>
     <string name="settings_other_sourcecode_summary">Bijdragen aan Photok</string>
@@ -160,14 +160,14 @@
     <string name="credits_icons_title">Icons</string>
 
     <!-- CHANGE PASSWORD -->
-    <string name="change_password_title">Wijzig uw wachtwoord</string>
+    <string name="change_password_title">Wijzig je wachtwoord</string>
     <string name="change_password_old_password">Oud wachtwoord</string>
     <string name="change_password_new_password">Nieuw wachtwoord</string>
     <string name="change_password_check">Check</string>
-    <string name="change_password_enter_new_password">Voer uw nieuwe wachtwoord in</string>
-    <string name="change_password_confirm_new_password">Bevestig uw nieuwe wachtwoord</string>
-    <string name="change_password_button">Wijzig Wachtwoord</string>
-    <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als u uw wachtwoord wijzigt, moeten al uw bestanden opnieuw worden versleuteld! Wilt u doorgaan?</string>
+    <string name="change_password_enter_new_password">Voer je nieuwe wachtwoord in</string>
+    <string name="change_password_confirm_new_password">Bevestig je nieuwe wachtwoord</string>
+    <string name="change_password_button">Wijzig wachtwoord</string>
+    <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
 
     <!-- HIDE APP -->
@@ -179,7 +179,7 @@
     <string name="hide_app_app_name_stealth">Telefoon</string>
     <string name="hide_app_confirm_hide">Wil je echt Photok verbergen?</string>
     <string name="hide_app_confirm_show">Wil je Photok nog eens laten zien?</string>
-    <string name="hide_app_hint">Eenmaal verborgen, kan Photok alleen worden gestart vanaf het toetsenblok van de telefoon, met uw geheime startcode.</string>
+    <string name="hide_app_hint">Eenmaal verborgen, kan Photok alleen worden gestart vanaf het toetsenblok van de telefoon, met je geheime startcode.</string>
     <string name="hide_app_hint_current_code">Huidige startcode:</string>
 
     <!-- ON BOARDING -->
@@ -188,11 +188,11 @@
     <string name="onboarding_skip"><u>Overslaan</u></string>
 
     <string name="onboarding_slide1_title">Welkom bij</string>
-    <string name="onboarding_slide1_description">Een veilige plek voor uw foto\'s.</string>
+    <string name="onboarding_slide1_description">Een veilige plek voor je foto\'s.</string>
     <string name="onboarding_slide2_title">Maak een wachtwoord</string>
-    <string name="onboarding_slide2_description">Maak een veilig wachtwoord aan. Uw wachtwoord wordt gebruikt om uw foto\'s rechtstreeks op uw telefoon te versleutelen.</string>
+    <string name="onboarding_slide2_description">Maak een veilig wachtwoord aan. Je wachtwoord wordt gebruikt om je foto\'s rechtstreeks op je telefoon te versleutelen.</string>
     <string name="onboarding_slide3_title">Begin met importeren</string>
-    <string name="onboarding_slide3_description">Begin met het importeren van uw foto\'s en bewaar ze veilig voor anderen. Daarna kunt u ze verwijderen in uw galerij.</string>
+    <string name="onboarding_slide3_description">Begin met het importeren van je foto\'s en bewaar ze veilig voor anderen. Daarna kun je ze verwijderen in uw galerij.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Back-up maken…</string>
@@ -212,8 +212,8 @@
     <string name="news_view_changelog">Bekijk changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Auto Delete</string> <!-- TODO -->
-    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
+    <string name="news_title_1">Automatisch verwijderen</string>
+    <string name="news_summary_1">Verwijder in Photok geïmporteerde bestanden automatisch.</string>
 
     <string name="news_title_2">EMPTY</string>
     <string name="news_summary_2">EMPTY</string>
@@ -225,7 +225,7 @@
     <string name="news_summary_4">LEEG</string>
 
     <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
-    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
+    <string name="recovery_subtitle">Herstelmenu</string>
+    <string name="recovery_menu_item_open_photok">Open Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">App verbergen Instellingen resetten</string>
 </resources>
