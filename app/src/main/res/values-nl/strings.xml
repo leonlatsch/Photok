@@ -45,7 +45,7 @@
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>
-    <string name="import_menu_photos">Foto\'s/<string>
+    <string name="import_menu_photos">Foto\'s</string>
     <string name="import_menu_videos">Video\'s</string>
     <string name="import_menu_backup">Back-up</string>
     <string name="import_menu_hint">Media-items toevoegen aan Photok…</string>
