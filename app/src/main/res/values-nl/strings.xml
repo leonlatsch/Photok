@@ -45,9 +45,9 @@
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>
-    <string name="import_menu_photos">Foto\'s/string>
+    <string name="import_menu_photos">Foto\'s/<string>
     <string name="import_menu_videos">Video\'s</string>
-    <string name="import_menu_backup">Back-up </string>
+    <string name="import_menu_backup">Back-up</string>
     <string name="import_menu_hint">Media-items toevoegen aan Photok…</string>
 
     <!-- PROCESS -->
@@ -115,7 +115,7 @@
     <string name="settings_security_change_password_title">Wijzig Wachtwoord</string>
     <string name="settings_security_change_password_summary">Wijzig je wachtwoord</string>
     <string name="settings_security_timeout_title">Automatische vergrendel time-out</string>
-    <string name="settings_security_timeout_summary">Automatische vergrendeling na bepaalde tijd op de achtergrond </string>
+    <string name="settings_security_timeout_summary">Automatische vergrendeling na bepaalde tijd op de achtergrond</string>
     <string name="settings_security_timeout_immediately">Onmiddellijk</string>
     <string name="settings_security_timeout_one_minute">1 Minuut</string>
     <string name="settings_security_timeout_two_minute">2 Minuten</string>
@@ -150,7 +150,7 @@
     <string name="settings_other_sourcecode_summary">Bijdragen aan Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string>
-    <string name="settings_other_credits_summary">Bijdragers en credits </string>
+    <string name="settings_other_credits_summary">Bijdragers en credits</string>
     <string name="settings_other_about_title">Over</string>
     <string name="settings_other_about_summary">Informatie over Photok</string>
 
