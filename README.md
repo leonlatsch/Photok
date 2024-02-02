@@ -6,7 +6,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
-![Maintenance](https://img.shields.io/maintenance/yes/2023)
+![Maintenance](https://img.shields.io/maintenance/yes/2024)
 
 Encrypt your photos on your device and keep them safe from others.
 
