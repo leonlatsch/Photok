@@ -70,8 +70,8 @@
         android:label="fragment_setup"
         tools:layout="@layout/fragment_setup">
         <action
-            android:id="@+id/action_setupFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
+            android:id="@+id/action_setupFragment_to_cgalleryFragment"
+            app:destination="@id/cgalleryFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/slide_to_bottom"
             app:popUpTo="@id/setupFragment"
@@ -83,8 +83,8 @@
         android:label="fragment_unlock"
         tools:layout="@layout/fragment_unlock">
         <action
-            android:id="@+id/action_unlockFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
+            android:id="@+id/action_unlockFragment_to_cgalleryFragment"
+            app:destination="@id/cgalleryFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/slide_to_bottom"
             app:popUpTo="@id/unlockFragment"

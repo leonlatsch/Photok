@@ -26,7 +26,11 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
-import dev.leonlatsch.photok.other.extensions.*
+import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.requireActivityAs
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -94,7 +98,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
         if (viewModel.encryptionManager.isReady) {
             requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
-            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
+            findNavController().navigate(R.id.action_setupFragment_to_cgalleryFragment)
         } else {
             Dialogs.showLongToast(
                 requireContext(),

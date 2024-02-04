@@ -37,8 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,19 +69,20 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 .height(80.dp)
                 .background(
                     Brush.verticalGradient(
-                        listOf(colorResource(R.color.background), Color.Transparent)
+                        listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
                     )
                 )
         )
 
+
         Text(
-            text = stringResource(R.string.app_name),
-            fontFamily = FontFamily(Font(R.font.lobster_regular)),
-            color = colorResource(R.color.appTitleColor),
-            fontSize = 40.sp,
+            text = stringResource(R.string.gallery_all_photos_label),
+            color = colorResource(android.R.color.white),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 12.dp)
+                .align(Alignment.TopStart)
+                .padding(14.dp)
         )
 
         AnimatedVisibility(
