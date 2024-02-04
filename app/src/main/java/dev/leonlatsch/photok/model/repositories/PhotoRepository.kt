@@ -207,7 +207,7 @@ class PhotoRepository @Inject constructor(
 
         encryptedStorageManager.internalOpenEncryptedFileOutput(
             photo.internalThumbnailFileName
-        ).use {
+        )?.use {
             thumbnail?.compress(Bitmap.CompressFormat.JPEG, 100, it)
         }
     }
@@ -221,7 +221,7 @@ class PhotoRepository @Inject constructor(
 
         encryptedStorageManager.internalOpenEncryptedFileOutput(
             photo.internalVideoPreviewFileName
-        ).use {
+        )?.use {
             preview?.compress(Bitmap.CompressFormat.JPEG, 100, it)
         }
     }
