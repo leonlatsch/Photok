@@ -14,12 +14,12 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = 33 // Android 13
+    compileSdk = 34 // Android 13
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdk = VersionCodes.N
-        targetSdk = 33 // Android 13
+        targetSdk = 34 // Android 14
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
 
@@ -159,6 +159,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.activity:activity:1.8.2")
     implementation("androidx.preference:preference-ktx:1.2.0")
 
     testImplementation("junit:junit:4.13.1")
