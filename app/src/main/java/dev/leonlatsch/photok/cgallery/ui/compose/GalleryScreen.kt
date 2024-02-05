@@ -22,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
 import dev.leonlatsch.photok.cgallery.ui.GalleryViewModel
-import dev.leonlatsch.photok.cgallery.ui.compose.GalleryContent
 
 @Composable
 fun GalleryScreen(viewModel: GalleryViewModel) {
@@ -31,7 +30,8 @@ fun GalleryScreen(viewModel: GalleryViewModel) {
 
     MaterialTheme {
         when (uiState) {
-            is GalleryUiState.Empty -> GalleryPlaceholder(uiState as GalleryUiState.Empty)
+            is GalleryUiState.Empty -> GalleryPlaceholder { viewModel.handleUiEvent(it) }
+
             is GalleryUiState.Content -> GalleryContent(
                 uiState as GalleryUiState.Content,
                 handleUiEvent = { viewModel.handleUiEvent(it) }
