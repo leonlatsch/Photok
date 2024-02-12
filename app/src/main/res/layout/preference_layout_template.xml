@@ -25,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/toolbarStyle"
-        app:navigationIcon="@drawable/ic_back"
         app:title="@string/settings_title" />
 
     <!-- Container for settings.xml -->
