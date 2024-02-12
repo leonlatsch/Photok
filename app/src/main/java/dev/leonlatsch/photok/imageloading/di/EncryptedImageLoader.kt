@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2023 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,18 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.imageloading.di
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
+import javax.inject.Qualifier
 
-// Intent
-const val INTENT_PHOTO_UUID = "intent.photo.uuid"
-
-// Permissions
-const val REQ_PERM_IMPORT_PHOTOS = 10
-const val REQ_PERM_IMPORT_VIDEOS = 11
-const val REQ_PERM_EXPORT = 12
-const val REQ_PERM_SHARED_IMPORT = 14
+@Retention
+@Qualifier
+annotation class EncryptedImageLoader

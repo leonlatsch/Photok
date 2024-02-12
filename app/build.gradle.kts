@@ -14,12 +14,12 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = 33 // Android 13
+    compileSdk = 34 // Android 13
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdk = VersionCodes.N
-        targetSdk = 33 // Android 13
+        targetSdk = 34 // Android 14
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
 
@@ -44,6 +44,11 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
 
     compileOptions {
@@ -114,6 +119,12 @@ dependencies {
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.7.0")
 
+    // Compose
+    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
+    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
 
@@ -135,6 +146,9 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.3.0")
+
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.18.1")
     implementation("com.google.android.exoplayer:exoplayer-ui:2.18.1")
@@ -145,6 +159,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.activity:activity:1.8.2")
     implementation("androidx.preference:preference-ktx:1.2.0")
 
     testImplementation("junit:junit:4.13.1")

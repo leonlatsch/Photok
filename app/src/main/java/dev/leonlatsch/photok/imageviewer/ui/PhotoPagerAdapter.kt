@@ -33,7 +33,7 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
  * @author Leon Latsch
  */
 class PhotoPagerAdapter(
-    private val photos: List<Int>,
+    private val photos: List<String>,
     private val photoRepository: PhotoRepository,
     private val navController: NavController,
     private val onZoomed: (zoomed: Boolean) -> Unit,

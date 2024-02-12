@@ -62,10 +62,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar = view.findViewById(R.id.settingsToolbar)
-
-        toolbar?.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

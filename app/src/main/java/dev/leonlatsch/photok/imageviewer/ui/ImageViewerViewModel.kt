@@ -41,7 +41,7 @@ class ImageViewerViewModel @Inject constructor(
     val photoRepository: PhotoRepository
 ) : ObservableViewModel(app) {
 
-    var ids = listOf<Int>()
+    var uuids = listOf<String>()
 
     @get:Bindable
     var currentPhoto: Photo? = null
@@ -54,18 +54,18 @@ class ImageViewerViewModel @Inject constructor(
      * Load all photo Ids.
      * Save them in viewModel and pass them to [onFinished].
      */
-    fun preloadData(onFinished: (List<Int>) -> Unit) = viewModelScope.launch {
-        if (ids.isEmpty()) {
-            ids = photoRepository.getAllIds()
+    fun preloadData(onFinished: (List<String>) -> Unit) = viewModelScope.launch {
+        if (uuids.isEmpty()) {
+            uuids = photoRepository.getAllUUIDs()
         }
-        onFinished(ids)
+        onFinished(uuids)
     }
 
     /**
      * Loads a photo. Gets called after onViewCreated
      */
     fun updateDetails(position: Int) = viewModelScope.launch {
-        val photo = photoRepository.get(ids[position])
+        val photo = photoRepository.get(uuids[position])
         currentPhoto = photo
     }
 

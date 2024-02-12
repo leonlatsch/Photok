@@ -19,7 +19,11 @@ package dev.leonlatsch.photok.other.extensions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dev.leonlatsch.photok.BaseApplication
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 /**
@@ -44,3 +48,9 @@ fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) 
     startActivityForResult(intent, reqCode)
     requireActivity().getBaseApplication().ignoreNextTimeout()
 }
+
+inline fun Fragment.launchLifecycleAwareJob(
+    state: Lifecycle.State = Lifecycle.State.CREATED,
+    crossinline block: suspend () -> Unit
+) =
+    viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(state) { block() } }

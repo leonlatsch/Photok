@@ -61,16 +61,16 @@ class PhotoViewHolder(
 ) {
     private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
     private val playButton: ImageView = itemView.findViewById(R.id.photoPlayButton)
-    var photoId: Int = 0
+    var photoUUID: String = ""
 
     /**
      * Called by Adapters onBindViewHolder.
      *
      * @param id The photo's id
      */
-    fun bindTo(id: Int?) {
-        id ?: return
-        photoId = id
+    fun bindTo(uuid: String?) {
+        uuid ?: return
+        photoUUID = uuid
 
         loadPhoto()
     }
@@ -78,7 +78,7 @@ class PhotoViewHolder(
     private fun loadPhoto() {
         try {
             GlobalScope.launch(Dispatchers.IO) {
-                val photo = photoRepository.get(photoId)
+                val photo = photoRepository.get(photoUUID)
 
                 val data = if (photo.type.isVideo) {
                     photoRepository.loadVideoPreview(photo)
@@ -86,7 +86,7 @@ class PhotoViewHolder(
                     photoRepository.loadPhoto(photo)
                 }
                 if (data == null) {
-                    Timber.d("Error loading photo data for photo: $photoId")
+                    Timber.d("Error loading photo data for photo: $photoUUID")
                     return@launch
                 }
 
@@ -148,7 +148,7 @@ class PhotoViewHolder(
     }
 
     private fun openVideoPlayer(photo: Photo) {
-        val args = bundleOf(INTENT_PHOTO_ID to photo.id)
+        val args = bundleOf(INTENT_PHOTO_UUID to photo.id)
         navController.navigate(
             R.id.action_imageViewerFragment_to_videoPlayerFragment,
             args

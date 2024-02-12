@@ -44,7 +44,7 @@ import kotlin.reflect.KFunction1
 class PhotoAdapter(
     private val context: Context,
     private val photoRepository: PhotoRepository,
-    private val viewPhotoCallback: KFunction1<Int, Unit>,
+    private val viewPhotoCallback: KFunction1<String, Unit>,
     val lifecycleOwner: LifecycleOwner
 ) : PagingDataAdapter<Photo, PhotoItemViewHolder>(differCallback) {
 
@@ -71,7 +71,7 @@ class PhotoAdapter(
      * Called by ui. On Click.
      */
     fun viewPhoto(position: Int) {
-        viewPhotoCallback.invoke(getItem(position)?.id!!)
+        viewPhotoCallback.invoke(getItem(position)?.uuid!!)
     }
 
     /**

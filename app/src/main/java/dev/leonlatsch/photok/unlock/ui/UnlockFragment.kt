@@ -25,8 +25,11 @@ import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.other.*
-import dev.leonlatsch.photok.other.extensions.*
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.requireActivityAs
+import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -71,7 +74,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         if (viewModel.encryptionManager.isReady) {
             requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
-            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+            findNavController().navigate(R.id.action_unlockFragment_to_cgalleryFragment)
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
         }
