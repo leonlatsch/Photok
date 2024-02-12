@@ -25,6 +25,9 @@ import coil.request.ImageRequest
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 
+/**
+ * Image Painter for encrypted images. Uses encrypted image fetcher if [LocalEncryptedImageLoader] provides it
+ */
 @Composable
 fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePainter {
     val context = LocalContext.current

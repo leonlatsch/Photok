@@ -28,6 +28,11 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import okio.buffer
 import okio.source
 
+/**
+ * Coil image fetcher decrypting the image on the fly while rendering.
+ *
+ * Used for displaying encrypted images.
+ */
 class EncryptedImageFetcher(
     @ApplicationContext private val context: Context,
     private val encryptedStorageManager: EncryptedStorageManager,
