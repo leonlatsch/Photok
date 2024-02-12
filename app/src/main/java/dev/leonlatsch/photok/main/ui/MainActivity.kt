@@ -20,6 +20,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -89,11 +90,21 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
         }
 
-        findNavController(R.id.mainNavHostFragment).addOnDestinationChangedListener { controller, destination, arguments ->
-            val showMenu = FragmentsWithMenu.contains(destination.id)
-            binding.mainMenuComposeContainer.isVisible = showMenu
+        findNavController(R.id.mainNavHostFragment).let { navController ->
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                val showMenu = FragmentsWithMenu.contains(destination.id)
+                binding.mainMenuComposeContainer.isVisible = showMenu
 
-            viewModel.onDestinationChanged(destination.id)
+                viewModel.onDestinationChanged(destination.id)
+            }
+
+            onBackPressedDispatcher.addCallback {
+                if (navController.currentDestination?.id == R.id.cgalleryFragment) {
+                    finish()
+                } else {
+                    navController.navigateUp()
+                }
+            }
         }
     }
 
@@ -102,6 +113,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             Intent.ACTION_SEND -> intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let { uri ->
                 viewModel.addUriToSharedUriStore(uri)
             }
+
             Intent.ACTION_SEND_MULTIPLE ->
                 intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.forEach { uri ->
                     viewModel.addUriToSharedUriStore(uri)

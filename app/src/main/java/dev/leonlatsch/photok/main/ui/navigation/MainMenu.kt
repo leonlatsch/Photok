@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
 
@@ -41,7 +42,7 @@ fun MainMenu(
             fragmentid = R.id.cgalleryFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_image,
-            label = "All Photos",
+            label = stringResource(R.string.gallery_all_photos_label),
             onNavigationItemClicked = onNavigationItemClicked
         )
 
@@ -49,7 +50,7 @@ fun MainMenu(
             fragmentid = R.id.settingsFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_settings,
-            label = "Settings",
+            label = stringResource(R.string.menu_main_settings),
             onNavigationItemClicked = onNavigationItemClicked
         )
     }
