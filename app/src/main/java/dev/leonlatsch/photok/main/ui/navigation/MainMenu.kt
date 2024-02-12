@@ -75,7 +75,7 @@ private fun RowScope.MainNavItem(
     label: String,
     onNavigationItemClicked: (Int) -> Unit
 ) {
-    val selectedColor = colorResource(R.color.colorPrimary).copy(alpha = .6f)
+    val selectedColor = colorResource(R.color.colorPrimaryDark).copy(alpha = .6f)
 
     NavigationBarItem(
         selected = currentSelectedFragmentId == fragmentid,

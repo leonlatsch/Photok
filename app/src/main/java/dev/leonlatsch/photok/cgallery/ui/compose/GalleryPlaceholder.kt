@@ -54,7 +54,10 @@ fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
                 modifier = Modifier.alpha(0.3f)
             )
 
-            Text(stringResource(R.string.gallery_placeholder))
+            Text(
+                stringResource(R.string.gallery_placeholder),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
 
         FloatingActionButton(
