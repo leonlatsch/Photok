@@ -26,9 +26,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,10 +38,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
@@ -77,9 +76,8 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
 
         Text(
             text = stringResource(R.string.gallery_all_photos_label),
-            color = colorResource(android.R.color.white),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(14.dp)
@@ -119,32 +117,34 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun GalleryContentPreview() {
-    GalleryContent(
-        uiState = GalleryUiState.Content(
-            selectionMode = true,
-            listOf(
-                PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.MPEG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+    MaterialTheme {
+        GalleryContent(
+            uiState = GalleryUiState.Content(
+                selectionMode = true,
+                listOf(
+                    PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.MPEG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                ),
+                multiSelectionState = MultiSelectionState(
+                    isActive = true,
+                    selectedItemUUIDs = listOf()
+                )
             ),
-            multiSelectionState = MultiSelectionState(
-                isActive = true,
-                selectedItemUUIDs = listOf()
-            )
-        ),
-        handleUiEvent = {},
-    )
+            handleUiEvent = {},
+        )
+    }
 }
 

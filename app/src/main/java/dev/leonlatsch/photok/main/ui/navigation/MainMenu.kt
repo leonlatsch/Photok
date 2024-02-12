@@ -17,12 +17,13 @@
 package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,8 +34,8 @@ fun MainMenu(
     uiState: MainMenuUiState,
     onNavigationItemClicked: (Int) -> Unit
 ) {
-    BottomNavigation(
-        backgroundColor = colorResource(R.color.background)
+    NavigationBar(
+        containerColor = colorResource(R.color.background)
     ) {
         MainNavItem(
             fragmentid = R.id.cgalleryFragment,
@@ -57,11 +58,14 @@ fun MainMenu(
 @Preview
 @Composable
 fun MainMenuPreview() {
-    MainMenu(
-        uiState = MainMenuUiState(R.id.cgalleryFragment),
-        onNavigationItemClicked = {}
-    )
+    MaterialTheme {
+        MainMenu(
+            uiState = MainMenuUiState(R.id.cgalleryFragment),
+            onNavigationItemClicked = {}
+        )
+    }
 }
+
 
 @Composable
 private fun RowScope.MainNavItem(
@@ -71,7 +75,9 @@ private fun RowScope.MainNavItem(
     label: String,
     onNavigationItemClicked: (Int) -> Unit
 ) {
-    BottomNavigationItem(
+    val selectedColor = colorResource(R.color.colorPrimary).copy(alpha = .6f)
+
+    NavigationBarItem(
         selected = currentSelectedFragmentId == fragmentid,
         onClick = { onNavigationItemClicked(fragmentid) },
         icon = {
@@ -80,8 +86,7 @@ private fun RowScope.MainNavItem(
         label = {
             Text(label)
         },
-        selectedContentColor = colorResource(R.color.colorPrimary),
-        unselectedContentColor = Color.DarkGray,
+        colors = NavigationBarItemDefaults.colors().copy(selectedIndicatorColor = selectedColor),
         alwaysShowLabel = true
     )
 }
