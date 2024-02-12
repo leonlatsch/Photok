@@ -58,6 +58,7 @@ import pub.devrel.easypermissions.EasyPermissions
  * @since 1.0.0
  * @author Leon Latsch
  */
+@Deprecated("Replaced with compose version. Remove this and all its dependencies once stable")
 @AndroidEntryPoint
 class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
 
