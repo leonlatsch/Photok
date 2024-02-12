@@ -93,7 +93,7 @@ interface PhotoDao {
     /**
      * Get all photo Ids.
      */
-    @Query("SELECT uuid FROM photo ORDER BY importedAt DESC")
+    @Query("SELECT uuid FROM photo ORDER BY importedAt ASC")
     suspend fun getAllUUIDs(): List<String>
 
     /**
