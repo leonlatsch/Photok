@@ -57,7 +57,7 @@ fun MainMenu(
 
 @Preview
 @Composable
-fun MainMenuPreview() {
+private fun MainMenuPreview() {
     MaterialTheme {
         MainMenu(
             uiState = MainMenuUiState(R.id.cgalleryFragment),
