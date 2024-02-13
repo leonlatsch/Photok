@@ -14,7 +14,7 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = 34 // Android 13
+    compileSdk = 34 // Android 14
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
@@ -57,6 +57,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    lint {
+        lintConfig = file("$rootDir/gradle/lint.xml")
     }
 }
 
