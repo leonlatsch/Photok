@@ -65,7 +65,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp)
+                .height(120.dp)
                 .background(
                     Brush.verticalGradient(
                         listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
@@ -114,7 +114,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF, showSystemUi = true)
 @Composable
 fun GalleryContentPreview() {
     MaterialTheme {
@@ -125,12 +125,12 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
-                    PhotoTile("", PhotoType.MPEG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.MPEG, "1"),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, "2"),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
@@ -140,7 +140,7 @@ fun GalleryContentPreview() {
                 ),
                 multiSelectionState = MultiSelectionState(
                     isActive = true,
-                    selectedItemUUIDs = listOf()
+                    selectedItemUUIDs = listOf("1", "2")
                 )
             ),
             handleUiEvent = {},
