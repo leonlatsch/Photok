@@ -76,7 +76,9 @@ private fun RowScope.MainNavItem(
     label: String,
     onNavigationItemClicked: (Int) -> Unit
 ) {
-    val selectedColor = colorResource(R.color.colorPrimaryDark).copy(alpha = .6f)
+    val selectedIndicatorColor = colorResource(R.color.colorPrimaryDark).copy(alpha = .6f)
+    val selectedColor = colorResource(R.color.textColor)
+    val unselectedColor = colorResource(R.color.textColor)
 
     NavigationBarItem(
         selected = currentSelectedFragmentId == fragmentid,
@@ -87,7 +89,13 @@ private fun RowScope.MainNavItem(
         label = {
             Text(label)
         },
-        colors = NavigationBarItemDefaults.colors().copy(selectedIndicatorColor = selectedColor),
+        colors = NavigationBarItemDefaults.colors().copy(
+            selectedIndicatorColor = selectedIndicatorColor,
+            selectedIconColor = selectedColor,
+            selectedTextColor = selectedColor,
+            unselectedIconColor = unselectedColor,
+            unselectedTextColor = unselectedColor
+        ),
         alwaysShowLabel = true
     )
 }

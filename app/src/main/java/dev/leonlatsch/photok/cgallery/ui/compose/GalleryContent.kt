@@ -27,25 +27,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
 import dev.leonlatsch.photok.cgallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.uicomponnets.compose.AppName
 import java.util.UUID
 
 @Composable
@@ -65,7 +61,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp)
+                .height(120.dp)
                 .background(
                     Brush.verticalGradient(
                         listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
@@ -73,12 +69,8 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 )
         )
 
-
-        Text(
-            text = stringResource(R.string.app_name),
+        AppName(
             color = Color.White,
-            fontFamily = FontFamily(Font(R.font.lobster_regular)),
-            fontSize = 38.sp,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(14.dp)
@@ -114,7 +106,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF, showSystemUi = true)
 @Composable
 fun GalleryContentPreview() {
     MaterialTheme {
@@ -125,12 +117,12 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
-                    PhotoTile("", PhotoType.MPEG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.MPEG, "1"),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                    PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
+                    PhotoTile("", PhotoType.PNG, "2"),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
@@ -140,7 +132,7 @@ fun GalleryContentPreview() {
                 ),
                 multiSelectionState = MultiSelectionState(
                     isActive = true,
-                    selectedItemUUIDs = listOf()
+                    selectedItemUUIDs = listOf("1", "2")
                 )
             ),
             handleUiEvent = {},
