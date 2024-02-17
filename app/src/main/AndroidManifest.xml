@@ -15,8 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="dev.leonlatsch.photok">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Legacy Permission -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />

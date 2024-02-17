@@ -48,7 +48,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.5"
+        kotlinCompilerExtensionVersion = "1.5.9"
     }
 
     compileOptions {
@@ -62,6 +62,7 @@ android {
     lint {
         lintConfig = file("$rootDir/gradle/lint.xml")
     }
+    namespace = "dev.leonlatsch.photok"
 }
 
 licenseReport {
