@@ -17,9 +17,9 @@
 package dev.leonlatsch.photok.cgallery.ui.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -28,9 +28,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -49,38 +52,60 @@ import java.util.UUID
 
 @Composable
 fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEvent) -> Unit) {
-    val scrollState = rememberScrollState()
+    val gridState = rememberLazyGridState()
 
-    Box(
-        modifier = Modifier
-            .scrollable(scrollState, orientation = Orientation.Vertical)
-    ) {
+    Box {
         PhotosGrid(
             photos = uiState.photos,
             multiSelectionState = uiState.multiSelectionState,
             handleUiEvent = handleUiEvent,
             modifier = Modifier.fillMaxHeight(),
-            extraTopPadding = 120.dp
+            extraTopPadding = 120.dp,
+            gridState = gridState
         )
 
+        val scrolling by remember {
+            derivedStateOf { gridState.firstVisibleItemIndex >= 3 }
+        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
+        AnimatedVisibility(
+            visible = scrolling,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
+                        )
                     )
-                )
-        )
+            )
+        }
 
-        AppName(
-            color = Color.White,
+        AnimatedVisibility(
+            visible = scrolling,
+            enter = fadeIn(),
+            exit = fadeOut(),
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(WindowInsets.statusBars.asPaddingValues())
-        )
+        ) {
+            AppName(color = Color.White)
+        }
+
+        AnimatedVisibility(
+            visible = scrolling.not(),
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(WindowInsets.statusBars.asPaddingValues())
+        ) {
+            AppName(color = Color.Black)
+        }
 
         AnimatedVisibility(
             visible = uiState.multiSelectionState.isActive.not(),

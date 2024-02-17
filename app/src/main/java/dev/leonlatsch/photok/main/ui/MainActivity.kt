@@ -100,12 +100,14 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 val showMenu = FragmentsWithMenu.contains(destination.id)
                 binding.mainMenuComposeContainer.isVisible = showMenu
 
+                /*
                 // Set dark icons if light mode and not gallery. Dark mode always has light icons
                 WindowCompat.getInsetsController(
                     window, window.decorView
                 ).isAppearanceLightStatusBars =
                     (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES &&
                             destination.id != R.id.cgalleryFragment
+                */
 
                 viewModel.onDestinationChanged(destination.id)
             }
