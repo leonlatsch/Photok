@@ -19,9 +19,11 @@ package dev.leonlatsch.photok.settings.ui
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.WindowInsets
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -60,6 +62,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Set top padding for layout
+        view.setOnApplyWindowInsetsListener { v, insets ->
+            v.setPadding(0, insets.top(), 0, 0)
+            insets
+        }
 
         toolbar = view.findViewById(R.id.settingsToolbar)
     }
@@ -210,3 +218,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         const val KEY_ACTION_ABOUT = "action_about"
     }
 }
+
+/**
+ * Thx mozilla
+ *
+ * https://github.com/mozilla-mobile/android-components/pull/9680/files#diff-9d900219329132b059f18f83b6e2952c5509bcfbf063a571ee5d647f76fa6554
+ */
+fun WindowInsets.top(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        this.getInsets(WindowInsets.Type.systemBars()).top
+
+    } else {
+        @Suppress("DEPRECATION")
+        this.systemWindowInsetTop
+    }

@@ -21,10 +21,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -49,14 +52,16 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     val scrollState = rememberScrollState()
 
     Box(
-        modifier = Modifier.scrollable(scrollState, orientation = Orientation.Vertical)
+        modifier = Modifier
+            .scrollable(scrollState, orientation = Orientation.Vertical)
     ) {
         PhotosGrid(
             photos = uiState.photos,
             multiSelectionState = uiState.multiSelectionState,
             handleUiEvent = handleUiEvent,
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier.fillMaxHeight(),
         )
+
 
         Box(
             modifier = Modifier
@@ -73,7 +78,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             color = Color.White,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(14.dp)
+                .padding(WindowInsets.statusBars.asPaddingValues())
         )
 
         AnimatedVisibility(

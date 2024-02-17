@@ -27,6 +27,11 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.ui.layout.BeyondBoundsLayout
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.exifinterface.media.ExifInterface
 import com.google.gson.GsonBuilder
 import timber.log.Timber
@@ -151,3 +156,12 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
 fun createGson() = GsonBuilder()
     .excludeFieldsWithoutExposeAnnotation()
     .create()
+
+operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingValues(
+    start = this.calculateStartPadding(LayoutDirection.Ltr) +
+            other.calculateStartPadding(LayoutDirection.Ltr),
+    top = this.calculateTopPadding() + other.calculateTopPadding(),
+    end = this.calculateEndPadding(LayoutDirection.Ltr) +
+            other.calculateEndPadding(LayoutDirection.Ltr),
+    bottom = this.calculateBottomPadding() + other.calculateBottomPadding(),
+)
