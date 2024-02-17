@@ -17,6 +17,11 @@
 package dev.leonlatsch.photok.cgallery.ui.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -38,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,6 +55,9 @@ import dev.leonlatsch.photok.cgallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 import java.util.UUID
+
+private val AnimationStiffness = Spring.StiffnessLow
+private val FadeAnimationSpec: FiniteAnimationSpec<Float> = spring(stiffness = AnimationStiffness)
 
 @Composable
 fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEvent) -> Unit) {
@@ -64,14 +73,12 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             gridState = gridState
         )
 
-        val scrolling by remember {
-            derivedStateOf { gridState.firstVisibleItemIndex >= 3 }
-        }
+        val scrolling by remember { derivedStateOf { gridState.canScrollBackward } }
 
         AnimatedVisibility(
             visible = scrolling,
-            enter = fadeIn(),
-            exit = fadeOut(),
+            enter = fadeIn(FadeAnimationSpec),
+            exit = fadeOut(FadeAnimationSpec),
         ) {
             Box(
                 modifier = Modifier
@@ -85,27 +92,18 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             )
         }
 
-        AnimatedVisibility(
-            visible = scrolling,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(WindowInsets.statusBars.asPaddingValues())
-        ) {
-            AppName(color = Color.White)
-        }
+        val titleColor by animateColorAsState(
+            targetValue = if (scrolling) Color.White else colorResource(R.color.appTitleColor),
+            animationSpec = spring(stiffness = AnimationStiffness),
+            label = "appTitleColor"
+        )
 
-        AnimatedVisibility(
-            visible = scrolling.not(),
-            enter = fadeIn(),
-            exit = fadeOut(),
+        AppName(
+            color = titleColor,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(WindowInsets.statusBars.asPaddingValues())
-        ) {
-            AppName(color = Color.Black)
-        }
+        )
 
         AnimatedVisibility(
             visible = uiState.multiSelectionState.isActive.not(),
