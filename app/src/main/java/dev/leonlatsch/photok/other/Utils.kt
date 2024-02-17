@@ -23,9 +23,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.view.View
+import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -165,3 +168,24 @@ operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingVa
             other.calculateEndPadding(LayoutDirection.Ltr),
     bottom = this.calculateBottomPadding() + other.calculateBottomPadding(),
 )
+
+fun View.statusBarPadding() {
+    setOnApplyWindowInsetsListener { v, insets ->
+        v.setPadding(0, insets.top(), 0, 0)
+        insets
+    }
+}
+
+/**
+ * Thx mozilla
+ *
+ * https://github.com/mozilla-mobile/android-components/pull/9680/files#diff-9d900219329132b059f18f83b6e2952c5509bcfbf063a571ee5d647f76fa6554
+ */
+fun WindowInsets.top(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        this.getInsets(WindowInsets.Type.systemBars()).top
+
+    } else {
+        @Suppress("DEPRECATION")
+        this.systemWindowInsetTop
+    }
