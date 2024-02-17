@@ -146,7 +146,6 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
-        requireActivity().window.setStatusBarColorRes(android.R.color.black)
 
         requireActivity().window.addSystemUIVisibilityListener {
             systemUiVisible = it
@@ -187,7 +186,6 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().showSystemUI()
-        requireActivity().window.setStatusBarColorRes(R.color.colorPrimary)
     }
 
     override fun bind(binding: FragmentImageViewerBinding) {

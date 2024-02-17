@@ -43,13 +43,6 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
 }
 
 /**
- * Set the color of the windows status bar.
- */
-fun Window.setStatusBarColorRes(@ColorRes colorRes: Int) {
-    statusBarColor = ContextCompat.getColor(context, colorRes)
-}
-
-/**
  * Set the color of the windows navigation bar.
  */
 fun Window.setNavBarColorRes(@ColorRes colorRes: Int) {
