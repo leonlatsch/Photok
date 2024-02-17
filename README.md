@@ -10,8 +10,6 @@
 
 Encrypt your photos on your device and keep them safe from others.
 
-> **❗ INFORMATION**: Currently there is no active development on Photok, just maintanance.
-
 ## About
 Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
 It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
