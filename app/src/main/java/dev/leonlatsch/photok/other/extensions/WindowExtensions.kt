@@ -41,10 +41,3 @@ fun Window.addSystemUIVisibilityListener(visibilityListener: (Boolean) -> Unit) 
         }
     }
 }
-
-/**
- * Set the color of the windows navigation bar.
- */
-fun Window.setNavBarColorRes(@ColorRes colorRes: Int) {
-    navigationBarColor = ContextCompat.getColor(context, colorRes)
-}
