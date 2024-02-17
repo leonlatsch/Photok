@@ -32,6 +32,8 @@ import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
 import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.*
+import dev.leonlatsch.photok.other.statusBarPadding
+import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -57,6 +59,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.systemBarsPadding()
 
         setHasOptionsMenu(true)
         setToolbar(binding.viewPhotoToolbar)

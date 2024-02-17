@@ -176,6 +176,13 @@ fun View.statusBarPadding() {
     }
 }
 
+fun View.systemBarsPadding() {
+    setOnApplyWindowInsetsListener { v, insets ->
+        v.setPadding(0, insets.top(), 0, insets.bottom())
+        insets
+    }
+}
+
 /**
  * Thx mozilla
  *
@@ -188,4 +195,13 @@ fun WindowInsets.top(): Int =
     } else {
         @Suppress("DEPRECATION")
         this.systemWindowInsetTop
+    }
+
+fun WindowInsets.bottom(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        this.getInsets(WindowInsets.Type.systemBars()).bottom
+
+    } else {
+        @Suppress("DEPRECATION")
+        this.systemWindowInsetBottom
     }
