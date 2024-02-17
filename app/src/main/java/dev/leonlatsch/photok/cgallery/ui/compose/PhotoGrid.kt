@@ -43,6 +43,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
@@ -57,12 +58,13 @@ fun PhotosGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     handleUiEvent: (GalleryUiEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    extraTopPadding: Dp = 0.dp
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(top = 100.dp)
+        contentPadding = PaddingValues(top = extraTopPadding)
     ) {
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(

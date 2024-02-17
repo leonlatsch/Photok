@@ -20,12 +20,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentCreditsBinding
+import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
 /**
@@ -37,10 +39,11 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragment_credits) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.systemBarsPadding()
         super.onViewCreated(view, savedInstanceState)
 
         binding.creditsToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
         requireActivity().assets.open(CONTRIBUTORS_FILE).let {

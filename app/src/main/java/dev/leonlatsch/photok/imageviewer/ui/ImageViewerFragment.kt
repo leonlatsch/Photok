@@ -64,7 +64,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
         setHasOptionsMenu(true)
         setToolbar(binding.viewPhotoToolbar)
         binding.viewPhotoToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
         initializeSystemUI()

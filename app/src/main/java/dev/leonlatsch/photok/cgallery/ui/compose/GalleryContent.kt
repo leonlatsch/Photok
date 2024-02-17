@@ -60,6 +60,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             multiSelectionState = uiState.multiSelectionState,
             handleUiEvent = handleUiEvent,
             modifier = Modifier.fillMaxHeight(),
+            extraTopPadding = 120.dp
         )
 
 
