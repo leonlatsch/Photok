@@ -44,14 +44,12 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                CompositionLocalProvider(
-                    LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
-                ) {
-                    GalleryScreen(viewModel)
-                }
+    ): View = ComposeView(requireContext()).apply {
+        setContent {
+            CompositionLocalProvider(
+                LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
+            ) {
+                GalleryScreen(viewModel)
             }
         }
     }

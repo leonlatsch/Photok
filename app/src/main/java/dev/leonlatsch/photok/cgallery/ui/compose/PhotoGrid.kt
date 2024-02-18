@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.cgallery.ui.compose
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -28,8 +29,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -43,6 +47,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
@@ -57,12 +62,15 @@ fun PhotosGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     handleUiEvent: (GalleryUiEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    extraTopPadding: Dp = 0.dp,
+    gridState: LazyGridState = rememberLazyGridState()
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(top = 100.dp)
+        contentPadding = PaddingValues(top = extraTopPadding),
+        state = gridState
     ) {
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(

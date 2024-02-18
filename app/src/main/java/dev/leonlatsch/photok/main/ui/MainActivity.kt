@@ -18,12 +18,18 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.addCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -35,7 +41,6 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragmen
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
-import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
 import dev.leonlatsch.photok.permissions.getReadImagesPermission
 import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
@@ -66,8 +71,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        window.setNavBarColorRes(android.R.color.black)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -94,6 +99,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             navController.addOnDestinationChangedListener { controller, destination, arguments ->
                 val showMenu = FragmentsWithMenu.contains(destination.id)
                 binding.mainMenuComposeContainer.isVisible = showMenu
+
+                WindowCompat.getInsetsController(
+                    window, window.decorView
+                ).isAppearanceLightStatusBars = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
 
                 viewModel.onDestinationChanged(destination.id)
             }

@@ -15,8 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="dev.leonlatsch.photok">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Legacy Permission -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
@@ -36,7 +35,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/SplashScreenTheme">
+        android:theme="@style/AppTheme">
 
         <!-- MAIN LAUNCHER: Starts the app -->
         <activity-alias

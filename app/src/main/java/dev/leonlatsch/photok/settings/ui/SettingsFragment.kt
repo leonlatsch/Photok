@@ -19,9 +19,11 @@ package dev.leonlatsch.photok.settings.ui
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.WindowInsets
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -37,6 +39,7 @@ import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
@@ -60,6 +63,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.statusBarPadding()
 
         toolbar = view.findViewById(R.id.settingsToolbar)
     }
