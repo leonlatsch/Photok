@@ -68,7 +68,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the website in new activity.
      */
     fun openWebsite() {
-        openUrl(requireContext(), getString(R.string.about_website_url))
+        openUrl(getString(R.string.about_website_url))
     }
 
     /**
@@ -82,7 +82,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the privacy policy in new activity.
      */
     fun openPrivacyPolicy() {
-        openUrl(requireContext(), getString(R.string.about_privacy_policy_url))
+        openUrl(getString(R.string.about_privacy_policy_url))
     }
 
     override fun bind(binding: FragmentAboutBinding) {
