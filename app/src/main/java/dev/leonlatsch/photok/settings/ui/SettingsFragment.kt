@@ -38,6 +38,7 @@ import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
+import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
@@ -147,15 +148,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         addActionTo(KEY_ACTION_DONATE) {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.settings_other_donate_url))
-            startActivity(intent)
+            openUrl(getString(R.string.settings_other_donate_url))
         }
 
         addActionTo(KEY_ACTION_SOURCECODE) {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.settings_other_sourcecode_url))
-            startActivity(intent)
+            openUrl(getString(R.string.settings_other_sourcecode_url))
         }
 
         addActionTo(KEY_ACTION_CREDITS) {
