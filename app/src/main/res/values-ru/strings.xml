@@ -100,11 +100,12 @@
     <string name="export_are_you_sure">Вы уверены, что хотите <b>экспортировать</b> %1$d файл(ов) обратно в галерею?</string>
     <string name="export_are_you_sure_this">Вы уверены, что хотите <b>экспортировать</b> этот файл в галерею?</string>
     <string name="export_exporting">Экспортирование файла(ов)…</string>
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_permission_rationale">Photok требует доступ к вашему хранилищу для экспорта файлов.</string>
     <string name="export_finished">Экспортировано</string>
 
     <!-- ABOUT -->
-    <string name="export_and_delete_finished">Экспортировано и удалено</string>
     <string name="about_version">Версия:</string>
     <string name="about_developed_by">Разработано:</string>
     <string name="about_website_label">leonlatsch.dev</string>
@@ -157,6 +158,8 @@
     <string name="settings_advanced_backup_summary">Сделать резервную копию вашего сейфа</string>
     <string name="settings_advanced_delete_imported_title">Удалять импортированные файлы</string>
     <string name="settings_advanced_delete_imported_summary">Удалять файлы после их импорта в сейф</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">Прочее</string>
     <string name="settings_other_feedback_title">Обратная связь</string>
@@ -249,7 +252,4 @@
     <string name="recovery_subtitle">Меню восстановления</string>
     <string name="recovery_menu_item_open_photok">Открыть Photok</string>
     <string name="recovery_subtitle_reset_hide_app">Сбросить опцию скрытия приложения</string>
-    <string name="settings_advanced_delete_exported_title">Удалить экспортированные файлы</string>
-    <string name="settings_advanced_delete_exported_summary">Удалить файлы после их экспорта</string>
-    <string name="export_and_delete_are_you_sure_this">Вы уверены, что хотите <b>экспортировать</b> этот файл в свою галерею и удалить его?</string>
 </resources>

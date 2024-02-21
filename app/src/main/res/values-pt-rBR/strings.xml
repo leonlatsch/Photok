@@ -100,13 +100,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d o(s) arquivo(s), de volta à sua galeria?</string>
     <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este arquivo, de volta à sua galeria?</string>
-    <string name="export_and_delete_are_you_sure_this">Tem certeza de que deseja <b>exportar</b> este arquivo para sua galeria e excluí-lo?</string>
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_exporting">Exportando o(s) arquivo(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar os arquivos.</string>
     <string name="export_finished">Exportado</string>
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
 
     <!-- ABOUT -->
-    <string name="export_and_delete_finished">Exportado e excluído</string>
     <string name="about_version">Versão:</string>
     <string name="about_developed_by">Desenvolvido por:</string>
     <string name="about_website_label">leonlatsch.dev</string>
@@ -251,6 +251,6 @@
     <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
     <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
     <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string>
-    <string name="settings_advanced_delete_exported_title">Excluir arquivos exportados</string>
-    <string name="settings_advanced_delete_exported_summary">Exclua arquivos após exportá-los</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 </resources>

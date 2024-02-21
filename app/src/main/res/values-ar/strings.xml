@@ -99,13 +99,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">هل أنت متأكد أنك تريد  <b>تصدير</b> %1$d file(s),إلى معرض الصور الخاص بك؟</string>
     <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
-    <string name="export_and_delete_are_you_sure_this">هل أنت متأكد أنك تريد <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك وحذفه؟</string>
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
     <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
     <string name="export_finished">تم التصدير</string>
 
     <!-- ABOUT -->
-    <string name="export_and_delete_finished">تم تصديرها وحذفها</string>
     <string name="about_version">إصدار:</string>
     <string name="about_developed_by">عُرِبَ بواسطة:</string>
     <string name="about_website_label">MRX7014</string>
@@ -158,6 +158,8 @@
     <string name="settings_advanced_backup_summary">قم بإنشاء نسخة احتياطية من خزنتك </string>
     <string name="settings_advanced_delete_imported_title">احذف الملفات المستوردة</string>
     <string name="settings_advanced_delete_imported_summary">احذف الملفات بعد استيرادها</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">آخر</string>
     <string name="settings_other_feedback_title">تعليق</string>
@@ -250,6 +252,4 @@
     <string name="recovery_subtitle">قائمة الاسترداد</string>
     <string name="recovery_menu_item_open_photok">افتح برنامج فوتوك</string>
     <string name="recovery_subtitle_reset_hide_app">إعادة تعيين إعدادات إخفاء التطبيق</string>
-    <string name="settings_advanced_delete_exported_title">حذف الملفات المصدرة</string>
-    <string name="settings_advanced_delete_exported_summary">حذف الملفات بعد تصديرها</string>
 </resources>

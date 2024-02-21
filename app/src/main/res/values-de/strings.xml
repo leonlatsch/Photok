@@ -100,13 +100,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_and_delete_are_you_sure_this">Sind Sie sicher, dass Sie diese Datei in Ihre Galerie <b>exportieren</b> und löschen möchten?</string>
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">Exportiere Dateien…</string>
     <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
     <string name="export_finished">Exportiert</string>
 
     <!-- ABOUT -->
-    <string name="export_and_delete_finished">Exportiert und gelöscht</string>
     <string name="about_version">Version:</string>
     <string name="about_developed_by">Entwickelt von:</string>
     <string name="about_website_label">leonlatsch.dev</string>
@@ -160,6 +160,8 @@
     <string name="settings_advanced_backup_summary">Erstelle ein Backup von deinem Safe</string>
     <string name="settings_advanced_delete_imported_title">Lösche importierte Dateien</string>
     <string name="settings_advanced_delete_imported_summary">Lösche Dateien nach dem Importieren</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -252,6 +254,4 @@
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>
     <string name="recovery_menu_item_open_photok">Photok Öffnen</string>
     <string name="recovery_subtitle_reset_hide_app">App Verstecken Einstellung zurücksetzen</string>
-    <string name="settings_advanced_delete_exported_title">Exportierte Dateien löschen</string>
-    <string name="settings_advanced_delete_exported_summary">Löschen Sie Dateien nach dem Exportieren</string>
 </resources>
