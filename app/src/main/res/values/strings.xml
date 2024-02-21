@@ -156,6 +156,8 @@
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
     <string name="settings_advanced_delete_imported_title">Delete imported files</string>
     <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string>
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>

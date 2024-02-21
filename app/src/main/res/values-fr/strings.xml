@@ -247,4 +247,6 @@
     <string name="recovery_subtitle">Menu de récupération</string>
     <string name="recovery_menu_item_open_photok">Ouvrir Photok</string>
     <string name="recovery_subtitle_reset_hide_app">Réinitialiser la visibilité de l\'application</string>
+    <string name="settings_advanced_delete_exported_title">Supprimer les fichiers exportés</string>
+    <string name="settings_advanced_delete_exported_summary">Supprimer les fichiers après les avoir exportés</string>
 </resources>

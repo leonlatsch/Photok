@@ -102,6 +102,12 @@
             android:summary="@string/settings_advanced_delete_imported_summary"
             android:title="@string/settings_advanced_delete_imported_title" />
 
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_delete"
+            android:key="advanced^deleteExportedFiles"
+            android:summary="@string/settings_advanced_delete_exported_summary"
+            android:title="@string/settings_advanced_delete_exported_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Other">

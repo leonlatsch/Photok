@@ -245,4 +245,6 @@
     <string name="recovery_subtitle">恢复菜单</string>
     <string name="recovery_menu_item_open_photok">打开 Photok</string>
     <string name="recovery_subtitle_reset_hide_app">重置“隐藏应用”设置</string>
+    <string name="settings_advanced_delete_exported_title">删除导出的文件</string>
+    <string name="settings_advanced_delete_exported_summary">导出后删除文件</string>
 </resources>

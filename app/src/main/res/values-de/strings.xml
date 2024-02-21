@@ -247,4 +247,6 @@
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>
     <string name="recovery_menu_item_open_photok">Photok Öffnen</string>
     <string name="recovery_subtitle_reset_hide_app">App Verstecken Einstellung zurücksetzen</string>
+    <string name="settings_advanced_delete_exported_title">Exportierte Dateien löschen</string>
+    <string name="settings_advanced_delete_exported_summary">Löschen Sie Dateien nach dem Exportieren</string>
 </resources>
