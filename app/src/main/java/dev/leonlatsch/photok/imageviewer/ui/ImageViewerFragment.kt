@@ -139,12 +139,8 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
             Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
-                    if (config.deleteExportedFiles) { //additionally delete photo if has such setting
-                        viewModel.deletePhoto({
-                            requireActivity().onBackPressed() // onSuccess
-                        }, { // onError
-                            Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-                        })
+                    if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
+                        requireActivity().onBackPressed()
                     }
                     Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
                 }, { // onError
