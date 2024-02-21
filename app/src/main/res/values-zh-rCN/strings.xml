@@ -99,11 +99,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">你确定要把 %1$d 个文件 <b>导</b> 回到系统图库吗？</string>
     <string name="export_are_you_sure_this">你确定要把这个文件 <b>导</b> 回到系统图库吗？</string>
+    <string name="export_and_delete_are_you_sure_this">您确定要<b>导出</b>此文件到您的图库并将其删除吗？</string>
     <string name="export_exporting">导出文件中……</string>
     <string name="export_permission_rationale">Photok 需要访问你的存储来导出文件。</string>
     <string name="export_finished">已导出</string>
 
     <!-- ABOUT -->
+    <string name="export_and_delete_finished">已导出并删除</string>
     <string name="about_version">版本号:</string>
     <string name="about_developed_by">开发者:</string>
     <string name="about_website_label">leonlatsch.dev</string>

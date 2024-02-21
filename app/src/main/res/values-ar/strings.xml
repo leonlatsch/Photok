@@ -99,11 +99,14 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">هل أنت متأكد أنك تريد  <b>تصدير</b> %1$d file(s),إلى معرض الصور الخاص بك؟</string>
     <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
+    <string name="export_and_delete_are_you_sure_this">هل أنت متأكد أنك تريد <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك وحذفه؟</string>
+    <string name="export_and_delete_are_you_sure_this">هل أنت متأكد أنك تريد <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك وحذفه؟</string>
     <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
     <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
     <string name="export_finished">تم التصدير</string>
 
     <!-- ABOUT -->
+    <string name="export_and_delete_finished">تم تصديرها وحذفها</string>
     <string name="about_version">إصدار:</string>
     <string name="about_developed_by">عُرِبَ بواسطة:</string>
     <string name="about_website_label">MRX7014</string>

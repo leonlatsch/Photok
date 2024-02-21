@@ -82,11 +82,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>exporteren</b>, terug naar uw galerij?</string>
     <string name="export_are_you_sure_this">Weet je zeker dat je dit bestand wilt <b>exporteren</b> naar je galerij?</string>
+    <string name="export_and_delete_are_you_sure_this">Weet u het zeker dat u dit bestand naar uw galerij wilt <b>exporteren</b> en verwijderen?</string>
     <string name="export_exporting">Bestand(en) exporteren…</string>
     <string name="export_permission_rationale">Photok heeft toegang nodig tot je opslag om bestanden te exporteren.</string>
     <string name="export_finished">Geëxporteerd</string>
 
     <!-- ABOUT -->
+    <string name="export_and_delete_finished">Geëxporteerd en verwijderd</string>
     <string name="about_version">Versie:</string>
     <string name="about_developed_by">Ontwikkeld door:</string>
     <string name="about_website_label">leonlatsch.dev</string>

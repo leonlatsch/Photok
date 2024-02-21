@@ -100,11 +100,13 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
     <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
+    <string name="export_and_delete_are_you_sure_this">Etes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer ?</string>
     <string name="export_exporting">Exportation en cours…</string>
     <string name="export_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
 
     <!-- ABOUT -->
+    <string name="export_and_delete_finished">Exporté et supprimé</string>
     <string name="about_version">Version :</string>
     <string name="about_developed_by">Développé par :</string>
     <string name="about_website_label">leonlatsch.dev</string>
