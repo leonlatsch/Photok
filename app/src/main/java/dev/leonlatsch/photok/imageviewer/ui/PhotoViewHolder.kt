@@ -24,6 +24,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ortiz.touchview.OnTouchImageViewListener
 import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -139,7 +140,7 @@ class PhotoViewHolder(
         } else {
             playButton.hide()
 
-            imageView.setOnTouchImageViewListener(object : TouchImageView.OnTouchImageViewListener {
+            imageView.setOnTouchImageViewListener(object : OnTouchImageViewListener {
                 override fun onMove() {
                     onZoomed(imageView.isZoomed)
                 }

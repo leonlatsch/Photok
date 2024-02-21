@@ -163,6 +163,9 @@
     <string name="settings_other_feedback_mail_subject">ردود الفعل على Photok </string>
     <string name="settings_other_feedback_mail_body">اكتب تعليقًا عن Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
+    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">الكود البرمجي للتطبيق</string>
     <string name="settings_other_sourcecode_summary">المساهمة في Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

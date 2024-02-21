@@ -75,7 +75,7 @@ dependencies {
     val roomVersion = "2.6.1"
     val coroutinesVersion = "1.7.3"
     val pagingVersion = "3.2.1"
-    val daggerVersion = "2.49"
+    val daggerVersion = "2.50"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -102,7 +102,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     // Paging 3
@@ -137,7 +137,7 @@ dependencies {
     implementation("org.mindrot", "jbcrypt", "0.4")
 
     // MikeOritz/TouchImageView - Zoomable Image View
-    implementation("com.github.MikeOrtiz:TouchImageView:3.0.1")
+    implementation("com.github.MikeOrtiz:TouchImageView:3.6")
 
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")

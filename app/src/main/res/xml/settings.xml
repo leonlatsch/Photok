@@ -118,6 +118,11 @@
             android:summary="@string/settings_other_feedback_summary"
             android:title="@string/settings_other_feedback_title" />
         <Preference
+            android:icon="@drawable/ic_money"
+            android:key="action_donate"
+            android:summary="@string/settings_other_donate_summary"
+            android:title="@string/settings_other_donate_title" />
+        <Preference
             android:icon="@drawable/ic_code"
             android:key="action_sourcecode"
             android:summary="@string/settings_other_sourcecode_summary"

@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.ui.layout.BeyondBoundsLayout
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.exifinterface.media.ExifInterface
+import androidx.fragment.app.Fragment
 import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -93,11 +94,11 @@ fun setAppDesign(design: String?) {
     AppCompatDelegate.setDefaultNightMode(nightMode)
 }
 
-fun openUrl(context: Context, url: String?) {
+fun Fragment.openUrl(url: String?) {
     url ?: return
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
-    context.startActivity(intent)
+    startActivity(intent)
 }
 
 /**

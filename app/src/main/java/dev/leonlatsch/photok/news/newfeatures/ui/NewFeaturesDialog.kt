@@ -54,7 +54,7 @@ class NewFeaturesDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dia
      */
     fun openChangelog() {
         val url = getString(R.string.news_changelog_url)
-        openUrl(requireContext(), url)
+        openUrl(url)
     }
 
     private fun getNewFeaturesViewData(): List<NewFeatureViewData> {
