@@ -26,7 +26,6 @@ import dev.leonlatsch.photok.cgallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
-import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
