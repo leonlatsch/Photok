@@ -239,17 +239,17 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Automatisches Löschen</string>
-    <string name="news_summary_1">Automatisches Löschen von Dateien beim importieren nach Photok.</string>
+    <string name="news_title_1">NEU: Neue Galerie und Navigation</string>
+    <string name="news_summary_1">Komplette erneuerung der Galerie und Navigation der App</string>
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">NEU: Spenden</string>
+    <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>
 
-    <string name="news_title_3">EMPTY</string>
-    <string name="news_summary_3">EMPTY</string>
+    <string name="news_title_3">Neu: Automatisches löschen</string>
+    <string name="news_summary_3">Automatisches Löschen von Dateien beim exportieren aus Photok.</string>
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">Mehr Sprachen</string>
+    <string name="news_summary_4">Photok gibts jetzt auch in Arabisch und Russisch</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>

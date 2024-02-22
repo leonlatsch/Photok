@@ -26,18 +26,21 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import javax.inject.Inject
 
-class GalleryNavigator @Inject constructor() {
+class GalleryNavigator @Inject constructor(
+    private val config: Config
+) {
 
     fun navigate(
         event: GalleryNavigationEvent,
         navController: NavController,
         fragment: Fragment,
-        deleteExportedFiles: Boolean
     ) {
         when (event) {
             is GalleryNavigationEvent.OpenPhoto -> navigateOpenPhoto(event.photoUUID, navController)
@@ -52,23 +55,33 @@ class GalleryNavigator @Inject constructor() {
                 fragment.requireContext(),
                 event.photosToExport,
                 fragment.childFragmentManager,
-                deleteExportedFiles
+            )
+
+            is GalleryNavigationEvent.ShowNewFeaturesDialog -> navigateShowNewFeaturesDialog(
+                fragment.childFragmentManager
             )
         }
+    }
+
+    private fun navigateShowNewFeaturesDialog(fragmentManager: FragmentManager) {
+        NewFeaturesDialog().show(fragmentManager)
     }
 
     private fun navigateStartExportDialog(
         context: Context,
         photos: List<Photo>,
         fragmentManager: FragmentManager,
-        deleteExportedFiles: Boolean
     ) {
-        var conformationText = context.getString(R.string.export_are_you_sure)
-        if (deleteExportedFiles) conformationText = context.getString(R.string.export_and_delete_are_you_sure)
+        val confirmationText = if (config.deleteExportedFiles) {
+            context.getString(R.string.export_and_delete_are_you_sure)
+        } else {
+            context.getString(R.string.export_are_you_sure)
+        }
+
         Dialogs.showConfirmDialog(
             context,
             String.format(
-                conformationText,
+                confirmationText,
                 photos.size
             )
         ) { _, _ -> // On positive button clicked

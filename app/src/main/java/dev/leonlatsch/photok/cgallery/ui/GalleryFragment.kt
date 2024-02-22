@@ -63,8 +63,10 @@ class GalleryFragment : Fragment() {
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
-                navigator.navigate(event, findNavController(), this, config.deleteExportedFiles)
+                navigator.navigate(event, findNavController(), this)
             }
         }
+
+        viewModel.checkForNewFeatures()
     }
 }
