@@ -149,7 +149,7 @@ dependencies {
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.14.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")

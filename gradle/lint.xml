@@ -2,5 +2,7 @@
 <lint>
     <issue id="NotificationPermission">
         <ignore regexp="com.bumptech.glide.request.target.NotificationTarget" />
+        <ignore
+            regexp="com.google.android.exoplayer2.offline.DownloadService.ForegroundNotificationUpdater" />
     </issue>
 </lint>
