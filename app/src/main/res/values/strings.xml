@@ -98,10 +98,13 @@
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string>
     <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery?</string>
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string>
     <string name="export_exporting">Exporting file(s)…</string>
     <string name="export_permission_rationale">Photok needs to access your storage, to export files.</string>
     <string name="export_finished">Exported</string>
+    <string name="export_and_delete_finished">Exported and deleted</string>
 
     <!-- ABOUT -->
     <string name="about_version">Version:</string>
@@ -156,6 +159,8 @@
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
     <string name="settings_advanced_delete_imported_title">Delete imported files</string>
     <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string>
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>

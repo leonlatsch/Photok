@@ -37,6 +37,7 @@ class GalleryNavigator @Inject constructor() {
         event: GalleryNavigationEvent,
         navController: NavController,
         fragment: Fragment,
+        deleteExportedFiles: Boolean
     ) {
         when (event) {
             is GalleryNavigationEvent.OpenPhoto -> navigateOpenPhoto(event.photoUUID, navController)
@@ -50,7 +51,8 @@ class GalleryNavigator @Inject constructor() {
             is GalleryNavigationEvent.StartExportDialog -> navigateStartExportDialog(
                 fragment.requireContext(),
                 event.photosToExport,
-                fragment.childFragmentManager
+                fragment.childFragmentManager,
+                deleteExportedFiles
             )
         }
     }
@@ -58,12 +60,15 @@ class GalleryNavigator @Inject constructor() {
     private fun navigateStartExportDialog(
         context: Context,
         photos: List<Photo>,
-        fragmentManager: FragmentManager
+        fragmentManager: FragmentManager,
+        deleteExportedFiles: Boolean
     ) {
+        var conformationText = context.getString(R.string.export_are_you_sure)
+        if (deleteExportedFiles) conformationText = context.getString(R.string.export_and_delete_are_you_sure)
         Dialogs.showConfirmDialog(
             context,
             String.format(
-                context.getString(R.string.export_are_you_sure),
+                conformationText,
                 photos.size
             )
         ) { _, _ -> // On positive button clicked

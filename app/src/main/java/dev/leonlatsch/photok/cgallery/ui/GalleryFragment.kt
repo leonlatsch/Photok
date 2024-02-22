@@ -30,6 +30,7 @@ import dev.leonlatsch.photok.cgallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.cgallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
+import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,6 +40,9 @@ class GalleryFragment : Fragment() {
 
     @Inject
     lateinit var navigator: GalleryNavigator
+
+    @Inject
+    lateinit var config: Config
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +63,7 @@ class GalleryFragment : Fragment() {
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
-                navigator.navigate(event, findNavController(), this)
+                navigator.navigate(event, findNavController(), this, config.deleteExportedFiles)
             }
         }
     }

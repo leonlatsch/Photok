@@ -99,7 +99,10 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">你确定要把 %1$d 个文件 <b>导</b> 回到系统图库吗？</string>
     <string name="export_are_you_sure_this">你确定要把这个文件 <b>导</b> 回到系统图库吗？</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_exporting">导出文件中……</string>
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_permission_rationale">Photok 需要访问你的存储来导出文件。</string>
     <string name="export_finished">已导出</string>
 
@@ -153,7 +156,9 @@
     <string name="settings_advanced_backup_title">备份</string>
     <string name="settings_advanced_backup_summary">创建文件保险库的备份</string>
     <string name="settings_advanced_delete_imported_title">删除导入的文件</string> 
-    <string name="settings_advanced_delete_imported_summary">导入文件后删除它们</string> 
+    <string name="settings_advanced_delete_imported_summary">导入文件后删除它们</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>

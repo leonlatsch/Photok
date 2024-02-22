@@ -98,7 +98,10 @@ class ImageViewerViewModel @Inject constructor(
             currentPhoto ?: return@launch
             currentPhoto!!.id ?: return@launch
 
-            val success = photoRepository.exportPhoto(currentPhoto!!)
-            if (success) onSuccess() else onError()
+            photoRepository.exportPhoto(currentPhoto!!).let { success ->
+                onMain {
+                    if (success) onSuccess() else onError()
+                }
+            }
         }
 }

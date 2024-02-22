@@ -129,9 +129,20 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            Dialogs.showConfirmDialog(requireContext(), getString(R.string.export_are_you_sure_this)) { _, _ ->
+
+            var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
+            var toastStringFinishedExport = getString(R.string.export_finished)
+            if (config.deleteExportedFiles) {
+                toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
+                toastStringFinishedExport = getString(R.string.export_and_delete_finished)
+            }
+
+            Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
-                    Dialogs.showShortToast(requireContext(), getString(R.string.export_finished))
+                    if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
+                        requireActivity().onBackPressed()
+                    }
+                    Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
                 }, { // onError
                     Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
                 })

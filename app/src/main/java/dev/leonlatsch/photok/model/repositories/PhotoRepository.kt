@@ -308,7 +308,7 @@ class PhotoRepository @Inject constructor(
      *
      * @param photo The Photo to be saved
      */
-    fun exportPhoto(photo: Photo): Boolean {
+    suspend fun exportPhoto(photo: Photo): Boolean {
         return try {
             val inputStream =
                 encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
@@ -320,7 +320,12 @@ class PhotoRepository @Inject constructor(
             val wrote = inputStream.copyTo(outputStream)
             outputStream.lazyClose()
 
-            wrote != -1L
+            var deleted = true
+            if (config.deleteExportedFiles) {
+                deleted = safeDeletePhoto(photo)
+            }
+
+            wrote != -1L && deleted
         } catch (e: IOException) {
             Timber.d("Error exporting file: ${photo.fileName}")
             false

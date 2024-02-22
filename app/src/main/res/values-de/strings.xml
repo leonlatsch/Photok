@@ -100,6 +100,9 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">Exportiere Dateien…</string>
     <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
     <string name="export_finished">Exportiert</string>
@@ -158,6 +161,8 @@
     <string name="settings_advanced_backup_summary">Erstelle ein Backup von deinem Safe</string>
     <string name="settings_advanced_delete_imported_title">Lösche importierte Dateien</string>
     <string name="settings_advanced_delete_imported_summary">Lösche Dateien nach dem Importieren</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
