@@ -82,6 +82,7 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>exporteren</b>, terug naar uw galerij?</string>
     <string name="export_are_you_sure_this">Weet je zeker dat je dit bestand wilt <b>exporteren</b> naar je galerij?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
     <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">Bestand(en) exporteren…</string>

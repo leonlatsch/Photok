@@ -100,6 +100,7 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
     <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
     <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">Exportation en cours…</string>

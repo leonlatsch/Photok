@@ -233,7 +233,7 @@ class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragme
                         Dialogs.showConfirmDialog(
                             requireContext(),
                             String.format(
-                                getString(R.string.export_are_you_sure),
+                                viewModel.getAreYouSureExportString(requireContext()),
                                 adapter.selectedItems.size
                             )
                         ) { _, _ -> // On positive button clicked

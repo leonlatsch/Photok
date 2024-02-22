@@ -99,6 +99,7 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">你确定要把 %1$d 个文件 <b>导</b> 回到系统图库吗？</string>
     <string name="export_are_you_sure_this">你确定要把这个文件 <b>导</b> 回到系统图库吗？</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
     <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_exporting">导出文件中……</string>
     <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
