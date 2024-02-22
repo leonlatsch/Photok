@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.cgallery.ui
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
@@ -33,11 +35,15 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+private const val PORTRAIT_COLUMN_COUNT = 3
+private const val LANDSCAPE_COLUMN_COUNT = 6
+
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
     @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val galleryUiStateFactory: GalleryUiStateFactory,
+    private val resources: Resources
 ) : ViewModel() {
 
     private val photosFlow = photoRepository.observeAll()
@@ -46,11 +52,14 @@ class GalleryViewModel @Inject constructor(
     private val multiSelectionState =
         MutableStateFlow(MultiSelectionState(isActive = false, listOf()))
 
+    private val columnCountFlow = MutableStateFlow(PORTRAIT_COLUMN_COUNT)
+
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
-        multiSelectionState
-    ) { photos, multiSelectionState ->
-        galleryUiStateFactory.create(photos, multiSelectionState)
+        multiSelectionState,
+        columnCountFlow
+    ) { photos, multiSelectionState, columnCount ->
+        galleryUiStateFactory.create(photos, multiSelectionState, columnCount)
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
@@ -130,6 +139,14 @@ class GalleryViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun onConfigurationChanged() {
+        columnCountFlow.value = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
+            Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_COLUMN_COUNT
+            else -> PORTRAIT_COLUMN_COUNT
         }
     }
 }

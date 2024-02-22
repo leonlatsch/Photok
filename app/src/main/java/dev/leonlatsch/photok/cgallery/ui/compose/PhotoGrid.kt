@@ -62,12 +62,13 @@ fun PhotosGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     handleUiEvent: (GalleryUiEvent) -> Unit,
+    columnCount: Int,
     modifier: Modifier = Modifier,
     extraTopPadding: Dp = 0.dp,
     gridState: LazyGridState = rememberLazyGridState()
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(top = extraTopPadding),
         state = gridState
@@ -97,7 +98,9 @@ private fun PhotoGridPreview() {
             PhotoTile("", PhotoType.JPEG, "6"),
         ),
         multiSelectionState = MultiSelectionState(isActive = true, listOf("1", "2", "5")),
-        handleUiEvent = {})
+        handleUiEvent = {},
+        columnCount = 3
+    )
 }
 
 private val VideoIconSize = 20.dp
