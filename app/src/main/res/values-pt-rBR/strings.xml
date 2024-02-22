@@ -251,7 +251,7 @@
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
     <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string>
+    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
     <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
     <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 </resources>

@@ -161,8 +161,8 @@
     <string name="settings_advanced_backup_summary">Erstelle ein Backup von deinem Safe</string>
     <string name="settings_advanced_delete_imported_title">Lösche importierte Dateien</string>
     <string name="settings_advanced_delete_imported_summary">Lösche Dateien nach dem Importieren</string>
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Lösche exportierte Dateien</string>
+    <string name="settings_advanced_delete_exported_summary">Lösche Dateien nach dem Exportieren</string>
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
