@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.cgallery.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -68,5 +69,11 @@ class GalleryFragment : Fragment() {
         }
 
         viewModel.checkForNewFeatures()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        viewModel.onConfigurationChanged()
     }
 }

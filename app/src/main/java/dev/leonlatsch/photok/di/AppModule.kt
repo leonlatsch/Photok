@@ -63,4 +63,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSharedUrisStore() = SharedUrisStore()
+
+    @Provides
+    fun provideResources(@ApplicationContext context: Context) = context.resources
 }

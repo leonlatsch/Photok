@@ -75,6 +75,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             photos = uiState.photos,
             multiSelectionState = uiState.multiSelectionState,
             handleUiEvent = handleUiEvent,
+            columnCount = uiState.columnCount,
             modifier = Modifier.fillMaxHeight(),
             extraTopPadding = 120.dp,
             gridState = gridState
@@ -177,7 +178,8 @@ fun GalleryContentPreview() {
                 multiSelectionState = MultiSelectionState(
                     isActive = true,
                     selectedItemUUIDs = listOf("1", "2")
-                )
+                ),
+                columnCount = 3,
             ),
             handleUiEvent = {},
         )

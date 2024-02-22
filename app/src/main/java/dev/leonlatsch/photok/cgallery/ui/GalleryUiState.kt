@@ -20,11 +20,13 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
 
 sealed class GalleryUiState {
-    object Empty : GalleryUiState()
+    data object Empty : GalleryUiState()
+
     data class Content(
         val selectionMode: Boolean,
         val photos: List<PhotoTile>,
         val multiSelectionState: MultiSelectionState,
+        val columnCount: Int,
     ) : GalleryUiState()
 }
 
