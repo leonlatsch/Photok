@@ -25,6 +25,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.cgallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
+import dev.leonlatsch.photok.other.onMain
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,6 +36,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val PORTRAIT_COLUMN_COUNT = 3
@@ -43,7 +47,8 @@ class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
     @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val galleryUiStateFactory: GalleryUiStateFactory,
-    private val resources: Resources
+    private val config: Config,
+    private val resources: Resources,
 ) : ViewModel() {
 
     private val photosFlow = photoRepository.observeAll()
@@ -140,6 +145,13 @@ class GalleryViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun checkForNewFeatures() = viewModelScope.launch {
+        if (config.systemLastFeatureVersionCode >= FEATURE_VERSION_CODE) return@launch
+
+        eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
+        config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
     }
 
     fun onConfigurationChanged() {
