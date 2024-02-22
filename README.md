@@ -39,14 +39,14 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-98%25-yellow)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
-![Dutch](https://img.shields.io/badge/Dutch-98%25-yellow)
-![French](https://img.shields.io/badge/French-96%25-yellow)
-![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-95%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-98%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-95%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-96%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-96%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-96%25-yellow)
+![French](https://img.shields.io/badge/French-94%25-yellow)
+![German](https://img.shields.io/badge/German-97%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-93%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-96%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-92%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 LICENSE
