@@ -237,17 +237,17 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">自动删除</string> 
-    <string name="news_summary_1">导入文件到 Photok 时自动删除它们。</string> 
+    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
+    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
+    <string name="news_summary_2">See the"Donate" button in the settings to support Photok</string> <!-- TODO -->
 
-    <string name="news_title_3">EMPTY</string>
-    <string name="news_summary_3">EMPTY</string>
+    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
+    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">More Languages</string> <!-- TODO -->
+    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>
