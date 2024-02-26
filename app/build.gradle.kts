@@ -119,7 +119,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     kapt("com.google.dagger:hilt-android-compiler:$daggerVersion")
 
-    kapt("androidx.hilt:hilt-compiler:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.8.2")
