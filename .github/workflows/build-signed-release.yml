@@ -44,7 +44,7 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
           # override default build-tools version (29.0.3) -- optional
-          BUILD_TOOLS_VERSION: "34.0.0"
+          BUILD_TOOLS_VERSION: "33.0.0"
       
       # Sign .apk file
       - name: Sign APK
@@ -58,7 +58,7 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
           # override default build-tools version (29.0.3) -- optional
-          BUILD_TOOLS_VERSION: "34.0.0"
+          BUILD_TOOLS_VERSION: "33.0.0"
         
       # Upload .aab Artifact
       - name: Upload GPlay AAB Artifact
