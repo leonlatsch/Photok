@@ -109,7 +109,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     fun onDelete() {
         Dialogs.showConfirmDialog(requireContext(), getString(R.string.delete_are_you_sure_this)) { _, _ ->
             viewModel.deletePhoto({ // onSuccess
-                requireActivity().onBackPressed()
+                findNavController().navigateUp()
             }, { // onError
                 Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
             })
@@ -140,7 +140,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
                     if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
-                        requireActivity().onBackPressed()
+                        findNavController().navigateUp()
                     }
                     Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
                 }, { // onError

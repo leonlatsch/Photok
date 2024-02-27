@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.settings.ui.thirdparty
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.other.systemBarsPadding
@@ -39,7 +40,7 @@ class OssLicensesFragment :
         binding.root.systemBarsPadding()
 
         binding.ossToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
         binding.ossRecycler.initialize(LICENSE_REPORT_FILE)
