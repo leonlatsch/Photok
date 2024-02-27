@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
+import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
 private const val LICENSE_REPORT_FILE = "open_source_licenses.json"
@@ -35,6 +36,7 @@ class OssLicensesFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.root.systemBarsPadding()
 
         binding.ossToolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
