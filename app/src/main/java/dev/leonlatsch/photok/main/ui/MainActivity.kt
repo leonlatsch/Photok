@@ -18,18 +18,29 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import androidx.activity.addCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.main.ui.navigation.MainMenu
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
-import dev.leonlatsch.photok.other.extensions.setNavBarColorRes
 import dev.leonlatsch.photok.permissions.getReadImagesPermission
 import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
@@ -39,6 +50,8 @@ import kotlinx.coroutines.flow.collectLatest
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+
+val FragmentsWithMenu = listOf(R.id.cgalleryFragment, R.id.settingsFragment)
 
 /**
  * The main Activity.
@@ -58,8 +71,8 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        window.setNavBarColorRes(android.R.color.black)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -81,6 +94,27 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 viewModel.consumeSharedUris()
             }
         }
+
+        findNavController(R.id.mainNavHostFragment).let { navController ->
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                val showMenu = FragmentsWithMenu.contains(destination.id)
+                binding.mainMenuComposeContainer.isVisible = showMenu
+
+                WindowCompat.getInsetsController(
+                    window, window.decorView
+                ).isAppearanceLightStatusBars = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
+
+                viewModel.onDestinationChanged(destination.id)
+            }
+
+            onBackPressedDispatcher.addCallback {
+                if (navController.currentDestination?.id == R.id.cgalleryFragment) {
+                    finish()
+                } else {
+                    navController.navigateUp()
+                }
+            }
+        }
     }
 
     private fun dispatchIntent() {
@@ -88,6 +122,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             Intent.ACTION_SEND -> intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let { uri ->
                 viewModel.addUriToSharedUriStore(uri)
             }
+
             Intent.ACTION_SEND_MULTIPLE ->
                 intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.forEach { uri ->
                     viewModel.addUriToSharedUriStore(uri)
@@ -144,5 +179,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun bind(binding: ActivityMainBinding) {
         super.bind(binding)
         binding.context = this
+
+        binding.mainMenuComposeContainer.setContent {
+            val uiState by viewModel.mainMenuUiState.collectAsState()
+
+            MainMenu(uiState) {
+                findNavController(R.id.mainNavHostFragment).navigate(it)
+            }
+        }
     }
 }

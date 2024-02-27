@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2023 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020-2024 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -100,6 +100,9 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
     <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
     <string name="export_exporting">Exportation en cours…</string>
     <string name="export_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
@@ -158,6 +161,8 @@
     <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
     <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
     <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 
     <string name="settings_other_title">Autre</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -165,6 +170,9 @@
     <string name="settings_other_feedback_mail_subject">Photok Feedback</string>
     <string name="settings_other_feedback_mail_body">Donnez votre avis sur Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
+    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Code source</string>
     <string name="settings_other_sourcecode_summary">Contribuer à Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
@@ -231,17 +239,17 @@
     <string name="news_view_changelog">Voir le Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Auto Delete</string> <!-- TODO -->
-    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
+    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
+    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
+    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
 
-    <string name="news_title_3">EMPTY</string>
-    <string name="news_summary_3">EMPTY</string>
+    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
+    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">More Languages</string> <!-- TODO -->
+    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>

@@ -30,7 +30,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  * Increase for this Dialog to show on the next update.
  * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
  */
-const val FEATURE_VERSION_CODE = 3
+const val FEATURE_VERSION_CODE = 4
 
 /**
  * Dialog for displaying new features.
@@ -54,7 +54,7 @@ class NewFeaturesDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dia
      */
     fun openChangelog() {
         val url = getString(R.string.news_changelog_url)
-        openUrl(requireContext(), url)
+        openUrl(url)
     }
 
     private fun getNewFeaturesViewData(): List<NewFeatureViewData> {

@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.databinding.FragmentAboutBinding
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
 /**
@@ -41,12 +42,13 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
     val version = BuildConfig.VERSION_NAME
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.systemBarsPadding()
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
         setToolbar(binding.aboutToolbar)
         binding.aboutToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
     }
@@ -66,7 +68,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the website in new activity.
      */
     fun openWebsite() {
-        openUrl(requireContext(), getString(R.string.about_website_url))
+        openUrl(getString(R.string.about_website_url))
     }
 
     /**
@@ -80,7 +82,7 @@ class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_a
      * Open the privacy policy in new activity.
      */
     fun openPrivacyPolicy() {
-        openUrl(requireContext(), getString(R.string.about_privacy_policy_url))
+        openUrl(getString(R.string.about_privacy_policy_url))
     }
 
     override fun bind(binding: FragmentAboutBinding) {

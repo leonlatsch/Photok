@@ -93,6 +93,13 @@ class Config(context: Context) {
         get() = getBoolean(ADVANCED_DELETE_IMPORTED_FILES, ADVANCED_DELETE_IMPORTED_FILES_DEFAULT)
         set(value) = putBoolean(ADVANCED_DELETE_IMPORTED_FILES, value)
 
+    /**
+     * Determines if files should be deleted after exporting them.
+     */
+    var deleteExportedFiles: Boolean
+        get() = getBoolean(ADVANCED_DELETE_EXPORTED_FILES, ADVANCED_DELETE_EXPORTED_FILES_DEFAULT)
+        set(value) = putBoolean(ADVANCED_DELETE_EXPORTED_FILES, value)
+
     var timestampLastRecoveryStart: Long
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
@@ -175,6 +182,9 @@ class Config(context: Context) {
 
         const val ADVANCED_DELETE_IMPORTED_FILES = "advanced^deleteImportedFiles"
         const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = false
+
+        const val ADVANCED_DELETE_EXPORTED_FILES = "advanced^deleteExportedFiles"
+        const val ADVANCED_DELETE_EXPORTED_FILES_DEFAULT = false
 
         const val TIMESTAMP_LAST_RECOVERY_START = "internal^timestampLastRecoveryStart"
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L

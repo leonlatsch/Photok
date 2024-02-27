@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.app.Application
+import android.content.Context
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
@@ -24,6 +25,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.other.onMain
@@ -79,6 +81,17 @@ class GalleryViewModel @Inject constructor(
         } else {
             placeholderVisibility = View.VISIBLE
             labelsVisibility = View.GONE
+        }
+    }
+
+    /**
+     * Change the dialog string accordingly to settings.
+     */
+    fun getAreYouSureExportString(context: Context): String{
+        return if (this.config.deleteExportedFiles) {
+            context.getString(R.string.export_and_delete_are_you_sure)
+        } else {
+            context.getString(R.string.export_are_you_sure)
         }
     }
 

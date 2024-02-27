@@ -142,6 +142,7 @@
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/importFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> context.showImportMenu()}"
@@ -153,6 +154,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.98" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_code"
+                android:tint="@android:color/white"
+                android:onClick="@{() -> context.navigateToNewGallery()}"
+                app:layout_constraintHorizontal_bias="0.96"
+                app:layout_constraintVertical_bias="0.98"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/importFab" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

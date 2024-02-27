@@ -29,9 +29,11 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.*
+import dev.leonlatsch.photok.other.statusBarPadding
+import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -57,11 +59,12 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.systemBarsPadding()
 
         setHasOptionsMenu(true)
         setToolbar(binding.viewPhotoToolbar)
         binding.viewPhotoToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
         initializeSystemUI()
@@ -72,18 +75,18 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             }
         })
 
-        viewModel.preloadData { ids ->
+        viewModel.preloadData { uuids ->
             val photoPagerAdapter =
-                PhotoPagerAdapter(ids, viewModel.photoRepository, findNavController(), {
+                PhotoPagerAdapter(uuids, viewModel.photoRepository, findNavController(), {
                     binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
                 }, { // ON CLICK
                     toggleSystemUI()
                 })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
-            val photoId = arguments?.getInt(INTENT_PHOTO_ID)
-            val startingAt = if (photoId != null && photoId != -1) {
-                ids.indexOf(photoId)
+            val photoId = arguments?.getString(INTENT_PHOTO_UUID)
+            val startingAt = if (!photoId.isNullOrEmpty()) {
+                uuids.indexOf(photoId)
             } else {
                 0
             }
@@ -106,7 +109,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     fun onDelete() {
         Dialogs.showConfirmDialog(requireContext(), getString(R.string.delete_are_you_sure_this)) { _, _ ->
             viewModel.deletePhoto({ // onSuccess
-                requireActivity().onBackPressed()
+                findNavController().navigateUp()
             }, { // onError
                 Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
             })
@@ -126,9 +129,20 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
-            Dialogs.showConfirmDialog(requireContext(), getString(R.string.export_are_you_sure_this)) { _, _ ->
+
+            var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
+            var toastStringFinishedExport = getString(R.string.export_finished)
+            if (config.deleteExportedFiles) {
+                toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
+                toastStringFinishedExport = getString(R.string.export_and_delete_finished)
+            }
+
+            Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
                 viewModel.exportPhoto({ // onSuccess
-                    Dialogs.showShortToast(requireContext(), getString(R.string.export_finished))
+                    if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
+                        findNavController().navigateUp()
+                    }
+                    Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
                 }, { // onError
                     Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
                 })
@@ -146,7 +160,6 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
-        requireActivity().window.setStatusBarColorRes(android.R.color.black)
 
         requireActivity().window.addSystemUIVisibilityListener {
             systemUiVisible = it
@@ -187,7 +200,6 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().showSystemUI()
-        requireActivity().window.setStatusBarColorRes(R.color.colorPrimary)
     }
 
     override fun bind(binding: FragmentImageViewerBinding) {

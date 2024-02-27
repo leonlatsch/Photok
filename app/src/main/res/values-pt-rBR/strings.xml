@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Direitos autorais \u00A9 2020-2023 Leon Latsch</string>
+    <string name="common_copyright_notice">Direitos autorais \u00A9 2020-2024 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -100,9 +100,12 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d o(s) arquivo(s), de volta à sua galeria?</string>
     <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este arquivo, de volta à sua galeria?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
     <string name="export_exporting">Exportando o(s) arquivo(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar os arquivos.</string>
     <string name="export_finished">Exportado</string>
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
 
     <!-- ABOUT -->
     <string name="about_version">Versão:</string>
@@ -162,6 +165,9 @@
     <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
     <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
+    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
@@ -230,20 +236,22 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Auto Delete</string> <!-- TODO -->
-    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string> <!-- TODO -->
+    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
+    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
+    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
 
-    <string name="news_title_3">SEM_CONTEÚDO</string>
-    <string name="news_summary_3">SEM_CONTEÚDO</string>
+    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
+    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
 
-    <string name="news_title_4">SEM_CONTEÚDO</string>
-    <string name="news_summary_4">SEM_CONTEÚDO</string>
+    <string name="news_title_4">More Languages</string> <!-- TODO -->
+    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
     <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
     <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
 </resources>

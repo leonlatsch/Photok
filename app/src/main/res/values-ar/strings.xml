@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2022 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok - فوتوك</string>
+    <string name="common_copyright_notice">حقوق النشر  \u00A9 2020–2023 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">أنتظر …</string>
+    <string name="common_password">كلمة السر</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_export">يصدّر </string>
+    <string name="common_error">كان هناك خطأ. حاول مرة اخرى. </string>
+    <string name="common_yes">نعم </string>
+    <string name="common_no">لا </string>
+    <string name="common_ok">نعم </string>
+    <string name="common_are_you_sure">هل أنت متأكد؟ </string>
+    <string name="common_bullet">•</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">استيراد ملف (ملفات) </string>
+    <string name="import_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لاستيراد الملفات. </string>
+    <string name="import_sharted_question">هل تريد استيراد٪ 1 $ d ملف (ملفات)؟ </string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">إنشاء كلمة مرورك </string>
+    <string name="setup_enter_password">ادخل رقمك السري </string>
+    <string name="setup_confirm_password">أكد رقمك السري </string>
+    <string name="setup_password_strength_label">قوة كلمة المرور: </string>
+    <string name="setup_button">إنشاء</string>
+    <string name="setup_password_strength_weak">ضعيف </string>
+    <string name="setup_password_strength_moderate">معتدل </string>
+    <string name="setup_password_strength_strong">قوي </string>
+    <string name="setup_password_match_warning">\u26A0 كلمة المرور غير مطابقة </string>
+    <string name="setupSetup">تنصيب</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">افتح خزنتك </string>
+    <string name="unlock_enter_password">أدخل كلمة المرور </string>
+    <string name="unlock_button">الغاء القفل </string>
+    <string name="unlock_wrong_password">\u26A0 كلمة مرور خاطئة </string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">لا توجد ملفات في خزنتك </string>
+    <string name="gallery_all_photos_label">كل الملفات </string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">استيراد الصور</string>
+    <string name="import_menu_photos">الصور</string>
+    <string name="import_menu_videos">الفيديوهات</string>
+    <string name="import_menu_backup">نسخ إحتياطي</string>
+    <string name="import_menu_hint">إضافة عناصر الوسائط إلى Photok ... </string>
+
+    <!-- PROCESS -->
+    <string name="process_close">إغلاق</string>
+    <string name="process_abort">إلغاء</string>
+    <string name="process_finished">انتهى</string>
+    <string name="process_initialize">يُجهز...</string>
+    <string name="process_aborted">لُغاَ</string>
+    <string name="process_failures_occurred">\u26A0 لا يمكن معالجة بعض العناصر</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">تفاصيل</string>
+    <string name="view_photo_detail_file_name_label">اسم الملف:</string>
+    <string name="view_photo_detail_import_at_label">مستورد في:</string>
+    <string name="view_photo_detail_file_type_label">نوع الملف:</string>
+    <string name="view_photo_detail_size_label">حجم الملف:</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">قفل</string>
+    <string name="menu_main_settings">إعدادات</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">اختر الكل</string>
+    <string name="menu_ms_delete">مسح</string>
+    <string name="menu_ms_export">تصدير</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>
+    <string name="delete_are_you_sure_this">هل أنت متأكد أنك تريد  <b>حذف</b> هذا الملف؟</string>
+    <string name="delete_deleting">جارٍ حذف الملف (الملفات) ... </string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">هل أنت متأكد أنك تريد  <b>تصدير</b> %1$d file(s),إلى معرض الصور الخاص بك؟</string>
+    <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
+    <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
+    <string name="export_finished">تم التصدير</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">إصدار:</string>
+    <string name="about_developed_by">عُرِبَ بواسطة:</string>
+    <string name="about_website_label">MRX7014</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">برامج الطرف الثالث</string>
+    <string name="about_privacy_policy">سياسة الخصوصية</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">أخبار</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">إعدادات</string>
+
+    <string name="settings_category_app">برنامج</string>
+    <string name="settings_app_design_title">تصميم</string>
+    <string name="settings_app_design_system_default">النظام الافتراضي</string>
+    <string name="settings_app_design_system_light">ساطع</string>
+    <string name="settings_app_design_system_dark">مظلم</string>
+
+    <string name="settings_category_gallery">المعرض</string>
+    <string name="settings_gallery_auto_fullscreen_title">ملء الشاشة تلقائيًا</string>
+    <string name="settings_gallery_auto_fullscreen_summary">أدخل وضع ملء الشاشة عند فتح ملف</string>
+
+    <string name="settings_category_security">حماية</string>
+    <string name="settings_security_allow_screenshots_title">السماح بلقطات الشاشة</string>
+    <string name="settings_security_allow_screenshots_summary">السماح بأخذ لقطة شاشة. يتطلب إعادة التشغيل.</string>
+    <string name="settings_security_change_password_title">تغيير كلمة المرور</string>
+    <string name="settings_security_change_password_summary">غير كلمة المرور الخاصة بك</string>
+    <string name="settings_security_timeout_title">مهلة القفل التلقائي</string>
+    <string name="settings_security_timeout_summary">قفل تلقائي بعد وقت معين في الخلفية</string>
+    <string name="settings_security_timeout_immediately">في الحال</string>
+    <string name="settings_security_timeout_one_minute">دقيقة واحده</string>
+    <string name="settings_security_timeout_two_minute">دقيقتين</string>
+    <string name="settings_security_timeout_five_minute">خمس دقائق</string>
+    <string name="settings_security_timeout_ten_minute">عشر دقائق</string>
+    <string name="settings_security_timeout_never">ابداً</string>
+    <string name="settings_security_launch_code_title">كود الإطلاق السري</string>
+    <string name="settings_security_launch_code_summary">رمز سري لتشغيل Photok من تطبيق الهاتف. </string>
+    <string name="settings_security_launch_code_message">أدخل * # * # [your code] # * # * في برنامج الهاتف لتشغيل Photok. </string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">اخفاء التطبيق</string>
+    <string name="settings_security_hide_app_summary">إخفاء التطبيق من قائمة التطبيقات.</string>
+
+    <string name="settings_category_advanced">متقدم</string>
+    <string name="settings_category_advanced_summary">استخدم بعناية</string>
+    <string name="settings_advanced_reset_title">إعادة تعيين الآمن</string>
+    <string name="settings_advanced_reset_summary">مسح البيانات وإعادة تعيين كلمة المرور</string>
+    <string name="settings_advanced_reset_confirmation">هل تريد حقًا إعادة ضبط خزنتك؟ سيتم فقدان كافة البيانات!</string>
+    <string name="settings_advanced_backup_title">نسخ إحتياطي</string>
+    <string name="settings_advanced_backup_summary">قم بإنشاء نسخة احتياطية من خزنتك </string>
+    <string name="settings_advanced_delete_imported_title">احذف الملفات المستوردة</string>
+    <string name="settings_advanced_delete_imported_summary">احذف الملفات بعد استيرادها</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+
+    <string name="settings_other_title">آخر</string>
+    <string name="settings_other_feedback_title">تعليق</string>
+    <string name="settings_other_feedback_summary">أرسل لي بريدًا إلكترونيًا مع التعليقات</string>
+    <string name="settings_other_feedback_mail_subject">ردود الفعل على Photok </string>
+    <string name="settings_other_feedback_mail_body">اكتب تعليقًا عن Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
+    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+    <string name="settings_other_sourcecode_title">الكود البرمجي للتطبيق</string>
+    <string name="settings_other_sourcecode_summary">المساهمة في Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">الاعتمادات</string>
+    <string name="settings_other_credits_summary">المساهمون والاعتمادات</string>
+    <string name="settings_other_about_title">عن</string>
+    <string name="settings_other_about_summary">معلومات حول Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">المساهمون</string>
+    <string name="credits_contributors_hint">قم بزيارة Photok على GitHub لمشاهدة جميع المساهمين</string>
+    <string name="credits_icons_title">الأيقونات</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">غير كلمة المرور الخاصة بك</string>
+    <string name="change_password_old_password">كلمة المرور القديمة</string>
+    <string name="change_password_new_password">كلمة المرور الجديدة</string>
+    <string name="change_password_check">يفحص</string>
+    <string name="change_password_enter_new_password">أدخل كلمة المرور الجديدة </string>
+    <string name="change_password_confirm_new_password">قم بتأكيد كلمة المرور الجديدة الخاصة بك</string>
+    <string name="change_password_button">تغيير كلمة المرور</string>
+    <string name="change_password_confirm_message">موصي بالنسخ الاحتياطي! <br /> يتطلب تغيير كلمة المرور إعادة تشفير جميع ملفاتك! هل تريد الاستمرار؟ </string>
+    <string name="change_password_reencrypting">إعادة تشفير الملف (الملفات) ...</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">إخفاء فوتوك</string>
+    <string name="hide_app_title_show">عرض فوتوك</string>
+    <string name="hide_app_status_label">فوتوك حاليًا:</string>
+    <string name="hide_app_status_visible">مرئي</string>
+    <string name="hide_app_status_hidden">مختفي</string>
+    <string name="hide_app_app_name_stealth">هاتف</string>
+    <string name="hide_app_confirm_hide">هل تريد حقًا إخفاء Photok؟</string>
+    <string name="hide_app_confirm_show">هل تريد إظهار Photok مرة أخرى؟</string>
+    <string name="hide_app_hint">بمجرد إخفائه ، لا يمكن تشغيل Photok إلا من لوحة الاتصال الهاتفي ، مع رمز التشغيل السري الخاص بك. </string>
+    <string name="hide_app_hint_current_code">رمز الإطلاق الحالي:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_finish">إنهاء</string>
+    <string name="onboarding_skip"><u>تخطي</u></string>
+
+    <string name="onboarding_slide1_title">مرحبا بك في</string>
+    <string name="onboarding_slide1_description">مكان آمن لصورك.</string>
+    <string name="onboarding_slide2_title">أنشئ كلمة مرور</string>
+    <string name="onboarding_slide2_description">أنشئ كلمة مرور آمنة. تُستخدم كلمة مرورك لتشفير صورك مباشرة على هاتفك. </string>
+    <string name="onboarding_slide3_title">ابدأ الاستيراد</string>
+    <string name="onboarding_slide3_description">ابدأ في استيراد صورك واحتفظ بها في مأمن من الآخرين. \nبعد ذلك يمكنك حذفها في معرض الصور الخاص بك. </string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">جارٍ إنشاء نسخة احتياطية ...</string>
+    <string name="backup_restore_title">استرجاع النسخة الاحتياطية</string>
+    <string name="backup_restore_validating">التحقق من صحة النسخ الاحتياطي ...</string>
+    <string name="backup_restore_details_created_at">أنشئت في:</string>
+    <string name="backup_restore_details_photos_contained">الملفات المضمنة:</string>
+    <string name="backup_restore_details_compatible">متناسق:</string>
+    <string name="backup_restore_details_size">حجم:</string>
+    <string name="backup_restore_button">فتح واستعادة</string>
+    <string name="backup_restore_invalid_file">\u26A0 ملف غير صالح</string>
+    <string name="backup_restore_processing">استعادة النسخة الاحتياطية ...</string>
+    <string name="backup_unlock_title">فتح النسخ الاحتياطي</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">الجديد في</string>
+    <string name="news_view_changelog">مشاهدة ملف Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
+    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
+
+    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
+    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+
+    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
+    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
+
+    <string name="news_title_4">More Languages</string> <!-- TODO -->
+    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">قائمة الاسترداد</string>
+    <string name="recovery_menu_item_open_photok">افتح برنامج فوتوك</string>
+    <string name="recovery_subtitle_reset_hide_app">إعادة تعيين إعدادات إخفاء التطبيق</string>
+</resources>

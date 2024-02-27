@@ -19,12 +19,13 @@ package dev.leonlatsch.photok.videoplayer.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.SimpleExoPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_ID
+import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
@@ -45,7 +46,7 @@ class VideoPlayerFragment :
         requireActivity().hideSystemUI()
 
         binding.videoPlayerToolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
 
         viewModel.addOnPropertyChange<SimpleExoPlayer?>(BR.player) {
@@ -58,9 +59,9 @@ class VideoPlayerFragment :
         }
         binding.playerView.showController()
 
-        val photoId = arguments?.get(INTENT_PHOTO_ID)
+        val photoId = arguments?.get(INTENT_PHOTO_UUID)
         if (photoId == null || photoId !is Int) {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
             return
         }
 

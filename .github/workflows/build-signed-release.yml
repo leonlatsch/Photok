@@ -18,10 +18,11 @@ jobs:
           ref: master # Always master!
       
       # Setup SDK
-      - name: Set up SDK 11
-        uses: actions/setup-java@v1
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          java-version: 11
+          distribution: 'zulu'
+          java-version: '17'
           
       # Build .aab file
       - name: Build GPlay AAB
@@ -66,18 +67,3 @@ jobs:
         with:
           name: Photok ${{ github.event.inputs.version }} Standalone APK
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
-
-      - name: Rename Artifacts
-        run: |
-          mv ${{ steps.sign_aab.outputs.signedReleaseFile }} Photok-${{ github.event.inputs.version }}-gplay.aab
-          mv ${{ steps.sign_apk.outputs.signedReleaseFile }} Photok-${{ github.event.inputs.version }}-standalone.apk
-
-      - name: Zip Artifacts
-        run: zip Photok-${{ github.event.inputs.version }}.zip Photok-${{ github.event.inputs.version }}-gplay.aab Photok-${{ github.event.inputs.version }}-standalone.apk
-
-      # Upload to Nextcloud
-      - name: Create Release Directory on Nextcloud
-        run: curl -X MKCOL -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}
-
-      - name: Upload Artifacts to Nextcloud
-        run: curl -T Photok-${{ github.event.inputs.version }}.zip -u ${{ secrets.NEXTCLOUD_USERNAME }}:${{ secrets.NEXTCLOUD_PASSWORD }} ${{ secrets.NEXTCLOUD_PHOTOK_URL }}/${{ github.event.inputs.version }}/Photok-${{ github.event.inputs.version }}.zip

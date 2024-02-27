@@ -19,9 +19,11 @@ package dev.leonlatsch.photok.settings.ui
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.WindowInsets
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -36,7 +38,9 @@ import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
+import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
@@ -60,12 +64,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.statusBarPadding()
 
         toolbar = view.findViewById(R.id.settingsToolbar)
-
-        toolbar?.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -146,10 +147,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             )
         }
 
+        addActionTo(KEY_ACTION_DONATE) {
+            openUrl(getString(R.string.settings_other_donate_url))
+        }
+
         addActionTo(KEY_ACTION_SOURCECODE) {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.settings_other_sourcecode_url))
-            startActivity(intent)
+            openUrl(getString(R.string.settings_other_sourcecode_url))
         }
 
         addActionTo(KEY_ACTION_CREDITS) {
@@ -209,6 +212,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
+        const val KEY_ACTION_DONATE = "action_donate"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"
         const val KEY_ACTION_CREDITS = "action_credits"
         const val KEY_ACTION_ABOUT = "action_about"

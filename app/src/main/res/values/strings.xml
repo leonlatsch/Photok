@@ -98,10 +98,13 @@
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery?</string>
+    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string>
     <string name="export_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery?</string>
+    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string>
     <string name="export_exporting">Exporting file(s)…</string>
     <string name="export_permission_rationale">Photok needs to access your storage, to export files.</string>
     <string name="export_finished">Exported</string>
+    <string name="export_and_delete_finished">Exported and deleted</string>
 
     <!-- ABOUT -->
     <string name="about_version">Version:</string>
@@ -156,6 +159,8 @@
     <string name="settings_advanced_backup_summary">Create a backup of your safe</string>
     <string name="settings_advanced_delete_imported_title">Delete imported files</string>
     <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string>
+    <string name="settings_advanced_delete_exported_title">Delete exported files</string>
+    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string>
 
     <string name="settings_other_title">Other</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -163,6 +168,9 @@
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Donate</string>
+    <string name="settings_other_donate_summary">Support the development of Photok</string>
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Source Code</string>
     <string name="settings_other_sourcecode_summary">Contribute to Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
@@ -229,17 +237,17 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Auto Delete</string>
-    <string name="news_summary_1">Automatically delete files when importing them to Photok.</string>
+    <string name="news_title_1">NEW: New gallery and navigation</string>
+    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string>
 
-    <string name="news_title_2">EMPTY</string>
-    <string name="news_summary_2">EMPTY</string>
+    <string name="news_title_2">NEW: Donations</string>
+    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string>
 
-    <string name="news_title_3">EMPTY</string>
-    <string name="news_summary_3">EMPTY</string>
+    <string name="news_title_3">NEW: Delete after export</string>
+    <string name="news_summary_3">Have files automatically deleted after exporting them</string>
 
-    <string name="news_title_4">EMPTY</string>
-    <string name="news_summary_4">EMPTY</string>
+    <string name="news_title_4">More Languages</string>
+    <string name="news_summary_4">Photok is now available in arabic and russian too</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string>

@@ -31,21 +31,24 @@
         android:layout_height="match_parent"
         tools:context=".main.ui.MainActivity">
 
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mainNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/mainMenuComposeContainer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/main_nav_graph" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/mainMenuComposeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/mainNavHostFragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/main_nav_graph" />
-        </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

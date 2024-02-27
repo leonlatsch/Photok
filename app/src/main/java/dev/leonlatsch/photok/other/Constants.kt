@@ -22,7 +22,7 @@ const val AES = "AES"
 const val AES_ALGORITHM = "AES/GCM/NoPadding"
 
 // Intent
-const val INTENT_PHOTO_ID = "intent.photo.id"
+const val INTENT_PHOTO_UUID = "intent.photo.uuid"
 
 // Permissions
 const val REQ_PERM_IMPORT_PHOTOS = 10

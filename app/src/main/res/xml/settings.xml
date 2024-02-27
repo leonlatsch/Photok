@@ -102,6 +102,12 @@
             android:summary="@string/settings_advanced_delete_imported_summary"
             android:title="@string/settings_advanced_delete_imported_title" />
 
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_delete"
+            android:key="advanced^deleteExportedFiles"
+            android:summary="@string/settings_advanced_delete_exported_summary"
+            android:title="@string/settings_advanced_delete_exported_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Other">
@@ -111,6 +117,11 @@
             android:key="action_feedback"
             android:summary="@string/settings_other_feedback_summary"
             android:title="@string/settings_other_feedback_title" />
+        <Preference
+            android:icon="@drawable/ic_money"
+            android:key="action_donate"
+            android:summary="@string/settings_other_donate_summary"
+            android:title="@string/settings_other_donate_title" />
         <Preference
             android:icon="@drawable/ic_code"
             android:key="action_sourcecode"
