@@ -14,11 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -33,7 +32,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -50,9 +48,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.cgallery.ui.MultiSelectionState
-import dev.leonlatsch.photok.cgallery.ui.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
+import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
+import dev.leonlatsch.photok.gallery.ui.PhotoTile
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType

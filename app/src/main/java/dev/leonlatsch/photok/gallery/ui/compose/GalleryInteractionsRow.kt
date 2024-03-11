@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

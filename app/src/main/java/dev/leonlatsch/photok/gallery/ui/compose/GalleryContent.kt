@@ -14,12 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -39,7 +37,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -52,10 +49,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
-import dev.leonlatsch.photok.cgallery.ui.MultiSelectionState
-import dev.leonlatsch.photok.cgallery.ui.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
+import dev.leonlatsch.photok.gallery.ui.GalleryUiState
+import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
+import dev.leonlatsch.photok.gallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 import dev.leonlatsch.photok.uicomponnets.compose.findWindow

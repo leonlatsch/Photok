@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,97 +16,149 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.app.Application
-import android.content.Context
-import android.view.View
-import androidx.databinding.Bindable
+import android.content.res.Configuration
+import android.content.res.Resources
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
+import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
-import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * ViewModel for the Gallery.
- * Holds a Flow for the photos.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
+private const val PORTRAIT_COLUMN_COUNT = 3
+private const val LANDSCAPE_COLUMN_COUNT = 6
+
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    app: Application,
-    val photoRepository: PhotoRepository,
-    private val config: Config
-) : ObservableViewModel(app) {
+    photoRepository: PhotoRepository,
+    @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
+    private val galleryUiStateFactory: GalleryUiStateFactory,
+    private val config: Config,
+    private val resources: Resources,
+) : ViewModel() {
 
-    @get:Bindable
-    var placeholderVisibility: Int = View.VISIBLE
-        set(value) {
-            field = value
-            notifyChange(BR.placeholderVisibility, value)
+    private val photosFlow = photoRepository.observeAll()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
+
+    private val multiSelectionState =
+        MutableStateFlow(MultiSelectionState(isActive = false, listOf()))
+
+    private val columnCountFlow = MutableStateFlow(PORTRAIT_COLUMN_COUNT)
+
+    val uiState: StateFlow<GalleryUiState> = combine(
+        photosFlow,
+        multiSelectionState,
+        columnCountFlow
+    ) { photos, multiSelectionState, columnCount ->
+        galleryUiStateFactory.create(photos, multiSelectionState, columnCount)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
+
+    private val eventsChannel = Channel<GalleryNavigationEvent>()
+    val eventsFlow = eventsChannel.receiveAsFlow()
+
+    fun handleUiEvent(event: GalleryUiEvent) {
+        when (event) {
+            is GalleryUiEvent.OpenImportMenu -> eventsChannel.trySend(GalleryNavigationEvent.OpenImportMenu)
+            is GalleryUiEvent.PhotoClicked -> onPhotoClicked(event.item)
+            is GalleryUiEvent.PhotoLongPressed -> onPhotoLongPressed(event.item)
+            is GalleryUiEvent.CancelMultiSelect -> onCancelMultiSelect()
+            is GalleryUiEvent.OnDelete -> onDeleteSelectedItems()
+            is GalleryUiEvent.OnExport -> onExportSelectedItems()
+            is GalleryUiEvent.SelectAll -> onSelectAll()
         }
+    }
 
-    @get:Bindable
-    var labelsVisibility: Int = View.GONE
-        set(value) {
-            field = value
-            notifyChange(BR.labelsVisibility, value)
+    private fun onSelectAll() {
+        multiSelectionState.update {
+            it.copy(
+                isActive = true,
+                selectedItemUUIDs = photosFlow.value.map { photo -> photo.uuid })
         }
+    }
 
-    val photos = Pager(
-        PagingConfig(
-            pageSize = PAGE_SIZE,
-            maxSize = MAX_SIZE,
+    private fun onExportSelectedItems() {
+        val uuidsToExport = multiSelectionState.value.selectedItemUUIDs
+        eventsChannel.trySend(
+            GalleryNavigationEvent.StartExportDialog(
+                photosFlow.value.filter { uuidsToExport.contains(it.uuid) })
         )
-    ) {
-        photoRepository.getAllPaged()
-    }.flow
+        onCancelMultiSelect()
+    }
 
-    /**
-     * Toggle the placeholder and label visibilities.
-     */
-    fun togglePlaceholder(itemCount: Int) {
-        if (itemCount > 0) {
-            labelsVisibility = View.VISIBLE
-            placeholderVisibility = View.GONE
+    private fun onDeleteSelectedItems() {
+        val uuidsToDelete = multiSelectionState.value.selectedItemUUIDs
+        eventsChannel.trySend(GalleryNavigationEvent.StartDeleteDialog(
+            photosFlow.value.filter { uuidsToDelete.contains(it.uuid) }
+        ))
+        onCancelMultiSelect()
+    }
+
+    private fun onCancelMultiSelect() {
+        multiSelectionState.update { it.copy(isActive = false, selectedItemUUIDs = emptyList()) }
+    }
+
+    private fun onPhotoLongPressed(item: PhotoTile) {
+        if (multiSelectionState.value.isActive.not()) {
+            multiSelectionState.update {
+                it.copy(
+                    isActive = true,
+                    selectedItemUUIDs = listOf(item.uuid)
+                )
+            }
+        }
+    }
+
+    private fun onPhotoClicked(item: PhotoTile) {
+        if (multiSelectionState.value.isActive.not()) {
+            eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(item.uuid))
         } else {
-            placeholderVisibility = View.VISIBLE
-            labelsVisibility = View.GONE
+            if (multiSelectionState.value.selectedItemUUIDs.contains(item.uuid)) {
+                // Remove
+                multiSelectionState.update {
+                    it.copy(
+                        isActive = it.selectedItemUUIDs.size != 1,
+                        selectedItemUUIDs = it.selectedItemUUIDs.filterNot { selectedUUid ->
+                            selectedUUid == item.uuid
+                        },
+                    )
+                }
+            } else {
+                // Add
+                multiSelectionState.update {
+                    it.copy(
+                        selectedItemUUIDs = it.selectedItemUUIDs + listOf(item.uuid)
+                    )
+                }
+            }
         }
     }
 
-    /**
-     * Change the dialog string accordingly to settings.
-     */
-    fun getAreYouSureExportString(context: Context): String{
-        return if (this.config.deleteExportedFiles) {
-            context.getString(R.string.export_and_delete_are_you_sure)
-        } else {
-            context.getString(R.string.export_are_you_sure)
-        }
+    fun checkForNewFeatures() = viewModelScope.launch {
+        if (config.systemLastFeatureVersionCode >= FEATURE_VERSION_CODE) return@launch
+
+        eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
+        config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
     }
 
-    /**
-     * Run the [onNewsPresent] if the app was just updated.
-     */
-    fun runIfNews(onNewsPresent: () -> Unit) = viewModelScope.launch {
-        if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
-            onMain(onNewsPresent)
-            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
+    fun onConfigurationChanged() {
+        columnCountFlow.value = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
+            Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_COLUMN_COUNT
+            else -> PORTRAIT_COLUMN_COUNT
         }
-    }
-
-    companion object {
-        private const val PAGE_SIZE = 100
-        private const val MAX_SIZE = 800
     }
 }
+

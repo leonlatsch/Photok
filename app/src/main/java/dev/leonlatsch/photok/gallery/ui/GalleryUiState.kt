@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui
+package dev.leonlatsch.photok.gallery.ui
 
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName

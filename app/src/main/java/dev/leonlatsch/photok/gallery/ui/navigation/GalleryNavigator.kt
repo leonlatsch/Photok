@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.navigation
+package dev.leonlatsch.photok.gallery.ui.navigation
 
 import android.content.Context
 import androidx.core.os.bundleOf

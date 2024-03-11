@@ -14,14 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui
+package dev.leonlatsch.photok.gallery.ui.navigation
 
-sealed interface GalleryUiEvent {
-    data class PhotoClicked(val item: PhotoTile) : GalleryUiEvent
-    data class PhotoLongPressed(val item: PhotoTile) : GalleryUiEvent
-    object OpenImportMenu : GalleryUiEvent
-    object CancelMultiSelect : GalleryUiEvent
-    object SelectAll : GalleryUiEvent
-    object OnDelete : GalleryUiEvent
-    object OnExport : GalleryUiEvent
+import dev.leonlatsch.photok.model.database.entity.Photo
+
+sealed interface GalleryNavigationEvent {
+    data class OpenPhoto(val photoUUID: String) : GalleryNavigationEvent
+    data object OpenImportMenu : GalleryNavigationEvent
+
+    data class StartDeleteDialog(val photosToDelete: List<Photo>) : GalleryNavigationEvent
+    data class StartExportDialog(val photosToExport: List<Photo>) : GalleryNavigationEvent
+    data object ShowNewFeaturesDialog : GalleryNavigationEvent
 }

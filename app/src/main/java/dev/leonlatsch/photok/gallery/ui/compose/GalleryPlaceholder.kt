@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.cgallery.ui.GalleryUiEvent
+import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 
 @Composable

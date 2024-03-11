@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
