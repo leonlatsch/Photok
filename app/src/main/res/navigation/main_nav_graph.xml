@@ -151,4 +151,9 @@
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="dev.leonlatsch.photok.gallery.ui.AlbumsFragment"
+        android:label="GalleryFragment">
+    </fragment>
 </navigation>

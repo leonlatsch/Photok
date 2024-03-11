@@ -47,6 +47,14 @@ fun MainMenu(
         )
 
         MainNavItem(
+            fragmentid = R.id.albumsFragment,
+            currentSelectedFragmentId = uiState.currentFragmentId,
+            iconRes = R.drawable.ic_folder,
+            label = "Albums",
+            onNavigationItemClicked = onNavigationItemClicked
+        )
+
+        MainNavItem(
             fragmentid = R.id.settingsFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_settings,
