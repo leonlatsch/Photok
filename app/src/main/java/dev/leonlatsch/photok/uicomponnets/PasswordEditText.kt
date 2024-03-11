@@ -185,7 +185,7 @@ class PasswordEditText @JvmOverloads constructor(
         @JvmStatic
         fun setTextWatcherAdapter(
             passwordEditText: PasswordEditText,
-            test: TextViewBindingAdapter.AfterTextChanged?,
+            @SuppressLint("RestrictedApi") afterTextChanged: TextViewBindingAdapter.AfterTextChanged?,
             textAttrChanged: InverseBindingListener?
         ) {
             val newValue = object : TextWatcher {
@@ -209,8 +209,8 @@ class PasswordEditText @JvmOverloads constructor(
 
                 @SuppressLint("RestrictedApi")
                 override fun afterTextChanged(s: Editable) {
-                    test?.let {
-                        test.afterTextChanged(s)
+                    afterTextChanged?.let {
+                        afterTextChanged.afterTextChanged(s)
                     }
 
                     textAttrChanged?.let {
