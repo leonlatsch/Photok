@@ -14,9 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui
+package dev.leonlatsch.photok.gallery.albums.ui.compose
 
-import androidx.fragment.app.Fragment
-
-class AlbumsFragment : Fragment() {
+sealed interface AlbumsUiState {
+    data object Empty : AlbumsUiState
+    data class Content(
+        val albums: List<AlbumItem>,
+    ) : AlbumsUiState
 }
+
+data class AlbumItem(
+    val id: String,
+    val name: String,
+    val itemCount: Int,
+)
