@@ -47,7 +47,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
-val FragmentsWithMenu = listOf(R.id.cgalleryFragment, R.id.settingsFragment)
+val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.settingsFragment)
 
 /**
  * The main Activity.
@@ -104,7 +104,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
 
             onBackPressedDispatcher.addCallback {
-                if (navController.currentDestination?.id == R.id.cgalleryFragment) {
+                if (navController.currentDestination?.id == R.id.galleryFragment) {
                     finish()
                 } else {
                     navController.navigateUp()

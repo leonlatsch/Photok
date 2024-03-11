@@ -39,7 +39,7 @@ fun MainMenu(
         containerColor = colorResource(R.color.background)
     ) {
         MainNavItem(
-            fragmentid = R.id.cgalleryFragment,
+            fragmentid = R.id.galleryFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_image,
             label = stringResource(R.string.gallery_all_photos_label),
@@ -61,7 +61,7 @@ fun MainMenu(
 private fun MainMenuPreview() {
     MaterialTheme {
         MainMenu(
-            uiState = MainMenuUiState(R.id.cgalleryFragment),
+            uiState = MainMenuUiState(R.id.galleryFragment),
             onNavigationItemClicked = {}
         )
     }

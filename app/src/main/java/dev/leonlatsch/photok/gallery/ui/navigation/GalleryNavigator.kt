@@ -111,6 +111,6 @@ class GalleryNavigator @Inject constructor(
 
     private fun navigateOpenPhoto(photoUUID: String, navController: NavController) {
         val args = bundleOf(INTENT_PHOTO_UUID to photoUUID)
-        navController.navigate(R.id.action_cgalleryFragment_to_imageViewerFragment, args)
+        navController.navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
     }
 }
