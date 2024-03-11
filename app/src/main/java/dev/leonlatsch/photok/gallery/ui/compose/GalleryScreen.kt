@@ -14,14 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.cgallery.ui.compose
+package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import dev.leonlatsch.photok.cgallery.ui.GalleryUiState
-import dev.leonlatsch.photok.cgallery.ui.GalleryViewModel
+import dev.leonlatsch.photok.gallery.ui.GalleryUiState
+import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
 
 @Composable
 fun GalleryScreen(viewModel: GalleryViewModel) {
