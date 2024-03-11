@@ -152,7 +152,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
