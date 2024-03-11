@@ -59,6 +59,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">В вашем сейфе нет файлов</string>
     <string name="gallery_all_photos_label">Все файлы</string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Импортировать</string>

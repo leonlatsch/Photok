@@ -50,7 +50,7 @@ fun MainMenu(
             fragmentid = R.id.albumsFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_folder,
-            label = "Albums",
+            label = stringResource(R.string.gallery_albums_label),
             onNavigationItemClicked = onNavigationItemClicked
         )
 

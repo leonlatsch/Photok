@@ -59,6 +59,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">There are no files in your safe</string>
     <string name="gallery_all_photos_label">All files</string>
+    <string name="gallery_albums_label">Albums</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Import</string>

@@ -60,6 +60,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">In deinem Safe sind kein Dateien</string>
     <string name="gallery_all_photos_label">Alle Dateien</string>
+    <string name="gallery_albums_label">Alben</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>

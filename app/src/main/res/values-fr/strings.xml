@@ -60,6 +60,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">Il n\'y a pas de fichier dans votre coffre-fort</string>
     <string name="gallery_all_photos_label">Tous les fichiers</string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importer</string>

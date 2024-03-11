@@ -42,6 +42,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">Er zijn geen bestanden in je kluis</string>
     <string name="gallery_all_photos_label">Alle bestanden</string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>
