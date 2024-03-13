@@ -27,4 +27,5 @@ data class AlbumItem(
     val id: String,
     val name: String,
     val itemCount: Int,
+    val albumCover: String? = null,
 )

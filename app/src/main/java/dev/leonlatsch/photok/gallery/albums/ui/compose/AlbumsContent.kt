@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,16 +35,20 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 
 @Composable
@@ -85,9 +90,29 @@ private fun AlbumPreviewTile(album: AlbumItem) {
                 .fillMaxSize()
                 .aspectRatio(1f)
 
-            Box(
-                modifier = contentModifier.background(Color.Red)
-            )
+            if (LocalInspectionMode.current) {
+                Box(
+                    modifier = contentModifier.background(Color.Red)
+                )
+            } else if (album.albumCover != null) {
+                val requestData = remember(album) {
+                    EncryptedImageRequestData(
+                        album.albumCover,
+                        "MIME_TYPE" // TODO: Add mime type to album cover
+                    )
+                }
+
+                Image(
+                    painter = rememberEncryptedImagePainter(requestData),
+                    contentDescription = album.albumCover,
+                    modifier = contentModifier
+                )
+            } else {
+                Box(
+                    // TODO: Maybe add a placeholder image
+                    modifier = contentModifier.background(Color.Gray)
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -111,8 +136,10 @@ private fun AlbumPreviewTile(album: AlbumItem) {
                     .padding(8.dp)
             )
 
+            val itemCountText = album.itemCount.toString().ifEmpty { "Empty" }
+
             Text(
-                text = album.itemCount.toString(),
+                text = itemCountText,
                 color = Color.White,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
@@ -132,17 +159,17 @@ private fun AlbumsContentPreview() {
                 AlbumItem(
                     id = "1",
                     name = "Album 1",
-                    itemCount = 10
+                    itemCount = 10,
                 ),
                 AlbumItem(
                     id = "2",
                     name = "Album 2",
-                    itemCount = 20
+                    itemCount = 20,
                 ),
                 AlbumItem(
                     id = "3",
                     name = "Album 3",
-                    itemCount = 30
+                    itemCount = 30,
                 ),
                 AlbumItem(
                     id = "4",
