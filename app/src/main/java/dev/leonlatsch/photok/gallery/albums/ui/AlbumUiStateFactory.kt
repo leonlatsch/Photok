@@ -16,25 +16,28 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-@HiltViewModel
-class AlbumsViewModel @Inject constructor(
-    albumsRepositoryImpl: AlbumRepository,
-    private val albumUiStateFactory: AlbumUiStateFactory
-) : ViewModel() {
+class AlbumUiStateFactory @Inject constructor() {
+    fun create(albums: List<Album>): AlbumsUiState {
+        if (albums.isEmpty()) {
+            return AlbumsUiState.Empty
+        }
 
-    val uiState: StateFlow<AlbumsUiState> = albumsRepositoryImpl.observeAlbums().map { albums ->
-        albumUiStateFactory.create(albums)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty)
+        return AlbumsUiState.Content(
+            albums = albums.map { album ->
+                with(album) {
+                    AlbumItem(
+                        id = uuid,
+                        name = name,
+                        itemCount = files.size,
+                        albumCover = files.first().internalFileName
+                    )
+                }
+            }
+        )
+    }
 }
-

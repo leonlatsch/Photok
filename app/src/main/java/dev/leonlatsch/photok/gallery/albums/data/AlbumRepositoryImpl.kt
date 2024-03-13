@@ -41,7 +41,7 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {
-            -1 -> Result.failure(IOException())
+            -1L -> Result.failure(IOException())
             else -> Result.success(album.copy())
         }
 

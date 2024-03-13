@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(album: AlbumTable): Int
+    suspend fun insert(album: AlbumTable): Long
 
     @Delete
     suspend fun delete(album: AlbumTable): Int

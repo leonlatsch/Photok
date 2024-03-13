@@ -27,10 +27,6 @@ import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
 fun AlbumsScreen(viewModel: AlbumsViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.loadAlbums()
-    }
-
     MaterialTheme {
         when (uiState) {
             is AlbumsUiState.Empty -> {}
