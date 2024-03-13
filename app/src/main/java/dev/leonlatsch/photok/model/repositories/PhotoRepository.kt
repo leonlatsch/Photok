@@ -79,11 +79,6 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun getAll() = photoDao.getAllSortedByImportedAt()
 
-    /**
-     * @see PhotoDao.getAllPagedSortedByImportedAt
-     */
-    fun getAllPaged() = photoDao.getAllPagedSortedByImportedAt()
-
     fun observeAll() = photoDao.observeAllSortedByImportedAt()
 
     /**

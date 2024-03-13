@@ -78,15 +78,6 @@ interface PhotoDao {
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     suspend fun getAllSortedByImportedAt(): List<Photo>
 
-    /**
-     * Get all photos, ordered by importedAt (desc) as [PagingSource].
-     * Used for Paging all photos in gallery.
-     *
-     * @return all photo as [PagingSource]
-     */
-    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
-
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     fun observeAllSortedByImportedAt(): Flow<List<Photo>>
 

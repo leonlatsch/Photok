@@ -19,9 +19,14 @@ package dev.leonlatsch.photok.model.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.VERSION
+import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
+import dev.leonlatsch.photok.model.database.entity.Album
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotosCrossRef
+
+private const val DATABASE_VERSION = 2
+const val DATABASE_NAME = "photok.db"
 
 /**
  * Abstract Room Database.
@@ -30,20 +35,21 @@ import dev.leonlatsch.photok.model.database.entity.Photo
  * @author Leon Latsch
  */
 @Database(
-    entities = [Photo::class],
-    version = VERSION,
+    entities = [
+        Photo::class,
+        Album::class,
+        AlbumPhotosCrossRef::class
+    ],
+    version = DATABASE_VERSION,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class PhotokDatabase : RoomDatabase() {
 
-    companion object {
-        const val VERSION = 1
-        const val DATABASE_NAME = "photok.db"
-    }
-
     /**
      * Get the data access object for [Photo]
      */
     abstract fun getPhotoDao(): PhotoDao
+
+    abstract fun getAlbumDao(): AlbumDao
 }
