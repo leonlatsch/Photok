@@ -78,7 +78,7 @@ class ImageViewerViewModel @Inject constructor(
     fun deletePhoto(onSuccess: () -> Unit, onError: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
             currentPhoto ?: return@launch
-            currentPhoto!!.id ?: return@launch
+            currentPhoto!!.photoId ?: return@launch
 
             photoRepository.safeDeletePhoto(currentPhoto!!).let {
                 onMain {
@@ -96,7 +96,7 @@ class ImageViewerViewModel @Inject constructor(
     fun exportPhoto(onSuccess: () -> Unit, onError: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
             currentPhoto ?: return@launch
-            currentPhoto!!.id ?: return@launch
+            currentPhoto!!.photoId ?: return@launch
 
             photoRepository.exportPhoto(currentPhoto!!).let { success ->
                 onMain {

@@ -34,7 +34,7 @@ data class Photo(
     @Expose val type: PhotoType,
     @Expose var size: Long = 0L,
     @Expose val uuid: String = UUID.randomUUID().toString(),
-    @PrimaryKey(autoGenerate = true) val id: Int? = null
+    @PrimaryKey(autoGenerate = true) val photoId: Int? = null
 ) {
 
     val internalFileName: String

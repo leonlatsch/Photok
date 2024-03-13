@@ -24,7 +24,7 @@ import dev.leonlatsch.photok.model.database.entity.Album
 import dev.leonlatsch.photok.model.database.entity.Photo
 
 private const val ALBUM_ID = "albumId"
-private const val PHOTO_ID = "albumId"
+private const val PHOTO_ID = "photoId"
 
 @Entity(primaryKeys = [ALBUM_ID, PHOTO_ID])
 data class AlbumPhotosCrossRef(

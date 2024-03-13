@@ -58,7 +58,7 @@ interface PhotoDao {
      *
      * @return the photo with [id]
      */
-    @Query("SELECT * FROM photo WHERE id = :id")
+    @Query("SELECT * FROM photo WHERE photoId = :id")
     suspend fun get(id: Int): Photo
 
     /**
@@ -90,7 +90,7 @@ interface PhotoDao {
     /**
      * Get uuid for a photo.
      */
-    @Query("SELECT uuid FROM photo WHERE id = :id")
+    @Query("SELECT uuid FROM photo WHERE photoId = :id")
     suspend fun getUUIDForPhoto(id: Int): String?
 
     /**
