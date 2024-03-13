@@ -22,7 +22,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import dev.leonlatsch.photok.model.database.entity.Album
+import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 import kotlinx.coroutines.flow.Flow
 
@@ -30,24 +30,28 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(album: Album): Long
+    suspend fun insert(album: AlbumTable): Int
 
     @Delete
-    suspend fun delete(album: Album): Int
+    suspend fun delete(album: AlbumTable): Int
 
-    @Query("DELETE FROM album")
+    @Query("DELETE FROM albumtable")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM album WHERE albumId = :id")
-    suspend fun getAlbumById(id: Int): Album
+    @Query("SELECT * FROM albumtable WHERE albumId = :id")
+    suspend fun getAlbumById(id: Int): AlbumTable
 
-    @Query("SELECT * FROM album WHERE uuid = :uuid")
-    suspend fun getAlbumByUuid(uuid: String): Album
+    @Query("SELECT * FROM albumtable WHERE uuid = :uuid")
+    suspend fun getAlbumByUuid(uuid: String): AlbumTable
 
     @Transaction
-    @Query("SELECT * FROM album")
-    fun getAlbumWithPhotos(): Flow<List<AlbumWithPhotos>>
+    @Query("SELECT * FROM albumtable")
+    fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
 
-    @Query("SELECT COUNT(*) FROM album")
+    @Transaction
+    @Query("SELECT * FROM albumtable WHERE uuid = :uuid")
+    suspend fun getAlbumWithPhotos(uuid: String): AlbumWithPhotos
+
+    @Query("SELECT COUNT(*) FROM albumtable")
     suspend fun countAll(): Int
 }

@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity
-data class Album(
+data class AlbumTable(
     val name: String,
     val uuid: String = UUID.randomUUID().toString(),
     @PrimaryKey(autoGenerate = true) val albumId: Int? = null,

@@ -27,6 +27,7 @@ import java.util.*
  * @since 1.0.0
  * @author Leon Latsch
  */
+// TODO: Add a domain model for photos
 @Entity(tableName = "photo")
 data class Photo(
     @Expose val fileName: String,

@@ -21,7 +21,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
-import dev.leonlatsch.photok.model.database.entity.Album
+import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotosCrossRef
 
@@ -37,7 +37,7 @@ const val DATABASE_NAME = "photok.db"
 @Database(
     entities = [
         Photo::class,
-        Album::class,
+        AlbumTable::class,
         AlbumPhotosCrossRef::class
     ],
     version = DATABASE_VERSION,
