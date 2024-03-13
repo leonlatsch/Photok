@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.model.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -41,7 +42,12 @@ const val DATABASE_NAME = "photok.db"
         AlbumPhotosCrossRef::class
     ],
     version = DATABASE_VERSION,
-    exportSchema = false
+    autoMigrations = [
+        AutoMigration(
+            from = 1,
+            to = 2
+        )
+    ]
 )
 @TypeConverters(Converters::class)
 abstract class PhotokDatabase : RoomDatabase() {
