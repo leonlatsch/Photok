@@ -16,11 +16,21 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Dialog
+import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
 
 @Composable
@@ -38,5 +48,7 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
                 handleUiEvent = { viewModel.handleUiEvent(it)}
             )
         }
+
+        CreateAlbumDialog(uiState = uiState, handleUiEvent = { viewModel.handleUiEvent(it) })
     }
 }

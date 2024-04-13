@@ -17,9 +17,14 @@
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
 sealed interface AlbumsUiState {
-    data object Empty : AlbumsUiState
+    val showCreateDialog: Boolean
+
+    data class Empty(
+        override val showCreateDialog: Boolean = false,
+    ) : AlbumsUiState
     data class Content(
         val albums: List<AlbumItem>,
+        override val showCreateDialog: Boolean = false,
     ) : AlbumsUiState
 }
 

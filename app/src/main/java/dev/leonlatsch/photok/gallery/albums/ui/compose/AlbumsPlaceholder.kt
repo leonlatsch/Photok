@@ -42,7 +42,7 @@ fun AlbumsPlaceholder(handleUiEvent: (AlbumsUiEvent) -> Unit) {
         )
 
         ImportButton(
-            onClick = { handleUiEvent(AlbumsUiEvent.AddAlbum) },
+            onClick = { handleUiEvent(AlbumsUiEvent.ShowCreateDialog) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)

@@ -22,9 +22,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -36,23 +37,30 @@ class AlbumsViewModel @Inject constructor(
     private val albumUiStateFactory: AlbumUiStateFactory
 ) : ViewModel() {
 
-    val uiState: StateFlow<AlbumsUiState> = albumsRepositoryImpl.observeAlbums().map { albums ->
-        albumUiStateFactory.create(albums)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty)
+    private val showCreateDialog = MutableStateFlow(false)
+
+    val uiState: StateFlow<AlbumsUiState> = combine(
+        albumsRepositoryImpl.observeAlbums(),
+        showCreateDialog
+    ) { albums, showCreateDialog ->
+        albumUiStateFactory.create(albums, showCreateDialog)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty())
 
     fun handleUiEvent(event: AlbumsUiEvent) {
         when (event) {
-            is AlbumsUiEvent.AddAlbum -> {
+            is AlbumsUiEvent.CreateAlbum -> {
                 viewModelScope.launch {
                     albumsRepositoryImpl.createAlbum(
                         Album(
-                            uuid = UUID.randomUUID().toString(),
-                            name = "My new album",
+                            name = event.name,
                             files = emptyList()
                         )
                     )
                 }
             }
+
+            AlbumsUiEvent.ShowCreateDialog -> showCreateDialog.value = true
+            AlbumsUiEvent.HideCreateDialog -> showCreateDialog.value = false
         }
     }
 }

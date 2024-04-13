@@ -23,9 +23,9 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import javax.inject.Inject
 
 class AlbumUiStateFactory @Inject constructor() {
-    fun create(albums: List<Album>): AlbumsUiState {
+    fun create(albums: List<Album>, showCreateDialog: Boolean): AlbumsUiState {
         if (albums.isEmpty()) {
-            return AlbumsUiState.Empty
+            return AlbumsUiState.Empty(showCreateDialog)
         }
 
         return AlbumsUiState.Content(
@@ -45,7 +45,8 @@ class AlbumUiStateFactory @Inject constructor() {
                         }
                     )
                 }
-            }
+            },
+            showCreateDialog = showCreateDialog,
         )
     }
 }

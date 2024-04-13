@@ -17,9 +17,10 @@
 package dev.leonlatsch.photok.gallery.albums.domain.model
 
 import dev.leonlatsch.photok.model.database.entity.Photo
+import java.util.UUID
 
 data class Album(
-    val uuid: String,
+    val uuid: String = UUID.randomUUID().toString(),
     val name: String,
     val files: List<Photo>,
 )

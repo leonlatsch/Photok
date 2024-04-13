@@ -17,5 +17,7 @@
 package dev.leonlatsch.photok.gallery.albums.ui
 
 sealed interface AlbumsUiEvent {
-    data object AddAlbum : AlbumsUiEvent
+    data object ShowCreateDialog : AlbumsUiEvent
+    data object HideCreateDialog : AlbumsUiEvent
+    data class CreateAlbum(val name: String) : AlbumsUiEvent
 }
