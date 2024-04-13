@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> Unit) {
@@ -85,7 +86,7 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
 @Preview
 @Composable
 private fun CreateAlbumDialogPreview() {
-    MaterialTheme {
+    AppTheme {
         CreateAlbumDialog(uiState = AlbumsUiState.Empty(showCreateDialog = true), handleUiEvent = {})
     }
 }

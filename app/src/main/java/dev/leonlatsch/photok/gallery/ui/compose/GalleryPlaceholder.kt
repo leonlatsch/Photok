@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 
 @Composable
@@ -82,7 +83,7 @@ fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 private fun GalleryPlaceholderPreview() {
-    MaterialTheme {
+    AppTheme {
         GalleryPlaceholder {}
     }
 }

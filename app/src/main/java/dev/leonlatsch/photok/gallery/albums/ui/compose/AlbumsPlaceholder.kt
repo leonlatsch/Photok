@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.ui.compose.ImportButton
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 
 @Composable
@@ -53,7 +54,7 @@ fun AlbumsPlaceholder(handleUiEvent: (AlbumsUiEvent) -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AlbumsPlaceholderPreview() {
-    MaterialTheme {
+    AppTheme {
         AlbumsPlaceholder(handleUiEvent = {})
     }
 }

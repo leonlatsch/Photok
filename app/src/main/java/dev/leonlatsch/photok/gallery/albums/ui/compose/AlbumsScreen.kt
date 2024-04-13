@@ -32,12 +32,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Dialog
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun AlbumsScreen(viewModel: AlbumsViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    MaterialTheme {
+    AppTheme {
         when (uiState) {
             is AlbumsUiState.Empty -> AlbumsPlaceholder(
                 handleUiEvent = { viewModel.handleUiEvent(it) }

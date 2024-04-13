@@ -54,6 +54,7 @@ import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 import dev.leonlatsch.photok.uicomponnets.compose.findWindow
 import java.util.UUID
@@ -151,7 +152,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF, showSystemUi = true)
 @Composable
 fun GalleryContentPreview() {
-    MaterialTheme {
+    AppTheme {
         GalleryContent(
             uiState = GalleryUiState.Content(
                 selectionMode = true,

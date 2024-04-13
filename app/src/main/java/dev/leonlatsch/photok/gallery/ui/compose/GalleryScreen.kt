@@ -22,13 +22,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun GalleryScreen(viewModel: GalleryViewModel) {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    MaterialTheme {
+    AppTheme {
         when (uiState) {
             is GalleryUiState.Empty -> GalleryPlaceholder { viewModel.handleUiEvent(it) }
 

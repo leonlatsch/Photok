@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun MainMenu(
@@ -67,7 +68,7 @@ fun MainMenu(
 @Preview
 @Composable
 private fun MainMenuPreview() {
-    MaterialTheme {
+    AppTheme {
         MainMenu(
             uiState = MainMenuUiState(R.id.galleryFragment),
             onNavigationItemClicked = {}
@@ -84,9 +85,6 @@ private fun RowScope.MainNavItem(
     label: String,
     onNavigationItemClicked: (Int) -> Unit
 ) {
-    val selectedIndicatorColor = colorResource(R.color.colorPrimaryDark).copy(alpha = .6f)
-    val selectedColor = colorResource(R.color.textColor)
-    val unselectedColor = colorResource(R.color.textColor)
 
     NavigationBarItem(
         selected = currentSelectedFragmentId == fragmentid,
@@ -97,13 +95,6 @@ private fun RowScope.MainNavItem(
         label = {
             Text(label)
         },
-        colors = NavigationBarItemDefaults.colors().copy(
-            selectedIndicatorColor = selectedIndicatorColor,
-            selectedIconColor = selectedColor,
-            selectedTextColor = selectedColor,
-            unselectedIconColor = unselectedColor,
-            unselectedTextColor = unselectedColor
-        ),
         alwaysShowLabel = true
     )
 }

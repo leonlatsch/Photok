@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.permissions.getReadImagesPermission
 import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -179,8 +180,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.mainMenuComposeContainer.setContent {
             val uiState by viewModel.mainMenuUiState.collectAsState()
 
-            MainMenu(uiState) {
-                findNavController(R.id.mainNavHostFragment).navigate(it)
+            AppTheme {
+                MainMenu(uiState) {
+                    findNavController(R.id.mainNavHostFragment).navigate(it)
+                }
             }
         }
     }
