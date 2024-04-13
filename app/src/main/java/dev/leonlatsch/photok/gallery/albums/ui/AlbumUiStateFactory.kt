@@ -35,7 +35,9 @@ class AlbumUiStateFactory @Inject constructor() {
                         id = uuid,
                         name = name,
                         itemCount = files.size,
-                        albumCover = with(files.first()) {
+                        albumCover = with(files.firstOrNull()) {
+                            this ?: return@with null
+
                             AlbumCover(
                                 filename = internalFileName,
                                 mimeType = type.mimeType,

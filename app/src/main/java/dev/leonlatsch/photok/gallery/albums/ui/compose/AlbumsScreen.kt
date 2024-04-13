@@ -29,8 +29,14 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
 
     MaterialTheme {
         when (uiState) {
-            is AlbumsUiState.Empty -> {}
-            is AlbumsUiState.Content -> AlbumsContent(uiState as AlbumsUiState.Content)
+            is AlbumsUiState.Empty -> AlbumsPlaceholder(
+                handleUiEvent = { viewModel.handleUiEvent(it) }
+
+            )
+            is AlbumsUiState.Content -> AlbumsContent(
+                content = uiState as AlbumsUiState.Content,
+                handleUiEvent = { viewModel.handleUiEvent(it)}
+            )
         }
     }
 }

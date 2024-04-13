@@ -20,21 +20,40 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
-    albumsRepositoryImpl: AlbumRepository,
+    private val albumsRepositoryImpl: AlbumRepository,
     private val albumUiStateFactory: AlbumUiStateFactory
 ) : ViewModel() {
 
     val uiState: StateFlow<AlbumsUiState> = albumsRepositoryImpl.observeAlbums().map { albums ->
         albumUiStateFactory.create(albums)
     }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty)
+
+    fun handleUiEvent(event: AlbumsUiEvent) {
+        when (event) {
+            is AlbumsUiEvent.AddAlbum -> {
+                viewModelScope.launch {
+                    albumsRepositoryImpl.createAlbum(
+                        Album(
+                            uuid = UUID.randomUUID().toString(),
+                            name = "My new album",
+                            files = emptyList()
+                        )
+                    )
+                }
+            }
+        }
+    }
 }
 
