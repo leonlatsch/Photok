@@ -13,6 +13,8 @@ val appVersionCode: String by project
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
+val composeCompilerVersion = "1.5.11"
+
 android {
     compileSdk = 34 // Android 14
 
@@ -48,7 +50,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     compileOptions {
