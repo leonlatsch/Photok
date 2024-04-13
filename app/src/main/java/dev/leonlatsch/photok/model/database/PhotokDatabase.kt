@@ -18,8 +18,10 @@ package dev.leonlatsch.photok.model.database
 
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
@@ -45,7 +47,8 @@ const val DATABASE_NAME = "photok.db"
     autoMigrations = [
         AutoMigration(
             from = 1,
-            to = 2
+            to = 2,
+            spec = MigrationSpec1To2::class
         )
     ]
 )
@@ -59,3 +62,12 @@ abstract class PhotokDatabase : RoomDatabase() {
 
     abstract fun getAlbumDao(): AlbumDao
 }
+
+@RenameColumn.Entries(
+    RenameColumn(
+        tableName = "photo",
+        fromColumnName = "id",
+        toColumnName = "photoId"
+    )
+)
+class MigrationSpec1To2 : AutoMigrationSpec
