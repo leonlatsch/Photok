@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.albums.ui
 
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumCover
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import javax.inject.Inject
@@ -34,7 +35,12 @@ class AlbumUiStateFactory @Inject constructor() {
                         id = uuid,
                         name = name,
                         itemCount = files.size,
-                        albumCover = files.first().internalFileName
+                        albumCover = with(files.first()) {
+                            AlbumCover(
+                                filename = internalFileName,
+                                mimeType = type.mimeType,
+                            )
+                        }
                     )
                 }
             }

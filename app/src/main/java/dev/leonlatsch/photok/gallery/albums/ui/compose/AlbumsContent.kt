@@ -90,25 +90,27 @@ private fun AlbumPreviewTile(album: AlbumItem) {
                 .fillMaxSize()
                 .aspectRatio(1f)
 
-            if (LocalInspectionMode.current) {
-                Box(
+            when {
+                LocalInspectionMode.current -> Box(
                     modifier = contentModifier.background(Color.Red)
                 )
-            } else if (album.albumCover != null) {
-                val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        album.albumCover,
-                        "MIME_TYPE" // TODO: Add mime type to album cover
+
+                album.albumCover != null -> {
+                    val requestData = remember(album) {
+                        EncryptedImageRequestData(
+                            album.albumCover.filename,
+                            album.albumCover.filename,
+                        )
+                    }
+
+                    Image(
+                        painter = rememberEncryptedImagePainter(requestData),
+                        contentDescription = album.albumCover.filename,
+                        modifier = contentModifier
                     )
                 }
 
-                Image(
-                    painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover,
-                    modifier = contentModifier
-                )
-            } else {
-                Box(
+                else -> Box(
                     // TODO: Maybe add a placeholder image
                     modifier = contentModifier.background(Color.Gray)
                 )

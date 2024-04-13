@@ -27,5 +27,10 @@ data class AlbumItem(
     val id: String,
     val name: String,
     val itemCount: Int,
-    val albumCover: String? = null,
+    val albumCover: AlbumCover? = null,
+)
+
+data class AlbumCover(
+    val filename: String,
+    val mimeType: String,
 )
