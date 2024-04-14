@@ -50,7 +50,7 @@ interface AlbumDao {
 
     @Transaction
     @Query("SELECT * FROM albumtable WHERE uuid = :uuid")
-    suspend fun getAlbumWithPhotos(uuid: String): AlbumWithPhotos
+    fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
     @Query("SELECT COUNT(*) FROM albumtable")
     suspend fun countAll(): Int

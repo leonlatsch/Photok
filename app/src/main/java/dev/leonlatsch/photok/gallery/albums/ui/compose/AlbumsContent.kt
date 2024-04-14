@@ -136,7 +136,7 @@ private fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) ->
                 }
 
                 else -> Box(
-                    // TODO: Maybe add a placeholder image
+                    // TODO: add a placeholder image
                     modifier = contentModifier.background(MaterialTheme.colorScheme.tertiary)
                 )
             }

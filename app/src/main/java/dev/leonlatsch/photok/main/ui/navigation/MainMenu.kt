@@ -18,10 +18,8 @@ package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
@@ -40,7 +38,7 @@ fun MainMenu(
         containerColor = colorResource(R.color.background)
     ) {
         MainNavItem(
-            fragmentid = R.id.galleryFragment,
+            fragmentsId = R.id.galleryFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_image,
             label = stringResource(R.string.gallery_all_photos_label),
@@ -48,7 +46,8 @@ fun MainMenu(
         )
 
         MainNavItem(
-            fragmentid = R.id.albumsFragment,
+            fragmentsId = R.id.albumsFragment,
+            additionalFragmentsId = listOf(R.id.albumDetailFragment),
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_folder,
             label = stringResource(R.string.gallery_albums_label),
@@ -56,7 +55,7 @@ fun MainMenu(
         )
 
         MainNavItem(
-            fragmentid = R.id.settingsFragment,
+            fragmentsId = R.id.settingsFragment,
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_settings,
             label = stringResource(R.string.menu_main_settings),
@@ -79,16 +78,19 @@ private fun MainMenuPreview() {
 
 @Composable
 private fun RowScope.MainNavItem(
-    fragmentid: Int,
+    fragmentsId: Int,
     currentSelectedFragmentId: Int,
     iconRes: Int,
     label: String,
-    onNavigationItemClicked: (Int) -> Unit
+    onNavigationItemClicked: (Int) -> Unit,
+    additionalFragmentsId: List<Int> = emptyList(),
 ) {
 
     NavigationBarItem(
-        selected = currentSelectedFragmentId == fragmentid,
-        onClick = { onNavigationItemClicked(fragmentid) },
+        selected = currentSelectedFragmentId == fragmentsId || additionalFragmentsId.contains(
+            currentSelectedFragmentId
+        ),
+        onClick = { onNavigationItemClicked(fragmentsId) },
         icon = {
             Icon(painter = painterResource(iconRes), contentDescription = label)
         },

@@ -22,6 +22,7 @@ import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
@@ -29,15 +30,13 @@ import javax.inject.Inject
 class AlbumRepositoryImpl @Inject constructor(
     private val albumDao: AlbumDao
 ) : AlbumRepository {
-    override fun observeAlbums(): Flow<List<Album>> {
-        return albumDao.getAllAlbumsWithPhotos().map { albumList ->
+    override fun observeAlbums(): Flow<List<Album>> =
+        albumDao.getAllAlbumsWithPhotos().map { albumList ->
             albumList.map { it.toDomain() }
         }
-    }
 
-    override suspend fun getAlbum(uuid: String): Album {
-        return albumDao.getAlbumWithPhotos(uuid).toDomain()
-    }
+    override fun getAlbum(uuid: String): Flow<Album> =
+        albumDao.getAlbumWithPhotos(uuid).map { it.toDomain() }
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {

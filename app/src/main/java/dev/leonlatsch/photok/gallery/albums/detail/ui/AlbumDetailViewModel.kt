@@ -17,21 +17,46 @@
 package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.ui.PhotoTile
+import dev.leonlatsch.photok.model.database.entity.Photo
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 const val ALBUM_DETAIL_UUID = "album_uuid"
 
 @HiltViewModel(assistedFactory = AlbumDetailViewModel.Factory::class)
 class AlbumDetailViewModel @AssistedInject constructor(
-    @Assisted(ALBUM_DETAIL_UUID) private val albumUUID: String
+    @Assisted(ALBUM_DETAIL_UUID) private val albumUUID: String,
+    private val albumsRepository: AlbumRepository,
 ) : ViewModel() {
+
+    val uiState = albumsRepository.getAlbum(albumUUID).map { album ->
+        AlbumDetailUiState(
+            albumName = album.name,
+            photos = album.files.map {
+                PhotoTile(
+                    it.internalThumbnailFileName,
+                    it.type,
+                    it.uuid
+                )
+            }
+        )
+    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumDetailUiState())
 
     @AssistedFactory
     interface Factory {
         fun create(@Assisted(ALBUM_DETAIL_UUID) albumUUID: String): AlbumDetailViewModel
     }
 }
+
+data class AlbumDetailUiState(
+    val albumName: String = "",
+    val photos: List<PhotoTile> = emptyList()
+)

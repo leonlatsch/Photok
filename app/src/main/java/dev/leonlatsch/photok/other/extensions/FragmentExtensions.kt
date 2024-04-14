@@ -62,13 +62,13 @@ inline fun Fragment.launchLifecycleAwareJob(
  * Create a view model with assisted injection. This is a workaround for the missing support of assisted injection in Hilt.
  */
 inline fun <FactoryType, reified ViewModelType: ViewModel> Fragment.assistedViewModel(
-    crossinline viewModeoProducer: (FactoryType) -> ViewModelType
+    crossinline viewModelProducer: (FactoryType) -> ViewModelType
 ) = lazy {
     ViewModelProvider(
         viewModelStore,
         defaultViewModelProviderFactory,
         defaultViewModelCreationExtras.withCreationCallback<FactoryType> { factory ->
-            viewModeoProducer(factory)
+            viewModelProducer(factory)
         }
     )[ViewModelType::class.java]
 }

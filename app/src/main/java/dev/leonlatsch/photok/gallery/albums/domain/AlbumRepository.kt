@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AlbumRepository {
     fun observeAlbums(): Flow<List<Album>>
-    suspend fun getAlbum(uuid: String): Album
+    fun getAlbum(uuid: String): Flow<Album>
     suspend fun createAlbum(album: Album): Result<Album>
     suspend fun deleteAlbum(album: Album): Result<Unit>
 }
