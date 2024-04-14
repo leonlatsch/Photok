@@ -32,6 +32,7 @@
     <string name="common_ok">نعم </string>
     <string name="common_are_you_sure">هل أنت متأكد؟ </string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
@@ -91,6 +92,7 @@
     <string name="menu_ms_select_all">اختر الكل</string>
     <string name="menu_ms_delete">مسح</string>
     <string name="menu_ms_export">تصدير</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>

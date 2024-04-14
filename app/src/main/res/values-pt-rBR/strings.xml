@@ -33,6 +33,7 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Tem certeza?</string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando arquivo(s)</string>
@@ -92,6 +93,7 @@
     <string name="menu_ms_select_all">Selecionar tudo</string>
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>

@@ -135,9 +135,9 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             visible = multiSelectionState.isActive.value,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 24.dp),
+                .padding(vertical = 24.dp, horizontal = 12.dp)
         ) {
-            GalleryInteractionsRow(
+            GalleryMultiSelectionMenu(
                 onClose = { multiSelectionState.cancelSelection() },
                 onSelectAll = { multiSelectionState.selectAll() },
                 onDelete = {
@@ -148,6 +148,10 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                     handleUiEvent(GalleryUiEvent.OnExport(multiSelectionState.selectedItems.value.toList()))
                     multiSelectionState.cancelSelection()
                 },
+                onAddToAlbum = {
+                    TODO()
+                },
+                numOfSelected = multiSelectionState.selectedItems.value.size
             )
         }
     }

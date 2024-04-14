@@ -32,6 +32,7 @@
     <string name="common_ok">ОК</string>
     <string name="common_are_you_sure">Вы уверены?</string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>
