@@ -38,6 +38,7 @@ import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -53,6 +54,14 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
+            val multiSelectionState = rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
+
+            PhotosGrid(
+                photos = uiState.photos,
+                multiSelectionState = multiSelectionState,
+                openPhoto = {},
+            )
+
             Text(
                 uiState.albumName,
                 style = MaterialTheme.typography.headlineSmall,
@@ -63,13 +72,9 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
                     .padding(WindowInsets.statusBars.asPaddingValues())
             )
 
-            val multiSelectionState = rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
-
-            PhotosGrid(
-                photos = uiState.photos,
-                multiSelectionState = multiSelectionState,
-                openPhoto = {},
-            )
+            MagicFab {
+                TODO()
+            }
         }
     }
 }

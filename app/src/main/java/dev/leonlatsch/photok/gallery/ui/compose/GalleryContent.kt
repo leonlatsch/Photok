@@ -126,12 +126,9 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
         ) {
-            MagicFab(
-                onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp)
-            )
+            MagicFab {
+                handleUiEvent(GalleryUiEvent.OpenImportMenu)
+            }
         }
 
         AnimatedVisibility(

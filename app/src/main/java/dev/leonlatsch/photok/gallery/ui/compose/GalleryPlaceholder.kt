@@ -38,9 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.components.MagicFab
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
@@ -72,12 +72,9 @@ fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
             )
         }
 
-        MagicFab(
-            onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(12.dp)
-        )
+        MagicFab {
+            handleUiEvent(GalleryUiEvent.OpenImportMenu)
+        }
     }
 }
 

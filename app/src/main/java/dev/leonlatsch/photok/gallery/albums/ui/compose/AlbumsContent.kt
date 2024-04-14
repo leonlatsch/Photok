@@ -50,11 +50,11 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
-import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.components.AppName
+import dev.leonlatsch.photok.ui.components.MagicFab
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent) -> Unit) {
@@ -74,12 +74,9 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
                 .padding(WindowInsets.statusBars.asPaddingValues())
         )
 
-        MagicFab(
-            onClick = { handleUiEvent(AlbumsUiEvent.ShowCreateDialog) },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(12.dp)
-        )
+        MagicFab {
+            handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
+        }
     }
 }
 
