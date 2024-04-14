@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.content.res.Configuration
 import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,17 +28,13 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-private const val PORTRAIT_COLUMN_COUNT = 3
-private const val LANDSCAPE_COLUMN_COUNT = 6
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
@@ -53,13 +48,8 @@ class GalleryViewModel @Inject constructor(
     private val photosFlow = photoRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
-    private val columnCountFlow = MutableStateFlow(PORTRAIT_COLUMN_COUNT)
-
-    val uiState: StateFlow<GalleryUiState> = combine(
-        photosFlow,
-        columnCountFlow
-    ) { photos, columnCount ->
-        galleryUiStateFactory.create(photos, columnCount)
+    val uiState: StateFlow<GalleryUiState> = photosFlow.map { photos ->
+        galleryUiStateFactory.create(photos)
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
@@ -96,14 +86,6 @@ class GalleryViewModel @Inject constructor(
 
         eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
         config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
-    }
-
-    fun onConfigurationChanged() {
-        columnCountFlow.value = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
-            Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_COLUMN_COUNT
-            else -> PORTRAIT_COLUMN_COUNT
-        }
     }
 }
 

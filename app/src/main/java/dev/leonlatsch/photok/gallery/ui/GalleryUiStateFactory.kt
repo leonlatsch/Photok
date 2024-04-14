@@ -21,14 +21,13 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import javax.inject.Inject
 
 class GalleryUiStateFactory @Inject constructor() {
-    fun create(photos: List<Photo>, columnCount: Int): GalleryUiState {
+    fun create(photos: List<Photo>): GalleryUiState {
         return if (photos.isEmpty()) {
             GalleryUiState.Empty
         } else {
             GalleryUiState.Content(
                 selectionMode = false,
                 photos = photos.map { PhotoTile(it.fileName, it.type, it.uuid) },
-                columnCount = columnCount
             )
         }
     }

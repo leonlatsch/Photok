@@ -24,6 +24,5 @@ sealed class GalleryUiState {
     data class Content(
         val selectionMode: Boolean,
         val photos: List<PhotoTile>,
-        val columnCount: Int,
     ) : GalleryUiState()
 }

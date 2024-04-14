@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -53,16 +55,24 @@ import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestDat
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
+private const val PORTRAIT_COLUMN_COUNT = 3
+private const val LANDSCAPE_COLUMN_COUNT = 6
+
 @Composable
 fun PhotosGrid(
     photos: List<PhotoTile>,
-    columnCount: Int,
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
     modifier: Modifier = Modifier,
     extraTopPadding: Dp = DefaultGalleryTopPadding,
     gridState: LazyGridState = rememberLazyGridState()
 ) {
+    val columnCount = when (LocalConfiguration.current.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
+        Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_COLUMN_COUNT
+        else -> PORTRAIT_COLUMN_COUNT
+    }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
@@ -186,7 +196,6 @@ private fun PhotoGridPreview() {
             PhotoTile("", PhotoType.JPEG, "5"),
             PhotoTile("", PhotoType.JPEG, "6"),
         ),
-        columnCount = 3,
         multiSelectionState = MultiSelectionState(listOf("2", "3", "5",)),
         openPhoto = {}
     )
