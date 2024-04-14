@@ -94,6 +94,7 @@
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>

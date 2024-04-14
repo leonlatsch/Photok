@@ -94,6 +94,7 @@
     <string name="menu_ms_delete">Borrar</string>
     <string name="menu_ms_export">Exportar</string>
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">¿Estas seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>

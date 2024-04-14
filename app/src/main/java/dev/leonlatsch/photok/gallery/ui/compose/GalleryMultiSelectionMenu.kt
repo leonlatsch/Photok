@@ -58,7 +58,7 @@ fun GalleryMultiSelectionMenu(
                     contentDescription = null
                 )
             },
-            text = { Text("Add to album") },
+            text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
             onClick = {
                 onAddToAlbum()
                 closeActions()

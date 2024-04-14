@@ -94,6 +94,7 @@
     <string name="menu_ms_delete">Löschen</string>
     <string name="menu_ms_export">Exportieren</string>
     <string name="menu_ms_info">%1$d Element(e) ausgewählt</string>
+    <string name="menu_ms_add_to_album">Zu Album hinzufügen</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>

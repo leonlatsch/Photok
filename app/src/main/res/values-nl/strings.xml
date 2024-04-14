@@ -76,6 +76,7 @@
     <string name="menu_ms_delete">Verwijder</string>
     <string name="menu_ms_export">Exporteren</string>
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>verwijderen</b>?</string>

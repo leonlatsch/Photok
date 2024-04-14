@@ -93,6 +93,7 @@
     <string name="menu_ms_delete">مسح</string>
     <string name="menu_ms_export">تصدير</string>
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>

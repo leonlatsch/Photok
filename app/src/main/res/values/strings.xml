@@ -93,6 +93,7 @@
     <string name="menu_ms_delete">Delete</string>
     <string name="menu_ms_export">Export</string>
     <string name="menu_ms_info">%1$d item(s) selected</string>
+    <string name="menu_ms_add_to_album">Add to album</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>

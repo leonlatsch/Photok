@@ -92,6 +92,8 @@
     <string name="menu_ms_select_all">Выбрать всё</string>
     <string name="menu_ms_delete">Удалить</string>
     <string name="menu_ms_export">Экспорт</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>
