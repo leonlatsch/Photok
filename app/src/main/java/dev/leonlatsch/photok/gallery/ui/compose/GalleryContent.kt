@@ -76,7 +76,6 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             photos = uiState.photos,
             multiSelectionState = multiSelectionState,
             openPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
-            columnCount = uiState.columnCount,
             modifier = Modifier.fillMaxHeight(),
             gridState = gridState
         )
@@ -181,7 +180,6 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 ),
-                columnCount = 3,
             ),
             handleUiEvent = {},
         )

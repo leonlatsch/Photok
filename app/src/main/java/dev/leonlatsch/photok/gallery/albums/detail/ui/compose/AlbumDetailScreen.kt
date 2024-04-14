@@ -69,7 +69,6 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
                 photos = uiState.photos,
                 multiSelectionState = multiSelectionState,
                 openPhoto = {},
-                columnCount = 3
             )
         }
     }
