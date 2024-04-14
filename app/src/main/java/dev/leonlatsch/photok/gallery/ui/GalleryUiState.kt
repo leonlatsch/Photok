@@ -24,13 +24,6 @@ sealed class GalleryUiState {
     data class Content(
         val selectionMode: Boolean,
         val photos: List<PhotoTile>,
-        val multiSelectionState: MultiSelectionState,
         val columnCount: Int,
     ) : GalleryUiState()
 }
-
-data class MultiSelectionState(
-    val isActive: Boolean,
-    val selectedItemUUIDs: List<String>
-)
-

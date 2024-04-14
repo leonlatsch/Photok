@@ -48,16 +48,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
-import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
+import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.findWindow
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
 
 private const val AnimationStiffness = Spring.StiffnessLow
@@ -69,12 +69,13 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
     val window = findWindow()
     val isDarkTheme = isSystemInDarkTheme()
 
+    val multiSelectionState = rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
+
     Box {
         PhotosGrid(
             photos = uiState.photos,
-            multiSelectionState = uiState.multiSelectionState,
-            onClicked = { handleUiEvent(GalleryUiEvent.PhotoClicked(it)) },
-            onLongPress = { handleUiEvent(GalleryUiEvent.PhotoLongPressed(it)) },
+            multiSelectionState = multiSelectionState,
+            openPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
             columnCount = uiState.columnCount,
             modifier = Modifier.fillMaxHeight(),
             gridState = gridState
@@ -121,7 +122,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         )
 
         AnimatedVisibility(
-            visible = uiState.multiSelectionState.isActive.not(),
+            visible = multiSelectionState.isActive.value.not(),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
@@ -135,16 +136,22 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         }
 
         AnimatedVisibility(
-            visible = uiState.multiSelectionState.isActive,
+            visible = multiSelectionState.isActive.value,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp),
         ) {
             GalleryInteractionsRow(
-                onClose = { handleUiEvent(GalleryUiEvent.CancelMultiSelect) },
-                onSelectAll = { handleUiEvent(GalleryUiEvent.SelectAll) },
-                onDelete = { handleUiEvent(GalleryUiEvent.OnDelete) },
-                onExport = { handleUiEvent(GalleryUiEvent.OnExport) },
+                onClose = { multiSelectionState.cancelSelection() },
+                onSelectAll = { multiSelectionState.selectAll() },
+                onDelete = {
+                    handleUiEvent(GalleryUiEvent.OnDelete(multiSelectionState.selectedItems.value.toList()))
+                    multiSelectionState.cancelSelection()
+               },
+                onExport = {
+                    handleUiEvent(GalleryUiEvent.OnExport(multiSelectionState.selectedItems.value.toList()))
+                    multiSelectionState.cancelSelection()
+                },
             )
         }
     }
@@ -173,10 +180,6 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
-                ),
-                multiSelectionState = MultiSelectionState(
-                    isActive = true,
-                    selectedItemUUIDs = listOf("1", "2")
                 ),
                 columnCount = 3,
             ),

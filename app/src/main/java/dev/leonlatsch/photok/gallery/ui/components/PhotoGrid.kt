@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
-import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -57,10 +56,9 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 @Composable
 fun PhotosGrid(
     photos: List<PhotoTile>,
-    multiSelectionState: MultiSelectionState,
-    onClicked: (PhotoTile) -> Unit,
-    onLongPress: (PhotoTile) -> Unit,
     columnCount: Int,
+    multiSelectionState: MultiSelectionState,
+    openPhoto: (PhotoTile) -> Unit,
     modifier: Modifier = Modifier,
     extraTopPadding: Dp = DefaultGalleryTopPadding,
     gridState: LazyGridState = rememberLazyGridState()
@@ -74,33 +72,28 @@ fun PhotosGrid(
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(
                 photoTile = it,
-                multiSelectionActive = multiSelectionState.isActive,
-                onClicked = { onClicked(it) },
-                selected = multiSelectionState.selectedItemUUIDs.contains(it.uuid),
-                onLongPress = { onLongPress(it) }
+                multiSelectionActive = multiSelectionState.isActive.value,
+                onClicked = {
+                    if (multiSelectionState.isActive.value.not()) {
+                        openPhoto(it)
+                        return@GalleryPhotoTile
+                    }
+
+                    if (multiSelectionState.selectedItems.value.contains(it.uuid)) {
+                        multiSelectionState.deselectItem(it.uuid)
+                    } else {
+                        multiSelectionState.selectItem(it.uuid)
+                    }
+                },
+                selected = multiSelectionState.selectedItems.value.contains(it.uuid),
+                onLongPress = {
+                    if (multiSelectionState.isActive.value.not()) {
+                        multiSelectionState.selectItem(it.uuid)
+                    }
+                }
             )
         }
     }
-}
-
-@Preview
-@Composable
-private fun PhotoGridPreview() {
-    PhotosGrid(
-        photos = listOf(
-            PhotoTile("", PhotoType.JPEG, "1"),
-            PhotoTile("", PhotoType.JPEG, "2"),
-            PhotoTile("", PhotoType.JPEG, "3"),
-            PhotoTile("", PhotoType.JPEG, "4"),
-            PhotoTile("", PhotoType.JPEG, "5"),
-            PhotoTile("", PhotoType.JPEG, "6"),
-        ),
-        multiSelectionState = MultiSelectionState(isActive = true, listOf("1", "2", "5")),
-        onClicked = {},
-        onLongPress = {},
-        columnCount = 3,
-        extraTopPadding = 0.dp
-    )
 }
 
 private val VideoIconSize = 20.dp
@@ -179,4 +172,22 @@ private fun GalleryPhotoTile(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun PhotoGridPreview() {
+    PhotosGrid(
+        photos = listOf(
+            PhotoTile("", PhotoType.JPEG, "1"),
+            PhotoTile("", PhotoType.JPEG, "2"),
+            PhotoTile("", PhotoType.JPEG, "3"),
+            PhotoTile("", PhotoType.JPEG, "4"),
+            PhotoTile("", PhotoType.JPEG, "5"),
+            PhotoTile("", PhotoType.JPEG, "6"),
+        ),
+        columnCount = 3,
+        multiSelectionState = MultiSelectionState(listOf("2", "3", "5",)),
+        openPhoto = {}
+    )
 }

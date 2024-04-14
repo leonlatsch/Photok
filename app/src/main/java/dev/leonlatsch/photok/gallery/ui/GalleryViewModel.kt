@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -54,17 +53,13 @@ class GalleryViewModel @Inject constructor(
     private val photosFlow = photoRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
-    private val multiSelectionState =
-        MutableStateFlow(MultiSelectionState(isActive = false, listOf()))
-
     private val columnCountFlow = MutableStateFlow(PORTRAIT_COLUMN_COUNT)
 
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
-        multiSelectionState,
         columnCountFlow
-    ) { photos, multiSelectionState, columnCount ->
-        galleryUiStateFactory.create(photos, multiSelectionState, columnCount)
+    ) { photos, columnCount ->
+        galleryUiStateFactory.create(photos, columnCount)
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
@@ -73,78 +68,27 @@ class GalleryViewModel @Inject constructor(
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
             is GalleryUiEvent.OpenImportMenu -> eventsChannel.trySend(GalleryNavigationEvent.OpenImportMenu)
-            is GalleryUiEvent.PhotoClicked -> onPhotoClicked(event.item)
-            is GalleryUiEvent.PhotoLongPressed -> onPhotoLongPressed(event.item)
-            is GalleryUiEvent.CancelMultiSelect -> onCancelMultiSelect()
-            is GalleryUiEvent.OnDelete -> onDeleteSelectedItems()
-            is GalleryUiEvent.OnExport -> onExportSelectedItems()
-            is GalleryUiEvent.SelectAll -> onSelectAll()
+            is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
+            is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
+            is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items)
         }
     }
 
-    private fun onSelectAll() {
-        multiSelectionState.update {
-            it.copy(
-                isActive = true,
-                selectedItemUUIDs = photosFlow.value.map { photo -> photo.uuid })
-        }
-    }
-
-    private fun onExportSelectedItems() {
-        val uuidsToExport = multiSelectionState.value.selectedItemUUIDs
+    private fun onExportSelectedItems(selectedItems: List<String>) {
         eventsChannel.trySend(
             GalleryNavigationEvent.StartExportDialog(
-                photosFlow.value.filter { uuidsToExport.contains(it.uuid) })
+                photosFlow.value.filter { selectedItems.contains(it.uuid) })
         )
-        onCancelMultiSelect()
     }
 
-    private fun onDeleteSelectedItems() {
-        val uuidsToDelete = multiSelectionState.value.selectedItemUUIDs
+    private fun onDeleteSelectedItems(selectedItems: List<String>) {
         eventsChannel.trySend(GalleryNavigationEvent.StartDeleteDialog(
-            photosFlow.value.filter { uuidsToDelete.contains(it.uuid) }
+            photosFlow.value.filter { selectedItems.contains(it.uuid) }
         ))
-        onCancelMultiSelect()
     }
 
-    private fun onCancelMultiSelect() {
-        multiSelectionState.update { it.copy(isActive = false, selectedItemUUIDs = emptyList()) }
-    }
-
-    private fun onPhotoLongPressed(item: PhotoTile) {
-        if (multiSelectionState.value.isActive.not()) {
-            multiSelectionState.update {
-                it.copy(
-                    isActive = true,
-                    selectedItemUUIDs = listOf(item.uuid)
-                )
-            }
-        }
-    }
-
-    private fun onPhotoClicked(item: PhotoTile) {
-        if (multiSelectionState.value.isActive.not()) {
-            eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(item.uuid))
-        } else {
-            if (multiSelectionState.value.selectedItemUUIDs.contains(item.uuid)) {
-                // Remove
-                multiSelectionState.update {
-                    it.copy(
-                        isActive = it.selectedItemUUIDs.size != 1,
-                        selectedItemUUIDs = it.selectedItemUUIDs.filterNot { selectedUUid ->
-                            selectedUUid == item.uuid
-                        },
-                    )
-                }
-            } else {
-                // Add
-                multiSelectionState.update {
-                    it.copy(
-                        selectedItemUUIDs = it.selectedItemUUIDs + listOf(item.uuid)
-                    )
-                }
-            }
-        }
+    private fun navigateToPhoto(item: PhotoTile) {
+        eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(item.uuid))
     }
 
     fun checkForNewFeatures() = viewModelScope.launch {
