@@ -14,47 +14,39 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.albums.ui
+package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
-import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
-import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
-import javax.inject.Inject
+import dev.leonlatsch.photok.other.extensions.assistedViewModel
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @AndroidEntryPoint
-class AlbumsFragment : Fragment() {
+class AlbumDetailFragment : Fragment() {
 
-    @Inject
-    lateinit var albumsNavigator: AlbumsNavigator
+    private val args: AlbumDetailFragmentArgs by navArgs()
 
-    private val viewModel: AlbumsViewModel by viewModels()
+    private val viewModel by assistedViewModel<AlbumDetailViewModel.Factory, AlbumDetailViewModel> {
+        it.create(args.albumUuid)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setContent {
-            AlbumsScreen(viewModel)
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        launchLifecycleAwareJob {
-            viewModel.navEvent.collect { event ->
-                albumsNavigator.navigate(event, findNavController())
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AppTheme {
+                    Text("Album Detail ${args.albumUuid}")
+                }
             }
         }
     }

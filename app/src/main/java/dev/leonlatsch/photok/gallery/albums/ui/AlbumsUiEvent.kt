@@ -20,4 +20,5 @@ sealed interface AlbumsUiEvent {
     data object ShowCreateDialog : AlbumsUiEvent
     data object HideCreateDialog : AlbumsUiEvent
     data class CreateAlbum(val name: String) : AlbumsUiEvent
+    data class OpenAlbum(val uuid: String) : AlbumsUiEvent
 }

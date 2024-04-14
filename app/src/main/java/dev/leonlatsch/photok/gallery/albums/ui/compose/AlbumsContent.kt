@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.gallery.albums.ui.compose
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -53,6 +54,7 @@ import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.compose.ImportButton
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.compose.AppName
 
 @Composable
@@ -63,11 +65,12 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
         AlbumsGrid(
             albums = content.albums,
             extraPadding = 120.dp,
+            handleUiEvent = handleUiEvent,
             modifier = Modifier.fillMaxWidth(),
         )
 
         AppName(
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(WindowInsets.statusBars.asPaddingValues())
@@ -83,21 +86,30 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
 }
 
 @Composable
-private fun AlbumsGrid(albums: List<AlbumItem>, modifier: Modifier = Modifier, extraPadding: Dp) {
+private fun AlbumsGrid(
+    albums: List<AlbumItem>,
+    extraPadding: Dp,
+    handleUiEvent: (AlbumsUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(top = extraPadding),
         modifier = modifier
     ) {
         items(albums, key = { it.id }) { album ->
-            AlbumPreviewTile(album)
+            AlbumPreviewTile(album, handleUiEvent)
         }
     }
 }
 
 @Composable
-private fun AlbumPreviewTile(album: AlbumItem) {
-    Card(modifier = Modifier.padding(12.dp)) {
+private fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(12.dp)
+            .clickable { handleUiEvent(AlbumsUiEvent.OpenAlbum(album.id)) }
+    ) {
         Box {
             val contentModifier = Modifier
                 .fillMaxSize()
@@ -105,7 +117,7 @@ private fun AlbumPreviewTile(album: AlbumItem) {
 
             when {
                 LocalInspectionMode.current -> Box(
-                    modifier = contentModifier.background(Color.Red)
+                    modifier = contentModifier.background(MaterialTheme.colorScheme.tertiary)
                 )
 
                 album.albumCover != null -> {
@@ -125,7 +137,7 @@ private fun AlbumPreviewTile(album: AlbumItem) {
 
                 else -> Box(
                     // TODO: Maybe add a placeholder image
-                    modifier = contentModifier.background(Color.Gray)
+                    modifier = contentModifier.background(MaterialTheme.colorScheme.tertiary)
                 )
             }
 
@@ -168,36 +180,38 @@ private fun AlbumPreviewTile(album: AlbumItem) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AlbumsContentPreview() {
-    AlbumsContent(
-        content = AlbumsUiState.Content(
-            listOf(
-                AlbumItem(
-                    id = "1",
-                    name = "Album 1",
-                    itemCount = 10,
-                ),
-                AlbumItem(
-                    id = "2",
-                    name = "Album 2",
-                    itemCount = 20,
-                ),
-                AlbumItem(
-                    id = "3",
-                    name = "Album 3",
-                    itemCount = 30,
-                ),
-                AlbumItem(
-                    id = "4",
-                    name = "Album 4",
-                    itemCount = 40
-                ),
-                AlbumItem(
-                    id = "5",
-                    name = "Album 5",
-                    itemCount = 50
-                ),
-            )
-        ),
-        handleUiEvent = {}
-    )
+    AppTheme {
+        AlbumsContent(
+            content = AlbumsUiState.Content(
+                listOf(
+                    AlbumItem(
+                        id = "1",
+                        name = "Album 1",
+                        itemCount = 10,
+                    ),
+                    AlbumItem(
+                        id = "2",
+                        name = "Album 2",
+                        itemCount = 20,
+                    ),
+                    AlbumItem(
+                        id = "3",
+                        name = "Album 3",
+                        itemCount = 30,
+                    ),
+                    AlbumItem(
+                        id = "4",
+                        name = "Album 4",
+                        itemCount = 40
+                    ),
+                    AlbumItem(
+                        id = "5",
+                        name = "Album 5",
+                        itemCount = 50
+                    ),
+                )
+            ),
+            handleUiEvent = {}
+        )
+    }
 }
