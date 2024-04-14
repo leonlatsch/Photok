@@ -149,7 +149,8 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                     multiSelectionState.cancelSelection()
                 },
                 onAddToAlbum = {
-                    TODO()
+                    handleUiEvent(GalleryUiEvent.OnAddToAlbum(multiSelectionState.selectedItems.value.toList()))
+                    multiSelectionState.cancelSelection()
                 },
                 numOfSelected = multiSelectionState.selectedItems.value.size
             )

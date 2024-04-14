@@ -23,4 +23,5 @@ sealed interface GalleryUiEvent {
     data object OpenImportMenu : GalleryUiEvent
     data class OnDelete(val items: List<String>) : GalleryUiEvent
     data class OnExport(val items: List<String>) : GalleryUiEvent
+    data class OnAddToAlbum(val items: List<String>) : GalleryUiEvent
 }

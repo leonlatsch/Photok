@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
@@ -43,6 +44,7 @@ class GalleryViewModel @Inject constructor(
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
     private val resources: Resources,
+    private val albumRepository: AlbumRepository
 ) : ViewModel() {
 
     private val photosFlow = photoRepository.observeAll()
@@ -61,7 +63,12 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items)
+            is GalleryUiEvent.OnAddToAlbum -> onAddToAlbum(event.items)
         }
+    }
+
+    private fun onAddToAlbum(items: List<String>) {
+        TODO()
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>) {
