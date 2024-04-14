@@ -20,6 +20,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,36 +45,40 @@ fun GalleryInteractionsRow(
     onExport: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .clip(CircleShape)
-            .background(colorResource(R.color.background))
-            .padding(horizontal = 12.dp)
+    Card(
+        shape = CircleShape,
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
-        IconButton(onClick = onClose) {
-            Icon(
-                painter = painterResource(R.drawable.ic_close),
-                contentDescription = stringResource(R.string.process_close),
-                tint = colorResource(R.color.appTitleColor)
-            )
-        }
-        TextButton(onClick = onSelectAll) {
-            Text(
-                text = stringResource(R.string.menu_ms_select_all),
-                color = colorResource(R.color.appTitleColor)
-            )
-        }
-        TextButton(onClick = onDelete) {
-            Text(
-                text = stringResource(R.string.common_delete),
-                color = colorResource(R.color.appTitleColor)
-            )
-        }
-        TextButton(onClick = onExport) {
-            Text(
-                text = stringResource(R.string.common_export),
-                color = colorResource(R.color.appTitleColor)
-            )
+        Row(
+            modifier = modifier
+                .background(colorResource(R.color.background))
+                .padding(horizontal = 12.dp)
+        ) {
+            IconButton(onClick = onClose) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_close),
+                    contentDescription = stringResource(R.string.process_close),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+            TextButton(onClick = onSelectAll) {
+                Text(
+                    text = stringResource(R.string.menu_ms_select_all),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+            TextButton(onClick = onDelete) {
+                Text(
+                    text = stringResource(R.string.common_delete),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+            TextButton(onClick = onExport) {
+                Text(
+                    text = stringResource(R.string.common_export),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ fun BoxScope.MagicFab(
     onClick: () -> Unit,
 ) {
     dev.leonlatsch.photok.ui.components.MagicFab(
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         modifier = modifier
             .align(Alignment.BottomEnd)
             .padding(12.dp)
