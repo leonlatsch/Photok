@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.model.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.UUID
@@ -23,7 +24,7 @@ import java.util.UUID
 @Entity
 data class AlbumTable(
     val name: String,
+    @PrimaryKey
+    @ColumnInfo(name = "album_uuid")
     val uuid: String = UUID.randomUUID().toString(),
-    @PrimaryKey(autoGenerate = true) val albumId: Int? = null,
-) {
-}
+)

@@ -36,7 +36,7 @@ class DeleteViewModel @Inject constructor(
 ) : BaseProcessViewModel<Photo>(app) {
 
     override suspend fun processItem(item: Photo) {
-        if (item.photoId == null) {
+        if (item.uuid.isEmpty()) {
             failuresOccurred = true
             return
         }

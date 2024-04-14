@@ -149,7 +149,7 @@ class PhotoViewHolder(
     }
 
     private fun openVideoPlayer(photo: Photo) {
-        val args = bundleOf(INTENT_PHOTO_UUID to photo.photoId)
+        val args = bundleOf(INTENT_PHOTO_UUID to photo.uuid)
         navController.navigate(
             R.id.action_imageViewerFragment_to_videoPlayerFragment,
             args

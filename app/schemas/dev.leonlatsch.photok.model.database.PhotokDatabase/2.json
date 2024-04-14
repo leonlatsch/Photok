@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "e2a46d4399cba1d70e20462a6c3b8147",
+    "identityHash": "0e9c6e20eb2e9681fedfcb4a3bfb42ae",
     "entities": [
       {
         "tableName": "photo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fileName` TEXT NOT NULL, `importedAt` INTEGER NOT NULL, `type` INTEGER NOT NULL, `size` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `photoId` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fileName` TEXT NOT NULL, `importedAt` INTEGER NOT NULL, `type` INTEGER NOT NULL, `size` INTEGER NOT NULL, `photo_uuid` TEXT NOT NULL, PRIMARY KEY(`photo_uuid`))",
         "fields": [
           {
             "fieldPath": "fileName",
@@ -34,21 +34,15 @@
           },
           {
             "fieldPath": "uuid",
-            "columnName": "uuid",
+            "columnName": "photo_uuid",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "photoId",
-            "columnName": "photoId",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "photoId"
+            "photo_uuid"
           ]
         },
         "indices": [],
@@ -56,7 +50,7 @@
       },
       {
         "tableName": "AlbumTable",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `uuid` TEXT NOT NULL, `albumId` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `album_uuid` TEXT NOT NULL, PRIMARY KEY(`album_uuid`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -66,48 +60,42 @@
           },
           {
             "fieldPath": "uuid",
-            "columnName": "uuid",
+            "columnName": "album_uuid",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "albumId",
-            "columnName": "albumId",
-            "affinity": "INTEGER",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "albumId"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "AlbumPhotosCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`albumId` INTEGER NOT NULL, `photoId` INTEGER NOT NULL, PRIMARY KEY(`albumId`, `photoId`))",
-        "fields": [
-          {
-            "fieldPath": "albumId",
-            "columnName": "albumId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "photoId",
-            "columnName": "photoId",
-            "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "albumId",
-            "photoId"
+            "album_uuid"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "album_photos_cross_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
+        "fields": [
+          {
+            "fieldPath": "albumUUID",
+            "columnName": "album_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "photoUUID",
+            "columnName": "photo_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "album_uuid",
+            "photo_uuid"
           ]
         },
         "indices": [],
@@ -117,7 +105,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2a46d4399cba1d70e20462a6c3b8147')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e9c6e20eb2e9681fedfcb4a3bfb42ae')"
     ]
   }
 }

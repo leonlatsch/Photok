@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.model.database
 
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.DeleteColumn
 import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -63,11 +64,17 @@ abstract class PhotokDatabase : RoomDatabase() {
     abstract fun getAlbumDao(): AlbumDao
 }
 
+@DeleteColumn.Entries(
+    DeleteColumn(
+        tableName = "photo",
+        columnName = "id"
+    ),
+)
 @RenameColumn.Entries(
     RenameColumn(
         tableName = "photo",
-        fromColumnName = "id",
-        toColumnName = "photoId"
+        fromColumnName = "uuid",
+        toColumnName = "photo_uuid",
     )
 )
 class MigrationSpec1To2 : AutoMigrationSpec

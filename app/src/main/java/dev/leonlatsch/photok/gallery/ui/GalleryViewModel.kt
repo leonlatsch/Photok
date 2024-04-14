@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
@@ -43,7 +42,6 @@ class GalleryViewModel @Inject constructor(
     @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
-    private val resources: Resources,
     private val albumRepository: AlbumRepository
 ) : ViewModel() {
 
@@ -68,7 +66,11 @@ class GalleryViewModel @Inject constructor(
     }
 
     private fun onAddToAlbum(items: List<String>) {
-        TODO()
+        viewModelScope.launch {
+            items.forEach {  photoId ->
+                albumRepository.linkPhotoToAlbum(photoId, "albumId")
+            }
+        }
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>) {

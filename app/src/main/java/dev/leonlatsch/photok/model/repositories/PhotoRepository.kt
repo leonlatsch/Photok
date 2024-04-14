@@ -67,11 +67,6 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun deleteAll() = photoDao.deleteAll()
 
-    /**
-     * @see PhotoDao.get
-     */
-    suspend fun get(id: Int) = photoDao.get(id)
-
     suspend fun get(uuid: String) = photoDao.get(uuid)
 
     /**

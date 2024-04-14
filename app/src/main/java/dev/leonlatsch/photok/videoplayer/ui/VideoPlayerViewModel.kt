@@ -60,11 +60,11 @@ class VideoPlayerViewModel @Inject constructor(
     /**
      * Create and prepare the [player] to play the passed video.
      */
-    fun setupPlayer(photoId: Int) {
+    fun setupPlayer(photoUUID: String) {
         releasePlayer()
 
         viewModelScope.launch(Dispatchers.IO) {
-            val photo = photoRepository.get(photoId)
+            val photo = photoRepository.get(photoUUID)
 
             player = SimpleExoPlayer.Builder(app)
                 .setMediaSourceFactory(createMediaSourceFactory())

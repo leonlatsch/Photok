@@ -24,4 +24,6 @@ interface AlbumRepository {
     fun getAlbum(uuid: String): Flow<Album>
     suspend fun createAlbum(album: Album): Result<Album>
     suspend fun deleteAlbum(album: Album): Result<Unit>
+
+    suspend fun linkPhotoToAlbum(photoUUID: String, albumUUID: String)
 }

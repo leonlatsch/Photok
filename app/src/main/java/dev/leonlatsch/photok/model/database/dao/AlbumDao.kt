@@ -38,10 +38,7 @@ interface AlbumDao {
     @Query("DELETE FROM albumtable")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM albumtable WHERE albumId = :id")
-    suspend fun getAlbumById(id: Int): AlbumTable
-
-    @Query("SELECT * FROM albumtable WHERE uuid = :uuid")
+    @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
     suspend fun getAlbumByUuid(uuid: String): AlbumTable
 
     @Transaction
@@ -49,9 +46,12 @@ interface AlbumDao {
     fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
 
     @Transaction
-    @Query("SELECT * FROM albumtable WHERE uuid = :uuid")
+    @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
     fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
     @Query("SELECT COUNT(*) FROM albumtable")
     suspend fun countAll(): Int
+
+    @Query("INSERT INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
+    suspend fun linkPhotoToAlbum(albumId: String, photoId: String)
 }

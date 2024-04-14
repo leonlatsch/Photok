@@ -22,7 +22,6 @@ import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
@@ -49,4 +48,8 @@ class AlbumRepositoryImpl @Inject constructor(
             -1 -> Result.failure(IOException())
             else -> Result.success(Unit)
         }
+
+    override suspend fun linkPhotoToAlbum(photoUUID: String, albumUUID: String) {
+        albumDao.linkPhotoToAlbum(photoUUID, albumUUID)
+    }
 }

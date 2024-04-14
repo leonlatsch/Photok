@@ -16,10 +16,11 @@
 
 package dev.leonlatsch.photok.model.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
-import java.util.*
+import java.util.UUID
 
 /**
  * Entity describing a Photo.
@@ -34,8 +35,10 @@ data class Photo(
     var importedAt: Long,
     @Expose val type: PhotoType,
     @Expose var size: Long = 0L,
-    @Expose val uuid: String = UUID.randomUUID().toString(),
-    @PrimaryKey(autoGenerate = true) val photoId: Int? = null
+    @Expose
+    @PrimaryKey
+    @ColumnInfo(name = "photo_uuid")
+    val uuid: String = UUID.randomUUID().toString(),
 ) {
 
     val internalFileName: String
