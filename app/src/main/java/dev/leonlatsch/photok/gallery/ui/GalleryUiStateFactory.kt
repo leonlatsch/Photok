@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.Photo
 import javax.inject.Inject
 

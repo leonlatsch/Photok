@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.uicomponnets.compose
+package dev.leonlatsch.photok.ui.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

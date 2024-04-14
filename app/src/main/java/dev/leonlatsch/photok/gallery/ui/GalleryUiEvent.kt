@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+
 sealed interface GalleryUiEvent {
     data class PhotoClicked(val item: PhotoTile) : GalleryUiEvent
     data class PhotoLongPressed(val item: PhotoTile) : GalleryUiEvent

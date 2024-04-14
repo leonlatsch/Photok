@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
-import dev.leonlatsch.photok.gallery.ui.PhotoTile
-import dev.leonlatsch.photok.gallery.ui.compose.PhotosGrid
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.theme.AppTheme
 

@@ -48,14 +48,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
-import dev.leonlatsch.photok.gallery.ui.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.compose.AppName
-import dev.leonlatsch.photok.uicomponnets.compose.findWindow
+import dev.leonlatsch.photok.ui.components.AppName
+import dev.leonlatsch.photok.ui.components.MagicFab
+import dev.leonlatsch.photok.ui.findWindow
 import java.util.UUID
 
 private const val AnimationStiffness = Spring.StiffnessLow
