@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
-import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.PhotoTile
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
@@ -60,7 +59,8 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 fun PhotosGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
-    handleUiEvent: (GalleryUiEvent) -> Unit,
+    onClicked: (PhotoTile) -> Unit,
+    onLongPress: (PhotoTile) -> Unit,
     columnCount: Int,
     modifier: Modifier = Modifier,
     extraTopPadding: Dp = DefaultGalleryTopPadding,
@@ -76,9 +76,9 @@ fun PhotosGrid(
             GalleryPhotoTile(
                 photoTile = it,
                 multiSelectionActive = multiSelectionState.isActive,
-                onClicked = { handleUiEvent(GalleryUiEvent.PhotoClicked(it)) },
+                onClicked = { onClicked(it) },
                 selected = multiSelectionState.selectedItemUUIDs.contains(it.uuid),
-                onLongPress = { handleUiEvent(GalleryUiEvent.PhotoLongPressed(it)) }
+                onLongPress = { onLongPress(it) }
             )
         }
     }
@@ -97,8 +97,10 @@ private fun PhotoGridPreview() {
             PhotoTile("", PhotoType.JPEG, "6"),
         ),
         multiSelectionState = MultiSelectionState(isActive = true, listOf("1", "2", "5")),
-        handleUiEvent = {},
-        columnCount = 3
+        onClicked = {},
+        onLongPress = {},
+        columnCount = 3,
+        extraTopPadding = 0.dp
     )
 }
 

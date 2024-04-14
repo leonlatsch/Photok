@@ -72,7 +72,8 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
             PhotosGrid(
                 photos = uiState.photos,
                 multiSelectionState = multiSelectionState,
-                handleUiEvent = {},
+                onClicked = {},
+                onLongPress = {},
                 columnCount = 3
             )
         }

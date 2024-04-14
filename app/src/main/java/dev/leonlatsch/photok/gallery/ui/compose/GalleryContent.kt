@@ -71,7 +71,8 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
         PhotosGrid(
             photos = uiState.photos,
             multiSelectionState = uiState.multiSelectionState,
-            handleUiEvent = handleUiEvent,
+            onClicked = { handleUiEvent(GalleryUiEvent.PhotoClicked(it)) },
+            onLongPress = { handleUiEvent(GalleryUiEvent.PhotoLongPressed(it)) },
             columnCount = uiState.columnCount,
             modifier = Modifier.fillMaxHeight(),
             gridState = gridState
