@@ -71,7 +71,7 @@ fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
             )
         }
 
-        ImportButton(
+        MagicFab(
             onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)

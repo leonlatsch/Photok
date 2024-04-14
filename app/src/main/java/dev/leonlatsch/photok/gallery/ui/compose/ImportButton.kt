@@ -23,22 +23,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun ImportButton(
+fun MagicFab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FloatingActionButton(
         onClick = onClick,
-        containerColor = colorResource(R.color.colorPrimary),
         modifier = modifier,
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_add),
-            contentDescription = null,
+            contentDescription = "Add",
             tint = Color.White
         )
     }
@@ -46,8 +47,10 @@ fun ImportButton(
 
 @Preview
 @Composable
-private fun ImportButtonPreview() {
-    ImportButton(
-        onClick = {}
-    )
+private fun MagicFabPreview() {
+    AppTheme {
+        MagicFab(
+            onClick = {}
+        )
+    }
 }

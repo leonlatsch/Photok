@@ -70,7 +70,6 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
 
             // TODO: Refactor photo grid to be reusable
             PhotosGrid(
-                extraTopPadding = 120.dp,
                 photos = uiState.photos,
                 multiSelectionState = multiSelectionState,
                 handleUiEvent = {},

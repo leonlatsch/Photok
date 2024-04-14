@@ -48,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.PhotoTile
@@ -62,7 +63,7 @@ fun PhotosGrid(
     handleUiEvent: (GalleryUiEvent) -> Unit,
     columnCount: Int,
     modifier: Modifier = Modifier,
-    extraTopPadding: Dp = 0.dp,
+    extraTopPadding: Dp = DefaultGalleryTopPadding,
     gridState: LazyGridState = rememberLazyGridState()
 ) {
     LazyVerticalGrid(

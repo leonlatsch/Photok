@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -75,7 +74,6 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             handleUiEvent = handleUiEvent,
             columnCount = uiState.columnCount,
             modifier = Modifier.fillMaxHeight(),
-            extraTopPadding = 120.dp,
             gridState = gridState
         )
 
@@ -125,7 +123,7 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
         ) {
-            ImportButton(
+            MagicFab(
                 onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)

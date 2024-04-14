@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,8 +49,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
-import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.gallery.ui.compose.ImportButton
+import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
+import dev.leonlatsch.photok.gallery.ui.compose.MagicFab
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -64,7 +63,6 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
     ) {
         AlbumsGrid(
             albums = content.albums,
-            extraPadding = 120.dp,
             handleUiEvent = handleUiEvent,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -76,7 +74,7 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
                 .padding(WindowInsets.statusBars.asPaddingValues())
         )
 
-        ImportButton(
+        MagicFab(
             onClick = { handleUiEvent(AlbumsUiEvent.ShowCreateDialog) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -88,13 +86,13 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
 @Composable
 private fun AlbumsGrid(
     albums: List<AlbumItem>,
-    extraPadding: Dp,
     handleUiEvent: (AlbumsUiEvent) -> Unit,
     modifier: Modifier = Modifier,
+    extraTopPadding: Dp = DefaultGalleryTopPadding,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = extraPadding),
+        contentPadding = PaddingValues(top = extraTopPadding),
         modifier = modifier
     ) {
         items(albums, key = { it.id }) { album ->
