@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
@@ -45,11 +46,14 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    AlbumDetailContent(uiState)
+    AlbumDetailContent(
+        uiState = uiState,
+        handleUiEvent = { viewModel.handleUiEvent(it) }
+    )
 }
 
 @Composable
-fun AlbumDetailContent(uiState: AlbumDetailUiState) {
+fun AlbumDetailContent(uiState: AlbumDetailUiState, handleUiEvent: (AlbumDetailUiEvent) -> Unit) {
     AppTheme {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -73,7 +77,7 @@ fun AlbumDetailContent(uiState: AlbumDetailUiState) {
             )
 
             MagicFab {
-                TODO()
+                handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
             }
         }
     }
@@ -96,7 +100,8 @@ private fun AlbumsDetailScreenPreview() {
                     PhotoTile("file7", PhotoType.JPEG, "uuid7"),
                     PhotoTile("file8", PhotoType.JPEG, "uuid8"),
                 )
-            )
+            ),
+            handleUiEvent = {},
         )
     }
 }

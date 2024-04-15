@@ -38,7 +38,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -48,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.ui.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
@@ -131,6 +134,8 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
             }
         }
 
+        var showAlbumPicker by remember { mutableStateOf(false) }
+
         AnimatedVisibility(
             visible = multiSelectionState.isActive.value,
             modifier = Modifier
@@ -149,10 +154,20 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                     multiSelectionState.cancelSelection()
                 },
                 onAddToAlbum = {
+                    showAlbumPicker = true
+                },
+                numOfSelected = multiSelectionState.selectedItems.value.size
+            )
+        }
+
+        if (showAlbumPicker) { // TODO: Find a solution to load albums
+            AlbumPickerDialog(
+                albums = emptyList(),
+                onAlbumSelected = {
                     handleUiEvent(GalleryUiEvent.OnAddToAlbum(multiSelectionState.selectedItems.value.toList()))
                     multiSelectionState.cancelSelection()
                 },
-                numOfSelected = multiSelectionState.selectedItems.value.size
+                onDismiss = { showAlbumPicker = false },
             )
         }
     }

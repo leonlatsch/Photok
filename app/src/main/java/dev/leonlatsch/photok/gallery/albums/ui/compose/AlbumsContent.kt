@@ -16,45 +16,20 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
-import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
-import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.gallery.ui.components.AlbumsGrid
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -66,7 +41,7 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
     ) {
         AlbumsGrid(
             albums = content.albums,
-            handleUiEvent = handleUiEvent,
+            onAlbumClicked = { handleUiEvent(AlbumsUiEvent.OpenAlbum(it)) },
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -79,98 +54,6 @@ fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent)
 
         MagicFab {
             handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
-        }
-    }
-}
-
-@Composable
-private fun AlbumsGrid(
-    albums: List<AlbumItem>,
-    handleUiEvent: (AlbumsUiEvent) -> Unit,
-    modifier: Modifier = Modifier,
-    extraTopPadding: Dp = DefaultGalleryTopPadding,
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = extraTopPadding),
-        modifier = modifier
-    ) {
-        items(albums, key = { it.id }) { album ->
-            AlbumPreviewTile(album, handleUiEvent)
-        }
-    }
-}
-
-@Composable
-fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(12.dp)
-            .clickable { handleUiEvent(AlbumsUiEvent.OpenAlbum(album.id)) }
-    ) {
-        Box {
-            val contentModifier = Modifier
-                .fillMaxSize()
-                .aspectRatio(1f)
-
-            if (album.albumCover == null || LocalInspectionMode.current) {
-                Box(
-                    modifier = contentModifier.background(MaterialTheme.colorScheme.outline)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_folder),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.align(Alignment.Center).size(48.dp)
-                    )
-                }
-            } else {
-                val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        album.albumCover.filename,
-                        album.albumCover.filename,
-                    )
-                }
-
-                Image(
-                    painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
-                    modifier = contentModifier
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(32.dp)
-                    .align(Alignment.BottomCenter)
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(Color.Transparent, colorResource(R.color.black_semi_transparent))
-                        )
-                    )
-            )
-
-            Text(
-                text = album.name,
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(8.dp)
-            )
-
-            val itemCountText = album.itemCount.toString().ifEmpty { "Empty" }
-
-            Text(
-                text = itemCountText,
-                color = Color.White,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-            )
         }
     }
 }

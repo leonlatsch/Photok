@@ -49,6 +49,12 @@ class AlbumDetailViewModel @AssistedInject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumDetailUiState())
 
+    fun handleUiEvent(event: AlbumDetailUiEvent) {
+        when (event) {
+            is AlbumDetailUiEvent.ImportIntoAlbum -> TODO()
+        }
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(@Assisted(ALBUM_DETAIL_UUID) albumUUID: String): AlbumDetailViewModel
@@ -59,3 +65,4 @@ data class AlbumDetailUiState(
     val albumName: String = "",
     val photos: List<PhotoTile> = emptyList()
 )
+
