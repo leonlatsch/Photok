@@ -28,9 +28,10 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -48,8 +49,13 @@ class GalleryViewModel @Inject constructor(
     private val photosFlow = photoRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
-    val uiState: StateFlow<GalleryUiState> = photosFlow.map { photos ->
-        galleryUiStateFactory.create(photos)
+    private val showAlbumSelectionDialog = MutableStateFlow(false)
+
+    val uiState: StateFlow<GalleryUiState> = combine(
+        photosFlow,
+        showAlbumSelectionDialog,
+    ) { photos, showAlbumSelection ->
+        galleryUiStateFactory.create(photos, showAlbumSelection)
     }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
@@ -61,16 +67,19 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items)
-            is GalleryUiEvent.OnAddToAlbum -> onAddToAlbum(event.items)
+            is GalleryUiEvent.OnAddToAlbum -> showAlbumSelectionDialog.value = true
+            is GalleryUiEvent.OnAlbumSelected -> onAlbumSelected(event.photoIds, event.albumId)
+            GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
         }
     }
 
-    private fun onAddToAlbum(items: List<String>) {
+    private fun onAlbumSelected(items: List<String>, albumId: String) {
         viewModelScope.launch {
-            items.forEach {  photoId ->
-                albumRepository.linkPhotoToAlbum(photoId, "albumId")
+            items.forEach { photoId ->
+                albumRepository.linkPhotoToAlbum(photoId, albumId)
             }
         }
+        showAlbumSelectionDialog.value = false
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>) {

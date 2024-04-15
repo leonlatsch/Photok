@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
@@ -37,6 +38,7 @@ import javax.inject.Inject
 class GalleryFragment : Fragment() {
 
     private val viewModel: GalleryViewModel by viewModels()
+    private val albumPickerViewModel: AlbumPickerViewModel by viewModels()
 
     @Inject
     lateinit var navigator: GalleryNavigator
@@ -53,7 +55,7 @@ class GalleryFragment : Fragment() {
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
             ) {
-                GalleryScreen(viewModel)
+                GalleryScreen(viewModel, albumPickerViewModel)
             }
         }
     }

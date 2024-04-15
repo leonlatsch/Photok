@@ -50,9 +50,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.albums.ui.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
+import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
@@ -67,12 +67,14 @@ private const val AnimationStiffness = Spring.StiffnessLow
 private val FadeAnimationSpec: FiniteAnimationSpec<Float> = spring(stiffness = AnimationStiffness)
 
 @Composable
-fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEvent) -> Unit) {
+fun GalleryContent(
+    uiState: GalleryUiState.Content,
+    handleUiEvent: (GalleryUiEvent) -> Unit,
+    multiSelectionState: MultiSelectionState,
+) {
     val gridState = rememberLazyGridState()
     val window = findWindow()
     val isDarkTheme = isSystemInDarkTheme()
-
-    val multiSelectionState = rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
 
     Box {
         PhotosGrid(
@@ -154,20 +156,9 @@ fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEve
                     multiSelectionState.cancelSelection()
                 },
                 onAddToAlbum = {
-                    showAlbumPicker = true
+                    handleUiEvent(GalleryUiEvent.OnAddToAlbum)
                 },
                 numOfSelected = multiSelectionState.selectedItems.value.size
-            )
-        }
-
-        if (showAlbumPicker) { // TODO: Find a solution to load albums
-            AlbumPickerDialog(
-                albums = emptyList(),
-                onAlbumSelected = {
-                    handleUiEvent(GalleryUiEvent.OnAddToAlbum(multiSelectionState.selectedItems.value.toList()))
-                    multiSelectionState.cancelSelection()
-                },
-                onDismiss = { showAlbumPicker = false },
             )
         }
     }
@@ -179,8 +170,7 @@ fun GalleryContentPreview() {
     AppTheme {
         GalleryContent(
             uiState = GalleryUiState.Content(
-                selectionMode = true,
-                listOf(
+                photos = listOf(
                     PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
@@ -197,8 +187,10 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 ),
+                showAlbumSelectionDialog = false,
             ),
             handleUiEvent = {},
+            multiSelectionState = rememberMultiSelectionState(items = emptyList())
         )
     }
 }

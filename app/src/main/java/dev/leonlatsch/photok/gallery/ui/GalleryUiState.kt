@@ -22,7 +22,7 @@ sealed class GalleryUiState {
     data object Empty : GalleryUiState()
 
     data class Content(
-        val selectionMode: Boolean,
         val photos: List<PhotoTile>,
+        val showAlbumSelectionDialog: Boolean,
     ) : GalleryUiState()
 }

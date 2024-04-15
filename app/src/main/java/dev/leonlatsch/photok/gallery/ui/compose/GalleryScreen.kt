@@ -16,16 +16,22 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
+import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerDialog
+import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
+import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun GalleryScreen(viewModel: GalleryViewModel) {
+fun GalleryScreen(
+    viewModel: GalleryViewModel,
+    albumPickerViewModel: AlbumPickerViewModel,
+) {
 
     val uiState by viewModel.uiState.collectAsState()
 
@@ -33,10 +39,33 @@ fun GalleryScreen(viewModel: GalleryViewModel) {
         when (uiState) {
             is GalleryUiState.Empty -> GalleryPlaceholder { viewModel.handleUiEvent(it) }
 
-            is GalleryUiState.Content -> GalleryContent(
-                uiState as GalleryUiState.Content,
-                handleUiEvent = { viewModel.handleUiEvent(it) }
-            )
+            is GalleryUiState.Content -> {
+                val multiSelectionState = rememberMultiSelectionState(
+                    items = (uiState as GalleryUiState.Content).photos.map { it.uuid }
+                )
+
+                GalleryContent(
+                    uiState = uiState as GalleryUiState.Content,
+                    handleUiEvent = { viewModel.handleUiEvent(it) },
+                    multiSelectionState = multiSelectionState,
+                )
+
+                if ((uiState as GalleryUiState.Content).showAlbumSelectionDialog) {
+                    AlbumPickerDialog(
+                        viewModel = albumPickerViewModel,
+                        onAlbumSelected = {
+                            viewModel.handleUiEvent(
+                                GalleryUiEvent.OnAlbumSelected(
+                                    multiSelectionState.selectedItems.value,
+                                    it
+                                )
+                            )
+                            multiSelectionState.cancelSelection()
+                        },
+                        onDismiss = { viewModel.handleUiEvent(GalleryUiEvent.CancelAlbumSelection) }
+                    )
+                }
+            }
         }
     }
 }

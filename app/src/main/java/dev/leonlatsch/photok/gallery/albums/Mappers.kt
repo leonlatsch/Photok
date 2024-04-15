@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.gallery.albums
 
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumCover
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 
@@ -28,4 +30,16 @@ fun AlbumWithPhotos.toDomain(): Album = Album(
 
 fun Album.toData(): AlbumTable = AlbumTable(
     name = name
+)
+
+fun Album.toUi(): AlbumItem = AlbumItem(
+    id = uuid,
+    name = name,
+    itemCount = files.size,
+    albumCover = files.firstOrNull()?.let { firstPhoto ->
+        AlbumCover(
+            filename = firstPhoto.internalFileName,
+            mimeType = firstPhoto.type.mimeType
+        )
+    }
 )

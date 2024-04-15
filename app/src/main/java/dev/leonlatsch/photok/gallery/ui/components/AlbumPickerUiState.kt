@@ -14,16 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui
+package dev.leonlatsch.photok.gallery.ui.components
 
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 
-sealed interface GalleryUiEvent {
-    data class OpenPhoto(val item: PhotoTile) : GalleryUiEvent
-    data object OpenImportMenu : GalleryUiEvent
-    data class OnDelete(val items: List<String>) : GalleryUiEvent
-    data class OnExport(val items: List<String>) : GalleryUiEvent
-    data object OnAddToAlbum : GalleryUiEvent
-    data class OnAlbumSelected(val photoIds: List<String>, val albumId: String) : GalleryUiEvent
-    data object CancelAlbumSelection : GalleryUiEvent
-}
+data class AlbumPickerUiState(
+    val albums: List<AlbumItem> = emptyList()
+)

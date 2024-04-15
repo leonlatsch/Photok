@@ -17,8 +17,7 @@
 package dev.leonlatsch.photok.gallery.albums.ui
 
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
-import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumCover
-import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
+import dev.leonlatsch.photok.gallery.albums.toUi
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import javax.inject.Inject
 
@@ -29,23 +28,7 @@ class AlbumUiStateFactory @Inject constructor() {
         }
 
         return AlbumsUiState.Content(
-            albums = albums.map { album ->
-                with(album) {
-                    AlbumItem(
-                        id = uuid,
-                        name = name,
-                        itemCount = files.size,
-                        albumCover = with(files.firstOrNull()) {
-                            this ?: return@with null
-
-                            AlbumCover(
-                                filename = internalFileName,
-                                mimeType = type.mimeType,
-                            )
-                        }
-                    )
-                }
-            },
+            albums = albums.map { album -> album.toUi() },
             showCreateDialog = showCreateDialog,
         )
     }
