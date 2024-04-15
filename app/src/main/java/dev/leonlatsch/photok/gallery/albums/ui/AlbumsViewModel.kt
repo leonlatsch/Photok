@@ -18,11 +18,13 @@ package dev.leonlatsch.photok.gallery.albums.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigationEvent
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,12 +33,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val albumsRepositoryImpl: AlbumRepository,
+    @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val albumUiStateFactory: AlbumUiStateFactory
 ) : ViewModel() {
 

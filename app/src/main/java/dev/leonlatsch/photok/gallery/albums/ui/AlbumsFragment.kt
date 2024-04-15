@@ -20,14 +20,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
+import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import javax.inject.Inject
 
@@ -45,7 +46,11 @@ class AlbumsFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
         setContent {
-            AlbumsScreen(viewModel)
+            CompositionLocalProvider(
+                LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
+            ) {
+                AlbumsScreen(viewModel)
+            }
         }
     }
 

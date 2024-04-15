@@ -28,11 +28,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +45,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -99,7 +102,7 @@ private fun AlbumsGrid(
 }
 
 @Composable
-private fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) -> Unit) {
+fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) -> Unit) {
     Card(
         modifier = Modifier
             .padding(12.dp)
@@ -110,29 +113,29 @@ private fun AlbumPreviewTile(album: AlbumItem, handleUiEvent: (AlbumsUiEvent) ->
                 .fillMaxSize()
                 .aspectRatio(1f)
 
-            when {
-                LocalInspectionMode.current -> Box(
-                    modifier = contentModifier.background(MaterialTheme.colorScheme.tertiary)
-                )
-
-                album.albumCover != null -> {
-                    val requestData = remember(album) {
-                        EncryptedImageRequestData(
-                            album.albumCover.filename,
-                            album.albumCover.filename,
-                        )
-                    }
-
-                    Image(
-                        painter = rememberEncryptedImagePainter(requestData),
-                        contentDescription = album.albumCover.filename,
-                        modifier = contentModifier
+            if (album.albumCover == null || LocalInspectionMode.current) {
+                Box(
+                    modifier = contentModifier.background(MaterialTheme.colorScheme.outline)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_folder),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.align(Alignment.Center).size(48.dp)
+                    )
+                }
+            } else {
+                val requestData = remember(album) {
+                    EncryptedImageRequestData(
+                        album.albumCover.filename,
+                        album.albumCover.filename,
                     )
                 }
 
-                else -> Box(
-                    // TODO: add a placeholder image
-                    modifier = contentModifier.background(MaterialTheme.colorScheme.tertiary)
+                Image(
+                    painter = rememberEncryptedImagePainter(requestData),
+                    contentDescription = album.albumCover.filename,
+                    modifier = contentModifier
                 )
             }
 
