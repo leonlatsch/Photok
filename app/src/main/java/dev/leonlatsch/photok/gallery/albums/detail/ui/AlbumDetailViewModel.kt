@@ -55,6 +55,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     fun handleUiEvent(event: AlbumDetailUiEvent) {
         when (event) {
             is AlbumDetailUiEvent.ImportIntoAlbum -> TODO()
+            AlbumDetailUiEvent.GoBack -> TODO()
         }
     }
 

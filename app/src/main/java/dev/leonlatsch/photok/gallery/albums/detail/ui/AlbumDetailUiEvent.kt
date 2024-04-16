@@ -18,4 +18,5 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 sealed interface AlbumDetailUiEvent {
     data object ImportIntoAlbum : AlbumDetailUiEvent
+    data object GoBack : AlbumDetailUiEvent
 }

@@ -16,92 +16,55 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
-import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
-import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
-import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
-    AlbumDetailContent(
-        uiState = uiState,
-        handleUiEvent = { viewModel.handleUiEvent(it) }
-    )
-}
-
-@Composable
-fun AlbumDetailContent(uiState: AlbumDetailUiState, handleUiEvent: (AlbumDetailUiEvent) -> Unit) {
     AppTheme {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val multiSelectionState = rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
-
-            PhotosGrid(
-                photos = uiState.photos,
-                multiSelectionState = multiSelectionState,
-                openPhoto = {},
-            )
-
-            Text(
-                uiState.albumName,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(16.dp)
-                    .padding(WindowInsets.statusBars.asPaddingValues())
-            )
-
-            MagicFab {
-                handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun AlbumsDetailScreenPreview() {
-    AppTheme {
-        AlbumDetailContent(
-            uiState = AlbumDetailUiState(
-                "Album Name",
-                listOf(
-                    PhotoTile("file1", PhotoType.JPEG, "uuid1"),
-                    PhotoTile("file2", PhotoType.JPEG, "uuid2"),
-                    PhotoTile("file3", PhotoType.JPEG, "uuid3"),
-                    PhotoTile("file4", PhotoType.JPEG, "uuid4"),
-                    PhotoTile("file5", PhotoType.JPEG, "uuid5"),
-                    PhotoTile("file6", PhotoType.JPEG, "uuid6"),
-                    PhotoTile("file7", PhotoType.JPEG, "uuid7"),
-                    PhotoTile("file8", PhotoType.JPEG, "uuid8"),
+        Scaffold(
+            topBar = {
+                LargeTopAppBar(
+                    title = { Text(uiState.albumName) },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.GoBack) }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_back),
+                                contentDescription = stringResource(R.string.process_close)
+                            )
+                        }
+                    },
+                    windowInsets = WindowInsets.statusBars
                 )
-            ),
-            handleUiEvent = {},
-        )
+            }
+        ) { contentPadding ->
+            AlbumDetailContent(
+                uiState = uiState,
+                handleUiEvent = { viewModel.handleUiEvent(it) },
+                modifier = Modifier.padding(contentPadding)
+            )
+        }
     }
 }
