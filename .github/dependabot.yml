@@ -9,4 +9,5 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
-    reviewers: leonlatsch
+    reviewers:
+      - leonlatsch
