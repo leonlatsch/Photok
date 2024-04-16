@@ -40,24 +40,25 @@ fun GalleryScreen(
             is GalleryUiState.Empty -> GalleryPlaceholder { viewModel.handleUiEvent(it) }
 
             is GalleryUiState.Content -> {
+                val contentUiState = uiState as GalleryUiState.Content
                 val multiSelectionState = rememberMultiSelectionState(
-                    items = (uiState as GalleryUiState.Content).photos.map { it.uuid }
+                    items = contentUiState.photos.map { it.uuid }
                 )
 
                 GalleryContent(
-                    uiState = uiState as GalleryUiState.Content,
+                    uiState = contentUiState,
                     handleUiEvent = { viewModel.handleUiEvent(it) },
                     multiSelectionState = multiSelectionState,
                 )
 
-                if ((uiState as GalleryUiState.Content).showAlbumSelectionDialog) {
+                if (contentUiState.showAlbumSelectionDialog) {
                     AlbumPickerDialog(
                         viewModel = albumPickerViewModel,
-                        onAlbumSelected = {
+                        onAlbumSelected = { selectedAlbum ->
                             viewModel.handleUiEvent(
                                 GalleryUiEvent.OnAlbumSelected(
-                                    multiSelectionState.selectedItems.value,
-                                    it
+                                    multiSelectionState.selectedItems.value.toList(),
+                                    selectedAlbum,
                                 )
                             )
                             multiSelectionState.cancelSelection()

@@ -38,9 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -129,14 +127,11 @@ fun GalleryContent(
             visible = multiSelectionState.isActive.value.not(),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(12.dp)
         ) {
             MagicFab {
                 handleUiEvent(GalleryUiEvent.OpenImportMenu)
             }
         }
-
-        var showAlbumPicker by remember { mutableStateOf(false) }
 
         AnimatedVisibility(
             visible = multiSelectionState.isActive.value,
