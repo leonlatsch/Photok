@@ -22,7 +22,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,10 +46,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -59,13 +56,29 @@ private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
 
 @Composable
-fun PhotosGrid(
+fun PhotoGallery(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
     modifier: Modifier = Modifier,
-    extraTopPadding: Dp = DefaultGalleryTopPadding,
-    gridState: LazyGridState = rememberLazyGridState()
+) {
+
+    Box(modifier = modifier.fillMaxSize()) {
+        PhotoGrid(
+            photos = photos,
+            multiSelectionState = multiSelectionState,
+            openPhoto = openPhoto,
+        )
+    }
+}
+
+@Composable
+fun PhotoGrid(
+    photos: List<PhotoTile>,
+    multiSelectionState: MultiSelectionState,
+    openPhoto: (PhotoTile) -> Unit,
+    modifier: Modifier = Modifier,
+    gridState: LazyGridState = rememberLazyGridState(),
 ) {
     val columnCount = when (LocalConfiguration.current.orientation) {
         Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
@@ -76,7 +89,6 @@ fun PhotosGrid(
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(top = extraTopPadding),
         state = gridState
     ) {
         items(photos, key = { it.uuid }) {
@@ -187,7 +199,7 @@ private fun GalleryPhotoTile(
 @Preview
 @Composable
 private fun PhotoGridPreview() {
-    PhotosGrid(
+    PhotoGallery(
         photos = listOf(
             PhotoTile("", PhotoType.JPEG, "1"),
             PhotoTile("", PhotoType.JPEG, "2"),
@@ -196,7 +208,7 @@ private fun PhotoGridPreview() {
             PhotoTile("", PhotoType.JPEG, "5"),
             PhotoTile("", PhotoType.JPEG, "6"),
         ),
-        multiSelectionState = MultiSelectionState(listOf("2", "3", "5",)),
+        multiSelectionState = MultiSelectionState(listOf("2", "3", "5")),
         openPhoto = {}
     )
 }

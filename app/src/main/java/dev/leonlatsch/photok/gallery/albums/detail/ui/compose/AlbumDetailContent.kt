@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
+import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.components.MagicFab
@@ -43,7 +43,7 @@ fun AlbumDetailContent(
         val multiSelectionState =
             rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
 
-        PhotosGrid(
+        PhotoGallery(
             photos = uiState.photos,
             multiSelectionState = multiSelectionState,
             openPhoto = {},

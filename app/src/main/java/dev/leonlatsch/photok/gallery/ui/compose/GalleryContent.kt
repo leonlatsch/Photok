@@ -51,8 +51,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
+import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.gallery.ui.components.PhotosGrid
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.components.AppName
@@ -74,17 +74,19 @@ fun GalleryContent(
     val window = findWindow()
     val isDarkTheme = isSystemInDarkTheme()
 
+    // TODO: Move all functionality that is also needed in album detail go PhotoGrid
     Box {
-        PhotosGrid(
+        PhotoGallery(
             photos = uiState.photos,
             multiSelectionState = multiSelectionState,
             openPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
             modifier = Modifier.fillMaxHeight(),
-            gridState = gridState
+            gridState = gridState // TODO: Grid state is now in photo gallery.
         )
 
         val scrolling by remember { derivedStateOf { gridState.canScrollBackward } }
 
+        // TODO: Move this animation to photo gallery. If even needed after using top bar
         AnimatedVisibility(
             visible = scrolling,
             enter = fadeIn(FadeAnimationSpec),
@@ -102,6 +104,7 @@ fun GalleryContent(
             )
         }
 
+        // TODO: Same for this. If needed move to photo gallery
         LaunchedEffect(scrolling) {
             window?.let { window ->
                 WindowCompat.getInsetsController(
@@ -133,6 +136,7 @@ fun GalleryContent(
             }
         }
 
+        // TODO: Also move this menu to photo gallery since the user should always be able to select photos
         AnimatedVisibility(
             visible = multiSelectionState.isActive.value,
             modifier = Modifier
