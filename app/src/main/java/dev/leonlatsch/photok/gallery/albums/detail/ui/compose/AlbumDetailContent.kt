@@ -16,19 +16,15 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -37,23 +33,21 @@ fun AlbumDetailContent(
     handleUiEvent: (AlbumDetailUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        val multiSelectionState =
-            rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
+    val multiSelectionState =
+        rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
 
-        PhotoGallery(
-            photos = uiState.photos,
-            multiSelectionState = multiSelectionState,
-            openPhoto = {},
-            extraTopPadding = 0.dp
-        )
-
-        MagicFab {
+    PhotoGallery(
+        photos = uiState.photos,
+        multiSelectionState = multiSelectionState,
+        onOpenPhoto = {},
+        onExport = {},
+        onDelete = {},
+        onMagicFabClicked = {
             handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
-        }
-    }
+        },
+        additionalMultiSelectionActions = {},
+        modifier = modifier,
+    )
 }
 
 @Preview(showBackground = true, showSystemUi = true)

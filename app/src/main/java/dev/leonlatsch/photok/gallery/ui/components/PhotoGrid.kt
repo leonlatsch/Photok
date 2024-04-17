@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok.gallery.ui.components
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +36,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,12 +49,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.ui.components.MagicFab
+import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -59,16 +66,83 @@ private const val LANDSCAPE_COLUMN_COUNT = 6
 fun PhotoGallery(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
-    openPhoto: (PhotoTile) -> Unit,
+    onOpenPhoto: (PhotoTile) -> Unit,
+    onExport: () -> Unit,
+    onDelete: () -> Unit,
+    onMagicFabClicked: () -> Unit,
+    additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
     modifier: Modifier = Modifier,
 ) {
-
     Box(modifier = modifier.fillMaxSize()) {
         PhotoGrid(
             photos = photos,
             multiSelectionState = multiSelectionState,
-            openPhoto = openPhoto,
+            openPhoto = onOpenPhoto,
         )
+
+        AnimatedVisibility(
+            visible = multiSelectionState.isActive.value.not(),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+        ) {
+            MagicFab {
+                onMagicFabClicked()
+            }
+        }
+
+        AnimatedVisibility(
+            visible = multiSelectionState.isActive.value,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(vertical = 24.dp, horizontal = 12.dp)
+        ) {
+            MultiSelectionMenu(
+                multiSelectionState = multiSelectionState,
+            ) { closeActions ->
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_select_all),
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(stringResource(R.string.menu_ms_select_all)) },
+                    onClick = {
+                        multiSelectionState.selectAll()
+                    },
+                )
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_delete),
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(stringResource(R.string.common_delete)) },
+                    onClick = {
+                        onDelete()
+                        closeActions()
+                    },
+                )
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_export),
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(stringResource(R.string.common_export)) },
+                    onClick = {
+                        onExport()
+                        closeActions()
+                    },
+                )
+
+                additionalMultiSelectionActions(
+                    closeActions = closeActions,
+                )
+            }
+        }
     }
 }
 
@@ -209,6 +283,10 @@ private fun PhotoGridPreview() {
             PhotoTile("", PhotoType.JPEG, "6"),
         ),
         multiSelectionState = MultiSelectionState(listOf("2", "3", "5")),
-        openPhoto = {}
+        onOpenPhoto = {},
+        onDelete = {},
+        onExport = {},
+        onMagicFabClicked = {},
+        additionalMultiSelectionActions = {},
     )
 }

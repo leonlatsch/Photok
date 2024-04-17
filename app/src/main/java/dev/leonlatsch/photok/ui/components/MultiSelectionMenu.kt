@@ -44,13 +44,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun MultiSelectionMenu(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit,
-    numOfSelected: Int,
+    multiSelectionState: MultiSelectionState,
     actions: @Composable (ColumnScope.(closeMore: () -> Unit) -> Unit),
 ) {
     val showMoreDefault = LocalInspectionMode.current
@@ -68,7 +68,7 @@ fun MultiSelectionMenu(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = onClose) {
+                IconButton(onClick = { multiSelectionState.cancelSelection() }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_close),
                         contentDescription = stringResource(R.string.process_close),
@@ -76,7 +76,10 @@ fun MultiSelectionMenu(
                     )
                 }
                 Text(
-                    text = stringResource(R.string.menu_ms_info, numOfSelected),
+                    text = stringResource(
+                        R.string.menu_ms_info,
+                        multiSelectionState.selectedItems.value.size
+                    ),
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 IconButton(onClick = { showMore = true }) {
@@ -111,8 +114,9 @@ fun MultiSelectionMenu(
 private fun MultiSelectionMenuPreview() {
     AppTheme {
         MultiSelectionMenu(
-            onClose = {},
-            numOfSelected = 5,
+            multiSelectionState = MultiSelectionState(emptyList()).apply {
+                selectedItems.value = listOf("", "")
+            },
             actions = {}
         )
     }

@@ -34,6 +34,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -44,6 +48,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
@@ -56,7 +62,6 @@ import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.components.AppName
-import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
@@ -74,19 +79,49 @@ fun GalleryContent(
     val window = findWindow()
     val isDarkTheme = isSystemInDarkTheme()
 
-    // TODO: Move all functionality that is also needed in album detail go PhotoGrid
     Box {
         PhotoGallery(
             photos = uiState.photos,
             multiSelectionState = multiSelectionState,
-            openPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
+            onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
+            onExport = {
+                handleUiEvent(
+                    GalleryUiEvent.OnExport(
+                        multiSelectionState.selectedItems.value.toList()
+                    )
+                )
+            },
+            onDelete = {
+                handleUiEvent(
+                    GalleryUiEvent.OnDelete(
+                        multiSelectionState.selectedItems.value.toList()
+                    )
+                )
+            },
+            onMagicFabClicked = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
             modifier = Modifier.fillMaxHeight(),
-            gridState = gridState // TODO: Grid state is now in photo gallery.
+            additionalMultiSelectionActions = { closeActions ->
+                HorizontalDivider()
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_folder),
+                            contentDescription = null
+                        )
+                    },
+                    text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
+                    onClick = {
+                        handleUiEvent(GalleryUiEvent.OnAddToAlbum)
+                        closeActions()
+                    },
+                )
+            }
         )
+
+        // TODO: Move this to photo gallery or get rid and use a top app bar
 
         val scrolling by remember { derivedStateOf { gridState.canScrollBackward } }
 
-        // TODO: Move this animation to photo gallery. If even needed after using top bar
         AnimatedVisibility(
             visible = scrolling,
             enter = fadeIn(FadeAnimationSpec),
@@ -104,7 +139,6 @@ fun GalleryContent(
             )
         }
 
-        // TODO: Same for this. If needed move to photo gallery
         LaunchedEffect(scrolling) {
             window?.let { window ->
                 WindowCompat.getInsetsController(
@@ -125,41 +159,6 @@ fun GalleryContent(
                 .align(Alignment.TopCenter)
                 .padding(WindowInsets.statusBars.asPaddingValues())
         )
-
-        AnimatedVisibility(
-            visible = multiSelectionState.isActive.value.not(),
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-        ) {
-            MagicFab {
-                handleUiEvent(GalleryUiEvent.OpenImportMenu)
-            }
-        }
-
-        // TODO: Also move this menu to photo gallery since the user should always be able to select photos
-        AnimatedVisibility(
-            visible = multiSelectionState.isActive.value,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(vertical = 24.dp, horizontal = 12.dp)
-        ) {
-            GalleryMultiSelectionMenu(
-                onClose = { multiSelectionState.cancelSelection() },
-                onSelectAll = { multiSelectionState.selectAll() },
-                onDelete = {
-                    handleUiEvent(GalleryUiEvent.OnDelete(multiSelectionState.selectedItems.value.toList()))
-                    multiSelectionState.cancelSelection()
-               },
-                onExport = {
-                    handleUiEvent(GalleryUiEvent.OnExport(multiSelectionState.selectedItems.value.toList()))
-                    multiSelectionState.cancelSelection()
-                },
-                onAddToAlbum = {
-                    handleUiEvent(GalleryUiEvent.OnAddToAlbum)
-                },
-                numOfSelected = multiSelectionState.selectedItems.value.size
-            )
-        }
     }
 }
 
