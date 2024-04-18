@@ -20,11 +20,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,19 +35,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        AppName(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(WindowInsets.statusBars.asPaddingValues())
-        )
+fun GalleryPlaceholder(
+    handleUiEvent: (GalleryUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier.fillMaxSize()) {
 
         Column(
             modifier = Modifier
@@ -82,6 +75,8 @@ fun GalleryPlaceholder(handleUiEvent: (GalleryUiEvent) -> Unit) {
 @Composable
 private fun GalleryPlaceholderPreview() {
     AppTheme {
-        GalleryPlaceholder {}
+        GalleryPlaceholder(
+            handleUiEvent = {}
+        )
     }
 }

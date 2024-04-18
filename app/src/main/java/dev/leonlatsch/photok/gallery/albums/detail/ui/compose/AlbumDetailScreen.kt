@@ -25,10 +25,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -40,6 +42,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 @Composable
 fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     AppTheme {
         Scaffold(
@@ -56,14 +59,17 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                             )
                         }
                     },
-                    windowInsets = WindowInsets.statusBars
+                    windowInsets = WindowInsets.statusBars,
+                    scrollBehavior = scrollBehavior,
                 )
             }
         ) { contentPadding ->
             AlbumDetailContent(
                 uiState = uiState,
                 handleUiEvent = { viewModel.handleUiEvent(it) },
-                modifier = Modifier.padding(contentPadding)
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
             )
         }
     }
