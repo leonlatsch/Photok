@@ -52,6 +52,6 @@ interface AlbumDao {
     @Query("SELECT COUNT(*) FROM albumtable")
     suspend fun countAll(): Int
 
-    @Query("INSERT INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
+    @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
     suspend fun linkPhotoToAlbum(photoId: String, albumId: String)
 }
