@@ -31,8 +31,11 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 
 
 @Composable
-fun AlbumsPlaceholder(handleUiEvent: (AlbumsUiEvent) -> Unit) {
-    Box(modifier = Modifier.fillMaxSize()) {
+fun AlbumsPlaceholder(
+    handleUiEvent: (AlbumsUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier.fillMaxSize()) {
         Text(
             text = "No Albums",
             style = MaterialTheme.typography.headlineLarge,

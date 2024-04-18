@@ -16,27 +16,22 @@
 
 package dev.leonlatsch.photok.gallery.ui.components
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
-import dev.leonlatsch.photok.gallery.ui.DefaultGalleryTopPadding
 
 @Composable
 fun AlbumsGrid(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
-    extraTopPadding: Dp = DefaultGalleryTopPadding,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = extraTopPadding),
         modifier = modifier.fillMaxWidth()
     ) {
         items(albums, key = { it.id }) { album ->

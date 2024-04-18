@@ -16,40 +16,55 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.window.Dialog
-import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumsScreen(viewModel: AlbumsViewModel) {
     val uiState by viewModel.uiState.collectAsState()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     AppTheme {
-        when (uiState) {
-            is AlbumsUiState.Empty -> AlbumsPlaceholder(
-                handleUiEvent = { viewModel.handleUiEvent(it) }
+        Scaffold(
+            topBar = {
+                LargeTopAppBar(
+                    title = { Text(stringResource(R.string.gallery_albums_label)) },
+                    scrollBehavior = scrollBehavior,
+                )
+            },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        ) { contentPadding ->
+            val modifier = Modifier.padding(contentPadding)
 
-            )
-            is AlbumsUiState.Content -> AlbumsContent(
-                content = uiState as AlbumsUiState.Content,
-                handleUiEvent = { viewModel.handleUiEvent(it)}
-            )
+            when (uiState) {
+                is AlbumsUiState.Empty -> AlbumsPlaceholder(
+                    handleUiEvent = { viewModel.handleUiEvent(it) },
+                    modifier = modifier,
+
+                    )
+
+                is AlbumsUiState.Content -> AlbumsContent(
+                    content = uiState as AlbumsUiState.Content,
+                    handleUiEvent = { viewModel.handleUiEvent(it) },
+                    modifier = modifier,
+                )
+            }
+
+            CreateAlbumDialog(uiState = uiState, handleUiEvent = { viewModel.handleUiEvent(it) })
         }
-
-        CreateAlbumDialog(uiState = uiState, handleUiEvent = { viewModel.handleUiEvent(it) })
     }
 }

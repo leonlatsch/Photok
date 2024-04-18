@@ -17,39 +17,29 @@
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.ui.components.AlbumsGrid
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun AlbumsContent(content: AlbumsUiState.Content, handleUiEvent: (AlbumsUiEvent) -> Unit) {
+fun AlbumsContent(
+    content: AlbumsUiState.Content,
+    handleUiEvent: (AlbumsUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) {
         AlbumsGrid(
             albums = content.albums,
             onAlbumClicked = { handleUiEvent(AlbumsUiEvent.OpenAlbum(it)) },
             modifier = Modifier.fillMaxWidth(),
-        )
-
-        AppName(
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(WindowInsets.statusBars.asPaddingValues())
         )
 
         MagicFab {

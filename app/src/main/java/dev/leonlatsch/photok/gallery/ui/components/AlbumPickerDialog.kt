@@ -28,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +61,6 @@ private fun AlbumPickerContent(
         AlbumsGrid(
             albums = uiState.albums,
             onAlbumClicked = onAlbumSelected,
-            extraTopPadding = 0.dp
         )
     }
 }
