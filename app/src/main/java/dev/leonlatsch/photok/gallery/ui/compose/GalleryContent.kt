@@ -16,8 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -45,47 +44,43 @@ fun GalleryContent(
     multiSelectionState: MultiSelectionState,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier,
-    ) {
-        PhotoGallery(
-            photos = uiState.photos,
-            multiSelectionState = multiSelectionState,
-            onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
-            onExport = {
-                handleUiEvent(
-                    GalleryUiEvent.OnExport(
-                        multiSelectionState.selectedItems.value.toList()
+    PhotoGallery(
+        modifier = modifier.fillMaxSize(),
+        photos = uiState.photos,
+        multiSelectionState = multiSelectionState,
+        onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
+        onExport = {
+            handleUiEvent(
+                GalleryUiEvent.OnExport(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
+        onDelete = {
+            handleUiEvent(
+                GalleryUiEvent.OnDelete(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
+        onMagicFabClicked = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
+        additionalMultiSelectionActions = { closeActions ->
+            HorizontalDivider()
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_folder),
+                        contentDescription = null
                     )
-                )
-            },
-            onDelete = {
-                handleUiEvent(
-                    GalleryUiEvent.OnDelete(
-                        multiSelectionState.selectedItems.value.toList()
-                    )
-                )
-            },
-            onMagicFabClicked = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
-            modifier = Modifier.fillMaxHeight(),
-            additionalMultiSelectionActions = { closeActions ->
-                HorizontalDivider()
-                DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_folder),
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
-                    onClick = {
-                        handleUiEvent(GalleryUiEvent.OnAddToAlbum)
-                        closeActions()
-                    },
-                )
-            }
-        )
-    }
+                },
+                text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
+                onClick = {
+                    handleUiEvent(GalleryUiEvent.OnAddToAlbum)
+                    closeActions()
+                },
+            )
+        }
+    )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF, showSystemUi = true)

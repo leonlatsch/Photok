@@ -68,7 +68,7 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                 uiState = uiState,
                 handleUiEvent = { viewModel.handleUiEvent(it) },
                 modifier = Modifier
-                    .padding(contentPadding)
+                    .padding(top = contentPadding.calculateTopPadding())
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
             )
         }

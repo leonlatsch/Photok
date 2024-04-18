@@ -48,7 +48,7 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
             },
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         ) { contentPadding ->
-            val modifier = Modifier.padding(contentPadding)
+            val modifier = Modifier.padding(top = contentPadding.calculateTopPadding())
 
             when (uiState) {
                 is AlbumsUiState.Empty -> AlbumsPlaceholder(
