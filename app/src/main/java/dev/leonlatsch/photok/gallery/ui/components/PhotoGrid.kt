@@ -109,6 +109,7 @@ fun PhotoGallery(
                     text = { Text(stringResource(R.string.menu_ms_select_all)) },
                     onClick = {
                         multiSelectionState.selectAll()
+                        closeActions()
                     },
                 )
                 DropdownMenuItem(

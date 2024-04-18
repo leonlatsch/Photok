@@ -39,9 +39,21 @@ fun AlbumDetailContent(
     PhotoGallery(
         photos = uiState.photos,
         multiSelectionState = multiSelectionState,
-        onOpenPhoto = { TODO() },
-        onExport = { TODO() },
-        onDelete = { TODO() },
+        onOpenPhoto = { handleUiEvent(AlbumDetailUiEvent.OpenPhoto(it)) },
+        onExport = {
+            handleUiEvent(
+                AlbumDetailUiEvent.OnExport(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
+        onDelete = {
+            handleUiEvent(
+                AlbumDetailUiEvent.OnDelete(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
         onMagicFabClicked = {
             handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
         },

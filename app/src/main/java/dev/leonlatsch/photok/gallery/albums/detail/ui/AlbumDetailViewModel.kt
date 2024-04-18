@@ -55,6 +55,9 @@ class AlbumDetailViewModel @AssistedInject constructor(
     fun handleUiEvent(event: AlbumDetailUiEvent) {
         when (event) {
             is AlbumDetailUiEvent.ImportIntoAlbum -> TODO()
+            is AlbumDetailUiEvent.OnDelete -> TODO()
+            is AlbumDetailUiEvent.OnExport -> TODO()
+            is AlbumDetailUiEvent.OpenPhoto -> TODO()
         }
     }
 
@@ -63,9 +66,3 @@ class AlbumDetailViewModel @AssistedInject constructor(
         fun create(@Assisted(ALBUM_DETAIL_UUID) albumUUID: String): AlbumDetailViewModel
     }
 }
-
-data class AlbumDetailUiState(
-    val albumName: String = "",
-    val photos: List<PhotoTile> = emptyList()
-)
-
