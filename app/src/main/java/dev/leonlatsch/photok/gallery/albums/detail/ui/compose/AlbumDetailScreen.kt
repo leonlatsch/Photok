@@ -31,14 +31,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
+fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
 
     AppTheme {
@@ -48,7 +48,7 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
                     title = { Text(uiState.albumName) },
                     navigationIcon = {
                         IconButton(
-                            onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.GoBack) }
+                            onClick = { navController.navigateUp() }
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back),

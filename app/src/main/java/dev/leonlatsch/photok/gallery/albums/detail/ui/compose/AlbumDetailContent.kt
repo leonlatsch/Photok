@@ -39,9 +39,9 @@ fun AlbumDetailContent(
     PhotoGallery(
         photos = uiState.photos,
         multiSelectionState = multiSelectionState,
-        onOpenPhoto = {},
-        onExport = {},
-        onDelete = {},
+        onOpenPhoto = { TODO() },
+        onExport = { TODO() },
+        onDelete = { TODO() },
         onMagicFabClicked = {
             handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
         },

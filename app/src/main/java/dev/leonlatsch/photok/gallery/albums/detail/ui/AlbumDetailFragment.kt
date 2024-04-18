@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.detail.ui.compose.AlbumDetailScreen
@@ -48,7 +49,7 @@ class AlbumDetailFragment : Fragment() {
             setContent {
                 AppTheme {
                     CompositionLocalProvider(LocalEncryptedImageLoader provides viewModel.encryptedImageLoader) {
-                        AlbumDetailScreen(viewModel)
+                        AlbumDetailScreen(viewModel, findNavController())
                     }
                 }
             }
