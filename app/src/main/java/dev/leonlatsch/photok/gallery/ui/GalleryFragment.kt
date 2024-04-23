@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
@@ -42,6 +43,9 @@ class GalleryFragment : Fragment() {
 
     @Inject
     lateinit var navigator: GalleryNavigator
+
+    @Inject
+    lateinit var photoActionsNavigator: PhotoActionsNavigator
 
     @Inject
     lateinit var config: Config
@@ -65,7 +69,13 @@ class GalleryFragment : Fragment() {
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
-                navigator.navigate(event, findNavController(), this)
+                navigator.navigate(event, this)
+            }
+        }
+
+        launchLifecycleAwareJob {
+            viewModel.photoActions.collect { action ->
+                photoActionsNavigator.navigate(action, findNavController(), this)
             }
         }
 

@@ -145,11 +145,6 @@
         android:id="@+id/galleryFragment"
         android:name="dev.leonlatsch.photok.gallery.ui.GalleryFragment"
         android:label="GalleryFragment">
-        <action
-            android:id="@+id/action_galleryFragment_to_imageViewerFragment"
-            app:destination="@id/imageViewerFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/albumsFragment"
@@ -170,4 +165,7 @@
             android:defaultValue=""
             app:argType="string" />
     </fragment>
+    <action
+        android:id="@+id/action_global_imageViewerFragment"
+        app:destination="@id/imageViewerFragment" />
 </navigation>

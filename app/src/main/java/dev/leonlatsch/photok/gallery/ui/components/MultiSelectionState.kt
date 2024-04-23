@@ -18,10 +18,10 @@ package dev.leonlatsch.photok.gallery.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 
 @Composable
-fun rememberMultiSelectionState(items: List<String>) = rememberSaveable(inputs = items.toTypedArray()) {
+fun rememberMultiSelectionState(items: List<String>) = remember { // TODO: Impl savable
     MultiSelectionState(items)
 }
 

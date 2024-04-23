@@ -16,13 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
-import dev.leonlatsch.photok.model.database.entity.Photo
-
 sealed interface GalleryNavigationEvent {
-    data class OpenPhoto(val photoUUID: String) : GalleryNavigationEvent
     data object OpenImportMenu : GalleryNavigationEvent
-
-    data class StartDeleteDialog(val photosToDelete: List<Photo>) : GalleryNavigationEvent
-    data class StartExportDialog(val photosToExport: List<Photo>) : GalleryNavigationEvent
     data object ShowNewFeaturesDialog : GalleryNavigationEvent
 }

@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
@@ -61,6 +62,9 @@ class GalleryViewModel @Inject constructor(
     private val eventsChannel = Channel<GalleryNavigationEvent>()
     val eventsFlow = eventsChannel.receiveAsFlow()
 
+    private val photoActionsChannel = Channel<PhotoAction>()
+    val photoActions = photoActionsChannel.receiveAsFlow()
+
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
             is GalleryUiEvent.OpenImportMenu -> eventsChannel.trySend(GalleryNavigationEvent.OpenImportMenu)
@@ -83,20 +87,23 @@ class GalleryViewModel @Inject constructor(
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>) {
-        eventsChannel.trySend(
-            GalleryNavigationEvent.StartExportDialog(
-                photosFlow.value.filter { selectedItems.contains(it.uuid) })
+        photoActionsChannel.trySend(
+            PhotoAction.ExportPhotos(
+                photosFlow.value.filter { selectedItems.contains(it.uuid) }
+            )
         )
     }
 
     private fun onDeleteSelectedItems(selectedItems: List<String>) {
-        eventsChannel.trySend(GalleryNavigationEvent.StartDeleteDialog(
-            photosFlow.value.filter { selectedItems.contains(it.uuid) }
-        ))
+        photoActionsChannel.trySend(
+            PhotoAction.DeletePhotos(
+                photosFlow.value.filter { selectedItems.contains(it.uuid) }
+            )
+        )
     }
 
     private fun navigateToPhoto(item: PhotoTile) {
-        eventsChannel.trySend(GalleryNavigationEvent.OpenPhoto(item.uuid))
+        photoActionsChannel.trySend(PhotoAction.OpenPhoto(item.uuid))
     }
 
     fun checkForNewFeatures() = viewModelScope.launch {
