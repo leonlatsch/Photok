@@ -24,10 +24,14 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 
 const val ALBUM_DETAIL_UUID = "album_uuid"
@@ -39,7 +43,13 @@ class AlbumDetailViewModel @AssistedInject constructor(
     @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
 ) : ViewModel() {
 
-    val uiState = albumsRepository.getAlbum(albumUUID).map { album ->
+    private val albumFlow = albumsRepository.getAlbum(albumUUID)
+        .stateIn(viewModelScope, SharingStarted.Lazily, Album("", "", emptyList()))
+
+    private val photoActionsChannel = Channel<PhotoAction>()
+    val photoActions = photoActionsChannel.receiveAsFlow()
+
+    val uiState = albumFlow.map { album ->
         AlbumDetailUiState(
             albumName = album.name,
             photos = album.files.map {
@@ -54,10 +64,18 @@ class AlbumDetailViewModel @AssistedInject constructor(
 
     fun handleUiEvent(event: AlbumDetailUiEvent) {
         when (event) {
-            is AlbumDetailUiEvent.ImportIntoAlbum -> TODO()
-            is AlbumDetailUiEvent.OnDelete -> TODO()
-            is AlbumDetailUiEvent.OnExport -> TODO()
-            is AlbumDetailUiEvent.OpenPhoto -> TODO()
+            is AlbumDetailUiEvent.ImportIntoAlbum -> TODO("Also make import a photo action")
+            is AlbumDetailUiEvent.OnDelete -> {
+                val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
+                photoActionsChannel.trySend(PhotoAction.DeletePhotos(photos))
+            }
+            is AlbumDetailUiEvent.OnExport -> {
+                val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
+                photoActionsChannel.trySend(PhotoAction.ExportPhotos(photos))
+            }
+            is AlbumDetailUiEvent.OpenPhoto -> {
+                photoActionsChannel.trySend(PhotoAction.OpenPhoto(event.item.uuid))
+            }
         }
     }
 

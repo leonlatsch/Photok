@@ -27,9 +27,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.detail.ui.compose.AlbumDetailScreen
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.assistedViewModel
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlbumDetailFragment : Fragment() {
@@ -39,6 +42,9 @@ class AlbumDetailFragment : Fragment() {
     private val viewModel by assistedViewModel<AlbumDetailViewModel.Factory, AlbumDetailViewModel> {
         it.create(args.albumUuid)
     }
+
+    @Inject
+    lateinit var photoActionsNavigator: PhotoActionsNavigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +58,16 @@ class AlbumDetailFragment : Fragment() {
                         AlbumDetailScreen(viewModel, findNavController())
                     }
                 }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        launchLifecycleAwareJob {
+            viewModel.photoActions.collect { action ->
+                photoActionsNavigator.navigate(action, findNavController(), this)
             }
         }
     }
