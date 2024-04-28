@@ -55,7 +55,7 @@ fun AlbumDetailContent(
             )
         },
         onMagicFabClicked = {
-            handleUiEvent(AlbumDetailUiEvent.ImportIntoAlbum)
+            handleUiEvent(AlbumDetailUiEvent.OnImport)
         },
         additionalMultiSelectionActions = {},
         modifier = modifier,

@@ -17,6 +17,5 @@
 package dev.leonlatsch.photok.gallery.ui.navigation
 
 sealed interface GalleryNavigationEvent {
-    data object OpenImportMenu : GalleryNavigationEvent
     data object ShowNewFeaturesDialog : GalleryNavigationEvent
 }

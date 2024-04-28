@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragmentDirections
@@ -48,7 +49,12 @@ class PhotoActionsNavigator @Inject constructor(
             )
 
             is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, navController)
+            PhotoAction.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager)
         }
+    }
+
+    private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
+        ImportMenuDialog().show(fragmentManager)
     }
 
     private fun confirmAndExport(
@@ -99,4 +105,5 @@ sealed interface PhotoAction {
     data class OpenPhoto(val photoUUID: String) : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
     data class ExportPhotos(val photos: List<Photo>) : PhotoAction
+    data object OpenImportMenu : PhotoAction
 }

@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.gallery.ui.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import javax.inject.Inject
@@ -30,7 +29,6 @@ class GalleryNavigator @Inject constructor() {
         fragment: Fragment,
     ) {
         when (event) {
-            GalleryNavigationEvent.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager)
             is GalleryNavigationEvent.ShowNewFeaturesDialog -> navigateShowNewFeaturesDialog(
                 fragment.childFragmentManager
             )
@@ -39,9 +37,5 @@ class GalleryNavigator @Inject constructor() {
 
     private fun navigateShowNewFeaturesDialog(fragmentManager: FragmentManager) {
         NewFeaturesDialog().show(fragmentManager)
-    }
-
-    private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
-        ImportMenuDialog().show(fragmentManager)
     }
 }

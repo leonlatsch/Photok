@@ -98,6 +98,8 @@ class AlbumDetailViewModel @AssistedInject constructor(
                         }
                 }
             }
+
+            AlbumDetailUiEvent.OnImport -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu)
         }
     }
 
