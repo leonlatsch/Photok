@@ -44,6 +44,8 @@
     <string name="gallery_placeholder">Er zijn geen bestanden in je kluis</string>
     <string name="gallery_all_photos_label">Alle bestanden</string>
     <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>

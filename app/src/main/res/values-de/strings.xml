@@ -62,6 +62,8 @@
     <string name="gallery_placeholder">In deinem Safe sind kein Dateien</string>
     <string name="gallery_all_photos_label">Alle Dateien</string>
     <string name="gallery_albums_label">Alben</string>
+    <string name="gallery_albums_placeholder">Erstelle dein erstes Album</string>
+    <string name="gallery_albums_create_placeholder">Hausaufgaben ;)</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>

@@ -62,6 +62,8 @@
     <string name="gallery_placeholder">Não há arquivos em seu cofre</string>
     <string name="gallery_all_photos_label">Todos os arquivos</string>
     <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importar</string>
