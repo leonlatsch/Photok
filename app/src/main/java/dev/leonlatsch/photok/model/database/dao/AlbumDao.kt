@@ -54,4 +54,13 @@ interface AlbumDao {
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
     suspend fun linkPhotoToAlbum(photoId: String, albumId: String)
+
+    @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumId")
+    suspend fun removeAllPhotosFromAlbum(albumId: String)
+
+   @Transaction
+   suspend fun unlinkAndDeleteAlbum(album: AlbumTable): Int {
+       removeAllPhotosFromAlbum(album.uuid)
+       return delete(album)
+   }
 }

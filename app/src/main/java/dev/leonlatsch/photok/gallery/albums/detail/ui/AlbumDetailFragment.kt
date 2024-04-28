@@ -46,6 +46,9 @@ class AlbumDetailFragment : Fragment() {
     @Inject
     lateinit var photoActionsNavigator: PhotoActionsNavigator
 
+    @Inject
+    lateinit var albumDetailNavigator: AlbumDetailNavigator
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,6 +71,12 @@ class AlbumDetailFragment : Fragment() {
         launchLifecycleAwareJob {
             viewModel.photoActions.collect { action ->
                 photoActionsNavigator.navigate(action, findNavController(), this)
+            }
+        }
+
+        launchLifecycleAwareJob {
+            viewModel.navEvents.collect { event ->
+                albumDetailNavigator.navigate(event, this)
             }
         }
     }

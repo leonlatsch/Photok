@@ -19,8 +19,8 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 sealed interface AlbumDetailUiEvent {
-    data object ImportIntoAlbum : AlbumDetailUiEvent
     data class OpenPhoto(val item: PhotoTile) : AlbumDetailUiEvent
     data class OnDelete(val items: List<String>) : AlbumDetailUiEvent
     data class OnExport(val items: List<String>) : AlbumDetailUiEvent
+    data object DeleteAlbum : AlbumDetailUiEvent
 }

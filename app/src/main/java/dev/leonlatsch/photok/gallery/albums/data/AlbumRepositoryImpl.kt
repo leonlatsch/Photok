@@ -44,7 +44,7 @@ class AlbumRepositoryImpl @Inject constructor(
         }
 
     override suspend fun deleteAlbum(album: Album): Result<Unit> =
-        when (albumDao.delete(album.toData())) {
+        when (albumDao.unlinkAndDeleteAlbum(album.toData())) {
             -1 -> Result.failure(IOException())
             else -> Result.success(Unit)
         }

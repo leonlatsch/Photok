@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,12 +31,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -47,6 +53,8 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
     AppTheme {
         Scaffold(
             topBar = {
+                var showMore by remember { mutableStateOf(false) }
+
                 LargeTopAppBar(
                     title = { Text(uiState.albumName) },
                     navigationIcon = {
@@ -61,7 +69,22 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                     },
                     windowInsets = WindowInsets.statusBars,
                     scrollBehavior = scrollBehavior,
+                    actions = {
+                        IconButton(onClick = { showMore = true }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_more),
+                                contentDescription = stringResource(R.string.common_more)
+                            )
+                        }
+                    }
                 )
+
+                DropdownMenu(expanded = showMore, onDismissRequest = { showMore = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.common_delete)) },
+                        onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) },
+                    )
+                }
             }
         ) { contentPadding ->
             AlbumDetailContent(
