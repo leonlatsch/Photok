@@ -27,39 +27,39 @@ import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AlbumDao {
+abstract class AlbumDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(album: AlbumTable): Long
+    abstract suspend fun insert(album: AlbumTable): Long
 
     @Delete
-    suspend fun delete(album: AlbumTable): Int
+    abstract suspend fun delete(album: AlbumTable): Int
 
     @Query("DELETE FROM albumtable")
-    suspend fun deleteAll()
+    abstract suspend fun deleteAll()
 
     @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
-    suspend fun getAlbumByUuid(uuid: String): AlbumTable
+    abstract suspend fun getAlbumByUuid(uuid: String): AlbumTable
 
     @Transaction
     @Query("SELECT * FROM albumtable")
-    fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
+    abstract fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
 
     @Transaction
     @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
-    fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
+    abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
     @Query("SELECT COUNT(*) FROM albumtable")
-    suspend fun countAll(): Int
+    abstract suspend fun countAll(): Int
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
-    suspend fun linkPhotoToAlbum(photoId: String, albumId: String)
+    abstract suspend fun linkPhotoToAlbum(photoId: String, albumId: String)
 
     @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumId")
-    suspend fun removeAllPhotosFromAlbum(albumId: String)
+    abstract suspend fun removeAllPhotosFromAlbum(albumId: String)
 
    @Transaction
-   suspend fun unlinkAndDeleteAlbum(album: AlbumTable): Int {
+   open suspend fun unlinkAndDeleteAlbum(album: AlbumTable): Int {
        removeAllPhotosFromAlbum(album.uuid)
        return delete(album)
    }

@@ -29,7 +29,8 @@ fun AlbumWithPhotos.toDomain(): Album = Album(
 )
 
 fun Album.toData(): AlbumTable = AlbumTable(
-    name = name
+    name = name,
+    uuid = uuid,
 )
 
 fun Album.toUi(): AlbumItem = AlbumItem(
