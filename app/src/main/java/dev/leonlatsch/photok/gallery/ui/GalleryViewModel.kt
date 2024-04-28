@@ -79,9 +79,7 @@ class GalleryViewModel @Inject constructor(
 
     private fun onAlbumSelected(items: List<String>, albumId: String) {
         viewModelScope.launch {
-            items.forEach { photoId ->
-                albumRepository.linkPhotoToAlbum(photoId, albumId)
-            }
+            albumRepository.link(items, albumId)
         }
         showAlbumSelectionDialog.value = false
     }

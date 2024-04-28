@@ -53,14 +53,24 @@ abstract class AlbumDao {
     abstract suspend fun countAll(): Int
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
-    abstract suspend fun linkPhotoToAlbum(photoId: String, albumId: String)
+    abstract suspend fun link(photoId: String, albumId: String)
+
+    @Transaction
+    open suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
+        photoUUIDs.forEach {
+            link(it, albumUUID)
+        }
+    }
+
+    @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumUUID AND photo_uuid IN (:photoUUIDs)")
+    abstract suspend fun unlink(photoUUIDs: List<String>, albumUUID: String)
 
     @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumId")
     abstract suspend fun removeAllPhotosFromAlbum(albumId: String)
 
-   @Transaction
-   open suspend fun unlinkAndDeleteAlbum(album: AlbumTable): Int {
-       removeAllPhotosFromAlbum(album.uuid)
-       return delete(album)
-   }
+    @Transaction
+    open suspend fun unlinkAndDeleteAlbum(album: AlbumTable): Int {
+        removeAllPhotosFromAlbum(album.uuid)
+        return delete(album)
+    }
 }

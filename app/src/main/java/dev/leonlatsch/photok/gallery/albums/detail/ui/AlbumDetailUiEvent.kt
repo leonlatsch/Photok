@@ -22,6 +22,7 @@ sealed interface AlbumDetailUiEvent {
     data class OpenPhoto(val item: PhotoTile) : AlbumDetailUiEvent
     data class OnDelete(val items: List<String>) : AlbumDetailUiEvent
     data class OnExport(val items: List<String>) : AlbumDetailUiEvent
+    data class RemoveFromAlbum(val items: List<String>) : AlbumDetailUiEvent
     data object DeleteAlbum : AlbumDetailUiEvent
     data object OnImport : AlbumDetailUiEvent
 }

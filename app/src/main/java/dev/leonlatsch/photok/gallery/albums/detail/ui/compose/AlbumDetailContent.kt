@@ -16,9 +16,16 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
@@ -57,7 +64,23 @@ fun AlbumDetailContent(
         onMagicFabClicked = {
             handleUiEvent(AlbumDetailUiEvent.OnImport)
         },
-        additionalMultiSelectionActions = {},
+        additionalMultiSelectionActions = { closeActions ->
+            HorizontalDivider()
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.menu_ms_remove_from_album)) },
+                onClick = {
+                    handleUiEvent(AlbumDetailUiEvent.RemoveFromAlbum(multiSelectionState.selectedItems.value.toList()))
+                    closeActions()
+                    multiSelectionState.cancelSelection()
+                },
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.ic_close),
+                        contentDescription = stringResource(R.string.menu_ms_remove_from_album),
+                    )
+                }
+            )
+        },
         modifier = modifier,
     )
 }

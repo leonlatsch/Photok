@@ -100,6 +100,16 @@ class AlbumDetailViewModel @AssistedInject constructor(
             }
 
             AlbumDetailUiEvent.OnImport -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu)
+            is AlbumDetailUiEvent.RemoveFromAlbum -> {
+                viewModelScope.launch {
+                    albumsRepository.unlink(event.items, albumFlow.value.uuid)
+                    navEventsChannel.trySend(
+                        AlbumDetailNavigator.NavigationEvent.ShowToast(
+                            resources.getString(R.string.common_ok)
+                        )
+                    )
+                }
+            }
         }
     }
 

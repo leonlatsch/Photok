@@ -76,21 +76,24 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                                 contentDescription = stringResource(R.string.common_more)
                             )
                         }
-                    }
-                )
 
-                DropdownMenu(expanded = showMore, onDismissRequest = { showMore = false }) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.common_delete)) },
-                        onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_delete),
-                                contentDescription = stringResource(R.string.common_delete)
+                        DropdownMenu(
+                            expanded = showMore,
+                            onDismissRequest = { showMore = false },
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.common_delete)) },
+                                onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) },
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(R.drawable.ic_delete),
+                                        contentDescription = stringResource(R.string.common_delete)
+                                    )
+                                }
                             )
                         }
-                    )
-                }
+                    }
+                )
             }
         ) { contentPadding ->
             AlbumDetailContent(

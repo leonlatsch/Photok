@@ -22,11 +22,14 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 
-fun AlbumWithPhotos.toDomain(): Album = Album(
-    uuid = album.uuid,
-    name = album.name,
-    files = photos
-)
+// Nullable is a safety mechanism for race condition when deleting album from detail view
+fun AlbumWithPhotos?.toDomain(): Album = this?.run {
+    Album(
+        uuid = album.uuid,
+        name = album.name,
+        files = photos
+    )
+} ?: Album(name = "", files = emptyList())
 
 fun Album.toData(): AlbumTable = AlbumTable(
     name = name,

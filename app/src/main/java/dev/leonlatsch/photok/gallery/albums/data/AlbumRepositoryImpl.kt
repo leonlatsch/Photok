@@ -49,7 +49,11 @@ class AlbumRepositoryImpl @Inject constructor(
             else -> Result.success(Unit)
         }
 
-    override suspend fun linkPhotoToAlbum(photoUUID: String, albumUUID: String) {
-        albumDao.linkPhotoToAlbum(photoUUID, albumUUID)
+    override suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
+        albumDao.link(photoUUIDs, albumUUID)
+    }
+
+    override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
+        albumDao.unlink(photoUUIDs, uuid)
     }
 }
