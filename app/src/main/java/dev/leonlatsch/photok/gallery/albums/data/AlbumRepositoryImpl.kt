@@ -56,4 +56,8 @@ class AlbumRepositoryImpl @Inject constructor(
     override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
         albumDao.unlink(photoUUIDs, uuid)
     }
+
+    override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {
+        return albumDao.getAllPhotoIdsFor(albumUUID)
+    }
 }

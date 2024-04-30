@@ -21,6 +21,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
@@ -38,7 +39,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ImageViewerViewModel @Inject constructor(
     app: Application,
-    val photoRepository: PhotoRepository
+    val photoRepository: PhotoRepository,
+    val albumRepository: AlbumRepository,
 ) : ObservableViewModel(app) {
 
     var uuids = listOf<String>()
@@ -54,10 +56,21 @@ class ImageViewerViewModel @Inject constructor(
      * Load all photo Ids.
      * Save them in viewModel and pass them to [onFinished].
      */
-    fun preloadData(onFinished: (List<String>) -> Unit) = viewModelScope.launch {
-        if (uuids.isEmpty()) {
-            uuids = photoRepository.getAllUUIDs()
+    fun preloadData(
+        albumUUID: String,
+        onFinished: (List<String>) -> Unit
+    ) = viewModelScope.launch {
+        if (uuids.isNotEmpty()) {
+            onFinished(uuids)
+            return@launch
         }
+
+        uuids = if (albumUUID.isEmpty()) {
+            photoRepository.getAllUUIDs()
+        } else {
+            albumRepository.getAllPhotoIdsFor(albumUUID)
+        }
+
         onFinished(uuids)
     }
 

@@ -126,6 +126,10 @@
             android:name="photo_uuid"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="album_uuid"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
             app:destination="@id/videoPlayerFragment"

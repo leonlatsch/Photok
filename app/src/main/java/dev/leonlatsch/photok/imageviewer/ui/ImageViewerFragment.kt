@@ -80,7 +80,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             }
         })
 
-        viewModel.preloadData { uuids ->
+        viewModel.preloadData(args.albumUuid) { uuids ->
             val photoPagerAdapter =
                 PhotoPagerAdapter(uuids, viewModel.photoRepository, findNavController(), {
                     binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
