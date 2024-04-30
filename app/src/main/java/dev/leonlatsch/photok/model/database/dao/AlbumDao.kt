@@ -67,4 +67,7 @@ abstract class AlbumDao {
         removeAllPhotosFromAlbum(album.uuid)
         return delete(album)
     }
+
+    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID")
+    abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
 }
