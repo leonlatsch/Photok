@@ -38,9 +38,6 @@ abstract class AlbumDao {
     @Query("DELETE FROM albumtable")
     abstract suspend fun deleteAll()
 
-    @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
-    abstract suspend fun getAlbumByUuid(uuid: String): AlbumTable
-
     @Transaction
     @Query("SELECT * FROM albumtable")
     abstract fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
@@ -48,9 +45,6 @@ abstract class AlbumDao {
     @Transaction
     @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
     abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
-
-    @Query("SELECT COUNT(*) FROM albumtable")
-    abstract suspend fun countAll(): Int
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
     abstract suspend fun link(photoId: String, albumId: String)

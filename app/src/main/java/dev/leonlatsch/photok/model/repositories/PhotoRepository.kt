@@ -70,11 +70,11 @@ class PhotoRepository @Inject constructor(
     suspend fun get(uuid: String) = photoDao.get(uuid)
 
     /**
-     * @see PhotoDao.getAllSortedByImportedAt
+     * @see PhotoDao.getAll
      */
-    suspend fun getAll() = photoDao.getAllSortedByImportedAt()
+    suspend fun getAll() = photoDao.getAll()
 
-    fun observeAll() = photoDao.observeAllSortedByImportedAt()
+    fun observeAll() = photoDao.observeAll()
 
     /**
      * @see PhotoDao.getAllUUIDs
