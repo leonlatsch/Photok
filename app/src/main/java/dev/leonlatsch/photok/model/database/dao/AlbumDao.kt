@@ -46,16 +46,16 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
-    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY addedAt DESC")
+    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY sortingId DESC")
     abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
 
-    @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid, addedAt) VALUES (:albumId, :photoId, :addedAt)")
-    abstract suspend fun link(photoId: String, albumId: String, addedAt: Long)
+    @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
+    abstract suspend fun link(photoId: String, albumId: String)
 
     @Transaction
     open suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
         photoUUIDs.forEach {
-            link(it, albumUUID, System.currentTimeMillis())
+            link(it, albumUUID)
         }
     }
 

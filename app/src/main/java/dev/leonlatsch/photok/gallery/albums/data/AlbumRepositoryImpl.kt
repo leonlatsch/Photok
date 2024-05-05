@@ -30,12 +30,17 @@ class AlbumRepositoryImpl @Inject constructor(
     private val albumDao: AlbumDao
 ) : AlbumRepository {
     override fun observeAlbums(): Flow<List<Album>> =
-        albumDao.getAllAlbumsWithPhotos().map { albumList ->
-            albumList.map { it.toDomain() }
-        }
+        albumDao.getAllAlbumsWithPhotos()
+            .map { albums ->
+                albums.map { it.toDomain() }
+            }.map { albums ->
+                albums.map { it.copy(files = it.files.asReversed()) }
+            }
 
     override fun getAlbum(uuid: String): Flow<Album> =
-        albumDao.getAlbumWithPhotos(uuid).map { it.toDomain() }
+        albumDao.getAlbumWithPhotos(uuid)
+            .map { it.toDomain() }
+            .map { it.copy(files = it.files.asReversed()) }
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {
