@@ -46,6 +46,10 @@ abstract class AlbumDao {
     @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
     abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
+    // TODO: Change sorting
+    @Query("SELECT photo.photo_uuid FROM album_photos_cross_ref AS ref JOIN photo ON photo.photo_uuid = ref.photo_uuid ORDER BY photo.importedAt")
+    abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
+
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
     abstract suspend fun link(photoId: String, albumId: String)
 
@@ -67,7 +71,4 @@ abstract class AlbumDao {
         removeAllPhotosFromAlbum(album.uuid)
         return delete(album)
     }
-
-    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID")
-    abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
 }
