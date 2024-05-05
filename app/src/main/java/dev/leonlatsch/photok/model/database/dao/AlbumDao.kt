@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.model.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
@@ -48,6 +49,11 @@ abstract class AlbumDao {
 
     @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY linked_at DESC")
     abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
+
+    @Query("SELECT photo_uuid, linked_at FROM album_photos_cross_ref WHERE photo_uuid in (:photoUUIDs)")
+    abstract suspend fun getLinkedAtFor(
+        photoUUIDs: List<String>
+    ): Map<@MapColumn(columnName = "photo_uuid") String, @MapColumn(columnName = "linked_at") Long>
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid, linked_at) VALUES (:albumId, :photoId, :linkedAt)")
     abstract suspend fun link(photoId: String, albumId: String, linkedAt: Long)

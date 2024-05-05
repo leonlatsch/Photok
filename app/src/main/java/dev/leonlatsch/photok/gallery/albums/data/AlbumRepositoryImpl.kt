@@ -29,13 +29,16 @@ import javax.inject.Inject
 class AlbumRepositoryImpl @Inject constructor(
     private val albumDao: AlbumDao
 ) : AlbumRepository {
+
     override fun observeAlbums(): Flow<List<Album>> =
-        albumDao.getAllAlbumsWithPhotos().map { albums ->
-            albums.map { it.toDomain() }
-        }
+        albumDao.getAllAlbumsWithPhotos()
+            .map { albums -> albums.map { it.toDomain() } }
+            .map { albums -> albums.map { album -> album.sortPhotos() } }
 
     override fun getAlbum(uuid: String): Flow<Album> =
-        albumDao.getAlbumWithPhotos(uuid).map { it.toDomain() }
+        albumDao.getAlbumWithPhotos(uuid)
+            .map { it.toDomain() }
+            .map { album -> album.sortPhotos() }
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {
@@ -59,5 +62,13 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {
         return albumDao.getAllPhotoIdsFor(albumUUID)
+    }
+
+    private suspend fun Album.sortPhotos(): Album {
+        val linkedAt = albumDao.getLinkedAtFor(files.map { it.uuid })
+
+        return this.copy(
+            files = files.sortedByDescending { photo -> linkedAt[photo.uuid] }
+        )
     }
 }
