@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0e9c6e20eb2e9681fedfcb4a3bfb42ae",
+    "identityHash": "d17d295ad2445d1a0bf98dc70b4f318f",
     "entities": [
       {
         "tableName": "photo",
@@ -49,7 +49,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "AlbumTable",
+        "tableName": "album",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `album_uuid` TEXT NOT NULL, PRIMARY KEY(`album_uuid`))",
         "fields": [
           {
@@ -76,7 +76,7 @@
       },
       {
         "tableName": "album_photos_cross_ref",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `addedAt` INTEGER NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
         "fields": [
           {
             "fieldPath": "albumUUID",
@@ -88,6 +88,12 @@
             "fieldPath": "photoUUID",
             "columnName": "photo_uuid",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addedAt",
+            "columnName": "addedAt",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -105,7 +111,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e9c6e20eb2e9681fedfcb4a3bfb42ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd17d295ad2445d1a0bf98dc70b4f318f')"
     ]
   }
 }

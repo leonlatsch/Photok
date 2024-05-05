@@ -35,28 +35,27 @@ abstract class AlbumDao {
     @Delete
     abstract suspend fun delete(album: AlbumTable): Int
 
-    @Query("DELETE FROM albumtable")
+    @Query("DELETE FROM album")
     abstract suspend fun deleteAll()
 
     @Transaction
-    @Query("SELECT * FROM albumtable")
+    @Query("SELECT * FROM album")
     abstract fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
 
     @Transaction
-    @Query("SELECT * FROM albumtable WHERE album_uuid = :uuid")
+    @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
-    // TODO: Change sorting
-    @Query("SELECT photo.photo_uuid FROM album_photos_cross_ref AS ref JOIN photo ON photo.photo_uuid = ref.photo_uuid ORDER BY photo.importedAt")
+    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY addedAt DESC")
     abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
 
-    @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid) VALUES (:albumId, :photoId)")
-    abstract suspend fun link(photoId: String, albumId: String)
+    @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid, addedAt) VALUES (:albumId, :photoId, :addedAt)")
+    abstract suspend fun link(photoId: String, albumId: String, addedAt: Long)
 
     @Transaction
     open suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
         photoUUIDs.forEach {
-            link(it, albumUUID)
+            link(it, albumUUID, System.currentTimeMillis())
         }
     }
 
