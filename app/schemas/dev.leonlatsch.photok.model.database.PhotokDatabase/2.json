@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d7a9b35eeba9406174d8cbb3087c2fbd",
+    "identityHash": "2cae67b57369ecb28bff639a63d85d8f",
     "entities": [
       {
         "tableName": "photo",
@@ -76,7 +76,7 @@
       },
       {
         "tableName": "album_photos_cross_ref",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `sortingId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `linked_at` INTEGER NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
         "fields": [
           {
             "fieldPath": "albumUUID",
@@ -91,16 +91,17 @@
             "notNull": true
           },
           {
-            "fieldPath": "sortingId",
-            "columnName": "sortingId",
+            "fieldPath": "linkedAt",
+            "columnName": "linked_at",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "sortingId"
+            "album_uuid",
+            "photo_uuid"
           ]
         },
         "indices": [],
@@ -110,7 +111,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7a9b35eeba9406174d8cbb3087c2fbd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2cae67b57369ecb28bff639a63d85d8f')"
     ]
   }
 }
