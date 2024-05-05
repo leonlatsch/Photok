@@ -127,7 +127,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.9.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.04.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
