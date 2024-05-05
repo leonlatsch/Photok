@@ -22,6 +22,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import com.bumptech.glide.Glide
+import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -45,6 +46,7 @@ import javax.inject.Inject
  */
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
+    private val albumDao: AlbumDao,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
     private val config: Config
@@ -271,6 +273,7 @@ class PhotoRepository @Inject constructor(
 
         if (success) {
             deleteInternalPhotoData(photo)
+            albumDao.unlink(photo.uuid)
         }
 
         return success
