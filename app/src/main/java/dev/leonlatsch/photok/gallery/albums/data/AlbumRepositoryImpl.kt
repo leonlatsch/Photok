@@ -53,7 +53,7 @@ class AlbumRepositoryImpl @Inject constructor(
         }
 
     override suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
-        albumDao.link(photoUUIDs, albumUUID, System.currentTimeMillis())
+        albumDao.link(photoUUIDs, albumUUID)
     }
 
     override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {

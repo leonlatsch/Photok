@@ -82,7 +82,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
             }
 
             is AlbumDetailUiEvent.OpenPhoto -> {
-                photoActionsChannel.trySend(PhotoAction.OpenPhoto(event.item.uuid))
+                photoActionsChannel.trySend(PhotoAction.OpenPhoto(event.item.uuid, albumFlow.value.uuid))
             }
 
             AlbumDetailUiEvent.DeleteAlbum -> {

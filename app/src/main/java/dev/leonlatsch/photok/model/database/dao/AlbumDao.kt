@@ -59,9 +59,9 @@ abstract class AlbumDao {
     abstract suspend fun link(photoId: String, albumId: String, linkedAt: Long)
 
     @Transaction
-    open suspend fun link(photoUUIDs: List<String>, albumUUID: String, linkedAt: Long) {
+    open suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
         photoUUIDs.forEach {
-            link(it, albumUUID, linkedAt)
+            link(it, albumUUID, System.currentTimeMillis())
         }
     }
 

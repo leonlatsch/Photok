@@ -48,7 +48,7 @@ class PhotoActionsNavigator @Inject constructor(
                 fragment.childFragmentManager
             )
 
-            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, navController)
+            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navController)
             PhotoAction.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager)
         }
     }
@@ -95,14 +95,14 @@ class PhotoActionsNavigator @Inject constructor(
         }
     }
 
-    private fun navigateOpenPhoto(photoUUID: String, navController: NavController) {
-        val direction = ImageViewerFragmentDirections.actionGlobalImageViewerFragment(photoUuid = photoUUID)
+    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navController: NavController) {
+        val direction = ImageViewerFragmentDirections.actionGlobalImageViewerFragment(photoUuid = photoUUID, albumUuid = albumUUID)
         navController.navigate(direction)
     }
 }
 
 sealed interface PhotoAction {
-    data class OpenPhoto(val photoUUID: String) : PhotoAction
+    data class OpenPhoto(val photoUUID: String, val albumUUID: String = "") : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
     data class ExportPhotos(val photos: List<Photo>) : PhotoAction
     data object OpenImportMenu : PhotoAction
