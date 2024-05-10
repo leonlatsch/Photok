@@ -54,7 +54,10 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
                 ) {
                     var albumName by remember { mutableStateOf("") }
 
-                    Text("Create Album", style = MaterialTheme.typography.headlineSmall)
+                    Text(
+                        stringResource(R.string.gallery_albums_create_title),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
 
                     OutlinedTextField(
                         value = albumName,
@@ -67,7 +70,7 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         TextButton(onClick = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
-                            Text("Cancel") // TODO: string key
+                            Text(stringResource(R.string.common_cancel))
                         }
                         Button(
                             onClick = {
@@ -76,7 +79,7 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
                             },
                             enabled = albumName.isNotEmpty()
                         ) {
-                            Text("Create") // TODO: string key
+                            Text(stringResource(R.string.common_create))
                         }
                     }
                 }

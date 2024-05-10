@@ -33,6 +33,8 @@
     <string name="common_are_you_sure">Вы уверены?</string>
     <string name="common_bullet">•</string>
     <string name="common_more">More</string> <!-- TODO -->
+    <string name="common_cancel">Cancel</string> <!-- TODO -->
+    <string name="common_create">Create</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>
@@ -62,6 +64,7 @@
     <string name="gallery_all_photos_label">Все файлы</string>
     <string name="gallery_albums_label">Albums</string> <!-- TODO -->
     <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
     <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
