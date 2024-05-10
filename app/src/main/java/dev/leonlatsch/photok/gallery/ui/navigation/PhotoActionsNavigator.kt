@@ -16,11 +16,9 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
@@ -28,7 +26,6 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragmentDirections
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import javax.inject.Inject
 
 class PhotoActionsNavigator @Inject constructor(
@@ -37,13 +34,11 @@ class PhotoActionsNavigator @Inject constructor(
     fun navigate(action: PhotoAction, navController: NavController, fragment: Fragment) {
         when (action) {
             is PhotoAction.DeletePhotos -> confirmAndDelete(
-                fragment.requireContext(),
                 action.photos,
                 fragment.childFragmentManager
             )
 
             is PhotoAction.ExportPhotos -> confirmAndExport(
-                fragment.requireContext(),
                 action.photos,
                 fragment.childFragmentManager
             )
@@ -58,41 +53,17 @@ class PhotoActionsNavigator @Inject constructor(
     }
 
     private fun confirmAndExport(
-        context: Context,
         photos: List<Photo>,
         fragmentManager: FragmentManager,
     ) {
-        val confirmationText = if (config.deleteExportedFiles) {
-            context.getString(R.string.export_and_delete_are_you_sure)
-        } else {
-            context.getString(R.string.export_are_you_sure)
-        }
-
-        Dialogs.showConfirmDialog(
-            context,
-            String.format(
-                confirmationText,
-                photos.size
-            )
-        ) { _, _ -> // On positive button clicked
-            ExportBottomSheetDialogFragment(photos).show(fragmentManager)
-        }
+        ExportBottomSheetDialogFragment(photos).show(fragmentManager)
     }
 
     private fun confirmAndDelete(
-        context: Context,
         photos: List<Photo>,
         fragmentManager: FragmentManager
     ) {
-        Dialogs.showConfirmDialog(
-            context,
-            String.format(
-                context.getString(R.string.delete_are_you_sure),
-                photos.size
-            )
-        ) { _, _ -> // On positive button clicked
-            DeleteBottomSheetDialogFragment(photos).show(fragmentManager)
-        }
+        DeleteBottomSheetDialogFragment(photos).show(fragmentManager)
     }
 
     private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navController: NavController) {

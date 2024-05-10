@@ -33,6 +33,7 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,7 +58,8 @@ class GalleryFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             CompositionLocalProvider(
-                LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
+                LocalEncryptedImageLoader provides viewModel.encryptedImageLoader,
+                LocalConfig provides config,
             ) {
                 GalleryScreen(viewModel, albumPickerViewModel)
             }

@@ -31,6 +31,8 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.assistedViewModel
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
+import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -49,6 +51,9 @@ class AlbumDetailFragment : Fragment() {
     @Inject
     lateinit var albumDetailNavigator: AlbumDetailNavigator
 
+    @Inject
+    lateinit var config: Config
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +62,10 @@ class AlbumDetailFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    CompositionLocalProvider(LocalEncryptedImageLoader provides viewModel.encryptedImageLoader) {
+                    CompositionLocalProvider(
+                        LocalEncryptedImageLoader provides viewModel.encryptedImageLoader,
+                        LocalConfig provides config,
+                    ) {
                         AlbumDetailScreen(viewModel, findNavController())
                     }
                 }

@@ -40,7 +40,10 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -56,6 +59,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 
@@ -90,6 +95,44 @@ fun PhotoGallery(
             }
         }
 
+        var showDeleteConfirmationDialog by remember {
+            mutableStateOf(false)
+        }
+
+        var showExportConfirmationDialog by remember {
+            mutableStateOf(false)
+        }
+
+        ConfirmationDialog(
+            show = showDeleteConfirmationDialog,
+            onDismissRequest = { showDeleteConfirmationDialog = false },
+            text = stringResource(
+                R.string.delete_are_you_sure,
+                multiSelectionState.selectedItems.value.size
+            ),
+            onConfirm = {
+                onDelete()
+                multiSelectionState.cancelSelection()
+            }
+        )
+
+        ConfirmationDialog(
+            show = showExportConfirmationDialog,
+            onDismissRequest = { showExportConfirmationDialog = false },
+            text = stringResource(
+                if (LocalConfig.current.deleteExportedFiles) {
+                    R.string.export_and_delete_are_you_sure
+                } else {
+                    R.string.export_are_you_sure
+                },
+                multiSelectionState.selectedItems.value.size
+            ),
+            onConfirm = {
+                onExport()
+                multiSelectionState.cancelSelection()
+            }
+        )
+
         AnimatedVisibility(
             visible = multiSelectionState.isActive.value,
             modifier = Modifier
@@ -121,7 +164,7 @@ fun PhotoGallery(
                     },
                     text = { Text(stringResource(R.string.common_delete)) },
                     onClick = {
-                        onDelete()
+                        showDeleteConfirmationDialog = true
                         closeActions()
                     },
                 )
@@ -134,7 +177,7 @@ fun PhotoGallery(
                     },
                     text = { Text(stringResource(R.string.common_export)) },
                     onClick = {
-                        onExport()
+                        showExportConfirmationDialog = true
                         closeActions()
                     },
                 )
