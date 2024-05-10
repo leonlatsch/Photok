@@ -67,13 +67,16 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         TextButton(onClick = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
-                            Text("Cancel")
+                            Text("Cancel") // TODO: string key
                         }
-                        Button(onClick = {
-                            handleUiEvent(AlbumsUiEvent.CreateAlbum(albumName))
-                            handleUiEvent(AlbumsUiEvent.HideCreateDialog)
-                        }) {
-                            Text("Create")
+                        Button(
+                            onClick = {
+                                handleUiEvent(AlbumsUiEvent.CreateAlbum(albumName))
+                                handleUiEvent(AlbumsUiEvent.HideCreateDialog)
+                            },
+                            enabled = albumName.isNotEmpty()
+                        ) {
+                            Text("Create") // TODO: string key
                         }
                     }
                 }
@@ -86,6 +89,8 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
 @Composable
 private fun CreateAlbumDialogPreview() {
     AppTheme {
-        CreateAlbumDialog(uiState = AlbumsUiState.Empty(showCreateDialog = true), handleUiEvent = {})
+        CreateAlbumDialog(
+            uiState = AlbumsUiState.Empty(showCreateDialog = true),
+            handleUiEvent = {})
     }
 }
