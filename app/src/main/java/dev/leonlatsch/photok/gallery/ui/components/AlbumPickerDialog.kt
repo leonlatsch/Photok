@@ -27,7 +27,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +56,7 @@ private fun AlbumPickerContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Select an album",
+            stringResource(R.string.gallery_albums_select_title),
             style = MaterialTheme.typography.headlineSmall
         )
 

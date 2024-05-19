@@ -35,6 +35,7 @@
     <string name="common_more">More</string> <!-- TODO -->
     <string name="common_cancel">Cancel</string> <!-- TODO -->
     <string name="common_create">Create</string> <!-- TODO -->
+    <string name="common_empty">Empty</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>

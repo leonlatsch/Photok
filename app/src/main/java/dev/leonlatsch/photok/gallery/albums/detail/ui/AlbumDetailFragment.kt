@@ -25,10 +25,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.detail.ui.compose.AlbumDetailScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.assistedViewModel
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
@@ -54,6 +56,10 @@ class AlbumDetailFragment : Fragment() {
     @Inject
     lateinit var config: Config
 
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +69,7 @@ class AlbumDetailFragment : Fragment() {
             setContent {
                 AppTheme {
                     CompositionLocalProvider(
-                        LocalEncryptedImageLoader provides viewModel.encryptedImageLoader,
+                        LocalEncryptedImageLoader provides encryptedImageLoader,
                         LocalConfig provides config,
                     ) {
                         AlbumDetailScreen(viewModel, findNavController())

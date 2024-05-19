@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -67,7 +68,9 @@ fun AlbumTile(album: AlbumItem, onAlbumClicked: (String) -> Unit) {
                         painter = painterResource(R.drawable.ic_folder),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.align(Alignment.Center).size(48.dp)
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(48.dp)
                     )
                 }
             } else {
@@ -108,7 +111,7 @@ fun AlbumTile(album: AlbumItem, onAlbumClicked: (String) -> Unit) {
                     .padding(8.dp)
             )
 
-            val itemCountText = album.itemCount.toString().ifEmpty { "Empty" }
+            val itemCountText = album.itemCount.toString().ifEmpty { stringResource(R.string.common_empty) }
 
             Text(
                 text = itemCountText,

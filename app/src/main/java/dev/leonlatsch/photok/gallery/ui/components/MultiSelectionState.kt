@@ -21,7 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 @Composable
-fun rememberMultiSelectionState(items: List<String>) = remember { // TODO: Impl savable
+fun rememberMultiSelectionState(items: List<String>) = remember {
     MultiSelectionState(items)
 }
 
