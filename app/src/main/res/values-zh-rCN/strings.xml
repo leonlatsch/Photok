@@ -67,6 +67,7 @@
     <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
     <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
     <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">导入</string>
