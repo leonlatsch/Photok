@@ -126,6 +126,10 @@
             android:name="photo_uuid"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="album_uuid"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
             app:destination="@id/videoPlayerFragment"
@@ -145,10 +149,27 @@
         android:id="@+id/galleryFragment"
         android:name="dev.leonlatsch.photok.gallery.ui.GalleryFragment"
         android:label="GalleryFragment">
-        <action
-            android:id="@+id/action_galleryFragment_to_imageViewerFragment"
-            app:destination="@id/imageViewerFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
     </fragment>
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="dev.leonlatsch.photok.gallery.albums.ui.AlbumsFragment"
+        android:label="GalleryFragment">
+        <action
+            android:id="@+id/action_albumsFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailFragment"
+        android:label="AlbumDetailFragment" >
+        <argument
+            android:name="album_uuid"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_imageViewerFragment"
+        app:destination="@id/imageViewerFragment" />
 </navigation>

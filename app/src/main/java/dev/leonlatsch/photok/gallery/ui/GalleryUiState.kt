@@ -16,29 +16,13 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 sealed class GalleryUiState {
     data object Empty : GalleryUiState()
 
     data class Content(
-        val selectionMode: Boolean,
         val photos: List<PhotoTile>,
-        val multiSelectionState: MultiSelectionState,
-        val columnCount: Int,
+        val showAlbumSelectionDialog: Boolean,
     ) : GalleryUiState()
-}
-
-data class MultiSelectionState(
-    val isActive: Boolean,
-    val selectedItemUUIDs: List<String>
-)
-
-data class PhotoTile(
-    val fileName: String,
-    val type: PhotoType,
-    val uuid: String,
-) {
-    val internalThumbnailFileName = internalThumbnailFileName(uuid)
 }

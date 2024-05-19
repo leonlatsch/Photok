@@ -59,13 +59,13 @@ class VideoPlayerFragment :
         }
         binding.playerView.showController()
 
-        val photoId = arguments?.get(INTENT_PHOTO_UUID)
-        if (photoId == null || photoId !is Int) {
+        val photoUUID = arguments?.getString(INTENT_PHOTO_UUID)
+        if (photoUUID == null) {
             findNavController().navigateUp()
             return
         }
 
-        viewModel.setupPlayer(photoId)
+        viewModel.setupPlayer(photoUUID)
     }
 
     override fun bind(binding: FragmentVideoPlayerBinding) {

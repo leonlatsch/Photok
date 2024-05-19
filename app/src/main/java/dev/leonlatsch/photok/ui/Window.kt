@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.uicomponnets.compose
+package dev.leonlatsch.photok.ui
 
 import android.app.Activity
 import android.content.Context

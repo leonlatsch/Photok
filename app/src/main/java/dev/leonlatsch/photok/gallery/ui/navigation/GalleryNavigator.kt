@@ -16,47 +16,19 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
-import android.content.Context
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
-import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
-import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import javax.inject.Inject
 
-class GalleryNavigator @Inject constructor(
-    private val config: Config
-) {
+class GalleryNavigator @Inject constructor() {
 
     fun navigate(
         event: GalleryNavigationEvent,
-        navController: NavController,
         fragment: Fragment,
     ) {
         when (event) {
-            is GalleryNavigationEvent.OpenPhoto -> navigateOpenPhoto(event.photoUUID, navController)
-            GalleryNavigationEvent.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager)
-            is GalleryNavigationEvent.StartDeleteDialog -> navigateStartDeleteDialog(
-                fragment.requireContext(),
-                event.photosToDelete,
-                fragment.childFragmentManager
-            )
-
-            is GalleryNavigationEvent.StartExportDialog -> navigateStartExportDialog(
-                fragment.requireContext(),
-                event.photosToExport,
-                fragment.childFragmentManager,
-            )
-
             is GalleryNavigationEvent.ShowNewFeaturesDialog -> navigateShowNewFeaturesDialog(
                 fragment.childFragmentManager
             )
@@ -65,52 +37,5 @@ class GalleryNavigator @Inject constructor(
 
     private fun navigateShowNewFeaturesDialog(fragmentManager: FragmentManager) {
         NewFeaturesDialog().show(fragmentManager)
-    }
-
-    private fun navigateStartExportDialog(
-        context: Context,
-        photos: List<Photo>,
-        fragmentManager: FragmentManager,
-    ) {
-        val confirmationText = if (config.deleteExportedFiles) {
-            context.getString(R.string.export_and_delete_are_you_sure)
-        } else {
-            context.getString(R.string.export_are_you_sure)
-        }
-
-        Dialogs.showConfirmDialog(
-            context,
-            String.format(
-                confirmationText,
-                photos.size
-            )
-        ) { _, _ -> // On positive button clicked
-            ExportBottomSheetDialogFragment(photos).show(fragmentManager)
-        }
-    }
-
-    private fun navigateStartDeleteDialog(
-        context: Context,
-        photos: List<Photo>,
-        fragmentManager: FragmentManager
-    ) {
-        Dialogs.showConfirmDialog(
-            context,
-            String.format(
-                context.getString(R.string.delete_are_you_sure),
-                photos.size
-            )
-        ) { _, _ -> // On positive button clicked
-            DeleteBottomSheetDialogFragment(photos).show(fragmentManager)
-        }
-    }
-
-    private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
-        ImportMenuDialog().show(fragmentManager)
-    }
-
-    private fun navigateOpenPhoto(photoUUID: String, navController: NavController) {
-        val args = bundleOf(INTENT_PHOTO_UUID to photoUUID)
-        navController.navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
     }
 }

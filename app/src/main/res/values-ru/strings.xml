@@ -32,6 +32,10 @@
     <string name="common_ok">ОК</string>
     <string name="common_are_you_sure">Вы уверены?</string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
+    <string name="common_cancel">Cancel</string> <!-- TODO -->
+    <string name="common_create">Create</string> <!-- TODO -->
+    <string name="common_empty">Empty</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>
@@ -59,6 +63,11 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">В вашем сейфе нет файлов</string>
     <string name="gallery_all_photos_label">Все файлы</string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Импортировать</string>
@@ -90,6 +99,9 @@
     <string name="menu_ms_select_all">Выбрать всё</string>
     <string name="menu_ms_delete">Удалить</string>
     <string name="menu_ms_export">Экспорт</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
+    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>

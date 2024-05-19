@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.model.database.dao
 
-import androidx.paging.PagingSource
 import androidx.room.*
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.flow.Flow
@@ -58,15 +57,7 @@ interface PhotoDao {
      *
      * @return the photo with [id]
      */
-    @Query("SELECT * FROM photo WHERE id = :id")
-    suspend fun get(id: Int): Photo
-
-    /**
-     * Get one [Photo] by [id].
-     *
-     * @return the photo with [id]
-     */
-    @Query("SELECT * FROM photo WHERE uuid = :uuid")
+    @Query("SELECT * FROM photo WHERE photo_uuid = :uuid")
     suspend fun get(uuid: String): Photo
 
     /**
@@ -76,31 +67,16 @@ interface PhotoDao {
      * @return all photos as [List]
      */
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    suspend fun getAllSortedByImportedAt(): List<Photo>
-
-    /**
-     * Get all photos, ordered by importedAt (desc) as [PagingSource].
-     * Used for Paging all photos in gallery.
-     *
-     * @return all photo as [PagingSource]
-     */
-    @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun getAllPagedSortedByImportedAt(): PagingSource<Int, Photo>
+    suspend fun getAll(): List<Photo>
 
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    fun observeAllSortedByImportedAt(): Flow<List<Photo>>
+    fun observeAll(): Flow<List<Photo>>
 
     /**
      * Get all photo Ids.
      */
-    @Query("SELECT uuid FROM photo ORDER BY importedAt DESC")
+    @Query("SELECT photo_uuid FROM photo ORDER BY importedAt DESC")
     suspend fun getAllUUIDs(): List<String>
-
-    /**
-     * Get uuid for a photo.
-     */
-    @Query("SELECT uuid FROM photo WHERE id = :id")
-    suspend fun getUUIDForPhoto(id: Int): String?
 
     /**
      * Count all photos.

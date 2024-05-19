@@ -24,8 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
+import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
-import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
@@ -51,6 +51,10 @@ object AppModule {
     @Provides
     @Singleton
     fun providePhotoDao(database: PhotokDatabase) = database.getPhotoDao()
+
+    @Provides
+    @Singleton
+    fun provideAlbumDao(database: PhotokDatabase) = database.getAlbumDao()
 
     @Provides
     @Singleton

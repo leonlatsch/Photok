@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,24 +25,37 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment() {
 
     private val viewModel: GalleryViewModel by viewModels()
+    private val albumPickerViewModel: AlbumPickerViewModel by viewModels()
 
     @Inject
     lateinit var navigator: GalleryNavigator
 
     @Inject
+    lateinit var photoActionsNavigator: PhotoActionsNavigator
+
+    @Inject
     lateinit var config: Config
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,9 +64,10 @@ class GalleryFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             CompositionLocalProvider(
-                LocalEncryptedImageLoader provides viewModel.encryptedImageLoader
+                LocalEncryptedImageLoader provides encryptedImageLoader,
+                LocalConfig provides config,
             ) {
-                GalleryScreen(viewModel)
+                GalleryScreen(viewModel, albumPickerViewModel)
             }
         }
     }
@@ -64,16 +77,16 @@ class GalleryFragment : Fragment() {
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
-                navigator.navigate(event, findNavController(), this)
+                navigator.navigate(event, this)
+            }
+        }
+
+        launchLifecycleAwareJob {
+            viewModel.photoActions.collect { action ->
+                photoActionsNavigator.navigate(action, findNavController(), this)
             }
         }
 
         viewModel.checkForNewFeatures()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        viewModel.onConfigurationChanged()
     }
 }

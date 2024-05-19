@@ -14,40 +14,36 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.compose
+package dev.leonlatsch.photok.ui.components
 
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 
 @Composable
-fun ImportButton(
-    onClick: () -> Unit,
+fun AppName(
+    color: Color = colorResource(R.color.appTitleColor),
     modifier: Modifier = Modifier,
 ) {
-    FloatingActionButton(
-        onClick = onClick,
-        containerColor = colorResource(R.color.colorPrimary),
-        modifier = modifier,
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_add),
-            contentDescription = null,
-            tint = Color.White
-        )
-    }
+    Text(
+        text = stringResource(R.string.app_name),
+        color = color,
+        fontFamily = FontFamily(Font(R.font.lobster_regular)),
+        fontSize = 38.sp,
+        modifier = modifier
+    )
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun ImportButtonPreview() {
-    ImportButton(
-        onClick = {}
-    )
+private fun AppNamePreview() {
+    AppName()
 }

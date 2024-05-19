@@ -16,12 +16,14 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+
 sealed interface GalleryUiEvent {
-    data class PhotoClicked(val item: PhotoTile) : GalleryUiEvent
-    data class PhotoLongPressed(val item: PhotoTile) : GalleryUiEvent
-    object OpenImportMenu : GalleryUiEvent
-    object CancelMultiSelect : GalleryUiEvent
-    object SelectAll : GalleryUiEvent
-    object OnDelete : GalleryUiEvent
-    object OnExport : GalleryUiEvent
+    data class OpenPhoto(val item: PhotoTile) : GalleryUiEvent
+    data object OpenImportMenu : GalleryUiEvent
+    data class OnDelete(val items: List<String>) : GalleryUiEvent
+    data class OnExport(val items: List<String>) : GalleryUiEvent
+    data object OnAddToAlbum : GalleryUiEvent
+    data class OnAlbumSelected(val photoIds: List<String>, val albumId: String) : GalleryUiEvent
+    data object CancelAlbumSelection : GalleryUiEvent
 }

@@ -16,146 +16,80 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FiniteAnimationSpec
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
-import dev.leonlatsch.photok.gallery.ui.MultiSelectionState
-import dev.leonlatsch.photok.gallery.ui.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
+import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
+import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.uicomponnets.compose.AppName
-import dev.leonlatsch.photok.uicomponnets.compose.findWindow
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
 
-private const val AnimationStiffness = Spring.StiffnessLow
-private val FadeAnimationSpec: FiniteAnimationSpec<Float> = spring(stiffness = AnimationStiffness)
-
 @Composable
-fun GalleryContent(uiState: GalleryUiState.Content, handleUiEvent: (GalleryUiEvent) -> Unit) {
-    val gridState = rememberLazyGridState()
-    val window = findWindow()
-    val isDarkTheme = isSystemInDarkTheme()
-
-    Box {
-        PhotosGrid(
-            photos = uiState.photos,
-            multiSelectionState = uiState.multiSelectionState,
-            handleUiEvent = handleUiEvent,
-            columnCount = uiState.columnCount,
-            modifier = Modifier.fillMaxHeight(),
-            extraTopPadding = 120.dp,
-            gridState = gridState
-        )
-
-        val scrolling by remember { derivedStateOf { gridState.canScrollBackward } }
-
-        AnimatedVisibility(
-            visible = scrolling,
-            enter = fadeIn(FadeAnimationSpec),
-            exit = fadeOut(FadeAnimationSpec),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(colorResource(R.color.black_semi_transparent), Color.Transparent)
-                        )
+fun GalleryContent(
+    uiState: GalleryUiState.Content,
+    handleUiEvent: (GalleryUiEvent) -> Unit,
+    multiSelectionState: MultiSelectionState,
+    modifier: Modifier = Modifier,
+) {
+    PhotoGallery(
+        modifier = modifier.fillMaxSize(),
+        photos = uiState.photos,
+        multiSelectionState = multiSelectionState,
+        onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
+        onExport = {
+            handleUiEvent(
+                GalleryUiEvent.OnExport(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
+        onDelete = {
+            handleUiEvent(
+                GalleryUiEvent.OnDelete(
+                    multiSelectionState.selectedItems.value.toList()
+                )
+            )
+        },
+        onMagicFabClicked = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
+        additionalMultiSelectionActions = { closeActions ->
+            HorizontalDivider()
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_folder),
+                        contentDescription = null
                     )
+                },
+                text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
+                onClick = {
+                    handleUiEvent(GalleryUiEvent.OnAddToAlbum)
+                    closeActions()
+                },
             )
         }
-
-        LaunchedEffect(scrolling) {
-            window?.let { window ->
-                WindowCompat.getInsetsController(
-                    window, window.decorView
-                ).isAppearanceLightStatusBars = isDarkTheme.not() && scrolling.not()
-            }
-        }
-
-        val titleColor by animateColorAsState(
-            targetValue = if (scrolling) Color.White else colorResource(R.color.appTitleColor),
-            animationSpec = spring(stiffness = AnimationStiffness),
-            label = "titleColor"
-        )
-
-        AppName(
-            color = titleColor,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(WindowInsets.statusBars.asPaddingValues())
-        )
-
-        AnimatedVisibility(
-            visible = uiState.multiSelectionState.isActive.not(),
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(12.dp)
-        ) {
-            ImportButton(
-                onClick = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp)
-            )
-        }
-
-        AnimatedVisibility(
-            visible = uiState.multiSelectionState.isActive,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 24.dp),
-        ) {
-            GalleryInteractionsRow(
-                onClose = { handleUiEvent(GalleryUiEvent.CancelMultiSelect) },
-                onSelectAll = { handleUiEvent(GalleryUiEvent.SelectAll) },
-                onDelete = { handleUiEvent(GalleryUiEvent.OnDelete) },
-                onExport = { handleUiEvent(GalleryUiEvent.OnExport) },
-            )
-        }
-    }
+    )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF, showSystemUi = true)
 @Composable
 fun GalleryContentPreview() {
-    MaterialTheme {
+    AppTheme {
         GalleryContent(
             uiState = GalleryUiState.Content(
-                selectionMode = true,
-                listOf(
+                photos = listOf(
                     PhotoTile("", PhotoType.JPEG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.MP4, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.GIF, UUID.randomUUID().toString()),
@@ -172,13 +106,10 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 ),
-                multiSelectionState = MultiSelectionState(
-                    isActive = true,
-                    selectedItemUUIDs = listOf("1", "2")
-                ),
-                columnCount = 3,
+                showAlbumSelectionDialog = false,
             ),
             handleUiEvent = {},
+            multiSelectionState = rememberMultiSelectionState(items = emptyList())
         )
     }
 }
