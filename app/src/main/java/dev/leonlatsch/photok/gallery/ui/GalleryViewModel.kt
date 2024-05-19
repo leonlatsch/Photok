@@ -18,13 +18,11 @@ package dev.leonlatsch.photok.gallery.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
-import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
@@ -41,7 +39,6 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
-    @EncryptedImageLoader val encryptedImageLoader: ImageLoader,
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
     private val albumRepository: AlbumRepository
