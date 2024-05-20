@@ -68,7 +68,7 @@
     <string name="gallery_albums_placeholder">Erstelle dein erstes Album</string>
     <string name="gallery_albums_create_title">Create Album</string>
     <string name="gallery_albums_create_placeholder">Hausaufgaben ;)</string>
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Wähle ein Album</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>
