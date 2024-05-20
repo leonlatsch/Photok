@@ -42,7 +42,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-86%25-yellow)
 ![Dutch](https://img.shields.io/badge/Dutch-86%25-yellow)
 ![French](https://img.shields.io/badge/French-85%25-yellow)
-![German](https://img.shields.io/badge/German-99%25-brightgreen)
+![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-83%25-yellow)
 ![Russian](https://img.shields.io/badge/Russian-86%25-yellow)
 ![Spanish](https://img.shields.io/badge/Spanish-83%25-yellow)
