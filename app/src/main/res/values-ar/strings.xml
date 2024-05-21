@@ -40,7 +40,7 @@
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
     <string name="import_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لاستيراد الملفات. </string>
-    <string name="import_sharted_question">هل تريد استيراد٪ 1 $ d ملف (ملفات)؟ </string>
+    <string name="import_sharted_question">هل تريد استيراد %1$d ملف (ملفات)؟ </string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">إنشاء كلمة مرورك </string>
