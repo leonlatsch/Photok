@@ -44,7 +44,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val albumFlow = albumsRepository.getAlbum(albumUUID)
+    private val albumFlow = albumsRepository.observeAlbumWithPhotos(albumUUID)
         .stateIn(viewModelScope, SharingStarted.Lazily, Album("", "", emptyList()))
 
     private val photoActionsChannel = Channel<PhotoAction>()

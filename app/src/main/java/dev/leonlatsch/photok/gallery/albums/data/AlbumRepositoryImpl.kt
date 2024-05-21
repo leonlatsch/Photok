@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.gallery.albums.data
 
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
@@ -30,13 +31,16 @@ class AlbumRepositoryImpl @Inject constructor(
     private val albumDao: AlbumDao
 ) : AlbumRepository {
 
-    override fun observeAlbums(): Flow<List<Album>> =
-        albumDao.getAllAlbumsWithPhotos()
+    override fun observeAlbumsWithPhotos(): Flow<List<Album>> =
+        albumDao.observeAllAlbumsWithPhotos()
             .map { albums -> albums.map { it.toDomain() } }
             .map { albums -> albums.map { album -> album.sortPhotos() } }
 
-    override fun getAlbum(uuid: String): Flow<Album> =
-        albumDao.getAlbumWithPhotos(uuid)
+    override suspend fun getAlbums(): List<Album> = albumDao.getAllAlbums()
+        .map { album -> album.toDomain() }
+
+    override fun observeAlbumWithPhotos(uuid: String): Flow<Album> =
+        albumDao.observeAlbumWithPhotos(uuid)
             .map { it.toDomain() }
             .map { album -> album.sortPhotos() }
 
@@ -63,6 +67,11 @@ class AlbumRepositoryImpl @Inject constructor(
     override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {
         return albumDao.getAllPhotoIdsFor(albumUUID)
     }
+
+    override suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef> =
+        albumDao.getAllAlbumPhotoRefs().map { ref ->
+            ref.toDomain()
+        }
 
     private suspend fun Album.sortPhotos(): Album {
         val linkedAt = albumDao.getLinkedAtFor(files.map { it.uuid })

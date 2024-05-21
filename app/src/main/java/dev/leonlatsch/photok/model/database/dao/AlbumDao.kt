@@ -24,6 +24,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 import kotlinx.coroutines.flow.Flow
 
@@ -41,11 +42,14 @@ abstract class AlbumDao {
 
     @Transaction
     @Query("SELECT * FROM album")
-    abstract fun getAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
+    abstract fun observeAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
+
+    @Query("SELECT * FROM album")
+    abstract suspend fun getAllAlbums(): List<AlbumTable>
 
     @Transaction
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
-    abstract fun getAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
+    abstract fun observeAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
     @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY linked_at DESC")
     abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
@@ -79,4 +83,7 @@ abstract class AlbumDao {
         removeAllPhotosFromAlbum(album.uuid)
         return delete(album)
     }
+
+    @Query("SELECT * FROM album_photos_cross_ref")
+    abstract suspend fun getAllAlbumPhotoRefs(): List<AlbumPhotoCroffRefTable>
 }

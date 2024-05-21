@@ -21,6 +21,7 @@ import android.net.Uri
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.DumpDatabaseUseCase
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -48,7 +49,8 @@ class BackupViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val config: Config
+    private val config: Config,
+    private val dumpDatabase: DumpDatabaseUseCase,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
@@ -73,8 +75,8 @@ class BackupViewModel @Inject constructor(
     }
 
     override suspend fun postProcess() {
-        val details = BackupMetaData(config.securityPassword!!, backedUpPhotos)
-        val metaBytes = gson.toJson(details).toByteArray()
+        val dump = dumpDatabase(config.securityPassword!!)
+        val metaBytes = gson.toJson(dump).toByteArray()
         writeZipEntry(BackupMetaData.FILE_NAME, ByteArrayInputStream(metaBytes))
 
         zipOutputStream.lazyClose()

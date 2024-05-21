@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -33,7 +32,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.ui.layout.BeyondBoundsLayout
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
@@ -158,7 +156,7 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
  * Create a Gson object with preferences.
  */
 fun createGson() = GsonBuilder()
-    .excludeFieldsWithoutExposeAnnotation()
+    .setPrettyPrinting()
     .create()
 
 operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingValues(
