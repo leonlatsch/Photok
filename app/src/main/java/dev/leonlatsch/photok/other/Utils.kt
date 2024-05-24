@@ -35,7 +35,6 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
-import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -151,13 +150,6 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
         bitmap
     }
 }
-
-/**
- * Create a Gson object with preferences.
- */
-fun createGson() = GsonBuilder()
-    .setPrettyPrinting()
-    .create()
 
 operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingValues(
     start = this.calculateStartPadding(LayoutDirection.Ltr) +

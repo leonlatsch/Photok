@@ -25,6 +25,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.internalFileName
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.empty
@@ -40,7 +41,7 @@ import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.util.*
+import java.util.UUID
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -168,7 +169,7 @@ class RestoreBackupViewModel @Inject constructor(
 
         while (ze != null) {
             val optPhoto = metaData?.photos?.stream()?.filter {
-                it.internalFileName == ze.name
+                internalFileName(it.uuid) == ze.name
             }?.findFirst()!!
 
             if (!optPhoto.isPresent) {
