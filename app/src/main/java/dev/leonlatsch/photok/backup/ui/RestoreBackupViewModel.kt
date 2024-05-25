@@ -110,7 +110,7 @@ class RestoreBackupViewModel @Inject constructor(
                     val bytes = stream.readBytes()
                     val string = String(bytes)
                     metaData = Gson().fromJson(string, BackupMetaData::class.java)
-                    backupVersion = getVersion()
+                    backupVersion = metaData.getBackupVersion()
 
 
                 } else if (ze.name.endsWith(".photok")) {
@@ -134,18 +134,6 @@ class RestoreBackupViewModel @Inject constructor(
         if (restoreState == RestoreState.INITIALIZE) {
             restoreState = RestoreState.FILE_INVALID
         }
-    }
-
-    private fun getVersion(): Int {
-        metaData?.let {
-            return if (it.backupVersion == 0) { // Treat legacy version 0 as 1
-                1
-            } else {
-                it.backupVersion
-            }
-        }
-
-        return -1
     }
 
     /**
@@ -272,4 +260,16 @@ class RestoreBackupViewModel @Inject constructor(
             null
         }
     }
+}
+
+private fun BackupMetaData?.getBackupVersion(): Int {
+    this?.let {
+        return if (it.backupVersion == 0) { // Treat legacy version 0 as 1
+            1
+        } else {
+            it.backupVersion
+        }
+    }
+
+    return -1
 }
