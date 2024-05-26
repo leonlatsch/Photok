@@ -31,7 +31,8 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
  */
 @AndroidEntryPoint
 class ImportBottomSheetDialogFragment(
-    uris: List<Uri>
+    uris: List<Uri>,
+    private val albumUUID: String? = ""
 ) : BaseProcessBottomSheetDialogFragment<Uri>(
     uris,
     R.string.import_importing,
@@ -41,6 +42,7 @@ class ImportBottomSheetDialogFragment(
     override val viewModel: ImportViewModel by viewModels()
 
     override fun prepareViewModel(items: List<Uri>?) {
+        viewModel.albumUUID = albumUUID
         super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
     }
 }

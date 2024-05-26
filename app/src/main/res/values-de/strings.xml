@@ -69,6 +69,8 @@
     <string name="gallery_albums_create_title">Create Album</string>
     <string name="gallery_albums_create_placeholder">Hausaufgaben ;)</string>
     <string name="gallery_albums_select_title">Wähle ein Album</string>
+    <string name="gallery_albums_deleted">Album gelöscht</string>
+    <string name="gallery_albums_photos_added">%1$d elemente hinzugefügt</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>

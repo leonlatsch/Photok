@@ -52,6 +52,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
 
     val uiState = albumFlow.map { album ->
         AlbumDetailUiState(
+            albumId = album.uuid,
             albumName = album.name,
             photos = album.files.map {
                 PhotoTile(
@@ -85,7 +86,14 @@ class AlbumDetailViewModel @AssistedInject constructor(
             AlbumDetailUiEvent.DeleteAlbum -> {
                 viewModelScope.launch {
                     albumsRepository.deleteAlbum(albumFlow.value)
-                        .onSuccess { navEventsChannel.trySend(AlbumDetailNavigator.NavigationEvent.Close) }
+                        .onSuccess {
+                            navEventsChannel.trySend(
+                                AlbumDetailNavigator.NavigationEvent.ShowToast(
+                                    resources.getString(R.string.gallery_albums_deleted)
+                                )
+                            )
+                            navEventsChannel.trySend(AlbumDetailNavigator.NavigationEvent.Close)
+                        }
                         .onFailure {
                             navEventsChannel.trySend(
                                 AlbumDetailNavigator.NavigationEvent.ShowToast(
@@ -96,7 +104,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                 }
             }
 
-            AlbumDetailUiEvent.OnImport -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu)
+            is AlbumDetailUiEvent.OnImport -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu(event.albumUUID))
             is AlbumDetailUiEvent.RemoveFromAlbum -> {
                 viewModelScope.launch {
                     albumsRepository.unlink(event.items, albumFlow.value.uuid)

@@ -44,12 +44,12 @@ class PhotoActionsNavigator @Inject constructor(
             )
 
             is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navController)
-            PhotoAction.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager)
+            is PhotoAction.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager, action.albumUUID)
         }
     }
 
-    private fun navigateOpenImportMenu(fragmentManager: FragmentManager) {
-        ImportMenuDialog().show(fragmentManager)
+    private fun navigateOpenImportMenu(fragmentManager: FragmentManager, albumUUID: String?) {
+        ImportMenuDialog(albumUUID).show(fragmentManager)
     }
 
     private fun confirmAndExport(
@@ -76,5 +76,5 @@ sealed interface PhotoAction {
     data class OpenPhoto(val photoUUID: String, val albumUUID: String = "") : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
     data class ExportPhotos(val photos: List<Photo>) : PhotoAction
-    data object OpenImportMenu : PhotoAction
+    data class OpenImportMenu(val albumUUID: String? = "") : PhotoAction
 }

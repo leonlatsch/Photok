@@ -16,9 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
@@ -41,7 +43,8 @@ class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
-    private val albumRepository: AlbumRepository
+    private val albumRepository: AlbumRepository,
+    private val resources: Resources,
 ) : ViewModel() {
 
     private val photosFlow = photoRepository.observeAll()
@@ -64,21 +67,26 @@ class GalleryViewModel @Inject constructor(
 
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
-            is GalleryUiEvent.OpenImportMenu -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu)
+            is GalleryUiEvent.OpenImportMenu -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu())
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items)
             is GalleryUiEvent.OnAddToAlbum -> showAlbumSelectionDialog.value = true
-            is GalleryUiEvent.OnAlbumSelected -> onAlbumSelected(event.photoIds, event.albumId)
+            is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
         }
     }
 
-    private fun onAlbumSelected(items: List<String>, albumId: String) {
+    private fun addPhotosToSelectedAlbum(items: List<String>, albumId: String) {
         viewModelScope.launch {
             albumRepository.link(items, albumId)
         }
         showAlbumSelectionDialog.value = false
+        eventsChannel.trySend(
+            GalleryNavigationEvent.ShowToast(
+                resources.getString(R.string.gallery_albums_photos_added, items.size)
+            )
+        )
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>) {
