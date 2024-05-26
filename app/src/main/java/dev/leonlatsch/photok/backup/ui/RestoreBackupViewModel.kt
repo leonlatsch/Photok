@@ -24,24 +24,17 @@ import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.entity.internalFileName
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
-import dev.leonlatsch.photok.other.extensions.remove
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.other.getFileSize
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.BufferedInputStream
-import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.util.UUID
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -54,9 +47,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RestoreBackupViewModel @Inject constructor(
     private val app: Application,
-    private val photoRepository: PhotoRepository,
-    private val encryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager
+    private val getRestoreStrategy: GetBackupRestoreStrategyUseCase,
+    private val gson: Gson,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -109,7 +101,7 @@ class RestoreBackupViewModel @Inject constructor(
                 if (ze.name == BackupMetaData.FILE_NAME) {
                     val bytes = stream.readBytes()
                     val string = String(bytes)
-                    metaData = Gson().fromJson(string, BackupMetaData::class.java)
+                    metaData = gson.fromJson(string, BackupMetaData::class.java)
                     backupVersion = metaData.getBackupVersion()
 
 
@@ -142,112 +134,17 @@ class RestoreBackupViewModel @Inject constructor(
     fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
-        createStream(fileUri)?.use {
-            when (backupVersion) {
-                1 -> restoreVersion1(it, origPassword)
-                2 -> restoreVersion2(it, origPassword)
-            }
+        val zipInputStream = createStream(fileUri)
+        val metaData = metaData ?: error("meta.json was loaded without success")
 
-            restoreState = RestoreState.FINISHED
-        }
+        val restoreStrategy = getRestoreStrategy(backupVersion)
+        restoreStrategy.restore(metaData, zipInputStream, origPassword)
+
+        zipInputStream.lazyClose()
+        restoreState = RestoreState.FINISHED
     }
 
-    private suspend fun restoreVersion1(stream: ZipInputStream, origPassword: String) {
-        var ze = stream.nextEntry
-
-        while (ze != null) {
-            val optPhoto = metaData?.photos?.stream()?.filter {
-                internalFileName(it.uuid) == ze.name
-            }?.findFirst()!!
-
-            if (!optPhoto.isPresent) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            val oldPhoto = optPhoto.get()
-
-            val newPhoto = Photo(
-                oldPhoto.fileName,
-                System.currentTimeMillis(),
-                oldPhoto.type,
-                oldPhoto.size,
-                UUID.randomUUID().toString()
-            )
-
-            val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, origPassword)
-
-            if (encryptedZipInput == null) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            // Read whole file here, because there are no thumbnails in a v1 backup.
-            val bytes = encryptedZipInput.readBytes()
-
-            val fullBytesInputStream = ByteArrayInputStream(bytes)
-            val success = photoRepository.createPhotoFile(newPhoto, fullBytesInputStream) != -1L
-            fullBytesInputStream.lazyClose()
-
-            if (success) {
-                photoRepository.createThumbnail(newPhoto, bytes)
-                photoRepository.insert(newPhoto)
-            }
-
-            ze = stream.nextEntry
-        }
-    }
-
-    private suspend fun restoreVersion2(stream: ZipInputStream, origPassword: String) {
-        val newUUIDs = mutableMapOf<String, String>()
-        var ze = stream.nextEntry
-
-        while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            val oldUUID = ze.name.remove(".photok").remove(".tn").remove(".vp")
-            val newUUID = newUUIDs[oldUUID] ?: UUID.randomUUID().toString()
-            newUUIDs[oldUUID] = newUUID
-
-            val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, origPassword)
-            val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(
-                    ze.name.replace(oldUUID, newUUID)
-                )
-
-            if (encryptedZipInput == null || internalOutputStream == null) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            encryptedZipInput.copyTo(internalOutputStream)
-            internalOutputStream.lazyClose()
-
-            ze = stream.nextEntry
-        }
-
-        metaData?.photos?.forEach {
-            val uuid = newUUIDs[it.uuid]
-            if (uuid != null) {
-                val newPhoto = Photo(
-                    it.fileName,
-                    System.currentTimeMillis(),
-                    it.type,
-                    it.size,
-                    uuid
-                )
-
-                photoRepository.insert(newPhoto)
-            }
-        }
-    }
-
-    private fun createStream(uri: Uri): ZipInputStream? {
+    private fun createStream(uri: Uri): ZipInputStream {
         val inputStream = try {
             app.contentResolver.openInputStream(uri)
         } catch (e: IOException) {
@@ -257,7 +154,7 @@ class RestoreBackupViewModel @Inject constructor(
         return if (inputStream != null) {
             ZipInputStream(BufferedInputStream(inputStream))
         } else {
-            null
+            error("Could not open zip file at $uri")
         }
     }
 }
