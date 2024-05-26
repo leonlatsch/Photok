@@ -20,22 +20,17 @@ import android.app.Application
 import android.net.Uri
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.BackupRepository
 import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
+import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
-import dev.leonlatsch.photok.other.getFileName
-import dev.leonlatsch.photok.other.getFileSize
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.io.BufferedInputStream
-import java.io.IOException
-import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
 /**
@@ -46,9 +41,10 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RestoreBackupViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val getRestoreStrategy: GetBackupRestoreStrategyUseCase,
-    private val gson: Gson,
+    private val backupRepository: BackupRepository,
+    private val validateBackup: ValidateBackupUseCase,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -92,40 +88,18 @@ class RestoreBackupViewModel @Inject constructor(
      * Load and Validate a backup file. Fill [metaData].
      */
     fun loadAndValidateBackup(uri: Uri) = viewModelScope.launch(Dispatchers.IO) {
-        var photoFiles = 0
         fileUri = uri
 
-        createStream(fileUri)?.use { stream ->
-            var ze = stream.nextEntry
-            while (ze != null) {
-                if (ze.name == BackupMetaData.FILE_NAME) {
-                    val bytes = stream.readBytes()
-                    val string = String(bytes)
-                    metaData = gson.fromJson(string, BackupMetaData::class.java)
-                    backupVersion = metaData.getBackupVersion()
+        validateBackup(uri)
+            .onFailure { restoreState = RestoreState.FILE_INVALID }
+            .onSuccess {
+                restoreState = RestoreState.FILE_VALID
 
 
-                } else if (ze.name.endsWith(".photok")) {
-                    photoFiles++
-                }
-
-                ze = stream.nextEntry
+                backupSize = it.backupFileDetails.fileSize
+                zipFileName = it.backupFileDetails.filename
+                metaData = it.metaData
             }
-        }
-
-        zipFileName = getFileName(app.contentResolver, fileUri) ?: String.empty
-
-        // Validate backup
-        if (metaData?.photos?.size == photoFiles
-            && BackupMetaData.VALID_BACKUP_VERSIONS.contains(backupVersion)
-        ) {
-            backupSize = getFileSize(app.contentResolver, fileUri)
-            restoreState = RestoreState.FILE_VALID
-        }
-
-        if (restoreState == RestoreState.INITIALIZE) {
-            restoreState = RestoreState.FILE_INVALID
-        }
     }
 
     /**
@@ -134,7 +108,7 @@ class RestoreBackupViewModel @Inject constructor(
     fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
-        val zipInputStream = createStream(fileUri)
+        val zipInputStream = backupRepository.openBackupInput(fileUri)
         val metaData = metaData ?: error("meta.json was loaded without success")
 
         val restoreStrategy = getRestoreStrategy(backupVersion)
@@ -143,30 +117,4 @@ class RestoreBackupViewModel @Inject constructor(
         zipInputStream.lazyClose()
         restoreState = RestoreState.FINISHED
     }
-
-    private fun createStream(uri: Uri): ZipInputStream {
-        val inputStream = try {
-            app.contentResolver.openInputStream(uri)
-        } catch (e: IOException) {
-            Timber.d("Error opening backup at: $uri")
-            null
-        }
-        return if (inputStream != null) {
-            ZipInputStream(BufferedInputStream(inputStream))
-        } else {
-            error("Could not open zip file at $uri")
-        }
-    }
-}
-
-private fun BackupMetaData?.getBackupVersion(): Int {
-    this?.let {
-        return if (it.backupVersion == 0) { // Treat legacy version 0 as 1
-            1
-        } else {
-            it.backupVersion
-        }
-    }
-
-    return -1
 }

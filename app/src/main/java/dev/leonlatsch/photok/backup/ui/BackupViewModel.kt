@@ -37,7 +37,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class BackupViewModel @Inject constructor(
-    private val app: Application,
+    app: Application,
     private val photoRepository: PhotoRepository,
     private val backupRepository: BackupRepository,
     private val createBackupMetaFile: CreateBackupMetaFileUseCase,
@@ -49,7 +49,7 @@ class BackupViewModel @Inject constructor(
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
-        openZipFile()
+        zipOutputStream = backupRepository.openBackupOutput(uri)
         super.preProcess()
     }
 
@@ -66,10 +66,4 @@ class BackupViewModel @Inject constructor(
         zipOutputStream.lazyClose()
         super.postProcess()
     }
-
-    private fun openZipFile() {
-        val out = app.contentResolver.openOutputStream(uri)
-        zipOutputStream = ZipOutputStream(out)
-    }
-
 }

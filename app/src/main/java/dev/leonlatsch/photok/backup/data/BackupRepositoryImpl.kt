@@ -16,11 +16,22 @@
 
 package dev.leonlatsch.photok.backup.data
 
+import android.content.Context
+import android.net.Uri
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.domain.BackupRepository
+import dev.leonlatsch.photok.backup.domain.model.BackupFileDetails
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.other.getFileSize
+import timber.log.Timber
+import java.io.BufferedInputStream
 import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
@@ -28,7 +39,28 @@ class BackupRepositoryImpl @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val backupLocalDataSource: BackupLocalDataSource,
     private val gson: Gson,
+    @ApplicationContext private val context: Context,
 ) : BackupRepository {
+
+    override suspend fun openBackupInput(uri: Uri): ZipInputStream {
+        val inputStream = try {
+            context.contentResolver.openInputStream(uri)
+        } catch (e: IOException) {
+            Timber.d("Error opening backup at: $uri")
+            null
+        }
+
+        return if (inputStream != null) {
+            ZipInputStream(BufferedInputStream(inputStream))
+        } else {
+            error("Could not open zip file at $uri")
+        }
+    }
+
+    override suspend fun openBackupOutput(uri: Uri): ZipOutputStream {
+        val out = context.contentResolver.openOutputStream(uri)
+        return ZipOutputStream(out)
+    }
 
     override suspend fun writePhoto(
         photo: Photo,
@@ -75,5 +107,24 @@ class BackupRepositoryImpl @Inject constructor(
             ByteArrayInputStream(metaBytes),
             zipOutputStream,
         )
+    }
+
+    override suspend fun readBackupMetadata(zipInputStream: ZipInputStream): BackupMetaData {
+        val bytes = zipInputStream.readBytes()
+        val string = String(bytes)
+
+        val metaData = gson.fromJson(string, BackupMetaData::class.java)
+        metaData ?: error("Error reading meta json from $zipInputStream")
+
+        return metaData
+    }
+
+    override suspend fun getBackupFileDetails(uri: Uri): BackupFileDetails {
+        val fileDetails = BackupFileDetails(
+            filename = getFileName(context.contentResolver, uri) ?: String.empty,
+            fileSize = getFileSize(context.contentResolver, uri),
+        )
+
+        return fileDetails
     }
 }
