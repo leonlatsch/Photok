@@ -251,8 +251,8 @@
     <string name="news_view_changelog">Посмотреть список изменений</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
-    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
+    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
+    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
 
     <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
     <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
