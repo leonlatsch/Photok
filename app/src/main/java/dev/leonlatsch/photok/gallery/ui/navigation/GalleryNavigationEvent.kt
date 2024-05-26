@@ -18,4 +18,5 @@ package dev.leonlatsch.photok.gallery.ui.navigation
 
 sealed interface GalleryNavigationEvent {
     data object ShowNewFeaturesDialog : GalleryNavigationEvent
+    data class ShowToast(val text: String) : GalleryNavigationEvent
 }

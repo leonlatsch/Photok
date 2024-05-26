@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
@@ -32,6 +33,14 @@ class GalleryNavigator @Inject constructor() {
             is GalleryNavigationEvent.ShowNewFeaturesDialog -> navigateShowNewFeaturesDialog(
                 fragment.childFragmentManager
             )
+
+            is GalleryNavigationEvent.ShowToast -> showToast(event, fragment)
+        }
+    }
+
+    private fun showToast(event: GalleryNavigationEvent.ShowToast, fragment: Fragment) {
+        fragment.context?.let { context ->
+            Toast.makeText(context, event.text, Toast.LENGTH_LONG).show()
         }
     }
 

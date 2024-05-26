@@ -51,6 +51,8 @@
     <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
     <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
     <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
+    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
+    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importeren</string>

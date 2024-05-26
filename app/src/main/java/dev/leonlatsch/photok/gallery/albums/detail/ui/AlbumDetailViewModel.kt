@@ -85,7 +85,14 @@ class AlbumDetailViewModel @AssistedInject constructor(
             AlbumDetailUiEvent.DeleteAlbum -> {
                 viewModelScope.launch {
                     albumsRepository.deleteAlbum(albumFlow.value)
-                        .onSuccess { navEventsChannel.trySend(AlbumDetailNavigator.NavigationEvent.Close) }
+                        .onSuccess {
+                            navEventsChannel.trySend(
+                                AlbumDetailNavigator.NavigationEvent.ShowToast(
+                                    resources.getString(R.string.gallery_albums_deleted)
+                                )
+                            )
+                            navEventsChannel.trySend(AlbumDetailNavigator.NavigationEvent.Close)
+                        }
                         .onFailure {
                             navEventsChannel.trySend(
                                 AlbumDetailNavigator.NavigationEvent.ShowToast(
