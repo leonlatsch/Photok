@@ -33,7 +33,7 @@ data class AlbumPhotoCroffRefTable(
     @ColumnInfo(name = PHOTO_UUID) val photoUUID: String,
 
     @ColumnInfo(name = "linked_at")
-    val linkedAt: Int
+    val linkedAt: Long
 )
 
 data class AlbumWithPhotos(
