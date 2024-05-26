@@ -60,6 +60,16 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.link(photoUUIDs, albumUUID)
     }
 
+    override suspend fun link(ref: AlbumPhotoRef) {
+        with(ref) {
+            albumDao.link(
+                photoId = photoUUID,
+                albumId = albumUUID,
+                linkedAt = linkedAt,
+            )
+        }
+    }
+
     override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
         albumDao.unlink(photoUUIDs, uuid)
     }

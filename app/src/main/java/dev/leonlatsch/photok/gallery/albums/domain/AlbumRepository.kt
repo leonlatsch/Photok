@@ -28,6 +28,7 @@ interface AlbumRepository {
     suspend fun deleteAlbum(album: Album): Result<Unit>
 
     suspend fun link(photoUUIDs: List<String>, albumUUID: String)
+    suspend fun link(ref: AlbumPhotoRef)
     suspend fun unlink(photoUUIDs: List<String>, uuid: String)
     suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
     suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef>
