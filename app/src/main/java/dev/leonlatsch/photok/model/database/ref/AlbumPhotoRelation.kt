@@ -28,12 +28,12 @@ private const val ALBUM_UUID = "album_uuid"
 private const val PHOTO_UUID = "photo_uuid"
 
 @Entity(primaryKeys = [ALBUM_UUID, PHOTO_UUID], tableName = "album_photos_cross_ref")
-data class AlbumPhotosCrossRef(
+data class AlbumPhotoCroffRefTable(
     @ColumnInfo(name = ALBUM_UUID) val albumUUID: String,
     @ColumnInfo(name = PHOTO_UUID) val photoUUID: String,
 
     @ColumnInfo(name = "linked_at")
-    val linkedAt: Int
+    val linkedAt: Long
 )
 
 data class AlbumWithPhotos(
@@ -41,7 +41,7 @@ data class AlbumWithPhotos(
     @Relation(
         parentColumn = ALBUM_UUID,
         entityColumn = PHOTO_UUID,
-        associateBy = Junction(AlbumPhotosCrossRef::class)
+        associateBy = Junction(AlbumPhotoCroffRefTable::class)
     )
     val photos: List<Photo>
 )

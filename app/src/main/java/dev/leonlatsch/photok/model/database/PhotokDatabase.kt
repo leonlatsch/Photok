@@ -27,7 +27,7 @@ import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.ref.AlbumPhotosCrossRef
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
 
 private const val DATABASE_VERSION = 2
 const val DATABASE_NAME = "photok.db"
@@ -42,7 +42,7 @@ const val DATABASE_NAME = "photok.db"
     entities = [
         Photo::class,
         AlbumTable::class,
-        AlbumPhotosCrossRef::class
+        AlbumPhotoCroffRefTable::class
     ],
     version = DATABASE_VERSION,
     autoMigrations = [
