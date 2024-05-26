@@ -24,5 +24,5 @@ sealed interface AlbumDetailUiEvent {
     data class OnExport(val items: List<String>) : AlbumDetailUiEvent
     data class RemoveFromAlbum(val items: List<String>) : AlbumDetailUiEvent
     data object DeleteAlbum : AlbumDetailUiEvent
-    data object OnImport : AlbumDetailUiEvent
+    data class OnImport(val albumUUID: String?) : AlbumDetailUiEvent
 }

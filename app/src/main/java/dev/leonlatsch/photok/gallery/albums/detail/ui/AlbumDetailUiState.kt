@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 data class AlbumDetailUiState(
+    val albumId: String = "",
     val albumName: String = "",
     val photos: List<PhotoTile> = emptyList()
 )

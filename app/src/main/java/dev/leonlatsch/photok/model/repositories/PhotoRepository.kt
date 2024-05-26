@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.settings.data.Config
@@ -98,15 +99,16 @@ class PhotoRepository @Inject constructor(
      * Import a photo from a url.
      *
      * Collects meta data and calls [safeCreatePhoto].
+     * Returns re created uuid
      */
-    suspend fun safeImportPhoto(sourceUri: Uri): Boolean {
+    suspend fun safeImportPhoto(sourceUri: Uri): String {
         val type = when (app.contentResolver.getType(sourceUri)) {
             PhotoType.PNG.mimeType -> PhotoType.PNG
             PhotoType.JPEG.mimeType -> PhotoType.JPEG
             PhotoType.GIF.mimeType -> PhotoType.GIF
             PhotoType.MP4.mimeType -> PhotoType.MP4
             PhotoType.MPEG.mimeType -> PhotoType.MPEG
-            else -> return false
+            else -> return String.empty
         }
 
         val fileName =
@@ -120,15 +122,15 @@ class PhotoRepository @Inject constructor(
         inputStream?.lazyClose()
 
         if (!created) {
-            return false
+            return String.empty
         }
 
         if (config.deleteImportedFiles) {
             val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
-            return deleted == true
+            return if (deleted == true) photo.uuid else String.empty
         }
 
-        return true
+        return photo.uuid
     }
 
     /**

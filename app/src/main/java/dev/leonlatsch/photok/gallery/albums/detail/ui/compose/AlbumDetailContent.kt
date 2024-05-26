@@ -62,7 +62,7 @@ fun AlbumDetailContent(
             )
         },
         onMagicFabClicked = {
-            handleUiEvent(AlbumDetailUiEvent.OnImport)
+            handleUiEvent(AlbumDetailUiEvent.OnImport(uiState.albumId))
         },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
@@ -91,6 +91,7 @@ private fun AlbumsDetailScreenPreview() {
     AppTheme {
         AlbumDetailContent(
             uiState = AlbumDetailUiState(
+                "",
                 "Album Name",
                 listOf(
                     PhotoTile("file1", PhotoType.JPEG, "uuid1"),
