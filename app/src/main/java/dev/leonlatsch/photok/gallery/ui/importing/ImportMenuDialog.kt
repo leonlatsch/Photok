@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -37,8 +37,9 @@ import pub.devrel.easypermissions.AfterPermissionGranted
  * @since 1.3.0
  * @author Leon Latsch
  */
-class ImportMenuDialog :
-    BindableBottomSheetDialogFragment<DialogImportMenuBinding>(R.layout.dialog_import_menu) {
+class ImportMenuDialog(
+    private val albumUUID: String? = null,
+) : BindableBottomSheetDialogFragment<DialogImportMenuBinding>(R.layout.dialog_import_menu) {
 
     /**
      * Starts the photo import.
@@ -111,7 +112,7 @@ class ImportMenuDialog :
     private fun dispatchMediaElementsImportRequest(data: Intent?) = data?.let {
         val mediaUris = resolveUrisFromIntent(it)
         if (mediaUris.isNotEmpty()) {
-            ImportBottomSheetDialogFragment(mediaUris).show(requireActivity().supportFragmentManager)
+            ImportBottomSheetDialogFragment(mediaUris, albumUUID).show(requireActivity().supportFragmentManager)
         }
     }
 

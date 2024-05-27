@@ -25,14 +25,17 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.extensions.*
-import dev.leonlatsch.photok.other.statusBarPadding
+import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
+import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.hideSystemUI
+import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.extensions.showSystemUI
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -57,6 +60,8 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
     @Inject
     lateinit var config: Config
 
+    private val args: ImageViewerFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.systemBarsPadding()
@@ -75,7 +80,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             }
         })
 
-        viewModel.preloadData { uuids ->
+        viewModel.preloadData(args.albumUuid) { uuids ->
             val photoPagerAdapter =
                 PhotoPagerAdapter(uuids, viewModel.photoRepository, findNavController(), {
                     binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
@@ -84,9 +89,9 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
                 })
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
-            val photoId = arguments?.getString(INTENT_PHOTO_UUID)
-            val startingAt = if (!photoId.isNullOrEmpty()) {
-                uuids.indexOf(photoId)
+            val photoUUID = args.photoUuid
+            val startingAt = if (!photoUUID.isNullOrEmpty()) {
+                uuids.indexOf(photoUUID)
             } else {
                 0
             }

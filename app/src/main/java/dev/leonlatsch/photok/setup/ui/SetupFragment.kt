@@ -102,7 +102,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
         if (viewModel.encryptionManager.isReady) {
             requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
-            findNavController().navigate(R.id.action_setupFragment_to_cgalleryFragment)
+            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(
                 requireContext(),

@@ -33,6 +33,10 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
     <string name="common_bullet">•</string>
+    <string name="common_more">Mehr</string>
+    <string name="common_cancel">Abbrechen</string>
+    <string name="common_create">Erstellen</string>
+    <string name="common_empty">Leer</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
@@ -60,6 +64,13 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">In deinem Safe sind kein Dateien</string>
     <string name="gallery_all_photos_label">Alle Dateien</string>
+    <string name="gallery_albums_label">Alben</string>
+    <string name="gallery_albums_placeholder">Erstelle dein erstes Album</string>
+    <string name="gallery_albums_create_title">Create Album</string>
+    <string name="gallery_albums_create_placeholder">Hausaufgaben ;)</string>
+    <string name="gallery_albums_select_title">Wähle ein Album</string>
+    <string name="gallery_albums_deleted">Album gelöscht</string>
+    <string name="gallery_albums_photos_added">%1$d elemente hinzugefügt</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importieren</string>
@@ -91,6 +102,9 @@
     <string name="menu_ms_select_all">Alle auswählen</string>
     <string name="menu_ms_delete">Löschen</string>
     <string name="menu_ms_export">Exportieren</string>
+    <string name="menu_ms_info">%1$d Element(e) ausgewählt</string>
+    <string name="menu_ms_add_to_album">Zu Album hinzufügen</string>
+    <string name="menu_ms_remove_from_album">Aus Album entfernen</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>
@@ -239,8 +253,8 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEU: Neue Galerie und Navigation</string>
-    <string name="news_summary_1">Komplette erneuerung der Galerie und Navigation der App</string>
+    <string name="news_title_1">NEU: Albumen</string>
+    <string name="news_summary_1">Sortiere deine Fotos und Videos in Alben</string>
 
     <string name="news_title_2">NEU: Spenden</string>
     <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>

@@ -32,11 +32,15 @@
     <string name="common_ok">نعم </string>
     <string name="common_are_you_sure">هل أنت متأكد؟ </string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
+    <string name="common_cancel">Cancel</string> <!-- TODO -->
+    <string name="common_create">Create</string> <!-- TODO -->
+    <string name="common_empty">Empty</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
     <string name="import_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لاستيراد الملفات. </string>
-    <string name="import_sharted_question">هل تريد استيراد٪ 1 $ d ملف (ملفات)؟ </string>
+    <string name="import_sharted_question">هل تريد استيراد %1$d ملف (ملفات)؟ </string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">إنشاء كلمة مرورك </string>
@@ -59,6 +63,13 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">لا توجد ملفات في خزنتك </string>
     <string name="gallery_all_photos_label">كل الملفات </string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
+    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
+    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">استيراد الصور</string>
@@ -90,6 +101,9 @@
     <string name="menu_ms_select_all">اختر الكل</string>
     <string name="menu_ms_delete">مسح</string>
     <string name="menu_ms_export">تصدير</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
+    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>
@@ -237,8 +251,8 @@
     <string name="news_view_changelog">مشاهدة ملف Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
-    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
+    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
+    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
 
     <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
     <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->

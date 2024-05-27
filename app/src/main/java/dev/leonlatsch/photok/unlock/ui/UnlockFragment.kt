@@ -78,7 +78,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         if (viewModel.encryptionManager.isReady) {
             requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
-            findNavController().navigate(R.id.action_unlockFragment_to_cgalleryFragment)
+            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
         }

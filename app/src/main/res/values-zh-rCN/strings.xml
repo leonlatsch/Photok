@@ -32,6 +32,10 @@
     <string name="common_ok">好</string>
     <string name="common_are_you_sure">你确定吗？</string>
     <string name="common_bullet">•</string>
+    <string name="common_more">More</string> <!-- TODO -->
+    <string name="common_cancel">Cancel</string> <!-- TODO -->
+    <string name="common_create">Create</string> <!-- TODO -->
+    <string name="common_empty">Empty</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
@@ -59,6 +63,13 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">你的库里没有文件</string>
     <string name="gallery_all_photos_label">所有文件</string>
+    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
+    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
+    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
+    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">导入</string>
@@ -90,6 +101,9 @@
     <string name="menu_ms_select_all">选择全部</string>
     <string name="menu_ms_delete">删除</string>
     <string name="menu_ms_export">导出</string>
+    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
+    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">你确定要 <b>删除</b> %1$d 个文件吗？</string>
@@ -237,8 +251,8 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: New gallery and navigation</string> <!-- TODO -->
-    <string name="news_summary_1">Complete rewrite of the gallery and the apps navigation</string> <!-- TODO -->
+    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
+    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
 
     <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
     <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->

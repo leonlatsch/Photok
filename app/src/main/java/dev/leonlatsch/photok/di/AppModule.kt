@@ -18,14 +18,16 @@ package dev.leonlatsch.photok.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
+import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
-import dev.leonlatsch.photok.model.database.PhotokDatabase.Companion.DATABASE_NAME
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
@@ -54,6 +56,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideAlbumDao(database: PhotokDatabase) = database.getAlbumDao()
+
+    @Provides
+    @Singleton
     fun provideConfig(@ApplicationContext app: Context) = Config(app)
 
     @Provides
@@ -66,4 +72,9 @@ object AppModule {
 
     @Provides
     fun provideResources(@ApplicationContext context: Context) = context.resources
+
+    @Provides
+    fun provideGson(): Gson = GsonBuilder()
+        .setPrettyPrinting()
+        .create()
 }

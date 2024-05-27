@@ -13,6 +13,8 @@ val appVersionCode: String by project
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
+val composeCompilerVersion = "1.5.11"
+
 android {
     compileSdk = 34 // Android 14
 
@@ -28,6 +30,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += "room.incremental" to "true"
+                arguments += "room.schemaLocation" to "$projectDir/schemas"
             }
         }
     }
@@ -48,7 +51,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     compileOptions {
@@ -73,9 +76,9 @@ licenseReport {
 
 dependencies {
     val roomVersion = "2.6.1"
-    val coroutinesVersion = "1.7.3"
+    val coroutinesVersion = "1.8.0"
     val pagingVersion = "3.2.1"
-    val daggerVersion = "2.50"
+    val daggerVersion = "2.51.1"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -103,7 +106,7 @@ dependencies {
 
     // Navigation Components
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -119,14 +122,14 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     kapt("com.google.dagger:hilt-android-compiler:$daggerVersion")
 
-    kapt("androidx.hilt:hilt-compiler:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.activity:activity-ktx:1.9.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
-    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
+    implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
@@ -152,7 +155,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
@@ -161,10 +164,10 @@ dependencies {
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity:1.8.2")
+    implementation("androidx.activity:activity:1.9.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     testImplementation("junit:junit:4.13.2")

@@ -20,8 +20,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.lifecycle.withCreationCallback
 import dev.leonlatsch.photok.BaseApplication
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
@@ -54,3 +57,18 @@ inline fun Fragment.launchLifecycleAwareJob(
     crossinline block: suspend () -> Unit
 ) =
     viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(state) { block() } }
+
+/**
+ * Create a view model with assisted injection. This is a workaround for the missing support of assisted injection in Hilt.
+ */
+inline fun <FactoryType, reified ViewModelType: ViewModel> Fragment.assistedViewModel(
+    crossinline viewModelProducer: (FactoryType) -> ViewModelType
+) = lazy {
+    ViewModelProvider(
+        viewModelStore,
+        defaultViewModelProviderFactory,
+        defaultViewModelCreationExtras.withCreationCallback<FactoryType> { factory ->
+            viewModelProducer(factory)
+        }
+    )[ViewModelType::class.java]
+}

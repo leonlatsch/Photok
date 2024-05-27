@@ -18,17 +18,13 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import androidx.activity.SystemBarStyle
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +40,7 @@ import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.permissions.getReadImagesPermission
 import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -51,7 +48,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
-val FragmentsWithMenu = listOf(R.id.cgalleryFragment, R.id.settingsFragment)
+val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.albumsFragment, R.id.settingsFragment, R.id.albumDetailFragment)
 
 /**
  * The main Activity.
@@ -108,7 +105,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
 
             onBackPressedDispatcher.addCallback {
-                if (navController.currentDestination?.id == R.id.cgalleryFragment) {
+                if (navController.currentDestination?.id == R.id.galleryFragment) {
                     finish()
                 } else {
                     navController.navigateUp()
@@ -183,8 +180,10 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.mainMenuComposeContainer.setContent {
             val uiState by viewModel.mainMenuUiState.collectAsState()
 
-            MainMenu(uiState) {
-                findNavController(R.id.mainNavHostFragment).navigate(it)
+            AppTheme {
+                MainMenu(uiState) {
+                    findNavController(R.id.mainNavHostFragment).navigate(it)
+                }
             }
         }
     }

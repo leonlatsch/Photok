@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,255 +16,77 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import android.Manifest
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.view.ActionMode
-import androidx.core.os.bundleOf
+import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentGalleryBinding
-import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
-import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
-import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.ui.MainActivity
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
-import dev.leonlatsch.photok.other.extensions.getBaseApplication
-import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.requireActivityAs
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
+import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
+import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
+import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
+import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
+import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import javax.inject.Inject
 
-/**
- * Fragment for displaying a gallery.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-@Deprecated("Replaced with compose version. Remove this and all its dependencies once stable")
 @AndroidEntryPoint
-class GalleryFragment : BindableFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
+class GalleryFragment : Fragment() {
 
     private val viewModel: GalleryViewModel by viewModels()
+    private val albumPickerViewModel: AlbumPickerViewModel by viewModels()
 
-    private lateinit var adapter: PhotoAdapter
-    private var actionMode: ActionMode? = null
+    @Inject
+    lateinit var navigator: GalleryNavigator
+
+    @Inject
+    lateinit var photoActionsNavigator: PhotoActionsNavigator
+
+    @Inject
+    lateinit var config: Config
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(requireContext()).apply {
+        setContent {
+            CompositionLocalProvider(
+                LocalEncryptedImageLoader provides encryptedImageLoader,
+                LocalConfig provides config,
+            ) {
+                GalleryScreen(viewModel, albumPickerViewModel)
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-        setToolbar(binding.galleryToolbar)
-        setupGridView()
 
-        adapter.isMultiSelectMode.observe(viewLifecycleOwner) {
-            if (it) {
-                actionMode = (activity as MainActivity).startSupportActionMode(actionModeCallback)
-            } else {
-                actionMode?.finish()
+        launchLifecycleAwareJob {
+            viewModel.eventsFlow.collect { event ->
+                navigator.navigate(event, this)
             }
         }
 
-        viewModel.runIfNews {
-            NewFeaturesDialog().show(requireActivity().supportFragmentManager)
-        }
-    }
-
-    private fun setupGridView() {
-        binding.galleryPhotoGrid.layoutManager = GridLayoutManager(requireContext(), getColCount())
-
-        adapter = PhotoAdapter(
-            requireContext(),
-            viewModel.photoRepository,
-            this::openPhoto,
-            viewLifecycleOwner
-        )
-
-        adapter.registerAdapterDataObserver(onAdapterDataObserver)
-        binding.galleryPhotoGrid.adapter = adapter
-        lifecycleScope.launch {
-            viewModel.photos.collectLatest { adapter.submitData(it) }
-        }
-    }
-
-    fun navigateToNewGallery() {
-        findNavController().navigate(R.id.action_galleryFragment_to_cgalleryFragment)
-    }
-
-    /**
-     * Show [ImportMenuDialog].
-     * Called by ui.
-     */
-    fun showImportMenu() {
-        ImportMenuDialog().show(childFragmentManager)
-    }
-
-    /**
-     * Start the deleting process with all selected items.
-     * Called by ui.
-     */
-    fun startDelete() {
-        DeleteBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
-        adapter.disableSelection()
-    }
-
-    /**
-     * Starts the exporting process.
-     * May request permission WRITE_EXTERNAL_STORAGE.
-     * Called by ui.
-     */
-    @AfterPermissionGranted(REQ_PERM_EXPORT)
-    fun startExport() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-        ) {
-            ExportBottomSheetDialogFragment(adapter.getAllSelected()).show(requireActivity().supportFragmentManager)
-            adapter.disableSelection()
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.export_permission_rationale),
-                REQ_PERM_EXPORT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    private val onAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            viewModel.togglePlaceholder(adapter.itemCount)
-            updateFileAmount()
-        }
-
-        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int)  {
-            viewModel.togglePlaceholder(adapter.itemCount)
-            updateFileAmount()
-        }
-    }
-
-    private fun updateFileAmount() {
-        if (adapter.itemCount == 0) {
-            binding.galleryAllPhotosAmount.hide()
-        } else {
-            binding.galleryAllPhotosAmount.show()
-            binding.galleryAllPhotosAmount.text = "(${adapter.itemCount})"
-        }
-    }
-
-    private fun getColCount() = when (resources.configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> 4
-        Configuration.ORIENTATION_LANDSCAPE -> 8
-        else -> 4
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuMainItemSettings -> {
-            findNavController().navigate(R.id.action_galleryFragment_to_settingsFragment)
-            true
-        }
-
-        R.id.menuMainItemLock -> {
-            requireActivity().getBaseApplication().lockApp()
-            true
-        }
-
-        else -> false
-    }
-
-    private fun openPhoto(uuid: String) {
-        val args = bundleOf(INTENT_PHOTO_UUID to uuid)
-        findNavController().navigate(R.id.action_galleryFragment_to_imageViewerFragment, args)
-    }
-
-    private val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            mode?.menuInflater?.inflate(R.menu.menu_multi_select, menu)
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
-
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean =
-            when (item?.itemId) {
-                R.id.menuMsAll -> {
-                    lifecycleScope.launch {
-                        adapter.selectAll()
-                    }
-                    true
-                }
-                R.id.menuMsDelete -> {
-                    lifecycleScope.launch {
-                        Dialogs.showConfirmDialog(
-                            requireContext(),
-                            String.format(
-                                getString(R.string.delete_are_you_sure),
-                                adapter.selectedItems.size
-                            )
-                        ) { _, _ -> // On positive button clicked
-                            startDelete()
-                        }
-                    }
-                    true
-                }
-                R.id.menuMsExport -> {
-                    lifecycleScope.launch {
-                        Dialogs.showConfirmDialog(
-                            requireContext(),
-                            String.format(
-                                viewModel.getAreYouSureExportString(requireContext()),
-                                adapter.selectedItems.size
-                            )
-                        ) { _, _ -> // On positive button clicked
-                            startExport()
-                        }
-                    }
-                    true
-                }
-                else -> false
+        launchLifecycleAwareJob {
+            viewModel.photoActions.collect { action ->
+                photoActionsNavigator.navigate(action, findNavController(), this)
             }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            adapter.disableSelection()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        requireActivityAs(MainActivity::class).onOrientationChanged = {
-            setupGridView()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        requireActivityAs(MainActivity::class).onOrientationChanged = {} // Reset
-    }
-
-    override fun bind(binding: FragmentGalleryBinding) {
-        super.bind(binding)
-        binding.context = this
-        binding.viewModel = viewModel
+        viewModel.checkForNewFeatures()
     }
 }

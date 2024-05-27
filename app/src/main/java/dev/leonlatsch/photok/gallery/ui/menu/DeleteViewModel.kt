@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2021 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class DeleteViewModel @Inject constructor(
 ) : BaseProcessViewModel<Photo>(app) {
 
     override suspend fun processItem(item: Photo) {
-        if (item.id == null) {
+        if (item.uuid.isEmpty()) {
             failuresOccurred = true
             return
         }

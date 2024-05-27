@@ -5,7 +5,6 @@
 [![F-Droid](https://img.shields.io/f-droid/v/dev.leonlatsch.photok.svg?logo=f-droid&label=F-Droid)](https://f-droid.org/packages/dev.leonlatsch.photok/)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9421dd34de7f42c8b8048d60a09ab5bd)](https://www.codacy.com/gh/leonlatsch/Photok/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonlatsch/Photok&amp;utm_campaign=Badge_Grade)
 ![Maintenance](https://img.shields.io/maintenance/yes/2024)
 
 Encrypt your photos on your device and keep them safe from others.
@@ -25,7 +24,7 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
       alt="Download from Google Play" 
       height="80">](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/dev.leonlatsch.photok/)
 [<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" 
@@ -39,14 +38,14 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-91%25-yellow)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-91%25-yellow)
-![Dutch](https://img.shields.io/badge/Dutch-91%25-yellow)
-![French](https://img.shields.io/badge/French-90%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-85%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-85%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-85%25-yellow)
+![French](https://img.shields.io/badge/French-84%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-89%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-91%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-89%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-83%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-85%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-83%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 LICENSE
