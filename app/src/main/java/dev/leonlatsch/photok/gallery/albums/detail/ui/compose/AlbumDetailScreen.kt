@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +50,8 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    var showConfirmDeleteDialog by remember { mutableStateOf(false) }
 
     AppTheme {
         Scaffold(
@@ -83,7 +86,10 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                         ) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.common_delete)) },
-                                onClick = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) },
+                                onClick = {
+                                    showMore = false
+                                    showConfirmDeleteDialog = true
+                                },
                                 leadingIcon = {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_delete),
@@ -102,6 +108,13 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                 modifier = Modifier
                     .padding(top = contentPadding.calculateTopPadding())
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
+            )
+
+            ConfirmationDialog(
+                show = showConfirmDeleteDialog,
+                onDismissRequest = { showConfirmDeleteDialog = false },
+                text = stringResource(R.string.common_are_you_sure),
+                onConfirm = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) }
             )
         }
     }
