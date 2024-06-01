@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -115,6 +116,17 @@ class AlbumDetailViewModel @AssistedInject constructor(
                     )
                 }
             }
+
+            is AlbumDetailUiEvent.RenameAlbum -> renameAlbum(event.newName)
+        }
+    }
+
+    private fun renameAlbum(newName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            albumsRepository.rename(
+                albumUUID = albumFlow.value.uuid,
+                newName = newName,
+            )
         }
     }
 

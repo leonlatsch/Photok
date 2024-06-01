@@ -82,6 +82,10 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.unlinkAll()
     }
 
+    override suspend fun rename(albumUUID: String, newName: String) {
+        albumDao.renameAlbum(albumUUID = albumUUID, newName = newName)
+    }
+
     override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {
         return albumDao.getAllPhotoIdsFor(albumUUID)
     }

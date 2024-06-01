@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
+import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -52,6 +53,7 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     var showConfirmDeleteDialog by remember { mutableStateOf(false) }
+    var showRenameDialog by remember { mutableStateOf(false) }
 
     AppTheme {
         Scaffold(
@@ -97,6 +99,20 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                                     )
                                 }
                             )
+
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.common_rename)) },
+                                onClick = {
+                                    showMore = false
+                                    showRenameDialog = true
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(R.drawable.ic_edit),
+                                        contentDescription = stringResource(R.string.common_rename),
+                                    )
+                                }
+                            )
                         }
                     }
                 )
@@ -115,6 +131,15 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                 onDismissRequest = { showConfirmDeleteDialog = false },
                 text = stringResource(R.string.common_are_you_sure),
                 onConfirm = { viewModel.handleUiEvent(AlbumDetailUiEvent.DeleteAlbum) }
+            )
+
+            RenameAlbumDialog(
+                show = showRenameDialog,
+                onDismiss = { showRenameDialog = false },
+                currentName = uiState.albumName,
+                onRename = { newName ->
+                    viewModel.handleUiEvent(AlbumDetailUiEvent.RenameAlbum(newName))
+                }
             )
         }
     }

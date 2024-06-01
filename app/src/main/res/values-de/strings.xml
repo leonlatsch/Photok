@@ -37,6 +37,7 @@
     <string name="common_cancel">Abbrechen</string>
     <string name="common_create">Erstellen</string>
     <string name="common_empty">Leer</string>
+    <string name="common_rename">Umbenennen</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
@@ -66,7 +67,8 @@
     <string name="gallery_all_photos_label">Alle Dateien</string>
     <string name="gallery_albums_label">Alben</string>
     <string name="gallery_albums_placeholder">Erstelle dein erstes Album</string>
-    <string name="gallery_albums_create_title">Create Album</string>
+    <string name="gallery_albums_create_title">Album erstellen</string>
+    <string name="gallery_albums_rename_title">Album Umbenennen</string>
     <string name="gallery_albums_create_placeholder">Hausaufgaben ;)</string>
     <string name="gallery_albums_select_title">Wähle ein Album</string>
     <string name="gallery_albums_deleted">Album gelöscht</string>
