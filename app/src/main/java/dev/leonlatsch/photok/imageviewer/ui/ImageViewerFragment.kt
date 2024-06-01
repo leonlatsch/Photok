@@ -92,9 +92,6 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
                     photos = photos,
                     encryptedImageLoader = encryptedImageLoader,
                     navController = findNavController(),
-                    onZoomed = {
-                        binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
-                    },
                     onClick = {
                         toggleSystemUI()
                     }

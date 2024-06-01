@@ -49,7 +49,6 @@ class PhotoViewHolder(
     parent: ViewGroup,
     private val encryptedImageLoader: ImageLoader,
     private val context: Context,
-    private val onZoomed: (zoomed: Boolean) -> Unit,
     private val onClick: () -> Unit,
     private val navController: NavController,
 ) : RecyclerView.ViewHolder(

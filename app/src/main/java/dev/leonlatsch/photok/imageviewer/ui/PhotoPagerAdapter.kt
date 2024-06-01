@@ -37,7 +37,6 @@ class PhotoPagerAdapter(
     private val photos: List<Photo>,
     private val encryptedImageLoader: ImageLoader,
     private val navController: NavController,
-    private val onZoomed: (zoomed: Boolean) -> Unit,
     private val onClick: () -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 
@@ -46,7 +45,6 @@ class PhotoPagerAdapter(
             parent = parent,
             encryptedImageLoader = encryptedImageLoader,
             context = parent.context,
-            onZoomed = onZoomed,
             onClick = onClick,
             navController = navController
         )
