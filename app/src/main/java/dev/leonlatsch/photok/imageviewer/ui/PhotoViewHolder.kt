@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
-import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoItem
+import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoViewHolderContent
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.*
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -67,7 +67,7 @@ class PhotoViewHolder(
         composeView.setContent {
             AppTheme {
                 CompositionLocalProvider(LocalEncryptedImageLoader provides encryptedImageLoader)  {
-                    PhotoItem(
+                    PhotoViewHolderContent(
                         photo = photo,
                         onClick = onClick,
                         onPlayVideo = { openVideoPlayer(photo) }

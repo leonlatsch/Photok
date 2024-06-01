@@ -95,6 +95,7 @@
     <string name="view_photo_detail_import_at_label">Importé le :</string>
     <string name="view_photo_detail_file_type_label">Type de fichier :</string>
     <string name="view_photo_detail_size_label">Taille du fichier :</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>

@@ -94,6 +94,7 @@
     <string name="view_photo_detail_import_at_label">Imported at:</string>
     <string name="view_photo_detail_file_type_label">File Type:</string>
     <string name="view_photo_detail_size_label">File size:</string>
+    <string name="view_photo_play_button_description">Play Video</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Lock</string>

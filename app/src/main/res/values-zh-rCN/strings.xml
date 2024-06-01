@@ -94,6 +94,7 @@
     <string name="view_photo_detail_import_at_label">导入于:</string>
     <string name="view_photo_detail_file_type_label">文件类型:</string>
     <string name="view_photo_detail_size_label">文件大小:</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">锁定</string>

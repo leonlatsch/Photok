@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
@@ -39,7 +40,7 @@ import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 
 @Composable
-fun PhotoItem(
+fun PhotoViewHolderContent(
     photo: Photo,
     onClick: () -> Unit,
     onPlayVideo: () -> Unit,
@@ -81,7 +82,7 @@ fun PhotoItem(
         if (photo.type.isVideo) {
             Icon(
                 painter = painterResource(R.drawable.ic_play_circle),
-                contentDescription = "Play Video",
+                contentDescription = stringResource(R.string.view_photo_play_button_description),
                 modifier = Modifier
                     .align(Alignment.Center)
                     .size(62.dp)
