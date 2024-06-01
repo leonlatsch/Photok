@@ -26,10 +26,13 @@ interface AlbumRepository {
     fun observeAlbumWithPhotos(uuid: String): Flow<Album>
     suspend fun createAlbum(album: Album): Result<Album>
     suspend fun deleteAlbum(album: Album): Result<Unit>
+    suspend fun deleteAll()
 
     suspend fun link(photoUUIDs: List<String>, albumUUID: String)
     suspend fun link(ref: AlbumPhotoRef)
     suspend fun unlink(photoUUIDs: List<String>, uuid: String)
+    suspend fun unlinkAll()
+    suspend fun rename(albumUUID: String, newName: String)
     suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
     suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef>
 }

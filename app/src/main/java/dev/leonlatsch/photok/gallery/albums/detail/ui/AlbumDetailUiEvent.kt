@@ -25,4 +25,5 @@ sealed interface AlbumDetailUiEvent {
     data class RemoveFromAlbum(val items: List<String>) : AlbumDetailUiEvent
     data object DeleteAlbum : AlbumDetailUiEvent
     data class OnImport(val albumUUID: String?) : AlbumDetailUiEvent
+    data class RenameAlbum(val newName: String) : AlbumDetailUiEvent
 }

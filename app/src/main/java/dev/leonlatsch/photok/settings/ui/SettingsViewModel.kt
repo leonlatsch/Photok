@@ -20,6 +20,7 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BaseApplication
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -36,7 +37,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val passwordManager: PasswordManager
+    private val albumRepository: AlbumRepository,
+    private val passwordManager: PasswordManager,
 ) : ObservableViewModel(app) {
 
     /**
@@ -48,6 +50,8 @@ class SettingsViewModel @Inject constructor(
             photoRepository.deleteInternalPhotoData(photo)
         }
         photoRepository.deleteAll()
+        albumRepository.deleteAll()
+        albumRepository.unlinkAll()
 
         passwordManager.resetPassword()
         (app as BaseApplication).lockApp()
