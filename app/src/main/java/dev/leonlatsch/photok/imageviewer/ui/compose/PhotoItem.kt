@@ -22,8 +22,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -33,6 +35,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.Photo
+import me.saket.telephoto.zoomable.rememberZoomableState
+import me.saket.telephoto.zoomable.zoomable
 
 @Composable
 fun PhotoItem(
@@ -41,7 +45,8 @@ fun PhotoItem(
     onPlayVideo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.background(Color.Black).clickable { onClick()}) {
+    Box(modifier = modifier
+        .background(Color.Black)) {
         val contentModifier = Modifier.fillMaxSize()
         if (LocalInspectionMode.current) {
             Box(modifier = contentModifier.background(Color.Red))
@@ -60,17 +65,28 @@ fun PhotoItem(
             }
 
             Image(
-                painter = rememberEncryptedImagePainter(requestData),
+                painter = rememberEncryptedImagePainter(
+                    data = requestData,
+                    placeholder = android.R.color.black,
+                ),
                 contentDescription = photo.fileName,
-                modifier = contentModifier,
+                modifier = contentModifier.zoomable(
+                    onClick = { onClick() },
+                    state =  rememberZoomableState(),
+                    enabled = !photo.type.isVideo
+                ),
             )
         }
 
         if (photo.type.isVideo) {
-            Image(
+            Icon(
                 painter = painterResource(R.drawable.ic_play_circle),
                 contentDescription = "Play Video",
-                modifier = Modifier.size(62.dp).clickable { onPlayVideo() },
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(62.dp)
+                    .clickable { onPlayVideo() },
+                tint = Color.LightGray,
             )
         }
     }
