@@ -94,7 +94,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     // ViewPager2
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
