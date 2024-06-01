@@ -26,7 +26,13 @@ class GalleryUiStateFactory @Inject constructor() {
             GalleryUiState.Empty
         } else {
             GalleryUiState.Content(
-                photos = photos.map { PhotoTile(it.fileName, it.type, it.uuid) },
+                photos = photos.map {
+                    PhotoTile(
+                        fileName = it.fileName,
+                        type = it.type,
+                        uuid = it.uuid
+                    )
+                },
                 showAlbumSelectionDialog = showAlbumSelectionDialog,
             )
         }

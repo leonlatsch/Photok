@@ -56,6 +56,10 @@ class AlbumRepositoryImpl @Inject constructor(
             else -> Result.success(Unit)
         }
 
+    override suspend fun deleteAll() {
+        albumDao.deleteAll()
+    }
+
     override suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
         albumDao.link(photoUUIDs, albumUUID)
     }
@@ -72,6 +76,10 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
         albumDao.unlink(photoUUIDs, uuid)
+    }
+
+    override suspend fun unlinkAll() {
+        albumDao.unlinkAll()
     }
 
     override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {

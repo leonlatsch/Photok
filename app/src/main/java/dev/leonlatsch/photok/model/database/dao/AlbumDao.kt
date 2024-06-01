@@ -75,6 +75,9 @@ abstract class AlbumDao {
     @Query("DELETE FROM album_photos_cross_ref WHERE photo_uuid = :photoUUID")
     abstract suspend fun unlink(photoUUID: String)
 
+    @Query("DELETE FROM album")
+    abstract suspend fun unlinkAll()
+
     @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumId")
     abstract suspend fun removeAllPhotosFromAlbum(albumId: String)
 
