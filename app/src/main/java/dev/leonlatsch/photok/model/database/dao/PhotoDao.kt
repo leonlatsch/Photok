@@ -73,12 +73,6 @@ interface PhotoDao {
     fun observeAll(): Flow<List<Photo>>
 
     /**
-     * Get all photo Ids.
-     */
-    @Query("SELECT photo_uuid FROM photo ORDER BY importedAt DESC")
-    suspend fun getAllUUIDs(): List<String>
-
-    /**
      * Count all photos.
      */
     @Query("SELECT COUNT(*) FROM photo")

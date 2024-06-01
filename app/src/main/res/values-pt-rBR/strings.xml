@@ -37,6 +37,7 @@
     <string name="common_cancel">Cancel</string> <!-- TODO -->
     <string name="common_create">Create</string> <!-- TODO -->
     <string name="common_empty">Empty</string> <!-- TODO -->
+    <string name="common_rename">Rename</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando arquivo(s)</string>
@@ -67,6 +68,7 @@
     <string name="gallery_albums_label">Albums</string> <!-- TODO -->
     <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
     <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
+    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
     <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
     <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
     <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
@@ -93,6 +95,7 @@
     <string name="view_photo_detail_import_at_label">Importado em:</string>
     <string name="view_photo_detail_file_type_label">Tipo do arquivo:</string>
     <string name="view_photo_detail_size_label">Tamanho do arquivo:</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>

@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImagePainter
@@ -29,13 +30,16 @@ import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestDat
  * Image Painter for encrypted images. Uses encrypted image fetcher if [LocalEncryptedImageLoader] provides it
  */
 @Composable
-fun rememberEncryptedImagePainter(data: EncryptedImageRequestData): AsyncImagePainter {
+fun rememberEncryptedImagePainter(
+    data: EncryptedImageRequestData,
+    @DrawableRes placeholder: Int = R.color.lightGray,
+): AsyncImagePainter {
     val context = LocalContext.current
 
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
-            .placeholder(R.color.lightGray)
+            .placeholder(placeholder)
             .fallback(R.color.design_default_color_error)
             .error(R.color.design_default_color_error)
             .build(),

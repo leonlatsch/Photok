@@ -139,9 +139,6 @@ dependencies {
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 
-    // MikeOritz/TouchImageView - Zoomable Image View
-    implementation("com.github.MikeOrtiz:TouchImageView:3.6")
-
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
 
@@ -153,6 +150,9 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Telephoto
+    implementation("me.saket.telephoto:zoomable-image-coil:0.11.2")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.6.0")

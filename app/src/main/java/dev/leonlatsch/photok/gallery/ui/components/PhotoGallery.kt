@@ -266,8 +266,8 @@ private fun GalleryPhotoTile(
         } else {
             val requestData = remember(photoTile) {
                 EncryptedImageRequestData(
-                    photoTile.internalThumbnailFileName,
-                    photoTile.type.mimeType
+                    internalFileName = photoTile.internalThumbnailFileName,
+                    mimeType = photoTile.type.mimeType
                 )
             }
 

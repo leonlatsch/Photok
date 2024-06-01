@@ -42,31 +42,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> Unit) {
+fun RenameAlbumDialog(
+    show: Boolean,
+    onDismiss: () -> Unit,
+    currentName: String,
+    onRename: (String) -> Unit,
+) {
     val focusRequester = remember {
         FocusRequester()
     }
 
-    if (uiState.showCreateDialog) {
+    if (show) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
 
-        Dialog(onDismissRequest = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
+        Dialog(onDismissRequest = onDismiss) {
             Card {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    var albumName by remember { mutableStateOf("") }
+                    var albumName by remember { mutableStateOf(currentName) }
 
                     Text(
-                        stringResource(R.string.gallery_albums_create_title),
+                        stringResource(R.string.gallery_albums_rename_title),
                         style = MaterialTheme.typography.headlineSmall
                     )
 
@@ -81,17 +85,17 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        TextButton(onClick = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
+                        TextButton(onClick = onDismiss) {
                             Text(stringResource(R.string.common_cancel))
                         }
                         Button(
                             onClick = {
-                                handleUiEvent(AlbumsUiEvent.CreateAlbum(albumName))
-                                handleUiEvent(AlbumsUiEvent.HideCreateDialog)
+                                onDismiss()
+                                onRename(albumName)
                             },
                             enabled = albumName.isNotEmpty()
                         ) {
-                            Text(stringResource(R.string.common_create))
+                            Text(stringResource(R.string.common_rename))
                         }
                     }
                 }
@@ -102,10 +106,13 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
 
 @Preview
 @Composable
-private fun CreateAlbumDialogPreview() {
+private fun RenameAlbumDialogPreview() {
     AppTheme {
-        CreateAlbumDialog(
-            uiState = AlbumsUiState.Empty(showCreateDialog = true),
-            handleUiEvent = {})
+        RenameAlbumDialog(
+            show = true,
+            onDismiss = {},
+            currentName = "previous name",
+            onRename = {}
+        )
     }
 }

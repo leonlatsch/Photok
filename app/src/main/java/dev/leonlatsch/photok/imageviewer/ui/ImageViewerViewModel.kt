@@ -43,7 +43,7 @@ class ImageViewerViewModel @Inject constructor(
     val albumRepository: AlbumRepository,
 ) : ObservableViewModel(app) {
 
-    var uuids = listOf<String>()
+    var photos = listOf<Photo>()
 
     @get:Bindable
     var currentPhoto: Photo? = null
@@ -58,28 +58,27 @@ class ImageViewerViewModel @Inject constructor(
      */
     fun preloadData(
         albumUUID: String,
-        onFinished: (List<String>) -> Unit
+        onFinished: (List<Photo>) -> Unit
     ) = viewModelScope.launch {
-        if (uuids.isNotEmpty()) {
-            onFinished(uuids)
+        if (photos.isNotEmpty()) {
+            onFinished(photos)
             return@launch
         }
 
-        uuids = if (albumUUID.isEmpty()) {
-            photoRepository.getAllUUIDs()
+        photos = if (albumUUID.isEmpty()) {
+            photoRepository.getAll()
         } else {
-            albumRepository.getAllPhotoIdsFor(albumUUID)
+            albumRepository.getAlbumWithPhotos(albumUUID).files
         }
 
-        onFinished(uuids)
+        onFinished(photos)
     }
 
     /**
      * Loads a photo. Gets called after onViewCreated
      */
     fun updateDetails(position: Int) = viewModelScope.launch {
-        val photo = photoRepository.get(uuids[position])
-        currentPhoto = photo
+        currentPhoto = photos[position]
     }
 
     /**
