@@ -19,23 +19,18 @@ package dev.leonlatsch.photok.imageviewer.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ortiz.touchview.OnTouchImageViewListener
-import com.ortiz.touchview.TouchImageView
+import coil.ImageLoader
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoViewHolderContent
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
-import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.show
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 /**
  * ViewHolder for a fullscreen photo.
@@ -52,99 +47,32 @@ import timber.log.Timber
  */
 class PhotoViewHolder(
     parent: ViewGroup,
+    private val encryptedImageLoader: ImageLoader,
     private val context: Context,
-    private val photoRepository: PhotoRepository,
-    private val onZoomed: (zoomed: Boolean) -> Unit,
     private val onClick: () -> Unit,
-    private val navController: NavController
+    private val navController: NavController,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
-    private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
-    private val playButton: ImageView = itemView.findViewById(R.id.photoPlayButton)
-    var photoUUID: String = ""
 
     /**
      * Called by Adapters onBindViewHolder.
      *
      * @param id The photo's id
      */
-    fun bindTo(uuid: String?) {
-        uuid ?: return
-        photoUUID = uuid
+    fun bindTo(photo: Photo) {
+        val composeView = itemView as ComposeView
 
-        loadPhoto()
-    }
-
-    private fun loadPhoto() {
-        try {
-            GlobalScope.launch(Dispatchers.IO) {
-                val photo = photoRepository.get(photoUUID)
-
-                val data = if (photo.type.isVideo) {
-                    photoRepository.loadVideoPreview(photo)
-                } else {
-                    photoRepository.loadPhoto(photo)
-                }
-                if (data == null) {
-                    Timber.d("Error loading photo data for photo: $photoUUID")
-                    return@launch
-                }
-
-                initUiElements(photo)
-
-                if (photo.type.isGif) {
-                    onMain {
-                        Glide.with(context)
-                            .asGif()
-                            .load(data)
-                            .into(imageView)
-                    }
-                } else {
-
-                    val bitmap = if (photo.type.isVideo) {
-                        Glide.with(context)
-                            .asBitmap()
-                            .load(data)
-                            .submit()
-                            .get()
-                    } else {
-                        normalizeExifOrientation(data)
-                    }
-
-                    bitmap ?: return@launch
-
-                    onMain {
-                        imageView.setImageBitmap(bitmap)
-                    }
+        composeView.setContent {
+            AppTheme {
+                CompositionLocalProvider(LocalEncryptedImageLoader provides encryptedImageLoader)  {
+                    PhotoViewHolderContent(
+                        photo = photo,
+                        onClick = onClick,
+                        onPlayVideo = { openVideoPlayer(photo) }
+                    )
                 }
             }
-        } catch (e: Exception) {
-            Timber.d("Error loading your photo: $e")
-            return
-        }
-
-    }
-
-    private fun initUiElements(photo: Photo) = onMain {
-        imageView.setOnClickListener {
-            onClick()
-        }
-
-        if (photo.type.isVideo) {
-            imageView.isZoomEnabled = false
-            playButton.show()
-            playButton.setOnClickListener {
-                openVideoPlayer(photo)
-            }
-        } else {
-            playButton.hide()
-
-            imageView.setOnTouchImageViewListener(object : OnTouchImageViewListener {
-                override fun onMove() {
-                    onZoomed(imageView.isZoomed)
-                }
-            })
         }
     }
 

@@ -77,6 +77,7 @@
     <string name="view_photo_detail_import_at_label">Geïmporteerd op:</string>
     <string name="view_photo_detail_file_type_label">Bestandstype:</string>
     <string name="view_photo_detail_size_label">Bestandsgrootte:</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Slot</string>

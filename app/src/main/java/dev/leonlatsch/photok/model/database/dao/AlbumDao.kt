@@ -51,8 +51,9 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun observeAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
 
-    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID ORDER BY linked_at DESC")
-    abstract suspend fun getAllPhotoIdsFor(albumUUID: String): List<String>
+    @Transaction
+    @Query("SELECT * FROM album WHERE album_uuid = :uuid")
+    abstract suspend fun getAlbumWithPhotos(uuid: String): AlbumWithPhotos
 
     @Query("SELECT photo_uuid, linked_at FROM album_photos_cross_ref WHERE photo_uuid in (:photoUUIDs)")
     abstract suspend fun getLinkedAtFor(

@@ -94,6 +94,7 @@
     <string name="view_photo_detail_import_at_label">Импортировано:</string>
     <string name="view_photo_detail_file_type_label">Тип файла:</string>
     <string name="view_photo_detail_size_label">Размер файла:</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>

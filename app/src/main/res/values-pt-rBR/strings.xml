@@ -95,6 +95,7 @@
     <string name="view_photo_detail_import_at_label">Importado em:</string>
     <string name="view_photo_detail_file_type_label">Tipo do arquivo:</string>
     <string name="view_photo_detail_size_label">Tamanho do arquivo:</string>
+    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>
