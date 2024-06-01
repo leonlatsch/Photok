@@ -27,9 +27,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
+import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
@@ -62,6 +64,10 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     private val args: ImageViewerFragmentArgs by navArgs()
 
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.systemBarsPadding()
@@ -82,11 +88,17 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
         viewModel.preloadData(args.albumUuid) { photos ->
             val photoPagerAdapter =
-                PhotoPagerAdapter(photos, viewModel.photoRepository, findNavController(), {
-                    binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
-                }, { // ON CLICK
-                    toggleSystemUI()
-                })
+                PhotoPagerAdapter(
+                    photos = photos,
+                    encryptedImageLoader = encryptedImageLoader,
+                    navController = findNavController(),
+                    onZoomed = {
+                        binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
+                    },
+                    onClick = {
+                        toggleSystemUI()
+                    }
+                )
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
             val photoUUID = args.photoUuid

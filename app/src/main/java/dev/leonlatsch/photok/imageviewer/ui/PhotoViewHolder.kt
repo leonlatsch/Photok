@@ -19,15 +19,18 @@ package dev.leonlatsch.photok.imageviewer.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoItem
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 /**
  * ViewHolder for a fullscreen photo.
@@ -44,11 +47,11 @@ import dev.leonlatsch.photok.other.*
  */
 class PhotoViewHolder(
     parent: ViewGroup,
+    private val encryptedImageLoader: ImageLoader,
     private val context: Context,
-    private val photoRepository: PhotoRepository,
     private val onZoomed: (zoomed: Boolean) -> Unit,
     private val onClick: () -> Unit,
-    private val navController: NavController
+    private val navController: NavController,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
@@ -62,9 +65,13 @@ class PhotoViewHolder(
         val composeView = itemView as ComposeView
 
         composeView.setContent {
-            PhotoItem(
-                photo = photo,
-            )
+            AppTheme {
+                CompositionLocalProvider(LocalEncryptedImageLoader provides encryptedImageLoader)  {
+                    PhotoItem(
+                        photo = photo,
+                    )
+                }
+            }
         }
     }
 /*
