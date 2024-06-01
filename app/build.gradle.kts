@@ -77,7 +77,7 @@ licenseReport {
 dependencies {
     val roomVersion = "2.6.1"
     val coroutinesVersion = "1.8.0"
-    val pagingVersion = "3.2.1"
+    val pagingVersion = "3.3.0"
     val daggerVersion = "2.51.1"
 
     // Architectural Components
