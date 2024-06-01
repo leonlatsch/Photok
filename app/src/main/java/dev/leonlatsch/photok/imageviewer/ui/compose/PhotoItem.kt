@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -36,9 +37,11 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 @Composable
 fun PhotoItem(
     photo: Photo,
+    onClick: () -> Unit,
+    onPlayVideo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.background(Color.Black)) {
+    Box(modifier = modifier.background(Color.Black).clickable { onClick()}) {
         val contentModifier = Modifier.fillMaxSize()
         if (LocalInspectionMode.current) {
             Box(modifier = contentModifier.background(Color.Red))
@@ -67,7 +70,7 @@ fun PhotoItem(
             Image(
                 painter = painterResource(R.drawable.ic_play_circle),
                 contentDescription = "Play Video",
-                modifier = Modifier.size(62.dp)
+                modifier = Modifier.size(62.dp).clickable { onPlayVideo() },
             )
         }
     }

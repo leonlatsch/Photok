@@ -139,9 +139,6 @@ dependencies {
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 
-    // MikeOritz/TouchImageView - Zoomable Image View
-    implementation("com.github.MikeOrtiz:TouchImageView:3.6")
-
     // Gson
     implementation("com.google.code.gson", "gson", "2.8.6")
 

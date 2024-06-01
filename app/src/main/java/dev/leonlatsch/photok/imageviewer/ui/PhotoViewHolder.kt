@@ -69,72 +69,13 @@ class PhotoViewHolder(
                 CompositionLocalProvider(LocalEncryptedImageLoader provides encryptedImageLoader)  {
                     PhotoItem(
                         photo = photo,
+                        onClick = onClick,
+                        onPlayVideo = { openVideoPlayer(photo) }
                     )
                 }
             }
         }
     }
-/*
-    private fun loadPhoto() {
-        try {
-            GlobalScope.launch(Dispatchers.IO) {
-                // initUiElements(photo)
-
-                if (photo.type.isGif) {
-                    onMain {
-                        Glide.with(context)
-                            .asGif()
-                            .load(data)
-                            .into(imageView)
-                    }
-                } else {
-
-                    val bitmap = if (photo.type.isVideo) {
-                        Glide.with(context)
-                            .asBitmap()
-                            .load(data)
-                            .submit()
-                            .get()
-                    } else {
-                        normalizeExifOrientation(data)
-                    }
-
-                    bitmap ?: return@launch
-
-                    onMain {
-                        imageView.setImageBitmap(bitmap)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Timber.d("Error loading your photo: $e")
-            return
-        }
-
-    }
-
-    private fun initUiElements(photo: Photo) = onMain {
-        imageView.setOnClickListener {
-            onClick()
-        }
-
-        if (photo.type.isVideo) {
-            imageView.isZoomEnabled = false
-            playButton.show()
-            playButton.setOnClickListener {
-                openVideoPlayer(photo)
-            }
-        } else {
-            playButton.hide()
-
-            imageView.setOnTouchImageViewListener(object : OnTouchImageViewListener {
-                override fun onMove() {
-                    onZoomed(imageView.isZoomed)
-                }
-            })
-        }
-    }
- */
 
     private fun openVideoPlayer(photo: Photo) {
         val args = bundleOf(INTENT_PHOTO_UUID to photo.uuid)
