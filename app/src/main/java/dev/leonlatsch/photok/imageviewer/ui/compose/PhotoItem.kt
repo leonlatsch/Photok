@@ -61,14 +61,14 @@ fun PhotoItem(
                 contentDescription = photo.fileName,
                 modifier = contentModifier,
             )
+        }
 
-            if (photo.type.isVideo) {
-                Image(
-                    painter = painterResource(R.drawable.ic_play_circle),
-                    contentDescription = "Play Video",
-                    modifier = Modifier.size(62.dp)
-                )
-            }
+        if (photo.type.isVideo) {
+            Image(
+                painter = painterResource(R.drawable.ic_play_circle),
+                contentDescription = "Play Video",
+                modifier = Modifier.size(62.dp)
+            )
         }
     }
 }

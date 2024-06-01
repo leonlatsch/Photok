@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.imageviewer.ui
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 
 /**
@@ -33,7 +34,7 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
  * @author Leon Latsch
  */
 class PhotoPagerAdapter(
-    private val photos: List<String>,
+    private val photos: List<Photo>,
     private val photoRepository: PhotoRepository,
     private val navController: NavController,
     private val onZoomed: (zoomed: Boolean) -> Unit,

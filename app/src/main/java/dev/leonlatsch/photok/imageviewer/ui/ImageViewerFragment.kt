@@ -80,9 +80,9 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             }
         })
 
-        viewModel.preloadData(args.albumUuid) { uuids ->
+        viewModel.preloadData(args.albumUuid) { photos ->
             val photoPagerAdapter =
-                PhotoPagerAdapter(uuids, viewModel.photoRepository, findNavController(), {
+                PhotoPagerAdapter(photos, viewModel.photoRepository, findNavController(), {
                     binding.viewPhotoViewPager.isUserInputEnabled = !it // On Zoom changed
                 }, { // ON CLICK
                     toggleSystemUI()
@@ -90,8 +90,9 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
             binding.viewPhotoViewPager.adapter = photoPagerAdapter
 
             val photoUUID = args.photoUuid
-            val startingAt = if (!photoUUID.isNullOrEmpty()) {
-                uuids.indexOf(photoUUID)
+            val startingPhoto = photos.find { it.uuid == photoUUID }
+            val startingAt = if (!photoUUID.isNullOrEmpty() || startingPhoto != null) {
+                photos.indexOf(startingPhoto)
             } else {
                 0
             }

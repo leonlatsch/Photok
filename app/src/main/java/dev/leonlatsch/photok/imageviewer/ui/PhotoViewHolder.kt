@@ -19,23 +19,15 @@ package dev.leonlatsch.photok.imageviewer.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ortiz.touchview.OnTouchImageViewListener
-import com.ortiz.touchview.TouchImageView
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoItem
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.*
-import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.show
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * ViewHolder for a fullscreen photo.
@@ -60,38 +52,26 @@ class PhotoViewHolder(
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.view_photo_item, parent, false)
 ) {
-    private val imageView: TouchImageView = itemView.findViewById(R.id.photoImageView)
-    private val playButton: ImageView = itemView.findViewById(R.id.photoPlayButton)
-    var photoUUID: String = ""
 
     /**
      * Called by Adapters onBindViewHolder.
      *
      * @param id The photo's id
      */
-    fun bindTo(uuid: String?) {
-        uuid ?: return
-        photoUUID = uuid
+    fun bindTo(photo: Photo) {
+        val composeView = itemView as ComposeView
 
-        loadPhoto()
+        composeView.setContent {
+            PhotoItem(
+                photo = photo,
+            )
+        }
     }
-
+/*
     private fun loadPhoto() {
         try {
             GlobalScope.launch(Dispatchers.IO) {
-                val photo = photoRepository.get(photoUUID)
-
-                val data = if (photo.type.isVideo) {
-                    photoRepository.loadVideoPreview(photo)
-                } else {
-                    photoRepository.loadPhoto(photo)
-                }
-                if (data == null) {
-                    Timber.d("Error loading photo data for photo: $photoUUID")
-                    return@launch
-                }
-
-                initUiElements(photo)
+                // initUiElements(photo)
 
                 if (photo.type.isGif) {
                     onMain {
@@ -147,6 +127,7 @@ class PhotoViewHolder(
             })
         }
     }
+ */
 
     private fun openVideoPlayer(photo: Photo) {
         val args = bundleOf(INTENT_PHOTO_UUID to photo.uuid)

@@ -80,11 +80,6 @@ class PhotoRepository @Inject constructor(
     fun observeAll() = photoDao.observeAll()
 
     /**
-     * @see PhotoDao.getAllUUIDs
-     */
-    suspend fun getAllUUIDs() = photoDao.getAllUUIDs()
-
-    /**
      * @see PhotoDao.countAll
      */
     suspend fun countAll() = photoDao.countAll()

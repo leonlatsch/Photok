@@ -44,6 +44,11 @@ class AlbumRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
             .map { album -> album.sortPhotos() }
 
+    override suspend fun getAlbumWithPhotos(uuid: String): Album =
+        albumDao.getAlbumWithPhotos(uuid)
+            .toDomain()
+            .sortPhotos()
+
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {
             -1L -> Result.failure(IOException())
@@ -72,10 +77,6 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
         albumDao.unlink(photoUUIDs, uuid)
-    }
-
-    override suspend fun getAllPhotoIdsFor(albumUUID: String): List<String> {
-        return albumDao.getAllPhotoIdsFor(albumUUID)
     }
 
     override suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef> =
