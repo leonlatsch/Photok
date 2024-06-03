@@ -11,3 +11,7 @@ updates:
       interval: "monthly"
     reviewers:
       - leonlatsch
+    groups:
+      dependencies:
+        patterns: 
+          - "*"
