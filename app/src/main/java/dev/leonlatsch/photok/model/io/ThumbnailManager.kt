@@ -109,7 +109,6 @@ class ThumbnailManager(
                 .size(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
                 .scale(Scale.FILL)
                 .allowHardware(false)
-
                 .target(
                     onSuccess = { result ->
                         val outputStream = when (thumbnailType) {
