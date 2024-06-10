@@ -148,14 +148,12 @@ dependencies {
     // Display OSS Licenses
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
     // Telephoto
     implementation("me.saket.telephoto:zoomable-image-coil:0.11.2")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-video:2.6.0")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
