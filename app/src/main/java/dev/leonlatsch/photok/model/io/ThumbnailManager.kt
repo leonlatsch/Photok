@@ -24,8 +24,8 @@ import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.size.Scale
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.io.ThumbnailManager.ThumbnailType.PHOTO
-import dev.leonlatsch.photok.model.io.ThumbnailManager.ThumbnailType.VIDEO
+import dev.leonlatsch.photok.model.io.ThumbnailManager.FileType.PHOTO
+import dev.leonlatsch.photok.model.io.ThumbnailManager.FileType.VIDEO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -49,7 +49,7 @@ class ThumbnailManager(
      * @property VIDEO for video preview
      * @property PHOTO for photo preview
      */
-    enum class ThumbnailType { VIDEO, PHOTO }
+    enum class FileType { VIDEO, PHOTO }
 
     companion object {
         private const val THUMBNAIL_SIZE = 128
@@ -86,46 +86,45 @@ class ThumbnailManager(
      *
      * @param photo the photo to create the thumbnail for
      * @param obj the object to create the thumbnail from
-     * @param thumbnailType the type of the preview
+     * @param fileType the type of the preview
      */
-    suspend fun createThumbnail(photo: Photo, obj: Any?, thumbnailType: ThumbnailType) {
-        internalCreateThumbnail(photo, obj, thumbnailType)
+    suspend fun createThumbnail(photo: Photo, obj: Any?, fileType: FileType) {
+        internalCreateThumbnail(photo, obj, fileType)
     }
 
     // Internal function to create the thumbnails.
     private suspend fun internalCreateThumbnail(
         photo: Photo,
         obj: Any?,
-        thumbnailType: ThumbnailType
-    ) =
-        withContext(Dispatchers.IO) {
-            val imageLoader = ImageLoader.Builder(context)
-                // For generating video thumbnails.
-                .components { add(VideoFrameDecoder.Factory()) }
-                .build()
+        fileType: FileType
+    ) = withContext(Dispatchers.IO) {
+        val imageLoader = ImageLoader.Builder(context)
+            // For generating video thumbnails.
+            .components { add(VideoFrameDecoder.Factory()) }
+            .build()
 
-            val request = ImageRequest.Builder(context)
-                .data(obj)
-                .size(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-                .scale(Scale.FILL)
-                .allowHardware(false)
-                .target(
-                    onSuccess = { result ->
-                        val outputStream = when (thumbnailType) {
-                            VIDEO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName)
-                            PHOTO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName)
-                        }
-                        outputStream?.use {
-                            result.toBitmap().compress(Bitmap.CompressFormat.JPEG, 100, it)
-                        }
-                    },
-                    onError = {
-                        Timber.e("Error creating thumbnail for ${photo.fileName}")
+        val request = ImageRequest.Builder(context)
+            .data(obj)
+            .size(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+            .scale(Scale.FILL)
+            .allowHardware(false)
+            .target(
+                onSuccess = { result ->
+                    val outputStream = when (fileType) {
+                        VIDEO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName)
+                        PHOTO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName)
                     }
-                )
-                .build()
+                    outputStream?.use {
+                        result.toBitmap().compress(Bitmap.CompressFormat.JPEG, 100, it)
+                    }
+                },
+                onError = {
+                    Timber.e("Error creating thumbnail for ${photo.fileName}")
+                }
+            )
+            .build()
 
-            imageLoader.execute(request)
-        }
+        imageLoader.execute(request)
+    }
 
 }

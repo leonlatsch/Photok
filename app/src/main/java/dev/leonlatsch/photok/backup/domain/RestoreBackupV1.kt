@@ -70,7 +70,7 @@ class RestoreBackupV1 @Inject constructor(
             if (photoFileCreated) {
                 thumbnailManager.createThumbnail(
                     newPhoto, photoBytes,
-                    ThumbnailManager.ThumbnailType.PHOTO
+                    ThumbnailManager.FileType.PHOTO
                 )
                 photoRepository.insert(newPhoto)
             }

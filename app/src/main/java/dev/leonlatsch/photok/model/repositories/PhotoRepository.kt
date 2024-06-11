@@ -150,12 +150,12 @@ class PhotoRepository @Inject constructor(
             if (origUri != null) {
                 thumbnailManager.createThumbnail(
                     photo, origUri,
-                    ThumbnailManager.ThumbnailType.PHOTO
+                    ThumbnailManager.FileType.PHOTO
                 )
                 if (photo.type.isVideo) {
                     thumbnailManager.createThumbnail(
                         photo, origUri,
-                        ThumbnailManager.ThumbnailType.VIDEO
+                        ThumbnailManager.FileType.VIDEO
                     )
                 }
             }
