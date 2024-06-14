@@ -150,7 +150,9 @@ dependencies {
     implementation("me.saket.telephoto:zoomable-image-coil:0.11.2")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.6.0")
+    val coilVersion = "2.6.0"
+    implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation("io.coil-kt:coil-gif:$coilVersion")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
