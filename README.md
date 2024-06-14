@@ -45,7 +45,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-81%25-yellow)
 ![Russian](https://img.shields.io/badge/Russian-84%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-81%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
 <!-- END-TRANSLATIONS -->
 
 LICENSE
