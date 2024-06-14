@@ -5,6 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 val appVersionName: String by project
@@ -12,8 +13,6 @@ val appVersionCode: String by project
 
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
-
-val composeCompilerVersion = "1.5.11"
 
 android {
     compileSdk = 34 // Android 14
@@ -48,10 +47,6 @@ android {
     buildFeatures {
         dataBinding = true
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     compileOptions {
