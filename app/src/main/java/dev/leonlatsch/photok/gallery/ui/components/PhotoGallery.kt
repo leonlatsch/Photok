@@ -182,9 +182,7 @@ fun PhotoGallery(
                     },
                 )
 
-                additionalMultiSelectionActions(
-                    closeActions = closeActions,
-                )
+                additionalMultiSelectionActions(closeActions)
             }
         }
     }
