@@ -33,11 +33,11 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">¿Estás seguro?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
+    <string name="common_more">Más</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_create">Crear</string>
+    <string name="common_empty">Vacío</string>
+    <string name="common_rename">Renombrar</string>
 
     <!-- IMPORT -->>
     <string name="import_importing">Importando foto(s)</string>
@@ -65,14 +65,14 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">No hay fotos en tu baúl</string>
     <string name="gallery_all_photos_label">Todas las Fotos</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
+    <string name="gallery_albums_label">Álbumes</string>
+    <string name="gallery_albums_placeholder">Crea tu primer álbum</string>
+    <string name="gallery_albums_create_title">Crear Álbum</string>
+    <string name="gallery_albums_rename_title">Renombrar Álbum</string>
+    <string name="gallery_albums_create_placeholder">Homework ;)</string> 
+    <string name="gallery_albums_select_title">Selecciona un Álbum</string>
+    <string name="gallery_albums_deleted">Álbum eliminado</string>
+    <string name="gallery_albums_photos_added">%1$d elementos añadidos</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importar</string>
@@ -95,7 +95,7 @@
     <string name="view_photo_detail_import_at_label">Importado en:</string>
     <string name="view_photo_detail_file_type_label">Tipo de archivo:</string>
     <string name="view_photo_detail_size_label">Tamaño del archivo:</string>
-    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
+    <string name="view_photo_play_button_description">Reproducir vídeo</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>
@@ -105,28 +105,28 @@
     <string name="menu_ms_select_all">Seleccionar todo</string>
     <string name="menu_ms_delete">Borrar</string>
     <string name="menu_ms_export">Exportar</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d elemento(s) seleccionado(s)</string>
+    <string name="menu_ms_add_to_album">Añadir al álbum</string>
+    <string name="menu_ms_remove_from_album">Eliminar del álbum</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">¿Estas seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
-    <string name="delete_are_you_sure_this">¿Estas seguro de que quieres <b>borrar</b> esta foto?</string>
+    <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
+    <string name="delete_are_you_sure_this">¿Estás seguro de que quieres <b>borrar</b> esta foto?</string>
     <string name="delete_deleting">Borrando foto(s)…</string>
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d foto(s), en tu galería?</string>
     <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> esta foto en tu galería?</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) a tu galería y eliminarlo(s)?</string>
+    <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
+    <string name="export_and_delete_finished">Exportado y eliminado</string>
     <string name="export_exporting">Exportando foto(s)…</string>
     <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar las fotos</string>
     <string name="export_finished">Exportado</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versión:</string>
-    <string name="about_developed_by">Desarollado por:</string>
+    <string name="about_developed_by">Desarrollado por:</string>
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
     <string name="about_third_party">Software de terceros</string>
@@ -165,7 +165,7 @@
     <string name="settings_security_launch_code_summary">Código secreto para lanzar Photok desde la app de teléfono.</string>
     <string name="settings_security_launch_code_message">Introduce *#*#[tu código]#*#* en la app de teléfono para lanzar Photok.</string>
     <string name="settings_security_hide_app_title">Ocultar App</string>
-    <string name="settings_security_hide_app_summary">Ocultar el icono de la app de el cajón de aplicaciones.</string>
+    <string name="settings_security_hide_app_summary">Ocultar el icono de la app del cajón de aplicaciones.</string>
 
     <string name="settings_category_advanced">Avanzado</string>
     <string name="settings_category_advanced_summary">Usar con cuidado</string>
@@ -174,10 +174,10 @@
     <string name="settings_advanced_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
     <string name="settings_advanced_backup_title">Copia de Seguridad</string>
     <string name="settings_advanced_backup_summary">Crea una copia de seguridad de tu baúl</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_title">Eliminar archivos importados</string>
+    <string name="settings_advanced_delete_imported_summary">Eliminar archivos después de importarlos</string>
+    <string name="settings_advanced_delete_exported_title">Eliminar archivos exportados</string>
+    <string name="settings_advanced_delete_exported_summary">Eliminar archivos después de exportarlos</string>
 
     <string name="settings_other_title">Otros</string>
     <string name="settings_other_feedback_title">Sugerencias</string>
@@ -185,8 +185,8 @@
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- PLEASE KEEP ENGLISH -->
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">Donar</string>
+    <string name="settings_other_donate_summary">Apoyar el desarrollo de Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Código fuente</string>
     <string name="settings_other_sourcecode_summary">Contribuir a Photok</string>
@@ -204,7 +204,7 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Cambiar contraseña</string>
     <string name="change_password_old_password">Contraseña antigua</string>
-    <string name="change_password_new_password">Cntraseña nueva</string>
+    <string name="change_password_new_password">Contraseña nueva</string>
     <string name="change_password_check">Comprobar</string>
     <string name="change_password_enter_new_password">Introduce tu nueva contraseña</string>
     <string name="change_password_confirm_new_password">Confirma tu nueva contraseña</string>
@@ -220,7 +220,7 @@
     <string name="hide_app_status_hidden">OCULTO</string>
     <string name="hide_app_app_name_stealth">Teléfono</string>
     <string name="hide_app_confirm_hide">¿Realmente quieres ocultar Photok?</string>
-    <string name="hide_app_confirm_show">¿Realmente quieres mostar Photok again?</string>
+    <string name="hide_app_confirm_show">¿Realmente quieres mostrar Photok de nuevo?</string>
     <string name="hide_app_hint">Una vez oculto, Photok solo podrá ser lanzado desde el teclado de la app de teléfono, con tu pin secreto.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
@@ -232,7 +232,7 @@
     <string name="onboarding_skip"><u>Saltar</u></string>
 
     <string name="onboarding_slide1_title">Bienvenido a</string>
-    <string name="onboarding_slide1_description">Un lugar seguro para gurdar tus fotos.</string>
+    <string name="onboarding_slide1_description">Un lugar seguro para guardar tus fotos.</string>
     <string name="onboarding_slide2_title">Crea una contraseña</string>
     <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
     <string name="onboarding_slide3_title">Empieza a importar</string>
@@ -256,20 +256,20 @@
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
-    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
+    <string name="news_title_1">NUEVO: Álbumes</string>
+    <string name="news_summary_1">Ordena tus fotos y vídeos en álbumes</string>
 
-    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
-    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+    <string name="news_title_2">NUEVO: Donaciones</string>
+    <string name="news_summary_2">Ver el botón "Donar" en la configuración para apoyar Photok</string>
 
-    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
+    <string name="news_title_3">NUEVO: Eliminar después de exportar</string>
+    <string name="news_summary_3">Eliminar automáticamente los archivos después de exportarlos</string>
 
-    <string name="news_title_4">More Languages</string> <!-- TODO -->
-    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+    <string name="news_title_4">Más idiomas</string>
+    <string name="news_summary_4">Photok ahora está disponible en árabe y ruso</string>
 
     <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
-    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
+    <string name="recovery_subtitle">Menú de Recuperación</string>
+    <string name="recovery_menu_item_open_photok">Abrir Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de Ocultar Aplicación</string>
 </resources>
