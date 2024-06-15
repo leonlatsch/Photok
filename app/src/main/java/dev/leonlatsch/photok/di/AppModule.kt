@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.di
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -28,6 +29,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.model.io.ThumbnailManager
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
@@ -71,7 +74,14 @@ object AppModule {
     fun provideSharedUrisStore() = SharedUrisStore()
 
     @Provides
-    fun provideResources(@ApplicationContext context: Context) = context.resources
+    @Singleton
+    fun provideThumbnailManager(
+        @ApplicationContext context: Context,
+        encryptedStorageManager: EncryptedStorageManager
+    ) = ThumbnailManager(context, encryptedStorageManager)
+
+    @Provides
+    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
     @Provides
     fun provideGson(): Gson = GsonBuilder()

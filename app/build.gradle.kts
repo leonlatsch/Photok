@@ -143,9 +143,6 @@ dependencies {
     // Display OSS Licenses
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
     // Telephoto
     implementation("me.saket.telephoto:zoomable-image-coil:0.11.2")
 
