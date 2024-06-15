@@ -17,7 +17,10 @@
 package dev.leonlatsch.photok.imageloading.di
 
 import android.content.Context
+import android.os.Build.VERSION.SDK_INT
 import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +38,13 @@ object ImageLoadingModule {
         @ApplicationContext context: Context,
         encryptedImageFetcherFactory: EncryptedImageFetcherFactory
     ): ImageLoader = ImageLoader.Builder(context)
-        .components { add(encryptedImageFetcherFactory) }
+        .components {
+            add(encryptedImageFetcherFactory)
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
         .build()
 }
