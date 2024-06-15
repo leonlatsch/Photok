@@ -24,11 +24,14 @@ import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.size.Scale
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.io.ThumbnailManager.FileType.PHOTO
-import dev.leonlatsch.photok.model.io.ThumbnailManager.FileType.VIDEO
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+
+
+/** Maximum size of the thumbnail in pixels */
+private const val THUMBNAIL_SIZE = 128
 
 /**
  * Manages the creation and loading of thumbnails for photos and videos.
@@ -43,18 +46,6 @@ class ThumbnailManager(
     private val context: Context,
     private val encryptedStorageManager: EncryptedStorageManager
 ) {
-    /**
-     * Types of the preview.
-     *
-     * @property VIDEO for video preview
-     * @property PHOTO for photo preview
-     */
-    enum class FileType { VIDEO, PHOTO }
-
-    companion object {
-        private const val THUMBNAIL_SIZE = 128
-    }
-
     /**
      * Loads the full size thumbnail stored for this photo as a [ByteArray]
      *
@@ -82,24 +73,19 @@ class ThumbnailManager(
     }
 
     /**
-     * Create a thumbnail for a photo or video asynchronously.
+     * Creates a thumbnail for the given photo. If the photo is a video,
+     * it also creates a video preview.
      *
-     * @param photo the photo to create the thumbnail for
-     * @param obj the object to create the thumbnail from
-     * @param fileType the type of the preview
+     * @param photo The photo object for which the thumbnail is to be created.
+     * @param obj The data for the image request. This could be a URL, file, or any other supported data type.
+     * @return A [Result] indicating the success or failure of the thumbnail creation.
      */
-    suspend fun createThumbnail(photo: Photo, obj: Any?, fileType: FileType) {
-        internalCreateThumbnail(photo, obj, fileType)
-    }
+    suspend fun createThumbnail(
+        photo: Photo, obj: Any?
+    ): Result<Unit> = withContext(Dispatchers.IO) {
+        val deferredResult = CompletableDeferred<Result<Unit>>()
 
-    // Internal function to create the thumbnails.
-    private suspend fun internalCreateThumbnail(
-        photo: Photo,
-        obj: Any?,
-        fileType: FileType
-    ) = withContext(Dispatchers.IO) {
         val imageLoader = ImageLoader.Builder(context)
-            // For generating video thumbnails.
             .components { add(VideoFrameDecoder.Factory()) }
             .build()
 
@@ -110,21 +96,37 @@ class ThumbnailManager(
             .allowHardware(false)
             .target(
                 onSuccess = { result ->
-                    val outputStream = when (fileType) {
-                        VIDEO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName)
-                        PHOTO -> encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName)
-                    }
-                    outputStream?.use {
-                        result.toBitmap().compress(Bitmap.CompressFormat.JPEG, 100, it)
+                    try {
+                        // Lambda to compress & save bitmap and avoid code duplication.
+                        val saveCompressedBitmap: (fileName: String) -> Unit = { fileName ->
+                            encryptedStorageManager.internalOpenEncryptedFileOutput(fileName)
+                                ?.use { ops ->
+                                    result.toBitmap().compress(Bitmap.CompressFormat.JPEG, 100, ops)
+                                }
+                        }
+                        // Create thumbnail
+                        saveCompressedBitmap(photo.internalThumbnailFileName)
+                        // If the photo is a video, create a video preview
+                        if (photo.type.isVideo) {
+                            saveCompressedBitmap(photo.internalVideoPreviewFileName)
+                        }
+                        deferredResult.complete(Result.success(Unit))
+                    } catch (e: Exception) {
+                        deferredResult.complete(Result.failure(e))
                     }
                 },
                 onError = {
                     Timber.e("Error creating thumbnail for ${photo.fileName}")
+                    deferredResult.complete(
+                        Result.failure(Exception("Error creating thumbnail for ${photo.fileName}"))
+                    )
                 }
             )
             .build()
 
         imageLoader.execute(request)
+        deferredResult.await()
     }
+
 
 }

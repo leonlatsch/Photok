@@ -68,10 +68,7 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.createPhotoFile(newPhoto, photoBytesInputStream) != -1L
 
             if (photoFileCreated) {
-                thumbnailManager.createThumbnail(
-                    newPhoto, photoBytes,
-                    ThumbnailManager.FileType.PHOTO
-                )
+                thumbnailManager.createThumbnail(newPhoto, photoBytes)
                 photoRepository.insert(newPhoto)
             }
 

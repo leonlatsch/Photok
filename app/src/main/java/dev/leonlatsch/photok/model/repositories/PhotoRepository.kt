@@ -148,16 +148,7 @@ class PhotoRepository @Inject constructor(
             photo.size = fileLen
 
             if (origUri != null) {
-                thumbnailManager.createThumbnail(
-                    photo, origUri,
-                    ThumbnailManager.FileType.PHOTO
-                )
-                if (photo.type.isVideo) {
-                    thumbnailManager.createThumbnail(
-                        photo, origUri,
-                        ThumbnailManager.FileType.VIDEO
-                    )
-                }
+                thumbnailManager.createThumbnail(photo, origUri)
             }
 
             val photoId = insert(photo)
