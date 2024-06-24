@@ -37,6 +37,7 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragmen
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
 import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.permissions.getReadImagesPermission
 import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
@@ -86,9 +87,11 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             }
         }
 
-        getBaseApplication().rawApplicationState.observe(this) {
-            if (it == ApplicationState.UNLOCKED) {
-                viewModel.consumeSharedUris()
+        launchLifecycleAwareJob {
+            getBaseApplication().state.collect {
+                if (it == ApplicationState.UNLOCKED) {
+                    viewModel.consumeSharedUris()
+                }
             }
         }
 

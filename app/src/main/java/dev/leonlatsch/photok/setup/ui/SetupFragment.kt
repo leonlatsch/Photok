@@ -31,11 +31,11 @@ import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import kotlinx.coroutines.flow.update
 
 /**
  * Fragment for the setup.
@@ -101,7 +101,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
+            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
             findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(
