@@ -121,7 +121,7 @@
     <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer ?</string>
     <string name="export_and_delete_finished">Exporté et supprimé</string>
     <string name="export_exporting">Exportation en cours…</string>
-    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour importer des fichiers.</string>
+    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
 
     <!-- ABOUT -->
