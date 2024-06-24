@@ -19,7 +19,7 @@
 
     <!-- COMMON -->
     <string name="app_name">Photok</string>
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2024 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2024 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -31,13 +31,13 @@
     <string name="common_yes">Oui</string>
     <string name="common_no">Non</string>
     <string name="common_ok">OK</string>
-    <string name="common_are_you_sure">Êtes vous sûr?</string>
+    <string name="common_are_you_sure">Êtes-vous sûr ?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
+    <string name="common_more">Plus</string>
+    <string name="common_cancel">Annuler</string>
+    <string name="common_create">Créer</string>
+    <string name="common_empty">Vide</string>
+    <string name="common_rename">Renommer</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importation en cours</string>
@@ -45,16 +45,16 @@
     <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s) ?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Créer votre mot de passe</string>
+    <string name="setup_create_your_password">Créez votre mot de passe</string>
     <string name="setup_enter_password">Entrer le mot de passe</string>
     <string name="setup_confirm_password">Confirmer votre mot de passe</string>
-    <string name="setup_password_strength_label">Fiabilité du mot de passe :</string>
+    <string name="setup_password_strength_label">Force du mot de passe :</string>
     <string name="setup_button">Créer</string>
     <string name="setup_password_strength_weak">Faible</string>
     <string name="setup_password_strength_moderate">Modérée</string>
     <string name="setup_password_strength_strong">Forte</string>
     <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
-    <string name="setupSetup">Installer</string>
+    <string name="setupSetup">Installation</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Déverrouiller votre coffre-fort</string>
@@ -63,16 +63,16 @@
     <string name="unlock_wrong_password">\u26A0 Mauvais mot de passe</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">Il n\'y a pas de fichier dans votre coffre-fort</string>
+    <string name="gallery_placeholder">Il n\'y a aucun fichier dans votre coffre-fort</string>
     <string name="gallery_all_photos_label">Tous les fichiers</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
+    <string name="gallery_albums_label">Albums</string>
+    <string name="gallery_albums_placeholder">Créer votre premier album</string>
+    <string name="gallery_albums_create_title">Créer un nouvel album</string>
+    <string name="gallery_albums_rename_title">Renommer l\'album</string>
+    <string name="gallery_albums_create_placeholder">Travail scolaire ;)</string>
+    <string name="gallery_albums_select_title">Selectionner un album</string>
+    <string name="gallery_albums_deleted">Album supprimé</string>
+    <string name="gallery_albums_photos_added">%1$d élément(s) ajouté(s)</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Importer</string>
@@ -85,7 +85,7 @@
     <string name="process_close">Fermer</string>
     <string name="process_abort">Annuler</string>
     <string name="process_finished">Terminé</string>
-    <string name="process_initialize">Initialisation…</string>
+    <string name="process_initialize">Préparation…</string>
     <string name="process_aborted">Annulé</string>
     <string name="process_failures_occurred">\u26A0 Certains éléments n\'ont pas pu être traités</string>
 
@@ -95,7 +95,7 @@
     <string name="view_photo_detail_import_at_label">Importé le :</string>
     <string name="view_photo_detail_file_type_label">Type de fichier :</string>
     <string name="view_photo_detail_size_label">Taille du fichier :</string>
-    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
+    <string name="view_photo_play_button_description">Lire la vidéo</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>
@@ -105,9 +105,9 @@
     <string name="menu_ms_select_all">Tout sélectionner</string>
     <string name="menu_ms_delete">Supprimer</string>
     <string name="menu_ms_export">Exporter</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d élément(s) sélectionné(s)</string>
+    <string name="menu_ms_add_to_album">Ajouter à un album</string>
+    <string name="menu_ms_remove_from_album">Enlever de l\'album</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Voulez-vous vraiment <b>supprimer</b> %1$d fichier(s) ?</string>
@@ -117,11 +117,11 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
     <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer ?</string>
+    <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer ?</string>
+    <string name="export_and_delete_finished">Exporté et supprimé</string>
     <string name="export_exporting">Exportation en cours…</string>
-    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour exporter des fichiers.</string>
+    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
 
     <!-- ABOUT -->
@@ -140,7 +140,7 @@
 
     <string name="settings_category_app">App</string>
     <string name="settings_app_design_title">Thème</string>
-    <string name="settings_app_design_system_default">Défaut du système</string>
+    <string name="settings_app_design_system_default">Valeur par défaut du système</string>
     <string name="settings_app_design_system_light">Clair</string>
     <string name="settings_app_design_system_dark">Sombre</string>
 
@@ -152,7 +152,7 @@
     <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
     <string name="settings_security_allow_screenshots_summary">Autorise la capture d\'écran. Nécessite un redémarrage.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
-    <string name="settings_security_change_password_summary">Changez votre mot de passe</string>
+    <string name="settings_security_change_password_summary">Définir un nouveau mot de passe</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
     <string name="settings_security_timeout_summary">Se verrouille en arrière-plan après un certain temps</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>
@@ -162,8 +162,8 @@
     <string name="settings_security_timeout_ten_minute">10 Minutes</string>
     <string name="settings_security_timeout_never">Jamais</string>
     <string name="settings_security_launch_code_title">Code de démarrage secret</string>
-    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l\'application téléphone.</string>
-    <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok.</string>
+    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l\'application téléphone</string>
+    <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Masquer l\'application</string>
@@ -176,19 +176,19 @@
     <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort ? Toutes les données seront perdues !</string>
     <string name="settings_advanced_backup_title">Sauvegarde</string>
     <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_title">Supprimer les fichiers importés</string>
+    <string name="settings_advanced_delete_imported_summary">Supprimer les fichiers après les avoir importés</string>
+    <string name="settings_advanced_delete_exported_title">Supprimer les fichiers exportés</string>
+    <string name="settings_advanced_delete_exported_summary">Supprimer les fichiers après les avoir exportés</string>
 
     <string name="settings_other_title">Autre</string>
-    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_title">Retours</string>
     <string name="settings_other_feedback_summary">Envoyez-moi un e-mail avec des commentaires</string>
     <string name="settings_other_feedback_mail_subject">Photok Feedback</string>
     <string name="settings_other_feedback_mail_body">Donnez votre avis sur Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">Donner</string>
+    <string name="settings_other_donate_summary">Soutenir le développement de Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Code source</string>
     <string name="settings_other_sourcecode_summary">Contribuer à Photok</string>
@@ -205,13 +205,13 @@
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Changer votre mot de passe</string>
-    <string name="change_password_old_password">Ancien mot de passe</string>
+    <string name="change_password_old_password">Mot de passe actuel</string>
     <string name="change_password_new_password">Nouveau mot de passe</string>
     <string name="change_password_check">Vérifier</string>
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
     <string name="change_password_button">Changer le mot de passe</string>
-    <string name="change_password_confirm_message">Sauvegarde recommandée !<br /> Changer votre mot de passe nécessite de rechiffrer tous vos fichiers ! Voulez-vous continuer?</string>
+    <string name="change_password_confirm_message">Sauvegarde recommandée !<br /> Changer votre mot de passe nécessite de rechiffrer tous vos fichiers ! Voulez-vous continuer ?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
 
     <!-- HIDE APP -->
@@ -222,7 +222,7 @@
     <string name="hide_app_status_hidden">CACHÉ</string>
     <string name="hide_app_app_name_stealth">Téléphone</string>
     <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok ?</string>
-    <string name="hide_app_confirm_show">Voulez-vous montrer à nouveau Photok ?</string>
+    <string name="hide_app_confirm_show">Voulez-vous afficher à nouveau Photok ?</string>
     <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
@@ -233,10 +233,10 @@
 
     <string name="onboarding_slide1_title">Bienvenue sur</string>
     <string name="onboarding_slide1_description">Un endroit sûr pour vos photos.</string>
-    <string name="onboarding_slide2_title">Créer un mot de passe</string>
-    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe sert à crypter vos photos directement sur votre téléphone.</string>
+    <string name="onboarding_slide2_title">Créez un mot de passe</string>
+    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe sert à chiffrer vos photos directement sur votre téléphone.</string>
     <string name="onboarding_slide3_title">Importez des photos</string>
-    <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des autres.\nVous pourrez ensuite les supprimer de votre galerie.</string>
+    <string name="onboarding_slide3_description">Commencez à importer vos photos et gardez-les à l\'abri des regards indiscrets. Vous pourrez ensuite les supprimer de votre galerie.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Création d\'une sauvegarde…</string>
@@ -253,20 +253,20 @@
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>
-    <string name="news_view_changelog">Voir le Changelog</string>
+    <string name="news_view_changelog">Voir le journal des modifications</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
-    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
+    <string name="news_title_1">NOUVEAU: Albums</string>
+    <string name="news_summary_1">Triez vos photos et vidéos dans des albums</string>
 
-    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
-    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+    <string name="news_title_2">NOUVEAU: Dons</string>
+    <string name="news_summary_2">Pour soutenir Photok, consultez le bouton de don dans les paramètres</string>
 
-    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
+    <string name="news_title_3">NOUVEAU : Supprimer après exportation</string>
+    <string name="news_summary_3">Les fichiers seront automatiquement supprimés après leur exportation</string>
 
-    <string name="news_title_4">More Languages</string> <!-- TODO -->
-    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+    <string name="news_title_4">Plus de langues disponibles</string>
+    <string name="news_summary_4">Photok est désormais disponible en arabe et en russe</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>
