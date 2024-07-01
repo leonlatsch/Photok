@@ -21,6 +21,7 @@ import android.os.Build.VERSION.SDK_INT
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import coil.request.CachePolicy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,5 +47,9 @@ object ImageLoadingModule {
                 add(GifDecoder.Factory())
             }
         }
+        .diskCachePolicy(CachePolicy.DISABLED)
+        .diskCache(null)
+        .memoryCachePolicy(CachePolicy.DISABLED)
+        .memoryCache(null)
         .build()
 }
