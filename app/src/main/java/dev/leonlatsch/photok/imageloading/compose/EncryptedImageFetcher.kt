@@ -16,17 +16,16 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
-import android.content.Context
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
-import coil.decode.ImageSource
+import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
-import coil.fetch.SourceResult
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import okio.buffer
-import okio.source
 
 /**
  * Coil image fetcher decrypting the image on the fly while rendering.
@@ -34,21 +33,22 @@ import okio.source
  * Used for displaying encrypted images.
  */
 class EncryptedImageFetcher(
-    @ApplicationContext private val context: Context,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val requestData: EncryptedImageRequestData
+    private val requestData: EncryptedImageRequestData,
+    private val resources: Resources,
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? {
         val inputStream = encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
         inputStream ?: return null
 
-        val imageSource = ImageSource(inputStream.source().buffer(), context)
+        val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+        bitmap ?: return null
 
-        return SourceResult(
-            source = imageSource,
-            mimeType = requestData.mimeType,
-            dataSource = DataSource.DISK
+        return DrawableResult(
+            drawable = bitmap.toDrawable(resources),
+            isSampled = false,
+            dataSource = DataSource.DISK,
         )
     }
 }
