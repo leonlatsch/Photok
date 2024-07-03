@@ -60,8 +60,9 @@ fun PhotoViewHolderContent(
                 }
 
                 EncryptedImageRequestData(
-                    fileName,
-                    photo.type.mimeType,
+                    internalFileName = fileName,
+                    mimeType = photo.type.mimeType,
+                    playGif = true,
                 )
             }
 

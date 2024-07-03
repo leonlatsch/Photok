@@ -76,8 +76,8 @@ fun AlbumTile(album: AlbumItem, onAlbumClicked: (String) -> Unit) {
             } else {
                 val requestData = remember(album) {
                     EncryptedImageRequestData(
-                        album.albumCover.filename,
-                        album.albumCover.filename,
+                        internalFileName = album.albumCover.filename,
+                        mimeType = album.albumCover.mimeType
                     )
                 }
 

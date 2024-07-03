@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.imageloading.di
 
 import android.content.Context
 import coil.ImageLoader
+import coil.request.CachePolicy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,12 @@ object ImageLoadingModule {
         @ApplicationContext context: Context,
         encryptedImageFetcherFactory: EncryptedImageFetcherFactory
     ): ImageLoader = ImageLoader.Builder(context)
-        .components { add(encryptedImageFetcherFactory) }
+        .components {
+            add(encryptedImageFetcherFactory)
+        }
+        .diskCachePolicy(CachePolicy.DISABLED)
+        .diskCache(null)
+        .memoryCachePolicy(CachePolicy.DISABLED)
+        .memoryCache(null)
         .build()
 }
