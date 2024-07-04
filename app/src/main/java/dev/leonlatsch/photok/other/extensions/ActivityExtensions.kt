@@ -21,7 +21,12 @@ import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dev.leonlatsch.photok.BaseApplication
+import kotlinx.coroutines.launch
 
 /**
  * Get the "application" as [BaseApplication] from any activity.
@@ -63,3 +68,7 @@ fun Activity.showSystemUI() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     }
 }
+inline fun AppCompatActivity.launchLifecycleAwareJob(
+    state: Lifecycle.State = Lifecycle.State.CREATED,
+    crossinline block: suspend () -> Unit
+) = lifecycleScope.launch { repeatOnLifecycle(state) { block() } }
