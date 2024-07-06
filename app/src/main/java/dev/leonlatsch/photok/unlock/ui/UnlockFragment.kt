@@ -30,11 +30,11 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
-import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import kotlinx.coroutines.flow.update
 
 /**
  * Unlock fragment.
@@ -77,7 +77,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().applicationState = ApplicationState.UNLOCKED
+            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
             findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
         } else {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
