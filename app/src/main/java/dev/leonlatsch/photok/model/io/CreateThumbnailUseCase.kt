@@ -34,7 +34,7 @@ import timber.log.Timber
 private const val THUMBNAIL_SIZE = 128
 
 /**
- * Manages the creation and loading of thumbnails for photos and videos.
+ * Use case to create a thumbnail for a photo or video.
  *
  * @param context the application context
  * @param encryptedStorageManager the [EncryptedStorageManager] to access the encrypted files
@@ -42,34 +42,14 @@ private const val THUMBNAIL_SIZE = 128
  * @since 1.7.2
  * @author Starry Shivam
  */
-class ThumbnailManager(
+class CreateThumbnailUseCase(
     private val context: Context,
     private val encryptedStorageManager: EncryptedStorageManager
 ) {
-    /**
-     * Loads the full size thumbnail stored for this photo as a [ByteArray]
-     *
-     * @param photo the photo to load the thumbnail for
-     * @return the thumbnail as a [ByteArray]
-     */
-    fun loadThumbnail(photo: Photo): ByteArray? {
-        encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalThumbnailFileName)
-            ?.use { return it.readBytes() }
 
-        return null
-    }
-
-    /**
-     * Load the full size preview for a stored photo as a [ByteArray]
-     *
-     * @param photo the photo to load the preview for
-     * @return the preview as a [ByteArray]
-     */
-    fun loadVideoPreview(photo: Photo): ByteArray? {
-        encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalVideoPreviewFileName)
-            ?.use { return it.readBytes() }
-
-        return null
+    // invoke operator to create thumbnail
+    suspend operator fun invoke(photo: Photo, obj: Any?): Result<Unit> {
+        return createThumbnail(photo, obj)
     }
 
     /**
@@ -80,7 +60,7 @@ class ThumbnailManager(
      * @param obj The data for the image request. This could be a URL, file, or any other supported data type.
      * @return A [Result] indicating the success or failure of the thumbnail creation.
      */
-    suspend fun createThumbnail(
+    private suspend fun createThumbnail(
         photo: Photo, obj: Any?
     ): Result<Unit> = withContext(Dispatchers.IO) {
         val deferredResult = CompletableDeferred<Result<Unit>>()

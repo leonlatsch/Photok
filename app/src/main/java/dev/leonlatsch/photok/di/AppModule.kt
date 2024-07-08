@@ -30,7 +30,7 @@ import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.ThumbnailManager
+import dev.leonlatsch.photok.model.io.CreateThumbnailUseCase
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
@@ -75,10 +75,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideThumbnailManager(
+    fun provideCreateThumbnailUseCase(
         @ApplicationContext context: Context,
         encryptedStorageManager: EncryptedStorageManager
-    ) = ThumbnailManager(context, encryptedStorageManager)
+    ) = CreateThumbnailUseCase(context, encryptedStorageManager)
 
     @Provides
     fun provideResources(@ApplicationContext context: Context): Resources = context.resources

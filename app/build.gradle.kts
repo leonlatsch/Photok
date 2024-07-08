@@ -150,6 +150,7 @@ dependencies {
     val coilVersion = "2.6.0"
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-gif:$coilVersion")
+    implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")

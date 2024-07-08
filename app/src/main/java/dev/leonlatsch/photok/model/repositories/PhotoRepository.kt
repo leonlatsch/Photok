@@ -25,7 +25,7 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.ThumbnailManager
+import dev.leonlatsch.photok.model.io.CreateThumbnailUseCase
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
@@ -48,7 +48,7 @@ class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val albumDao: AlbumDao,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val thumbnailManager: ThumbnailManager,
+    private val createThumbnailUseCase: CreateThumbnailUseCase,
     private val app: Application,
     private val config: Config,
 ) {
@@ -148,7 +148,7 @@ class PhotoRepository @Inject constructor(
             photo.size = fileLen
 
             if (origUri != null) {
-                thumbnailManager.createThumbnail(photo, origUri)
+                createThumbnailUseCase(photo, origUri)
             }
 
             val photoId = insert(photo)
