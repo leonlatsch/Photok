@@ -1,0 +1,258 @@
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2024 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Yükleniyor …</string>
+    <string name="common_password">Şifre</string>
+    <string name="common_delete">Sil</string>
+    <string name="common_export">Dışa aktar</string>
+    <string name="common_error">Bir hata oluştu. Lütfen tekrar deneyin.</string>
+    <string name="common_yes">Evet</string>
+    <string name="common_no">Hayır</string>
+    <string name="common_ok">Tamam</string>
+    <string name="common_are_you_sure">Emin misiniz?</string>
+    <string name="common_bullet">•</string>
+    <string name="common_more">Daha fazla</string>
+    <string name="common_cancel">İptal</string>
+    <string name="common_create">Oluştur</string>
+    <string name="common_empty">Boş</string>
+    <string name="common_rename">Yeniden adlandır</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Dosya(lar) içe aktarılıyor</string>
+    <string name="import_permission_rationale">Photok dosyaları içe aktarmak için depolama alanınıza erişim izni gerektirir.</string>
+    <string name="import_sharted_question">%1$d dosya(ları) içe aktarmak istiyor musunuz?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Şifrenizi oluşturun</string>
+    <string name="setup_enter_password">Şifrenizi girin</string>
+    <string name="setup_confirm_password">Şifrenizi onaylayın</string>
+    <string name="setup_password_strength_label">Şifre gücü:</string>
+    <string name="setup_button">Oluştur</string>
+    <string name="setup_password_strength_weak">Zayıf</string>
+    <string name="setup_password_strength_moderate">Orta</string>
+    <string name="setup_password_strength_strong">Güçlü</string>
+    <string name="setup_password_match_warning">\u26A0 Şifreler eşleşmiyor</string>
+    <string name="setupSetup">Kurulum</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Kasayı açın</string>
+    <string name="unlock_enter_password">Şifreyi girin</string>
+    <string name="unlock_button">Aç</string>
+    <string name="unlock_wrong_password">\u26A0 Yanlış şifre</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">Kasada dosya yok</string>
+    <string name="gallery_all_photos_label">Tüm dosyalar</string>
+    <string name="gallery_albums_label">Albüm</string>
+    <string name="gallery_albums_placeholder">İlk albümünüzü oluşturun</string>
+    <string name="gallery_albums_create_title">Albüm Oluştur</string>
+    <string name="gallery_albums_rename_title">Albümü Yeniden Adlandır</string>
+    <string name="gallery_albums_create_placeholder">Ödev ;)</string>
+    <string name="gallery_albums_select_title">Bir Albüm Seçin</string>
+    <string name="gallery_albums_deleted">Albüm silindi</string>
+    <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_title">İçe Aktar</string>
+    <string name="import_menu_photos">Fotoğraflar</string>
+    <string name="import_menu_videos">Videolar</string>
+    <string name="import_menu_backup">Yedekleme</string>
+    <string name="import_menu_hint">Medya öğelerini Photok\'a ekleyin…</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Kapat</string>
+    <string name="process_abort">Durdur</string>
+    <string name="process_finished">Tamamlandı</string>
+    <string name="process_initialize">Hazırlanıyor…</string>
+    <string name="process_aborted">Durduruldu</string>
+    <string name="process_failures_occurred">\u26A0 Bazı öğeler işlenemedi</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Ayrıntılar</string>
+    <string name="view_photo_detail_file_name_label">Dosya Adı:</string>
+    <string name="view_photo_detail_import_at_label">İçe Aktarma Zamanı:</string>
+    <string name="view_photo_detail_file_type_label">Dosya Türü:</string>
+    <string name="view_photo_detail_size_label">Dosya Boyutu:</string>
+    <string name="view_photo_play_button_description">Videoyu Oynat</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Kilit</string>
+    <string name="menu_main_settings">Ayarlar</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Hepsini Seç</string>
+    <string name="menu_ms_delete">Sil</string>
+    <string name="menu_ms_export">Dışa aktar</string>
+    <string name="menu_ms_info">%1$d öğe seçildi</string>
+    <string name="menu_ms_add_to_album">Albüm ekle</string>
+    <string name="menu_ms_remove_from_album">Albümden kaldır</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Gerçekten %1$d dosya(ları) <b>silmek</b> istediğinizden emin misiniz?</string>
+    <string name="delete_are_you_sure_this">Gerçekten bu dosyayı <b>silmek</b> istediğinizden emin misiniz?</string>
+    <string name="delete_deleting">Dosya(lar) siliniyor…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Gerçekten %1$d dosya(ları)nı galerinizde <b>dışa aktarmak</b> istediğinizden emin misiniz?</string>
+    <string name="export_and_delete_are_you_sure">Gerçekten %1$d dosya(ları)nı galerinizde <b>dışa aktarmak</b> ve silmek istediğinizden emin misiniz?</string>
+    <string name="export_are_you_sure_this">Gerçekten bu dosyayı galerinizde <b>dışa aktarmak</b> istediğinizden emin misiniz?</string>
+    <string name="export_and_delete_are_you_sure_this">Gerçekten bu dosyayı galerinizde <b>dışa aktarmak</b> ve silmek istediğinizden emin misiniz?</string>
+    <string name="export_exporting">Dosya(lar) dışa aktarılıyor…</string>
+    <string name="export_permission_rationale">Photok dosyaları dışa aktarmak için depolama alanınıza erişim izni gerektirir.</string>
+    <string name="export_finished">Dışa aktarıldı</string>
+    <string name="export_and_delete_finished">Dışa aktarıldı ve silindi</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Sürüm:</string>
+    <string name="about_developed_by">Geliştiren:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Üçüncü Parti Yazılım</string>
+    <string name="about_privacy_policy">Gizlilik Politikası</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Haberler</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Ayarlar</string>
+
+    <string name="settings_category_app">Uygulama</string>
+    <string name="settings_app_design_title">Tasarım</string>
+    <string name="settings_app_design_system_default">Sistem Varsayılanı</string>
+    <string name="settings_app_design_system_light">Açık</string>
+    <string name="settings_app_design_system_dark">Koyu</string>
+
+    <string name="settings_category_gallery">Galeri</string>
+    <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
+
+    <string name="settings_category_security">Güvenlik</string>
+    <string name="settings_security_allow_screenshots_title">Ekran Görüntüsüne İzin Ver</string>
+    <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver. Yeniden başlatma gerektirir.</string>
+    <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
+    <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
+    <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
+    <string name="settings_security_timeout_summary">Arka planda verilen süre sonunda otomatik kilitle</string>
+    <string name="settings_security_timeout_immediately">Hemen</string>
+    <string name="settings_security_timeout_one_minute">1 Dakika</string>
+    <string name="settings_security_timeout_two_minute">2 Dakika</string>
+    <string name="settings_security_timeout_five_minute">5 Dakika</string>
+    <string name="settings_security_timeout_ten_minute">10 Dakika</string>
+    <string name="settings_security_timeout_never">Asla</string>
+    <string name="settings_security_launch_code_title">Gizli Başlatma Kodu</string>
+    <string name="settings_security_launch_code_summary">Telefon çeviricisinden Photok\'u başlatmak için gizli kod.</string>
+    <string name="settings_security_launch_code_message">Photok\'u başlatmak için telefon çeviricisinde *#*#[kodunuzu]#*#* girin.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Uygulamayı Gizle</string>
+    <string name="settings_security_hide_app_summary">Uygulama simgesini uygulama çekmecesinden gizle.</string>
+
+    <string name="settings_category_advanced">Gelişmiş</string>
+    <string name="settings_category_advanced_summary">Dikkatle kullanın</string>
+    <string name="settings_advanced_reset_title">Kasayı Sıfırla</string>
+    <string name="settings_advanced_reset_summary">Verileri sil ve şifreyi sıfırla</string>
+    <string name="settings_advanced_reset_confirmation">Gerçekten kasanızı sıfırlamak istiyor musunuz? Tüm veriler kaybolacak!</string>
+    <string name="settings_advanced_backup_title">Yedekleme</string>
+    <string name="settings_advanced_backup_summary">Kasayı yedekle</string>
+    <string name="settings_advanced_delete_imported_title">İçe aktarılan dosyaları sil</string>
+    <string name="settings_advanced_delete_imported_summary">Dosyaları içe aktardıktan sonra sil</string>
+    <string name="settings_advanced_delete_exported_title">Dışa aktarılan dosyaları sil</string>
+    <string name="settings_advanced_delete_exported_summary">Dosyaları dışa aktardıktan sonra sil</string>
+
+    <string name="settings_other_title">Diğer</string>
+    <string name="settings_other_feedback_title">Geri Bildirim</string>
+    <string name="settings_other_feedback_summary">Bana geri bildirim ile bir e-posta gönderin</string>
+    <string name="settings_other_feedback_mail_subject">Photok hakkında geri bildirim</string>
+    <string name="settings_other_feedback_mail_body">Photok hakkında bir geri bildirim yazın :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Bağış</string>
+    <string name="settings_other_donate_summary">Photok\'un gelişimini destekleyin</string>
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+    <string name="settings_other_sourcecode_title">Kaynak Kodu</string>
+    <string name="settings_other_sourcecode_summary">Photok\'a katkıda bulunun</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Teşekkürler</string>
+    <string name="settings_other_credits_summary">Katkıda bulunanlar ve teşekkürler</string>
+    <string name="settings_other_about_title">Hakkında</string>
+    <string name="settings_other_about_summary">Photok hakkında bilgi</string>
+
+        <!-- CREDITS -->
+    <string name="credits_contributors_title">Katkıda Bulunanlar</string>
+    <string name="credits_contributors_hint">Tüm katkıda bulunanları görmek için GitHub\'da Photok\'u ziyaret edin</string>
+    <string name="credits_icons_title">Simge Paketleri</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Şifrenizi Değiştirin</string>
+    <string name="change_password_old_password">Eski Şifre</string>
+    <string name="change_password_new_password">Yeni Şifre</string>
+    <string name="change_password_check">Kontrol Et</string>
+    <string name="change_password_enter_new_password">Yeni şifrenizi girin</string>
+    <string name="change_password_confirm_new_password">Yeni şifrenizi onaylayın</string>
+    <string name="change_password_button">Şifreyi Değiştir</string>
+    <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
+    <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Photok\'u Gizle</string>
+    <string name="hide_app_title_show">Photok\'u Göster</string>
+    <string name="hide_app_status_label">Photok şu anda:</string>
+    <string name="hide_app_status_visible">GÖRÜNÜR</string>
+    <string name="hide_app_status_hidden">GİZLİ</string>
+    <string name="hide_app_app_name_stealth">Telefon</string>
+    <string name="hide_app_confirm_hide">Photok\'u gerçekten gizlemek istiyor musunuz?</string>
+    <string name="hide_app_confirm_show">Photok\'u yeniden göstermek istiyor musunuz?</string>
+    <string name="hide_app_hint">Gizlendikten sonra, Photok yalnızca telefon çeviricisinden gizli başlatma kodunuzla başlatılabilir.</string>
+    <string name="hide_app_hint_current_code">Mevcut başlatma kodu:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">İleri</string>
+    <string name="onboarding_finish">Bitir</string>
+    <string name="onboarding_skip"><u>Geç</u></string>
+
+    <string name="onboarding_slide1_title">Hoş Geldiniz</string>
+    <string name="onboarding_slide1_description">Fotoğraflarınız için güvenli bir yer.</string>
+    <string name="onboarding_slide2_title">Şifre Oluşturun</string>
+    <string name="onboarding_slide2_description">Güvenli bir şifre oluşturun. Şifreniz fotoğraflarınızı doğrudan telefonunuzda şifrelemek için kullanılır.</string>
+    <string name="onboarding_slide3_title">İçe Aktarmaya Başlayın</string>
+    <string name="onboarding_slide3_description">Fotoğraflarınızı içe aktarmaya başlayın ve başkalarından koruyun.\nDaha sonra galerinizdeki fotoğrafları silebilirsiniz.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Yedek oluşturuluyor…</string>
+    <string name="backup_restore_title">Yedeği Geri Yükle</string>
+    <string name="backup_restore_validating">Yedek doğrulanıyor…</string>
+    <string name="backup_restore_details_created_at">Oluşturulma tarihi:</string>
+    <string name="backup_restore_details_photos_contained">İçerilen Dosyalar:</string>
+    <string name="backup_restore_details_compatible">Uyumlu:</string>
+    <string name="backup_restore_details_size">Boyut:</string>
+    <string name="backup_restore_button">Kilidi Aç ve Geri Yükle</string>
+    <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
+    <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
+    <string name="backup_unlock_title">Yedek Kilidini Aç</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Yeni Özellikler</string>
+    <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">YENİ: Albümler</string>
+    <string name="news_summary_1">Fotoğraflarınızı ve videolarınızı albümlerde sıralayın</string>
+
+    <string name="news_title_2">YENİ: Bağışlar</string>
+    <string name="news_summary_2">Photok\'u desteklemek için ayarlardaki "Bağış" düğmesini görün</string>
+
+    <string name="news_title_3">YENİ: Dışa aktardıktan sonra sil</string>
+    <string name="news_summary_3">Dosyalar dışa aktarıldıktan sonra otomatik olarak silinsin</string>
+
+    <string name="news_title_4">Daha Fazla Dil</string>
+    <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da mevcut</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Kurtarma Menüsü</string>
+    <string name="recovery_menu_item_open_photok">Photok\'u Aç</string>
+    <string name="recovery_subtitle_reset_hide_app">Uygulamayı Gizle Ayarını Sıfırla</string>
+
+</resources>

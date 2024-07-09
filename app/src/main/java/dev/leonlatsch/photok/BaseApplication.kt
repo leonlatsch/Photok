@@ -21,11 +21,11 @@ import android.content.Intent
 import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @HiltAndroidApp
-class BaseApplication : Application(), LifecycleObserver {
+class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var config: Config
@@ -44,36 +44,30 @@ class BaseApplication : Application(), LifecycleObserver {
     @Inject
     lateinit var encryptionManager: EncryptionManager
 
-    @Inject
-    lateinit var encryptedStorageManager: EncryptedStorageManager
+    val state = MutableStateFlow(ApplicationState.LOCKED)
 
     private var wentToBackgroundAt = 0L
-
-    val rawApplicationState = MutableLiveData(ApplicationState.LOCKED)
-
     private var ignoreNextTimeout = false
 
-    var applicationState: ApplicationState
-        get() = rawApplicationState.value!!
-        set(value) = rawApplicationState.postValue(value)
-
     override fun onCreate() {
-        super.onCreate()
+        super<Application>.onCreate()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-
         setAppDesign(config.systemDesign)
     }
 
-    /**
-     * Call [lockApp] when app was ON_STOP for at least the configured time.
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onAppForeground() {
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+
         if (ignoreNextTimeout) {
             ignoreNextTimeout = false
             return
@@ -87,11 +81,9 @@ class BaseApplication : Application(), LifecycleObserver {
         }
     }
 
-    /**
-     * Saves the ON_STOP timestamp
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onAppBackground() {
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+
         wentToBackgroundAt = System.currentTimeMillis()
     }
 
@@ -107,7 +99,7 @@ class BaseApplication : Application(), LifecycleObserver {
      */
     fun lockApp() {
         encryptionManager.reset()
-        applicationState = ApplicationState.LOCKED
+        state.update { ApplicationState.LOCKED }
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

@@ -55,8 +55,8 @@ fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) 
 inline fun Fragment.launchLifecycleAwareJob(
     state: Lifecycle.State = Lifecycle.State.CREATED,
     crossinline block: suspend () -> Unit
-) =
-    viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(state) { block() } }
+) = viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(state) { block() } }
+
 
 /**
  * Create a view model with assisted injection. This is a workaround for the missing support of assisted injection in Hilt.
