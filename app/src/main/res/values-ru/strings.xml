@@ -32,11 +32,11 @@
     <string name="common_ok">ОК</string>
     <string name="common_are_you_sure">Вы уверены?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
+    <string name="common_more">Ещё</string> <!-- TODO -->
+    <string name="common_cancel">Отменить</string> <!-- TODO -->
+    <string name="common_create">Создать</string> <!-- TODO -->
+    <string name="common_empty">Пусто</string> <!-- TODO -->
+    <string name="common_rename">Переименовать</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>
@@ -64,14 +64,14 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">В вашем сейфе нет файлов</string>
     <string name="gallery_all_photos_label">Все файлы</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
+    <string name="gallery_albums_label">Альбомы</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Создайте ваш первый альбом</string> <!-- TODO -->
+    <string name="gallery_albums_create_title">Создать альбом</string> <!-- TODO -->
+    <string name="gallery_albums_rename_title">Переименовать альбом</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Домашнее ;)</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Выберите альбом</string> <!-- TODO -->
+    <string name="gallery_albums_deleted">Альбом удален</string> <!-- TODO -->
+    <string name="gallery_albums_photos_added">%1$d элементов добавлено</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_title">Импортировать</string>
@@ -94,7 +94,7 @@
     <string name="view_photo_detail_import_at_label">Импортировано:</string>
     <string name="view_photo_detail_file_type_label">Тип файла:</string>
     <string name="view_photo_detail_size_label">Размер файла:</string>
-    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
+    <string name="view_photo_play_button_description">Воспроизвести видео</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>
@@ -104,9 +104,9 @@
     <string name="menu_ms_select_all">Выбрать всё</string>
     <string name="menu_ms_delete">Удалить</string>
     <string name="menu_ms_export">Экспорт</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d элемент(ов) выбрано</string> <!-- TODO -->
+    <string name="menu_ms_add_to_album">Добавить в альбом</string> <!-- TODO -->
+    <string name="menu_ms_remove_from_album">Удалить из альбома</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>
@@ -117,9 +117,9 @@
     <string name="export_are_you_sure">Вы уверены, что хотите <b>экспортировать</b> %1$d файл(ов) обратно в галерею?</string>
     <string name="export_are_you_sure_this">Вы уверены, что хотите <b>экспортировать</b> этот файл в галерею?</string>
     <string name="export_exporting">Экспортирование файла(ов)…</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">Вы уверены, что хотите <b>экспортировать</b> %1$d файл(ов) обратно в галерею и удаить его?</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Экспортировано и удаленно</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure_this">Вы уверены, что хотите <b>экспортировать</b> этот файл в галерею и удалить его?</string> <!-- TODO -->
     <string name="export_permission_rationale">Photok требует доступ к вашему хранилищу для экспорта файлов.</string>
     <string name="export_finished">Экспортировано</string>
 
@@ -176,8 +176,8 @@
     <string name="settings_advanced_backup_summary">Сделать резервную копию вашего сейфа</string>
     <string name="settings_advanced_delete_imported_title">Удалять импортированные файлы</string>
     <string name="settings_advanced_delete_imported_summary">Удалять файлы после их импорта в сейф</string>
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Удалять экспортированные файлы</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_summary">Удалять файлы после их экспорта</string> <!-- TODO -->
 
     <string name="settings_other_title">Прочее</string>
     <string name="settings_other_feedback_title">Обратная связь</string>
@@ -185,8 +185,8 @@
     <string name="settings_other_feedback_mail_subject">Отзыв о Photok</string>
     <string name="settings_other_feedback_mail_body">Напишите отзыв о Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">Поддержать разработку</string> <!-- TODO -->
+    <string name="settings_other_donate_summary">Поддержите разработку Photok</string> <!-- TODO -->
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Исходный код</string>
     <string name="settings_other_sourcecode_summary">Внести вклад в Photok</string>
@@ -254,17 +254,17 @@
     <string name="news_view_changelog">Посмотреть список изменений</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
-    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
+    <string name="news_title_1">NEW: Альбомы</string> <!-- TODO -->
+    <string name="news_summary_1">Упорядочивайте свои фото и видео в альбомах</string> <!-- TODO -->
 
-    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
-    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+    <string name="news_title_2">NEW: Поддержка</string> <!-- TODO -->
+    <string name="news_summary_2">Найдите кнопку \'Поддержать разработку\' в настройках, чтобы помочь в развитии Photok</string> <!-- TODO -->
 
-    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
+    <string name="news_title_3">NEW: Удаление после экспорта</string> <!-- TODO -->
+    <string name="news_summary_3">Автоматически удаляйте файлы после их экспорта</string> <!-- TODO -->
 
-    <string name="news_title_4">More Languages</string> <!-- TODO -->
-    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+    <string name="news_title_4">Больше языков</string> <!-- TODO -->
+    <string name="news_summary_4">Photok теперь доступен на арабском и русском языках</string> <!-- TODO -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Меню восстановления</string>
