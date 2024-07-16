@@ -22,7 +22,8 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
-import coil.size.Scale
+import coil.size.Size
+import coil.transform.Transformation
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -71,8 +72,8 @@ class CreateThumbnailUseCase(
 
         val request = ImageRequest.Builder(context)
             .data(obj)
-            .size(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-            .scale(Scale.FILL)
+            .size(THUMBNAIL_SIZE)
+            .transformations(CenterCropTransformation())
             .allowHardware(false)
             .target(
                 onSuccess = { result ->
@@ -107,6 +108,17 @@ class CreateThumbnailUseCase(
         imageLoader.execute(request)
         deferredResult.await()
     }
+}
 
+class CenterCropTransformation : Transformation {
 
+    override val cacheKey: String = javaClass.name
+
+    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
+        val minDim = minOf(input.width, input.height)
+        val startX = (input.width - minDim) / 2
+        val startY = (input.height - minDim) / 2
+
+        return Bitmap.createBitmap(input, startX, startY, minDim, minDim)
+    }
 }
