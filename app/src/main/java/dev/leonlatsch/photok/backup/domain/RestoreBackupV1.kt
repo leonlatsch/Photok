@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.database.entity.internalFileName
-import dev.leonlatsch.photok.model.io.CreateThumbnailUseCase
+import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.ByteArrayInputStream
@@ -31,7 +31,7 @@ import kotlin.coroutines.suspendCoroutine
 class RestoreBackupV1 @Inject constructor(
     private val encryptionManager: EncryptionManager,
     private val photoRepository: PhotoRepository,
-    private val createThumbnailUseCase: CreateThumbnailUseCase,
+    private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {
     override suspend fun restore(
         metaData: BackupMetaData,
@@ -68,8 +68,9 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.createPhotoFile(newPhoto, photoBytesInputStream) != -1L
 
             if (photoFileCreated) {
-                createThumbnailUseCase(newPhoto, photoBytes)
-                photoRepository.insert(newPhoto)
+                createThumbnails(newPhoto, photoBytes).onSuccess {
+                    photoRepository.insert(newPhoto)
+                }
             }
 
             ze = stream.nextEntry

@@ -24,46 +24,35 @@ import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.OutputStream
+import javax.inject.Inject
 
 
 /** Maximum size of the thumbnail in pixels */
-private const val THUMBNAIL_SIZE = 128
+private const val THUMBNAIL_SIZE = 256
 
 /**
- * Use case to create a thumbnail for a photo or video.
- *
- * @param context the application context
- * @param encryptedStorageManager the [EncryptedStorageManager] to access the encrypted files
+ * Use case to create all thumbnails for a photo or video.
  *
  * @since 1.7.2
  * @author Starry Shivam
  */
-class CreateThumbnailUseCase(
-    private val context: Context,
+class CreateThumbnailsUseCase @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val encryptedStorageManager: EncryptedStorageManager
 ) {
 
-    // invoke operator to create thumbnail
-    suspend operator fun invoke(photo: Photo, obj: Any?): Result<Unit> {
-        return createThumbnail(photo, obj)
-    }
-
     /**
-     * Creates a thumbnail for the given photo. If the photo is a video,
-     * it also creates a video preview.
-     *
      * @param photo The photo object for which the thumbnail is to be created.
-     * @param obj The data for the image request. This could be a URL, file, or any other supported data type.
-     * @return A [Result] indicating the success or failure of the thumbnail creation.
+     * @param data The data for the photo. May be ByteArray or system Uri
      */
-    private suspend fun createThumbnail(
-        photo: Photo, obj: Any?
-    ): Result<Unit> = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> = withContext(Dispatchers.IO) {
         val deferredResult = CompletableDeferred<Result<Unit>>()
 
         val imageLoader = ImageLoader.Builder(context)
@@ -71,35 +60,35 @@ class CreateThumbnailUseCase(
             .build()
 
         val request = ImageRequest.Builder(context)
-            .data(obj)
+            .data(data)
             .size(THUMBNAIL_SIZE)
-            .transformations(CenterCropTransformation())
+            .transformations(CenterCropTransformation)
             .allowHardware(false)
             .target(
                 onSuccess = { result ->
                     try {
-                        // Lambda to compress & save bitmap and avoid code duplication.
-                        val saveCompressedBitmap: (fileName: String) -> Unit = { fileName ->
-                            encryptedStorageManager.internalOpenEncryptedFileOutput(fileName)
-                                ?.use { ops ->
-                                    result.toBitmap().compress(Bitmap.CompressFormat.JPEG, 100, ops)
-                                }
+                        encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName)?.use { out ->
+                            result.toBitmap().writeTo(out)
                         }
-                        // Create thumbnail
-                        saveCompressedBitmap(photo.internalThumbnailFileName)
-                        // If the photo is a video, create a video preview
+
                         if (photo.type.isVideo) {
-                            saveCompressedBitmap(photo.internalVideoPreviewFileName)
+                            encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName)?.use { out ->
+                                result.toBitmap().writeTo(out)
+                            }
                         }
+
                         deferredResult.complete(Result.success(Unit))
                     } catch (e: Exception) {
                         deferredResult.complete(Result.failure(e))
                     }
                 },
                 onError = {
-                    Timber.e("Error creating thumbnail for ${photo.fileName}")
+                    val errorMessage = "Error creating thumbnails for ${photo.fileName}"
+                    Timber.e(errorMessage)
                     deferredResult.complete(
-                        Result.failure(Exception("Error creating thumbnail for ${photo.fileName}"))
+                        Result.failure(
+                            Exception(errorMessage)
+                        )
                     )
                 }
             )
@@ -107,10 +96,15 @@ class CreateThumbnailUseCase(
 
         imageLoader.execute(request)
         deferredResult.await()
+
+    }
+
+    private fun Bitmap.writeTo(out: OutputStream) {
+        compress(Bitmap.CompressFormat.JPEG, 100, out)
     }
 }
 
-class CenterCropTransformation : Transformation {
+object CenterCropTransformation : Transformation {
 
     override val cacheKey: String = javaClass.name
 
