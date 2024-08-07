@@ -143,9 +143,6 @@ dependencies {
     // Display OSS Licenses
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
     // Telephoto
     implementation("me.saket.telephoto:zoomable-image-coil:0.12.1")
 
@@ -153,6 +150,7 @@ dependencies {
     val coilVersion = "2.7.0"
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-gif:$coilVersion")
+    implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
     implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
