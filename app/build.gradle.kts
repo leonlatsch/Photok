@@ -72,12 +72,12 @@ licenseReport {
 dependencies {
     val roomVersion = "2.6.1"
     val coroutinesVersion = "1.8.1"
-    val pagingVersion = "3.3.0"
+    val pagingVersion = "3.3.1"
     val daggerVersion = "2.51.1"
 
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -96,8 +96,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
 
     // Navigation Components
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
@@ -120,7 +120,7 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.activity:activity-ktx:1.9.1")
 
     // Compose
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
@@ -147,10 +147,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.11.2")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.12.1")
 
     // Coil
-    val coilVersion = "2.6.0"
+    val coilVersion = "2.7.0"
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-gif:$coilVersion")
 
@@ -164,7 +164,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity:1.9.0")
+    implementation("androidx.activity:activity:1.9.1")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
