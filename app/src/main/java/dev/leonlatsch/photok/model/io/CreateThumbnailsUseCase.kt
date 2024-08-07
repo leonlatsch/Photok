@@ -50,9 +50,9 @@ class CreateThumbnailsUseCase @Inject constructor(
 
     /**
      * @param photo The photo object for which the thumbnail is to be created.
-     * @param photoBytes The original full bytes of the photo
+     * @param data The data for the photo. May be ByteArray or system Uri
      */
-    suspend operator fun invoke(photo: Photo, photoBytes: ByteArray): Result<Unit> = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> = withContext(Dispatchers.IO) {
         val deferredResult = CompletableDeferred<Result<Unit>>()
 
         val imageLoader = ImageLoader.Builder(context)
@@ -60,7 +60,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             .build()
 
         val request = ImageRequest.Builder(context)
-            .data(photoBytes)
+            .data(data)
             .size(THUMBNAIL_SIZE)
             .transformations(CenterCropTransformation)
             .allowHardware(false)
