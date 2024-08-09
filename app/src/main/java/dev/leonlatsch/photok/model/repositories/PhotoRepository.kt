@@ -103,6 +103,7 @@ class PhotoRepository @Inject constructor(
             PhotoType.GIF.mimeType -> PhotoType.GIF
             PhotoType.MP4.mimeType -> PhotoType.MP4
             PhotoType.MPEG.mimeType -> PhotoType.MPEG
+            PhotoType.WEBM.mimeType -> PhotoType.WEBM
             else -> return String.empty
         }
 
