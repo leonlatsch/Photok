@@ -50,6 +50,8 @@ class CreateThumbnailsUseCase @Inject constructor(
      */
     suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> =
         withContext(Dispatchers.IO) {
+
+            // Thumbnail
             val thumbnailRequest = ImageRequest.Builder(context)
                 .data(data)
                 .size(THUMBNAIL_SIZE)
@@ -57,27 +59,25 @@ class CreateThumbnailsUseCase @Inject constructor(
                 .allowHardware(false)
                 .build()
 
-            val videoPreviewRequest = if (photo.type.isVideo) {
-                ImageRequest.Builder(context)
-                    .data(data)
-                    .allowHardware(false)
-                    .build()
-            } else {
-                null
-            }
-
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
                 outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName),
             )
 
+            // Video Preview
+            val videoPreviewResult = if (photo.type.isVideo) {
+                val videoPreviewRequest = ImageRequest.Builder(context)
+                    .data(data)
+                    .allowHardware(false)
+                    .build()
 
-            var videoPreviewResult = Result.success(Unit)
-            if (videoPreviewRequest != null) {
-                videoPreviewResult = imageStorage.execAndWrite(
+                imageStorage.execAndWrite(
                     imageRequest = videoPreviewRequest,
                     outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName),
                 )
+            } else {
+                // Success if not a video
+                Result.success(Unit)
             }
 
             if (thumbnailResult.isSuccess && videoPreviewResult.isSuccess) {
