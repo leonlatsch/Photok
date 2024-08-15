@@ -18,19 +18,14 @@ package dev.leonlatsch.photok.model.io
 
 import android.content.Context
 import android.graphics.Bitmap
-import androidx.core.graphics.drawable.toBitmap
-import coil.ImageLoader
-import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.imageloading.domain.ImageStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timber.log.Timber
-import java.io.OutputStream
 import javax.inject.Inject
 
 
@@ -45,63 +40,54 @@ private const val THUMBNAIL_SIZE = 256
  */
 class CreateThumbnailsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val encryptedStorageManager: EncryptedStorageManager
+    private val imageStorage: ImageStorage,
+    private val encryptedStorageManager: EncryptedStorageManager,
 ) {
 
     /**
      * @param photo The photo object for which the thumbnail is to be created.
      * @param data The data for the photo. May be ByteArray or system Uri
      */
-    suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> = withContext(Dispatchers.IO) {
-        val deferredResult = CompletableDeferred<Result<Unit>>()
+    suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> =
+        withContext(Dispatchers.IO) {
 
-        val imageLoader = ImageLoader.Builder(context)
-            .components { add(VideoFrameDecoder.Factory()) }
-            .build()
+            // Thumbnail
+            val thumbnailRequest = ImageRequest.Builder(context)
+                .data(data)
+                .size(THUMBNAIL_SIZE)
+                .transformations(CenterCropTransformation)
+                .allowHardware(false)
+                .build()
 
-        val request = ImageRequest.Builder(context)
-            .data(data)
-            .size(THUMBNAIL_SIZE)
-            .transformations(CenterCropTransformation)
-            .allowHardware(false)
-            .target(
-                onSuccess = { result ->
-                    try {
-                        encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName)?.use { out ->
-                            result.toBitmap().writeTo(out)
-                        }
-
-                        if (photo.type.isVideo) {
-                            encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName)?.use { out ->
-                                result.toBitmap().writeTo(out)
-                            }
-                        }
-
-                        deferredResult.complete(Result.success(Unit))
-                    } catch (e: Exception) {
-                        deferredResult.complete(Result.failure(e))
-                    }
-                },
-                onError = {
-                    val errorMessage = "Error creating thumbnails for ${photo.fileName}"
-                    Timber.e(errorMessage)
-                    deferredResult.complete(
-                        Result.failure(
-                            Exception(errorMessage)
-                        )
-                    )
-                }
+            val thumbnailResult = imageStorage.execAndWrite(
+                imageRequest = thumbnailRequest,
+                outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName),
             )
-            .build()
 
-        imageLoader.execute(request)
-        deferredResult.await()
+            // Video Preview
+            val videoPreviewResult = if (photo.type.isVideo) {
+                val videoPreviewRequest = ImageRequest.Builder(context)
+                    .data(data)
+                    .allowHardware(false)
+                    .build()
 
-    }
+                imageStorage.execAndWrite(
+                    imageRequest = videoPreviewRequest,
+                    outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName),
+                )
+            } else {
+                // Success if not a video
+                Result.success(Unit)
+            }
 
-    private fun Bitmap.writeTo(out: OutputStream) {
-        compress(Bitmap.CompressFormat.JPEG, 100, out)
-    }
+            if (thumbnailResult.isSuccess && videoPreviewResult.isSuccess) {
+                Result.success(Unit)
+            } else {
+                Result.failure(
+                    thumbnailResult.exceptionOrNull() ?: Exception("error creating thumbnail")
+                )
+            }
+        }
 }
 
 object CenterCropTransformation : Transformation {
