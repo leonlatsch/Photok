@@ -18,14 +18,13 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
 import android.content.ContentValues
-import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
-import com.bumptech.glide.Glide
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
@@ -49,8 +48,9 @@ class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val albumDao: AlbumDao,
     private val encryptedStorageManager: EncryptedStorageManager,
+    private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
-    private val config: Config
+    private val config: Config,
 ) {
 
     // region DATABASE
@@ -103,6 +103,7 @@ class PhotoRepository @Inject constructor(
             PhotoType.GIF.mimeType -> PhotoType.GIF
             PhotoType.MP4.mimeType -> PhotoType.MP4
             PhotoType.MPEG.mimeType -> PhotoType.MPEG
+            PhotoType.WEBM.mimeType -> PhotoType.WEBM
             else -> return String.empty
         }
 
@@ -136,7 +137,7 @@ class PhotoRepository @Inject constructor(
      *
      * @return true, if everything worked
      */
-    suspend fun safeCreatePhoto(
+    private suspend fun safeCreatePhoto(
         photo: Photo,
         source: InputStream?,
         origUri: Uri? = null
@@ -149,9 +150,6 @@ class PhotoRepository @Inject constructor(
 
             if (origUri != null) {
                 createThumbnail(photo, origUri)
-                if (photo.type.isVideo) {
-                    createVideoPreview(photo, origUri)
-                }
             }
 
             val photoId = insert(photo)
@@ -177,44 +175,6 @@ class PhotoRepository @Inject constructor(
         return fileLen
     }
 
-    private fun createThumbnail(photo: Photo, sourceUri: Uri) =
-        internalCreateThumbnail(photo, sourceUri)
-
-    /**
-     * Create a thumbnail from raw bytes.
-     */
-    fun createThumbnail(photo: Photo, bytes: ByteArray) =
-        internalCreateThumbnail(photo, bytes)
-
-    private fun internalCreateThumbnail(photo: Photo, obj: Any?) {
-        val thumbnail = Glide.with(app)
-            .asBitmap()
-            .load(obj)
-            .centerCrop()
-            .submit(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
-            .get()
-
-        encryptedStorageManager.internalOpenEncryptedFileOutput(
-            photo.internalThumbnailFileName
-        )?.use {
-            thumbnail?.compress(Bitmap.CompressFormat.JPEG, 100, it)
-        }
-    }
-
-    private fun createVideoPreview(photo: Photo, sourceUri: Uri) {
-        val preview = Glide.with(app)
-            .asBitmap()
-            .load(sourceUri)
-            .submit()
-            .get()
-
-        encryptedStorageManager.internalOpenEncryptedFileOutput(
-            photo.internalVideoPreviewFileName
-        )?.use {
-            preview?.compress(Bitmap.CompressFormat.JPEG, 100, it)
-        }
-    }
-
     // endregion
 
     // region READ
@@ -227,30 +187,6 @@ class PhotoRepository @Inject constructor(
         encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)?.use {
             return it.readBytes()
         }
-
-        return null
-    }
-
-    /**
-     * Loads the full size thumbnail stored for this photo as a [ByteArray]
-     */
-    fun loadThumbnail(photo: Photo): ByteArray? {
-        encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalThumbnailFileName)
-            ?.use {
-                return it.readBytes()
-            }
-
-        return null
-    }
-
-    /**
-     * Load the full size preview for a stored photo as a [ByteArray]
-     */
-    fun loadVideoPreview(photo: Photo): ByteArray? {
-        encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalVideoPreviewFileName)
-            ?.use {
-                return it.readBytes()
-            }
 
         return null
     }
@@ -351,8 +287,4 @@ class PhotoRepository @Inject constructor(
 
     // endregion
     // endregion
-
-    companion object {
-        private const val THUMBNAIL_SIZE = 128
-    }
 }

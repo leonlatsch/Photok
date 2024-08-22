@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.di
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -71,7 +72,7 @@ object AppModule {
     fun provideSharedUrisStore() = SharedUrisStore()
 
     @Provides
-    fun provideResources(@ApplicationContext context: Context) = context.resources
+    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
     @Provides
     fun provideGson(): Gson = GsonBuilder()
