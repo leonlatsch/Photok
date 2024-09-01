@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.20"
 }
 
 val appVersionName: String by project
@@ -72,8 +72,8 @@ licenseReport {
 dependencies {
     val roomVersion = "2.6.1"
     val coroutinesVersion = "1.8.1"
-    val pagingVersion = "3.3.1"
-    val daggerVersion = "2.51.1"
+    val pagingVersion = "3.3.2"
+    val daggerVersion = "2.52"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
@@ -123,7 +123,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.9.1")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.08.00"))
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
@@ -144,7 +144,7 @@ dependencies {
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.12.1")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.13.0")
 
     // Coil
     val coilVersion = "2.7.0"
