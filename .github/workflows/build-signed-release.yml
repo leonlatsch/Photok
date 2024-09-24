@@ -62,14 +62,14 @@ jobs:
         
       # Upload .aab Artifact
       - name: Upload GPlay AAB Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Photok ${{ github.event.inputs.version }} GPlay AAB
           path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
 
       # Upload .apk Artifact
       - name: Upload Standalone APK Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Photok ${{ github.event.inputs.version }} Standalone APK
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
