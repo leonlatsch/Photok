@@ -72,6 +72,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     getString(R.string.process_initialize)
                 }
                 ProcessState.PROCESSING -> {
+                    isCancelable = false
                     binding.processItemsProgressIndicatorLayout.show()
                     binding.processPercentLayout.show()
                     binding.processProcessingIndicator.show()
