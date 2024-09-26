@@ -18,6 +18,7 @@ package dev.leonlatsch.photok
 
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.LegacyEncryptionManager
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -26,7 +27,7 @@ class EncryptionManagerTests {
 
     private val validPassword = "abc123"
 
-    var encryptionManager: EncryptionManager = EncryptionManager()
+    var encryptionManager: EncryptionManager = LegacyEncryptionManager()
 
     @Test
     fun initializeTest() {

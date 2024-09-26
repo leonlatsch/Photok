@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,17 +16,15 @@
 
 package dev.leonlatsch.photok.security
 
-import java.io.InputStream
-import java.io.OutputStream
-import javax.crypto.CipherInputStream
-import javax.crypto.CipherOutputStream
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@InstallIn(SingletonComponent::class)
+@Module
+interface SecurityModule {
 
-interface EncryptionManager {
-    val isReady: Boolean
-    fun initialize(password: String)
-    fun reset()
-
-    fun createCipherInputStream(inputStream: InputStream, password: String? = null): CipherInputStream?
-    fun createCipherOutputStream(outputStream: OutputStream, password: String? = null): CipherOutputStream?
+    @Binds
+    fun bindEncryptionManager(impl: LegacyEncryptionManager): EncryptionManager
 }

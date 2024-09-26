@@ -29,7 +29,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Singleton
 
@@ -62,10 +61,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideConfig(@ApplicationContext app: Context) = Config(app)
-
-    @Provides
-    @Singleton
-    fun provideEncryptionManager() = EncryptionManager()
 
     @Provides
     @Singleton
