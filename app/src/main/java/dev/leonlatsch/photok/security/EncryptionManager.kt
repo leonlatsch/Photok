@@ -23,10 +23,11 @@ import javax.crypto.CipherOutputStream
 
 
 interface EncryptionManager {
-    val isReady: Boolean
+    var isReady: Boolean
     fun initialize(password: String)
     fun reset()
 
     fun createCipherInputStream(inputStream: InputStream, password: String? = null): CipherInputStream?
     fun createCipherOutputStream(outputStream: OutputStream, password: String? = null): CipherOutputStream?
 }
+
