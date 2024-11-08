@@ -15,12 +15,13 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = 34 // Android 14
+    compileSdk = VersionCodes.VANILLA_ICE_CREAM
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdk = VersionCodes.N
-        targetSdk = 34 // Android 14
+        targetSdk = VersionCodes.VANILLA_ICE_CREAM
+
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
 
