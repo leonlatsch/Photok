@@ -35,11 +35,12 @@ enum class PhotoType(
     GIF(3, "image/gif"),
     MP4(4, "video/mp4"),
     MPEG(5, "video/mpeg"),
-    WEBM(6, "video/webm");
+    WEBM(6, "video/webm"),
+    MOV(7, "video/mov");
 
     val isVideo: Boolean
         get() = when (value) {
-            4, 5, 6 -> true
+            4, 5, 6, 7 -> true
             else -> false
         }
 
