@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.uicomponnets.base
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Base for all fragments.
@@ -37,15 +36,5 @@ abstract class BaseFragment : Fragment() {
         activity.setSupportActionBar(toolbar)
 
         activity.supportActionBar?.setDisplayShowTitleEnabled(showTitle)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

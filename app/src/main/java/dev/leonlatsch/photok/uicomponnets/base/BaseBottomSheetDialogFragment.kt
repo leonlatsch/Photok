@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.uicomponnets.base
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Base for all bottom sheet dialogs.
@@ -25,15 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions
  * @since 1.3.0
  * @author Leon Latsch
  */
+@Deprecated("use BottomSheetDialogFragment")
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // Forward result to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
 }

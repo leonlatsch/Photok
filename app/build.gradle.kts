@@ -129,9 +129,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
-    // Easy Permissions
-    implementation("pub.devrel:easypermissions:3.0.0")
-
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 

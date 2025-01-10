@@ -22,14 +22,9 @@ import android.net.Uri
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
-import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_PHOTOS
-import dev.leonlatsch.photok.other.REQ_PERM_IMPORT_VIDEOS
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.permissions.getReadImagesPermission
-import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.uicomponnets.Chooser
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableBottomSheetDialogFragment
-import pub.devrel.easypermissions.AfterPermissionGranted
 
 /**
  * BottomSheetDialog for showing import options and starting import Dialogs.
@@ -47,14 +42,11 @@ class ImportMenuDialog(
      * May request permission READ_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_IMPORT_PHOTOS)
     fun startSelectPhotos() = Chooser.Builder()
         .message("Select Photos")
         .mimeType("image/*")
         .allowMultiple()
         .requestCode(REQ_CONTENT_PHOTOS)
-        .permissionCode(REQ_PERM_IMPORT_PHOTOS)
-        .permission(getReadImagesPermission())
         .show(this)
 
     /**
@@ -63,14 +55,11 @@ class ImportMenuDialog(
      * May request permission READ_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_IMPORT_VIDEOS)
     fun startSelectVideos() = Chooser.Builder()
         .message("Select Videos")
         .mimeType("video/*")
         .allowMultiple()
         .requestCode(REQ_CONTENT_VIDEOS)
-        .permissionCode(REQ_PERM_IMPORT_VIDEOS)
-        .permission(getReadVideosPermission())
         .show(this)
 
     /**

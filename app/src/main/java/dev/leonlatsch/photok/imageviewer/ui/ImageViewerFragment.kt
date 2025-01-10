@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
@@ -42,8 +41,6 @@ import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 /**
@@ -136,40 +133,23 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * May request permission WRITE_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_EXPORT)
     fun onExport() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-        ) {
+        var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
+        var toastStringFinishedExport = getString(R.string.export_finished)
+        if (config.deleteExportedFiles) {
+            toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
+            toastStringFinishedExport = getString(R.string.export_and_delete_finished)
+        }
 
-            var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
-            var toastStringFinishedExport = getString(R.string.export_finished)
-            if (config.deleteExportedFiles) {
-                toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
-                toastStringFinishedExport = getString(R.string.export_and_delete_finished)
-            }
-
-            Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
-                viewModel.exportPhoto({ // onSuccess
-                    if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
-                        findNavController().navigateUp()
-                    }
-                    Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
-                }, { // onError
-                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-                })
-            }
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.export_permission_rationale),
-                REQ_PERM_EXPORT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+        Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
+            viewModel.exportPhoto({ // onSuccess
+                if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
+                    findNavController().navigateUp()
+                }
+                Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
+            }, { // onError
+                Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+            })
         }
     }
 

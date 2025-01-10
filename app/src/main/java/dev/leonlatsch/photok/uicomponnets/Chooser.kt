@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.uicomponnets.Chooser.Builder
-import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Intent chooser that requests permissions.
@@ -38,36 +37,20 @@ class Chooser {
     internal var message: String? = null
     internal var mimeType: String? = null
     internal var requestCode: Int = 0
-    internal var permissionRequestCode: Int = 0
-    internal var permission: String? = null
     internal var allowMultiple: Boolean = false
 
     /**
      * Show a document chooser.
-     * Or request the [permission]
      */
     fun show(fragment: Fragment) {
-        if (permission == null || EasyPermissions.hasPermissions(
-                fragment.requireContext(),
-                permission
-            )
-        ) {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = mimeType
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, allowMultiple)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            fragment.startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, message),
-                requestCode
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                fragment,
-                fragment.requireContext().getString(R.string.import_permission_rationale),
-                permissionRequestCode,
-                permission
-            )
-        }
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = mimeType
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, allowMultiple)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        fragment.startActivityForResultAndIgnoreTimer(
+            Intent.createChooser(intent, message),
+            requestCode
+        )
     }
 
     /**
@@ -98,22 +81,6 @@ class Chooser {
          */
         fun requestCode(requestCode: Int): Builder {
             chooser.requestCode = requestCode
-            return this
-        }
-
-        /**
-         * Set permissionCode
-         */
-        fun permissionCode(permissionCode: Int): Builder {
-            chooser.permissionRequestCode = permissionCode
-            return this
-        }
-
-        /**
-         * Set permission
-         */
-        fun permission(permission: String): Builder {
-            chooser.permission = permission
             return this
         }
 
