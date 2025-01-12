@@ -104,6 +104,7 @@ class PhotoRepository @Inject constructor(
             PhotoType.MP4.mimeType -> PhotoType.MP4
             PhotoType.MPEG.mimeType -> PhotoType.MPEG
             PhotoType.WEBM.mimeType -> PhotoType.WEBM
+            PhotoType.MOV.mimeType -> PhotoType.MOV
             else -> return String.empty
         }
 

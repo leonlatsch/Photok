@@ -36,7 +36,7 @@ enum class PhotoType(
     MP4(4, "video/mp4"),
     MPEG(5, "video/mpeg"),
     WEBM(6, "video/webm"),
-    MOV(7, "video/mov");
+    MOV(7, "video/quicktime");
 
     val isVideo: Boolean
         get() = when (value) {
