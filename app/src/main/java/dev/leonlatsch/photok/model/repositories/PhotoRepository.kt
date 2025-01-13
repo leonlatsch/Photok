@@ -97,15 +97,10 @@ class PhotoRepository @Inject constructor(
      * Returns re created uuid
      */
     suspend fun safeImportPhoto(sourceUri: Uri): String {
-        val type = when (app.contentResolver.getType(sourceUri)) {
-            PhotoType.PNG.mimeType -> PhotoType.PNG
-            PhotoType.JPEG.mimeType -> PhotoType.JPEG
-            PhotoType.GIF.mimeType -> PhotoType.GIF
-            PhotoType.MP4.mimeType -> PhotoType.MP4
-            PhotoType.MPEG.mimeType -> PhotoType.MPEG
-            PhotoType.WEBM.mimeType -> PhotoType.WEBM
-            else -> return String.empty
-        }
+        val mimeType = app.contentResolver.getType(sourceUri)
+        val type = PhotoType.fromMimeType(mimeType)
+
+        if (type == PhotoType.UNDEFINED) return String.empty
 
         val fileName =
             getFileName(app.contentResolver, sourceUri) ?: UUID.randomUUID().toString()

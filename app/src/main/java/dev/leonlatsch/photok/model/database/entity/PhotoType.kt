@@ -35,11 +35,12 @@ enum class PhotoType(
     GIF(3, "image/gif"),
     MP4(4, "video/mp4"),
     MPEG(5, "video/mpeg"),
-    WEBM(6, "video/webm");
+    WEBM(6, "video/webm"),
+    MOV(7, "video/quicktime");
 
     val isVideo: Boolean
         get() = when (value) {
-            4, 5, 6 -> true
+            4, 5, 6, 7 -> true
             else -> false
         }
 
@@ -52,6 +53,17 @@ enum class PhotoType(
          * Used in converters.
          */
         fun fromValue(value: Int) = values().first { it.value == value }
+
+        fun fromMimeType(mimeType: String?): PhotoType = when (mimeType) {
+            PNG.mimeType -> PNG
+            JPEG.mimeType -> JPEG
+            GIF.mimeType -> GIF
+            MP4.mimeType -> MP4
+            MPEG.mimeType -> MPEG
+            WEBM.mimeType -> WEBM
+            MOV.mimeType -> MOV
+            else -> UNDEFINED
+        }
     }
 
 }
