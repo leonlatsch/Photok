@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.Movie
 import android.os.Build
+import android.os.Build.VERSION_CODES
 import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
 import coil.drawable.MovieDrawable
@@ -49,7 +50,7 @@ class EncryptedImageFetcher(
         inputStream ?: return null
 
         val drawable = if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
-            if (Build.VERSION.SDK_INT >= 31) {
+            if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
                 val bytes = inputStream.readBytes()
                 val source = ImageDecoder.createSource(bytes)
                 ImageDecoder.decodeDrawable(source)
