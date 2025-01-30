@@ -35,6 +35,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
@@ -143,7 +144,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     private fun startImportOfSharedUris() {
         val urisToImport = viewModel.consumedUrisFromStore.value
 
-        ImportBottomSheetDialogFragment(urisToImport).show(
+        ImportBottomSheetDialogFragment(urisToImport, importSource = ImportSource.Share).show(
             supportFragmentManager,
             ImportBottomSheetDialogFragment::class.qualifiedName
         )

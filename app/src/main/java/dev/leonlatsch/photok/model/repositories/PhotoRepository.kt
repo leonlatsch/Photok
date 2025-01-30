@@ -17,9 +17,8 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
-import android.content.ContentValues
+import android.content.Intent
 import android.net.Uri
-import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -36,6 +35,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
 import javax.inject.Inject
+
 
 /**
  * Repository for [Photo].
@@ -96,7 +96,7 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      * Returns re created uuid
      */
-    suspend fun safeImportPhoto(sourceUri: Uri): String {
+    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource): String {
         val type = when (app.contentResolver.getType(sourceUri)) {
             PhotoType.PNG.mimeType -> PhotoType.PNG
             PhotoType.JPEG.mimeType -> PhotoType.JPEG
@@ -121,7 +121,7 @@ class PhotoRepository @Inject constructor(
             return String.empty
         }
 
-        if (config.deleteImportedFiles) {
+        if (config.deleteImportedFiles && importSource != ImportSource.Share) {
             val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
             return if (deleted == true) photo.uuid else String.empty
         }

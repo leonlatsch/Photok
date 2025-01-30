@@ -22,6 +22,7 @@ import android.net.Uri
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.databinding.DialogImportMenuBinding
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.Chooser
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableBottomSheetDialogFragment
@@ -101,7 +102,7 @@ class ImportMenuDialog(
     private fun dispatchMediaElementsImportRequest(data: Intent?) = data?.let {
         val mediaUris = resolveUrisFromIntent(it)
         if (mediaUris.isNotEmpty()) {
-            ImportBottomSheetDialogFragment(mediaUris, albumUUID).show(requireActivity().supportFragmentManager)
+            ImportBottomSheetDialogFragment(mediaUris, albumUUID, ImportSource.InApp).show(requireActivity().supportFragmentManager)
         }
     }
 
