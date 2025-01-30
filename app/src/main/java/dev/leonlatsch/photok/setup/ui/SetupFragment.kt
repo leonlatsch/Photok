@@ -24,6 +24,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.extensions.empty
@@ -50,6 +51,11 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
+
+        if (BuildConfig.DEBUG) {
+            viewModel.password = "abc123"
+            viewModel.confirmPassword = "abc123"
+        }
 
         viewModel.addOnPropertyChange<String>(BR.password) {
             if (it.isNotEmpty()) {
