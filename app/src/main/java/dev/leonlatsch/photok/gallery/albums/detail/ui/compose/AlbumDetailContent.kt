@@ -47,10 +47,11 @@ fun AlbumDetailContent(
         photos = uiState.photos,
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(AlbumDetailUiEvent.OpenPhoto(it)) },
-        onExport = {
+        onExport = { targetUri ->
             handleUiEvent(
                 AlbumDetailUiEvent.OnExport(
-                    multiSelectionState.selectedItems.value.toList()
+                    multiSelectionState.selectedItems.value.toList(),
+                    targetUri,
                 )
             )
         },

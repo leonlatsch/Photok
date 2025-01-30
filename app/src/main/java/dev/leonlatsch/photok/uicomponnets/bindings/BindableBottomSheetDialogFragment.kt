@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import dev.leonlatsch.photok.uicomponnets.base.BaseBottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
  * Base for all BottomSheetDialogs that use data binding.
@@ -36,7 +36,7 @@ import dev.leonlatsch.photok.uicomponnets.base.BaseBottomSheetDialogFragment
  */
 abstract class BindableBottomSheetDialogFragment<BindingType : ViewDataBinding>(
     @LayoutRes private val layout: Int
-) : BaseBottomSheetDialogFragment(), Bindable<BindingType> {
+) : BottomSheetDialogFragment(), Bindable<BindingType> {
 
     final override lateinit var binding: BindingType
 

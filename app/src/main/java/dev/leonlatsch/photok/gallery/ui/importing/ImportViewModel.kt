@@ -20,6 +20,7 @@ import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
 import javax.inject.Inject
@@ -38,9 +39,10 @@ class ImportViewModel @Inject constructor(
 ) : BaseProcessViewModel<Uri>(app) {
 
     var albumUUID: String? = null
+    var importSource = ImportSource.InApp
 
     override suspend fun processItem(item: Uri) {
-        val photoUUID = photoRepository.safeImportPhoto(item)
+        val photoUUID = photoRepository.safeImportPhoto(item, importSource)
         if (photoUUID.isEmpty()) {
             failuresOccurred = true
             return

@@ -17,9 +17,8 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
-import android.content.ContentValues
+import android.content.Intent
 import android.net.Uri
-import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -36,6 +35,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
 import javax.inject.Inject
+
 
 /**
  * Repository for [Photo].
@@ -96,16 +96,11 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      * Returns re created uuid
      */
-    suspend fun safeImportPhoto(sourceUri: Uri): String {
-        val type = when (app.contentResolver.getType(sourceUri)) {
-            PhotoType.PNG.mimeType -> PhotoType.PNG
-            PhotoType.JPEG.mimeType -> PhotoType.JPEG
-            PhotoType.GIF.mimeType -> PhotoType.GIF
-            PhotoType.MP4.mimeType -> PhotoType.MP4
-            PhotoType.MPEG.mimeType -> PhotoType.MPEG
-            PhotoType.WEBM.mimeType -> PhotoType.WEBM
-            else -> return String.empty
-        }
+    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource): String {
+        val mimeType = app.contentResolver.getType(sourceUri)
+        val type = PhotoType.fromMimeType(mimeType)
+
+        if (type == PhotoType.UNDEFINED) return String.empty
 
         val fileName =
             getFileName(app.contentResolver, sourceUri) ?: UUID.randomUUID().toString()
@@ -121,7 +116,7 @@ class PhotoRepository @Inject constructor(
             return String.empty
         }
 
-        if (config.deleteImportedFiles) {
+        if (config.deleteImportedFiles && importSource != ImportSource.Share) {
             val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
             return if (deleted == true) photo.uuid else String.empty
         }
@@ -234,13 +229,13 @@ class PhotoRepository @Inject constructor(
      *
      * @param photo The Photo to be saved
      */
-    suspend fun exportPhoto(photo: Photo): Boolean {
+    suspend fun exportPhoto(photo: Photo, target: Uri): Boolean {
         return try {
             val inputStream =
                 encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
             inputStream ?: return false
 
-            val outputStream = createExternalOutputStream(photo)
+            val outputStream = createExternalOutputStream(photo, target)
             outputStream ?: return false
 
             val wrote = inputStream.copyTo(outputStream)
@@ -258,30 +253,15 @@ class PhotoRepository @Inject constructor(
         }
     }
 
-    private fun createExternalOutputStream(photo: Photo): OutputStream? {
-        val mediaColName: String
-        val mediaColMimeType: String
-        val externalUri: Uri
-
-        if (photo.type.isVideo) {
-            mediaColName = MediaStore.Video.Media.DISPLAY_NAME
-            mediaColMimeType = MediaStore.Video.Media.MIME_TYPE
-            externalUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        } else {
-            mediaColName = MediaStore.Images.Media.DISPLAY_NAME
-            mediaColMimeType = MediaStore.Images.Media.MIME_TYPE
-            externalUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        }
-
-        val contentValues = ContentValues().apply {
-            put(mediaColName, "photok_export_${photo.fileName}")
-            put(mediaColMimeType, photo.type.mimeType)
-        }
+    private fun createExternalOutputStream(photo: Photo, uri: Uri): OutputStream? {
+        val fileName = "photok_export_${photo.fileName}"
+        val mimeType = photo.type.mimeType
 
         return encryptedStorageManager.externalOpenFileOutput(
             app.contentResolver,
-            contentValues,
-            externalUri
+            fileName,
+            mimeType,
+            uri,
         )
     }
 

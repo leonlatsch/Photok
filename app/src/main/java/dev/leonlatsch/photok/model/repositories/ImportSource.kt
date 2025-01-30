@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,21 +14,8 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.permissions
+package dev.leonlatsch.photok.model.repositories
 
-import android.Manifest
-import android.os.Build
-
-fun getReadVideosPermission() =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        Manifest.permission.READ_MEDIA_VIDEO
-    } else {
-        Manifest.permission.READ_EXTERNAL_STORAGE
-    }
-
-fun getReadImagesPermission() =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        Manifest.permission.READ_MEDIA_IMAGES
-    } else {
-        Manifest.permission.READ_EXTERNAL_STORAGE
-    }
+enum class ImportSource {
+    InApp, Share,
+}

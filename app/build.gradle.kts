@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.20"// Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
 }
 
 val appVersionName: String by project
@@ -15,12 +15,13 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = 34 // Android 14
+    compileSdk = VersionCodes.VANILLA_ICE_CREAM
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
-        minSdk = VersionCodes.N
-        targetSdk = 34 // Android 14
+        minSdk = VersionCodes.P
+        targetSdk = VersionCodes.VANILLA_ICE_CREAM
+
         versionCode = appVersionCode.toInt()
         versionName = appVersionName
 
@@ -71,13 +72,13 @@ licenseReport {
 
 dependencies {
     val roomVersion = "2.6.1"
-    val coroutinesVersion = "1.8.1"
-    val pagingVersion = "3.3.1"
-    val daggerVersion = "2.51.1"
+    val coroutinesVersion = "1.9.0" // Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
+    val pagingVersion = "3.3.5"
+    val daggerVersion = "2.55"
 
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -96,12 +97,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.6")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -120,16 +121,14 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.9.1")
+    implementation("androidx.activity:activity-ktx:1.10.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
-    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation(platform("androidx.compose:compose-bom:2025.01.00"))
+    implementation("androidx.compose.material3:material3:1.3.1")
     implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-
-    // Easy Permissions
-    implementation("pub.devrel:easypermissions:3.0.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
+    implementation("androidx.activity:activity-compose")
 
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
@@ -144,7 +143,7 @@ dependencies {
     implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.12.1")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.14.0")
 
     // Coil
     val coilVersion = "2.7.0"
@@ -159,10 +158,10 @@ dependencies {
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity:1.9.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.activity:activity:1.10.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     testImplementation("junit:junit:4.13.2")

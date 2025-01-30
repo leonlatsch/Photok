@@ -5,7 +5,7 @@
 [![F-Droid](https://img.shields.io/f-droid/v/dev.leonlatsch.photok.svg?logo=f-droid&label=F-Droid)](https://f-droid.org/packages/dev.leonlatsch.photok/)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
-![Maintenance](https://img.shields.io/maintenance/yes/2024)
+![Maintenance](https://img.shields.io/maintenance/yes/2025)
 
 Encrypt your photos on your device and keep them safe from others.
 
@@ -51,7 +51,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 
 LICENSE
 =======
-    Copyright 2020-2024 Leon Latsch
+    Copyright 2020-2025 Leon Latsch
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

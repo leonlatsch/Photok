@@ -161,12 +161,15 @@ class EncryptedStorageManager @Inject constructor(
      */
     fun externalOpenFileOutput(
         contentResolver: ContentResolver,
-        contentValues: ContentValues,
+        filename: String,
+        mimeType: String,
         destinationUri: Uri
     ): OutputStream? {
         return try {
-            val externalUrl = contentResolver.insert(destinationUri, contentValues) ?: return null
-            contentResolver.openOutputStream(externalUrl)
+            DocumentFile.fromTreeUri(app, destinationUri)?.let { dir ->
+                val newFile = dir.createFile(mimeType, filename)
+                newFile?.uri?.let { contentResolver.openOutputStream(it) }
+            }
         } catch (e: IOException) {
             Timber.d("Error opening external file at $destinationUri: $e")
             null

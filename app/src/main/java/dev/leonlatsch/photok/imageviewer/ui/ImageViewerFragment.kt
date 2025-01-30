@@ -16,13 +16,13 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.Manifest
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -32,7 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
-import dev.leonlatsch.photok.other.REQ_PERM_EXPORT
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
@@ -42,8 +41,6 @@ import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 /**
@@ -53,11 +50,18 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
+class ImageViewerFragment :
+    BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
 
     private val viewModel: ImageViewerViewModel by viewModels()
 
     private var systemUiVisible = true
+
+    private val pickExportTargetLauncher =
+        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            uri ?: return@registerForActivityResult
+            onExportTargetPicked(uri)
+        }
 
     @Inject
     lateinit var config: Config
@@ -80,7 +84,8 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
         initializeSystemUI()
 
-        binding.viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDetails(position)
             }
@@ -113,7 +118,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * On Detail button clicked.
      * Called by ui.
      */
-    fun onDetails() {
+    fun onDetailsClicked() {
         DetailsBottomSheetDialog(viewModel.currentPhoto).show(childFragmentManager)
     }
 
@@ -121,13 +126,15 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * On delete button clicked.
      * Called by ui.
      */
-    fun onDelete() {
-        Dialogs.showConfirmDialog(requireContext(), getString(R.string.delete_are_you_sure_this)) { _, _ ->
-            viewModel.deletePhoto({ // onSuccess
-                findNavController().navigateUp()
-            }, { // onError
-                Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            })
+    fun onDeleteClicked() {
+        Dialogs.showConfirmDialog(
+            requireContext(),
+            getString(R.string.delete_are_you_sure_this)
+        ) { _, _ ->
+            viewModel.deletePhoto(
+                onSuccess = { findNavController().navigateUp() },
+                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
+            )
         }
     }
 
@@ -136,39 +143,28 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * May request permission WRITE_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    @AfterPermissionGranted(REQ_PERM_EXPORT)
-    fun onExport() {
-        if (EasyPermissions.hasPermissions(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-        ) {
+    fun onExportClicked() {
+        pickExportTargetLauncher.launch(null)
+    }
 
-            var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
-            var toastStringFinishedExport = getString(R.string.export_finished)
-            if (config.deleteExportedFiles) {
-                toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
-                toastStringFinishedExport = getString(R.string.export_and_delete_finished)
-            }
+    private fun onExportTargetPicked(target: Uri) {
+        var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
+        var toastStringFinishedExport = getString(R.string.export_finished)
+        if (config.deleteExportedFiles) {
+            toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
+            toastStringFinishedExport = getString(R.string.export_and_delete_finished)
+        }
 
-            Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
-                viewModel.exportPhoto({ // onSuccess
-                    if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
+        Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
+            viewModel.exportPhoto(
+                target = target,
+                onSuccess = {
+                    if (config.deleteExportedFiles) {
                         findNavController().navigateUp()
                     }
                     Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
-                }, { // onError
-                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-                })
-            }
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.export_permission_rationale),
-                REQ_PERM_EXPORT,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                },
+                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
             )
         }
     }
@@ -198,9 +194,10 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuViewPhotoInfo -> {
-            onDetails()
+            onDetailsClicked()
             true
         }
+
         else -> false
     }
 
