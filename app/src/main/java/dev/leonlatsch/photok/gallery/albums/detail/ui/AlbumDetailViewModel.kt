@@ -76,8 +76,10 @@ class AlbumDetailViewModel @AssistedInject constructor(
             }
 
             is AlbumDetailUiEvent.OnExport -> {
-                val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
-                photoActionsChannel.trySend(PhotoAction.ExportPhotos(photos))
+                if (event.target != null) {
+                    val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
+                    photoActionsChannel.trySend(PhotoAction.ExportPhotos(photos, event.target))
+                }
             }
 
             is AlbumDetailUiEvent.OpenPhoto -> {

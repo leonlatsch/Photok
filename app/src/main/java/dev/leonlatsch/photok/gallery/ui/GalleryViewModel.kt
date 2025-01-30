@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.content.res.Resources
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,7 +71,7 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OpenImportMenu -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu())
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
-            is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items)
+            is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items, event.target)
             is GalleryUiEvent.OnAddToAlbum -> showAlbumSelectionDialog.value = true
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
@@ -89,10 +90,12 @@ class GalleryViewModel @Inject constructor(
         )
     }
 
-    private fun onExportSelectedItems(selectedItems: List<String>) {
+    private fun onExportSelectedItems(selectedItems: List<String>, target: Uri?) {
+        target ?: return
         photoActionsChannel.trySend(
             PhotoAction.ExportPhotos(
-                photosFlow.value.filter { selectedItems.contains(it.uuid) }
+                photosFlow.value.filter { selectedItems.contains(it.uuid) },
+                target,
             )
         )
     }

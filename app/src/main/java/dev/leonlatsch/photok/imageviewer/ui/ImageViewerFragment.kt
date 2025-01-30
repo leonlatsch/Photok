@@ -16,13 +16,13 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.Manifest
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -50,11 +50,18 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
+class ImageViewerFragment :
+    BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
 
     private val viewModel: ImageViewerViewModel by viewModels()
 
     private var systemUiVisible = true
+
+    private val pickExportTargetLauncher =
+        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            uri ?: return@registerForActivityResult
+            onExportTargetPicked(uri)
+        }
 
     @Inject
     lateinit var config: Config
@@ -77,7 +84,8 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
         initializeSystemUI()
 
-        binding.viewPhotoViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDetails(position)
             }
@@ -110,7 +118,7 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * On Detail button clicked.
      * Called by ui.
      */
-    fun onDetails() {
+    fun onDetailsClicked() {
         DetailsBottomSheetDialog(viewModel.currentPhoto).show(childFragmentManager)
     }
 
@@ -118,13 +126,15 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * On delete button clicked.
      * Called by ui.
      */
-    fun onDelete() {
-        Dialogs.showConfirmDialog(requireContext(), getString(R.string.delete_are_you_sure_this)) { _, _ ->
-            viewModel.deletePhoto({ // onSuccess
-                findNavController().navigateUp()
-            }, { // onError
-                Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            })
+    fun onDeleteClicked() {
+        Dialogs.showConfirmDialog(
+            requireContext(),
+            getString(R.string.delete_are_you_sure_this)
+        ) { _, _ ->
+            viewModel.deletePhoto(
+                onSuccess = { findNavController().navigateUp() },
+                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
+            )
         }
     }
 
@@ -133,7 +143,11 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
      * May request permission WRITE_EXTERNAL_STORAGE.
      * Called by ui.
      */
-    fun onExport() {
+    fun onExportClicked() {
+        pickExportTargetLauncher.launch(null)
+    }
+
+    private fun onExportTargetPicked(target: Uri) {
         var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
         var toastStringFinishedExport = getString(R.string.export_finished)
         if (config.deleteExportedFiles) {
@@ -142,14 +156,16 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
         }
 
         Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
-            viewModel.exportPhoto({ // onSuccess
-                if (config.deleteExportedFiles) { // close current photo if deleteExportedFiles is true
-                    findNavController().navigateUp()
-                }
-                Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
-            }, { // onError
-                Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            })
+            viewModel.exportPhoto(
+                target = target,
+                onSuccess = {
+                    if (config.deleteExportedFiles) {
+                        findNavController().navigateUp()
+                    }
+                    Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
+                },
+                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
+            )
         }
     }
 
@@ -178,9 +194,10 @@ class ImageViewerFragment : BindableFragment<FragmentImageViewerBinding>(R.layou
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuViewPhotoInfo -> {
-            onDetails()
+            onDetailsClicked()
             true
         }
+
         else -> false
     }
 

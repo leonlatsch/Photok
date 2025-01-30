@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
+import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -40,6 +41,7 @@ class PhotoActionsNavigator @Inject constructor(
 
             is PhotoAction.ExportPhotos -> confirmAndExport(
                 action.photos,
+                action.target,
                 fragment.childFragmentManager
             )
 
@@ -54,9 +56,10 @@ class PhotoActionsNavigator @Inject constructor(
 
     private fun confirmAndExport(
         photos: List<Photo>,
+        target: Uri,
         fragmentManager: FragmentManager,
     ) {
-        ExportBottomSheetDialogFragment(photos).show(fragmentManager)
+        ExportBottomSheetDialogFragment(photos, target).show(fragmentManager)
     }
 
     private fun confirmAndDelete(
@@ -75,6 +78,6 @@ class PhotoActionsNavigator @Inject constructor(
 sealed interface PhotoAction {
     data class OpenPhoto(val photoUUID: String, val albumUUID: String = "") : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
-    data class ExportPhotos(val photos: List<Photo>) : PhotoAction
+    data class ExportPhotos(val photos: List<Photo>, val target: Uri) : PhotoAction
     data class OpenImportMenu(val albumUUID: String? = "") : PhotoAction
 }

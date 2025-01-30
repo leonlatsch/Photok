@@ -234,13 +234,13 @@ class PhotoRepository @Inject constructor(
      *
      * @param photo The Photo to be saved
      */
-    suspend fun exportPhoto(photo: Photo): Boolean {
+    suspend fun exportPhoto(photo: Photo, target: Uri): Boolean {
         return try {
             val inputStream =
                 encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
             inputStream ?: return false
 
-            val outputStream = createExternalOutputStream(photo)
+            val outputStream = createExternalOutputStream(photo, target)
             outputStream ?: return false
 
             val wrote = inputStream.copyTo(outputStream)
@@ -258,30 +258,15 @@ class PhotoRepository @Inject constructor(
         }
     }
 
-    private fun createExternalOutputStream(photo: Photo): OutputStream? {
-        val mediaColName: String
-        val mediaColMimeType: String
-        val externalUri: Uri
-
-        if (photo.type.isVideo) {
-            mediaColName = MediaStore.Video.Media.DISPLAY_NAME
-            mediaColMimeType = MediaStore.Video.Media.MIME_TYPE
-            externalUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        } else {
-            mediaColName = MediaStore.Images.Media.DISPLAY_NAME
-            mediaColMimeType = MediaStore.Images.Media.MIME_TYPE
-            externalUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        }
-
-        val contentValues = ContentValues().apply {
-            put(mediaColName, "photok_export_${photo.fileName}")
-            put(mediaColMimeType, photo.type.mimeType)
-        }
+    private fun createExternalOutputStream(photo: Photo, uri: Uri): OutputStream? {
+        val fileName = "photok_export_${photo.fileName}"
+        val mimeType = photo.type.mimeType
 
         return encryptedStorageManager.externalOpenFileOutput(
             app.contentResolver,
-            contentValues,
-            externalUri
+            fileName,
+            mimeType,
+            uri,
         )
     }
 
