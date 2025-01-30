@@ -17,6 +17,9 @@
 package dev.leonlatsch.photok.gallery.ui.components
 
 import android.content.res.Configuration
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -72,12 +75,13 @@ fun PhotoGallery(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     onOpenPhoto: (PhotoTile) -> Unit,
-    onExport: () -> Unit,
+    onExport: (Uri?) -> Unit,
     onDelete: () -> Unit,
     onMagicFabClicked: () -> Unit,
     additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
     modifier: Modifier = Modifier,
 ) {
+
     Box(modifier = modifier.fillMaxSize()) {
         PhotoGrid(
             photos = photos,
@@ -101,6 +105,13 @@ fun PhotoGallery(
 
         var showExportConfirmationDialog by remember {
             mutableStateOf(false)
+        }
+
+        var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
+        
+        val pickExportTargetLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+            exportDirectoryUri = it
+            showExportConfirmationDialog = true
         }
 
         ConfirmationDialog(
@@ -128,7 +139,7 @@ fun PhotoGallery(
                 multiSelectionState.selectedItems.value.size
             ),
             onConfirm = {
-                onExport()
+                onExport(exportDirectoryUri)
                 multiSelectionState.cancelSelection()
             }
         )
@@ -177,7 +188,7 @@ fun PhotoGallery(
                     },
                     text = { Text(stringResource(R.string.common_export)) },
                     onClick = {
-                        showExportConfirmationDialog = true
+                        pickExportTargetLauncher.launch(null)
                         closeActions()
                     },
                 )

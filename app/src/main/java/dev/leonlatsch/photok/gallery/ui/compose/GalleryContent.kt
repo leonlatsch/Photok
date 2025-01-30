@@ -49,10 +49,11 @@ fun GalleryContent(
         photos = uiState.photos,
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
-        onExport = {
+        onExport = { targetUri ->
             handleUiEvent(
                 GalleryUiEvent.OnExport(
-                    multiSelectionState.selectedItems.value.toList()
+                    multiSelectionState.selectedItems.value.toList(),
+                    targetUri
                 )
             )
         },

@@ -35,18 +35,14 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
-import dev.leonlatsch.photok.other.REQ_PERM_SHARED_IMPORT
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
-import dev.leonlatsch.photok.permissions.getReadImagesPermission
-import dev.leonlatsch.photok.permissions.getReadVideosPermission
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import kotlinx.coroutines.flow.collectLatest
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.albumsFragment, R.id.settingsFragment, R.id.albumDetailFragment)
@@ -145,29 +141,13 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     /**
      * Start importing after the overview of photos.
      */
-    @AfterPermissionGranted(REQ_PERM_SHARED_IMPORT)
-    fun startImportOfSharedUris() {
+    private fun startImportOfSharedUris() {
         val urisToImport = viewModel.consumedUrisFromStore.value
 
-        if (EasyPermissions.hasPermissions(
-                this,
-                getReadImagesPermission(),
-                getReadVideosPermission()
-            )
-        ) {
-            ImportBottomSheetDialogFragment(urisToImport).show(
-                supportFragmentManager,
-                ImportBottomSheetDialogFragment::class.qualifiedName
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_permission_rationale),
-                REQ_PERM_SHARED_IMPORT,
-                getReadImagesPermission(),
-                getReadVideosPermission()
-            )
-        }
+        ImportBottomSheetDialogFragment(urisToImport, importSource = ImportSource.Share).show(
+            supportFragmentManager,
+            ImportBottomSheetDialogFragment::class.qualifiedName
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

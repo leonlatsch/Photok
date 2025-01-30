@@ -121,16 +121,14 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.9.2")
+    implementation("androidx.activity:activity-ktx:1.10.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.09.02"))
-    implementation("androidx.compose.material3:material3:1.3.0")
+    implementation(platform("androidx.compose:compose-bom:2025.01.00"))
+    implementation("androidx.compose.material3:material3:1.3.1")
     implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-
-    // Easy Permissions
-    implementation("pub.devrel:easypermissions:3.0.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
+    implementation("androidx.activity:activity-compose")
 
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")

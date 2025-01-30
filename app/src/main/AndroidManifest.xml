@@ -25,10 +25,6 @@
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
 
-    <!-- New Permission -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove"/>
 
     <application

@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.imageviewer.ui
 
 import android.app.Application
+import android.net.Uri
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -104,14 +105,15 @@ class ImageViewerViewModel @Inject constructor(
      * @param onSuccess Block called on success
      * @param onError Block called on error
      */
-    fun exportPhoto(onSuccess: () -> Unit, onError: () -> Unit) =
+    fun exportPhoto(target: Uri, onSuccess: () -> Unit, onError: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
-            currentPhoto ?: return@launch
-
-            photoRepository.exportPhoto(currentPhoto!!).let { success ->
-                onMain {
-                    if (success) onSuccess() else onError()
+            currentPhoto?.let { safeCurrentPhoto ->
+                photoRepository.exportPhoto(safeCurrentPhoto, target).let { success ->
+                    onMain {
+                        if (success) onSuccess() else onError()
+                    }
                 }
             }
+
         }
 }
