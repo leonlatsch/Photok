@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
-        minSdk = VersionCodes.N
+        minSdk = VersionCodes.P
         targetSdk = VersionCodes.VANILLA_ICE_CREAM
 
         versionCode = appVersionCode.toInt()
