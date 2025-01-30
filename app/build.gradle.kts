@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.1.10"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" // Cannot update to 2.1 currently. See https://issuetracker.google.com/issues/386304679?pli=1
 }
 
 val appVersionName: String by project

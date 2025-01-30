@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val kotlinVersion = "2.1.10"
+    val kotlinVersion = "2.0.0" // Cannot update to 2.1 currently. See https://issuetracker.google.com/issues/386304679?pli=1
     repositories {
         google()
         mavenCentral()
