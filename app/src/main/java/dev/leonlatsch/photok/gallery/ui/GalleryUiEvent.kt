@@ -21,7 +21,6 @@ import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 sealed interface GalleryUiEvent {
     data class OpenPhoto(val item: PhotoTile) : GalleryUiEvent
-    data object OpenImportMenu : GalleryUiEvent
     data class OnDelete(val items: List<String>) : GalleryUiEvent
     data class OnExport(val items: List<String>, val target: Uri?) : GalleryUiEvent
     data object OnAddToAlbum : GalleryUiEvent

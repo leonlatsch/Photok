@@ -63,7 +63,7 @@ fun AlbumDetailContent(
             )
         },
         onMagicFabClicked = {
-            handleUiEvent(AlbumDetailUiEvent.OnImport(uiState.albumId))
+            TODO()
         },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()

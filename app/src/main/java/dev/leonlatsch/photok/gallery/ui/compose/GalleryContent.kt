@@ -64,7 +64,7 @@ fun GalleryContent(
                 )
             )
         },
-        onMagicFabClicked = { handleUiEvent(GalleryUiEvent.OpenImportMenu) },
+        onMagicFabClicked = { TODO() },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
             DropdownMenuItem(

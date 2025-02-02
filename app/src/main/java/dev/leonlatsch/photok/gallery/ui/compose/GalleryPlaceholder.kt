@@ -66,7 +66,7 @@ fun GalleryPlaceholder(
         }
 
         MagicFab {
-            handleUiEvent(GalleryUiEvent.OpenImportMenu)
+            TODO()
         }
     }
 }

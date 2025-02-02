@@ -68,7 +68,6 @@ class GalleryViewModel @Inject constructor(
 
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
-            is GalleryUiEvent.OpenImportMenu -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu())
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items, event.target)
