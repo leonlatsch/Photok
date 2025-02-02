@@ -62,9 +62,6 @@ fun AlbumDetailContent(
                 )
             )
         },
-        onMagicFabClicked = {
-            TODO()
-        },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
             DropdownMenuItem(

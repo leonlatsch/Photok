@@ -43,6 +43,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,10 +79,22 @@ fun PhotoGallery(
     onOpenPhoto: (PhotoTile) -> Unit,
     onExport: (Uri?) -> Unit,
     onDelete: () -> Unit,
-    onMagicFabClicked: () -> Unit,
     additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
     modifier: Modifier = Modifier,
 ) {
+    val magicFabMenuVisible = remember { mutableStateOf(false) }
+    val magicFabVisible = remember {
+        derivedStateOf {
+            multiSelectionState.isActive.value.not() && magicFabMenuVisible.value.not()
+        }
+    }
+
+    // Hide magic fab menu when multi selection active
+    LaunchedEffect(multiSelectionState.isActive.value) {
+        if (multiSelectionState.isActive.value) {
+            magicFabMenuVisible.value = false
+        }
+    }
 
     Box(modifier = modifier.fillMaxSize()) {
         PhotoGrid(
@@ -90,14 +104,16 @@ fun PhotoGallery(
         )
 
         AnimatedVisibility(
-            visible = multiSelectionState.isActive.value.not(),
+            visible = magicFabVisible.value,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
         ) {
             MagicFab {
-                onMagicFabClicked()
+                magicFabMenuVisible.value = true
             }
         }
+
+        MagicFabMenu(openState = magicFabMenuVisible)
 
         var showDeleteConfirmationDialog by remember {
             mutableStateOf(false)
@@ -108,11 +124,12 @@ fun PhotoGallery(
         }
 
         var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
-        
-        val pickExportTargetLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
-            exportDirectoryUri = it
-            showExportConfirmationDialog = true
-        }
+
+        val pickExportTargetLauncher =
+            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+                exportDirectoryUri = it
+                showExportConfirmationDialog = true
+            }
 
         ConfirmationDialog(
             show = showDeleteConfirmationDialog,
@@ -339,7 +356,6 @@ private fun PhotoGridPreview() {
         onOpenPhoto = {},
         onDelete = {},
         onExport = {},
-        onMagicFabClicked = {},
         additionalMultiSelectionActions = {},
     )
 }

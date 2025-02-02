@@ -29,6 +29,7 @@
     <color name="disabledColor">@color/gray</color>
     <color name="dotSelectedColor">@color/darkGray</color>
     <color name="dotUnselectedColor">@color/lightGray</color>
+    <color name="cardBackground">@color/lightGray</color>
 
     <!-- Explicit -->
     <color name="darkRed">#FF0000</color>

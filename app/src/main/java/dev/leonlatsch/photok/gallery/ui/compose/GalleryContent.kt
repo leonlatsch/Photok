@@ -64,7 +64,6 @@ fun GalleryContent(
                 )
             )
         },
-        onMagicFabClicked = { TODO() },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
             DropdownMenuItem(
