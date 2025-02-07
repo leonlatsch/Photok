@@ -1,5 +1,5 @@
 <resources>
-    <!-- GENEL -->
+    <!-- COMMON -->
     <string name="app_name">Photok</string>
     <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2025 Leon Latsch</string>
     <string name="common_slash">/</string>
@@ -21,12 +21,12 @@
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
 
-    <!-- İÇE AKTAR -->
+    <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
     <string name="import_permission_rationale">Photok\'un dosyalarınızı içe aktarmak için depolama alanınıza erişmesi gerekiyor.</string>
     <string name="import_sharted_question">%1$d dosya(ları) içe aktarmak istiyor musunuz?</string>
 
-    <!-- KURULUM -->
+    <!-- SETUP -->
     <string name="setup_create_your_password">Şifrenizi oluşturun</string>
     <string name="setup_enter_password">Şifrenizi girin</string>
     <string name="setup_confirm_password">Şifrenizi onaylayın</string>
@@ -38,13 +38,13 @@
     <string name="setup_password_match_warning">\u26A0 Şifreler eşleşmiyor</string>
     <string name="setupSetup">Kurulum</string>
 
-    <!-- KİLİDİ AÇ -->
+    <!-- UNLOCK -->
     <string name="unlock_title">Kasayı Aç</string>
     <string name="unlock_enter_password">Şifreyi girin</string>
     <string name="unlock_button">Kilidi Aç</string>
     <string name="unlock_wrong_password">\u26A0 Yanlış şifre</string>
 
-    <!-- GALERİ -->
+    <!-- GALLERY -->
     <string name="gallery_placeholder">Kasada dosya yok</string>
     <string name="gallery_all_photos_label">Tüm Dosyalar</string>
     <string name="gallery_albums_label">Albümler</string>
@@ -56,14 +56,14 @@
     <string name="gallery_albums_deleted">Albüm silindi</string>
     <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
 
-    <!-- İÇE AKTAR MENÜSÜ -->
+    <!-- IMPORT MENU -->
     <string name="import_menu_title">İçe Aktar</string>
     <string name="import_menu_photos">Fotoğraflar</string>
     <string name="import_menu_videos">Videolar</string>
     <string name="import_menu_backup">Yedekleme</string>
     <string name="import_menu_hint">Medya öğelerini Photok\'a ekleyin…</string>
 
-    <!-- İŞLEM -->
+    <!-- PROCESS -->
     <string name="process_close">Kapat</string>
     <string name="process_abort">İptal Et</string>
     <string name="process_finished">Tamamlandı</string>
@@ -71,7 +71,7 @@
     <string name="process_aborted">İptal Edildi</string>
     <string name="process_failures_occurred">\u26A0 Bazı öğeler işlenemedi</string>
 
-    <!-- FOTOĞRAFI GÖRÜNTÜLE -->
+    <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Detaylar</string>
     <string name="view_photo_detail_file_name_label">Dosya Adı:</string>
     <string name="view_photo_detail_import_at_label">İçe Aktarma Tarihi:</string>
@@ -79,11 +79,11 @@
     <string name="view_photo_detail_size_label">Dosya Boyutu:</string>
     <string name="view_photo_play_button_description">Videoyu Oynat</string>
 
-        <!-- ANA MENÜ -->
+    <!-- MAIN MENU -->
     <string name="menu_main_lock">Kilitle</string>
     <string name="menu_main_settings">Ayarlar</string>
 
-    <!-- ÇOKLU SEÇİM MENÜSÜ -->
+    <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Tümünü Seç</string>
     <string name="menu_ms_delete">Sil</string>
     <string name="menu_ms_export">Dışa Aktar</string>
@@ -91,12 +91,12 @@
     <string name="menu_ms_add_to_album">Albüme Ekle</string>
     <string name="menu_ms_remove_from_album">Albümden Kaldır</string>
 
-    <!-- SİLME -->
+    <!-- DELETE -->
     <string name="delete_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> silmek istiyor musunuz?</string>
     <string name="delete_are_you_sure_this">Emin misiniz, bu <b>dosyayı</b> silmek istiyor musunuz?</string>
     <string name="delete_deleting">Dosya(lar) siliniyor…</string>
 
-    <!-- DIŞA AKTAR -->
+    <!-- EXPORT -->
     <string name="export_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> galerinizde dışa aktarmak istiyor musunuz?</string>
     <string name="export_and_delete_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> galerinizde dışa aktarmak ve silmek istiyor musunuz?</string>
     <string name="export_are_you_sure_this">Emin misiniz, bu <b>dosyayı</b> galerinizde dışa aktarmak istiyor musunuz?</string>
@@ -106,7 +106,7 @@
     <string name="export_finished">Dışa aktarıldı</string>
     <string name="export_and_delete_finished">Dışa aktarıldı ve silindi</string>
 
-    <!-- HAKKINDA -->
+    <!-- ABOUT -->
     <string name="about_version">Sürüm:</string>
     <string name="about_developed_by">Geliştirici:</string>
     <string name="about_website_label">leonlatsch.dev</string>
@@ -116,7 +116,7 @@
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
     <string name="about_menu_news">Haberler</string>
 
-        <!-- AYARLAR -->
+    <!-- SETTINGS -->
     <string name="settings_title">Ayarlar</string>
 
     <string name="settings_category_app">Uygulama</string>
@@ -179,12 +179,12 @@
     <string name="settings_other_about_title">Hakkında</string>
     <string name="settings_other_about_summary">Photok hakkında bilgi</string>
 
-        <!-- KATKIDA BULUNANLAR -->
+    <!-- CREDITS -->
     <string name="credits_contributors_title">Katkıda Bulunanlar</string>
     <string name="credits_contributors_hint">Tüm katkıda bulunanları görmek için GitHub\'da Photok\'u ziyaret edin</string>
     <string name="credits_icons_title">Simgeler</string>
 
-    <!-- ŞİFREYİ DEĞİŞTİR -->
+    <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Şifrenizi Değiştirin</string>
     <string name="change_password_old_password">Eski Şifre</string>
     <string name="change_password_new_password">Yeni Şifre</string>
@@ -195,7 +195,7 @@
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
 
-    <!-- UYGULAMAYI GİZLE -->
+    <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok\'u Gizle</string>
     <string name="hide_app_title_show">Photok\'u Göster</string>
     <string name="hide_app_status_label">Photok şu anda:</string>
@@ -207,7 +207,7 @@
     <string name="hide_app_hint">Gizlendikten sonra, Photok yalnızca telefon çeviricisinden gizli başlatma kodunuz ile açılabilir.</string>
     <string name="hide_app_hint_current_code">Mevcut başlatma kodu:</string>
 
-    <!-- KARŞILAMA EKRANI -->
+    <!-- ON BOARDING -->
     <string name="onboarding_next">İleri</string>
     <string name="onboarding_finish">Bitir</string>
     <string name="onboarding_skip"><u>Atla</u></string>
@@ -219,7 +219,7 @@
     <string name="onboarding_slide3_title">İçe Aktarmaya Başlayın</string>
     <string name="onboarding_slide3_description">Fotoğraflarınızı içe aktarmaya başlayın ve başkalarından koruyun.\nDaha sonra bunları galerinizden silebilirsiniz.</string>
 
-    <!-- YEDEKLEME -->
+    <!-- BACKUP -->
     <string name="backup_processing_title">Yedekleme oluşturuluyor…</string>
     <string name="backup_restore_title">Yedeği Geri Yükle</string>
     <string name="backup_restore_validating">Yedek doğrulanıyor…</string>
@@ -232,7 +232,7 @@
     <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
     <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
 
-    <!-- HABERLER -->
+    <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
@@ -249,7 +249,7 @@
     <string name="news_title_4">Daha Fazla Dil</string>
     <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da kullanılabilir</string>
 
-    <!-- KURTARMA MENÜSÜ -->
+    <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>
     <string name="recovery_menu_item_open_photok">Photok\'u Aç</string>
     <string name="recovery_subtitle_reset_hide_app">Uygulamayı Gizleme Ayarını Sıfırla</string>
