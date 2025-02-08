@@ -49,7 +49,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
 <!-- END-TRANSLATIONS -->
 
-> You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md)
+> You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
 LICENSE
 =======
