@@ -75,11 +75,12 @@
     <string name="gallery_albums_photos_added">%1$d elemente hinzugefügt</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Importieren</string>
-    <string name="import_menu_photos">Fotos</string>
-    <string name="import_menu_videos">Videos</string>
-    <string name="import_menu_backup">Backup</string>
-    <string name="import_menu_hint">Füge Medienelemente zu Photok hinzu…</string>
+    <string name="import_menu_fab_label">Importieren</string>
+    <string name="import_menu_new_files_title">Neue Dateien importieren</string>
+    <string name="import_menu_new_files_description">Importiere Fotos und Videos aus deiner Galerie.</string>
+    <string name="import_menu_restore_title">Ein Backup wiederherstellen</string>
+    <string name="import_menu_restore_description">Stelle ein Photok Backup wieder her. Die Dateien werden zu den aktuellen Dateien hinzugefügt.</string>
+    <string name="import_menu_delete_warning">Importierte Dateien werden gelöscht</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>

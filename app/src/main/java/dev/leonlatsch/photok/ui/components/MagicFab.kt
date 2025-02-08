@@ -64,12 +64,12 @@ fun MagicFab(
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_add),
-            contentDescription = "Add",
+            contentDescription = null,
             tint = Color.White
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
-            text = stringResource(R.string.import_menu_title),
+            text = stringResource(R.string.import_menu_fab_label),
             color = Color.White,
         )
     }

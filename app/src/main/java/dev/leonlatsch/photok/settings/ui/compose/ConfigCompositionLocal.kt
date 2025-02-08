@@ -20,5 +20,5 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import dev.leonlatsch.photok.settings.data.Config
 
-val LocalConfig: ProvidableCompositionLocal<Config> =
-    compositionLocalOf { error("Config no provided") }
+val LocalConfig: ProvidableCompositionLocal<Config?> =
+    compositionLocalOf { null }

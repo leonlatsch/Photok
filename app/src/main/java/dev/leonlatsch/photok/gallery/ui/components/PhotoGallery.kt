@@ -152,7 +152,7 @@ fun PhotoGallery(
             show = showExportConfirmationDialog,
             onDismissRequest = { showExportConfirmationDialog = false },
             text = stringResource(
-                if (LocalConfig.current.deleteExportedFiles) {
+                if (LocalConfig.current?.deleteExportedFiles == true) {
                     R.string.export_and_delete_are_you_sure
                 } else {
                     R.string.export_are_you_sure
