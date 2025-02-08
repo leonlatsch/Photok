@@ -20,6 +20,8 @@ There are several `strings.xml`  files in `app/src/main/res/values[your_language
 In these files un-translated texts are marked with `<!-- TODO -->`. Translate these and remove the marker.
 Open a Pull Request with your new text.
 
+[Exampe](https://github.com/leonlatsch/Photok/pull/411)
+
 **Add a new language**
 
 Adding a new language is about the same process as editing an existing one.
@@ -33,6 +35,8 @@ The folder name of Android string files is formatted as the following:
 - without region variant: values-[locale]
 - with region variant: values-[locale]-r[region]
 - For example: values-en, values-en-rGB, values-el-rGR.
+
+[Example](https://github.com/leonlatsch/Photok/pull/344)
 
 ## New Features
 
