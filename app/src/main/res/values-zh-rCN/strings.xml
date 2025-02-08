@@ -74,11 +74,12 @@
     <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">导入</string>
-    <string name="import_menu_photos">照片</string>
-    <string name="import_menu_videos">视频</string>
-    <string name="import_menu_backup">备份</string>
-    <string name="import_menu_hint">添加媒体项目到 Photok…</string>
+    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
+    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
+    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
+    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
+    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
+    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>

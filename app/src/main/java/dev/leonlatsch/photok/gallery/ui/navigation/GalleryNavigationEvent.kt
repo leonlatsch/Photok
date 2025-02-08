@@ -16,7 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
+import android.net.Uri
+
 sealed interface GalleryNavigationEvent {
     data object ShowNewFeaturesDialog : GalleryNavigationEvent
     data class ShowToast(val text: String) : GalleryNavigationEvent
+    data class StartImport(val fileUris: List<Uri>) : GalleryNavigationEvent
+    data class StartRestoreBackup(val backupUri: Uri) : GalleryNavigationEvent
 }
