@@ -26,6 +26,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +84,12 @@ class AlbumDetailViewModel @AssistedInject constructor(
             }
 
             is AlbumDetailUiEvent.OpenPhoto -> {
-                photoActionsChannel.trySend(PhotoAction.OpenPhoto(event.item.uuid, albumFlow.value.uuid))
+                photoActionsChannel.trySend(
+                    PhotoAction.OpenPhoto(
+                        event.item.uuid,
+                        albumFlow.value.uuid
+                    )
+                )
             }
 
             AlbumDetailUiEvent.DeleteAlbum -> {
@@ -119,7 +125,22 @@ class AlbumDetailViewModel @AssistedInject constructor(
             }
 
             is AlbumDetailUiEvent.RenameAlbum -> renameAlbum(event.newName)
+            is AlbumDetailUiEvent.OnImportChoice -> onImportChoice(event.choice)
         }
+    }
+
+    private fun onImportChoice(choice: ImportChoice) {
+        val navEvent = when (choice) {
+            is ImportChoice.AddNewFiles -> AlbumDetailNavigator.NavigationEvent.StartImport(
+                fileUris = choice.fileUris,
+                albumUuid = albumFlow.value.uuid,
+            )
+            is ImportChoice.RestoreBackup -> AlbumDetailNavigator.NavigationEvent.StartRestoreBackup(
+                choice.backupUri,
+            )
+        }
+
+        navEventsChannel.trySend(navEvent)
     }
 
     private fun renameAlbum(newName: String) {

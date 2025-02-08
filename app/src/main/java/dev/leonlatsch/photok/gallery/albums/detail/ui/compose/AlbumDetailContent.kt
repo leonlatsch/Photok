@@ -62,6 +62,9 @@ fun AlbumDetailContent(
                 )
             )
         },
+        onImportChoice = {
+            handleUiEvent(AlbumDetailUiEvent.OnImportChoice(it))
+        },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
             DropdownMenuItem(

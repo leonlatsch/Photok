@@ -38,7 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.gallery.ui.components.MagicFabMenu
+import dev.leonlatsch.photok.gallery.ui.components.ImportMenuBottomSheet
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -49,7 +49,7 @@ fun GalleryPlaceholder(
 ) {
     Box(modifier = modifier.fillMaxSize()) {
 
-        val magicFabMenuVisible = remember { mutableStateOf(false) }
+        val importMenuBottomSheetVisible = remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -71,16 +71,16 @@ fun GalleryPlaceholder(
             )
         }
 
-        AnimatedVisibility(
-            visible = magicFabMenuVisible.value.not(),
-            modifier = Modifier.align(Alignment.BottomEnd)
-        ) {
-            MagicFab {
-                magicFabMenuVisible.value = true
-            }
+        MagicFab {
+            importMenuBottomSheetVisible.value = true
         }
 
-        MagicFabMenu(openState = magicFabMenuVisible)
+        ImportMenuBottomSheet(
+            openState = importMenuBottomSheetVisible,
+            onImportChoice = {
+                handleUiEvent(GalleryUiEvent.OnImportChoice(it))
+            }
+        )
     }
 }
 

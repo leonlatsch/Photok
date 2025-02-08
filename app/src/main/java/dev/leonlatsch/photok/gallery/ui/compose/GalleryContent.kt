@@ -64,6 +64,9 @@ fun GalleryContent(
                 )
             )
         },
+        onImportChoice = {
+            handleUiEvent(GalleryUiEvent.OnImportChoice(it))
+        },
         additionalMultiSelectionActions = { closeActions ->
             HorizontalDivider()
             DropdownMenuItem(

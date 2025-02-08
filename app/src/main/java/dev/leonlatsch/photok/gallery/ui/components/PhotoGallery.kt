@@ -79,20 +79,21 @@ fun PhotoGallery(
     onOpenPhoto: (PhotoTile) -> Unit,
     onExport: (Uri?) -> Unit,
     onDelete: () -> Unit,
+    onImportChoice: (ImportChoice) -> Unit,
     additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
     modifier: Modifier = Modifier,
 ) {
-    val magicFabMenuVisible = remember { mutableStateOf(false) }
+    val importMenuBottomSheetVisible = remember { mutableStateOf(false) }
     val magicFabVisible = remember {
         derivedStateOf {
-            multiSelectionState.isActive.value.not() && magicFabMenuVisible.value.not()
+            multiSelectionState.isActive.value.not()
         }
     }
 
     // Hide magic fab menu when multi selection active
     LaunchedEffect(multiSelectionState.isActive.value) {
         if (multiSelectionState.isActive.value) {
-            magicFabMenuVisible.value = false
+            importMenuBottomSheetVisible.value = false
         }
     }
 
@@ -109,11 +110,14 @@ fun PhotoGallery(
                 .align(Alignment.BottomEnd)
         ) {
             MagicFab {
-                magicFabMenuVisible.value = true
+                importMenuBottomSheetVisible.value = true
             }
         }
 
-        MagicFabMenu(openState = magicFabMenuVisible)
+        ImportMenuBottomSheet(
+            openState = importMenuBottomSheetVisible,
+            onImportChoice = onImportChoice,
+        )
 
         var showDeleteConfirmationDialog by remember {
             mutableStateOf(false)
@@ -356,6 +360,7 @@ private fun PhotoGridPreview() {
         onOpenPhoto = {},
         onDelete = {},
         onExport = {},
+        onImportChoice = {},
         additionalMultiSelectionActions = {},
     )
 }
