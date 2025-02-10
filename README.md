@@ -7,12 +7,14 @@
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
 
-Encrypt your photos on your device and keep them safe from others.
+Encrypt images and videos on your device and keep them safe from others.
 
 ## About
-Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
-It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
-Photok is completely free, open source, and contains no ads.
+Photok is a free and open-source gallery app for Android.
+Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
+This makes Photok different from other encrypted gallery apps.
+
+Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
 
 <a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank">
     <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" width="250" height="54" />

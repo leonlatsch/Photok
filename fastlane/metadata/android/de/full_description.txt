@@ -1,6 +1,6 @@
 Photok ist eine freie Open-Source-Galerie-App für Android.
 Importierte Dateien werden lokal auf dem Gerät mit AES-256 verschlüsselt und nur beim Nutzen der App im Arbeitsspeicher entschlüsselt.
- Dies hebt Photok von anderen verschlüsselten Galerie-Apps ab.
+Dies hebt Photok von anderen verschlüsselten Galerie-Apps ab.
 
 Photok ist komplett kostenlos, Open Source und werbefrei. Es wird von mir (Leon) und freiwilligen Helfern als ein Hobby entwickelt.
 
