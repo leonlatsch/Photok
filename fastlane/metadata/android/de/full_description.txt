@@ -1,23 +1,24 @@
-Photok ist eine kostenloser Foto-Safe. Es speichert deine Fotos & Videos verschlüsselt auf deinem Smartphone und versteckt sie vor fremden.
-Es benutzt Technologien wie AES-256 encryption standard oder bcrypt, um deine Fotos zu sichern.
-Photos ist komplett kostenlos, open source und werbefrei.
+Photok ist eine freie Open-Source-Galerie-App für Android.
+Importierte Dateien werden lokal auf dem Gerät mit AES-256 verschlüsselt und nur beim Nutzen der App im Arbeitsspeicher entschlüsselt.
+ Dies hebt Photok von anderen verschlüsselten Galerie-Apps ab.
 
-<b>Funktionen</b>
+Photok ist komplett kostenlos, Open Source und werbefrei. Es wird von mir (Leon) und freiwilligen Helfern als ein Hobby entwickelt.
 
-- importiere Fotos und Videos aus deiner Galerie
-- komplett funktionale In-App-Galerie.
-- exportiere Fotos zurück in deine Galerie
-- ändere dein Passwort
-- erstelle und stelle Backups wieder her
-- senden an Photok
-- app Icon verstecken
-- Wiederherstellungs Menu
+<b>Features</b>
+
+- Importiere Fotos und Videos aus deiner Galerie
+- Sortieren von Dateien in Alben
+- Exportiere Fotos zurück in deine Galerie
+- Erstelle und stelle Backups wieder her
+- Senden an Photok
+- App verstecken
+- Automatisches Löschen beim Importieren & Exportieren
 
 <b>Vorteile</b>
 
-- verstecke deine sensiblen Fotos vor Anderen
-- schütze deine Fotos vor Datendiebstahl
+- Verstecke deine sensiblen Fotos vor Anderen
+- Schütze deine Fotos vor Datendiebstahl
 
-Photok auf GitHub: https://github.com/leonlatsch/Photok
+Photok on GitHub: https://github.com/leonlatsch/Photok
 
 Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
