@@ -67,8 +67,8 @@ android {
 
 licenseReport {
     copyCsvReportToAssets = false
-    copyHtmlReportToAssets = false
-    copyJsonReportToAssets = true
+    copyHtmlReportToAssets = true
+    copyJsonReportToAssets = false
 }
 
 dependencies {
@@ -139,9 +139,6 @@ dependencies {
 
     // Androidx ExifInterface
     implementation("androidx.exifinterface", "exifinterface", "1.3.0-alpha01")
-
-    // Display OSS Licenses
-    implementation("com.github.leonlatsch:OssLicenseView:1.1.0")
 
     // Telephoto
     implementation("me.saket.telephoto:zoomable-image-coil:0.14.0")
