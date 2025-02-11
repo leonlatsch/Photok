@@ -37,6 +37,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +49,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -112,7 +115,7 @@ private fun ImportMenuDialogContent(
     val isPreview = LocalInspectionMode.current
 
     Column(
-        modifier = modifier.padding(vertical = 12.dp),
+        modifier = modifier.padding(bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         ImportMenuItem(
@@ -186,7 +189,10 @@ fun ImportMenuItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(horizontal = 22.dp),
+            .padding(
+                start = 24.dp,
+                end = 24.dp * 2,
+            ),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Row(
@@ -201,7 +207,7 @@ fun ImportMenuItem(
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.titleLarge,
             )
         }
 
@@ -215,12 +221,27 @@ fun ImportMenuItem(
     }
 }
 
-@PreviewLightDark
+@OptIn(ExperimentalMaterial3Api::class)
+@PreviewLightDark()
 @Composable
 private fun Preview() {
     val openState = remember { mutableStateOf(true) }
     AppTheme {
-        Surface {
+        ModalBottomSheet(sheetState = rememberStandardBottomSheetState(), onDismissRequest = {}) {
+            ImportMenuDialogContent(
+                openState = openState,
+                onImportChoice = {}
+            )
+        }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(widthDp = 340, heightDp = 600)
+@Composable
+private fun SmallPreview() {
+    val openState = remember { mutableStateOf(true) }
+    AppTheme {
+        ModalBottomSheet(sheetState = rememberStandardBottomSheetState(), onDismissRequest = {}) {
             ImportMenuDialogContent(
                 openState = openState,
                 onImportChoice = {}
