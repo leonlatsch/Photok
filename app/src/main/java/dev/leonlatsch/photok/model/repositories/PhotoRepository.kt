@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
-import android.content.Intent
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
@@ -96,7 +95,7 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      * Returns re created uuid
      */
-    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource): String {
+    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource, uriHasDeletePermission: Boolean): String {
         val mimeType = app.contentResolver.getType(sourceUri)
         val type = PhotoType.fromMimeType(mimeType)
 
@@ -116,12 +115,16 @@ class PhotoRepository @Inject constructor(
             return String.empty
         }
 
-        if (config.deleteImportedFiles && importSource != ImportSource.Share) {
-            val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
-            return if (deleted == true) photo.uuid else String.empty
+        if (!config.deleteImportedFiles) {
+            return photo.uuid
         }
 
-        return photo.uuid
+        if (importSource == ImportSource.Share || !uriHasDeletePermission) {
+            return photo.uuid
+        }
+
+        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+        return if (deleted == true) photo.uuid else String.empty
     }
 
     /**

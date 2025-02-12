@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.gallery.ui.importing
 
 import android.app.Application
 import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.ImportSource
@@ -41,8 +42,14 @@ class ImportViewModel @Inject constructor(
     var albumUUID: String? = null
     var importSource = ImportSource.InApp
 
+    val importingFromPhotoPicker = ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(app)
+
     override suspend fun processItem(item: Uri) {
-        val photoUUID = photoRepository.safeImportPhoto(item, importSource)
+        val photoUUID = photoRepository.safeImportPhoto(
+            sourceUri = item,
+            importSource = importSource,
+            uriHasDeletePermission = !importingFromPhotoPicker,
+        )
         if (photoUUID.isEmpty()) {
             failuresOccurred = true
             return

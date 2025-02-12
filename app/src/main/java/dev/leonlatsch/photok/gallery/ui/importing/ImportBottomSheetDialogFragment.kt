@@ -17,11 +17,19 @@
 package dev.leonlatsch.photok.gallery.ui.importing
 
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.ImportSource
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
+import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Process Fragment to import photos.
@@ -41,11 +49,42 @@ class ImportBottomSheetDialogFragment(
     true
 ) {
 
+    private val deleteRequestLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+        Timber.d("Delete Request result: ${it.resultCode}")
+    }
+
+    @Inject
+    lateinit var config: Config
+
     override val viewModel: ImportViewModel by viewModels()
 
     override fun prepareViewModel(items: List<Uri>?) {
         viewModel.albumUUID = albumUUID
         viewModel.importSource = importSource
         super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
+    }
+
+    override fun onProcessingDone() {
+        if (config.deleteImportedFiles && viewModel.importingFromPhotoPicker && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requestDelete(viewModel.items)
+        }
+        super.onProcessingDone()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun requestDelete(uris: List<Uri>) {
+        try {
+            // Create delete request
+            val deleteRequest = MediaStore.createDeleteRequest(
+                requireContext().contentResolver,
+                uris,
+            )
+
+            deleteRequestLauncher.launch(
+                IntentSenderRequest.Builder(deleteRequest.intentSender).build()
+            )
+        } catch (e: Exception) {
+            Timber.e("Error requesting delete: $e")
+        }
     }
 }
