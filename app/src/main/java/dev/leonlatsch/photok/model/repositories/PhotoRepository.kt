@@ -95,7 +95,7 @@ class PhotoRepository @Inject constructor(
      * Collects meta data and calls [safeCreatePhoto].
      * Returns re created uuid
      */
-    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource, uriHasDeletePermission: Boolean): String {
+    suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource): String {
         val mimeType = app.contentResolver.getType(sourceUri)
         val type = PhotoType.fromMimeType(mimeType)
 
@@ -115,11 +115,7 @@ class PhotoRepository @Inject constructor(
             return String.empty
         }
 
-        if (!config.deleteImportedFiles) {
-            return photo.uuid
-        }
-
-        if (importSource == ImportSource.Share || !uriHasDeletePermission) {
+        if (!config.deleteImportedFiles || importSource == ImportSource.Share) {
             return photo.uuid
         }
 

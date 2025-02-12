@@ -35,9 +35,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -53,6 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
@@ -91,16 +90,24 @@ private fun ImportMenuDialogContent(
     onImportChoice: (ImportChoice) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val importNewFilesLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
-            openState.value = false
-            it.ifEmpty { return@rememberLauncherForActivityResult }
+    val onImportNewItems: (List<Uri>) -> Unit = {
+        openState.value = false
 
+        if (it.isNotEmpty()) {
             onImportChoice(
                 ImportChoice.AddNewFiles(fileUris = it)
             )
-
         }
+    }
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
+        onImportNewItems(it)
+        }
+
+    val openDocumentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {
+        onImportNewItems(it)
+    }
+
     val restoreBackupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
             openState.value = false
@@ -114,6 +121,8 @@ private fun ImportMenuDialogContent(
     val config = LocalConfig.current
     val isPreview = LocalInspectionMode.current
 
+    val deleteImportedFiles = remember { config?.deleteImportedFiles }
+
     Column(
         modifier = modifier.padding(bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -125,16 +134,22 @@ private fun ImportMenuDialogContent(
             chips = { modifier ->
 
                 val showWarningChip =
-                    config?.deleteImportedFiles == true || isPreview
+                    deleteImportedFiles == true || isPreview
 
                 if (showWarningChip) {
                     ImportWarningChip(modifier = modifier)
                 }
             },
             onClick = {
-                importNewFilesLauncher.launch(
-                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo)
-                )
+                if (deleteImportedFiles == true) {
+                    openDocumentLauncher.launch(
+                        PhotoType.entries.map { it.mimeType }.toTypedArray()
+                    )
+                } else {
+                    photoPickerLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo)
+                    )
+                }
             }
         )
 

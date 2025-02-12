@@ -42,13 +42,10 @@ class ImportViewModel @Inject constructor(
     var albumUUID: String? = null
     var importSource = ImportSource.InApp
 
-    val importingFromPhotoPicker = ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(app)
-
     override suspend fun processItem(item: Uri) {
         val photoUUID = photoRepository.safeImportPhoto(
             sourceUri = item,
             importSource = importSource,
-            uriHasDeletePermission = !importingFromPhotoPicker,
         )
         if (photoUUID.isEmpty()) {
             failuresOccurred = true
