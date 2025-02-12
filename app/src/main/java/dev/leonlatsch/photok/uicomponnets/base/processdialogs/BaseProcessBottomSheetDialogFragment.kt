@@ -81,6 +81,8 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                 ProcessState.FINISHED -> {
                     enterFinishedOrAbortedState()
                     setStatusIcon(R.drawable.ic_check, android.R.color.holo_green_dark)
+                    // auto dismiss
+                    dismiss()
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
