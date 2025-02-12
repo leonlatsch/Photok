@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogBottomSheetProcessBinding
@@ -27,6 +28,9 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableBottomSheetDialogFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Abstract base for all process dialogs.
@@ -82,7 +86,10 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     enterFinishedOrAbortedState()
                     setStatusIcon(R.drawable.ic_check, android.R.color.holo_green_dark)
                     // auto dismiss
-                    dismiss()
+                    lifecycleScope.launch {
+                        delay(1500)
+                        dismiss()
+                    }
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
