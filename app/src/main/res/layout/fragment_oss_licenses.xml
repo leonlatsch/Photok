@@ -28,10 +28,10 @@
             app:navigationIcon="@drawable/ic_back"
             app:title="@string/about_third_party" />
 
-        <dev.leonlatsch.osslicenseview.OssLicenseView
-            android:id="@+id/ossRecycler"
+
+        <WebView
+            android:id="@+id/licenseWebView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 </layout>

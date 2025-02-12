@@ -24,7 +24,7 @@ import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
-private const val LICENSE_REPORT_FILE = "open_source_licenses.json"
+private const val LICENSE_REPORT_FILE = "open_source_licenses.html"
 
 /**
  * Fragment for displaying open source licenses.
@@ -43,6 +43,6 @@ class OssLicensesFragment :
             findNavController().navigateUp()
         }
 
-        binding.ossRecycler.initialize(LICENSE_REPORT_FILE)
+        binding.licenseWebView.loadUrl("file:///android_asset/$LICENSE_REPORT_FILE")
     }
 }
