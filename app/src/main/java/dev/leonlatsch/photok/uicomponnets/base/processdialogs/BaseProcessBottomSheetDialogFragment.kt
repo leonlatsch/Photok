@@ -28,7 +28,6 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableBottomSheetDialogFragment
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -83,7 +82,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     getString(processingLabelTextResource)
                 }
                 ProcessState.FINISHED -> {
-                    enterFinishedOrAbortedState()
+                    onProcessingDone()
                     setStatusIcon(R.drawable.ic_check, android.R.color.holo_green_dark)
                     // auto dismiss
                     lifecycleScope.launch {
@@ -93,7 +92,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     getString(R.string.process_finished)
                 }
                 ProcessState.ABORTED -> {
-                    enterFinishedOrAbortedState()
+                    onProcessingDone()
                     setStatusIcon(R.drawable.ic_close, android.R.color.holo_red_dark)
                     getString(R.string.process_aborted)
                 }
@@ -105,7 +104,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
         viewModel.runProcessing()
     }
 
-    private fun enterFinishedOrAbortedState() {
+    open fun onProcessingDone() {
         isCancelable = true
         binding.processCloseButton.show()
         binding.processAbortButton.hide()

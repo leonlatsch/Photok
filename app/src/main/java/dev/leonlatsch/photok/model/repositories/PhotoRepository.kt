@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
-import android.content.Intent
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
@@ -116,12 +115,12 @@ class PhotoRepository @Inject constructor(
             return String.empty
         }
 
-        if (config.deleteImportedFiles && importSource != ImportSource.Share) {
-            val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
-            return if (deleted == true) photo.uuid else String.empty
+        if (!config.deleteImportedFiles || importSource == ImportSource.Share) {
+            return photo.uuid
         }
 
-        return photo.uuid
+        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+        return if (deleted == true) photo.uuid else String.empty
     }
 
     /**
