@@ -47,6 +47,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -178,7 +179,11 @@ fun ImportWarningChip(modifier: Modifier = Modifier) {
             )
         },
         label = {
-            Text(stringResource(R.string.import_menu_delete_warning))
+            Text(
+                text = stringResource(R.string.import_menu_delete_warning),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         },
         colors = AssistChipDefaults.assistChipColors(
             leadingIconContentColor = Colors.Warning,
@@ -189,7 +194,7 @@ fun ImportWarningChip(modifier: Modifier = Modifier) {
 
 val IconSize = 24.dp
 val IconEndPadding = 4.dp
-val StartPadding = IconSize + IconEndPadding
+val DescriptionStartPadding = IconSize + IconEndPadding
 
 @Composable
 fun ImportMenuItem(
@@ -223,16 +228,18 @@ fun ImportMenuItem(
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
 
         Text(
-            modifier = Modifier.padding(start = StartPadding),
+            modifier = Modifier.padding(start = DescriptionStartPadding),
             text = description,
             style = MaterialTheme.typography.bodyMedium,
         )
 
-        chips(Modifier.padding(start = StartPadding))
+        chips(Modifier.padding(start = DescriptionStartPadding))
     }
 }
 
