@@ -90,23 +90,23 @@ private fun ImportMenuDialogContent(
     onImportChoice: (ImportChoice) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val onImportNewItems: (List<Uri>) -> Unit = {
+    val onImportNewItems: (List<Uri>) -> Unit = { urisToImport ->
         openState.value = false
 
-        if (it.isNotEmpty()) {
+        if (urisToImport.isNotEmpty()) {
             onImportChoice(
-                ImportChoice.AddNewFiles(fileUris = it)
+                ImportChoice.AddNewFiles(fileUris = urisToImport)
             )
         }
     }
 
-    val photoPickerLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
-        onImportNewItems(it)
-        }
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickMultipleVisualMedia()
+    ) { onImportNewItems(it) }
 
-    val openDocumentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {
-        onImportNewItems(it)
-    }
+    val openDocumentLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenMultipleDocuments()
+    ) { onImportNewItems(it) }
 
     val restoreBackupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
