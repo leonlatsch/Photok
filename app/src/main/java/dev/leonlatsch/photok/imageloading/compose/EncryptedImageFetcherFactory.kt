@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.imageloading.compose
 
 import android.content.res.Resources
+import android.view.WindowManager
 import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
@@ -27,12 +28,14 @@ import javax.inject.Inject
 class EncryptedImageFetcherFactory @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val resources: Resources,
+    private val windowManager: WindowManager,
 ) : Fetcher.Factory<EncryptedImageRequestData> {
     override fun create(data: EncryptedImageRequestData, options: Options, imageLoader: ImageLoader): Fetcher =
         EncryptedImageFetcher(
             encryptedStorageManager = encryptedStorageManager,
             requestData = data,
             resources = resources,
+            windowManager = windowManager,
         )
 
 }

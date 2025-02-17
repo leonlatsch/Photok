@@ -20,12 +20,14 @@ import android.content.Context
 import coil.ImageLoader
 import coil.decode.VideoFrameDecoder
 import coil.request.CachePolicy
+import coil.util.DebugLogger
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.imageloading.compose.EncryptedImageFetcherFactory
 import dev.leonlatsch.photok.imageloading.data.ImageStorageImpl
 import dev.leonlatsch.photok.imageloading.domain.ImageStorage
@@ -47,6 +49,11 @@ object ImageLoadingModule {
         .diskCache(null)
         .memoryCachePolicy(CachePolicy.DISABLED)
         .memoryCache(null)
+        .apply {
+            if (BuildConfig.DEBUG) {
+                logger(DebugLogger())
+            }
+        }
         .build()
 
     @Provides
