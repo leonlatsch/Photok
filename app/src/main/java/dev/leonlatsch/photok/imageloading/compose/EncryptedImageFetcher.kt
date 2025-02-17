@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -26,14 +27,20 @@ import android.os.Build.VERSION_CODES
 import android.view.WindowManager
 import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
+import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
 import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
+import coil.fetch.SourceResult
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.getCompatScreenSize
+import okio.BufferedSource
+import okio.buffer
+import okio.source
+import java.io.ByteArrayInputStream
 import java.io.InputStream
 import javax.crypto.CipherInputStream
 
@@ -47,6 +54,7 @@ class EncryptedImageFetcher(
     private val requestData: EncryptedImageRequestData,
     private val resources: Resources,
     private val windowManager: WindowManager,
+    private val context: Context,
 ) : Fetcher {
 
     @Suppress("DEPRECATION") // ImageDecoder is only available from API 28
@@ -57,7 +65,15 @@ class EncryptedImageFetcher(
         val drawable = if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
             decodeGif(inputStream)
         } else {
-            safeDecodeInputStream(inputStream) ?: return null
+            // safeDecodeInputStream(inputStream)
+            return SourceResult(
+                source = ImageSource(
+                    source = syntheticBufferFor(inputStream),
+                    context = context,
+                ),
+                mimeType = requestData.mimeType,
+                DataSource.MEMORY,
+            )
         }
 
         return DrawableResult(
@@ -65,6 +81,13 @@ class EncryptedImageFetcher(
             isSampled = false,
             dataSource = DataSource.DISK,
         )
+    }
+
+    private fun syntheticBufferFor(inputStream: InputStream): BufferedSource {
+        val rawBytes = inputStream.readBytes()
+        val byteStream = ByteArrayInputStream(rawBytes)
+
+        return byteStream.source().buffer()
     }
 
     private fun decodeGif(inputStream: CipherInputStream) =

@@ -16,11 +16,13 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
+import android.content.Context
 import android.content.res.Resources
 import android.view.WindowManager
 import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import javax.inject.Inject
@@ -29,6 +31,7 @@ class EncryptedImageFetcherFactory @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val resources: Resources,
     private val windowManager: WindowManager,
+    @ApplicationContext private val context: Context,
 ) : Fetcher.Factory<EncryptedImageRequestData> {
     override fun create(data: EncryptedImageRequestData, options: Options, imageLoader: ImageLoader): Fetcher =
         EncryptedImageFetcher(
@@ -36,6 +39,7 @@ class EncryptedImageFetcherFactory @Inject constructor(
             requestData = data,
             resources = resources,
             windowManager = windowManager,
+            context = context,
         )
 
 }
