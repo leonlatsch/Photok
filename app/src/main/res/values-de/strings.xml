@@ -116,9 +116,9 @@
     <string name="delete_deleting">Lösche Dateien…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_and_delete_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
+    <string name="export_and_delete_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_finished">Exportiert und gelöscht</string>
     <string name="export_exporting">Exportiere Dateien…</string>
