@@ -88,7 +88,7 @@ class EncryptedImageFetcher(
 
     private fun decodeGif(inputStream: InputStream) =
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
-            val bytes = inputStream.readBytes()
+            val bytes = inputStream.use { it.readBytes() }
             val source = ImageDecoder.createSource(bytes)
             ImageDecoder.decodeDrawable(source)
         } else {

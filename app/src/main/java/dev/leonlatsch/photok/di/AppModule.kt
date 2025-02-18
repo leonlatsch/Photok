@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.di
 
 import android.content.Context
 import android.content.res.Resources
-import android.view.WindowManager
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
