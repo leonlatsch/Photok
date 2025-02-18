@@ -254,7 +254,7 @@ fun ImportMenuItem(
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleLarge,
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -285,7 +285,7 @@ private fun Preview() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(widthDp = 280, heightDp = 600)
+@Preview(widthDp = 280, heightDp = 600, locale = "de")
 @Composable
 private fun SmallPreview() {
     val openState = remember { mutableStateOf(true) }
