@@ -7,12 +7,14 @@
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
 
-Encrypt your photos on your device and keep them safe from others.
+Encrypt images and videos on your device and keep them safe from others.
 
 ## About
-Photok is a free Photo-Safe. It stores your photos encrypted on your device and hides them from others.
-It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
-Photok is completely free, open source, and contains no ads.
+Photok is a free and open-source gallery app for Android.
+Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
+This makes Photok different from other encrypted gallery apps.
+
+Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
 
 <a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank">
     <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" width="250" height="54" />
@@ -38,16 +40,18 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-84%25-yellow)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-84%25-yellow)
-![Dutch](https://img.shields.io/badge/Dutch-84%25-yellow)
-![French](https://img.shields.io/badge/French-100%25-brightgreen)
+![Arabic](https://img.shields.io/badge/Arabic-81%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-81%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-81%25-yellow)
+![French](https://img.shields.io/badge/French-96%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-81%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-100%25-brightgreen)
-![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
-![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-78%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-96%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-96%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-96%25-yellow)
 <!-- END-TRANSLATIONS -->
+
+> You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
 LICENSE
 =======

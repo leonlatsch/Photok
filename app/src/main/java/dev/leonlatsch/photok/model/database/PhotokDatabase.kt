@@ -29,7 +29,7 @@ import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
 
-private const val DATABASE_VERSION = 2
+private const val DATABASE_VERSION = 3
 const val DATABASE_NAME = "photok.db"
 
 /**
@@ -50,7 +50,11 @@ const val DATABASE_NAME = "photok.db"
             from = 1,
             to = 2,
             spec = MigrationSpec1To2::class
-        )
+        ),
+        AutoMigration(
+            from = 2,
+            to = 3,
+        ),
     ]
 )
 @TypeConverters(Converters::class)

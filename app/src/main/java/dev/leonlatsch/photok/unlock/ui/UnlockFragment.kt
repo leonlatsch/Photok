@@ -23,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
@@ -50,6 +51,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
+
+        if (BuildConfig.DEBUG) {
+            viewModel.password = "abc123"
+        }
 
         viewModel.addOnPropertyChange<UnlockState>(BR.unlockState) {
             when (it) {

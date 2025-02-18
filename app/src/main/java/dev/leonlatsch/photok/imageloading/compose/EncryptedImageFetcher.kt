@@ -16,22 +16,33 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
+import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.Movie
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Build.VERSION_CODES
+import android.view.WindowManager
 import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
+import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
 import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
+import coil.fetch.SourceResult
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.other.extensions.getCompatScreenSize
+import okio.BufferedSource
+import okio.buffer
+import okio.source
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import javax.crypto.CipherInputStream
 
 /**
  * Coil image fetcher decrypting the image on the fly while rendering.
@@ -41,33 +52,48 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 class EncryptedImageFetcher(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val requestData: EncryptedImageRequestData,
-    private val resources: Resources,
+    private val context: Context,
 ) : Fetcher {
 
-    @Suppress("DEPRECATION") // ImageDecoder is only available from API 28
     override suspend fun fetch(): FetchResult? {
-        val inputStream = encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
+        val inputStream =
+            encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
         inputStream ?: return null
 
-        val drawable = if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
-            if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
-                val bytes = inputStream.readBytes()
-                val source = ImageDecoder.createSource(bytes)
-                ImageDecoder.decodeDrawable(source)
-            } else {
-                val movie = Movie.decodeStream(inputStream)
-                MovieDrawable(movie)
-            }
+        return if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
+            val drawable = decodeGif(inputStream)
+            DrawableResult(
+                drawable = drawable,
+                isSampled = false,
+                dataSource = DataSource.DISK,
+            )
         } else {
-            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
-            bitmap ?: return null
-            bitmap.toDrawable(resources)
+            SourceResult(
+                source = ImageSource(
+                    source = inputStream.inMemoryBufferedSource(),
+                    context = context,
+                ),
+                mimeType = requestData.mimeType,
+                DataSource.MEMORY,
+            )
         }
-
-        return DrawableResult(
-            drawable = drawable,
-            isSampled = false,
-            dataSource = DataSource.DISK,
-        )
     }
+
+    private fun InputStream.inMemoryBufferedSource(): BufferedSource {
+        val rawBytes = this.use { it.readBytes() }
+        val byteStream = ByteArrayInputStream(rawBytes)
+
+        return byteStream.source().buffer()
+    }
+
+    private fun decodeGif(inputStream: InputStream) =
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
+            val bytes = inputStream.use { it.readBytes() }
+            val source = ImageDecoder.createSource(bytes)
+            ImageDecoder.decodeDrawable(source)
+        } else {
+            @Suppress("DEPRECATION")
+            val movie = Movie.decodeStream(inputStream)
+            MovieDrawable(movie)
+        }
 }

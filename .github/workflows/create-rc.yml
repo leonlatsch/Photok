@@ -43,7 +43,7 @@ jobs:
           name: Release Bot
           push-branch: release/${{ github.event.inputs.version }}
           commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
-          files: gradle.properties app/src/main/assets/open_source_licenses.json
+          files: gradle.properties app/src/main/assets/open_source_licenses.html
           
       - name: Create Release PR
         uses: repo-sync/pull-request@v2

@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
@@ -68,14 +69,23 @@ class GalleryViewModel @Inject constructor(
 
     fun handleUiEvent(event: GalleryUiEvent) {
         when (event) {
-            is GalleryUiEvent.OpenImportMenu -> photoActionsChannel.trySend(PhotoAction.OpenImportMenu())
             is GalleryUiEvent.OpenPhoto -> navigateToPhoto(event.item)
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items, event.target)
             is GalleryUiEvent.OnAddToAlbum -> showAlbumSelectionDialog.value = true
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
+            is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
         }
+    }
+
+    private fun onImportChoice(choice: ImportChoice) {
+        val navEvent = when (choice) {
+            is ImportChoice.AddNewFiles -> GalleryNavigationEvent.StartImport(choice.fileUris)
+            is ImportChoice.RestoreBackup -> GalleryNavigationEvent.StartRestoreBackup(choice.backupUri)
+        }
+
+        eventsChannel.trySend(navEvent)
     }
 
     private fun addPhotosToSelectedAlbum(items: List<String>, albumId: String) {

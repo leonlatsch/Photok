@@ -1,22 +1,23 @@
-Photok is a free Photo-Safe. It stores your photos & videos encrypted on your device and hides them from others.
-It uses technologies like, AES-256 encryption standard or bcrypt, to keep your photos secure.
-Photok is completely free, open source, and runs no ads.
+Photok is a free and open-source gallery app for Android.
+Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
+This makes Photok different from other encrypted gallery apps.
+
+Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
 
 <b>Features</b>
 
-- import photos and videosfrom your gallery
-- fully functional in app gallery
-- export photos back to your gallery
-- change your password
-- create and Restore backups
-- share to Photok
-- hide app icon
-- recovery menu
+- Import photos and videos from your gallery
+- Organize files in albums
+- Export photos back to your gallery
+- Create and restore backups
+- Share to Photok
+- Hide app
+- Auto-delete when importing & exporting
 
 <b>Benefits</b>
 
-- hide your sensitive photos from others
-- protect your photos from data theft
+- Hide your sensitive photos from others
+- Protect your photos from data theft
 
 Photok on GitHub: https://github.com/leonlatsch/Photok
 

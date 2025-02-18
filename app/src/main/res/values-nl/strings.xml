@@ -57,11 +57,12 @@
     <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Importeren</string>
-    <string name="import_menu_photos">Foto\'s</string>
-    <string name="import_menu_videos">Video\'s</string>
-    <string name="import_menu_backup">Back-up</string>
-    <string name="import_menu_hint">Media-items toevoegen aan Photok…</string>
+    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
+    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
+    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
+    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
+    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
+    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">Sluit</string>
@@ -237,8 +238,8 @@
     <string name="news_view_changelog">Bekijk changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Albums</string> <!-- TODO -->
-    <string name="news_summary_1">Sort your photos and videos in albums</string> <!-- TODO -->
+    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
+    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
 
     <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
     <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->

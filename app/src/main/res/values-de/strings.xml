@@ -75,11 +75,12 @@
     <string name="gallery_albums_photos_added">%1$d elemente hinzugefügt</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_title">Importieren</string>
-    <string name="import_menu_photos">Fotos</string>
-    <string name="import_menu_videos">Videos</string>
-    <string name="import_menu_backup">Backup</string>
-    <string name="import_menu_hint">Füge Medienelemente zu Photok hinzu…</string>
+    <string name="import_menu_fab_label">Importieren</string>
+    <string name="import_menu_new_files_title">Neue Dateien importieren</string>
+    <string name="import_menu_new_files_description">Importiere Fotos und Videos aus deiner Galerie.</string>
+    <string name="import_menu_restore_title">Ein Backup wiederherstellen</string>
+    <string name="import_menu_restore_description">Stelle ein Photok Backup wieder her. Die Dateien werden zu den aktuellen Dateien hinzugefügt.</string>
+    <string name="import_menu_delete_warning">Importierte Dateien werden gelöscht</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>
@@ -115,9 +116,9 @@
     <string name="delete_deleting">Lösche Dateien…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_and_delete_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
+    <string name="export_and_delete_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_finished">Exportiert und gelöscht</string>
     <string name="export_exporting">Exportiere Dateien…</string>
@@ -256,8 +257,8 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEU: Albumen</string>
-    <string name="news_summary_1">Sortiere deine Fotos und Videos in Alben</string>
+    <string name="news_title_1">NEU: Import Menu</string>
+    <string name="news_summary_1">Neues import Menu ermöglicht das gleichzeitige Importieren von Bildern und Videos.</string>
 
     <string name="news_title_2">NEU: Spenden</string>
     <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>

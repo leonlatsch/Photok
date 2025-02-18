@@ -20,18 +20,14 @@ import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
-import dev.leonlatsch.photok.gallery.ui.importing.ImportMenuDialog
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragmentDirections
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
-class PhotoActionsNavigator @Inject constructor(
-    private val config: Config,
-) {
+class PhotoActionsNavigator @Inject constructor() {
     fun navigate(action: PhotoAction, navController: NavController, fragment: Fragment) {
         when (action) {
             is PhotoAction.DeletePhotos -> confirmAndDelete(
@@ -46,12 +42,7 @@ class PhotoActionsNavigator @Inject constructor(
             )
 
             is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navController)
-            is PhotoAction.OpenImportMenu -> navigateOpenImportMenu(fragment.childFragmentManager, action.albumUUID)
         }
-    }
-
-    private fun navigateOpenImportMenu(fragmentManager: FragmentManager, albumUUID: String?) {
-        ImportMenuDialog(albumUUID).show(fragmentManager)
     }
 
     private fun confirmAndExport(
@@ -79,5 +70,4 @@ sealed interface PhotoAction {
     data class OpenPhoto(val photoUUID: String, val albumUUID: String = "") : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
     data class ExportPhotos(val photos: List<Photo>, val target: Uri) : PhotoAction
-    data class OpenImportMenu(val albumUUID: String? = "") : PhotoAction
 }
