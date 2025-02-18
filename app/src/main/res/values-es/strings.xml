@@ -257,8 +257,8 @@
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NUEVO: Álbumes</string>
-    <string name="news_summary_1">Ordena tus fotos y vídeos en álbumes</string>
+    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
+    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
 
     <string name="news_title_2">NUEVO: Donaciones</string>
     <string name="news_summary_2">Ver el botón "Donar" en la configuración para apoyar Photok</string>
