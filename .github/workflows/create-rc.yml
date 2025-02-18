@@ -19,6 +19,30 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: release/${{ github.event.inputs.version }}
+
+      - name: Create Release PR
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: release/${{ github.event.inputs.version }}
+          destination_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: release
+          pr_assignee: leonlatsch
+          pr_reviewer: leonlatsch
+          pr_title: "Release: ${{ github.event.inputs.version }}"
+          pr_body: |
+            ## Release PR ${{ github.event.inputs.version }}
+            
+            Release Version ${{ github.event.inputs.version }}
+            
+            **Checklist BEFOORE release:**
+            - [ ] Build runs
+            - [ ] Tests run
+            - [ ] All Features are working as expected
+            - [ ] Update works
+            - [ ] Version was updated by actions bot
+
+            **DO NOT SQUASH THE COMMITS!**
       
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,26 +69,4 @@ jobs:
           commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
           files: gradle.properties app/src/main/assets/open_source_licenses.html
           
-      - name: Create Release PR
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: release/${{ github.event.inputs.version }}
-          destination_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_label: release
-          pr_assignee: leonlatsch
-          pr_reviewer: leonlatsch
-          pr_title: "Release: ${{ github.event.inputs.version }}"
-          pr_body: |
-            ## Release PR ${{ github.event.inputs.version }}
-            
-            Release Version ${{ github.event.inputs.version }}
-            
-            **Checklist BEFOORE release:**
-            - [ ] Build runs
-            - [ ] Tests run
-            - [ ] All Features are working as expected
-            - [ ] Update works
-            - [ ] Version was updated by actions bot
 
-            **DO NOT SQUASH THE COMMITS!**
