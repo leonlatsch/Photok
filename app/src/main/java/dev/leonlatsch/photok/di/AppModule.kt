@@ -76,9 +76,6 @@ object AppModule {
     fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
     @Provides
-    fun provideWindowManager(@ApplicationContext context: Context) = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-    @Provides
     fun provideGson(): Gson = GsonBuilder()
         .setPrettyPrinting()
         .create()

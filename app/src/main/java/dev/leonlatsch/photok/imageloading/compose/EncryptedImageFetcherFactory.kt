@@ -29,16 +29,12 @@ import javax.inject.Inject
 
 class EncryptedImageFetcherFactory @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val resources: Resources,
-    private val windowManager: WindowManager,
     @ApplicationContext private val context: Context,
 ) : Fetcher.Factory<EncryptedImageRequestData> {
     override fun create(data: EncryptedImageRequestData, options: Options, imageLoader: ImageLoader): Fetcher =
         EncryptedImageFetcher(
             encryptedStorageManager = encryptedStorageManager,
             requestData = data,
-            resources = resources,
-            windowManager = windowManager,
             context = context,
         )
 

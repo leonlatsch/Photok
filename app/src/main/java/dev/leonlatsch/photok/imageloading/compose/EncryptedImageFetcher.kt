@@ -52,90 +52,48 @@ import javax.crypto.CipherInputStream
 class EncryptedImageFetcher(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val requestData: EncryptedImageRequestData,
-    private val resources: Resources,
-    private val windowManager: WindowManager,
     private val context: Context,
 ) : Fetcher {
 
-    @Suppress("DEPRECATION") // ImageDecoder is only available from API 28
     override suspend fun fetch(): FetchResult? {
-        val inputStream = encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
+        val inputStream =
+            encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
         inputStream ?: return null
 
-        val drawable = if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
-            decodeGif(inputStream)
+        return if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
+            val drawable = decodeGif(inputStream)
+            DrawableResult(
+                drawable = drawable,
+                isSampled = false,
+                dataSource = DataSource.DISK,
+            )
         } else {
-            // safeDecodeInputStream(inputStream)
-            return SourceResult(
+            SourceResult(
                 source = ImageSource(
-                    source = syntheticBufferFor(inputStream),
+                    source = inputStream.inMemoryBufferedSource(),
                     context = context,
                 ),
                 mimeType = requestData.mimeType,
                 DataSource.MEMORY,
             )
         }
-
-        return DrawableResult(
-            drawable = drawable,
-            isSampled = false,
-            dataSource = DataSource.DISK,
-        )
     }
 
-    private fun syntheticBufferFor(inputStream: InputStream): BufferedSource {
-        val rawBytes = inputStream.readBytes()
+    private fun InputStream.inMemoryBufferedSource(): BufferedSource {
+        val rawBytes = this.use { it.readBytes() }
         val byteStream = ByteArrayInputStream(rawBytes)
 
         return byteStream.source().buffer()
     }
 
-    private fun decodeGif(inputStream: CipherInputStream) =
+    private fun decodeGif(inputStream: InputStream) =
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
             val bytes = inputStream.readBytes()
             val source = ImageDecoder.createSource(bytes)
             ImageDecoder.decodeDrawable(source)
         } else {
+            @Suppress("DEPRECATION")
             val movie = Movie.decodeStream(inputStream)
             MovieDrawable(movie)
         }
-
-    private fun safeDecodeInputStream(inputStream: InputStream): BitmapDrawable? {
-        val rawBytes = inputStream.use { it.readBytes() }
-
-        val (screenWidth, screenHeight) = windowManager.getCompatScreenSize()
-        val (imageWidth, imageHeight) = getDimensionsFromBytes(rawBytes)
-
-        val sampleSize = calculateSampleSize(imageWidth, imageHeight, screenWidth, screenHeight)
-
-        val bitmapOptions = BitmapFactory.Options().apply {
-            inSampleSize = sampleSize
-        }
-
-        val bitmap = BitmapFactory.decodeByteArray(rawBytes, 0, rawBytes.size, bitmapOptions)
-        return bitmap?.toDrawable(resources)
-    }
-    
-    private fun getDimensionsFromBytes(rawBytes: ByteArray): Pair<Int, Int> {
-        val onlyDecodeBoundsOption = BitmapFactory.Options().apply {
-            inJustDecodeBounds = true
-        }
-        BitmapFactory.decodeByteArray(rawBytes, 0, rawBytes.size, onlyDecodeBoundsOption)
-        
-        return onlyDecodeBoundsOption.run { outWidth to outHeight }
-    }
-
-    private fun calculateSampleSize(width: Int, height: Int, reqWidth: Int, reqHeight: Int): Int {
-        var inSampleSize = 1
-
-        if (height > reqHeight || width > reqWidth) {
-            val halfHeight: Int = height / 2
-            val halfWidth: Int = width / 2
-
-            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
-                inSampleSize *= 2
-            }
-        }
-        return inSampleSize
-    }
 }
