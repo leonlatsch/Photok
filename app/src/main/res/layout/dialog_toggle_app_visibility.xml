@@ -63,7 +63,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_black"
+                android:textFontWeight="900"
+                android:textStyle="bold"
                 android:text="@{viewModel.currentState, default=HIDDEN}" />
         </LinearLayout>
 
@@ -98,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_black"
+                android:textFontWeight="900"
                 android:text="@{viewModel.secretLaunchCode(), default=1773}"
                 android:textColor="@color/secondaryTextColor" />
         </LinearLayout>
