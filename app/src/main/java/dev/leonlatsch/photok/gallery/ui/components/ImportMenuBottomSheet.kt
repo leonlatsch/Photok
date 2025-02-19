@@ -20,6 +20,8 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BasicTooltipBox
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +29,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberBasicTooltipState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.BottomSheetDefaults
@@ -35,12 +39,18 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionProvider
 import androidx.compose.material3.rememberStandardBottomSheetState
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -51,11 +61,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupPositionProvider
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
+import kotlinx.coroutines.launch
 
 sealed interface ImportChoice {
     data class AddNewFiles(val fileUris: List<Uri>) : ImportChoice
@@ -167,29 +179,43 @@ private fun ImportMenuDialogContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImportWarningChip(modifier: Modifier = Modifier) {
-    AssistChip(
-        modifier = modifier,
-        onClick = {},
-        leadingIcon = {
-            Icon(
-                painter = painterResource(R.drawable.ic_warning),
-                contentDescription = null,
-            )
-        },
-        label = {
-            Text(
-                text = stringResource(R.string.import_menu_delete_warning),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-        colors = AssistChipDefaults.assistChipColors(
-            leadingIconContentColor = Colors.Warning,
-            labelColor = Colors.Warning,
-        ),
-    )
+    val scope = rememberCoroutineScope()
+    val tooltipState = rememberTooltipState(isPersistent = false)
+
+    TooltipBox(
+        positionProvider = rememberPlainTooltipPositionProvider(),
+        state = tooltipState,
+        tooltip = {
+            PlainTooltip(shape = RoundedCornerShape(8.dp)) {
+                Text(text = stringResource(R.string.import_menu_delete_warning))
+            }
+        }
+    ) {
+        AssistChip(
+            modifier = modifier,
+            onClick = { scope.launch { tooltipState.show() } },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_warning),
+                    contentDescription = null,
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.import_menu_delete_warning),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            },
+            colors = AssistChipDefaults.assistChipColors(
+                leadingIconContentColor = Colors.Warning,
+                labelColor = Colors.Warning,
+            ),
+        )
+    }
 }
 
 val IconSize = 24.dp
@@ -228,7 +254,7 @@ fun ImportMenuItem(
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleLarge,
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -257,8 +283,9 @@ private fun Preview() {
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(widthDp = 340, heightDp = 600)
+@Preview(widthDp = 280, heightDp = 600, locale = "de")
 @Composable
 private fun SmallPreview() {
     val openState = remember { mutableStateOf(true) }

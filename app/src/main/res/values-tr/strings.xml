@@ -238,8 +238,8 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">YENİ: Albümler</string>
-    <string name="news_summary_1">Fotoğraflarınızı ve videolarınızı albümlerde sıralayın</string>
+    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
+    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
 
     <string name="news_title_2">YENİ: Bağışlar</string>
     <string name="news_summary_2">Photok\'u desteklemek için ayarlarda "Bağış Yap" düğmesini görebilirsiniz</string>

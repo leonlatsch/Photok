@@ -68,6 +68,7 @@ import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
+import kotlin.math.exp
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -130,8 +131,9 @@ fun PhotoGallery(
         var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
         val pickExportTargetLauncher =
-            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
-                exportDirectoryUri = it
+            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { exportTarget ->
+                exportTarget ?: return@rememberLauncherForActivityResult
+                exportDirectoryUri = exportTarget
                 showExportConfirmationDialog = true
             }
 

@@ -116,9 +116,9 @@
     <string name="delete_deleting">Lösche Dateien…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
+    <string name="export_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
-    <string name="export_and_delete_are_you_sure">Bist du sucher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
+    <string name="export_and_delete_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_finished">Exportiert und gelöscht</string>
     <string name="export_exporting">Exportiere Dateien…</string>
@@ -257,8 +257,8 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEU: Albumen</string>
-    <string name="news_summary_1">Sortiere deine Fotos und Videos in Alben</string>
+    <string name="news_title_1">NEU: Import Menu</string>
+    <string name="news_summary_1">Neues import Menu ermöglicht das gleichzeitige Importieren von Bildern und Videos.</string>
 
     <string name="news_title_2">NEU: Spenden</string>
     <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>
