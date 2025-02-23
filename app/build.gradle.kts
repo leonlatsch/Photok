@@ -102,8 +102,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.8.6")
-    implementation("androidx.navigation:navigation-ui-ktx:2.8.6")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.7")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
