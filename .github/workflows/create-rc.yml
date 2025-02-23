@@ -10,41 +10,21 @@ on:
 jobs:
   create-release-candidate:
     runs-on: ubuntu-latest
-    
+
     steps:
-    
+
       - name: "Create branch: release/${{ github.event.inputs.version }}"
         uses: peterjgrainger/action-create-branch@v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: release/${{ github.event.inputs.version }}
-      
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: release/${{ github.event.inputs.version }}
 
-      - name: set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-      
-      - name: Update Version
-        run: ./gradlew updateVersion -Pversion=${{ github.event.inputs.version }}
-      
-      - name: Update Open Source Licenses
-        run: ./gradlew licenseReleaseReport
-      
-      - name: Commit and Push
-        uses: github-actions-x/commit@v2.9
-        with:
-          name: Release Bot
-          push-branch: release/${{ github.event.inputs.version }}
-          commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
-          files: gradle.properties app/src/main/assets/open_source_licenses.html
-          
       - name: Create Release PR
         uses: repo-sync/pull-request@v2
         with:
@@ -68,3 +48,25 @@ jobs:
             - [ ] Version was updated by actions bot
 
             **DO NOT SQUASH THE COMMITS!**
+      
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Update Version
+        run: ./gradlew updateVersion -Pversion=${{ github.event.inputs.version }}
+      
+      - name: Update Open Source Licenses
+        run: ./gradlew licenseReleaseReport
+      
+      - name: Commit and Push
+        uses: github-actions-x/commit@v2.9
+        with:
+          name: Release Bot
+          push-branch: release/${{ github.event.inputs.version }}
+          commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
+          files: gradle.properties app/src/main/assets/open_source_licenses.html
+          
+

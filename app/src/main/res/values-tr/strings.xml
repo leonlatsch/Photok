@@ -55,6 +55,7 @@
     <string name="gallery_albums_select_title">Bir Albüm Seçin</string>
     <string name="gallery_albums_deleted">Albüm silindi</string>
     <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
+    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
     <string name="import_menu_fab_label">Import</string> <!-- TODO -->

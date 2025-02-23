@@ -68,7 +68,6 @@ import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
-import kotlin.math.exp
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -110,9 +109,12 @@ fun PhotoGallery(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
         ) {
-            MagicFab {
-                importMenuBottomSheetVisible.value = true
-            }
+            MagicFab(
+                label = stringResource(R.string.import_menu_fab_label),
+                onClick = {
+                    importMenuBottomSheetVisible.value = true
+                }
+            )
         }
 
         ImportMenuBottomSheet(
