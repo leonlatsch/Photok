@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -41,10 +40,12 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
  */
 @Composable
 fun BoxScope.MagicFab(
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    label: String,
+    modifier: Modifier = Modifier,
 ) {
     dev.leonlatsch.photok.ui.components.MagicFab(
+        label = label,
         onClick = onClick,
         modifier = modifier
             .align(Alignment.BottomEnd)
@@ -53,9 +54,10 @@ fun BoxScope.MagicFab(
 }
 
 @Composable
-fun MagicFab(
-    modifier: Modifier = Modifier,
+private fun MagicFab(
+    label: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     ExtendedFloatingActionButton(
         onClick = onClick,
@@ -69,7 +71,7 @@ fun MagicFab(
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
-            text = stringResource(R.string.import_menu_fab_label),
+            text = label,
             color = Color.White,
         )
     }
@@ -80,6 +82,7 @@ fun MagicFab(
 private fun MagicFabPreview() {
     AppTheme {
         MagicFab(
+            label = stringResource(R.string.import_menu_fab_label),
             onClick = {}
         )
     }

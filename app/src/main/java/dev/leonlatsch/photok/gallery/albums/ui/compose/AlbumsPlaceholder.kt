@@ -45,9 +45,12 @@ fun AlbumsPlaceholder(
             modifier = Modifier.align(Alignment.Center)
         )
 
-        MagicFab {
-            handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
-        }
+        MagicFab(
+            label = stringResource(R.string.magic_fab_new_album_label),
+            onClick = {
+                handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
+            },
+        )
     }
 }
 
