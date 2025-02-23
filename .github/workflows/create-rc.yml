@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: release/${{ github.event.inputs.version }}
+
       - name: "Create branch: release/${{ github.event.inputs.version }}"
         uses: peterjgrainger/action-create-branch@v3.0.0
         env:
@@ -44,11 +48,6 @@ jobs:
 
             **DO NOT SQUASH THE COMMITS!**
       
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: release/${{ github.event.inputs.version }}
-
       - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
