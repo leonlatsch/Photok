@@ -73,6 +73,7 @@
     <string name="gallery_albums_select_title">Wähle ein Album</string>
     <string name="gallery_albums_deleted">Album gelöscht</string>
     <string name="gallery_albums_photos_added">%1$d elemente hinzugefügt</string>
+    <string name="magic_fab_new_album_label">Neues Album</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_fab_label">Importieren</string>

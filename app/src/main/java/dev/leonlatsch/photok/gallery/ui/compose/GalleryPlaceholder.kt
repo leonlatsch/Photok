@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,9 +70,12 @@ fun GalleryPlaceholder(
             )
         }
 
-        MagicFab {
-            importMenuBottomSheetVisible.value = true
-        }
+        MagicFab(
+            label = stringResource(R.string.import_menu_fab_label),
+            onClick = {
+                importMenuBottomSheetVisible.value = true
+            }
+        )
 
         ImportMenuBottomSheet(
             openState = importMenuBottomSheetVisible,

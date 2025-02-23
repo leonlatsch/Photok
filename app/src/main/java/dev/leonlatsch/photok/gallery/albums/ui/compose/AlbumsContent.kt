@@ -21,7 +21,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.ui.components.AlbumsGrid
 import dev.leonlatsch.photok.ui.components.MagicFab
@@ -42,9 +44,12 @@ fun AlbumsContent(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        MagicFab {
-            handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
-        }
+        MagicFab(
+            label = stringResource(R.string.magic_fab_new_album_label),
+            onClick = {
+                handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
+            }
+        )
     }
 }
 
