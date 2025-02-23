@@ -10,12 +10,8 @@ on:
 jobs:
   create-release-candidate:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: release/${{ github.event.inputs.version }}
 
       - name: "Create branch: release/${{ github.event.inputs.version }}"
         uses: peterjgrainger/action-create-branch@v3.0.0
@@ -23,6 +19,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: release/${{ github.event.inputs.version }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: release/${{ github.event.inputs.version }}
 
       - name: Create Release PR
         uses: repo-sync/pull-request@v2
