@@ -17,15 +17,10 @@
 package dev.leonlatsch.photok.imageloading.compose
 
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.Movie
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Build.VERSION_CODES
-import android.view.WindowManager
-import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
 import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
@@ -36,13 +31,14 @@ import coil.fetch.SourceResult
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.other.extensions.getCompatScreenSize
 import okio.BufferedSource
 import okio.buffer
 import okio.source
 import java.io.ByteArrayInputStream
 import java.io.InputStream
-import javax.crypto.CipherInputStream
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Coil image fetcher decrypting the image on the fly while rendering.
@@ -79,16 +75,16 @@ class EncryptedImageFetcher(
         }
     }
 
-    private fun InputStream.inMemoryBufferedSource(): BufferedSource {
-        val rawBytes = this.use { it.readBytes() }
+    private suspend fun InputStream.inMemoryBufferedSource(): BufferedSource {
+        val rawBytes = this.use { it.readBytesSuspending() }
         val byteStream = ByteArrayInputStream(rawBytes)
 
         return byteStream.source().buffer()
     }
 
-    private fun decodeGif(inputStream: InputStream) =
+    private suspend fun decodeGif(inputStream: InputStream) =
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
-            val bytes = inputStream.use { it.readBytes() }
+            val bytes = inputStream.use { it.readBytesSuspending() }
             val source = ImageDecoder.createSource(bytes)
             ImageDecoder.decodeDrawable(source)
         } else {
@@ -96,4 +92,13 @@ class EncryptedImageFetcher(
             val movie = Movie.decodeStream(inputStream)
             MovieDrawable(movie)
         }
+}
+
+suspend fun InputStream.readBytesSuspending(): ByteArray = suspendCoroutine { continuation ->
+    try {
+        val bytes = readBytes()
+        continuation.resume(bytes)
+    } catch (e: Exception) {
+        continuation.resumeWithException(e)
+    }
 }
