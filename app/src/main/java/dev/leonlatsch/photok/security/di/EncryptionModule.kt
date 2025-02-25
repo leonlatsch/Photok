@@ -30,6 +30,6 @@ interface EncryptionModule {
 
     @Binds
     @Singleton
-    @dev.leonlatsch.photok.security.di.LegacyEncryptionManager
+    //@dev.leonlatsch.photok.security.di.LegacyEncryptionManager
     fun bindEncryptionManager(impl: LegacyEncryptionManager): EncryptionManager
 }

@@ -27,6 +27,8 @@ import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.security.GeneralSecurityException
+import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
@@ -53,7 +55,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherInputStream? =
         try {
             val inputStream = app.openFileInput(fileName)
-            encryptionManager.createCipherInputStream(inputStream, password)
+            createCipherInputStream(inputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -79,7 +81,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherOutputStream? =
         try {
             val outputStream = app.openFileOutput(fileName, INTERNAL_FILE_MODE)
-            encryptionManager.createCipherOutputStream(outputStream, password)
+            createCipherOutputStream(outputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -176,9 +178,6 @@ class EncryptedStorageManager @Inject constructor(
         }
     }
 
-    /**
-     * Deletes an external file.
-     */
     fun externalDeleteFile(fileUri: Uri): Boolean? =
         try {
             val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri);
@@ -187,6 +186,46 @@ class EncryptedStorageManager @Inject constructor(
             Timber.d("Error deleting external file at $fileUri: $e")
             null
         }
+
+     fun createCipherInputStream(
+        inputStream: InputStream,
+        password: String? = null,
+    ): CipherInputStream? {
+        return if (encryptionManager.isReady) try {
+            val cipher = if (password == null) {
+                encryptionManager.createCipher(Cipher.DECRYPT_MODE)
+            } else {
+                encryptionManager.createCipher(Cipher.DECRYPT_MODE, password)
+            }
+
+            CipherInputStream(inputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted input stream: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+     fun createCipherOutputStream(
+        outputStream: OutputStream,
+        password: String?
+    ): CipherOutputStream? {
+        return if (encryptionManager.isReady) try {
+            val cipher = if (password == null) {
+                encryptionManager.createCipher(Cipher.ENCRYPT_MODE)
+            } else {
+                encryptionManager.createCipher(Cipher.ENCRYPT_MODE, password)
+            }
+
+            CipherOutputStream(outputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted output stream: $e")
+            null
+        } else {
+            null
+        }
+    }
 
     // endregion
 

@@ -46,9 +46,6 @@ class LegacyEncryptionManager @Inject constructor() : EncryptionManager {
 
     override var isReady: Boolean = false
 
-    val encodedKey: ByteArray
-        get() = encryptionKey!!.encoded
-
     /**
      * Initialize the [SecretKeySpec] with a [password].
      * Uses the [password] to create a SHA-256 hash binary that is used to create [SecretKeySpec].
@@ -80,59 +77,8 @@ class LegacyEncryptionManager @Inject constructor() : EncryptionManager {
         isReady = false
     }
 
-    /**
-     * Turn a [InputStream] into an [CipherInputStream] with the stored [encryptionKey] or
-     * an encryption key generated from the [password] if given.
-     *
-     * @param password if not null, this will be used for decrypting
-     */
-    override fun createCipherInputStream(
-        inputStream: InputStream,
-        password: String?
-    ): CipherInputStream? {
-        return if (isReady) try {
-            val cipher = if (password == null) {
-                createCipher(Cipher.DECRYPT_MODE)
-            } else {
-                createCipher(Cipher.DECRYPT_MODE, password)
-            }
 
-            CipherInputStream(inputStream, cipher)
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error creating encrypted input stream: $e")
-            null
-        } else {
-            null
-        }
-    }
-
-    /**
-     * Turn a [OutputStream] into an [CipherOutputStream] with the stored [encryptionKey] or
-     * an encryption key generated from the [password] if given.
-     *
-     * @param password if not null, this will be used for encrypting
-     */
-    override fun createCipherOutputStream(
-        outputStream: OutputStream,
-        password: String?
-    ): CipherOutputStream? {
-        return if (isReady) try {
-            val cipher = if (password == null) {
-                createCipher(Cipher.ENCRYPT_MODE)
-            } else {
-                createCipher(Cipher.ENCRYPT_MODE, password)
-            }
-
-            CipherOutputStream(outputStream, cipher)
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error creating encrypted output stream: $e")
-            null
-        } else {
-            null
-        }
-    }
-
-    private fun createCipher(mode: Int, password: String): Cipher? {
+    override fun createCipher(mode: Int, password: String): Cipher? {
         val key = genSecKey(password)
         val iv = genIv(password)
 
