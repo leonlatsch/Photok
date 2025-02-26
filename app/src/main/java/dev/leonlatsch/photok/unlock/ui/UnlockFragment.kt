@@ -78,7 +78,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
-        requireActivityAs(BaseActivity::class).hideKeyboard()
+        (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {

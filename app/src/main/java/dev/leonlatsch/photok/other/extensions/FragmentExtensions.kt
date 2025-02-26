@@ -30,21 +30,6 @@ import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 /**
- * Require the parent activity as a specific type to avoid casting.
- *
- * @see Fragment.requireActivity
- */
-@Suppress("UNCHECKED_CAST")
-fun <T : AppCompatActivity> Fragment.requireActivityAs(clazz: KClass<T>): T {
-    val activity = requireActivity()
-    return try {
-        activity as T
-    } catch (e: ClassCastException) {
-        throw IllegalArgumentException("$activity is not of type ${clazz.simpleName}")
-    }
-}
-
-/**
  * Extension for starting an activity for result and disable lock timer in [BaseApplication].
  */
 fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {

@@ -103,7 +103,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
     }
 
     private fun finishSetup() {
-        requireActivityAs(BaseActivity::class).hideKeyboard()
+        (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
         if (viewModel.encryptionManager.isReady) {
