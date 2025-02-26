@@ -22,6 +22,6 @@ interface EncryptionManager {
     val isReady: Boolean
     fun initialize(password: String)
     fun reset()
-    fun createCipher(mode: Int): Cipher?
-    fun createCipher(mode: Int, password: String): Cipher?
+    fun createEncryptionCipher(password: String? = null): Cipher?
+    fun createDecryptionCipher(ivBytes: ByteArray, password: String? = null): Cipher?
 }

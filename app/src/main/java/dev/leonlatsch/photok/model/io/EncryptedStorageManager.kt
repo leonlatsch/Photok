@@ -18,17 +18,16 @@ package dev.leonlatsch.photok.model.io
 
 import android.app.Application
 import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
+import dev.leonlatsch.photok.other.IV_SIZE
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.security.GeneralSecurityException
-import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
@@ -113,7 +112,7 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Rename a file in internal storage.
      */
-    private fun internalRenameFile(currentFileName: String, newFileName: String): Boolean {
+    fun renameFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
@@ -138,7 +137,7 @@ class EncryptedStorageManager @Inject constructor(
         var success = bytesCopied > 0
 
         success = success && internalDeleteFile(fileName)
-        success = success && internalRenameFile(tmpFileName, fileName)
+        success = success && renameFile(tmpFileName, fileName)
 
         return success
     }
@@ -192,11 +191,10 @@ class EncryptedStorageManager @Inject constructor(
         password: String? = null,
     ): CipherInputStream? {
         return if (encryptionManager.isReady) try {
-            val cipher = if (password == null) {
-                encryptionManager.createCipher(Cipher.DECRYPT_MODE)
-            } else {
-                encryptionManager.createCipher(Cipher.DECRYPT_MODE, password)
-            }
+            val iv = ByteArray(IV_SIZE)
+            inputStream.read(iv, 0, IV_SIZE)
+
+            val cipher = encryptionManager.createDecryptionCipher(iv, password)
 
             CipherInputStream(inputStream, cipher)
         } catch (e: GeneralSecurityException) {
@@ -212,11 +210,10 @@ class EncryptedStorageManager @Inject constructor(
         password: String?
     ): CipherOutputStream? {
         return if (encryptionManager.isReady) try {
-            val cipher = if (password == null) {
-                encryptionManager.createCipher(Cipher.ENCRYPT_MODE)
-            } else {
-                encryptionManager.createCipher(Cipher.ENCRYPT_MODE, password)
-            }
+            val cipher = encryptionManager.createEncryptionCipher(password)
+            cipher ?: return null
+
+            outputStream.write(cipher.iv)
 
             CipherOutputStream(outputStream, cipher)
         } catch (e: GeneralSecurityException) {

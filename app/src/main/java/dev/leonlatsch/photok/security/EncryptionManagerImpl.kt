@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.security
 
 import dev.leonlatsch.photok.other.AES
 import dev.leonlatsch.photok.other.AES_ALGORITHM
+import dev.leonlatsch.photok.other.IV_SIZE
 import dev.leonlatsch.photok.other.SHA_256
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -65,26 +66,22 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         state.update { EncryptionManagerState.Initial }
     }
 
-    override fun createCipher(mode: Int): Cipher? {
-        val key = (state.value as? EncryptionManagerState.Ready)?.key ?: return null
+    override fun createEncryptionCipher(password: String?): Cipher? {
+        val key = password?.let { genSecKey(it) } ?: (state.value as? EncryptionManagerState.Ready)?.key ?: return null
 
-        return createCipher(mode, key)
+        return createEncryptionCipher(key)
     }
 
-    override fun createCipher(mode: Int, password: String): Cipher? {
-        val key = genSecKey(password)
+    override fun createDecryptionCipher(ivBytes: ByteArray, password: String?): Cipher? {
+        val key = password?.let { genSecKey(it) } ?: (state.value as? EncryptionManagerState.Ready)?.key ?: return null
 
-        return createCipher(mode, key)
+        return createDecryptionCipher(key, ivBytes)
     }
 
-    private fun createCipher(
-        mode: Int,
-        secretKeySpec: SecretKeySpec?,
-    ): Cipher? {
+    private fun createDecryptionCipher(secretKeySpec: SecretKeySpec?, ivBytes: ByteArray): Cipher? {
         return if (isReady) try {
             Cipher.getInstance(AES_ALGORITHM).apply {
-                // TODO: Pass IV when decrypting
-                init(mode, secretKeySpec, genIv())
+                init(Cipher.DECRYPT_MODE, secretKeySpec, IvParameterSpec(ivBytes))
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing cipher: $e")
@@ -95,15 +92,30 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         }
     }
 
+    private fun createEncryptionCipher(secretKeySpec: SecretKeySpec?): Cipher? {
+        return if (isReady) try {
+            Cipher.getInstance(AES_ALGORITHM).apply {
+                init(Cipher.ENCRYPT_MODE, secretKeySpec, IvParameterSpec(genIv()))
+            }
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error initializing cipher: $e")
+            null
+        } else {
+            Timber.d("EncryptionManager has to be ready to create a cipher")
+            null
+        }
+    }
+
+
     private fun genSecKey(password: String): SecretKeySpec {
         val md = MessageDigest.getInstance(SHA_256)
         val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
         return SecretKeySpec(bytes, AES)
     }
 
-    private fun genIv(): IvParameterSpec {
-        val iv = ByteArray(12)
+    private fun genIv(): ByteArray {
+        val iv = ByteArray(IV_SIZE)
         SecureRandom().nextBytes(iv)
-        return IvParameterSpec(iv)
+        return iv
     }
 }
