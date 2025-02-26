@@ -151,7 +151,7 @@ class EncryptedStorageManager @Inject constructor(
     fun externalOpenFileInput(fileUri: Uri): InputStream? =
         try {
             app.contentResolver.openInputStream(fileUri)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Timber.d("Error opening external file at $fileUri: $e")
             null
         }
