@@ -21,7 +21,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.LegacyEncryptionManager
+import dev.leonlatsch.photok.security.EncryptionManagerImpl
 import javax.inject.Singleton
 
 @Module
@@ -31,5 +31,5 @@ interface EncryptionModule {
     @Binds
     @Singleton
     //@dev.leonlatsch.photok.security.di.LegacyEncryptionManager
-    fun bindEncryptionManager(impl: LegacyEncryptionManager): EncryptionManager
+    fun bindEncryptionManager(impl: EncryptionManagerImpl): EncryptionManager
 }

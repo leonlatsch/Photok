@@ -25,8 +25,11 @@ import timber.log.Timber
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
 import java.security.MessageDigest
+import java.security.SecureRandom
 import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import javax.inject.Inject
 
 sealed interface EncryptionManagerState {
     data object Initial : EncryptionManagerState
@@ -35,7 +38,7 @@ sealed interface EncryptionManagerState {
     data class Ready(val key: SecretKeySpec) : EncryptionManagerState
 }
 
-class EncryptionManagerImpl : EncryptionManager {
+class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     private val state: MutableStateFlow<EncryptionManagerState> =
         MutableStateFlow(EncryptionManagerState.Initial)
@@ -80,7 +83,8 @@ class EncryptionManagerImpl : EncryptionManager {
     ): Cipher? {
         return if (isReady) try {
             Cipher.getInstance(AES_ALGORITHM).apply {
-                init(mode, secretKeySpec)
+                // TODO: Pass IV when decrypting
+                init(mode, secretKeySpec, genIv())
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing cipher: $e")
@@ -95,5 +99,11 @@ class EncryptionManagerImpl : EncryptionManager {
         val md = MessageDigest.getInstance(SHA_256)
         val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
         return SecretKeySpec(bytes, AES)
+    }
+
+    private fun genIv(): IvParameterSpec {
+        val iv = ByteArray(12)
+        SecureRandom().nextBytes(iv)
+        return IvParameterSpec(iv)
     }
 }
