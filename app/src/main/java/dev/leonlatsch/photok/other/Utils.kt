@@ -47,7 +47,7 @@ import java.io.ByteArrayInputStream
  * @since 1.0.0
  * @author Leon Latsch
  */
-fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
+fun getFileName(contentResolver: ContentResolver, uri: Uri): String? = try {
     val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
     contentResolver.query(uri, projection, null, null, null)?.use {
         if (it.moveToFirst()) {
@@ -55,7 +55,9 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? {
 
         }
     }
-    return null
+    null
+} catch (e: SecurityException) {
+    null
 }
 
 /**
