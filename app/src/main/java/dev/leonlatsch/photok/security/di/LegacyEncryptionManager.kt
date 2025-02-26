@@ -14,14 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security
+package dev.leonlatsch.photok.security.di
 
-import javax.crypto.Cipher
+import javax.inject.Qualifier
 
-interface EncryptionManager {
-    val isReady: Boolean
-    fun initialize(password: String)
-    fun reset()
-    fun createEncryptionCipher(password: String? = null): Cipher?
-    fun createDecryptionCipher(ivBytes: ByteArray, password: String? = null): Cipher?
-}
+@Retention
+@Qualifier
+annotation class LegacyEncryptionManager
