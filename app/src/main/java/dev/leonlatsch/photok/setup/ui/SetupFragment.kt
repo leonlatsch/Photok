@@ -102,18 +102,21 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
     }
 
     private fun finishSetup() {
+        val activity = activity
         (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
-        if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
-            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
-        } else {
+        if (activity == null || !viewModel.encryptionManager.isReady) {
             Dialogs.showLongToast(
                 requireContext(),
                 getString(R.string.common_error)
             )
+
+            return
         }
+
+        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
+        findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
     }
 
     private fun enableOrDisableSetup() {

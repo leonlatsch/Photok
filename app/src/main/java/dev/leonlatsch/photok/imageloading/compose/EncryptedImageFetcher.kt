@@ -22,6 +22,8 @@ import android.graphics.Movie
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import coil.decode.DataSource
+import coil.decode.DecodeResult
+import coil.decode.Decoder
 import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
 import coil.fetch.DrawableResult
@@ -31,6 +33,8 @@ import coil.fetch.SourceResult
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okio.BufferedSource
 import okio.buffer
 import okio.source
@@ -51,12 +55,12 @@ class EncryptedImageFetcher(
     private val context: Context,
 ) : Fetcher {
 
-    override suspend fun fetch(): FetchResult? {
+    override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
         val inputStream =
             encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
-        inputStream ?: return null
+        inputStream ?: return@withContext null
 
-        return if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
+        if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
             val drawable = decodeGif(inputStream)
             DrawableResult(
                 drawable = drawable,
