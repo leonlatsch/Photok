@@ -35,6 +35,7 @@ import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.showSystemUI
 import dev.leonlatsch.photok.other.systemBarsPadding
@@ -144,7 +145,10 @@ class ImageViewerFragment :
      * Called by ui.
      */
     fun onExportClicked() {
-        pickExportTargetLauncher.launch(null)
+        pickExportTargetLauncher.launchAndIgnoreTimer(
+            input = null,
+            activity = activity,
+        )
     }
 
     private fun onExportTargetPicked(target: Uri) {

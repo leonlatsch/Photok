@@ -17,11 +17,10 @@
 package dev.leonlatsch.photok.gallery.ui.components
 
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BasicTooltipBox
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,7 +28,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberBasicTooltipState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -42,7 +40,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionProvider
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.material3.rememberTooltipState
@@ -61,9 +58,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupPositionProvider
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
@@ -134,6 +131,8 @@ private fun ImportMenuDialogContent(
     val config = LocalConfig.current
     val isPreview = LocalInspectionMode.current
 
+    val activity = LocalActivity.current
+
     val deleteImportedFiles = remember { config?.deleteImportedFiles }
 
     Column(
@@ -155,8 +154,9 @@ private fun ImportMenuDialogContent(
             },
             onClick = {
                 if (deleteImportedFiles == true) {
-                    openDocumentLauncher.launch(
-                        PhotoType.entries.map { it.mimeType }.toTypedArray()
+                    openDocumentLauncher.launchAndIgnoreTimer(
+                        input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
+                        activity = activity,
                     )
                 } else {
                     photoPickerLauncher.launch(
@@ -173,7 +173,10 @@ private fun ImportMenuDialogContent(
             description = stringResource(R.string.import_menu_restore_description),
             iconPainter = painterResource(R.drawable.ic_backup_restore),
             onClick = {
-                restoreBackupLauncher.launch(arrayOf("application/zip"))
+                restoreBackupLauncher.launchAndIgnoreTimer(
+                    input = arrayOf("application/zip"),
+                    activity = activity
+                )
             }
         )
     }
