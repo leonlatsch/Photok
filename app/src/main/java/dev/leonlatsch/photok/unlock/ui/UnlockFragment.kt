@@ -77,15 +77,18 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
+        val activity = activity
+
         (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
-        if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
-            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
-        } else {
+        if (activity == null || !viewModel.encryptionManager.isReady) {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+            return
         }
+
+        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
+        findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

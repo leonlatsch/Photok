@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.WindowInsets
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -36,8 +37,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
@@ -58,6 +59,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
     private var toolbar: Toolbar? = null
+
+    private val createBackupLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        uri ?: return@registerForActivityResult
+        BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
+    }
 
     @Inject
     lateinit var config: Config
@@ -108,15 +114,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         addActionTo(KEY_ACTION_BACKUP) {
-            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            intent.type = "application/zip"
-            intent.putExtra(
-                Intent.EXTRA_TITLE,
-                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
-            )
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Backup File"),
-                REQ_BACKUP
+            val fileName = "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
+
+            createBackupLauncher.launchAndIgnoreTimer(
+                input = fileName,
+                activity = activity,
             )
         }
     }
@@ -176,15 +178,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_BACKUP && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            uri ?: return
-            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
-        }
-    }
-
     private fun addActionTo(preferenceId: String, action: () -> Unit) {
         preferenceManager
             .findPreference<Preference>(preferenceId)
@@ -203,8 +196,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        const val REQ_BACKUP = 42
-
         const val SCHEMA_MAILTO = "mailto"
 
         const val KEY_ACTION_RESET = "action_reset_safe"

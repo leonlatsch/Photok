@@ -28,7 +28,7 @@ class AlbumsNavigator @Inject constructor() {
     ) {
         when (event) {
             is AlbumsNavigationEvent.OpenAlbumDetail -> navController.navigate(
-                AlbumsFragmentDirections.actionAlbumsFragmentToAlbumDetailFragment(event.uuid)
+                AlbumsFragmentDirections.actionGlobalAlbumDetailFragment(albumUuid = event.uuid)
             )
         }
     }

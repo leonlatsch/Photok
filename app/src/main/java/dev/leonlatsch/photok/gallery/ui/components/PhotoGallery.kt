@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.gallery.ui.components
 
 import android.content.res.Configuration
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -42,6 +43,7 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -64,6 +66,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
@@ -83,6 +86,7 @@ fun PhotoGallery(
     additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
     modifier: Modifier = Modifier,
 ) {
+    val activity = LocalActivity.current
     val importMenuBottomSheetVisible = remember { mutableStateOf(false) }
     val magicFabVisible = remember {
         derivedStateOf {
@@ -213,7 +217,10 @@ fun PhotoGallery(
                     },
                     text = { Text(stringResource(R.string.common_export)) },
                     onClick = {
-                        pickExportTargetLauncher.launch(null)
+                        pickExportTargetLauncher.launchAndIgnoreTimer(
+                            input = null,
+                            activity = activity,
+                        )
                         closeActions()
                     },
                 )
