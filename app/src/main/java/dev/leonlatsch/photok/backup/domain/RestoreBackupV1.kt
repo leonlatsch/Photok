@@ -20,6 +20,7 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.database.entity.internalFileName
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.ByteArrayInputStream
@@ -29,7 +30,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV1 @Inject constructor(
-    private val encryptionManager: EncryptionManager,
+    private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {
@@ -53,7 +54,7 @@ class RestoreBackupV1 @Inject constructor(
             val newPhoto = photoBackup.toDomain().copy(importedAt = System.currentTimeMillis())
 
             val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, originalPassword)
+                encryptedStorageManager.createCipherInputStream(stream, originalPassword)
             if (encryptedZipInput == null) {
                 ze = stream.nextEntry
                 continue

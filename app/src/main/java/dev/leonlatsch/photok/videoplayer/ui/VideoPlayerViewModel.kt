@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.upstream.DataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -47,7 +48,7 @@ import javax.inject.Inject
 class VideoPlayerViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val encryptionManager: EncryptionManager
+    private val encryptedStorageManager: EncryptedStorageManager,
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -80,7 +81,9 @@ class VideoPlayerViewModel @Inject constructor(
     }
 
     private fun createMediaSourceFactory(): MediaSourceFactory {
-        val aesDataSource = AesDataSource(encryptionManager)
+        val aesDataSource = AesDataSource(
+            encryptedStorageManager = encryptedStorageManager,
+        )
 
         val factory = DataSource.Factory {
             aesDataSource

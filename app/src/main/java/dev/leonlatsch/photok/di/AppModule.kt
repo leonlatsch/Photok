@@ -65,10 +65,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideEncryptionManager() = EncryptionManager()
-
-    @Provides
-    @Singleton
     fun provideSharedUrisStore() = SharedUrisStore()
 
     @Provides

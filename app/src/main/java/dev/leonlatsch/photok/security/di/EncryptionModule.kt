@@ -14,14 +14,22 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security
+package dev.leonlatsch.photok.security.di
 
-import javax.crypto.Cipher
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.EncryptionManagerImpl
+import javax.inject.Singleton
 
-interface EncryptionManager {
-    val isReady: Boolean
-    fun initialize(password: String)
-    fun reset()
-    fun createEncryptionCipher(password: String? = null): Cipher?
-    fun createDecryptionCipher(ivBytes: ByteArray, password: String? = null): Cipher?
+@Module
+@InstallIn(SingletonComponent::class)
+interface EncryptionModule {
+
+    @Binds
+    @Singleton
+    //@dev.leonlatsch.photok.security.di.LegacyEncryptionManager
+    fun bindEncryptionManager(impl: EncryptionManagerImpl): EncryptionManager
 }
