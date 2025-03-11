@@ -64,7 +64,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">你的库里没有文件</string>
     <string name="gallery_all_photos_label">所有文件</string>
-    <string name="gallery_albums_label">专辑</string>
+    <string name="gallery_albums_label">相簿</string>
     <string name="gallery_albums_placeholder">创建你的首个相簿</string>
     <string name="gallery_albums_create_title">创建相簿</string>
     <string name="gallery_albums_rename_title">重命名相簿</string>
