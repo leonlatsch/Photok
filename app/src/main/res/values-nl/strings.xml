@@ -197,6 +197,9 @@
     <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Check your Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Verberg Photok</string>
     <string name="hide_app_title_show">Toon Photok</string>

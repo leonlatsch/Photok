@@ -216,6 +216,9 @@
     <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Check your Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok verstecken</string>
     <string name="hide_app_title_show">Photok zeigen</string>
