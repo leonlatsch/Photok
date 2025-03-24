@@ -28,16 +28,6 @@ import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
-<<<<<<< HEAD
-=======
-/**
- * ViewModel for checking the password.
- * Validates password..
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
->>>>>>> 4e67fb4c278072625f2d3298f55a21b329cc8cfc
 @HiltViewModel
 class CheckPasswordViewModel @Inject constructor(
     app: Application,

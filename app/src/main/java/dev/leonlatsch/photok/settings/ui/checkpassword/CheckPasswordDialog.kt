@@ -28,16 +28,6 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
 
-<<<<<<< HEAD
-=======
-
-/**
- * Dialog for checking the password.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
->>>>>>> 4e67fb4c278072625f2d3298f55a21b329cc8cfc
 @AndroidEntryPoint
 class CheckPasswordDialog(
     private val onPasswordValid: (() -> Unit)? = null

@@ -217,7 +217,7 @@
     <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Check your Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok verstecken</string>
