@@ -214,8 +214,13 @@
     <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
 
+<<<<<<< HEAD
     <!-- VERIFY PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string>
+=======
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Check your Password</string>
+>>>>>>> 4e67fb4c278072625f2d3298f55a21b329cc8cfc
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Hide Photok</string>

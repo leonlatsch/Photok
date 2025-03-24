@@ -16,6 +16,15 @@
 
 package dev.leonlatsch.photok.settings.ui.checkpassword
 
+<<<<<<< HEAD
+=======
+/**
+ * Enum to indicate the state of [CheckPasswordDialog]
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+>>>>>>> 4e67fb4c278072625f2d3298f55a21b329cc8cfc
 enum class CheckPasswordState {
     START,
     CHECKING_OLD,

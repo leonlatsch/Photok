@@ -204,6 +204,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_CHECK_PASSWORD = "action_check_password"
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"

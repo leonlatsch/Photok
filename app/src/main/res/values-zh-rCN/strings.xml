@@ -32,11 +32,11 @@
     <string name="common_ok">好</string>
     <string name="common_are_you_sure">你确定吗？</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
+    <string name="common_more">更多</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_create">创建</string>
+    <string name="common_empty">空</string>
+    <string name="common_rename">重命名</string>
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
@@ -64,23 +64,23 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">你的库里没有文件</string>
     <string name="gallery_all_photos_label">所有文件</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="gallery_albums_label">相簿</string>
+    <string name="gallery_albums_placeholder">创建你的首个相簿</string>
+    <string name="gallery_albums_create_title">创建相簿</string>
+    <string name="gallery_albums_rename_title">重命名相簿</string>
+    <string name="gallery_albums_create_placeholder">家庭作业 ;)</string>
+    <string name="gallery_albums_select_title">选择相簿</string>
+    <string name="gallery_albums_deleted">已删除相簿</string>
+    <string name="gallery_albums_photos_added">添加了 %1$d 个项目 </string>
+    <string name="magic_fab_new_album_label">新相簿</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
+    <string name="import_menu_fab_label">导入</string>
+    <string name="import_menu_new_files_title">导入新文件</string>
+    <string name="import_menu_new_files_description">从图库中导入相片和视频</string>
+    <string name="import_menu_restore_title">恢复备份</string>
+    <string name="import_menu_restore_description">恢复 Photok 备份。恢复的文件将被添加至当前文件中。</string>
+    <string name="import_menu_delete_warning">导入的文件将被删除</string>
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
@@ -96,7 +96,7 @@
     <string name="view_photo_detail_import_at_label">导入于:</string>
     <string name="view_photo_detail_file_type_label">文件类型:</string>
     <string name="view_photo_detail_size_label">文件大小:</string>
-    <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
+    <string name="view_photo_play_button_description">播放视频</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">锁定</string>
@@ -106,9 +106,9 @@
     <string name="menu_ms_select_all">选择全部</string>
     <string name="menu_ms_delete">删除</string>
     <string name="menu_ms_export">导出</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">选中了 %1$d 个项目 </string>
+    <string name="menu_ms_add_to_album">添加到相簿</string>
+    <string name="menu_ms_remove_from_album">从相簿中删除</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">你确定要 <b>删除</b> %1$d 个文件吗？</string>
@@ -118,10 +118,10 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">你确定要把 %1$d 个文件 <b>导</b> 回到系统图库吗？</string>
     <string name="export_are_you_sure_this">你确定要把这个文件 <b>导</b> 回到系统图库吗？</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">你确定要把  %1$d 个文件<b>导回</b>图库并删除它们吗？</string>
+    <string name="export_and_delete_are_you_sure_this">你确定要把这个文件<b>导入</b>图库并删除它吗？</string>
     <string name="export_exporting">导出文件中……</string>
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_finished">已导出并删除</string>
     <string name="export_permission_rationale">Photok 需要访问你的存储来导出文件。</string>
     <string name="export_finished">已导出</string>
 
@@ -174,19 +174,19 @@
     <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
     <string name="settings_advanced_backup_title">备份</string>
     <string name="settings_advanced_backup_summary">创建文件保险库的备份</string>
-    <string name="settings_advanced_delete_imported_title">删除导入的文件</string> 
+    <string name="settings_advanced_delete_imported_title">删除导入的文件</string>
     <string name="settings_advanced_delete_imported_summary">导入文件后删除它们</string>
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">删除已导出的文件</string>
+    <string name="settings_advanced_delete_exported_summary">导出文件后删除它们</string>
 
     <string name="settings_other_title">其他</string>
     <string name="settings_other_feedback_title">反馈</string>
     <string name="settings_other_feedback_summary">给我发送一封带反馈的电子邮件</string>
-    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string>
-    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string>
+    <string name="settings_other_feedback_mail_subject">向 Photok 提供反馈</string>
+    <string name="settings_other_feedback_mail_body">写一则 Photok 的反馈 :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">捐赠</string>
+    <string name="settings_other_donate_summary">支持 Photok 开发</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
@@ -259,17 +259,17 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
-    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
+    <string name="news_title_1">新：导入菜单</string>
+    <string name="news_summary_1">新的导入菜单， 允许一并导入图片和视频文件</string>
 
-    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
-    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+    <string name="news_title_2">新：捐赠</string> 
+    <string name="news_summary_2">查看设置中的“捐赠”按钮来支持 Photok</string>
 
-    <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
+    <string name="news_title_3">新：导出后删除</string> 
+    <string name="news_summary_3">导出文件后自动删除这些导出的文件</string>
 
-    <string name="news_title_4">More Languages</string> <!-- TODO -->
-    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+    <string name="news_title_4">更多语言</string> 
+    <string name="news_summary_4">Photok 界面现在可以以阿拉伯语和俄语显示了</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>
