@@ -214,7 +214,7 @@
     <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
 
-    <!-- VERIFY PASSWORD -->
+    <!-- CHECk PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string>
 
     <!-- HIDE APP -->
