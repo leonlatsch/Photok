@@ -44,6 +44,7 @@ import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import javax.inject.Inject
@@ -105,13 +106,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setupAdvancedCategory() {
         addActionTo(KEY_ACTION_RESET) {
-            Dialogs.showConfirmDialog(
-                requireContext(),
-                getString(R.string.settings_advanced_reset_confirmation)
-            ) { _, _ ->
-                viewModel.resetComponents()
-            }
+            CheckPasswordDialog {
+                Dialogs.showConfirmDialog(
+                    requireContext(),
+                    getString(R.string.settings_advanced_reset_confirmation)
+                ) { _, _ ->
+                    viewModel.resetComponents()
+                }
+            }.show(childFragmentManager)
         }
+
 
         addActionTo(KEY_ACTION_BACKUP) {
             val fileName = "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"

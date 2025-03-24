@@ -214,6 +214,9 @@
     <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Check your Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar Photok</string>
     <string name="hide_app_title_show">Mostrar Photok</string>

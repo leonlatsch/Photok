@@ -214,6 +214,9 @@
     <string name="change_password_confirm_message">موصي بالنسخ الاحتياطي! <br /> يتطلب تغيير كلمة المرور إعادة تشفير جميع ملفاتك! هل تريد الاستمرار؟ </string>
     <string name="change_password_reencrypting">إعادة تشفير الملف (الملفات) ...</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Check your Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">إخفاء فوتوك</string>
     <string name="hide_app_title_show">عرض فوتوك</string>
