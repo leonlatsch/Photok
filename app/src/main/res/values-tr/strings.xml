@@ -197,6 +197,9 @@
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok\'u Gizle</string>
     <string name="hide_app_title_show">Photok\'u Göster</string>

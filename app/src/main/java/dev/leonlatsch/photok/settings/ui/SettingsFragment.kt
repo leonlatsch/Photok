@@ -45,6 +45,7 @@ import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import timber.log.Timber
@@ -108,13 +109,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setupAdvancedCategory() {
         addActionTo(KEY_ACTION_RESET) {
-            Dialogs.showConfirmDialog(
-                requireContext(),
-                getString(R.string.settings_advanced_reset_confirmation)
-            ) { _, _ ->
-                viewModel.resetComponents()
-            }
+            CheckPasswordDialog {
+                Dialogs.showConfirmDialog(
+                    requireContext(),
+                    getString(R.string.settings_advanced_reset_confirmation)
+                ) { _, _ ->
+                    viewModel.resetComponents()
+                }
+            }.show(childFragmentManager)
         }
+
 
         addActionTo(KEY_ACTION_BACKUP) {
             val fileName =
@@ -199,6 +203,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     companion object {
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_CHECK_PASSWORD = "action_check_password"
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
