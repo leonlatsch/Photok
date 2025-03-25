@@ -34,6 +34,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
@@ -46,6 +47,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -60,10 +62,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val viewModel: SettingsViewModel by viewModels()
     private var toolbar: Toolbar? = null
 
-    private val createBackupLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
-        uri ?: return@registerForActivityResult
-        BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
-    }
+    private val createBackupLauncher =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+            uri ?: return@registerForActivityResult
+            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
+        }
 
     @Inject
     lateinit var config: Config
@@ -114,7 +117,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         addActionTo(KEY_ACTION_BACKUP) {
-            val fileName = "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
+            val fileName =
+                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
 
             createBackupLauncher.launchAndIgnoreTimer(
                 input = fileName,
@@ -124,23 +128,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setupOtherCategory() {
+        val email = getString(R.string.settings_other_feedback_mail_emailaddress)
+        val subject =
+            "${getString(R.string.settings_other_feedback_mail_subject)} (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
+        val text = getString(R.string.settings_other_feedback_mail_body)
+
         addActionTo(KEY_ACTION_FEEDBACK) {
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
-                Uri.fromParts(
-                    SCHEMA_MAILTO,
-                    getString(R.string.settings_other_feedback_mail_emailaddress),
-                    null
-                )
-            )
-            emailIntent.putExtra(
-                Intent.EXTRA_SUBJECT,
-                getString(R.string.settings_other_feedback_mail_subject)
-            )
-            emailIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                getString(R.string.settings_other_feedback_mail_body)
-            )
+                Uri.parse("mailto:$email?subject=$subject&body=$text")
+            ).apply {
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
             startActivity(
                 Intent.createChooser(
                     emailIntent,
@@ -196,8 +197,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        const val SCHEMA_MAILTO = "mailto"
-
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
