@@ -40,9 +40,7 @@ class CheckPasswordDialog(
 
         viewModel.addOnPropertyChange<CheckPasswordState>(BR.checkPasswordState) {
             when (it) {
-                CheckPasswordState.START -> {
-                    binding.checkPasswordOldPasswordLayout.hide()
-                }
+                CheckPasswordState.START -> Unit
                 CheckPasswordState.CHECKING_OLD -> {
                     binding.loadingOverlay.show()
                     binding.checkPasswordOldPasswordWrongLabel.hide()
@@ -60,7 +58,6 @@ class CheckPasswordDialog(
         binding.loadingOverlay.hide()
         binding.checkPasswordOldPasswordEditText.hide()
         binding.checkPasswordCheckOldButton.hide()
-        binding.checkPasswordOldStatusIcon.show()
         dismiss()
     }
 
