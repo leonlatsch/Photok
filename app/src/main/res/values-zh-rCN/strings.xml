@@ -64,7 +64,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">你的库里没有文件</string>
     <string name="gallery_all_photos_label">所有文件</string>
-    <string name="gallery_albums_label">相簿</string>
+    <string name="gallery_albums_label">专辑</string>
     <string name="gallery_albums_placeholder">创建你的首个相簿</string>
     <string name="gallery_albums_create_title">创建相簿</string>
     <string name="gallery_albums_rename_title">重命名相簿</string>
@@ -213,7 +213,7 @@
     <string name="change_password_reencrypting">重新加密文件中……</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">验证密码</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">隐藏 Photok</string>
@@ -262,13 +262,13 @@
     <string name="news_title_1">新：导入菜单</string>
     <string name="news_summary_1">新的导入菜单， 允许一并导入图片和视频文件</string>
 
-    <string name="news_title_2">新：捐赠</string> 
+    <string name="news_title_2">新：捐赠</string>
     <string name="news_summary_2">查看设置中的“捐赠”按钮来支持 Photok</string>
 
-    <string name="news_title_3">新：导出后删除</string> 
+    <string name="news_title_3">新：导出后删除</string>
     <string name="news_summary_3">导出文件后自动删除这些导出的文件</string>
 
-    <string name="news_title_4">更多语言</string> 
+    <string name="news_title_4">更多语言</string>
     <string name="news_summary_4">Photok 界面现在可以以阿拉伯语和俄语显示了</string>
 
     <!-- Recovery Menu -->
