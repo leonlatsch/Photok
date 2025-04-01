@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.20"// Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.20"// Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
 }
 
 val appVersionName: String by project
@@ -73,9 +73,9 @@ licenseReport {
 
 dependencies {
     val roomVersion = "2.6.1"
-    val coroutinesVersion = "1.9.0" // Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
-    val pagingVersion = "3.3.5"
-    val daggerVersion = "2.55"
+    val coroutinesVersion = "1.10.1" // Don't update. See https://issuetracker.google.com/u/1/issues/386304679?pli=1
+    val pagingVersion = "3.3.6"
+    val daggerVersion = "2.56.1"
 
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
@@ -102,8 +102,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.8.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.8.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.9")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
@@ -122,13 +122,13 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.10.0")
+    implementation("androidx.activity:activity-ktx:1.10.1")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2025.01.00"))
+    implementation(platform("androidx.compose:compose-bom:2025.03.01"))
     implementation("androidx.compose.material3:material3:1.3.1")
     implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     implementation("androidx.activity:activity-compose")
 
     // jBCrypt for Password Hashing
@@ -141,7 +141,7 @@ dependencies {
     implementation("androidx.exifinterface", "exifinterface", "1.3.0-alpha01")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.14.0")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.15.1")
 
     // Coil
     val coilVersion = "2.7.0"
@@ -158,8 +158,8 @@ dependencies {
     })
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
-    implementation("androidx.activity:activity:1.10.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.activity:activity:1.10.1")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
