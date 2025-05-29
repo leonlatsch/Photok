@@ -31,9 +31,13 @@ import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class BackupRepositoryImpl @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
@@ -99,10 +103,10 @@ class BackupRepositoryImpl @Inject constructor(
     override suspend fun writeBackupMetadata(
         backupMetaData: BackupMetaData,
         zipOutputStream: ZipOutputStream
-    ) {
+    ): Result<Unit> {
         val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-        backupLocalDataSource.writeZipEntry(
+        return backupLocalDataSource.writeZipEntry(
             BackupMetaData.FILE_NAME,
             ByteArrayInputStream(metaBytes),
             zipOutputStream,
@@ -127,4 +131,23 @@ class BackupRepositoryImpl @Inject constructor(
 
         return fileDetails
     }
+
+
+    override suspend fun restoreZipEntry(encryptedZipInput: InputStream, internalOutputStream: OutputStream) =
+        suspendCoroutine<Result<Unit>> { continuation ->
+            try {
+                val bytesWritten = encryptedZipInput.copyTo(internalOutputStream, bufferSize = 8192)
+                internalOutputStream.flush()
+                internalOutputStream.close()
+
+                if (bytesWritten <= 0) {
+                    continuation.resume(Result.failure(IOException("$bytesWritten bytes written from zip entry")))
+                    return@suspendCoroutine
+                }
+
+                continuation.resume(Result.success(Unit))
+            } catch (e: Exception) {
+                continuation.resume(Result.failure(e))
+            }
+        }
 }

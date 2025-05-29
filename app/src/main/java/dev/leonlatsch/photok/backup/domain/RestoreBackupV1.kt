@@ -37,7 +37,9 @@ class RestoreBackupV1 @Inject constructor(
         metaData: BackupMetaData,
         stream: ZipInputStream,
         originalPassword: String,
-    ): Result<Unit> {
+    ): RestoreResult {
+        var errors = 0
+
         var ze = stream.nextEntry
 
         while (ze != null) {
@@ -67,15 +69,23 @@ class RestoreBackupV1 @Inject constructor(
             val photoFileCreated =
                 photoRepository.createPhotoFile(newPhoto, photoBytesInputStream) != -1L
 
-            if (photoFileCreated) {
-                createThumbnails(newPhoto, photoBytes).onSuccess {
+            if (!photoFileCreated) {
+                errors++
+                ze = stream.nextEntry
+                continue
+            }
+
+            createThumbnails(newPhoto, photoBytes)
+                .onSuccess {
                     photoRepository.insert(newPhoto)
                 }
-            }
+                .onFailure {
+                    errors++
+                }
 
             ze = stream.nextEntry
         }
 
-        return Result.success(Unit)
+        return RestoreResult(errors)
     }
 }
