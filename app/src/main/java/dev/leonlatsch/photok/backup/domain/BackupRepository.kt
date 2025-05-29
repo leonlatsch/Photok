@@ -30,7 +30,8 @@ interface BackupRepository {
     suspend fun writeBackupMetadata(
         backupMetaData: BackupMetaData,
         zipOutputStream: ZipOutputStream,
-    )
+    ): Result<Unit>
+
     suspend fun readBackupMetadata(zipInputStream: ZipInputStream, ): BackupMetaData
     suspend fun getBackupFileDetails(uri: Uri): BackupFileDetails
 }

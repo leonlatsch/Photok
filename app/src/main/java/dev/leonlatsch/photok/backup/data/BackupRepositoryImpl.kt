@@ -99,10 +99,10 @@ class BackupRepositoryImpl @Inject constructor(
     override suspend fun writeBackupMetadata(
         backupMetaData: BackupMetaData,
         zipOutputStream: ZipOutputStream
-    ) {
+    ): Result<Unit> {
         val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-        backupLocalDataSource.writeZipEntry(
+        return backupLocalDataSource.writeZipEntry(
             BackupMetaData.FILE_NAME,
             ByteArrayInputStream(metaBytes),
             zipOutputStream,
