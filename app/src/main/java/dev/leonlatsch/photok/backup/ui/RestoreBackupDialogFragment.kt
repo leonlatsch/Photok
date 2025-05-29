@@ -74,6 +74,13 @@ class RestoreBackupDialogFragment(
                     binding.restoreProgressIndicator.hide()
                     binding.restoreCloseButton.show()
                 }
+
+                RestoreState.FINISHED_WITH_ERRORS -> {
+                    viewModel.zipFileName = getString(R.string.process_finished)
+                    binding.restoreProgressIndicator.hide()
+                    binding.restoreFailuresWarning.show()
+                    binding.restoreCloseButton.show()
+                }
             }
         }
 
