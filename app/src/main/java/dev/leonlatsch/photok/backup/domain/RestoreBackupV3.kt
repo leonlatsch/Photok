@@ -23,9 +23,11 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
+import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV3 @Inject constructor(
@@ -57,10 +59,18 @@ class RestoreBackupV3 @Inject constructor(
                 continue
             }
 
+
             suspendCoroutine { continuation ->
-                val bytesWritten = encryptedZipInput.copyTo(internalOutputStream)
-                internalOutputStream.lazyClose()
-                continuation.resume(bytesWritten)
+                try {
+                    Timber.d("Copying ${ze.name} from zip to Photok")
+                    val bytesWritten = encryptedZipInput.copyTo(internalOutputStream, bufferSize = 8192)
+                    internalOutputStream.flush()
+                    internalOutputStream.close()
+                    continuation.resume(bytesWritten)
+                } catch (e: Exception) {
+                    Timber.d("Failed to copy ${ze.name} from zip to Photok: $e")
+                    continuation.resumeWithException(e)
+                }
             } != -1L
 
             ze = stream.nextEntry
