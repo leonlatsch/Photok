@@ -21,10 +21,13 @@ import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.zip.ZipInputStream
+import javax.crypto.CipherInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -35,12 +38,15 @@ class RestoreBackupV3 @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
+    private val backupRepository: BackupRepository,
 ) : RestoreBackupStrategy {
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
         originalPassword: String
-    ): Result<Unit> {
+    ): RestoreResult {
+        var errors = 0
+
         var ze = stream.nextEntry
 
         while (ze != null) {
@@ -60,18 +66,11 @@ class RestoreBackupV3 @Inject constructor(
             }
 
 
-            suspendCoroutine { continuation ->
-                try {
-                    Timber.d("Copying ${ze.name} from zip to Photok")
-                    val bytesWritten = encryptedZipInput.copyTo(internalOutputStream, bufferSize = 8192)
-                    internalOutputStream.flush()
-                    internalOutputStream.close()
-                    continuation.resume(bytesWritten)
-                } catch (e: Exception) {
-                    Timber.d("Failed to copy ${ze.name} from zip to Photok: $e")
-                    continuation.resumeWithException(e)
+            backupRepository.restoreZipEntry(encryptedZipInput, internalOutputStream)
+                .onFailure {
+                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
+                    errors++
                 }
-            } != -1L
 
             ze = stream.nextEntry
         }
@@ -94,6 +93,7 @@ class RestoreBackupV3 @Inject constructor(
             albumRepository.link(albumPhotoRef)
         }
 
-        return Result.success(Unit)
+        return RestoreResult(errors)
     }
+
 }
