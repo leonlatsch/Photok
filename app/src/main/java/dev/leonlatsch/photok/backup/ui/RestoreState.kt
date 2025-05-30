@@ -27,5 +27,6 @@ enum class RestoreState {
     FILE_VALID,
     FILE_INVALID,
     RESTORING,
-    FINISHED
+    FINISHED,
+    FINISHED_WITH_ERRORS,
 }

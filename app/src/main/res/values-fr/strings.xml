@@ -216,6 +216,9 @@
     <string name="change_password_confirm_message">Sauvegarde recommandée !<br /> Changer votre mot de passe nécessite de rechiffrer tous vos fichiers ! Voulez-vous continuer ?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Vérifier votre Mot de passe</string>
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Cacher Photok</string>
     <string name="hide_app_title_show">Afficher Photok</string>

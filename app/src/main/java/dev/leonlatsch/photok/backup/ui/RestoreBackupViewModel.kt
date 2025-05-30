@@ -112,9 +112,14 @@ class RestoreBackupViewModel @Inject constructor(
         val metaData = metaData ?: error("meta.json was loaded without success")
 
         val restoreStrategy = getRestoreStrategy(backupVersion)
-        restoreStrategy.restore(metaData, zipInputStream, origPassword)
+        val result = restoreStrategy.restore(metaData, zipInputStream, origPassword)
+        zipInputStream.close()
 
-        zipInputStream.lazyClose()
-        restoreState = RestoreState.FINISHED
+        restoreState = if (result.errors > 0) {
+            RestoreState.FINISHED_WITH_ERRORS
+        } else {
+            RestoreState.FINISHED
+        }
+
     }
 }

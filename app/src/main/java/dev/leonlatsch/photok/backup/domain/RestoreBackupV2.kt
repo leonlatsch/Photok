@@ -22,6 +22,7 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
+import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -31,13 +32,16 @@ class RestoreBackupV2 @Inject constructor(
     private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
+    private val backupRepository: BackupRepository,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
         originalPassword: String
-    ): Result<Unit> {
+    ): RestoreResult {
+        var errors = 0
+
         var ze = stream.nextEntry
 
         while (ze != null) {
@@ -56,11 +60,11 @@ class RestoreBackupV2 @Inject constructor(
                 continue
             }
 
-            suspendCoroutine { continuation ->
-                val bytesWritten = encryptedZipInput.copyTo(internalOutputStream)
-                internalOutputStream.lazyClose()
-                continuation.resume(bytesWritten)
-            } != -1L
+            backupRepository.restoreZipEntry(encryptedZipInput, internalOutputStream)
+                .onFailure {
+                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
+                    errors++
+                }
 
             ze = stream.nextEntry
         }
@@ -73,6 +77,6 @@ class RestoreBackupV2 @Inject constructor(
             photoRepository.insert(newPhoto)
         }
 
-        return Result.success(Unit)
+        return RestoreResult(errors)
     }
 }

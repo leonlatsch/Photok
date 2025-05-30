@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
+import timber.log.Timber
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
@@ -55,12 +56,19 @@ class BackupViewModel @Inject constructor(
 
     override suspend fun processItem(item: Photo) {
         backupRepository.writePhoto(item, zipOutputStream)
-            .onFailure { failuresOccurred = true }
+            .onFailure {
+                Timber.e(it, "Error writing photo to backup")
+                failuresOccurred = true
+            }
     }
 
     override suspend fun postProcess() {
         if (failuresOccurred.not()) {
             createBackupMetaFile(zipOutputStream)
+                .onFailure {
+                    Timber.e(it, "Error writing meta file to backup")
+                    failuresOccurred = true
+                }
         }
 
         zipOutputStream.lazyClose()
