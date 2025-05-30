@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2024 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.domain
+package dev.leonlatsch.photok.settings.ui.checkpassword
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import java.util.zip.ZipInputStream
-
-interface RestoreBackupStrategy {
-    suspend fun restore(
-        metaData: BackupMetaData,
-        stream: ZipInputStream,
-        originalPassword: String,
-    ): RestoreResult
+enum class CheckPasswordState {
+    START,
+    CHECKING_OLD,
+    OLD_VALID,
+    OLD_INVALID,
 }

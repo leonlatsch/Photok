@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.imageloading.di
 import android.content.Context
 import coil.ImageLoader
 import coil.decode.VideoFrameDecoder
+import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.util.DebugLogger
 import dagger.Binds
@@ -47,8 +48,12 @@ object ImageLoadingModule {
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
-        .memoryCachePolicy(CachePolicy.DISABLED)
-        .memoryCache(null)
+        .memoryCachePolicy(CachePolicy.READ_ONLY)
+        .memoryCache {
+            MemoryCache.Builder(context)
+                .maxSizePercent(0.25)
+                .build()
+        }
         .apply {
             if (BuildConfig.DEBUG) {
                 logger(DebugLogger())

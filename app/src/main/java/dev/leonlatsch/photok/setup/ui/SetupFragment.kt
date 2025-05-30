@@ -30,7 +30,6 @@ import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -103,18 +102,21 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
     }
 
     private fun finishSetup() {
-        requireActivityAs(BaseActivity::class).hideKeyboard()
+        val activity = activity
+        (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
-        if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
-            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
-        } else {
+        if (activity == null || !viewModel.encryptionManager.isReady) {
             Dialogs.showLongToast(
                 requireContext(),
                 getString(R.string.common_error)
             )
+
+            return
         }
+
+        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
+        findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
     }
 
     private fun enableOrDisableSetup() {

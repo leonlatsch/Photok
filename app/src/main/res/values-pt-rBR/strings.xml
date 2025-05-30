@@ -211,6 +211,9 @@
     <string name="change_password_confirm_message">Um Backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todos seus arquivos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Arquivo(s) sendo criptografado(s) de novo…</string>
 
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar o Photok</string>
     <string name="hide_app_title_show">Mostrar o Photok</string>

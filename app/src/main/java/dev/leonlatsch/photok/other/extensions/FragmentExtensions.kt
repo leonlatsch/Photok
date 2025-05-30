@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.other.extensions
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
@@ -25,32 +23,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.lifecycle.withCreationCallback
-import dev.leonlatsch.photok.BaseApplication
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
-/**
- * Require the parent activity as a specific type to avoid casting.
- *
- * @see Fragment.requireActivity
- */
-@Suppress("UNCHECKED_CAST")
-fun <T : AppCompatActivity> Fragment.requireActivityAs(clazz: KClass<T>): T {
-    val activity = requireActivity()
-    return try {
-        activity as T
-    } catch (e: ClassCastException) {
-        throw IllegalArgumentException("$activity is not of type ${clazz.simpleName}")
-    }
-}
-
-/**
- * Extension for starting an activity for result and disable lock timer in [BaseApplication].
- */
-fun Fragment.startActivityForResultAndIgnoreTimer(intent: Intent, reqCode: Int) {
-    startActivityForResult(intent, reqCode)
-    requireActivity().getBaseApplication().ignoreNextTimeout()
-}
 
 inline fun Fragment.launchLifecycleAwareJob(
     state: Lifecycle.State = Lifecycle.State.CREATED,
@@ -61,7 +35,7 @@ inline fun Fragment.launchLifecycleAwareJob(
 /**
  * Create a view model with assisted injection. This is a workaround for the missing support of assisted injection in Hilt.
  */
-inline fun <FactoryType, reified ViewModelType: ViewModel> Fragment.assistedViewModel(
+inline fun <FactoryType, reified ViewModelType : ViewModel> Fragment.assistedViewModel(
     crossinline viewModelProducer: (FactoryType) -> ViewModelType
 ) = lazy {
     ViewModelProvider(

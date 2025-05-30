@@ -137,6 +137,14 @@
             android:textColor="@color/darkRed"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/restoreFailuresWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/process_failures_occurred"
+            android:textColor="@color/darkYellow"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/restoreCloseButton"
             android:layout_width="wrap_content"

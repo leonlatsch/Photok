@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.WindowInsets
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -33,18 +34,21 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.extensions.startActivityForResultAndIgnoreTimer
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -58,6 +62,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
     private var toolbar: Toolbar? = null
+
+    private val createBackupLauncher =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+            uri ?: return@registerForActivityResult
+            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
+        }
 
     @Inject
     lateinit var config: Config
@@ -99,46 +109,43 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setupAdvancedCategory() {
         addActionTo(KEY_ACTION_RESET) {
-            Dialogs.showConfirmDialog(
-                requireContext(),
-                getString(R.string.settings_advanced_reset_confirmation)
-            ) { _, _ ->
-                viewModel.resetComponents()
-            }
+            CheckPasswordDialog {
+                Dialogs.showConfirmDialog(
+                    requireContext(),
+                    getString(R.string.settings_advanced_reset_confirmation)
+                ) { _, _ ->
+                    viewModel.resetComponents()
+                }
+            }.show(childFragmentManager)
         }
 
+
         addActionTo(KEY_ACTION_BACKUP) {
-            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            intent.type = "application/zip"
-            intent.putExtra(
-                Intent.EXTRA_TITLE,
+            val fileName =
                 "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
-            )
-            startActivityForResultAndIgnoreTimer(
-                Intent.createChooser(intent, "Select Backup File"),
-                REQ_BACKUP
+
+            createBackupLauncher.launchAndIgnoreTimer(
+                input = fileName,
+                activity = activity,
             )
         }
     }
 
     private fun setupOtherCategory() {
+        val email = getString(R.string.settings_other_feedback_mail_emailaddress)
+        val subject =
+            "${getString(R.string.settings_other_feedback_mail_subject)} (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
+        val text = getString(R.string.settings_other_feedback_mail_body)
+
         addActionTo(KEY_ACTION_FEEDBACK) {
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
-                Uri.fromParts(
-                    SCHEMA_MAILTO,
-                    getString(R.string.settings_other_feedback_mail_emailaddress),
-                    null
-                )
-            )
-            emailIntent.putExtra(
-                Intent.EXTRA_SUBJECT,
-                getString(R.string.settings_other_feedback_mail_subject)
-            )
-            emailIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                getString(R.string.settings_other_feedback_mail_body)
-            )
+                Uri.parse("mailto:$email?subject=$subject&body=$text")
+            ).apply {
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
             startActivity(
                 Intent.createChooser(
                     emailIntent,
@@ -176,15 +183,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_BACKUP && resultCode == Activity.RESULT_OK) {
-            val uri = data?.data
-            uri ?: return
-            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
-        }
-    }
-
     private fun addActionTo(preferenceId: String, action: () -> Unit) {
         preferenceManager
             .findPreference<Preference>(preferenceId)
@@ -203,12 +201,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        const val REQ_BACKUP = 42
-
-        const val SCHEMA_MAILTO = "mailto"
-
         const val KEY_ACTION_RESET = "action_reset_safe"
         const val KEY_ACTION_CHANGE_PASSWORD = "action_change_password"
+        const val KEY_ACTION_CHECK_PASSWORD = "action_check_password"
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_FEEDBACK = "action_feedback"

@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.backup.data
 
-import dev.leonlatsch.photok.other.extensions.lazyClose
+import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.util.zip.ZipEntry
@@ -36,12 +36,17 @@ class BackupLocalDataSource @Inject constructor() {
             val entry = ZipEntry(filename)
             zipOutputStream.putNextEntry(entry)
 
-            input.copyTo(zipOutputStream)
-
-            input.lazyClose()
+            val bytesWritten = input.copyTo(zipOutputStream)
+            input.close()
             zipOutputStream.closeEntry()
+
+            if (bytesWritten <= 0) {
+                throw IOException("Failed writing bytes to zip entry for: $filename. Copied bytes: $bytesWritten")
+            }
+
             continuation.resume(Result.success(Unit))
         } catch (e: IOException) {
+            Timber.e(e, "Error writing zip entry for $filename")
             continuation.resume(Result.failure(e))
         }
     }

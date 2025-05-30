@@ -14,15 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.domain
+package dev.leonlatsch.photok.other.extensions
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import java.util.zip.ZipInputStream
+import android.app.Activity
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityOptionsCompat
 
-interface RestoreBackupStrategy {
-    suspend fun restore(
-        metaData: BackupMetaData,
-        stream: ZipInputStream,
-        originalPassword: String,
-    ): RestoreResult
+fun <I> ActivityResultLauncher<I>.launchAndIgnoreTimer(
+    input: I,
+    activity: Activity?,
+    options: ActivityOptionsCompat? = null,
+) {
+    launch(input, options)
+    activity?.getBaseApplication()?.ignoreNextTimeout()
 }

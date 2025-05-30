@@ -20,6 +20,8 @@ import android.net.Uri
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.model.BackupFileDetails
 import dev.leonlatsch.photok.model.database.entity.Photo
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
@@ -30,7 +32,12 @@ interface BackupRepository {
     suspend fun writeBackupMetadata(
         backupMetaData: BackupMetaData,
         zipOutputStream: ZipOutputStream,
-    )
+    ): Result<Unit>
+
     suspend fun readBackupMetadata(zipInputStream: ZipInputStream, ): BackupMetaData
     suspend fun getBackupFileDetails(uri: Uri): BackupFileDetails
+    suspend fun restoreZipEntry(
+        encryptedZipInput: InputStream,
+        internalOutputStream: OutputStream
+    ): Result<Unit>
 }

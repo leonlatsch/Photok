@@ -20,6 +20,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove"/>
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO"/>
+            <data android:scheme="mailto" android:host="*" />
+        </intent>
+    </queries>
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"

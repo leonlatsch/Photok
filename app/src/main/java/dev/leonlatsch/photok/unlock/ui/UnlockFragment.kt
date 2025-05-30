@@ -28,7 +28,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.requireActivityAs
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
@@ -78,15 +77,18 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun unlock() {
-        requireActivityAs(BaseActivity::class).hideKeyboard()
+        val activity = activity
+
+        (activity as? BaseActivity)?.hideKeyboard()
         binding.loadingOverlay.hide()
 
-        if (viewModel.encryptionManager.isReady) {
-            requireActivity().getBaseApplication().state.update { ApplicationState.UNLOCKED }
-            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
-        } else {
+        if (activity == null || !viewModel.encryptionManager.isReady) {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+            return
         }
+
+        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
+        findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
     }
 
     override fun bind(binding: FragmentUnlockBinding) {
