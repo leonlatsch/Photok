@@ -18,15 +18,16 @@ package dev.leonlatsch.photok.model.io
 
 import android.app.Application
 import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
+import dev.leonlatsch.photok.other.IV_SIZE
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.security.GeneralSecurityException
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
@@ -53,7 +54,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherInputStream? =
         try {
             val inputStream = app.openFileInput(fileName)
-            encryptionManager.createCipherInputStream(inputStream, password)
+            createCipherInputStream(inputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -79,7 +80,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherOutputStream? =
         try {
             val outputStream = app.openFileOutput(fileName, INTERNAL_FILE_MODE)
-            encryptionManager.createCipherOutputStream(outputStream, password)
+            createCipherOutputStream(outputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -111,7 +112,7 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Rename a file in internal storage.
      */
-    private fun internalRenameFile(currentFileName: String, newFileName: String): Boolean {
+    fun renameFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
@@ -136,7 +137,7 @@ class EncryptedStorageManager @Inject constructor(
         var success = bytesCopied > 0
 
         success = success && internalDeleteFile(fileName)
-        success = success && internalRenameFile(tmpFileName, fileName)
+        success = success && renameFile(tmpFileName, fileName)
 
         return success
     }
@@ -176,9 +177,6 @@ class EncryptedStorageManager @Inject constructor(
         }
     }
 
-    /**
-     * Deletes an external file.
-     */
     fun externalDeleteFile(fileUri: Uri): Boolean? =
         try {
             val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri);
@@ -187,6 +185,44 @@ class EncryptedStorageManager @Inject constructor(
             Timber.d("Error deleting external file at $fileUri: $e")
             null
         }
+
+     fun createCipherInputStream(
+        inputStream: InputStream,
+        password: String? = null,
+    ): CipherInputStream? {
+        return if (encryptionManager.isReady) try {
+            val iv = ByteArray(IV_SIZE)
+            inputStream.read(iv, 0, IV_SIZE)
+
+            val cipher = encryptionManager.createDecryptionCipher(iv, password)
+
+            CipherInputStream(inputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted input stream: $e")
+            null
+        } else {
+            null
+        }
+    }
+
+     fun createCipherOutputStream(
+        outputStream: OutputStream,
+        password: String?
+    ): CipherOutputStream? {
+        return if (encryptionManager.isReady) try {
+            val cipher = encryptionManager.createEncryptionCipher(password)
+            cipher ?: return null
+
+            outputStream.write(cipher.iv)
+
+            CipherOutputStream(outputStream, cipher)
+        } catch (e: GeneralSecurityException) {
+            Timber.d("Error creating encrypted output stream: $e")
+            null
+        } else {
+            null
+        }
+    }
 
     // endregion
 

@@ -56,7 +56,7 @@ class RestoreBackupV3 @Inject constructor(
             }
 
             val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, originalPassword)
+                encryptedStorageManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
 
