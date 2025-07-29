@@ -88,7 +88,11 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
 
         activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-        findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+        if (true) {
+            findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+        } else {
+            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+        }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {
