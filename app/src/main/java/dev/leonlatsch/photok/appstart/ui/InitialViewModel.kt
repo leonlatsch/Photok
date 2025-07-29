@@ -14,15 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.splashscreen.ui
+package dev.leonlatsch.photok.appstart.ui
 
-import android.app.Application
-import androidx.databinding.Bindable
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,35 +32,29 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @HiltViewModel
-class SplashScreenViewModel @Inject constructor(
-    app: Application,
+class InitialViewModel @Inject constructor(
     private val config: Config
-) : ObservableViewModel(app) {
-
-    @get:Bindable
-    var appStartState: AppStartState? = null
-        set(value) {
-            field = value
-            notifyChange(BR.appStartState, value)
-        }
+) : ViewModel() {
 
     /**
      * Check the application state.
      */
-    fun checkApplicationState() = viewModelScope.launch {
+    fun checkApplicationState(continueStart: (AppStartState) -> Unit) = viewModelScope.launch {
 
         // First start
         if (config.systemFirstStart) {
-            appStartState = AppStartState.FIRST_START
+            continueStart(AppStartState.FIRST_START)
             return@launch
         }
 
         // Unlock or Setup
         val password = config.securityPassword
-        appStartState = if (password == null || password.isEmpty()) {
+        val appStartState = if (password == null || password.isEmpty()) {
             AppStartState.SETUP
         } else {
             AppStartState.LOCKED
         }
+
+        continueStart(appStartState)
     }
 }

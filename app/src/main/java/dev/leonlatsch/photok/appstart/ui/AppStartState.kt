@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.splashscreen.ui
+package dev.leonlatsch.photok.appstart.ui
 
 /**
  * Enum class to indicate application state.

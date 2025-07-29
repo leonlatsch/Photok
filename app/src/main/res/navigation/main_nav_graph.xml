@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/initialFragment">
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.leonlatsch.photok.settings.ui.SettingsFragment"
@@ -84,30 +84,29 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="dev.leonlatsch.photok.splashscreen.ui.SplashScreenFragment"
-        android:label="SplashScreenFragment"
-        tools:layout="@layout/fragment_splash_screen">
+        android:id="@+id/initialFragment"
+        android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
+        android:label="SplashScreenFragment">
         <action
-            android:id="@+id/action_splashScreenFragment_to_unlockFragment"
+            android:id="@+id/action_initialFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
+            android:id="@+id/action_initialFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashScreenFragment_to_setupFragment"
+            android:id="@+id/action_initialFragment_to_setupFragment"
             app:destination="@id/setupFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
