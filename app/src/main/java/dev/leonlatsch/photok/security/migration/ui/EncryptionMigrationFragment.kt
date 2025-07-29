@@ -21,13 +21,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.migration.MigrationService
+import dev.leonlatsch.photok.security.migration.MigrationServiceCompanion
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EncryptionMigrationFragment : Fragment() {
+
+    @Inject
+    lateinit var migrationServiceCompanion: MigrationServiceCompanion
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,8 +53,17 @@ class EncryptionMigrationFragment : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
+                val progress by migrationServiceCompanion.progress.collectAsStateWithLifecycle()
+
+                LaunchedEffect(progress) {
+                    if (progress == 100) {
+                        delay(300)
+                        findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
+                    }
+                }
+
                 AppTheme {
-                    EncryptionMigrationScreen()
+                    EncryptionMigrationScreen(progress)
                 }
             }
         }

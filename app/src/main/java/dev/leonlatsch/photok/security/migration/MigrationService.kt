@@ -23,6 +23,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,18 +32,38 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val CHANNEL_ID = "MigrationChannel"
 private const val SERVICE_ID = 1
 
+@Singleton
+class MigrationServiceCompanion @Inject constructor(
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator
+) {
+    val progress = MutableStateFlow(0)
 
+    suspend fun startMigration() {
+        for (step in 1..100) {
+            delay(200)
+            progress.update { step }
+        }
+    }
+
+}
+
+@AndroidEntryPoint
 class MigrationService : Service() {
+
+    @Inject
+    lateinit var companion: MigrationServiceCompanion
+
     private val supervisorJob = Job()
 
     private val scope = CoroutineScope(supervisorJob + Dispatchers.IO)
     private var notificationManager: NotificationManager? = null
 
-    private val progress = MutableStateFlow(0)
 
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -56,17 +78,14 @@ class MigrationService : Service() {
         startForeground(SERVICE_ID, createNotification(0))
         scope.launch {
 
-            for (step in 1..100) {
-                delay(200)
-                progress.update { step }
-            }
+            companion.startMigration()
 
             stopForeground(STOP_FOREGROUND_DETACH)
             stopSelf()
         }
 
         scope.launch {
-            progress.collect {
+            companion.progress.collect {
                 updateNotification(it)
             }
         }

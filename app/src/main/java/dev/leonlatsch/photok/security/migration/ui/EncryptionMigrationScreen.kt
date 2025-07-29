@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,16 +29,22 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun EncryptionMigrationScreen(modifier: Modifier = Modifier) {
+fun EncryptionMigrationScreen(progress: Int) {
     Scaffold { contentPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
         ) {
-            LinearProgressIndicator(
+            Box(
                 modifier = Modifier.align(Alignment.Center)
-            )
+            ) {
+                if (progress == 100) {
+                    Text("Finished")
+                } else {
+                    LinearProgressIndicator( progress = { progress.toFloat() / 100 })
+                }
+            }
         }
     }
 }
@@ -46,6 +53,6 @@ fun EncryptionMigrationScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun Preview() {
     AppTheme {
-        EncryptionMigrationScreen()
+        EncryptionMigrationScreen(50)
     }
 }
