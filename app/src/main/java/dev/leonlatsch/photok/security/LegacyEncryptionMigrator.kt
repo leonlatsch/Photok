@@ -63,7 +63,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
     }
 
-    suspend  fun migrate(): LegacyEncryptionResult = mutex.withLock {
+    suspend fun migrate(): LegacyEncryptionResult = mutex.withLock {
         if (key == null || iv == null) {
             return LegacyEncryptionResult.Failure(IllegalStateException("Encryption not initialized"))
         }
@@ -80,7 +80,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
                 processedFiles++
 
-                progress.update { (processedFiles / allFiles.size) * 100}
+                progress.update { (processedFiles / allFiles.size) * 100 }
             }
 
             return if (failedFiles.isEmpty()) {
@@ -100,8 +100,9 @@ class LegacyEncryptionMigrator @Inject constructor(
         try {
             val origInput = app.openFileInput(fileName)
             val legacyInputStream = openLegacyCipherInputStream(origInput)
-            val newOutputStream = encryptedStorageManager.internalOpenFileOutput( migrationFileName )
-                ?: return Result.failure(Exception("New output was null"))
+            val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
+                migrationFileName
+            ) ?: return Result.failure(Exception("New output was null"))
 
 
             suspendCoroutine { continuation ->
