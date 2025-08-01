@@ -84,6 +84,7 @@ class LegacyEncryptionMigrator @Inject constructor(
             }
 
             return if (failedFiles.isEmpty()) {
+                progress.update { 100 }
                 LegacyEncryptionResult.Success
             } else {
                 LegacyEncryptionResult.PartialSuccess(failedFiles)
@@ -94,8 +95,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     }
 
     private suspend fun migrateSingleFile(fileName: String): Result<Unit> {
-
-        val migrationFileName = "${fileName}_migration"
+        val migrationFileName = ".migrated~${fileName}"
 
         try {
             val origInput = app.openFileInput(fileName)
@@ -113,7 +113,7 @@ class LegacyEncryptionMigrator @Inject constructor(
                 continuation.resume(Unit)
             }
 
-            app.deleteFile(fileName)
+            encryptedStorageManager.internalDeleteFile(fileName)
             encryptedStorageManager.renameFile(
                 currentFileName = migrationFileName,
                 newFileName = fileName,
@@ -121,7 +121,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
             return Result.success(Unit)
         } catch (e: Exception) {
-            app.deleteFile(migrationFileName)
+            encryptedStorageManager.internalDeleteFile(migrationFileName)
             return Result.failure(e)
         }
     }
