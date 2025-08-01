@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
@@ -40,7 +41,8 @@ import javax.inject.Inject
 class UnlockViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager
+    private val passwordManager: PasswordManager,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -68,6 +70,8 @@ class UnlockViewModel @Inject constructor(
 
         unlockState = if (passwordManager.checkPassword(password)) {
             encryptionManager.initialize(password)
+            // TODO: Only if needed
+            legacyEncryptionMigrator.init(password)
             UnlockState.UNLOCKED
         } else {
             UnlockState.LOCKED

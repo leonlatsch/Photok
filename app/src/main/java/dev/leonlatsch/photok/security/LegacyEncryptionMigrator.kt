@@ -21,6 +21,10 @@ import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.AES
 import dev.leonlatsch.photok.other.AES_ALGORITHM
 import dev.leonlatsch.photok.other.SHA_256
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -30,6 +34,14 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
+sealed interface LegacyEncryptionResult {
+    data class Failure(val error: Throwable) : LegacyEncryptionResult
+    data class PartialSuccess(val failedElements: Map<String, Throwable>) : LegacyEncryptionResult
+    data object Success : LegacyEncryptionResult
+}
 
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
@@ -37,15 +49,51 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val app: Application,
 ) {
 
+    val progress = MutableStateFlow(0)
+
     private var key: SecretKeySpec? = null
     private var iv: IvParameterSpec? = null
 
+    private val mutex = Mutex()
 
-    fun invoke(password: String, fileName: String): Result<Unit> {
+    suspend fun init(password: String) = mutex.withLock {
         if (key == null || iv == null) {
             key = genSecKey(password)
             iv = genLegacyIv(password)
         }
+    }
+
+    suspend  fun migrate(): LegacyEncryptionResult = mutex.withLock {
+        if (key == null || iv == null) {
+            return LegacyEncryptionResult.Failure(IllegalStateException("Encryption not initialized"))
+        }
+
+        try {
+            val allFiles = app.fileList()
+
+            var processedFiles = 0
+            val failedFiles = mutableMapOf<String, Throwable>()
+
+            for (file in allFiles) {
+                migrateSingleFile(file)
+                    .onFailure { failedFiles[file] = it }
+
+                processedFiles++
+
+                progress.update { (processedFiles / allFiles.size) * 100}
+            }
+
+            return if (failedFiles.isEmpty()) {
+                LegacyEncryptionResult.Success
+            } else {
+                LegacyEncryptionResult.PartialSuccess(failedFiles)
+            }
+        } catch (e: Exception) {
+            return LegacyEncryptionResult.Failure(e)
+        }
+    }
+
+    private suspend fun migrateSingleFile(fileName: String): Result<Unit> {
 
         val migrationFileName = "${fileName}_migration"
 
@@ -56,10 +104,13 @@ class LegacyEncryptionMigrator @Inject constructor(
                 ?: return Result.failure(Exception("New output was null"))
 
 
-            legacyInputStream.copyTo(newOutputStream)
+            suspendCoroutine { continuation ->
+                legacyInputStream.copyTo(newOutputStream)
+                legacyInputStream.close()
+                newOutputStream.close()
 
-            legacyInputStream.close()
-            newOutputStream.close()
+                continuation.resume(Unit)
+            }
 
             app.deleteFile(fileName)
             encryptedStorageManager.renameFile(

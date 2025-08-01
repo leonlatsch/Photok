@@ -23,13 +23,20 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
 
 @Composable
-fun EncryptionMigrationScreen(progress: Int) {
+fun EncryptionMigrationScreen(
+    uiState: LegacyEncryptionMigrationUiState.Migrating,
+) {
     Scaffold { contentPadding ->
         Box(
             modifier = Modifier
@@ -39,10 +46,10 @@ fun EncryptionMigrationScreen(progress: Int) {
             Box(
                 modifier = Modifier.align(Alignment.Center)
             ) {
-                if (progress == 100) {
+                if (uiState.progress == 100) {
                     Text("Finished")
                 } else {
-                    LinearProgressIndicator( progress = { progress.toFloat() / 100 })
+                    LinearProgressIndicator( progress = { uiState.progress.toFloat() / 100 })
                 }
             }
         }
@@ -53,6 +60,10 @@ fun EncryptionMigrationScreen(progress: Int) {
 @Composable
 private fun Preview() {
     AppTheme {
-        EncryptionMigrationScreen(50)
+        EncryptionMigrationScreen(
+            uiState = LegacyEncryptionMigrationUiState.Migrating(
+                progress = 50
+            ),
+        )
     }
 }

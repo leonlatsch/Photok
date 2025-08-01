@@ -38,26 +38,12 @@ import javax.inject.Singleton
 private const val CHANNEL_ID = "MigrationChannel"
 private const val SERVICE_ID = 1
 
-@Singleton
-class MigrationServiceCompanion @Inject constructor(
-    private val legacyEncryptionMigrator: LegacyEncryptionMigrator
-) {
-    val progress = MutableStateFlow(0)
-
-    suspend fun startMigration() {
-        for (step in 1..100) {
-            delay(200)
-            progress.update { step }
-        }
-    }
-
-}
 
 @AndroidEntryPoint
 class MigrationService : Service() {
 
     @Inject
-    lateinit var companion: MigrationServiceCompanion
+    lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
 
     private val supervisorJob = Job()
 
@@ -77,15 +63,14 @@ class MigrationService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startForeground(SERVICE_ID, createNotification(0))
         scope.launch {
-
-            companion.startMigration()
+            legacyEncryptionMigrator.migrate()
 
             stopForeground(STOP_FOREGROUND_DETACH)
             stopSelf()
         }
 
         scope.launch {
-            companion.progress.collect {
+            legacyEncryptionMigrator.progress.collect {
                 updateNotification(it)
             }
         }
