@@ -118,7 +118,7 @@
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d foto(s), en tu galería?</string>
-    <string name="export_and_delete_are_you_sure">¿Estás seguro de querer <b>exportar</b> %1$d archivos(s), de nuevo a tu galería y eliminarlos?</string>
+    <string name="export_and_delete_are_you_sure">¿Estás seguro de querer <b>exportar</b> %1$d archivo(s), de nuevo a tu galería y eliminarlos?</string>
     <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> esta foto en tu galería?</string>
     <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
     <string name="export_exporting">Exportando foto(s)…</string>
@@ -262,7 +262,7 @@
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <string name="news_title_1">NUEVO: Menú de importación</string>
-    <string name="news_summary_1">Nuevo menú de importación te permitirá importar imágenes y videos al mismo tiempo</string>
+    <string name="news_summary_1">El nuevo menú de importación te permitirá importar imágenes y videos al mismo tiempo</string>
 
     <string name="news_title_2">NUEVO: Donaciones</string>
     <string name="news_summary_2">Ver el botón "Donar" en la configuración para apoyar Photok</string>
