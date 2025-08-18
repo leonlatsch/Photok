@@ -16,28 +16,43 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.other.AES
-import dev.leonlatsch.photok.other.AES_ALGORITHM
-import dev.leonlatsch.photok.other.IV_SIZE
-import dev.leonlatsch.photok.other.SHA_256
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.nio.charset.StandardCharsets
+import java.io.InputStream
+import java.io.OutputStream
 import java.security.GeneralSecurityException
-import java.security.MessageDigest
 import java.security.SecureRandom
 import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
+import javax.crypto.SecretKey
+import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
+import kotlin.coroutines.suspendCoroutine
 
 sealed interface EncryptionManagerState {
     data object Initial : EncryptionManagerState
     data object Error : EncryptionManagerState
 
-    data class Ready(val key: SecretKeySpec) : EncryptionManagerState
+    data class Ready(val password: String) : EncryptionManagerState
 }
+
+private const val ENC_VERSION_BYTE: Byte = 0x01
+private const val IV_SIZE = 16
+private const val SALT_SIZE = 16
+private const val KEY_SIZE = 256
+private const val ITERATION_COUNT = 100_000
+private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
+private const val ALGORITHM = "AES"
+
+// FORMAT: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
+
 
 class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
@@ -54,7 +69,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         }
         try {
             state.update {
-                EncryptionManagerState.Ready(key = genSecKey(password))
+                EncryptionManagerState.Ready(password = password)
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
@@ -66,56 +81,56 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         state.update { EncryptionManagerState.Initial }
     }
 
-    override fun createEncryptionCipher(password: String?): Cipher? {
-        val key = password?.let { genSecKey(it) } ?: (state.value as? EncryptionManagerState.Ready)?.key ?: return null
+    override suspend fun createCipherInputStream(
+        password: String?,
+        input: InputStream
+    ): CipherInputStream = withContext(IO) {
+        val passwordToUse = password ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
 
-        return createEncryptionCipher(key)
-    }
+        suspendCoroutine { continuation ->
+            val version = input.read().toByte()
+            if (version != ENC_VERSION_BYTE) throw IllegalArgumentException("Unsupported version")
 
-    override fun createDecryptionCipher(ivBytes: ByteArray, password: String?): Cipher? {
-        val key = password?.let { genSecKey(it) } ?: (state.value as? EncryptionManagerState.Ready)?.key ?: return null
+            val salt = ByteArray(SALT_SIZE)
+            val iv = ByteArray(IV_SIZE)
 
-        return createDecryptionCipher(key, ivBytes)
-    }
+            input.read(salt, 0, salt.size)
+            input.read(iv, salt.size, iv.size)
 
-    private fun createDecryptionCipher(secretKeySpec: SecretKeySpec?, ivBytes: ByteArray): Cipher? {
-        return if (isReady) try {
-            Cipher.getInstance(AES_ALGORITHM).apply {
-                init(Cipher.DECRYPT_MODE, secretKeySpec, IvParameterSpec(ivBytes))
-            }
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error initializing cipher: $e")
-            null
-        } else {
-            Timber.d("EncryptionManager has to be ready to create a cipher")
-            null
+            val key = deriveAesKey(passwordToUse, salt)
+            val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
+
+            CipherInputStream(input, cipher)
         }
     }
 
-    private fun createEncryptionCipher(secretKeySpec: SecretKeySpec?): Cipher? {
-        return if (isReady) try {
-            Cipher.getInstance(AES_ALGORITHM).apply {
-                init(Cipher.ENCRYPT_MODE, secretKeySpec, IvParameterSpec(genIv()))
-            }
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error initializing cipher: $e")
-            null
-        } else {
-            Timber.d("EncryptionManager has to be ready to create a cipher")
-            null
+    override suspend fun createCipherOutputStream(
+        password: String?,
+        output: OutputStream
+    ): CipherOutputStream = withContext(IO) {
+        val passwordToUse = password ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
+
+        suspendCoroutine { continuation ->
+            val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+            val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
+
+            val key = deriveAesKey(passwordToUse, salt)
+            val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
+
+            output.write(byteArrayOf(ENC_VERSION_BYTE))
+            output.write(salt)
+            output.write(iv)
+
+            CipherOutputStream(output, cipher)
         }
     }
 
-
-    private fun genSecKey(password: String): SecretKeySpec {
-        val md = MessageDigest.getInstance(SHA_256)
-        val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
-        return SecretKeySpec(bytes, AES)
-    }
-
-    private fun genIv(): ByteArray {
-        val iv = ByteArray(IV_SIZE)
-        SecureRandom().nextBytes(iv)
-        return iv
+    private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
+        val factory = SecretKeyFactory.getInstance(FULL_ALGORITHM)
+        val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
+        val keyBytes = factory.generateSecret(spec).encoded
+        return SecretKeySpec(keyBytes, ALGORITHM)
     }
 }

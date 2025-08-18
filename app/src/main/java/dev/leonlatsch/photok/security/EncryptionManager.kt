@@ -16,12 +16,19 @@
 
 package dev.leonlatsch.photok.security
 
+import okio.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
+import kotlin.jvm.Throws
 
 interface EncryptionManager {
     val isReady: Boolean
     fun initialize(password: String)
     fun reset()
-    fun createEncryptionCipher(password: String? = null): Cipher?
-    fun createDecryptionCipher(ivBytes: ByteArray, password: String? = null): Cipher?
+
+    suspend fun createCipherInputStream(password: String? = null, input: InputStream): CipherInputStream
+    suspend fun createCipherOutputStream(password: String? = null, output: OutputStream): CipherOutputStream
 }
