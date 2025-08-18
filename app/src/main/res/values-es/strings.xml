@@ -39,7 +39,7 @@
     <string name="common_empty">Vacío</string>
     <string name="common_rename">Renombrar</string>
 
-    <!-- IMPORT -->>
+    <!-- IMPORT -->
     <string name="import_importing">Importando foto(s)</string>
     <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
     <string name="import_sharted_question">¿Quieres importar %1$d foto(s)?</string>
@@ -73,15 +73,15 @@
     <string name="gallery_albums_select_title">Selecciona un Álbum</string>
     <string name="gallery_albums_deleted">Álbum eliminado</string>
     <string name="gallery_albums_photos_added">%1$d elementos añadidos</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Nuevo Álbum</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importar</string>
+    <string name="import_menu_new_files_title">Importar nuevos archivos</string>
+    <string name="import_menu_new_files_description">Importar fotos y vídeos desde tu galería</string>
+    <string name="import_menu_restore_title">Restaurar una copia de seguridad</string>
+    <string name="import_menu_restore_description">Restaurar una copia de seguridad de Photok. Los archivos serán añadidos a tus archivos actuales.</string>
+    <string name="import_menu_delete_warning">Los archivos importados se eliminarán</string>
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -118,13 +118,13 @@
 
     <!-- EXPORT -->
     <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d foto(s), en tu galería?</string>
+    <string name="export_and_delete_are_you_sure">¿Estás seguro de querer <b>exportar</b> %1$d archivo(s), de nuevo a tu galería y eliminarlos?</string>
     <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> esta foto en tu galería?</string>
-    <string name="export_and_delete_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) a tu galería y eliminarlo(s)?</string>
     <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
-    <string name="export_and_delete_finished">Exportado y eliminado</string>
     <string name="export_exporting">Exportando foto(s)…</string>
-    <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar las fotos</string>
+    <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar archivos.</string>
     <string name="export_finished">Exportado</string>
+    <string name="export_and_delete_finished">Exportado y eliminado</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versión:</string>
@@ -166,6 +166,8 @@
     <string name="settings_security_launch_code_title">Código Secreto de Lanzamiento</string>
     <string name="settings_security_launch_code_summary">Código secreto para lanzar Photok desde la app de teléfono.</string>
     <string name="settings_security_launch_code_message">Introduce *#*#[tu código]#*#* en la app de teléfono para lanzar Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Ocultar App</string>
     <string name="settings_security_hide_app_summary">Ocultar el icono de la app del cajón de aplicaciones.</string>
 
@@ -215,7 +217,7 @@
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Verificar contraseña</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar Photok</string>
@@ -227,8 +229,6 @@
     <string name="hide_app_confirm_hide">¿Realmente quieres ocultar Photok?</string>
     <string name="hide_app_confirm_show">¿Realmente quieres mostrar Photok de nuevo?</string>
     <string name="hide_app_hint">Una vez oculto, Photok solo podrá ser lanzado desde el teclado de la app de teléfono, con tu pin secreto.</string>
-    <string name="settings_security_launch_code_prefix">*#*#</string>
-    <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="hide_app_hint_current_code">Código de lanzamiento actual:</string>
 
     <!-- ON BOARDING -->
@@ -261,8 +261,8 @@
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
-    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
+    <string name="news_title_1">NUEVO: Menú de importación</string>
+    <string name="news_summary_1">El nuevo menú de importación te permitirá importar imágenes y videos al mismo tiempo</string>
 
     <string name="news_title_2">NUEVO: Donaciones</string>
     <string name="news_summary_2">Ver el botón "Donar" en la configuración para apoyar Photok</string>
