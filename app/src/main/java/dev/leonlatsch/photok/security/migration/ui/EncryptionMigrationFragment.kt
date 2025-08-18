@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -43,7 +44,8 @@ class EncryptionMigrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.startMigration(requireContext().applicationContext)
+//        viewModel.startMigration(requireContext().applicationContext)
+        findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
 
         return ComposeView(requireContext()).apply {
             setContent {

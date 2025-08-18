@@ -29,6 +29,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV2 @Inject constructor(
+    private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val backupRepository: BackupRepository,
@@ -50,7 +51,7 @@ class RestoreBackupV2 @Inject constructor(
             }
 
             val encryptedZipInput =
-                encryptedStorageManager.createCipherInputStream(stream, originalPassword)
+                encryptionManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
 

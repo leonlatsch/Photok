@@ -54,7 +54,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherInputStream? =
         try {
             val inputStream = app.openFileInput(fileName)
-            createCipherInputStream(inputStream, password)
+            encryptionManager.createCipherInputStream(inputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -80,7 +80,7 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherOutputStream? =
         try {
             val outputStream = app.openFileOutput(fileName, INTERNAL_FILE_MODE)
-            createCipherOutputStream(outputStream, password)
+            encryptionManager.createCipherOutputStream(outputStream, password)
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -185,44 +185,6 @@ class EncryptedStorageManager @Inject constructor(
             Timber.d("Error deleting external file at $fileUri: $e")
             null
         }
-
-     fun createCipherInputStream(
-        inputStream: InputStream,
-        password: String? = null,
-    ): CipherInputStream? {
-        return if (encryptionManager.isReady) try {
-            val iv = ByteArray(IV_SIZE)
-            inputStream.read(iv, 0, IV_SIZE)
-
-            val cipher = encryptionManager.createDecryptionCipher(iv, password)
-
-            CipherInputStream(inputStream, cipher)
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error creating encrypted input stream: $e")
-            null
-        } else {
-            null
-        }
-    }
-
-     fun createCipherOutputStream(
-        outputStream: OutputStream,
-        password: String?
-    ): CipherOutputStream? {
-        return if (encryptionManager.isReady) try {
-            val cipher = encryptionManager.createEncryptionCipher(password)
-            cipher ?: return null
-
-            outputStream.write(cipher.iv)
-
-            CipherOutputStream(outputStream, cipher)
-        } catch (e: GeneralSecurityException) {
-            Timber.d("Error creating encrypted output stream: $e")
-            null
-        } else {
-            null
-        }
-    }
 
     // endregion
 

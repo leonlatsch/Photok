@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.security
 
+import dev.leonlatsch.photok.BuildConfig
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -81,13 +82,13 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         state.update { EncryptionManagerState.Initial }
     }
 
-    override suspend fun createCipherInputStream(
+    override fun createCipherInputStream(
+        input: InputStream,
         password: String?,
-        input: InputStream
-    ): CipherInputStream = withContext(IO) {
-        val passwordToUse = password ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
+    ): CipherInputStream? {
+        val passwordToUse = requirePassword(password)
 
-        suspendCoroutine { continuation ->
+        try {
             val version = input.read().toByte()
             if (version != ENC_VERSION_BYTE) throw IllegalArgumentException("Unsupported version")
 
@@ -95,23 +96,27 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
             val iv = ByteArray(IV_SIZE)
 
             input.read(salt, 0, salt.size)
-            input.read(iv, salt.size, iv.size)
+            input.read(iv, 0, iv.size)
 
             val key = deriveAesKey(passwordToUse, salt)
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
 
-            CipherInputStream(input, cipher)
+            return CipherInputStream(input, cipher)
+        } catch (e: Exception) {
+            Timber.d("Error creating CipherInputStream: $e")
+            if (BuildConfig.DEBUG) throw RuntimeException(e)
+            return null
         }
     }
 
-    override suspend fun createCipherOutputStream(
+    override fun createCipherOutputStream(
+        output: OutputStream,
         password: String?,
-        output: OutputStream
-    ): CipherOutputStream = withContext(IO) {
-        val passwordToUse = password ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
+    ): CipherOutputStream? {
+        val passwordToUse = requirePassword(password)
 
-        suspendCoroutine { continuation ->
+        try {
             val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
@@ -123,8 +128,15 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
             output.write(salt)
             output.write(iv)
 
-            CipherOutputStream(output, cipher)
+            return CipherOutputStream(output, cipher)
+        } catch (e: Exception) {
+            Timber.d("Error creating CipherOutputStream: $e")
+            return null
         }
+    }
+
+    private fun requirePassword(override: String?): String {
+        return override ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
     }
 
     private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {

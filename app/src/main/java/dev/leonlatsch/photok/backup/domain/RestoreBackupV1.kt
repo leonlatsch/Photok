@@ -30,7 +30,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV1 @Inject constructor(
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val encryptionManager: EncryptionManager,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {
@@ -56,7 +56,7 @@ class RestoreBackupV1 @Inject constructor(
             val newPhoto = photoBackup.toDomain().copy(importedAt = System.currentTimeMillis())
 
             val encryptedZipInput =
-                encryptedStorageManager.createCipherInputStream(stream, originalPassword)
+                encryptionManager.createCipherInputStream(stream, originalPassword)
             if (encryptedZipInput == null) {
                 ze = stream.nextEntry
                 continue

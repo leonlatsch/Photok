@@ -48,7 +48,7 @@ import javax.inject.Inject
 class VideoPlayerViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val encryptionManager: EncryptionManager,
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -82,7 +82,7 @@ class VideoPlayerViewModel @Inject constructor(
 
     private fun createMediaSourceFactory(): MediaSourceFactory {
         val aesDataSource = AesDataSource(
-            encryptedStorageManager = encryptedStorageManager,
+            encryptionManager = encryptionManager,
         )
 
         val factory = DataSource.Factory {
