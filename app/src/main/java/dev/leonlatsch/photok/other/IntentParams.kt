@@ -16,12 +16,6 @@
 
 package dev.leonlatsch.photok.other
 
-// Encryption
-const val SHA_256 = "SHA-256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/GCM/NoPadding"
-const val IV_SIZE= 12
-
-// Intent
-const val INTENT_PHOTO_UUID = "intent.photo.uuid"
-
+object IntentParams {
+    const val PHOTO_UUID = "photoUuid"
+}

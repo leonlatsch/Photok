@@ -18,9 +18,6 @@ package dev.leonlatsch.photok.security
 
 import android.app.Application
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.other.AES
-import dev.leonlatsch.photok.other.AES_ALGORITHM
-import dev.leonlatsch.photok.other.SHA_256
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
@@ -37,6 +34,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+private const val SHA_256 = "SHA-256"
+private const val AES = "AES"
+private const val AES_ALGORITHM = "AES/GCM/NoPadding"
+private const val IV_SIZE= 12
 
 sealed interface LegacyEncryptionResult {
     data class Failure(val error: Throwable) : LegacyEncryptionResult

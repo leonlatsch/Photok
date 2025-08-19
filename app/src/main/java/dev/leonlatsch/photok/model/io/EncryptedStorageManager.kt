@@ -21,7 +21,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
-import dev.leonlatsch.photok.other.IV_SIZE
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.io.IOException
