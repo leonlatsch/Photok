@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import timber.log.Timber
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -80,7 +81,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
                 processedFiles++
 
-                progress.update { (processedFiles / allFiles.size) * 100 }
+                progress.update { ((processedFiles.toFloat() / allFiles.size) * 100).toInt() }
             }
 
             return if (failedFiles.isEmpty()) {
