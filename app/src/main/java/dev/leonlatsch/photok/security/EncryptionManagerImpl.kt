@@ -17,10 +17,8 @@
 package dev.leonlatsch.photok.security
 
 import dev.leonlatsch.photok.BuildConfig
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
@@ -35,14 +33,7 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
-import kotlin.coroutines.suspendCoroutine
 
-sealed interface EncryptionManagerState {
-    data object Initial : EncryptionManagerState
-    data object Error : EncryptionManagerState
-
-    data class Ready(val password: String) : EncryptionManagerState
-}
 
 private const val ENC_VERSION_BYTE: Byte = 0x01
 private const val IV_SIZE = 16
@@ -57,29 +48,29 @@ private const val ALGORITHM = "AES"
 
 class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
-    private val state: MutableStateFlow<EncryptionManagerState> =
-        MutableStateFlow(EncryptionManagerState.Initial)
+    private val state: MutableStateFlow<State> =
+        MutableStateFlow(State.Initial)
 
     override val isReady: Boolean
-        get() = state.value is EncryptionManagerState.Ready
+        get() = state.value is State.Ready
 
     override fun initialize(password: String) {
         if (password.length < 6) {
-            state.update { EncryptionManagerState.Error }
+            state.update { State.Error }
             return
         }
         try {
             state.update {
-                EncryptionManagerState.Ready(password = password)
+                State.Ready(password = password)
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
-            state.update { EncryptionManagerState.Error }
+            state.update { State.Error }
         }
     }
 
     override fun reset() {
-        state.update { EncryptionManagerState.Initial }
+        state.update { State.Initial }
     }
 
     override fun createCipherInputStream(
@@ -136,7 +127,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
     }
 
     private fun requirePassword(override: String?): String {
-        return override ?: (state.value as? EncryptionManagerState.Ready)?.password ?: error("EncryptionManager not initialized")
+        return override ?: (state.value as? State.Ready)?.password ?: error("EncryptionManager not initialized")
     }
 
     private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
@@ -144,5 +135,12 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
         val keyBytes = factory.generateSecret(spec).encoded
         return SecretKeySpec(keyBytes, ALGORITHM)
+    }
+
+    private sealed interface State {
+        data object Initial : State
+        data object Error : State
+
+        data class Ready(val password: String) : State
     }
 }

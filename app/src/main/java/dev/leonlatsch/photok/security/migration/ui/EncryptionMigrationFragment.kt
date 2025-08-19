@@ -44,8 +44,8 @@ class EncryptionMigrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        viewModel.startMigration(requireContext().applicationContext)
-        findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
+        viewModel.startMigration(requireContext().applicationContext)
+//        findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
 
         return ComposeView(requireContext()).apply {
             setContent {
