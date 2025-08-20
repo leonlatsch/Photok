@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -49,6 +55,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
@@ -73,7 +81,18 @@ fun EncryptionMigrationScreenInitial(
         if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
         BackupBottomSheetDialogFragment(it).show(activity.supportFragmentManager)
-        handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            handleUiEvent(SwitchStage(InitialSubStage.READY))
+        } else {
+            handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+        }
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            handleUiEvent(SwitchStage(InitialSubStage.READY))
+        }
     }
 
     Scaffold { contentPadding ->
@@ -238,11 +257,18 @@ fun EncryptionMigrationScreenInitial(
                         InitialSubStage.PERMISSION -> Button(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
-                                handleUiEvent(
-                                    SwitchStage(
-                                        InitialSubStage.READY
-                                    )
-                                )
+                                activity ?: return@Button
+                                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
+                                    val intent = Intent().apply {
+                                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                                        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                                    }
+                                    context.startActivity(intent)
+                                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    permissionLauncher.launchAndIgnoreTimer(Manifest.permission.POST_NOTIFICATIONS, activity)
+                                } else {
+                                    handleUiEvent(SwitchStage(InitialSubStage.READY))
+                                }
                             }
                         ) {
                             Text("Grant permissions")
