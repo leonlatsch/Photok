@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import timber.log.Timber
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -38,12 +37,16 @@ import kotlin.coroutines.suspendCoroutine
 private const val SHA_256 = "SHA-256"
 private const val AES = "AES"
 private const val AES_ALGORITHM = "AES/GCM/NoPadding"
-private const val IV_SIZE= 12
 
-sealed interface LegacyEncryptionResult {
-    data class Failure(val error: Throwable) : LegacyEncryptionResult
-    data class PartialSuccess(val failedElements: Map<String, Throwable>) : LegacyEncryptionResult
-    data object Success : LegacyEncryptionResult
+sealed interface LegacyEncryptionState {
+    data object Initial : LegacyEncryptionState
+    data class Running(
+        val processedFiles: Int = 0,
+        val totalFiles: Int = 0,
+    ) : LegacyEncryptionState
+
+    data class Error(val error: Throwable) : LegacyEncryptionState
+    data object Success : LegacyEncryptionState
 }
 
 
@@ -53,12 +56,8 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val app: Application,
 ) {
 
-    data class Progress(
-        val processedFiles: Int = 0,
-        val totalFiles: Int = 0,
-    )
+    val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
 
-    val progress = MutableStateFlow(Progress())
 
     private var key: SecretKeySpec? = null
     private var iv: IvParameterSpec? = null
@@ -72,34 +71,58 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
     }
 
-    suspend fun migrate(): LegacyEncryptionResult = mutex.withLock {
+    suspend fun migrate() = mutex.withLock {
         if (key == null || iv == null) {
-            return LegacyEncryptionResult.Failure(IllegalStateException("Encryption not initialized"))
+
+            state.update {
+                LegacyEncryptionState.Error(IllegalStateException("Encryption not initialized"))
+            }
+
+            return@withLock
         }
 
+
         try {
-            val allFiles = app.fileList()
+            val allFiles = app.fileList().filter { it.contains("photok") }
+
+            state.update {
+                LegacyEncryptionState.Running(
+                    processedFiles = 0,
+                    totalFiles = allFiles.size,
+                )
+            }
 
             var processedFiles = 0
-            val failedFiles = mutableMapOf<String, Throwable>()
+            var error: Throwable? = null
 
             for (file in allFiles) {
                 migrateSingleFile(file)
-                    .onFailure { failedFiles[file] = it }
+                    .onFailure {
+                        error = it
+                        break
+                    }
 
                 processedFiles++
 
-                progress.update { it.copy(processedFiles = processedFiles, totalFiles = allFiles.size) }
+                state.update {
+                    (it as? LegacyEncryptionState.Running)?.copy(processedFiles = processedFiles)
+                        ?: it
+                }
             }
 
-            return if (failedFiles.isEmpty()) {
-                progress.update { it.copy(processedFiles = allFiles.size, totalFiles = allFiles.size) }
-                LegacyEncryptionResult.Success
+            return if (error == null) {
+                state.update {
+                    LegacyEncryptionState.Success
+                }
             } else {
-                LegacyEncryptionResult.PartialSuccess(failedFiles)
+                state.update {
+                    LegacyEncryptionState.Error(error)
+                }
             }
         } catch (e: Exception) {
-            return LegacyEncryptionResult.Failure(e)
+            state.update {
+                LegacyEncryptionState.Error(e)
+            }
         }
     }
 

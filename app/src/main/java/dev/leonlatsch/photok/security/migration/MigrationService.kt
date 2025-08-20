@@ -24,7 +24,9 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.security.LegacyEncryptionState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -32,6 +34,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,8 +73,21 @@ class MigrationService : Service() {
         }
 
         scope.launch {
-            legacyEncryptionMigrator.progress.collect {
-                updateNotification(it.processedFiles.toFloat() / it.totalFiles.toFloat())
+            legacyEncryptionMigrator.state.collect {
+                val notification = when (it) {
+                    is LegacyEncryptionState.Running -> {
+                        val progress = it.processedFiles.toFloat() / it.totalFiles.toFloat()
+                        createNotification(progress)
+                    }
+                    is LegacyEncryptionState.Success -> createFinishedNotification()
+                    else -> null
+                }
+
+                notification ?: return@collect
+
+                withContext(Dispatchers.Main) {
+                    notificationManager?.notify(SERVICE_ID, notification)
+                }
             }
         }
 
@@ -82,15 +98,6 @@ class MigrationService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         supervisorJob.cancel()
-    }
-
-    private fun updateNotification(progress: Float) {
-        val notification = if (progress < 1) {
-            createNotification(progress)
-        } else {
-            createFinishedNotification()
-        }
-        notificationManager?.notify(SERVICE_ID, notification)
     }
 
     private fun createNotification(progress: Float): Notification {
@@ -107,6 +114,15 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration Done")
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+            .setOngoing(false)
+            .build()
+    }
+
+    private fun createErrorNotification(error: Throwable): Notification {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(error.message ?: resources.getString(R.string.common_error))
+            .setSmallIcon(R.drawable.ic_warning)
+            .setOngoing(false)
             .build()
     }
 

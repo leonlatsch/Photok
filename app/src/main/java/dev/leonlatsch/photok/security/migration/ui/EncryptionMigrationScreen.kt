@@ -39,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -142,8 +143,9 @@ fun EncryptionMigrationScreenError(
                     )
 
                     Text(
-                        text = "x files failed",
+                        text = uiState.error.message ?: stringResource(R.string.common_error),
                         color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }
@@ -242,7 +244,7 @@ private fun Preview() {
 private fun PreviewError() {
     AppTheme {
         EncryptionMigrationScreenError(
-            uiState = LegacyEncryptionMigrationUiState.Error
+            uiState = LegacyEncryptionMigrationUiState.Error(Throwable("Test error"))
         )
     }
 }

@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.security.LegacyEncryptionState
 import dev.leonlatsch.photok.security.migration.MigrationService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,30 +39,33 @@ sealed interface LegacyEncryptionMigrationUiState {
     ) : LegacyEncryptionMigrationUiState {
         val progressPercentage: Float = processedFiles.toFloat() / totalFiles.toFloat()
     }
+
     data object Success : LegacyEncryptionMigrationUiState
-    data object Error : LegacyEncryptionMigrationUiState
+    data class Error(
+        val error: Throwable,
+    ) : LegacyEncryptionMigrationUiState
 }
 
 @HiltViewModel
 class LegacyEncryptionMigrationViewModel @Inject constructor(
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator
-): ViewModel() {
+) : ViewModel() {
 
-    val uiState = legacyEncryptionMigrator.progress.map { progress ->
-        if (progress.totalFiles == 0 && progress.processedFiles == 0) {
-            return@map LegacyEncryptionMigrationUiState.Initial
-
+    val uiState = legacyEncryptionMigrator.state.map { state ->
+        when (state) {
+            is LegacyEncryptionState.Initial -> LegacyEncryptionMigrationUiState.Initial
+            is LegacyEncryptionState.Error -> LegacyEncryptionMigrationUiState.Error(state.error)
+            is LegacyEncryptionState.Running -> LegacyEncryptionMigrationUiState.Migrating(
+                totalFiles = state.totalFiles,
+                processedFiles = state.processedFiles,
+            )
+            is LegacyEncryptionState.Success -> LegacyEncryptionMigrationUiState.Success
         }
-
-        if (progress.processedFiles == progress.totalFiles) {
-            return@map LegacyEncryptionMigrationUiState.Success
-        }
-
-        LegacyEncryptionMigrationUiState.Migrating(
-            totalFiles = progress.totalFiles,
-            processedFiles = progress.processedFiles,
-        )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), LegacyEncryptionMigrationUiState.Initial)
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        LegacyEncryptionMigrationUiState.Initial
+    )
 
     fun startMigration(context: Context) {
         // TODO: Check if on progress
