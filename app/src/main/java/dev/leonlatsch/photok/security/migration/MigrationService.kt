@@ -80,7 +80,8 @@ class MigrationService : Service() {
                         createNotification(progress)
                     }
                     is LegacyEncryptionState.Success -> createFinishedNotification()
-                    else -> null
+                    is LegacyEncryptionState.Error -> createErrorNotification(it.error)
+                    is LegacyEncryptionState.Initial -> null
                 }
 
                 notification ?: return@collect
@@ -101,11 +102,12 @@ class MigrationService : Service() {
     }
 
     private fun createNotification(progress: Float): Notification {
+        val humanReadableProgress = (progress * 100).toInt()
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration in Progress")
-            .setContentText("Progress: $progress%")
+            .setContentText("Progress: $humanReadableProgress%")
             .setSmallIcon(android.R.drawable.stat_sys_upload)
-            .setProgress(100, (progress * 100).toInt(), false)
+            .setProgress(100, humanReadableProgress, false)
             .setOngoing(true)
             .build()
     }
