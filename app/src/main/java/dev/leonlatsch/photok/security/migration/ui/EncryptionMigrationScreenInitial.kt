@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -58,7 +59,8 @@ fun EncryptionMigrationScreenInitial(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding),
+                .padding(contentPadding)
+                .padding(horizontal = 12.dp),
         ) {
 
             Column(
@@ -83,7 +85,6 @@ fun EncryptionMigrationScreenInitial(
 
                 AnimatedVisibility(uiState.stage == InitialSubStage.INITIAL) {
                     Text(
-                        modifier = Modifier.padding(horizontal = 12.dp),
                         text = "This Version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.",
                         textAlign = TextAlign.Center,
                     )
@@ -190,6 +191,7 @@ fun EncryptionMigrationScreenInitial(
                 ) {
                     when (it) {
                         InitialSubStage.INITIAL -> Button(
+                            modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
                                     LegacyEncryptionMigrationUiEvent.SwitchStage(
@@ -202,6 +204,7 @@ fun EncryptionMigrationScreenInitial(
                         }
 
                         InitialSubStage.BACKUP -> Button(
+                            modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
                                     LegacyEncryptionMigrationUiEvent.SwitchStage(
@@ -214,6 +217,7 @@ fun EncryptionMigrationScreenInitial(
                         }
 
                         InitialSubStage.PERMISSION -> Button(
+                            modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
                                     LegacyEncryptionMigrationUiEvent.SwitchStage(
@@ -226,6 +230,7 @@ fun EncryptionMigrationScreenInitial(
                         }
 
                         InitialSubStage.READY -> Button(
+                            modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
                                     LegacyEncryptionMigrationUiEvent.StartMigration(
