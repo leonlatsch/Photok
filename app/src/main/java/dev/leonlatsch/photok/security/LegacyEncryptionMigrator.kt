@@ -38,6 +38,8 @@ private const val SHA_256 = "SHA-256"
 private const val AES = "AES"
 private const val AES_ALGORITHM = "AES/GCM/NoPadding"
 
+private const val MIGRATIED_FILE_PREFIX = ".migrated~"
+
 sealed interface LegacyEncryptionState {
     data object Initial : LegacyEncryptionState
     data class Running(
@@ -81,21 +83,20 @@ class LegacyEncryptionMigrator @Inject constructor(
             return@withLock
         }
 
-
         try {
-            val allFiles = app.fileList().filter { it.contains("photok") }
+            val legacyFiles = app.fileList().filter { it.contains("photok") }
 
             state.update {
                 LegacyEncryptionState.Running(
                     processedFiles = 0,
-                    totalFiles = allFiles.size,
+                    totalFiles = legacyFiles.size,
                 )
             }
 
             var processedFiles = 0
             var error: Throwable? = null
 
-            for (file in allFiles) {
+            for (file in legacyFiles) {
                 migrateSingleFile(file)
                     .onFailure {
                         error = it
@@ -111,6 +112,8 @@ class LegacyEncryptionMigrator @Inject constructor(
             }
 
             return if (error == null) {
+                postMigrate()
+
                 state.update {
                     LegacyEncryptionState.Success
                 }
@@ -126,14 +129,25 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
     }
 
+    private suspend fun postMigrate() = suspendCoroutine { continuation ->
+        val migratedFile = app.fileList().filter { it.contains(MIGRATIED_FILE_PREFIX) }
+
+        for (file in migratedFile) {
+            val targetFileName = file.removePrefix(MIGRATIED_FILE_PREFIX)
+            encryptedStorageManager.renameFile(file, targetFileName)
+        }
+
+        continuation.resume(Unit)
+    }
+
     private suspend fun migrateSingleFile(fileName: String): Result<Unit> {
-        val migrationFileName = ".migrated~${fileName}"
+        val migratedFile = "$MIGRATIED_FILE_PREFIX${fileName}"
 
         try {
             val origInput = app.openFileInput(fileName)
             val legacyInputStream = openLegacyCipherInputStream(origInput)
             val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
-                migrationFileName
+                migratedFile
             ) ?: return Result.failure(Exception("New output was null"))
 
 
@@ -146,14 +160,10 @@ class LegacyEncryptionMigrator @Inject constructor(
             }
 
             encryptedStorageManager.internalDeleteFile(fileName)
-            encryptedStorageManager.renameFile(
-                currentFileName = migrationFileName,
-                newFileName = fileName,
-            )
 
             return Result.success(Unit)
         } catch (e: Exception) {
-            encryptedStorageManager.internalDeleteFile(migrationFileName)
+            encryptedStorageManager.internalDeleteFile(migratedFile)
             return Result.failure(e)
         }
     }
