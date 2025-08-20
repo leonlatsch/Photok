@@ -61,7 +61,7 @@ class MigrationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForeground(SERVICE_ID, createNotification(0))
+        startForeground(SERVICE_ID, createNotification(0f))
         scope.launch {
             legacyEncryptionMigrator.migrate()
 
@@ -71,7 +71,7 @@ class MigrationService : Service() {
 
         scope.launch {
             legacyEncryptionMigrator.progress.collect {
-                updateNotification(it)
+                updateNotification(it.processedFiles.toFloat() / it.totalFiles.toFloat())
             }
         }
 
@@ -84,8 +84,8 @@ class MigrationService : Service() {
         supervisorJob.cancel()
     }
 
-    private fun updateNotification(progress: Int) {
-        val notification = if (progress < 100) {
+    private fun updateNotification(progress: Float) {
+        val notification = if (progress < 1) {
             createNotification(progress)
         } else {
             createFinishedNotification()
@@ -93,12 +93,12 @@ class MigrationService : Service() {
         notificationManager?.notify(SERVICE_ID, notification)
     }
 
-    private fun createNotification(progress: Int): Notification {
+    private fun createNotification(progress: Float): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration in Progress")
             .setContentText("Progress: $progress%")
             .setSmallIcon(android.R.drawable.stat_sys_upload)
-            .setProgress(100, progress, false)
+            .setProgress(100, (progress * 100).toInt(), false)
             .setOngoing(true)
             .build()
     }

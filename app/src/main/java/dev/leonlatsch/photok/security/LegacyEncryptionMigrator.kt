@@ -46,13 +46,19 @@ sealed interface LegacyEncryptionResult {
     data object Success : LegacyEncryptionResult
 }
 
+
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
 ) {
 
-    val progress = MutableStateFlow(0)
+    data class Progress(
+        val processedFiles: Int = 0,
+        val totalFiles: Int = 0,
+    )
+
+    val progress = MutableStateFlow(Progress())
 
     private var key: SecretKeySpec? = null
     private var iv: IvParameterSpec? = null
@@ -83,11 +89,11 @@ class LegacyEncryptionMigrator @Inject constructor(
 
                 processedFiles++
 
-                progress.update { ((processedFiles.toFloat() / allFiles.size) * 100).toInt() }
+                progress.update { it.copy(processedFiles = processedFiles, totalFiles = allFiles.size) }
             }
 
             return if (failedFiles.isEmpty()) {
-                progress.update { 100 }
+                progress.update { it.copy(processedFiles = allFiles.size, totalFiles = allFiles.size) }
                 LegacyEncryptionResult.Success
             } else {
                 LegacyEncryptionResult.PartialSuccess(failedFiles)

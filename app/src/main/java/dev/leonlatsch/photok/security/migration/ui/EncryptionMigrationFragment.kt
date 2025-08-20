@@ -52,23 +52,14 @@ class EncryptionMigrationFragment : Fragment() {
                 AppTheme {
                     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                    when (uiState) {
-                        is LegacyEncryptionMigrationUiState.Initial -> Unit
-                        is LegacyEncryptionMigrationUiState.Error -> Text("")
-                        is LegacyEncryptionMigrationUiState.Migrating -> {
-
-                            val progress = (uiState as LegacyEncryptionMigrationUiState.Migrating).progress
-
-                            LaunchedEffect(progress) {
-                                if (progress == 100) {
-                                    delay(2000)
-                                    findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
-                                }
-                            }
-
-                            EncryptionMigrationScreen(uiState = uiState as LegacyEncryptionMigrationUiState.Migrating)
+                    LaunchedEffect(uiState is LegacyEncryptionMigrationUiState.Success) {
+                        if (uiState is LegacyEncryptionMigrationUiState.Success) {
+                            delay(2000)
+                            findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
                         }
                     }
+
+                    EncryptionMigrationScreen(uiState = uiState)
                 }
             }
         }

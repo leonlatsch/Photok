@@ -32,7 +32,13 @@ import javax.inject.Inject
 
 sealed interface LegacyEncryptionMigrationUiState {
     data object Initial : LegacyEncryptionMigrationUiState
-    data class Migrating(val progress: Int) : LegacyEncryptionMigrationUiState
+    data class Migrating(
+        val totalFiles: Int = 0,
+        val processedFiles: Int = 0,
+    ) : LegacyEncryptionMigrationUiState {
+        val progressPercentage: Float = processedFiles.toFloat() / totalFiles.toFloat()
+    }
+    data object Success : LegacyEncryptionMigrationUiState
     data object Error : LegacyEncryptionMigrationUiState
 }
 
@@ -42,8 +48,13 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
 ): ViewModel() {
 
     val uiState = legacyEncryptionMigrator.progress.map { progress ->
+        if (progress.processedFiles == progress.totalFiles) {
+            return@map LegacyEncryptionMigrationUiState.Success
+        }
+
         LegacyEncryptionMigrationUiState.Migrating(
-            progress = progress,
+            totalFiles = progress.totalFiles,
+            processedFiles = progress.processedFiles,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), LegacyEncryptionMigrationUiState.Initial)
 
