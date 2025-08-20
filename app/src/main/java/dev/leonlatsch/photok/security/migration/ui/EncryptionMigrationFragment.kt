@@ -44,9 +44,6 @@ class EncryptionMigrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.startMigration(requireContext().applicationContext)
-//        findNavController().navigate(R.id.action_encryptionMigrationFragment_to_galleryFragment)
-
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
@@ -61,7 +58,7 @@ class EncryptionMigrationFragment : Fragment() {
 
 
                     when (uiState) {
-                        is LegacyEncryptionMigrationUiState.Initial -> Unit
+                        is LegacyEncryptionMigrationUiState.Initial -> EncryptionMigrationScreenInitial(uiState as LegacyEncryptionMigrationUiState.Initial, viewModel::handleUiEvent)
                         is LegacyEncryptionMigrationUiState.Migrating -> EncryptionMigrationScreenMigrating(uiState as LegacyEncryptionMigrationUiState.Migrating)
                         is LegacyEncryptionMigrationUiState.Success -> EncryptionMigrationScreenSuccess(uiState as LegacyEncryptionMigrationUiState.Success)
                         is LegacyEncryptionMigrationUiState.Error -> EncryptionMigrationScreenError(uiState as LegacyEncryptionMigrationUiState.Error)

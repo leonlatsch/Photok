@@ -25,14 +25,24 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
 import dev.leonlatsch.photok.security.migration.MigrationService
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+enum class InitialSubStage(val value: Int) {
+    INITIAL(0),
+    BACKUP(1),
+    PERMISSION(2),
+    READY(3),
+}
+
 sealed interface LegacyEncryptionMigrationUiState {
-    data object Initial : LegacyEncryptionMigrationUiState
+    data class Initial(
+        val stage: InitialSubStage = InitialSubStage.INITIAL,
+    ) : LegacyEncryptionMigrationUiState
     data class Migrating(
         val totalFiles: Int = 0,
         val processedFiles: Int = 0,
@@ -46,14 +56,24 @@ sealed interface LegacyEncryptionMigrationUiState {
     ) : LegacyEncryptionMigrationUiState
 }
 
+sealed interface LegacyEncryptionMigrationUiEvent {
+    data class StartMigration(val context: Context) : LegacyEncryptionMigrationUiEvent
+    data class SwitchStage(val stage: InitialSubStage) : LegacyEncryptionMigrationUiEvent
+}
+
 @HiltViewModel
 class LegacyEncryptionMigrationViewModel @Inject constructor(
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator
 ) : ViewModel() {
 
-    val uiState = legacyEncryptionMigrator.state.map { state ->
+    private val initialStage = MutableStateFlow(InitialSubStage.INITIAL)
+
+    val uiState = combine(
+        legacyEncryptionMigrator.state,
+        initialStage
+    ) { state, stage ->
         when (state) {
-            is LegacyEncryptionState.Initial -> LegacyEncryptionMigrationUiState.Initial
+            is LegacyEncryptionState.Initial -> LegacyEncryptionMigrationUiState.Initial(stage)
             is LegacyEncryptionState.Error -> LegacyEncryptionMigrationUiState.Error(state.error)
             is LegacyEncryptionState.Running -> LegacyEncryptionMigrationUiState.Migrating(
                 totalFiles = state.totalFiles,
@@ -64,12 +84,18 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
-        LegacyEncryptionMigrationUiState.Initial
+        LegacyEncryptionMigrationUiState.Initial()
     )
 
-    fun startMigration(context: Context) {
-        // TODO: Check if on progress
-        val serviceIntent = Intent(context, MigrationService::class.java)
-        startForegroundService(context, serviceIntent)
+    fun handleUiEvent(event: LegacyEncryptionMigrationUiEvent) {
+        when (event) {
+            is LegacyEncryptionMigrationUiEvent.StartMigration -> {
+                val serviceIntent = Intent(event.context, MigrationService::class.java)
+                startForegroundService(event.context, serviceIntent)
+            }
+            is LegacyEncryptionMigrationUiEvent.SwitchStage -> {
+                initialStage.update { event.stage }
+            }
+        }
     }
 }
