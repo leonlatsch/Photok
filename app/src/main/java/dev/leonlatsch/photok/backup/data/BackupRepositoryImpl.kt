@@ -70,22 +70,11 @@ class BackupRepositoryImpl @Inject constructor(
         photo: Photo,
         zipOutputStream: ZipOutputStream,
     ): Result<Unit> {
-        val fileInputs = buildList {
-            val file = encryptedStorageManager.internalOpenFileInput(photo.internalFileName)
-            add(photo.internalFileName to file)
+        val inputs = context.fileList()
+            .filter { it.contains(photo.uuid) }
+            .map { it to encryptedStorageManager.internalOpenFileInput(it) }
 
-            val thumbnail =
-                encryptedStorageManager.internalOpenFileInput(photo.internalThumbnailFileName)
-            add(photo.internalThumbnailFileName to thumbnail)
-
-            if (photo.type.isVideo) {
-                val videoPreview =
-                    encryptedStorageManager.internalOpenFileInput(photo.internalVideoPreviewFileName)
-                add(photo.internalVideoPreviewFileName to videoPreview)
-            }
-        }
-
-        fileInputs.forEach { file ->
+        inputs.forEach { file ->
             val filename = file.first
             val inputStream = file.second
 

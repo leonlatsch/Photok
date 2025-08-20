@@ -51,6 +51,10 @@ import dev.leonlatsch.photok.uicomponnets.Dialogs
 import timber.log.Timber
 import javax.inject.Inject
 
+fun createBackupFilename(): String {
+    return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
+}
+
 /**
  * Preference Fragment. Loads preferences from xml resource.
  *
@@ -121,11 +125,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
         addActionTo(KEY_ACTION_BACKUP) {
-            val fileName =
-                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
-
             createBackupLauncher.launchAndIgnoreTimer(
-                input = fileName,
+                input = createBackupFilename(),
                 activity = activity,
             )
         }

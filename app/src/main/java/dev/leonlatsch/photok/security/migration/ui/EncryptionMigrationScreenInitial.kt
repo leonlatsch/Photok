@@ -16,6 +16,10 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -46,6 +50,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
+import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
+import dev.leonlatsch.photok.settings.ui.createBackupFilename
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -55,6 +65,17 @@ fun EncryptionMigrationScreenInitial(
     uiState: LegacyEncryptionMigrationUiState.Initial,
     handleUiEvent: (LegacyEncryptionMigrationUiEvent) -> Unit,
 ) {
+    val context = LocalContext.current
+    val activity = LocalActivity.current
+
+    val createBackupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
+        it ?: return@rememberLauncherForActivityResult
+        if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
+
+        BackupBottomSheetDialogFragment(it).show(activity.supportFragmentManager)
+        handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+    }
+
     Scaffold { contentPadding ->
         Box(
             modifier = Modifier
@@ -96,13 +117,13 @@ fun EncryptionMigrationScreenInitial(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         AnimatedContent(
-                            targetState = uiState.stage.value > InitialSubStage.BACKUP.value,
+                            targetState = uiState.stage.value,
                             transitionSpec = { fadeIn().togetherWith(fadeOut()) },
                         ) {
                             val icon: Painter
                             val color: Color
 
-                            if (it) {
+                            if (it > InitialSubStage.BACKUP.value) {
                                 icon = painterResource(R.drawable.ic_check)
                                 color = MaterialTheme.colorScheme.primary
                             } else {
@@ -127,13 +148,13 @@ fun EncryptionMigrationScreenInitial(
                         }
 
                         AnimatedContent(
-                            targetState = uiState.stage.value > InitialSubStage.PERMISSION.value,
+                            targetState = uiState.stage.value,
                             transitionSpec = { fadeIn().togetherWith(fadeOut()) },
                         ) {
                             val icon: Painter
                             val color: Color
 
-                            if (it) {
+                            if (it > InitialSubStage.PERMISSION.value) {
                                 icon = painterResource(R.drawable.ic_check)
                                 color = MaterialTheme.colorScheme.primary
                             } else {
@@ -183,7 +204,6 @@ fun EncryptionMigrationScreenInitial(
                 Spacer(Modifier.height(24.dp))
 
 
-                val context = LocalContext.current
 
                 AnimatedContent(
                     targetState = uiState.stage,
@@ -194,7 +214,7 @@ fun EncryptionMigrationScreenInitial(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
-                                    LegacyEncryptionMigrationUiEvent.SwitchStage(
+                                    SwitchStage(
                                         InitialSubStage.BACKUP
                                     )
                                 )
@@ -206,10 +226,9 @@ fun EncryptionMigrationScreenInitial(
                         InitialSubStage.BACKUP -> Button(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
-                                handleUiEvent(
-                                    LegacyEncryptionMigrationUiEvent.SwitchStage(
-                                        InitialSubStage.PERMISSION
-                                    )
+                                createBackupLauncher.launchAndIgnoreTimer(
+                                    input = createBackupFilename(),
+                                    activity = activity,
                                 )
                             }
                         ) {
@@ -220,7 +239,7 @@ fun EncryptionMigrationScreenInitial(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
-                                    LegacyEncryptionMigrationUiEvent.SwitchStage(
+                                    SwitchStage(
                                         InitialSubStage.READY
                                     )
                                 )
@@ -233,7 +252,7 @@ fun EncryptionMigrationScreenInitial(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 handleUiEvent(
-                                    LegacyEncryptionMigrationUiEvent.StartMigration(
+                                    StartMigration(
                                         context
                                     )
                                 )
