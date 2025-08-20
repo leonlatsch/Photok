@@ -48,19 +48,7 @@ import dev.leonlatsch.photok.ui.theme.Colors
 private val IconSize = 72.dp
 
 @Composable
-fun EncryptionMigrationScreen(
-    uiState: LegacyEncryptionMigrationUiState,
-) {
-    when (uiState) {
-        is LegacyEncryptionMigrationUiState.Initial -> Unit
-        is LegacyEncryptionMigrationUiState.Migrating -> Migrating(uiState)
-        is LegacyEncryptionMigrationUiState.Success -> Text("Success")
-        is LegacyEncryptionMigrationUiState.Error -> Text("Error")
-    }
-}
-
-@Composable
-private fun Migrating(
+fun EncryptionMigrationScreenMigrating(
     uiState: LegacyEncryptionMigrationUiState.Migrating,
 ) {
     Scaffold { contentPadding ->
@@ -112,6 +100,20 @@ private fun Migrating(
 }
 
 @Composable
+fun EncryptionMigrationScreenError(
+    uiState: LegacyEncryptionMigrationUiState.Error
+) {
+    Text("Error")
+}
+
+@Composable
+fun EncryptionMigrationScreenSuccess(
+    uiState: LegacyEncryptionMigrationUiState.Success
+) {
+    Text("Success")
+}
+
+@Composable
 private fun LoadingIndicator(progressPercentage: Float, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Image(
@@ -136,7 +138,7 @@ private fun LoadingIndicator(progressPercentage: Float, modifier: Modifier = Mod
 @Composable
 private fun Preview() {
     AppTheme {
-        EncryptionMigrationScreen(
+        EncryptionMigrationScreenMigrating(
             uiState = LegacyEncryptionMigrationUiState.Migrating(
                 totalFiles = 100,
                 processedFiles = 40,
@@ -148,7 +150,7 @@ private fun Preview() {
 @Composable
 private fun PreviewError() {
     AppTheme {
-        EncryptionMigrationScreen(
+        EncryptionMigrationScreenError(
             uiState = LegacyEncryptionMigrationUiState.Error
         )
     }
@@ -158,7 +160,7 @@ private fun PreviewError() {
 @Composable
 private fun PreviewSuccess() {
     AppTheme {
-        EncryptionMigrationScreen(
+        EncryptionMigrationScreenSuccess(
             uiState = LegacyEncryptionMigrationUiState.Success
         )
     }

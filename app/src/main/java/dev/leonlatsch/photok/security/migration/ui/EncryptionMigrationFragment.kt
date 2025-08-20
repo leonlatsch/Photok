@@ -59,7 +59,13 @@ class EncryptionMigrationFragment : Fragment() {
                         }
                     }
 
-                    EncryptionMigrationScreen(uiState = uiState)
+
+                    when (uiState) {
+                        is LegacyEncryptionMigrationUiState.Initial -> Unit
+                        is LegacyEncryptionMigrationUiState.Migrating -> EncryptionMigrationScreenMigrating(uiState as LegacyEncryptionMigrationUiState.Migrating)
+                        is LegacyEncryptionMigrationUiState.Success -> EncryptionMigrationScreenSuccess(uiState as LegacyEncryptionMigrationUiState.Success)
+                        is LegacyEncryptionMigrationUiState.Error -> EncryptionMigrationScreenError(uiState as LegacyEncryptionMigrationUiState.Error)
+                    }
                 }
             }
         }
