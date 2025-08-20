@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security.migration.ui
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -46,6 +47,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,11 +59,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.currentStateAsState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.other.areNotificationsEnabled
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.extensions.startActivityAndIgnoreTimer
+import dev.leonlatsch.photok.other.openNotificationSettings
+import dev.leonlatsch.photok.other.requestInSettings
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
 import dev.leonlatsch.photok.settings.ui.createBackupFilename
@@ -76,13 +87,24 @@ fun EncryptionMigrationScreenInitial(
     val context = LocalContext.current
     val activity = LocalActivity.current
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleState by lifecycleOwner.lifecycle.currentStateAsState()
+
+    LaunchedEffect(lifecycleState) {
+        if (lifecycleState == Lifecycle.State.RESUMED) {
+            if (context.areNotificationsEnabled() && uiState.stage == InitialSubStage.PERMISSION) {
+                handleUiEvent(SwitchStage(InitialSubStage.READY))
+            }
+        }
+    }
+
     val createBackupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
         it ?: return@rememberLauncherForActivityResult
         if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
         BackupBottomSheetDialogFragment(it).show(activity.supportFragmentManager)
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        if (context.areNotificationsEnabled()) {
             handleUiEvent(SwitchStage(InitialSubStage.READY))
         } else {
             handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
@@ -258,12 +280,9 @@ fun EncryptionMigrationScreenInitial(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
                                 activity ?: return@Button
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
-                                    val intent = Intent().apply {
-                                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-                                        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                    }
-                                    context.startActivity(intent)
+
+                                if (activity.requestInSettings(Manifest.permission.POST_NOTIFICATIONS)) {
+                                    activity.openNotificationSettings()
                                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                     permissionLauncher.launchAndIgnoreTimer(Manifest.permission.POST_NOTIFICATIONS, activity)
                                 } else {
