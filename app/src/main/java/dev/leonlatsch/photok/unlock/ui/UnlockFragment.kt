@@ -31,10 +31,12 @@ import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
+import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 /**
  * Unlock fragment.
@@ -47,6 +49,9 @@ import kotlinx.coroutines.flow.update
 class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {
 
     private val viewModel: UnlockViewModel by viewModels()
+
+    @Inject
+    lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
@@ -88,7 +93,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
 
         activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-        if (true) {
+
+        if (legacyEncryptionMigrator.migrationNeeded()) {
             findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
         } else {
             findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
