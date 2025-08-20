@@ -84,7 +84,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
 
         try {
-            val legacyFiles = app.fileList().filter { it.contains("photok") }
+            val legacyFiles = app.fileList().filter { it.contains("photok") && !it.startsWith(MIGRATIED_FILE_PREFIX) }
 
             state.update {
                 LegacyEncryptionState.Running(
@@ -144,6 +144,8 @@ class LegacyEncryptionMigrator @Inject constructor(
         val migratedFile = "$MIGRATIED_FILE_PREFIX${fileName}"
 
         try {
+            encryptedStorageManager.internalDeleteFile(migratedFile)
+
             val origInput = app.openFileInput(fileName)
             val legacyInputStream = openLegacyCipherInputStream(origInput)
             val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
