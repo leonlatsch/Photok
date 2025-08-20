@@ -48,6 +48,11 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
 ): ViewModel() {
 
     val uiState = legacyEncryptionMigrator.progress.map { progress ->
+        if (progress.totalFiles == 0 && progress.processedFiles == 0) {
+            return@map LegacyEncryptionMigrationUiState.Initial
+
+        }
+
         if (progress.processedFiles == progress.totalFiles) {
             return@map LegacyEncryptionMigrationUiState.Success
         }
