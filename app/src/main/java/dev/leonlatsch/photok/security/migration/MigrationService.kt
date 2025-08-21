@@ -16,31 +16,31 @@
 
 package dev.leonlatsch.photok.security.migration
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
-import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
 private const val CHANNEL_ID = "MigrationChannel"
 private const val SERVICE_ID = 1
@@ -55,7 +55,7 @@ class MigrationService : Service() {
     private val supervisorJob = Job()
 
     private val scope = CoroutineScope(supervisorJob + Dispatchers.IO)
-    private var notificationManager: NotificationManager? = null
+    private var notificationManager: NotificationManagerCompat? = null
 
 
 
@@ -63,8 +63,13 @@ class MigrationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        notificationManager = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = NotificationManagerCompat.from(this)
         createNotificationChannel()
+    }
+
+    override fun onTimeout(startId: Int) {
+        super.onTimeout(startId)
+        supervisorJob.cancel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -73,7 +78,7 @@ class MigrationService : Service() {
         scope.launch { legacyEncryptionMigrator.migrate() }
 
         scope.launch {
-            legacyEncryptionMigrator.state.collect {
+            legacyEncryptionMigrator.state.collectLatest {
                 val notification = when (it) {
                     is LegacyEncryptionState.Running -> createNotification(it)
                     is LegacyEncryptionState.Success -> createFinishedNotification()
@@ -81,8 +86,9 @@ class MigrationService : Service() {
                     is LegacyEncryptionState.Initial -> createInitialNotification()
                 }
 
-                notificationManager?.notify(SERVICE_ID, notification)
-
+                if (ContextCompat.checkSelfPermission(this@MigrationService, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    notificationManager?.notify(SERVICE_ID, notification)
+                }
 
                 if (it is LegacyEncryptionState.Success || it is LegacyEncryptionState.Error) {
                     stopForeground(STOP_FOREGROUND_DETACH)
@@ -124,7 +130,8 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration Done")
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
-            .setOngoing(true)
+            .setOngoing(false)
+            .setAutoCancel(true)
             .build()
     }
 
@@ -132,7 +139,8 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(error.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
-            .setOngoing(true)
+            .setOngoing(false)
+            .setAutoCancel(true)
             .build()
     }
 
