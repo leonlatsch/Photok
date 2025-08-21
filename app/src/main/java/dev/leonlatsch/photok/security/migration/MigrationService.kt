@@ -43,7 +43,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 private const val CHANNEL_ID = "MigrationChannel"
-private const val SERVICE_ID = 1
+private const val SERVICE_ID = 1001
 
 
 @AndroidEntryPoint
@@ -76,7 +76,12 @@ class MigrationService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         ServiceCompat.startForeground(this@MigrationService, SERVICE_ID, createInitialNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
-        scope.launch { legacyEncryptionMigrator.migrate() }
+        scope.launch {
+            legacyEncryptionMigrator.migrate()
+
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            stopSelf()
+        }
 
         scope.launch {
             legacyEncryptionMigrator.state.collectLatest {
@@ -87,13 +92,7 @@ class MigrationService : Service() {
                     is LegacyEncryptionState.Initial -> createInitialNotification()
                 }
 
-                if (it is LegacyEncryptionState.Success || it is LegacyEncryptionState.Error) {
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                    postNotification(notification)
-                    stopSelf()
-                } else {
-                    postNotification(notification)
-                }
+                postNotification(notification)
             }
         }
 
