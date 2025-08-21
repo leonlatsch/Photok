@@ -21,8 +21,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
@@ -66,7 +68,7 @@ class MigrationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForeground(SERVICE_ID, createInitialNotification())
+        ServiceCompat.startForeground(this, SERVICE_ID, createInitialNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
         scope.launch { legacyEncryptionMigrator.migrate() }
 
@@ -122,6 +124,7 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration Done")
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+            .setOngoing(true)
             .build()
     }
 
@@ -129,6 +132,7 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(error.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
+            .setOngoing(true)
             .build()
     }
 
