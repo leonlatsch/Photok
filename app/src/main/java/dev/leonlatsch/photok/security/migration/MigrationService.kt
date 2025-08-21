@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security.migration
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -36,7 +37,6 @@ import dev.leonlatsch.photok.security.LegacyEncryptionState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -55,7 +55,7 @@ class MigrationService : Service() {
     private val supervisorJob = Job()
 
     private val scope = CoroutineScope(supervisorJob + Dispatchers.IO)
-    private var notificationManager: NotificationManagerCompat? = null
+    private lateinit var notificationManager: NotificationManagerCompat
 
 
 
@@ -72,8 +72,9 @@ class MigrationService : Service() {
         supervisorJob.cancel()
     }
 
+    @SuppressLint("InlinedApi")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        ServiceCompat.startForeground(this, SERVICE_ID, createInitialNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        ServiceCompat.startForeground(this@MigrationService, SERVICE_ID, createInitialNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
         scope.launch { legacyEncryptionMigrator.migrate() }
 
@@ -86,19 +87,24 @@ class MigrationService : Service() {
                     is LegacyEncryptionState.Initial -> createInitialNotification()
                 }
 
-                if (ContextCompat.checkSelfPermission(this@MigrationService, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                    notificationManager?.notify(SERVICE_ID, notification)
-                }
-
                 if (it is LegacyEncryptionState.Success || it is LegacyEncryptionState.Error) {
-                    stopForeground(STOP_FOREGROUND_DETACH)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    postNotification(notification)
                     stopSelf()
+                } else {
+                    postNotification(notification)
                 }
             }
         }
 
 
         return START_STICKY
+    }
+
+    private fun postNotification(notification: Notification) {
+        if (notificationManager.areNotificationsEnabled()) {
+            notificationManager.notify(SERVICE_ID, notification)
+        }
     }
 
     override fun onDestroy() {
@@ -118,17 +124,18 @@ class MigrationService : Service() {
         val humanReadableProgress = ((state.processedFiles.toFloat() / state.totalFiles.toFloat()) * 100).toInt()
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Migration in Progress")
+            .setContentTitle("Migrating your gallery")
             .setContentText("${state.processedFiles} / ${state.totalFiles} files processed")
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setProgress(100, humanReadableProgress, false)
             .setOngoing(true)
+            .setCategory(Notification.CATEGORY_SERVICE)
             .build()
     }
 
     private fun createFinishedNotification(): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Migration Done")
+            .setContentTitle("Migration Finished")
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
             .setOngoing(false)
             .setAutoCancel(true)
@@ -150,7 +157,6 @@ class MigrationService : Service() {
             "Migration Channel",
             NotificationManager.IMPORTANCE_LOW
         )
-        val manager = getSystemService(NotificationManager::class.java)
-        manager?.createNotificationChannel(serviceChannel)
+        notificationManager?.createNotificationChannel(serviceChannel)
     }
 }

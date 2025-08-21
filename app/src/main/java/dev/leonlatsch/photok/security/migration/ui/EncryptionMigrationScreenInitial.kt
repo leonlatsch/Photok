@@ -267,10 +267,12 @@ fun EncryptionMigrationScreenInitial(
                         InitialSubStage.BACKUP -> Button(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
-                                createBackupLauncher.launchAndIgnoreTimer(
-                                    input = createBackupFilename(),
-                                    activity = activity,
-                                )
+                                // TODO: TEST CODE
+                                handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+//                                createBackupLauncher.launchAndIgnoreTimer(
+//                                    input = createBackupFilename(),
+//                                    activity = activity,
+//                                )
                             }
                         ) {
                             Text("Create backup")
