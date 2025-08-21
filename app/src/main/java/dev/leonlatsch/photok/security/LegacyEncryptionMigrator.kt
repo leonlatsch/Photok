@@ -73,7 +73,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         return app.fileList().any { it.contains("photok") }
     }
 
-    suspend fun init(password: String) = mutex.withLock {
+    suspend fun init(password: String) {
         if (key == null || iv == null) {
             key = genSecKey(password)
             iv = genLegacyIv(password)
@@ -90,11 +90,12 @@ class LegacyEncryptionMigrator @Inject constructor(
             return@withLock
         }
 
+        config.legacyCurrentlyMigrating = true
+
         try {
             val legacyFiles = app.fileList()
                 .filter { it.contains("photok") && !it.startsWith(MIGRATIED_FILE_PREFIX) }
 
-            config.legacyCurrentlyMigrating = true
             state.update {
                 LegacyEncryptionState.Running(
                     processedFiles = 0,

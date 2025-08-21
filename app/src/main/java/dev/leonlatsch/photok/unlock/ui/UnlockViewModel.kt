@@ -26,6 +26,8 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,7 +44,6 @@ class UnlockViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
     private val passwordManager: PasswordManager,
-    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -52,12 +53,7 @@ class UnlockViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    @get:Bindable
-    var unlockState: UnlockState = UnlockState.UNDEFINED
-        set(value) {
-            field = value
-            notifyChange(BR.unlockState, value)
-        }
+    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.UNDEFINED)
 
     /**
      * Tries to unlock the save.
@@ -66,15 +62,15 @@ class UnlockViewModel @Inject constructor(
      * Called by ui.
      */
     fun unlock() = viewModelScope.launch {
-        unlockState = UnlockState.CHECKING
+        unlockState.update { UnlockState.CHECKING }
 
-        unlockState = if (passwordManager.checkPassword(password)) {
-            encryptionManager.initialize(password)
-            // TODO: Only if needed
-            legacyEncryptionMigrator.init(password)
-            UnlockState.UNLOCKED
-        } else {
-            UnlockState.LOCKED
+        unlockState.update {
+            if (passwordManager.checkPassword(password)) {
+                encryptionManager.initialize(password)
+                UnlockState.UNLOCKED
+            } else {
+                UnlockState.LOCKED
+            }
         }
     }
 
