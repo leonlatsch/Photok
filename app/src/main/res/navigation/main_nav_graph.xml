@@ -96,7 +96,7 @@
     <fragment
         android:id="@+id/initialFragment"
         android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
-        android:label="SplashScreenFragment">
+        android:label="InitialFragment">
         <action
             android:id="@+id/action_initialFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
