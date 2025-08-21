@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
+import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -64,30 +66,25 @@ class MigrationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForeground(SERVICE_ID, createNotification(0f))
-        scope.launch {
-            legacyEncryptionMigrator.migrate()
+        startForeground(SERVICE_ID, createInitialNotification())
 
-            stopForeground(STOP_FOREGROUND_DETACH)
-            stopSelf()
-        }
+        scope.launch { legacyEncryptionMigrator.migrate() }
 
         scope.launch {
             legacyEncryptionMigrator.state.collect {
                 val notification = when (it) {
-                    is LegacyEncryptionState.Running -> {
-                        val progress = it.processedFiles.toFloat() / it.totalFiles.toFloat()
-                        createNotification(progress)
-                    }
+                    is LegacyEncryptionState.Running -> createNotification(it)
                     is LegacyEncryptionState.Success -> createFinishedNotification()
                     is LegacyEncryptionState.Error -> createErrorNotification(it.error)
-                    is LegacyEncryptionState.Initial -> null
+                    is LegacyEncryptionState.Initial -> createInitialNotification()
                 }
 
-                notification ?: return@collect
+                notificationManager?.notify(SERVICE_ID, notification)
 
-                withContext(Dispatchers.Main) {
-                    notificationManager?.notify(SERVICE_ID, notification)
+
+                if (it is LegacyEncryptionState.Success || it is LegacyEncryptionState.Error) {
+                    stopForeground(STOP_FOREGROUND_DETACH)
+                    stopSelf()
                 }
             }
         }
@@ -101,11 +98,20 @@ class MigrationService : Service() {
         supervisorJob.cancel()
     }
 
-    private fun createNotification(progress: Float): Notification {
-        val humanReadableProgress = (progress * 100).toInt()
+    private fun createInitialNotification(): Notification {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Preparing Migration")
+            .setSmallIcon(android.R.drawable.stat_sys_upload)
+            .setOngoing(true)
+            .build()
+    }
+
+    private fun createNotification(state: LegacyEncryptionState.Running): Notification {
+        val humanReadableProgress = ((state.processedFiles.toFloat() / state.totalFiles.toFloat()) * 100).toInt()
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration in Progress")
-            .setContentText("Progress: $humanReadableProgress%")
+            .setContentText("${state.processedFiles} / ${state.totalFiles} files processed")
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setProgress(100, humanReadableProgress, false)
             .setOngoing(true)
@@ -116,7 +122,6 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Migration Done")
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
-            .setOngoing(false)
             .build()
     }
 
@@ -124,7 +129,6 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(error.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
-            .setOngoing(false)
             .build()
     }
 
