@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.security
 import android.app.Application
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
@@ -57,6 +58,7 @@ sealed interface LegacyEncryptionState {
 class LegacyEncryptionMigrator @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
+    private val config: Config,
 ) {
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
@@ -92,6 +94,7 @@ class LegacyEncryptionMigrator @Inject constructor(
             val legacyFiles = app.fileList()
                 .filter { it.contains("photok") && !it.startsWith(MIGRATIED_FILE_PREFIX) }
 
+            config.legacyCurrentlyMigrating = true
             state.update {
                 LegacyEncryptionState.Running(
                     processedFiles = 0,
@@ -146,6 +149,7 @@ class LegacyEncryptionMigrator @Inject constructor(
             encryptedStorageManager.renameFile(file, targetFileName)
         }
 
+        config.legacyCurrentlyMigrating = false
         continuation.resume(Unit)
     }
 

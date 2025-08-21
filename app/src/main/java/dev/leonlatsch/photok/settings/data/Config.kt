@@ -104,6 +104,10 @@ class Config(context: Context) {
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
 
+    var legacyCurrentlyMigrating: Boolean
+        get() = getBoolean("legacy^currentlyMigrating", false)
+        set(value) = putBoolean("legacy^currentlyMigrating", value)
+
     // region put/get methods
 
     private fun getString(key: String, default: String) = preferences.getString(key, default)

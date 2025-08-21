@@ -18,21 +18,20 @@ package dev.leonlatsch.photok.security.migration.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
 import dev.leonlatsch.photok.security.migration.MigrationService
-import kotlinx.coroutines.delay
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class InitialSubStage(val value: Int) {
@@ -66,10 +65,18 @@ sealed interface LegacyEncryptionMigrationUiEvent {
 
 @HiltViewModel
 class LegacyEncryptionMigrationViewModel @Inject constructor(
-    private val legacyEncryptionMigrator: LegacyEncryptionMigrator
+    @ApplicationContext context: Context,
+    legacyEncryptionMigrator: LegacyEncryptionMigrator,
+    config: Config,
 ) : ViewModel() {
 
     private val initialStage = MutableStateFlow(InitialSubStage.INITIAL)
+
+    init {
+        if (config.legacyCurrentlyMigrating) {
+            handleUiEvent(LegacyEncryptionMigrationUiEvent.StartMigration(context))
+        }
+    }
 
     val uiState = combine(
         legacyEncryptionMigrator.state,
