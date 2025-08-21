@@ -21,20 +21,13 @@ import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
 import timber.log.Timber
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 import java.util.zip.ZipInputStream
-import javax.crypto.CipherInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV3 @Inject constructor(
-    private val encryptionManager: EncryptionManager,
+    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
@@ -56,7 +49,7 @@ class RestoreBackupV3 @Inject constructor(
             }
 
             val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, originalPassword)
+                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
 

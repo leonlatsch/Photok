@@ -70,21 +70,20 @@ class BackupRepositoryImpl @Inject constructor(
         photo: Photo,
         zipOutputStream: ZipOutputStream,
     ): Result<Unit> {
-        val inputs = context.fileList()
+        context.fileList()
             .filter { it.contains(photo.uuid) }
             .map { it to encryptedStorageManager.internalOpenFileInput(it) }
+            .forEach { file ->
+                val filename = file.first
+                val inputStream = file.second
 
-        inputs.forEach { file ->
-            val filename = file.first
-            val inputStream = file.second
+                inputStream ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
 
-            inputStream ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
-
-            backupLocalDataSource.writeZipEntry(filename, inputStream, zipOutputStream)
-                .onFailure {
-                    return Result.failure(it)
-                }
-        }
+                backupLocalDataSource.writeZipEntry(filename, inputStream, zipOutputStream)
+                    .onFailure {
+                        return Result.failure(it)
+                    }
+            }
 
         return Result.success(Unit)
     }

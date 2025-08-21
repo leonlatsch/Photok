@@ -111,7 +111,7 @@ class RestoreBackupViewModel @Inject constructor(
         val zipInputStream = backupRepository.openBackupInput(fileUri)
         val metaData = metaData ?: error("meta.json was loaded without success")
 
-        val restoreStrategy = getRestoreStrategy(backupVersion)
+        val restoreStrategy = getRestoreStrategy(backupVersion) ?: error("Unknown backup version")
         val result = restoreStrategy.restore(metaData, zipInputStream, origPassword)
         zipInputStream.close()
 

@@ -18,24 +18,21 @@ package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
-class RestoreBackupV2 @Inject constructor(
-    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
+class RestoreBackupV4 @Inject constructor(
+    private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
+    private val albumRepository: AlbumRepository,
     private val backupRepository: BackupRepository,
 ) : RestoreBackupStrategy {
-
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
@@ -52,7 +49,7 @@ class RestoreBackupV2 @Inject constructor(
             }
 
             val encryptedZipInput =
-                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
+                encryptionManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
 
@@ -60,6 +57,7 @@ class RestoreBackupV2 @Inject constructor(
                 ze = stream.nextEntry
                 continue
             }
+
 
             backupRepository.restoreZipEntry(encryptedZipInput, internalOutputStream)
                 .onFailure {
@@ -78,6 +76,17 @@ class RestoreBackupV2 @Inject constructor(
             photoRepository.insert(newPhoto)
         }
 
+        metaData.albums.forEach { albumBackup ->
+            val album = albumBackup.toDomain()
+            albumRepository.createAlbum(album)
+        }
+
+        metaData.albumPhotoRefs.forEach { albumPhotoRefBackup ->
+            val albumPhotoRef = albumPhotoRefBackup.toDomain()
+            albumRepository.link(albumPhotoRef)
+        }
+
         return RestoreResult(errors)
     }
+
 }

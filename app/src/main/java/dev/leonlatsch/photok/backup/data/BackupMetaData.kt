@@ -35,9 +35,9 @@ data class BackupMetaData(
 ) {
     companion object {
         const val FILE_NAME = "meta.json"
-        const val CURRENT_BACKUP_VERSION = 3
+        const val CURRENT_BACKUP_VERSION = 4
 
-        val VALID_BACKUP_VERSIONS = arrayOf(1, 2, 3)
+        val VALID_BACKUP_VERSIONS = arrayOf(1, 2, 3, 4)
     }
 }
 
