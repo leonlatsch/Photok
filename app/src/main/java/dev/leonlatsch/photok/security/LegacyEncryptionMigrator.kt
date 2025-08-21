@@ -56,6 +56,7 @@ sealed interface LegacyEncryptionState {
 
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
+    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
     private val config: Config,
@@ -63,26 +64,14 @@ class LegacyEncryptionMigrator @Inject constructor(
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
 
-
-    private var key: SecretKeySpec? = null
-    private var iv: IvParameterSpec? = null
-
     private val mutex = Mutex()
 
     fun migrationNeeded(): Boolean {
         return app.fileList().any { it.contains("photok") }
     }
 
-    suspend fun init(password: String) {
-        if (key == null || iv == null) {
-            key = genSecKey(password)
-            iv = genLegacyIv(password)
-        }
-    }
-
     suspend fun migrate() = mutex.withLock {
-        if (key == null || iv == null) {
-
+        if (!legacyEncryptionManager.isReady) {
             state.update {
                 LegacyEncryptionState.Error(IllegalStateException("Encryption not initialized"))
             }
@@ -161,7 +150,9 @@ class LegacyEncryptionMigrator @Inject constructor(
             encryptedStorageManager.internalDeleteFile(migratedFile)
 
             val origInput = app.openFileInput(fileName)
-            val legacyInputStream = openLegacyCipherInputStream(origInput)
+            val legacyInputStream = legacyEncryptionManager.createCipherInputStream(
+                origInput
+            ) ?: return Result.failure(Exception("Old output was null"))
             val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
                 migratedFile
             ) ?: return Result.failure(Exception("New output was null"))
@@ -182,31 +173,5 @@ class LegacyEncryptionMigrator @Inject constructor(
             encryptedStorageManager.internalDeleteFile(migratedFile)
             return Result.failure(e)
         }
-    }
-
-    @Throws
-    private fun openLegacyCipherInputStream(inputStream: InputStream): CipherInputStream {
-        val cipher = Cipher.getInstance(AES_ALGORITHM).apply {
-            init(Cipher.DECRYPT_MODE, key, this@LegacyEncryptionMigrator.iv)
-        }
-
-        return CipherInputStream(inputStream, cipher)
-    }
-
-    private fun genSecKey(password: String): SecretKeySpec {
-        val md = MessageDigest.getInstance(SHA_256)
-        val bytes = md.digest(password.toByteArray(StandardCharsets.UTF_8))
-        return SecretKeySpec(bytes, AES)
-    }
-
-    private fun genLegacyIv(password: String): IvParameterSpec {
-        val iv = ByteArray(16)
-        val charArray = password.toCharArray()
-        val firstChars = charArray.take(16)
-        for (i in firstChars.indices) {
-            iv[i] = firstChars[i].toByte()
-        }
-
-        return IvParameterSpec(iv)
     }
 }

@@ -33,6 +33,8 @@ import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
+import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -58,6 +60,9 @@ import javax.inject.Inject
 class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {
 
     private val viewModel: UnlockViewModel by viewModels()
+
+    @Inject
+    lateinit var legacyEncryptionManager: LegacyEncryptionManagerImpl
 
     @Inject
     lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
@@ -111,7 +116,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
             lifecycleScope.launch {
-                legacyEncryptionMigrator.init(viewModel.password)
+                legacyEncryptionManager.initialize(viewModel.password)
                 findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
             }
         } else {
