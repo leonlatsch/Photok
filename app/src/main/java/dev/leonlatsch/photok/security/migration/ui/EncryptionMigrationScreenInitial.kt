@@ -65,6 +65,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.currentStateAsState
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.other.areNotificationsEnabled
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
@@ -102,7 +103,10 @@ fun EncryptionMigrationScreenInitial(
         it ?: return@rememberLauncherForActivityResult
         if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
-        BackupBottomSheetDialogFragment(it).show(activity.supportFragmentManager)
+        BackupBottomSheetDialogFragment(
+            uri = it,
+            overrideVersion = BackupMetaData.LEGACY_BACKUP_VERSION,
+        ).show(activity.supportFragmentManager)
 
         if (context.areNotificationsEnabled()) {
             handleUiEvent(SwitchStage(InitialSubStage.READY))

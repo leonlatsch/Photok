@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.backup.ui
 import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupRepository
 import dev.leonlatsch.photok.backup.domain.CreateBackupMetaFileUseCase
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -45,6 +46,8 @@ class BackupViewModel @Inject constructor(
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
+    var backupVersion = BackupMetaData.CURRENT_BACKUP_VERSION
+
     private lateinit var zipOutputStream: ZipOutputStream
 
     override suspend fun preProcess() {
@@ -64,7 +67,7 @@ class BackupViewModel @Inject constructor(
 
     override suspend fun postProcess() {
         if (failuresOccurred.not()) {
-            createBackupMetaFile(zipOutputStream)
+            createBackupMetaFile(zipOutputStream, backupVersion)
                 .onFailure {
                     Timber.e(it, "Error writing meta file to backup")
                     failuresOccurred = true

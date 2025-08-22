@@ -32,7 +32,8 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
  */
 @AndroidEntryPoint
 class BackupBottomSheetDialogFragment(
-    private val uri: Uri
+    private val uri: Uri,
+    private val overrideVersion: Int? = null,
 ) : BaseProcessBottomSheetDialogFragment<Photo>(
     null,
     R.string.backup_processing_title,
@@ -43,5 +44,8 @@ class BackupBottomSheetDialogFragment(
     override fun prepareViewModel(items: List<Photo>?) {
         super.prepareViewModel(items)
         viewModel.uri = uri
+        if (overrideVersion != null) {
+            viewModel.backupVersion = overrideVersion
+        }
     }
 }

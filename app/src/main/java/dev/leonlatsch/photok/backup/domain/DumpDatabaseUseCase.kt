@@ -31,7 +31,7 @@ class DumpDatabaseUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
 ){
-    suspend operator fun invoke(password: String): BackupMetaData = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(password: String, version: Int): BackupMetaData = withContext(Dispatchers.IO) {
         val photos = photoRepository.getAll().map { it.toBackup() }
         val albums = albumRepository.getAlbums().map { it.toBackup() }
         val albumPhotoLinks = albumRepository.getAllAlbumPhotoLinks().map { it.toBackup() }
@@ -41,6 +41,7 @@ class DumpDatabaseUseCase @Inject constructor(
             photos = photos,
             albums = albums,
             albumPhotoRefs = albumPhotoLinks,
+            backupVersion = version,
         )
     }
 }

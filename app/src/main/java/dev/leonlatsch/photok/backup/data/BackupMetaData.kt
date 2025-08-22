@@ -31,10 +31,15 @@ data class BackupMetaData(
     @Expose val albums: List<AlbumBackup>,
     @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
     @Expose val createdAt: Long = System.currentTimeMillis(),
-    @Expose val backupVersion: Int = CURRENT_BACKUP_VERSION
+    @Expose val backupVersion: Int,
 ) {
     companion object {
         const val FILE_NAME = "meta.json"
+
+        /**
+         * Backup version used before switching the encryption. Used for creating a backup before migrating.
+         */
+        const val LEGACY_BACKUP_VERSION = 3
         const val CURRENT_BACKUP_VERSION = 4
 
         val VALID_BACKUP_VERSIONS = arrayOf(1, 2, 3, 4)

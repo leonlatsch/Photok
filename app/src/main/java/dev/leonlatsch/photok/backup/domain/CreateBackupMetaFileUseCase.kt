@@ -25,8 +25,8 @@ class CreateBackupMetaFileUseCase @Inject constructor(
     private val backupRepository: BackupRepository,
     private val config: Config,
 ){
-    suspend operator fun invoke(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val dump = dumpDatabaseUseCase(config.securityPassword!!)
+    suspend operator fun invoke(zipOutputStream: ZipOutputStream, version: Int): Result<Unit> {
+        val dump = dumpDatabaseUseCase(config.securityPassword!!, version)
         return backupRepository.writeBackupMetadata(dump, zipOutputStream)
     }
 }
