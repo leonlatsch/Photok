@@ -66,6 +66,7 @@ import dev.leonlatsch.photok.other.openNotificationSettings
 import dev.leonlatsch.photok.other.requestInSettings
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
+import dev.leonlatsch.photok.settings.ui.createBackupFilename
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -261,12 +262,10 @@ fun EncryptionMigrationScreenInitial(
                         InitialSubStage.BACKUP -> Button(
                             modifier = Modifier.defaultMinSize(minWidth = 200.dp),
                             onClick = {
-                                // TODO: TEST CODE
-                                handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
-//                                createBackupLauncher.launchAndIgnoreTimer(
-//                                    input = createBackupFilename(),
-//                                    activity = activity,
-//                                )
+                                createBackupLauncher.launchAndIgnoreTimer(
+                                    input = createBackupFilename(),
+                                    activity = activity,
+                                )
                             }
                         ) {
                             Text("Create backup")
