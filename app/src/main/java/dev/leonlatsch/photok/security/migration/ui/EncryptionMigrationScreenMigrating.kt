@@ -64,7 +64,7 @@ fun EncryptionMigrationScreenMigrating(
                 AppName()
 
                 Text(
-                    text = "Migrating your gallery",
+                    text = stringResource(R.string.migration_running_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -78,7 +78,7 @@ fun EncryptionMigrationScreenMigrating(
                     )
 
                     Text(
-                        text = "${uiState.processedFiles} of ${uiState.totalFiles} files processed",
+                        text = stringResource(R.string.migration_running_progress, uiState.processedFiles, uiState.totalFiles),
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 }
@@ -88,7 +88,7 @@ fun EncryptionMigrationScreenMigrating(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                text = "Feel free to leave this screen while the migration is running",
+                text = stringResource(R.string.migration_running_advice),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
             )

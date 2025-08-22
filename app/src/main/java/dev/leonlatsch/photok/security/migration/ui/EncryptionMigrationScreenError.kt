@@ -62,7 +62,7 @@ fun EncryptionMigrationScreenError(
                 AppName()
 
                 Text(
-                    text = "Something went wrong",
+                    text = stringResource(R.string.migration_error_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                 )

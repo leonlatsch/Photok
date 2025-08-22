@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -90,27 +91,29 @@ fun EncryptionMigrationScreenInitial(
         }
     }
 
-    val createBackupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
-        it ?: return@rememberLauncherForActivityResult
-        if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
+    val createBackupLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
+            it ?: return@rememberLauncherForActivityResult
+            if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
-        BackupBottomSheetDialogFragment(
-            uri = it,
-            strategy = BackupStrategy.Name.Legacy,
-        ).show(activity.supportFragmentManager)
+            BackupBottomSheetDialogFragment(
+                uri = it,
+                strategy = BackupStrategy.Name.Legacy,
+            ).show(activity.supportFragmentManager)
 
-        if (context.areNotificationsEnabled()) {
-            handleUiEvent(SwitchStage(InitialSubStage.READY))
-        } else {
-            handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+            if (context.areNotificationsEnabled()) {
+                handleUiEvent(SwitchStage(InitialSubStage.READY))
+            } else {
+                handleUiEvent(SwitchStage(InitialSubStage.PERMISSION))
+            }
         }
-    }
 
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) {
-            handleUiEvent(SwitchStage(InitialSubStage.READY))
+    val permissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                handleUiEvent(SwitchStage(InitialSubStage.READY))
+            }
         }
-    }
 
     Scaffold { contentPadding ->
         Box(
@@ -128,9 +131,7 @@ fun EncryptionMigrationScreenInitial(
             ) {
 
                 AnimatedVisibility(uiState.stage == InitialSubStage.INITIAL) {
-                    Text(
-                        text = "Welcome to"
-                    )
+                    Text(text = stringResource(R.string.migration_initial_title_welcome))
                 }
 
                 Spacer(Modifier.height(24.dp))
@@ -142,7 +143,7 @@ fun EncryptionMigrationScreenInitial(
 
                 AnimatedVisibility(uiState.stage == InitialSubStage.INITIAL) {
                     Text(
-                        text = "This Version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.",
+                        text = stringResource(R.string.migration_initial_explaination),
                         textAlign = TextAlign.Center,
                     )
                 }
@@ -177,7 +178,7 @@ fun EncryptionMigrationScreenInitial(
                                     tint = color,
                                 )
                                 Text(
-                                    text = "Backup your data",
+                                    text = stringResource(R.string.migration_initial_stage_backup_checklist),
                                     color = color,
                                 )
                             }
@@ -208,7 +209,7 @@ fun EncryptionMigrationScreenInitial(
                                     tint = color,
                                 )
                                 Text(
-                                    text = "Grant permissions",
+                                    text = stringResource(R.string.migration_initial_stage_permission_checklist),
                                     color = color,
                                 )
                             }
@@ -224,14 +225,14 @@ fun EncryptionMigrationScreenInitial(
                 ) {
                     val text = when (it) {
                         InitialSubStage.INITIAL -> null
-                        InitialSubStage.BACKUP -> "Create a backup of your data before continuing"
-                        InitialSubStage.PERMISSION -> "Please grant notification permissions in order to run the migration in the background"
-                        InitialSubStage.READY -> "Youre all set"
+                        InitialSubStage.BACKUP -> R.string.migration_initial_stage_backup_explanation
+                        InitialSubStage.PERMISSION -> R.string.migration_initial_stage_permission_explanation
+                        InitialSubStage.READY -> R.string.migration_initial_stage_ready_explanation
                     }
 
                     if (text != null) {
                         Text(
-                            text = text,
+                            text = stringResource(text),
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -256,7 +257,7 @@ fun EncryptionMigrationScreenInitial(
                                 )
                             }
                         ) {
-                            Text("Get started")
+                            Text(stringResource(R.string.migration_initial_button))
                         }
 
                         InitialSubStage.BACKUP -> Button(
@@ -268,7 +269,7 @@ fun EncryptionMigrationScreenInitial(
                                 )
                             }
                         ) {
-                            Text("Create backup")
+                            Text(stringResource(R.string.migration_initial_stage_backup_button))
                         }
 
                         InitialSubStage.PERMISSION -> Button(
@@ -279,13 +280,16 @@ fun EncryptionMigrationScreenInitial(
                                 if (activity.requestInSettings(Manifest.permission.POST_NOTIFICATIONS)) {
                                     activity.openNotificationSettings()
                                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    permissionLauncher.launchAndIgnoreTimer(Manifest.permission.POST_NOTIFICATIONS, activity)
+                                    permissionLauncher.launchAndIgnoreTimer(
+                                        Manifest.permission.POST_NOTIFICATIONS,
+                                        activity
+                                    )
                                 } else {
                                     handleUiEvent(SwitchStage(InitialSubStage.READY))
                                 }
                             }
                         ) {
-                            Text("Grant permissions")
+                            Text(stringResource(R.string.migration_initial_stage_permission_button))
                         }
 
                         InitialSubStage.READY -> Button(
@@ -298,7 +302,7 @@ fun EncryptionMigrationScreenInitial(
                                 )
                             }
                         ) {
-                            Text("Start migration")
+                            Text(stringResource(R.string.migration_initial_stage_ready_button))
                         }
                     }
                 }

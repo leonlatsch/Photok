@@ -16,25 +16,19 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +56,7 @@ fun EncryptionMigrationScreenSuccess(
                 AppName()
 
                 Text(
-                    text = "Migrating your gallery",
+                    text = stringResource(R.string.migration_done_title),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -76,20 +70,11 @@ fun EncryptionMigrationScreenSuccess(
                     )
 
                     Text(
-                        text = "All files migrated",
+                        text = stringResource(R.string.migration_done_progress),
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
-
-            Text(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(16.dp),
-                text = "Feel free to leave this screen while the migration is running",
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.outline,
-            )
         }
     }
 }
