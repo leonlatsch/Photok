@@ -286,7 +286,7 @@
     <string name="migration_initial_stage_backup_button">Create backup</string>
 
     <string name="migration_initial_stage_permission_checklist">Grant permission</string>
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration in the background.</string>
+    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string>
     <string name="migration_initial_stage_permission_button">Grant permission</string>
 
     <string name="migration_initial_stage_ready_explanation">You\'re all set</string>
