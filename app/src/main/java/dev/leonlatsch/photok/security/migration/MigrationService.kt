@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -29,6 +30,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.notifications.NotificationChannels
 import dev.leonlatsch.photok.notifications.createAllNotificationChannels
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
@@ -108,9 +110,12 @@ class MigrationService : Service() {
     }
 
     private fun createInitialNotification(): Notification {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
-            .setSmallIcon(R.drawable.ic_database)
+            .setContentIntent(pendingIntent)
             .setOngoing(true)
             .build()
     }
@@ -138,9 +143,13 @@ class MigrationService : Service() {
     }
 
     private fun createErrorNotification(error: Throwable): Notification {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(error.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
+            .setContentIntent(pendingIntent)
             .setOngoing(false)
             .setAutoCancel(true)
             .build()
