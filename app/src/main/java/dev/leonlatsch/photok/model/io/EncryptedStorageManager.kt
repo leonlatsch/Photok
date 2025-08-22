@@ -53,7 +53,11 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherInputStream? =
         try {
             val inputStream = app.openFileInput(fileName)
-            encryptionManager.createCipherInputStream(inputStream, password)
+            encryptionManager.createCipherInputStream(
+                input = inputStream,
+                fileName = fileName,
+                password = password,
+            )
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null

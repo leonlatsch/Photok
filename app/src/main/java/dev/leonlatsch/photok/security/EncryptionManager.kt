@@ -26,6 +26,14 @@ interface EncryptionManager {
     fun initialize(password: String)
     fun reset()
 
-    fun createCipherInputStream(input: InputStream, password: String? = null): CipherInputStream?
-    fun createCipherOutputStream(output: OutputStream, password: String? = null): CipherOutputStream?
+    fun createCipherInputStream(
+        input: InputStream,
+        fileName: String?,
+        password: String? = null,
+    ): CipherInputStream?
+    fun createCipherOutputStream(
+        output: OutputStream,
+        fileName: String?,
+        password: String? = null
+    ): CipherOutputStream?
 }

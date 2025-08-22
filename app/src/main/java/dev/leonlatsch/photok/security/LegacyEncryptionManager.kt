@@ -70,6 +70,7 @@ class LegacyEncryptionManagerImpl @Inject constructor(
 
     override fun createCipherInputStream(
         input: InputStream,
+        fileName: String?,
         password: String?
     ): CipherInputStream? {
         val key: SecretKeySpec
@@ -92,6 +93,7 @@ class LegacyEncryptionManagerImpl @Inject constructor(
 
     override fun createCipherOutputStream(
         output: OutputStream,
+        fileName: String?,
         password: String?
     ): CipherOutputStream? {
         val key: SecretKeySpec

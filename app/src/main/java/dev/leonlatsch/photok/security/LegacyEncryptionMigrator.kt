@@ -151,7 +151,8 @@ class LegacyEncryptionMigrator @Inject constructor(
 
             val origInput = app.openFileInput(fileName)
             val legacyInputStream = legacyEncryptionManager.createCipherInputStream(
-                origInput
+                origInput,
+                null
             ) ?: return Result.failure(Exception("Old output was null"))
             val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
                 migratedFile

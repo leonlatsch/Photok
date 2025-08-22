@@ -33,6 +33,8 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.io.encoding.Base64
 
 
 private const val ENC_VERSION_BYTE: Byte = 0x01
@@ -43,9 +45,11 @@ private const val ITERATION_COUNT = 100_000
 private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
 private const val ALGORITHM = "AES"
 
+
 // FORMAT: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
 
 
+@Singleton
 class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     private val state: MutableStateFlow<State> =
@@ -75,6 +79,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     override fun createCipherInputStream(
         input: InputStream,
+        fileName: String?,
         password: String?,
     ): CipherInputStream? {
         val passwordToUse = requirePassword(password)
@@ -89,7 +94,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
             input.read(salt, 0, salt.size)
             input.read(iv, 0, iv.size)
 
-            val key = deriveAesKey(passwordToUse, salt)
+            val key = getOrDeriveAesKey(fileName, passwordToUse, salt)
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
 
@@ -103,6 +108,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     override fun createCipherOutputStream(
         output: OutputStream,
+        fileName: String?,
         password: String?,
     ): CipherOutputStream? {
         val passwordToUse = requirePassword(password)
@@ -111,7 +117,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
             val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
-            val key = deriveAesKey(passwordToUse, salt)
+            val key = getOrDeriveAesKey(fileName, passwordToUse, salt)
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
 
@@ -127,7 +133,17 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
     }
 
     private fun requirePassword(override: String?): String {
-        return override ?: (state.value as? State.Ready)?.password ?: error("EncryptionManager not initialized")
+        return override ?: (state.value as? State.Ready)?.password
+        ?: error("EncryptionManager not initialized")
+    }
+
+    private fun getOrDeriveAesKey(fileName: String?, password: String, salt: ByteArray): SecretKey {
+        fileName ?: return deriveAesKey(password, salt)
+        val base64Salt = Base64.encode(salt)
+
+        return (state.value as? State.Ready)?.keyCache?.getOrPut("$fileName+$password+$base64Salt") {
+            deriveAesKey(password, salt)
+        } ?: error("EncryptionManager not initialized")
     }
 
     private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
@@ -141,6 +157,17 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         data object Initial : State
         data object Error : State
 
-        data class Ready(val password: String) : State
+        data class Ready(
+            val password: String,
+            val keyCache: MutableMap<String, SecretKey> = object : LinkedHashMap<String, SecretKey>(
+                KEY_CACHE_SIZE, 0.75f, true
+            ) {
+                override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, SecretKey>?): Boolean {
+                    return size > KEY_CACHE_SIZE
+                }
+            }
+        ) : State
     }
 }
+
+private const val KEY_CACHE_SIZE = 500
