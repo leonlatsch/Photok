@@ -110,7 +110,7 @@ class MigrationService : Service() {
     private fun createInitialNotification(): Notification {
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
-            .setSmallIcon(android.R.drawable.stat_sys_upload)
+            .setSmallIcon(R.drawable.ic_database)
             .setOngoing(true)
             .build()
     }
@@ -121,7 +121,7 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
             .setContentText(getString(R.string.migration_running_progress, state.processedFiles, state.totalFiles))
-            .setSmallIcon(android.R.drawable.stat_sys_upload)
+            .setSmallIcon(R.drawable.ic_database)
             .setProgress(100, humanReadableProgress, false)
             .setOngoing(true)
             .setCategory(Notification.CATEGORY_SERVICE)
@@ -131,7 +131,7 @@ class MigrationService : Service() {
     private fun createFinishedNotification(): Notification {
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_done_title))
-            .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+            .setSmallIcon(R.drawable.ic_check)
             .setOngoing(false)
             .setAutoCancel(true)
             .build()
