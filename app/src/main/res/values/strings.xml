@@ -301,4 +301,6 @@
 
     <string name="migration_error_title">Error while migrating your gallery</string>
     <string name="migration_error_button">Send error report</string>
+
+    <string name="notification_channel_background_tasks">Background Tasks</string>
 </resources>

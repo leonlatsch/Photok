@@ -120,13 +120,7 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
                 val subject =
                     "Photok Migration Error Report (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
 
-                val text = """
-                    Photok error migration report.
-                    
-                    Please don't change the content below.
-                    
-                    ${event.error.stackTraceToString()}
-                """.trimIndent()
+                val text = "Photok error migration report.\n\nPlease don't change the content below.\n\n ${event.error.stackTraceToString()}"
 
                 event.context.sendEmail(
                     email = email,

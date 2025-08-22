@@ -16,22 +16,21 @@
 
 package dev.leonlatsch.photok.security.migration
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
-import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.notifications.NotificationChannels
+import dev.leonlatsch.photok.notifications.createAllNotificationChannels
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
 import kotlinx.coroutines.CoroutineScope
@@ -39,12 +38,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
-private const val CHANNEL_ID = "MigrationChannel"
+private const val CHANNEL_ID = "BackgroundTasks"
 private const val SERVICE_ID = 1001
-
 
 @AndroidEntryPoint
 class MigrationService : Service() {
@@ -64,7 +61,7 @@ class MigrationService : Service() {
     override fun onCreate() {
         super.onCreate()
         notificationManager = NotificationManagerCompat.from(this)
-        createNotificationChannel()
+        notificationManager.createAllNotificationChannels(this)
     }
 
     override fun onTimeout(startId: Int) {
@@ -113,7 +110,7 @@ class MigrationService : Service() {
 
     private fun createInitialNotification(): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Preparing Migration")
+            .setContentTitle(getString(R.string.migration_running_title))
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setOngoing(true)
             .build()
@@ -123,8 +120,8 @@ class MigrationService : Service() {
         val humanReadableProgress = ((state.processedFiles.toFloat() / state.totalFiles.toFloat()) * 100).toInt()
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Migrating your gallery")
-            .setContentText("${state.processedFiles} / ${state.totalFiles} files processed")
+            .setContentTitle(getString(R.string.migration_running_title))
+            .setContentText(getString(R.string.migration_running_progress, state.processedFiles, state.totalFiles))
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setProgress(100, humanReadableProgress, false)
             .setOngoing(true)
@@ -134,7 +131,7 @@ class MigrationService : Service() {
 
     private fun createFinishedNotification(): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Migration Finished")
+            .setContentTitle(getString(R.string.migration_done_title))
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
             .setOngoing(false)
             .setAutoCancel(true)
@@ -148,14 +145,5 @@ class MigrationService : Service() {
             .setOngoing(false)
             .setAutoCancel(true)
             .build()
-    }
-
-    private fun createNotificationChannel() {
-        val serviceChannel = NotificationChannel(
-            CHANNEL_ID,
-            "Migration Channel",
-            NotificationManager.IMPORTANCE_LOW
-        )
-        notificationManager?.createNotificationChannel(serviceChannel)
     }
 }
