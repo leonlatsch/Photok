@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val CHANNEL_ID = "BackgroundTasks"
 private const val SERVICE_ID = 1001
 
 @AndroidEntryPoint
@@ -109,7 +108,7 @@ class MigrationService : Service() {
     }
 
     private fun createInitialNotification(): Notification {
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setOngoing(true)
@@ -119,7 +118,7 @@ class MigrationService : Service() {
     private fun createNotification(state: LegacyEncryptionState.Running): Notification {
         val humanReadableProgress = ((state.processedFiles.toFloat() / state.totalFiles.toFloat()) * 100).toInt()
 
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
             .setContentText(getString(R.string.migration_running_progress, state.processedFiles, state.totalFiles))
             .setSmallIcon(android.R.drawable.stat_sys_upload)
@@ -130,7 +129,7 @@ class MigrationService : Service() {
     }
 
     private fun createFinishedNotification(): Notification {
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_done_title))
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
             .setOngoing(false)
@@ -139,7 +138,7 @@ class MigrationService : Service() {
     }
 
     private fun createErrorNotification(error: Throwable): Notification {
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(error.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
             .setOngoing(false)
