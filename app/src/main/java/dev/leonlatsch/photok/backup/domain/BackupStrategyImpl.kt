@@ -14,24 +14,32 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.data
+package dev.leonlatsch.photok.backup.domain
 
 import android.content.Context
+import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
+import dev.leonlatsch.photok.settings.data.Config
+import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
-class WritePhotoToZipEntryUseCase @Inject constructor(
+class BackupStrategyImpl @Inject constructor(
+    private val dumpDatabaseUseCase: DumpDatabaseUseCase,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val io: IO,
+    private val config: Config,
+    private val gson: Gson,
     @ApplicationContext private val context: Context,
-) {
-    suspend operator fun invoke(
+) : BackupStrategy {
+
+    override suspend fun writePhotoToBackup(
         photo: Photo,
-        zipOutputStream: ZipOutputStream,
+        zipOutputStream: ZipOutputStream
     ): Result<Unit> {
         context.fileList()
             .filter { it.contains(photo.uuid) }
@@ -50,5 +58,17 @@ class WritePhotoToZipEntryUseCase @Inject constructor(
             }
 
         return Result.success(Unit)
+    }
+
+    override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
+        val backupMetaData = dumpDatabaseUseCase(config.securityPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
+
+        val metaBytes = gson.toJson(backupMetaData).toByteArray()
+
+        return io.zip.writeZipEntry(
+            BackupMetaData.Companion.FILE_NAME,
+            ByteArrayInputStream(metaBytes),
+            zipOutputStream,
+        )
     }
 }

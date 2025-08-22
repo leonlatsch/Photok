@@ -20,8 +20,10 @@ import android.net.Uri
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
+
 
 /**
  * Process fragment for backing up photos.
@@ -33,7 +35,7 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
 @AndroidEntryPoint
 class BackupBottomSheetDialogFragment(
     private val uri: Uri,
-    private val overrideVersion: Int? = null,
+    private val strategy: BackupStrategy.Name
 ) : BaseProcessBottomSheetDialogFragment<Photo>(
     null,
     R.string.backup_processing_title,
@@ -44,8 +46,6 @@ class BackupBottomSheetDialogFragment(
     override fun prepareViewModel(items: List<Photo>?) {
         super.prepareViewModel(items)
         viewModel.uri = uri
-        if (overrideVersion != null) {
-            viewModel.backupVersion = overrideVersion
-        }
+        viewModel.strategyName = strategy
     }
 }

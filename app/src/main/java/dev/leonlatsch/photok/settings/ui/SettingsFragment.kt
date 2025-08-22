@@ -16,14 +16,12 @@
 
 package dev.leonlatsch.photok.settings.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import android.view.WindowInsets
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
@@ -36,6 +34,7 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
@@ -48,7 +47,6 @@ import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import timber.log.Timber
 import javax.inject.Inject
 
 fun createBackupFilename(): String {
@@ -70,7 +68,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val createBackupLauncher =
         registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
             uri ?: return@registerForActivityResult
-            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
+            BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(requireActivity().supportFragmentManager)
         }
 
     @Inject

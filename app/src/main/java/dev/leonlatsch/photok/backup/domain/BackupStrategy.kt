@@ -14,28 +14,24 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.data
+package dev.leonlatsch.photok.backup.domain
 
-import com.google.gson.Gson
-import dev.leonlatsch.photok.model.io.IO
-import java.io.ByteArrayInputStream
+import dev.leonlatsch.photok.model.database.entity.Photo
 import java.util.zip.ZipOutputStream
-import javax.inject.Inject
 
-class WriteBackupMetaDataToZipUseCase @Inject constructor(
-    private val io: IO,
-    private val gson: Gson,
-) {
-     suspend operator fun invoke(
-        backupMetaData: BackupMetaData,
-        zipOutputStream: ZipOutputStream
-    ): Result<Unit> {
-        val metaBytes = gson.toJson(backupMetaData).toByteArray()
+interface BackupStrategy {
 
-        return io.zip.writeZipEntry(
-            BackupMetaData.FILE_NAME,
-            ByteArrayInputStream(metaBytes),
-            zipOutputStream,
-        )
+    enum class Name {
+        Default,
+        Legacy;
     }
+
+    suspend fun writePhotoToBackup(
+        photo: Photo,
+        zipOutputStream: ZipOutputStream,
+    ): Result<Unit>
+
+    suspend fun createMetaFileInBackup(
+        zipOutputStream: ZipOutputStream
+    ): Result<Unit>
 }

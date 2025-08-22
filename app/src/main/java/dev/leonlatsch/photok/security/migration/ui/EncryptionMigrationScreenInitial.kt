@@ -17,12 +17,7 @@
 package dev.leonlatsch.photok.security.migration.ui
 
 import android.Manifest
-import android.app.NotificationManager
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,24 +53,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.currentStateAsState
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.other.areNotificationsEnabled
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.extensions.startActivityAndIgnoreTimer
 import dev.leonlatsch.photok.other.openNotificationSettings
 import dev.leonlatsch.photok.other.requestInSettings
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
-import dev.leonlatsch.photok.settings.ui.createBackupFilename
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -105,7 +95,7 @@ fun EncryptionMigrationScreenInitial(
 
         BackupBottomSheetDialogFragment(
             uri = it,
-            overrideVersion = BackupMetaData.LEGACY_BACKUP_VERSION,
+            strategy = BackupStrategy.Name.Legacy,
         ).show(activity.supportFragmentManager)
 
         if (context.areNotificationsEnabled()) {
