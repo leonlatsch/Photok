@@ -16,10 +16,15 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,12 +61,24 @@ class EncryptionMigrationFragment : Fragment() {
                         }
                     }
 
-
                     when (uiState) {
-                        is LegacyEncryptionMigrationUiState.Initial -> EncryptionMigrationScreenInitial(uiState as LegacyEncryptionMigrationUiState.Initial, viewModel::handleUiEvent)
-                        is LegacyEncryptionMigrationUiState.Migrating -> EncryptionMigrationScreenMigrating(uiState as LegacyEncryptionMigrationUiState.Migrating)
-                        is LegacyEncryptionMigrationUiState.Success -> EncryptionMigrationScreenSuccess(uiState as LegacyEncryptionMigrationUiState.Success)
-                        is LegacyEncryptionMigrationUiState.Error -> EncryptionMigrationScreenError(uiState as LegacyEncryptionMigrationUiState.Error)
+                        is LegacyEncryptionMigrationUiState.Initial -> EncryptionMigrationScreenInitial(
+                            uiState as LegacyEncryptionMigrationUiState.Initial,
+                            viewModel::handleUiEvent
+                        )
+
+                        is LegacyEncryptionMigrationUiState.Migrating -> EncryptionMigrationScreenMigrating(
+                            uiState as LegacyEncryptionMigrationUiState.Migrating
+                        )
+
+                        is LegacyEncryptionMigrationUiState.Success -> EncryptionMigrationScreenSuccess(
+                            uiState as LegacyEncryptionMigrationUiState.Success
+                        )
+
+                        is LegacyEncryptionMigrationUiState.Error -> EncryptionMigrationScreenError(
+                            uiState as LegacyEncryptionMigrationUiState.Error,
+                            viewModel::handleUiEvent
+                        )
                     }
                 }
             }

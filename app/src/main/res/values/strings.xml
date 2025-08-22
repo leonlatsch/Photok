@@ -300,4 +300,5 @@
     <string name="migration_done_progress">All files migrated</string>
 
     <string name="migration_error_title">Error while migrating your gallery</string>
+    <string name="migration_error_button">Send error report</string>
 </resources>

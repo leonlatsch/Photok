@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

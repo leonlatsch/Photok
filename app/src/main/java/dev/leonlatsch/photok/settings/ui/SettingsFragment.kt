@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
@@ -137,19 +138,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val text = getString(R.string.settings_other_feedback_mail_body)
 
         addActionTo(KEY_ACTION_FEEDBACK) {
-            val emailIntent = Intent(
-                Intent.ACTION_SENDTO,
-                Uri.parse("mailto:$email?subject=$subject&body=$text")
-            ).apply {
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-                putExtra(Intent.EXTRA_SUBJECT, subject)
-                putExtra(Intent.EXTRA_TEXT, text)
-            }
-            startActivity(
-                Intent.createChooser(
-                    emailIntent,
-                    getString(R.string.settings_other_feedback_title)
-                )
+            context?.sendEmail(
+                email = email,
+                subject = subject,
+                text = text,
+                chooserTitle = getString(R.string.settings_other_feedback_title)
             )
         }
 

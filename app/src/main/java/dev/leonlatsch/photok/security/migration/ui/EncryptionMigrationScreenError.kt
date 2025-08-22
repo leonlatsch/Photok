@@ -19,9 +19,13 @@ package dev.leonlatsch.photok.security.migration.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,11 +44,15 @@ import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import okio.IOException
 
 @Composable
 fun EncryptionMigrationScreenError(
-    uiState: LegacyEncryptionMigrationUiState.Error
+    uiState: LegacyEncryptionMigrationUiState.Error,
+    handleUiEvent: (LegacyEncryptionMigrationUiEvent) -> Unit
 ) {
+    val context = LocalContext.current
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.errorContainer,
     ) { contentPadding ->
@@ -73,14 +82,35 @@ fun EncryptionMigrationScreenError(
                 ) {
                     Icon(
                         modifier = Modifier
+                            .padding(vertical = 24.dp)
                             .size(IconSize),
-                        painter = painterResource(R.drawable.ic_warning),
+                        painter = painterResource(R.drawable.ic_smile_sad),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.error,
                     )
 
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.error,
+                            contentColor = MaterialTheme.colorScheme.onError,
+                        ),
+                        onClick = {
+                            handleUiEvent(
+                                LegacyEncryptionMigrationUiEvent.SendErrorReport(
+                                    context,
+                                    uiState.error
+                                )
+                            )
+                        }
+                    ) {
+                        Text(stringResource(R.string.migration_error_button))
+                    }
+
+                    Spacer(Modifier.height(24.dp))
+
                     Text(
-                        text = uiState.error.message ?: stringResource(R.string.common_error),
+                        text = uiState.error.localizedMessage
+                            ?: stringResource(R.string.common_error),
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center,
                     )
@@ -91,15 +121,15 @@ fun EncryptionMigrationScreenError(
 }
 
 
-
-
-
 @PreviewLightDark
 @Composable
 private fun PreviewError() {
     AppTheme {
         EncryptionMigrationScreenError(
-            uiState = LegacyEncryptionMigrationUiState.Error(Throwable("Test error"))
+            uiState = LegacyEncryptionMigrationUiState.Error(
+                IOException("Some error message from exception")
+            ),
+            handleUiEvent = {},
         )
     }
 }

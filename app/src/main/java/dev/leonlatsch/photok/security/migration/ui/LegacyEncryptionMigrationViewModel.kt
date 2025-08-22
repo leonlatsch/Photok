@@ -18,11 +18,15 @@ package dev.leonlatsch.photok.security.migration.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.security.LegacyEncryptionState
 import dev.leonlatsch.photok.security.migration.MigrationService
@@ -61,6 +65,10 @@ sealed interface LegacyEncryptionMigrationUiState {
 sealed interface LegacyEncryptionMigrationUiEvent {
     data class StartMigration(val context: Context) : LegacyEncryptionMigrationUiEvent
     data class SwitchStage(val stage: InitialSubStage) : LegacyEncryptionMigrationUiEvent
+    data class SendErrorReport(
+        val context: Context,
+        val error: Throwable
+    ) : LegacyEncryptionMigrationUiEvent
 }
 
 @HiltViewModel
@@ -105,6 +113,27 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
             }
             is LegacyEncryptionMigrationUiEvent.SwitchStage -> {
                 initialStage.update { event.stage }
+            }
+
+            is LegacyEncryptionMigrationUiEvent.SendErrorReport -> {
+                val email = event.context.getString(R.string.settings_other_feedback_mail_emailaddress)
+                val subject =
+                    "Photok Migration Error Report (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
+
+                val text = """
+                    Photok error migration report.
+                    
+                    Please don't change the content below.
+                    
+                    ${event.error.stackTraceToString()}
+                """.trimIndent()
+
+                event.context.sendEmail(
+                    email = email,
+                    subject = subject,
+                    text = text,
+                    chooserTitle = "Send Error Report"
+                )
             }
         }
     }
