@@ -28,12 +28,12 @@ interface EncryptionManager {
 
     fun createCipherInputStream(
         input: InputStream,
-        fileName: String?,
         password: String? = null,
+        salt: ByteArray? = null,
     ): CipherInputStream?
     fun createCipherOutputStream(
         output: OutputStream,
-        fileName: String?,
-        password: String? = null
+        password: String? = null,
+        salt: ByteArray? = null,
     ): CipherOutputStream?
 }

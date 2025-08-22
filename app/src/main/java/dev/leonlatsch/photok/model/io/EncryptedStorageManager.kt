@@ -55,7 +55,6 @@ class EncryptedStorageManager @Inject constructor(
             val inputStream = app.openFileInput(fileName)
             encryptionManager.createCipherInputStream(
                 input = inputStream,
-                fileName = fileName,
                 password = password,
             )
         } catch (e: IOException) {

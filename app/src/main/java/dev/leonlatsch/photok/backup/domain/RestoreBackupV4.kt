@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
+import kotlin.io.encoding.Base64
 
 class RestoreBackupV4 @Inject constructor(
     private val encryptionManager: EncryptionManager,
@@ -34,6 +35,7 @@ class RestoreBackupV4 @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val io: IO,
 ) : RestoreBackupStrategy {
+
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
@@ -50,7 +52,11 @@ class RestoreBackupV4 @Inject constructor(
             }
 
             val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, originalPassword)
+                encryptionManager.createCipherInputStream(
+                    input = stream,
+                    password = originalPassword,
+                    salt = Base64.decode(metaData.salt ?: error("Backup V4 requires salt")),
+                )
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
 

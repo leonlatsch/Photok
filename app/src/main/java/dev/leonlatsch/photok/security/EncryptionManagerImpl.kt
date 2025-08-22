@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security
 
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -48,9 +49,27 @@ private const val ALGORITHM = "AES"
 
 // FORMAT: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
 
+class GetOrCreateUserSaltUseCase @Inject constructor(
+    private val config: Config
+) {
+    operator fun invoke(): ByteArray {
+        val storedSalt = config.userSalt
+
+        return if (storedSalt != null) {
+            Base64.decode(storedSalt)
+        } else {
+            val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+            config.userSalt = Base64.encode(salt)
+            salt
+        }
+    }
+}
+
 
 @Singleton
-class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
+class EncryptionManagerImpl @Inject constructor(
+    private val getOrCreateUserSalt: GetOrCreateUserSaltUseCase
+) : EncryptionManager {
 
     private val state: MutableStateFlow<State> =
         MutableStateFlow(State.Initial)
@@ -65,7 +84,9 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         }
         try {
             state.update {
-                State.Ready(password = password)
+                State.Ready(
+                    key = deriveAesKey(password, getOrCreateUserSalt())
+                )
             }
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
@@ -79,22 +100,24 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     override fun createCipherInputStream(
         input: InputStream,
-        fileName: String?,
         password: String?,
+        salt: ByteArray?,
     ): CipherInputStream? {
-        val passwordToUse = requirePassword(password)
+        val key = if (password != null && salt != null) {
+            deriveAesKey(password, salt)
+        } else {
+            requireKey()
+        }
 
         try {
             val version = input.read().toByte()
             if (version != ENC_VERSION_BYTE) throw IllegalArgumentException("Unsupported version")
 
-            val salt = ByteArray(SALT_SIZE)
             val iv = ByteArray(IV_SIZE)
 
-            input.read(salt, 0, salt.size)
+            input.skip(SALT_SIZE.toLong())
             input.read(iv, 0, iv.size)
 
-            val key = getOrDeriveAesKey(fileName, passwordToUse, salt)
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
 
@@ -108,16 +131,19 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     override fun createCipherOutputStream(
         output: OutputStream,
-        fileName: String?,
         password: String?,
+        salt: ByteArray?,
     ): CipherOutputStream? {
-        val passwordToUse = requirePassword(password)
+        val key = if (password != null && salt != null) {
+            deriveAesKey(password, salt)
+        } else {
+            requireKey()
+        }
 
         try {
-            val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+            val salt = getOrCreateUserSalt()
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
-            val key = getOrDeriveAesKey(fileName, passwordToUse, salt)
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
 
@@ -132,18 +158,8 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         }
     }
 
-    private fun requirePassword(override: String?): String {
-        return override ?: (state.value as? State.Ready)?.password
-        ?: error("EncryptionManager not initialized")
-    }
-
-    private fun getOrDeriveAesKey(fileName: String?, password: String, salt: ByteArray): SecretKey {
-        fileName ?: return deriveAesKey(password, salt)
-        val base64Salt = Base64.encode(salt)
-
-        return (state.value as? State.Ready)?.keyCache?.getOrPut("$fileName+$password+$base64Salt") {
-            deriveAesKey(password, salt)
-        } ?: error("EncryptionManager not initialized")
+    private fun requireKey(): SecretKey {
+        return (state.value as? State.Ready)?.key ?: error("EncryptionManager not initialized")
     }
 
     private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
@@ -158,16 +174,7 @@ class EncryptionManagerImpl @Inject constructor() : EncryptionManager {
         data object Error : State
 
         data class Ready(
-            val password: String,
-            val keyCache: MutableMap<String, SecretKey> = object : LinkedHashMap<String, SecretKey>(
-                KEY_CACHE_SIZE, 0.75f, true
-            ) {
-                override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, SecretKey>?): Boolean {
-                    return size > KEY_CACHE_SIZE
-                }
-            }
+            val key: SecretKey,
         ) : State
     }
 }
-
-private const val KEY_CACHE_SIZE = 500

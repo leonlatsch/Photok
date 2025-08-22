@@ -48,7 +48,6 @@ class AesDataSource(
         val file = File(uri.path!!).canonicalFile
         inputStream = encryptionManager.createCipherInputStream(
             input = file.inputStream(),
-            fileName = file.name,
         )
         if (dataSpec.position != 0L) {
             inputStream?.forceSkip(dataSpec.position)
