@@ -116,6 +116,7 @@ class MigrationService : Service() {
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
             .setContentTitle(getString(R.string.migration_running_title))
             .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.ic_database)
             .setOngoing(true)
             .build()
     }
