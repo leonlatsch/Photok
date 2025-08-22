@@ -20,9 +20,10 @@ import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.domain.BackupRepository
+import dev.leonlatsch.photok.backup.data.WritePhotoToZipEntryUseCase
 import dev.leonlatsch.photok.backup.domain.CreateBackupMetaFileUseCase
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
@@ -41,8 +42,9 @@ import javax.inject.Inject
 class BackupViewModel @Inject constructor(
     app: Application,
     private val photoRepository: PhotoRepository,
-    private val backupRepository: BackupRepository,
+    private val writePhotoToZipEntry: WritePhotoToZipEntryUseCase,
     private val createBackupMetaFile: CreateBackupMetaFileUseCase,
+    private val io: IO,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
@@ -53,12 +55,12 @@ class BackupViewModel @Inject constructor(
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
-        zipOutputStream = backupRepository.openBackupOutput(uri)
+        zipOutputStream = io.zip.openZipOutput(uri)
         super.preProcess()
     }
 
     override suspend fun processItem(item: Photo) {
-        backupRepository.writePhoto(item, zipOutputStream)
+        writePhotoToZipEntry(item, zipOutputStream)
             .onFailure {
                 Timber.e(it, "Error writing photo to backup")
                 failuresOccurred = true

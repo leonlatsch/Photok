@@ -19,21 +19,18 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.extensions.lazyClose
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class RestoreBackupV2 @Inject constructor(
     private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
-    private val backupRepository: BackupRepository,
+    private val io: IO,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
@@ -61,7 +58,7 @@ class RestoreBackupV2 @Inject constructor(
                 continue
             }
 
-            backupRepository.restoreZipEntry(encryptedZipInput, internalOutputStream)
+            io.copy(encryptedZipInput, internalOutputStream)
                 .onFailure {
                     Timber.e(it, "Error restoring zip entry: ${ze.name}")
                     errors++

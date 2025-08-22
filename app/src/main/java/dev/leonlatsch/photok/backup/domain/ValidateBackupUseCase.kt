@@ -18,15 +18,17 @@ package dev.leonlatsch.photok.backup.domain
 
 import android.net.Uri
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.domain.model.BackupFileDetails
+import dev.leonlatsch.photok.backup.data.ReadBackupMetadataUseCase
+import dev.leonlatsch.photok.model.io.IO
 import javax.inject.Inject
 
 class ValidateBackupUseCase @Inject constructor(
-    private val backupRepository: BackupRepository,
+    private val readBackupMetadata: ReadBackupMetadataUseCase,
+    private val io: IO,
 ) {
 
     suspend operator fun invoke(uri: Uri): Result<BackupValidation> {
-        val zipInputStream = backupRepository.openBackupInput(uri)
+        val zipInputStream = io.zip.openZipInput(uri)
 
         var files = 0
         var metaData: BackupMetaData? = null
@@ -35,7 +37,7 @@ class ValidateBackupUseCase @Inject constructor(
         var ze = zipInputStream.nextEntry
         while (ze != null) {
             if (ze.name == BackupMetaData.FILE_NAME) {
-                metaData = backupRepository.readBackupMetadata(zipInputStream)
+                metaData = readBackupMetadata(zipInputStream)
                 backupVersion = metaData.getBackupVersion()
             } else if (ze.name.endsWith(".photok")) {
                 files++
@@ -45,10 +47,13 @@ class ValidateBackupUseCase @Inject constructor(
         }
 
         return if (metaData != null && backupVersion != null && files > 0) {
-            val backupFileDetails = backupRepository.getBackupFileDetails(uri)
+            val fileName = io.getFileName(uri)
+            val fileSize = io.getFileSize(uri)
+
             val backupValidation = BackupValidation(
                 metaData = metaData,
-                backupFileDetails = backupFileDetails,
+                fileName = fileName.orEmpty(),
+                fileSize = fileSize,
             )
             Result.success(backupValidation)
         } else {
@@ -71,5 +76,6 @@ private fun BackupMetaData?.getBackupVersion(): Int {
 
 data class BackupValidation(
     val metaData: BackupMetaData,
-    val backupFileDetails: BackupFileDetails,
+    val fileName: String,
+    val fileSize: Long,
 )

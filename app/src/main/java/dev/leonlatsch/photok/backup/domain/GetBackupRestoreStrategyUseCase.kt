@@ -22,7 +22,7 @@ class GetBackupRestoreStrategyUseCase @Inject constructor(
     private val v1Strategy: RestoreBackupV1,
     private val v2Strategy: RestoreBackupV2,
     private val v3Strategy: RestoreBackupV3,
-    private val v4Strategy: RestoreBackupV3,
+    private val v4Strategy: RestoreBackupV4,
 ) {
     operator fun invoke(version: Int): RestoreBackupStrategy? {
         return when (version) {
