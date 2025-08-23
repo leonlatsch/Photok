@@ -28,6 +28,39 @@ import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
+/**
+ * Backup Format V4
+ *
+ *  A ZIP archive with the following structure:
+ *
+ *  ┌───────────────────────────────┐
+ *  │           backup.zip          │
+ *  ├───────────────────────────────┤
+ *  │ meta.json                     │
+ *  │   {                           │
+ *  │     "password": String,       │
+ *  │     "salt": String?,          │
+ *  │     "photos": [PhotoBackup],  │
+ *  │     "albums": [AlbumBackup],  │
+ *  │     "albumPhotoRefs":         │
+ *  │        [AlbumPhotoRefBackup], │
+ *  │     "createdAt": Long,        │
+ *  │     "backupVersion": Int      │
+ *  │   }                           │
+ *  │                               │
+ *  │ <uuid>.crypt                  │  ← Encrypted photo/video
+ *  │ <uuid>.crypt.tn               │  ← Encrypted thumbnail
+ *  │ <uuid>.crypt.vp               │  ← Encrypted video preview
+ *  │ ...                           │
+ *  └───────────────────────────────┘
+ *
+ * Notes:
+ *  - `password` and optional `salt` are used for decryption.
+ *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
+ *  - Each media file is identified by a UUID and encrypted.
+ *  - `createdAt` is the timestamp of backup creation.
+ *  - `backupVersion` must equal 4 for this format.
+ */
 class RestoreBackupV4 @Inject constructor(
     private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
@@ -44,6 +77,7 @@ class RestoreBackupV4 @Inject constructor(
         var errors = 0
 
         var ze = stream.nextEntry
+        val salt = Base64.decode(metaData.salt ?: error("Backup V4 requires salt"))
 
         while (ze != null) {
             if (ze.name == BackupMetaData.FILE_NAME) {
@@ -55,7 +89,7 @@ class RestoreBackupV4 @Inject constructor(
                 encryptionManager.createCipherInputStream(
                     input = stream,
                     password = originalPassword,
-                    salt = Base64.decode(metaData.salt ?: error("Backup V4 requires salt")),
+                    salt = salt,
                 )
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)

@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
+import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -27,6 +29,39 @@ import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
+/**
+ * Backup Format V3
+ *
+ *  A ZIP archive with the following structure:
+ *
+ *  ┌───────────────────────────────┐
+ *  │           backup.zip          │
+ *  ├───────────────────────────────┤
+ *  │ meta.json                     │
+ *  │   {                           │
+ *  │     "password": String,       │
+ *  │     "salt": String?,          │
+ *  │     "photos": [PhotoBackup],  │
+ *  │     "albums": [AlbumBackup],  │
+ *  │     "albumPhotoRefs":         │
+ *  │        [AlbumPhotoRefBackup], │
+ *  │     "createdAt": Long,        │
+ *  │     "backupVersion": Int      │
+ *  │   }                           │
+ *  │                               │
+ *  │ <uuid>.photok                 │  ← Encrypted photo/video
+ *  │ <uuid>.photok.tn              │  ← Encrypted thumbnail
+ *  │ <uuid>.photok.vp              │  ← Encrypted video preview
+ *  │ ...                           │
+ *  └───────────────────────────────┘
+ *
+ * Notes:
+ *  - `password` and optional `salt` are used for decryption.
+ *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
+ *  - Each media file is identified by a UUID and encrypted.
+ *  - File extension differs from V4: uses `.photok.*` instead of `.crypt.*`.
+ *  - `backupVersion` must equal 3 for this format.
+ */
 class RestoreBackupV3 @Inject constructor(
     private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
     private val encryptedStorageManager: EncryptedStorageManager,
@@ -52,7 +87,12 @@ class RestoreBackupV3 @Inject constructor(
             val encryptedZipInput =
                 legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
+                encryptedStorageManager.internalOpenEncryptedFileOutput(
+                    ze.name.replace(
+                        oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+                        newValue = PHOTOK_FILE_EXTENSION,
+                    )
+                )
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry

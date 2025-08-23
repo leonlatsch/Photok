@@ -116,11 +116,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
         }
 
         activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-        if (true) {
-            findNavController().navigate(R.id.action_setupFragment_to_encryptionMigrationFragment)
-        } else {
-            findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
-        }
+        findNavController().navigate(R.id.action_setupFragment_to_galleryFragment)
     }
 
     private fun enableOrDisableSetup() {

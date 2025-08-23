@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security
 
 import android.app.Application
+import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.settings.data.Config
@@ -56,7 +57,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val mutex = Mutex()
 
     fun migrationNeeded(): Boolean {
-        return app.fileList().any { it.contains("photok") }
+        return app.fileList().any { it.contains(LEGACY_PHOTOK_FILE_EXTENSION) }
     }
 
     suspend fun migrate() = mutex.withLock {
@@ -72,7 +73,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
         try {
             val legacyFiles = app.fileList()
-                .filter { it.contains("photok") && !it.startsWith(MIGRATIED_FILE_PREFIX) }
+                .filter { it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(MIGRATIED_FILE_PREFIX) }
 
             state.update {
                 LegacyEncryptionState.Running(
@@ -123,7 +124,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         for (file in migratedFile) {
             val targetFileName = file
                 .removePrefix(MIGRATIED_FILE_PREFIX)
-                .replace("photok", PHOTOK_FILE_EXTENSION)
+                .replace(LEGACY_PHOTOK_FILE_EXTENSION, PHOTOK_FILE_EXTENSION)
 
             encryptedStorageManager.renameFile(file, targetFileName)
         }

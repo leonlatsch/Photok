@@ -30,6 +30,34 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * Backup Format V1
+ *
+ *  A ZIP archive with the following structure:
+ *
+ *  ┌───────────────────────────────┐
+ *  │           backup.zip          │
+ *  ├───────────────────────────────┤
+ *  │ meta.json                     │
+ *  │   {                           │
+ *  │     "password": String,       │
+ *  │     "salt": String?,          │
+ *  │     "photos": [PhotoBackup],  │
+ *  │     "createdAt": Long,        │
+ *  │     "backupVersion": Int      │
+ *  │   }                           │
+ *  │                               │
+ *  │ <uuid>.photok                 │  ← Encrypted photo/video
+ *  │ ...                           │
+ *  └───────────────────────────────┘
+ *
+ * Notes:
+ *  - `password` and optional `salt` are used for decryption.
+ *  - Only `photos` are tracked (no albums or albumPhotoRefs).
+ *  - Media files are encrypted and stored as `<uuid>.photok`.
+ *  - No thumbnails (`.tn`) or video previews (`.vp`) in this version.
+ *  - `backupVersion` must equal 1 for this format.
+ */
 class RestoreBackupV1 @Inject constructor(
     private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
     private val photoRepository: PhotoRepository,
@@ -46,7 +74,7 @@ class RestoreBackupV1 @Inject constructor(
 
         while (ze != null) {
             val photoBackup = metaData.photos.find {
-                internalFileName(it.uuid) == ze.name
+                ze.name.contains(it.uuid)
             }
 
             if (photoBackup == null) {

@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.model.database.entity
 
 const val PHOTOK_FILE_EXTENSION = "crypt"
+const val LEGACY_PHOTOK_FILE_EXTENSION = "photok"
 
 /**
  * Get FileName for internal files and backup files.

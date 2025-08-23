@@ -81,7 +81,6 @@ class RestoreBackupViewModel @Inject constructor(
         }
 
     private lateinit var fileUri: Uri
-    private var backupVersion = -1
 
     /**
      * Load and Validate a backup file. Fill [metaData].
@@ -110,7 +109,7 @@ class RestoreBackupViewModel @Inject constructor(
         val zipInputStream = io.zip.openZipInput(fileUri)
         val metaData = metaData ?: error("meta.json was loaded without success")
 
-        val restoreStrategy = getRestoreStrategy(backupVersion) ?: error("Unknown backup version")
+        val restoreStrategy = getRestoreStrategy(metaData.backupVersion) ?: error("Unknown backup version")
         val result = restoreStrategy.restore(metaData, zipInputStream, origPassword)
         zipInputStream.close()
 

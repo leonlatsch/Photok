@@ -20,6 +20,7 @@ import android.content.Context
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
@@ -42,7 +43,7 @@ class LegacyBackupStrategyImpl @Inject constructor(
         zipOutputStream: ZipOutputStream
     ): Result<Unit> {
         context.fileList()
-            .filter { it.contains(photo.uuid) && it.contains("photok") }
+            .filter { it.contains(photo.uuid) && it.contains(LEGACY_PHOTOK_FILE_EXTENSION) }
             .map { it to encryptedStorageManager.internalOpenFileInput(it) }
             .forEach { file ->
                 val filename = file.first
