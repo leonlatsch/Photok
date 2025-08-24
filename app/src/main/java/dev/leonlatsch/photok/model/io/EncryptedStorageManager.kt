@@ -44,6 +44,14 @@ class EncryptedStorageManager @Inject constructor(
 
     // region internal
 
+    fun internalFileExists(fileName: String): Boolean {
+        return try {
+            app.openFileInput(fileName).use { true }
+        } catch (e: IOException) {
+            false
+        }
+    }
+
     /**
      * Opens a [CipherInputStream] for an internal file.
      */

@@ -27,8 +27,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 private const val MIGRATIED_FILE_PREFIX = ".migrated~"
 
@@ -73,7 +71,11 @@ class LegacyEncryptionMigrator @Inject constructor(
 
         try {
             val legacyFiles = app.fileList()
-                .filter { it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(MIGRATIED_FILE_PREFIX) }
+                .filter {
+                    it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(
+                        MIGRATIED_FILE_PREFIX
+                    )
+                }
 
             state.update {
                 LegacyEncryptionState.Running(
@@ -85,8 +87,8 @@ class LegacyEncryptionMigrator @Inject constructor(
             var processedFiles = 0
             var error: Throwable? = null
 
-            for (file in legacyFiles) {
-                migrateSingleFile(file)
+            for (legacyFile in legacyFiles) {
+                migrateSingleFile(legacyFile)
                     .onFailure {
                         error = it
                         break
@@ -95,8 +97,8 @@ class LegacyEncryptionMigrator @Inject constructor(
                 processedFiles++
 
                 state.update {
-                    (it as? LegacyEncryptionState.Running)?.copy(processedFiles = processedFiles)
-                        ?: it
+                    require(it is LegacyEncryptionState.Running)
+                    it.copy(processedFiles = processedFiles)
                 }
             }
 
@@ -118,7 +120,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
     }
 
-    private suspend fun postMigrate() = suspendCoroutine { continuation ->
+    private fun postMigrate() {
         val migratedFile = app.fileList().filter { it.contains(MIGRATIED_FILE_PREFIX) }
 
         for (file in migratedFile) {
@@ -130,39 +132,38 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
 
         config.legacyCurrentlyMigrating = false
-        continuation.resume(Unit)
     }
 
-    private suspend fun migrateSingleFile(fileName: String): Result<Unit> {
-        val migratedFile = "$MIGRATIED_FILE_PREFIX${fileName}"
+    private fun migrateSingleFile(legacyName: String): Result<Unit> = runCatching {
+        require(legacyName.contains(LEGACY_PHOTOK_FILE_EXTENSION)) { "Not legacy file" }
 
-        try {
-            encryptedStorageManager.internalDeleteFile(migratedFile)
+        val tmpName = "$MIGRATIED_FILE_PREFIX$legacyName"
+        val finalName = legacyName.replace(
+            oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+            newValue = PHOTOK_FILE_EXTENSION,
+        )
 
-            val origInput = app.openFileInput(fileName)
-            val legacyInputStream = legacyEncryptionManager.createCipherInputStream(
-                origInput,
-                null
-            ) ?: return Result.failure(Exception("Old output was null"))
-            val newOutputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(
-                migratedFile
-            ) ?: return Result.failure(Exception("New output was null"))
+        // Clean any stale temp from prior crashes
+        encryptedStorageManager.internalDeleteFile(tmpName)
 
+        app.openFileInput(legacyName).use { origInput ->
+            val legacyIn = legacyEncryptionManager.createCipherInputStream(
+                input = origInput,
+                password = null,
+            ) ?: error("Legacy cipher stream null")
 
-            suspendCoroutine { continuation ->
-                legacyInputStream.copyTo(newOutputStream)
-                legacyInputStream.close()
-                newOutputStream.close()
-
-                continuation.resume(Unit)
+            encryptedStorageManager.internalOpenEncryptedFileOutput(tmpName).use { newOut ->
+                requireNotNull(newOut) { "New output was null" }
+                legacyIn.use { it.copyTo(newOut) }
+                newOut.flush()
             }
-
-            encryptedStorageManager.internalDeleteFile(fileName)
-
-            return Result.success(Unit)
-        } catch (e: Exception) {
-            encryptedStorageManager.internalDeleteFile(migratedFile)
-            return Result.failure(e)
         }
+
+        // Finalize atomically: temp -> final (non-overwriting)
+        require(!encryptedStorageManager.internalFileExists(finalName)) { "Target exists: $finalName" }
+        encryptedStorageManager.renameFile(tmpName, finalName)
+
+        // Only now delete original
+        encryptedStorageManager.internalDeleteFile(legacyName)
     }
 }
