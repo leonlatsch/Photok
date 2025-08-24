@@ -18,8 +18,6 @@ package dev.leonlatsch.photok.security.migration
 
 import android.annotation.SuppressLint
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
@@ -33,8 +31,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.notifications.NotificationChannels
 import dev.leonlatsch.photok.notifications.createAllNotificationChannels
-import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
-import dev.leonlatsch.photok.security.LegacyEncryptionState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +26,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,7 +43,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
- val IconSize = 72.dp
+val IconSize = 72.dp
 
 @Composable
 fun EncryptionMigrationScreenMigrating(
@@ -83,7 +81,11 @@ fun EncryptionMigrationScreenMigrating(
                     )
 
                     Text(
-                        text = stringResource(R.string.migration_running_progress, uiState.processedFiles, uiState.totalFiles),
+                        text = stringResource(
+                            R.string.migration_running_progress,
+                            uiState.processedFiles,
+                            uiState.totalFiles
+                        ),
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 }

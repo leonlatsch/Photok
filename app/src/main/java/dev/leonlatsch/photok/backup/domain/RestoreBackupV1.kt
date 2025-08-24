@@ -18,12 +18,9 @@ package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
-import dev.leonlatsch.photok.model.database.entity.internalFileName
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject

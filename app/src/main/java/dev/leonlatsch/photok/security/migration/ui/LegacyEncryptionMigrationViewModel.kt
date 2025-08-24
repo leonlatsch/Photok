@@ -27,8 +27,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.sendEmail
-import dev.leonlatsch.photok.security.LegacyEncryptionMigrator
-import dev.leonlatsch.photok.security.LegacyEncryptionState
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionState
 import dev.leonlatsch.photok.security.migration.MigrationService
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -24,7 +24,7 @@ import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject

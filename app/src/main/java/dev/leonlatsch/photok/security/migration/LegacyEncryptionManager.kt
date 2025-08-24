@@ -14,14 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security
+package dev.leonlatsch.photok.security.migration
 
+import dev.leonlatsch.photok.security.EncryptionManager
 import jakarta.inject.Inject
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
-import java.lang.annotation.ElementType
-import java.lang.annotation.Target
 import java.nio.charset.StandardCharsets
 import java.security.GeneralSecurityException
 import java.security.MessageDigest
@@ -30,7 +29,6 @@ import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private const val SHA_256 = "SHA-256"

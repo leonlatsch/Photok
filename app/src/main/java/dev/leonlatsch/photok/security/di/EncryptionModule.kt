@@ -22,7 +22,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.EncryptionManagerImpl
-import dev.leonlatsch.photok.security.LegacyEncryptionManagerImpl
 import javax.inject.Singleton
 
 @Module
