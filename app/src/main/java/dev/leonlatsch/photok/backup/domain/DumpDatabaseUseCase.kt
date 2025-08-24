@@ -21,7 +21,6 @@ import dev.leonlatsch.photok.backup.data.toBackup
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.GetOrCreateUserSaltUseCase
-import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

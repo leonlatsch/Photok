@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
