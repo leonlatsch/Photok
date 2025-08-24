@@ -37,6 +37,7 @@
     <string name="common_create">Create</string>
     <string name="common_empty">Empty</string>
     <string name="common_rename">Rename</string>
+    <string name="common_try_again">Try again</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>

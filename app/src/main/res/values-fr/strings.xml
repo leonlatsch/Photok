@@ -38,6 +38,7 @@
     <string name="common_create">Créer</string>
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
+    <string name="common_try_again">Try again</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importation en cours</string>

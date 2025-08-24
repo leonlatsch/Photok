@@ -37,6 +37,7 @@
     <string name="common_create">Создать</string>
     <string name="common_empty">Пусто</string>
     <string name="common_rename">Переименовать</string>
+    <string name="common_try_again">Try again</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>

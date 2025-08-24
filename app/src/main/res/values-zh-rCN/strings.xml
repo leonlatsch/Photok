@@ -37,6 +37,7 @@
     <string name="common_create">创建</string>
     <string name="common_empty">空</string>
     <string name="common_rename">重命名</string>
+    <string name="common_try_again">Try again</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>

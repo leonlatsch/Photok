@@ -38,6 +38,7 @@
     <string name="common_create">Crear</string>
     <string name="common_empty">Vacío</string>
     <string name="common_rename">Renombrar</string>
+    <string name="common_try_again">Try again</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando foto(s)</string>

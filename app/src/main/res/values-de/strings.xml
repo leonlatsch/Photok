@@ -38,6 +38,7 @@
     <string name="common_create">Erstellen</string>
     <string name="common_empty">Leer</string>
     <string name="common_rename">Umbenennen</string>
+    <string name="common_try_again">Erneut versuchen</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
