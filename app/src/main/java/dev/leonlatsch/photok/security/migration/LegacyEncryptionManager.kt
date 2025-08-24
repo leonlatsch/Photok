@@ -29,11 +29,16 @@ import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private const val SHA_256 = "SHA-256"
 private const val AES = "AES"
 private const val AES_ALGORITHM = "AES/GCM/NoPadding"
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LegacyEncryptionManager
 
 @Singleton
 class LegacyEncryptionManagerImpl @Inject constructor(

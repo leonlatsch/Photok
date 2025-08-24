@@ -20,7 +20,8 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -56,7 +57,7 @@ import kotlin.coroutines.suspendCoroutine
  *  - `backupVersion` must equal 1 for this format.
  */
 class RestoreBackupV1 @Inject constructor(
-    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {

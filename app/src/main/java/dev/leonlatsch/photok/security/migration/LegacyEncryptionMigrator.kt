@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2022 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import android.app.Application
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -44,7 +45,7 @@ sealed interface LegacyEncryptionState {
 
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
-    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
     private val config: Config,

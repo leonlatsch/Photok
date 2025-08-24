@@ -23,7 +23,8 @@ import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -59,7 +60,7 @@ import javax.inject.Inject
  *  - `backupVersion` must equal 2 for this format.
  */
 class RestoreBackupV2 @Inject constructor(
-    private val legacyEncryptionManager: LegacyEncryptionManagerImpl,
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val io: IO,
