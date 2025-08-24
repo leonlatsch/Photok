@@ -53,6 +53,10 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
+## Related Tools
+
+[![RecWare-Photok](https://github-readme-stats.vercel.app/api/pin/?username=Blk-S-Bellamy&repo=RecWare-Photok&show_owner=true&theme=transparent)](https://github.com/Blk-S-Bellamy/RecWare-Photok)
+
 LICENSE
 =======
     Copyright 2020-2025 Leon Latsch
