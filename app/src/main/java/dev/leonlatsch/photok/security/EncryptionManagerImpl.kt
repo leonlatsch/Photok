@@ -124,7 +124,6 @@ class EncryptionManagerImpl @Inject constructor(
             return CipherInputStream(input, cipher)
         } catch (e: Exception) {
             Timber.d("Error creating CipherInputStream: $e")
-            if (BuildConfig.DEBUG) throw RuntimeException(e)
             return null
         }
     }
