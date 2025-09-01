@@ -27,7 +27,6 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
  */
 data class BackupMetaData(
     @Expose val password: String,
-    @Expose val salt: String?,
     @Expose val photos: List<PhotoBackup>,
     @Expose val albums: List<AlbumBackup>,
     @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,

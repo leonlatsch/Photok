@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -39,7 +38,7 @@ import kotlin.io.encoding.Base64
 
 private const val ENC_VERSION_BYTE: Byte = 0x01
 private const val IV_SIZE = 16
-private const val SALT_SIZE = 16
+const val SALT_SIZE = 16
 private const val KEY_SIZE = 256
 private const val ITERATION_COUNT = 100_000
 private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
@@ -48,33 +47,25 @@ private const val ALGORITHM = "AES"
 
 // FORMAT: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
 
-class GetOrCreateUserSaltUseCase @Inject constructor(
-    private val config: Config
-) {
-    operator fun invoke(): ByteArray {
-        val storedSalt = config.userSalt
-
-        return if (storedSalt != null) {
-            Base64.decode(storedSalt)
-        } else {
-            val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-            config.userSalt = Base64.encode(salt)
-            salt
-        }
-    }
-}
-
 
 @Singleton
 class EncryptionManagerImpl @Inject constructor(
     private val getOrCreateUserSalt: GetOrCreateUserSaltUseCase
 ) : EncryptionManager {
 
+    private val keyCache = mutableMapOf<String, SecretKey>()
+
     private val state: MutableStateFlow<State> =
         MutableStateFlow(State.Initial)
 
     override val isReady: Boolean
         get() = state.value is State.Ready
+
+    override var keyCacheEnabled: Boolean = false
+        set(value) {
+            keyCache.clear()
+            field = value
+        }
 
     override fun initialize(password: String) {
         if (password.length < 6) {
@@ -95,27 +86,28 @@ class EncryptionManagerImpl @Inject constructor(
 
     override fun reset() {
         state.update { State.Initial }
+        keyCache.clear()
     }
 
     override fun createCipherInputStream(
         input: InputStream,
         password: String?,
-        salt: ByteArray?,
     ): CipherInputStream? {
-        val key = if (password != null && salt != null) {
-            deriveAesKey(password, salt)
-        } else {
-            requireKey()
-        }
-
         try {
             val version = input.read().toByte()
             if (version != ENC_VERSION_BYTE) throw IllegalArgumentException("Unsupported version")
 
             val iv = ByteArray(IV_SIZE)
+            val salt = ByteArray(SALT_SIZE)
 
-            input.skip(SALT_SIZE.toLong())
+            input.read(salt, 0, salt.size)
             input.read(iv, 0, iv.size)
+
+            val key = if (password != null) {
+                deriveAesKey(password, salt)
+            } else {
+                requireKey()
+            }
 
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
@@ -130,17 +122,17 @@ class EncryptionManagerImpl @Inject constructor(
     override fun createCipherOutputStream(
         output: OutputStream,
         password: String?,
-        salt: ByteArray?,
     ): CipherOutputStream? {
-        val key = if (password != null && salt != null) {
-            deriveAesKey(password, salt)
-        } else {
-            requireKey()
-        }
 
         try {
             val salt = getOrCreateUserSalt()
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
+
+            val key = if (password != null) {
+                deriveAesKey(password, salt)
+            } else {
+                requireKey()
+            }
 
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
@@ -161,10 +153,21 @@ class EncryptionManagerImpl @Inject constructor(
     }
 
     private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
+        if (keyCacheEnabled) {
+            val hash = "${password}_${Base64.encode(salt)}"
+            keyCache[hash]?.let { return it }
+        }
+
         val factory = SecretKeyFactory.getInstance(FULL_ALGORITHM)
         val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
         val keyBytes = factory.generateSecret(spec).encoded
-        return SecretKeySpec(keyBytes, ALGORITHM)
+
+        return SecretKeySpec(keyBytes, ALGORITHM).also {
+            if (keyCacheEnabled) {
+                val hash = "${password}_${Base64.encode(salt)}"
+                keyCache[hash] = it
+            }
+        }
     }
 
     private sealed interface State {

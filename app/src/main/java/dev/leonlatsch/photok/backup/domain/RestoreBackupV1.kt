@@ -39,7 +39,6 @@ import kotlin.coroutines.suspendCoroutine
  *  │ meta.json                     │
  *  │   {                           │
  *  │     "password": String,       │
- *  │     "salt": String?,          │
  *  │     "photos": [PhotoBackup],  │
  *  │     "createdAt": Long,        │
  *  │     "backupVersion": Int      │
@@ -50,7 +49,7 @@ import kotlin.coroutines.suspendCoroutine
  *  └───────────────────────────────┘
  *
  * Notes:
- *  - `password` and optional `salt` are used for decryption.
+ *  - `password` is used to check before decryption.
  *  - Only `photos` are tracked (no albums or albumPhotoRefs).
  *  - Media files are encrypted and stored as `<uuid>.photok`.
  *  - No thumbnails (`.tn`) or video previews (`.vp`) in this version.

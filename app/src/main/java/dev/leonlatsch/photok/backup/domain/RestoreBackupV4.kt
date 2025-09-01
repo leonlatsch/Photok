@@ -39,7 +39,6 @@ import kotlin.io.encoding.Base64
  *  │ meta.json                     │
  *  │   {                           │
  *  │     "password": String,       │
- *  │     "salt": String?,          │
  *  │     "photos": [PhotoBackup],  │
  *  │     "albums": [AlbumBackup],  │
  *  │     "albumPhotoRefs":         │
@@ -55,7 +54,7 @@ import kotlin.io.encoding.Base64
  *  └───────────────────────────────┘
  *
  * Notes:
- *  - `password` and optional `salt` are used for decryption.
+ *  - `password` is used to check before decryption.
  *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
  *  - Each media file is identified by a UUID and encrypted.
  *  - `createdAt` is the timestamp of backup creation.
@@ -74,10 +73,13 @@ class RestoreBackupV4 @Inject constructor(
         stream: ZipInputStream,
         originalPassword: String
     ): RestoreResult {
+        val start = System.currentTimeMillis()
+
         var errors = 0
 
         var ze = stream.nextEntry
-        val salt = Base64.decode(metaData.salt ?: error("Backup V4 requires salt"))
+
+        encryptionManager.keyCacheEnabled = true
 
         while (ze != null) {
             if (ze.name == BackupMetaData.FILE_NAME) {
@@ -89,7 +91,6 @@ class RestoreBackupV4 @Inject constructor(
                 encryptionManager.createCipherInputStream(
                     input = stream,
                     password = originalPassword,
-                    salt = salt,
                 )
             val internalOutputStream =
                 encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
@@ -109,6 +110,8 @@ class RestoreBackupV4 @Inject constructor(
             ze = stream.nextEntry
         }
 
+        encryptionManager.keyCacheEnabled = false
+
         metaData.photos.forEach { photoBackup ->
             val newPhoto = photoBackup
                 .toDomain()
@@ -126,6 +129,8 @@ class RestoreBackupV4 @Inject constructor(
             val albumPhotoRef = albumPhotoRefBackup.toDomain()
             albumRepository.link(albumPhotoRef)
         }
+
+        Timber.d("PERFORMANCE: Restore backup took ${System.currentTimeMillis() - start}ms")
 
         return RestoreResult(errors)
     }

@@ -41,7 +41,6 @@ import javax.inject.Inject
  *  │ meta.json                     │
  *  │   {                           │
  *  │     "password": String,       │
- *  │     "salt": String?,          │
  *  │     "photos": [PhotoBackup],  │
  *  │     "albums": [AlbumBackup],  │
  *  │     "albumPhotoRefs":         │
@@ -57,7 +56,7 @@ import javax.inject.Inject
  *  └───────────────────────────────┘
  *
  * Notes:
- *  - `password` and optional `salt` are used for decryption.
+ *  - `password` is used to check before decryption.
  *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
  *  - Each media file is identified by a UUID and encrypted.
  *  - File extension differs from V4: uses `.photok.*` instead of `.crypt.*`.

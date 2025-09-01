@@ -41,13 +41,15 @@ private const val AES_ALGORITHM = "AES/GCM/NoPadding"
 annotation class LegacyEncryptionManager
 
 @Singleton
-class LegacyEncryptionManagerImpl @Inject constructor(
-) : EncryptionManager {
+class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
 
     private var key: SecretKeySpec? = null
     private var iv: IvParameterSpec? = null
 
     override var isReady: Boolean = false
+
+    @Deprecated("Legacy encryption manager does not support key caching")
+    override var keyCacheEnabled: Boolean = false
 
     override fun initialize(password: String) {
         if (password.length < 6) {
@@ -74,7 +76,6 @@ class LegacyEncryptionManagerImpl @Inject constructor(
     override fun createCipherInputStream(
         input: InputStream,
         password: String?,
-        salt: ByteArray?,
     ): CipherInputStream? {
         val key: SecretKeySpec
         val iv: IvParameterSpec
@@ -97,7 +98,6 @@ class LegacyEncryptionManagerImpl @Inject constructor(
     override fun createCipherOutputStream(
         output: OutputStream,
         password: String?,
-        salt: ByteArray?,
     ): CipherOutputStream? {
         val key: SecretKeySpec
         val iv: IvParameterSpec

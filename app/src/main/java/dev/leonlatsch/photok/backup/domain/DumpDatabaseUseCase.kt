@@ -32,18 +32,14 @@ import kotlin.io.encoding.Base64
 class DumpDatabaseUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val getOrCreateUserSalt: GetOrCreateUserSaltUseCase,
-){
+) {
     suspend operator fun invoke(password: String, version: Int): BackupMetaData = withContext(Dispatchers.IO) {
         val photos = photoRepository.getAll().map { it.toBackup() }
         val albums = albumRepository.getAlbums().map { it.toBackup() }
         val albumPhotoLinks = albumRepository.getAllAlbumPhotoLinks().map { it.toBackup() }
 
-        val userSalt = getOrCreateUserSalt()
-
         BackupMetaData(
             password = password,
-            salt = Base64.encode(userSalt),
             photos = photos,
             albums = albums,
             albumPhotoRefs = albumPhotoLinks,

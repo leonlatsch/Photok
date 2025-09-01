@@ -40,7 +40,6 @@ import javax.inject.Inject
  *  │ meta.json                     │
  *  │   {                           │
  *  │     "password": String,       │
- *  │     "salt": String?,          │
  *  │     "photos": [PhotoBackup],  │
  *  │     "createdAt": Long,        │
  *  │     "backupVersion": Int      │
@@ -53,7 +52,7 @@ import javax.inject.Inject
  *  └───────────────────────────────┘
  *
  * Notes:
- *  - `password` and optional `salt` are used for decryption.
+ *  - `password` is used to check before decryption.
  *  - Only `photos` are tracked (no album or albumPhotoRefs yet).
  *  - Each media file is identified by a UUID and encrypted.
  *  - File extension matches V3: `.photok.*`.
