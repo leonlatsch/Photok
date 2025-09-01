@@ -102,6 +102,14 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
                 viewModel.onDestinationChanged(destination.id)
             }
+
+            onBackPressedDispatcher.addCallback {
+                if (navController.currentDestination?.id == R.id.galleryFragment) {
+                    finish()
+                } else {
+                    navController.navigateUp()
+                }
+            }
         }
     }
 

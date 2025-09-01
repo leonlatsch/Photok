@@ -45,9 +45,46 @@ private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
 private const val ALGORITHM = "AES"
 
 
-// FORMAT: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
-
-
+/**
+ * Encryption Format V1
+ *
+ *  Each encrypted file/stream follows the structure:
+ *
+ *  ┌───────────────────────────────┐
+ *  │         Encrypted Data        │
+ *  ├───────────────────────────────┤
+ *  │ ENC_VERSION_BYTE (1 byte)     │  ← Format version, must equal 0x01
+ *  │ SALT (16 bytes)               │  ← Random salt for PBKDF2
+ *  │ IV (16 bytes)                 │  ← Initialization vector for AES
+ *  │ ENCRYPTED_DATA (N bytes)      │  ← AES-256-CBC/PKCS7 encrypted payload
+ *  └───────────────────────────────┘
+ *
+ * Short: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
+ *
+ * Notes:
+ *  - Key Derivation:
+ *      • Algorithm: PBKDF2WithHmacSHA256
+ *      • Iterations: 100,000
+ *      • Key Size: 256 bits
+ *  - Encryption:
+ *      • Algorithm: AES
+ *      • Mode: CBC
+ *      • Padding: PKCS7
+ *  - Password Handling:
+ *      • A user-supplied password (≥ 6 characters) is combined with a
+ *        per-user salt to derive the AES key.
+ *      • If no password is provided, the cached/initialized key is required.
+ *  - Caching:
+ *      • Derived keys can be cached in-memory (configurable).
+ *      • Cache is cleared when disabled or when the manager is reset.
+ *  - Error Handling:
+ *      • Initialization fails if password is too short (<6) or if key derivation fails.
+ *      • Unsupported version bytes cause decryption errors.
+ *
+ * Versioning:
+ *  - This format is defined as version 1 (ENC_VERSION_BYTE = 0x01).
+ *  - Future formats must increment the version byte and adjust parsing accordingly.
+ */
 @Singleton
 class EncryptionManagerImpl @Inject constructor(
     private val getOrCreateUserSalt: GetOrCreateUserSaltUseCase

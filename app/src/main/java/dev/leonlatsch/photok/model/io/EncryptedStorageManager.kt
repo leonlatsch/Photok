@@ -121,7 +121,7 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Rename a file in internal storage.
      */
-    fun renameFile(currentFileName: String, newFileName: String): Boolean {
+    fun internalRenameFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
@@ -146,7 +146,7 @@ class EncryptedStorageManager @Inject constructor(
         var success = bytesCopied > 0
 
         success = success && internalDeleteFile(fileName)
-        success = success && renameFile(tmpFileName, fileName)
+        success = success && internalRenameFile(tmpFileName, fileName)
 
         return success
     }

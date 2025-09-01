@@ -129,7 +129,7 @@ class LegacyEncryptionMigrator @Inject constructor(
                 .removePrefix(MIGRATIED_FILE_PREFIX)
                 .replace(LEGACY_PHOTOK_FILE_EXTENSION, PHOTOK_FILE_EXTENSION)
 
-            encryptedStorageManager.renameFile(file, targetFileName)
+            encryptedStorageManager.internalRenameFile(file, targetFileName)
         }
 
         config.legacyCurrentlyMigrating = false
@@ -162,7 +162,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
         // Finalize atomically: temp -> final (non-overwriting)
         require(!encryptedStorageManager.internalFileExists(finalName)) { "Target exists: $finalName" }
-        encryptedStorageManager.renameFile(tmpName, finalName)
+        encryptedStorageManager.internalRenameFile(tmpName, finalName)
 
         // Only now delete original
         encryptedStorageManager.internalDeleteFile(legacyName)
