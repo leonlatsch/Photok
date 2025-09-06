@@ -63,7 +63,11 @@ class MigrationService : Service() {
 
     override fun onTimeout(startId: Int) {
         super.onTimeout(startId)
+        val timeoutNotification = createErrorNotification()
+        postNotification(timeoutNotification)
+
         supervisorJob.cancel()
+        stopSelf()
     }
 
     @SuppressLint("InlinedApi")
@@ -139,12 +143,12 @@ class MigrationService : Service() {
             .build()
     }
 
-    private fun createErrorNotification(error: Throwable): Notification {
+    private fun createErrorNotification(error: Throwable? = null): Notification {
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
-            .setContentTitle(error.message ?: resources.getString(R.string.common_error))
+            .setContentTitle(error?.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
             .setContentIntent(pendingIntent)
             .setOngoing(false)
