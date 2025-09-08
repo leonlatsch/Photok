@@ -262,8 +262,8 @@
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NUEVO: Menú de importación</string>
-    <string name="news_summary_1">El nuevo menú de importación te permitirá importar imágenes y videos al mismo tiempo</string>
+    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
+    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
 
     <string name="news_title_2">NUEVO: Donaciones</string>
     <string name="news_summary_2">Ver el botón "Donar" en la configuración para apoyar Photok</string>

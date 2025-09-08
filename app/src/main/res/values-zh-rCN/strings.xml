@@ -260,8 +260,8 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">新：导入菜单</string>
-    <string name="news_summary_1">新的导入菜单， 允许一并导入图片和视频文件</string>
+    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
+    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
 
     <string name="news_title_2">新：捐赠</string>
     <string name="news_summary_2">查看设置中的“捐赠”按钮来支持 Photok</string>
