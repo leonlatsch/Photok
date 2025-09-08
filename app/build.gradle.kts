@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.0"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.10"
 }
 
 val appVersionName: String by project
@@ -73,8 +73,8 @@ licenseReport {
 
 dependencies {
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.3")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -93,8 +93,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.3")
 
     // Navigation Components
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.3")
@@ -107,12 +107,12 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Dagger Core
-    implementation("com.google.dagger:dagger:2.57")
-    kapt("com.google.dagger:dagger-compiler:2.57")
+    implementation("com.google.dagger:dagger:2.57.1")
+    kapt("com.google.dagger:dagger-compiler:2.57.1")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.57")
-    kapt("com.google.dagger:hilt-android-compiler:2.57")
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.57.1")
 
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
@@ -120,7 +120,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.10.1")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2025.07.00"))
+    implementation(platform("androidx.compose:compose-bom:2025.08.01"))
     implementation("androidx.compose.material3:material3:1.3.2")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.activity:activity-compose")
@@ -150,7 +150,7 @@ dependencies {
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.activity:activity:1.10.1")
