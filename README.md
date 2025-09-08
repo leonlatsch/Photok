@@ -40,15 +40,15 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-80%25-yellow)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-80%25-yellow)
-![French](https://img.shields.io/badge/French-95%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-73%25-orange)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-91%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-73%25-orange)
+![French](https://img.shields.io/badge/French-87%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-78%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-95%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
-![Turkish](https://img.shields.io/badge/Turkish-95%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-71%25-orange)
+![Russian](https://img.shields.io/badge/Russian-86%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-91%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-86%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
