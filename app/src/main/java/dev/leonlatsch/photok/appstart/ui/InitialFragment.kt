@@ -14,15 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.splashscreen.ui
+package dev.leonlatsch.photok.appstart.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 
 /**
@@ -32,23 +33,25 @@ import dev.leonlatsch.photok.R
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
+class InitialFragment : Fragment() {
 
-    private val viewModel: SplashScreenViewModel by viewModels()
+    private val viewModel: InitialViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.addOnPropertyChange<AppStartState>(BR.appStartState) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewModel.checkApplicationState {
             when (it) {
-                AppStartState.FIRST_START -> navigate(R.id.action_splashScreenFragment_to_onBoardingFragment)
-                AppStartState.SETUP -> navigate(R.id.action_splashScreenFragment_to_setupFragment)
-                AppStartState.LOCKED -> navigate(R.id.action_splashScreenFragment_to_unlockFragment)
+                AppStartState.FIRST_START -> navigate(R.id.action_initialFragment_to_onBoardingFragment)
+                AppStartState.SETUP -> navigate(R.id.action_initialFragment_to_setupFragment)
+                AppStartState.LOCKED -> navigate(R.id.action_initialFragment_to_unlockFragment)
             }
         }
-        viewModel.checkApplicationState()
-    }
 
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     private fun navigate(fragment: Int) {
         findNavController().navigate(fragment)

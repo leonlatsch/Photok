@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2024 Leon Latsch
+ *   Copyright 2020-2021 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,19 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.di
+package dev.leonlatsch.photok.appstart.ui
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dev.leonlatsch.photok.backup.data.BackupRepositoryImpl
-import dev.leonlatsch.photok.backup.domain.BackupRepository
-
-@InstallIn(SingletonComponent::class)
-@Module
-interface BackupModule {
-
-    @Binds
-    fun bindBackupRepository(impl: BackupRepositoryImpl): BackupRepository
+/**
+ * Enum class to indicate application state.
+ * Used in Splash Screen.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+enum class AppStartState {
+    FIRST_START,
+    LOCKED,
+    SETUP
 }

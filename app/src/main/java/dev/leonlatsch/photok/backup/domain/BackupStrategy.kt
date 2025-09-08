@@ -16,28 +16,22 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import android.net.Uri
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.domain.model.BackupFileDetails
 import dev.leonlatsch.photok.model.database.entity.Photo
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
-interface BackupRepository {
-    suspend fun openBackupInput(uri: Uri): ZipInputStream
-    suspend fun openBackupOutput(uri: Uri): ZipOutputStream
-    suspend fun writePhoto(photo: Photo, zipOutputStream: ZipOutputStream): Result<Unit>
-    suspend fun writeBackupMetadata(
-        backupMetaData: BackupMetaData,
+interface BackupStrategy {
+
+    enum class Name {
+        Default,
+        Legacy;
+    }
+
+    suspend fun writePhotoToBackup(
+        photo: Photo,
         zipOutputStream: ZipOutputStream,
     ): Result<Unit>
 
-    suspend fun readBackupMetadata(zipInputStream: ZipInputStream, ): BackupMetaData
-    suspend fun getBackupFileDetails(uri: Uri): BackupFileDetails
-    suspend fun restoreZipEntry(
-        encryptedZipInput: InputStream,
-        internalOutputStream: OutputStream
+    suspend fun createMetaFileInBackup(
+        zipOutputStream: ZipOutputStream
     ): Result<Unit>
 }

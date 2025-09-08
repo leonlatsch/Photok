@@ -16,14 +16,12 @@
 
 package dev.leonlatsch.photok.settings.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
-import android.view.WindowInsets
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
@@ -36,11 +34,13 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.settings.data.Config
@@ -48,8 +48,11 @@ import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import timber.log.Timber
 import javax.inject.Inject
+
+fun createBackupFilename(): String {
+    return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
+}
 
 /**
  * Preference Fragment. Loads preferences from xml resource.
@@ -66,7 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val createBackupLauncher =
         registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
             uri ?: return@registerForActivityResult
-            BackupBottomSheetDialogFragment(uri).show(requireActivity().supportFragmentManager)
+            BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(requireActivity().supportFragmentManager)
         }
 
     @Inject
@@ -121,11 +124,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
         addActionTo(KEY_ACTION_BACKUP) {
-            val fileName =
-                "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
-
             createBackupLauncher.launchAndIgnoreTimer(
-                input = fileName,
+                input = createBackupFilename(),
                 activity = activity,
             )
         }
@@ -138,19 +138,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val text = getString(R.string.settings_other_feedback_mail_body)
 
         addActionTo(KEY_ACTION_FEEDBACK) {
-            val emailIntent = Intent(
-                Intent.ACTION_SENDTO,
-                Uri.parse("mailto:$email?subject=$subject&body=$text")
-            ).apply {
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-                putExtra(Intent.EXTRA_SUBJECT, subject)
-                putExtra(Intent.EXTRA_TEXT, text)
-            }
-            startActivity(
-                Intent.createChooser(
-                    emailIntent,
-                    getString(R.string.settings_other_feedback_title)
-                )
+            context?.sendEmail(
+                email = email,
+                subject = subject,
+                text = text,
+                chooserTitle = getString(R.string.settings_other_feedback_title)
             )
         }
 

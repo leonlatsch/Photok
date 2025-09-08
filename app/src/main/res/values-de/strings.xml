@@ -38,6 +38,7 @@
     <string name="common_create">Erstellen</string>
     <string name="common_empty">Leer</string>
     <string name="common_rename">Umbenennen</string>
+    <string name="common_try_again">Erneut versuchen</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
@@ -277,4 +278,32 @@
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>
     <string name="recovery_menu_item_open_photok">Photok Öffnen</string>
     <string name="recovery_subtitle_reset_hide_app">App Verstecken Einstellung zurücksetzen</string>
+
+    <!-- Migration -->
+    <string name="migration_initial_title_welcome">Willkommen bei</string>
+    <string name="migration_initial_explaination">Diese Version von Photok führt eine neue Verschlüsselungsmethode ein. Um zu deiner Galerie zu gelangen, ist eine Migration erforderlich.</string>
+    <string name="migration_initial_button">Los geht’s</string>
+
+    <string name="migration_initial_stage_backup_checklist">Sichere deine Daten</string>
+    <string name="migration_initial_stage_backup_explanation">Erstelle eine Sicherung deiner Daten, bevor du fortfährst</string>
+    <string name="migration_initial_stage_backup_button">Sicherung erstellen</string>
+
+    <string name="migration_initial_stage_permission_checklist">Berechtigung erteilen</string>
+    <string name="migration_initial_stage_permission_explanation">Bitte erteile die Benachrichtigungsberechtigung, damit die Migration zuverlässig im Hintergrund ausgeführt werden kann.</string>
+    <string name="migration_initial_stage_permission_button">Berechtigung erteilen</string>
+
+    <string name="migration_initial_stage_ready_explanation">Alles ist bereit</string>
+    <string name="migration_initial_stage_ready_button">Migration starten</string>
+
+    <string name="migration_running_title">Galerie wird migriert</string>
+    <string name="migration_running_progress">%d von %d Dateien verarbeitet</string>
+    <string name="migration_running_advice">Du kannst diesen Bildschirm verlassen, während die Migration läuft</string>
+
+    <string name="migration_done_title">Galerie-Migration abgeschlossen</string>
+    <string name="migration_done_progress">Alle Dateien migriert</string>
+
+    <string name="migration_error_title">Fehler bei der Migration deiner Galerie</string>
+    <string name="migration_error_button">Fehlerbericht senden</string>
+
+    <string name="notification_channel_background_tasks">Hintergrundprozesse</string>
 </resources>

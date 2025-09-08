@@ -14,19 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.domain
+package dev.leonlatsch.photok.other
 
-import dev.leonlatsch.photok.settings.data.Config
-import java.util.zip.ZipOutputStream
-import javax.inject.Inject
+import android.app.Activity
+import androidx.core.app.ActivityCompat
 
-class CreateBackupMetaFileUseCase @Inject constructor(
-    private val dumpDatabaseUseCase: DumpDatabaseUseCase,
-    private val backupRepository: BackupRepository,
-    private val config: Config,
-){
-    suspend operator fun invoke(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val dump = dumpDatabaseUseCase(config.securityPassword!!)
-        return backupRepository.writeBackupMetadata(dump, zipOutputStream)
-    }
+fun Activity.requestInSettings(permission: String): Boolean {
+    return ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
 }
