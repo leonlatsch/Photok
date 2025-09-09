@@ -260,8 +260,8 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
-    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
+    <string name="news_title_1">Enhanced Encryption</string>
+    <string name="news_summary_1">改进的加密方法极大提升安全性和效率</string>
 
     <string name="news_title_2">新：捐赠</string>
     <string name="news_summary_2">查看设置中的“捐赠”按钮来支持 Photok</string>
@@ -279,30 +279,30 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">欢迎来到</string>
+    <string name="migration_initial_explaination">此版 Photok 引入新的加密方法。为了继续使用现有图库，需要进行迁移。</string>
+    <string name="migration_initial_button">开始</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">备份数据</string>
+    <string name="migration_initial_stage_backup_explanation">继续前创建数据备份</string>
+    <string name="migration_initial_stage_backup_button">创建备份</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">授予权限</string>
+    <string name="migration_initial_stage_permission_explanation">请授予通知权限以可靠地在后台运行迁移</string>
+    <string name="migration_initial_stage_permission_button">授予权限</string> <!-- TODO -->
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">准备好了</string>
+    <string name="migration_initial_stage_ready_button">开始迁移</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">You may leave this screen while the migration is running</string> <!-- TODO -->
+    <string name="migration_running_title">迁移图库</string>
+    <string name="migration_running_progress">已经处理了 %d 个文件中的 %d 个</string>
+    <string name="migration_running_advice">迁移运行时你可以离开此屏幕</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">图库迁移完毕</string>
+    <string name="migration_done_progress">所有文件以迁移</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">迁移图库时出错</string>
+    <string name="migration_error_button">发送错误报告</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">后台任务</string>
 </resources>
