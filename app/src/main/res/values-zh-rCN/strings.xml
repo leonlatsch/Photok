@@ -37,7 +37,7 @@
     <string name="common_create">创建</string>
     <string name="common_empty">空</string>
     <string name="common_rename">重命名</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">重试</string>
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
@@ -289,7 +289,7 @@
 
     <string name="migration_initial_stage_permission_checklist">授予权限</string>
     <string name="migration_initial_stage_permission_explanation">请授予通知权限以可靠地在后台运行迁移</string>
-    <string name="migration_initial_stage_permission_button">授予权限</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_button">授予权限</string>
 
     <string name="migration_initial_stage_ready_explanation">准备好了</string>
     <string name="migration_initial_stage_ready_button">开始迁移</string>
