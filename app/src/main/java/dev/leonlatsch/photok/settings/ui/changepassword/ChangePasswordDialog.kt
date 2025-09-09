@@ -102,6 +102,7 @@ class ChangePasswordDialog :
             getString(R.string.change_password_confirm_message)
         ) { _, _ ->
             ReEncryptBottomSheetDialogFragment(
+                viewModel.oldPassword,
                 viewModel.newPassword
             ).show(requireActivity().supportFragmentManager)
             dismiss()

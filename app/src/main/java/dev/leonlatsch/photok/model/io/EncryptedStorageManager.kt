@@ -130,11 +130,11 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Re-encrypt a file with a new password.
      */
-    fun reEncryptFile(fileName: String, password: String): Boolean {
+    fun reEncryptFile(fileName: String, oldPassword: String): Boolean {
         val tmpFileName = ".tmp~$fileName"
 
-        val origInput = internalOpenEncryptedFileInput(fileName)
-        val tmpOutput = internalOpenEncryptedFileOutput(tmpFileName, password)
+        val origInput = internalOpenEncryptedFileInput(fileName, oldPassword)
+        val tmpOutput = internalOpenEncryptedFileOutput(tmpFileName)
 
         origInput ?: return false
         tmpOutput ?: return false
