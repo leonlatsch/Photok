@@ -41,7 +41,7 @@ Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-73%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-90%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 ![Dutch](https://img.shields.io/badge/Dutch-73%25-orange)
 ![French](https://img.shields.io/badge/French-87%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
