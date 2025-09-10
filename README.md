@@ -32,8 +32,9 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 [<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" 
       alt="Get it on GitHub" 
       height="80">](https://github.com/leonlatsch/Photok/releases/latest)
-
-Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)**
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" 
+      alt="Get it on IzzyOnDroid" 
+      height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1UPJIV)
 
