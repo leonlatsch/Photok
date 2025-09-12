@@ -37,6 +37,7 @@ class PasswordManager @Inject constructor(
     fun storePassword(password: String) {
         val hashedPw = BCrypt.hashpw(password, BCrypt.gensalt())
         config.securityPassword = hashedPw
+        config.userSalt = null
     }
 
     /**

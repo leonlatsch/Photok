@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
  */
 @AndroidEntryPoint
 class ReEncryptBottomSheetDialogFragment(
+    private val oldPassword: String,
     private val newPassword: String,
 ) : BaseProcessBottomSheetDialogFragment<Photo>(
     null,
@@ -42,6 +43,7 @@ class ReEncryptBottomSheetDialogFragment(
 
     override fun prepareViewModel(items: List<Photo>?) {
         super.prepareViewModel(items)
+        viewModel.oldPassword = oldPassword
         viewModel.newPassword = newPassword
     }
 }
