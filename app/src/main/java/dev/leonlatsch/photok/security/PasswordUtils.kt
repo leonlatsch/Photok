@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security
 
 import androidx.lifecycle.LiveData
+import dev.leonlatsch.photok.security.PasswordUtils.PASSWORD_MIN_LENGTH
 
 /**
  * Utils to validate passwords.

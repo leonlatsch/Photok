@@ -32,26 +32,31 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 [<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" 
       alt="Get it on GitHub" 
       height="80">](https://github.com/leonlatsch/Photok/releases/latest)
-
-Also available at **[IzzyOnDroid (F-Droid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)**
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" 
+      alt="Get it on IzzyOnDroid" 
+      height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1UPJIV)
 
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-80%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-73%25-orange)
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-80%25-yellow)
-![French](https://img.shields.io/badge/French-95%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-73%25-orange)
+![French](https://img.shields.io/badge/French-87%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-78%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-95%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-95%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-95%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-71%25-orange)
+![Russian](https://img.shields.io/badge/Russian-86%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-90%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-86%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
+
+## Related Tools
+
+[![RecWare-Photok](https://github-readme-stats.vercel.app/api/pin/?username=Blk-S-Bellamy&repo=RecWare-Photok&show_owner=true&theme=transparent)](https://github.com/Blk-S-Bellamy/RecWare-Photok)
 
 LICENSE
 =======

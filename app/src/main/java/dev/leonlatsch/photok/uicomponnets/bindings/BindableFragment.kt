@@ -65,6 +65,6 @@ abstract class BindableFragment<BindingType : ViewDataBinding>(
      * Inserts the Bindings. Always call super.insertBindings() to set lifecycle owner.
      */
     override fun bind(binding: BindingType) {
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 }

@@ -23,11 +23,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.domain.BackupRepository
 import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,8 +42,8 @@ import javax.inject.Inject
 class RestoreBackupViewModel @Inject constructor(
     app: Application,
     private val getRestoreStrategy: GetBackupRestoreStrategyUseCase,
-    private val backupRepository: BackupRepository,
     private val validateBackup: ValidateBackupUseCase,
+    private val io: IO,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -82,7 +81,6 @@ class RestoreBackupViewModel @Inject constructor(
         }
 
     private lateinit var fileUri: Uri
-    private var backupVersion = -1
 
     /**
      * Load and Validate a backup file. Fill [metaData].
@@ -96,8 +94,8 @@ class RestoreBackupViewModel @Inject constructor(
                 restoreState = RestoreState.FILE_VALID
 
 
-                backupSize = it.backupFileDetails.fileSize
-                zipFileName = it.backupFileDetails.filename
+                backupSize = it.fileSize
+                zipFileName = it.fileName
                 metaData = it.metaData
             }
     }
@@ -108,10 +106,10 @@ class RestoreBackupViewModel @Inject constructor(
     fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
-        val zipInputStream = backupRepository.openBackupInput(fileUri)
+        val zipInputStream = io.zip.openZipInput(fileUri)
         val metaData = metaData ?: error("meta.json was loaded without success")
 
-        val restoreStrategy = getRestoreStrategy(backupVersion)
+        val restoreStrategy = getRestoreStrategy(metaData.backupVersion) ?: error("Unknown backup version")
         val result = restoreStrategy.restore(metaData, zipInputStream, origPassword)
         zipInputStream.close()
 

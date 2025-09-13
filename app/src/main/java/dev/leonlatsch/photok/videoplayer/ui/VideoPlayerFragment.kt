@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentVideoPlayerBinding
-import dev.leonlatsch.photok.other.INTENT_PHOTO_UUID
+import dev.leonlatsch.photok.other.IntentParams
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 
@@ -59,7 +59,7 @@ class VideoPlayerFragment :
         }
         binding.playerView.showController()
 
-        val photoUUID = arguments?.getString(INTENT_PHOTO_UUID)
+        val photoUUID = arguments?.getString(IntentParams.PHOTO_UUID)
         if (photoUUID == null) {
             findNavController().navigateUp()
             return

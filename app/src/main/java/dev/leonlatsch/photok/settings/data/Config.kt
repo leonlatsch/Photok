@@ -104,9 +104,17 @@ class Config(context: Context) {
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
 
+    var legacyCurrentlyMigrating: Boolean
+        get() = getBoolean("legacy^currentlyMigrating", false)
+        set(value) = putBoolean("legacy^currentlyMigrating", value)
+
+    var userSalt: String?
+        get() = getString("user^salt", null)
+        set(value) = putString("user^salt", value)
+
     // region put/get methods
 
-    private fun getString(key: String, default: String) = preferences.getString(key, default)
+    private fun getString(key: String, default: String?) = preferences.getString(key, default)
 
     private fun getInt(key: String, default: Int) = preferences.getInt(key, default)
 
@@ -119,7 +127,7 @@ class Config(context: Context) {
 
     private fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
-    private fun putString(key: String, value: String) {
+    private fun putString(key: String, value: String?) {
         val edit = preferences.edit()
         edit.putString(key, value)
         edit.apply()

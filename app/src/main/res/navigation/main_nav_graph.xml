@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/initialFragment">
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.leonlatsch.photok.settings.ui.SettingsFragment"
@@ -56,6 +56,11 @@
             app:exitAnim="@anim/slide_to_bottom"
             app:popUpTo="@id/setupFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_setupFragment_to_encryptionMigrationFragment"
+            app:destination="@id/encryptionMigrationFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/unlockFragment"
@@ -67,6 +72,11 @@
             app:destination="@id/galleryFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/unlockFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
+            app:destination="@id/encryptionMigrationFragment"
             app:popUpTo="@id/unlockFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -84,30 +94,29 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="dev.leonlatsch.photok.splashscreen.ui.SplashScreenFragment"
-        android:label="SplashScreenFragment"
-        tools:layout="@layout/fragment_splash_screen">
+        android:id="@+id/initialFragment"
+        android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
+        android:label="InitialFragment">
         <action
-            android:id="@+id/action_splashScreenFragment_to_unlockFragment"
+            android:id="@+id/action_initialFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashScreenFragment_to_onBoardingFragment"
+            android:id="@+id/action_initialFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashScreenFragment_to_setupFragment"
+            android:id="@+id/action_initialFragment_to_setupFragment"
             app:destination="@id/setupFragment"
             app:enterAnim="@anim/slide_to_top"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/splashScreenFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -176,4 +185,14 @@
         app:destination="@id/albumDetailFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/encryptionMigrationFragment"
+        android:name="dev.leonlatsch.photok.security.migration.ui.EncryptionMigrationFragment"
+        android:label="EncryptionMigrationFragment" >
+        <action
+            android:id="@+id/action_encryptionMigrationFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:popUpTo="@id/encryptionMigrationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2024 Leon Latsch
+ *   Copyright 2020-2022 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.domain.model
+package dev.leonlatsch.photok.other
 
-data class BackupFileDetails(
-    val filename: String,
-    val fileSize: Long,
-)
+object IntentParams {
+    const val PHOTO_UUID = "photoUuid"
+}

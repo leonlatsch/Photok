@@ -18,18 +18,45 @@ package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.toDomain
-import dev.leonlatsch.photok.model.database.entity.internalFileName
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * Backup Format V1
+ *
+ *  A ZIP archive with the following structure:
+ *
+ *  ┌───────────────────────────────┐
+ *  │           backup.zip          │
+ *  ├───────────────────────────────┤
+ *  │ meta.json                     │
+ *  │   {                           │
+ *  │     "password": String,       │
+ *  │     "photos": [PhotoBackup],  │
+ *  │     "createdAt": Long,        │
+ *  │     "backupVersion": Int      │
+ *  │   }                           │
+ *  │                               │
+ *  │ <uuid>.photok                 │  ← Encrypted photo/video
+ *  │ ...                           │
+ *  └───────────────────────────────┘
+ *
+ * Notes:
+ *  - `password` is used to check before decryption.
+ *  - Only `photos` are tracked (no albums or albumPhotoRefs).
+ *  - Media files are encrypted and stored as `<uuid>.photok`.
+ *  - No thumbnails (`.tn`) or video previews (`.vp`) in this version.
+ *  - `backupVersion` must equal 1 for this format.
+ */
 class RestoreBackupV1 @Inject constructor(
-    private val encryptionManager: EncryptionManager,
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {
@@ -44,7 +71,7 @@ class RestoreBackupV1 @Inject constructor(
 
         while (ze != null) {
             val photoBackup = metaData.photos.find {
-                internalFileName(it.uuid) == ze.name
+                ze.name.contains(it.uuid)
             }
 
             if (photoBackup == null) {
@@ -55,7 +82,7 @@ class RestoreBackupV1 @Inject constructor(
             val newPhoto = photoBackup.toDomain().copy(importedAt = System.currentTimeMillis())
 
             val encryptedZipInput =
-                encryptionManager.createCipherInputStream(stream, originalPassword)
+                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
             if (encryptedZipInput == null) {
                 ze = stream.nextEntry
                 continue

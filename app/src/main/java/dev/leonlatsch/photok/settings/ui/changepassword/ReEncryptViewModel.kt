@@ -39,24 +39,40 @@ class ReEncryptViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val passwordManager: PasswordManager
+    private val passwordManager: PasswordManager,
 ) : BaseProcessViewModel<Photo>(app) {
 
+    lateinit var oldPassword: String
     lateinit var newPassword: String
 
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
+
+        passwordManager.storePassword(newPassword)
+        encryptionManager.initialize(newPassword)
+
+        encryptionManager.keyCacheEnabled = true
+
         super.preProcess()
     }
 
     override suspend fun processItem(item: Photo) {
-        val fileSuccess = encryptedStorageManager.reEncryptFile(item.internalFileName, newPassword)
+        val fileSuccess = encryptedStorageManager.reEncryptFile(
+            fileName = item.internalFileName,
+            oldPassword = oldPassword,
+        )
         val thumbnailSuccess =
-            encryptedStorageManager.reEncryptFile(item.internalThumbnailFileName, newPassword)
+            encryptedStorageManager.reEncryptFile(
+                fileName = item.internalThumbnailFileName,
+                oldPassword = oldPassword,
+            )
 
         val videoPreviewSuccess = if (item.type.isVideo) {
-            encryptedStorageManager.reEncryptFile(item.internalVideoPreviewFileName, newPassword)
+            encryptedStorageManager.reEncryptFile(
+                fileName = item.internalVideoPreviewFileName,
+                oldPassword = oldPassword,
+            )
         } else {
             true // Just set true, since it can be ignored
         }
@@ -69,7 +85,6 @@ class ReEncryptViewModel @Inject constructor(
 
     override suspend fun postProcess() {
         super.postProcess()
-        passwordManager.storePassword(newPassword)
-        encryptionManager.initialize(newPassword)
+        encryptionManager.keyCacheEnabled = false
     }
 }

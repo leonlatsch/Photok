@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.unlock.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.ApplicationState
@@ -28,13 +29,20 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Unlock fragment.
@@ -48,6 +56,15 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
     private val viewModel: UnlockViewModel by viewModels()
 
+    @Inject
+    lateinit var legacyEncryptionManager: LegacyEncryptionManagerImpl
+
+    @Inject
+    lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
+
+    @Inject
+    lateinit var config: Config
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
 
@@ -55,15 +72,18 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.password = "abc123"
         }
 
-        viewModel.addOnPropertyChange<UnlockState>(BR.unlockState) {
-            when (it) {
-                UnlockState.CHECKING -> binding.loadingOverlay.show()
-                UnlockState.UNLOCKED -> unlock()
-                UnlockState.LOCKED -> {
-                    binding.loadingOverlay.hide()
-                    binding.unlockWrongPasswordWarningTextView.show()
+        launchLifecycleAwareJob {
+            viewModel.unlockState.collectLatest {
+                when (it) {
+                    UnlockState.CHECKING -> binding.loadingOverlay.show()
+                    UnlockState.UNLOCKED -> unlock()
+                    UnlockState.LOCKED -> {
+                        binding.loadingOverlay.hide()
+                        binding.unlockWrongPasswordWarningTextView.show()
+                    }
+
+                    UnlockState.UNDEFINED -> Unit
                 }
-                else -> return@addOnPropertyChange
             }
         }
 
@@ -88,7 +108,15 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
 
         activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-        findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+
+        if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
+            lifecycleScope.launch {
+                legacyEncryptionManager.initialize(viewModel.password)
+                findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+            }
+        } else {
+            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+        }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

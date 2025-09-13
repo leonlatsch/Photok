@@ -19,9 +19,11 @@ package dev.leonlatsch.photok.backup.ui
 import android.app.Application
 import android.net.Uri
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.backup.domain.BackupRepository
-import dev.leonlatsch.photok.backup.domain.CreateBackupMetaFileUseCase
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
+import dev.leonlatsch.photok.backup.domain.BackupStrategyImpl
+import dev.leonlatsch.photok.backup.domain.LegacyBackupStrategyImpl
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
@@ -40,22 +42,33 @@ import javax.inject.Inject
 class BackupViewModel @Inject constructor(
     app: Application,
     private val photoRepository: PhotoRepository,
-    private val backupRepository: BackupRepository,
-    private val createBackupMetaFile: CreateBackupMetaFileUseCase,
+    private val io: IO,
+    private val defaultBackupStrategy: BackupStrategyImpl,
+    private val legacyBackupStrategy: LegacyBackupStrategyImpl
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
+
+    lateinit var strategyName: BackupStrategy.Name
+
+    private val strategy: BackupStrategy by lazy {
+        when (strategyName) {
+            BackupStrategy.Name.Default -> defaultBackupStrategy
+            BackupStrategy.Name.Legacy -> legacyBackupStrategy
+        }
+    }
+
     private lateinit var zipOutputStream: ZipOutputStream
 
     override suspend fun preProcess() {
         items = photoRepository.getAll()
         elementsToProcess = items.size
-        zipOutputStream = backupRepository.openBackupOutput(uri)
+        zipOutputStream = io.zip.openZipOutput(uri)
         super.preProcess()
     }
 
     override suspend fun processItem(item: Photo) {
-        backupRepository.writePhoto(item, zipOutputStream)
+        strategy.writePhotoToBackup(item, zipOutputStream)
             .onFailure {
                 Timber.e(it, "Error writing photo to backup")
                 failuresOccurred = true
@@ -64,7 +77,7 @@ class BackupViewModel @Inject constructor(
 
     override suspend fun postProcess() {
         if (failuresOccurred.not()) {
-            createBackupMetaFile(zipOutputStream)
+            strategy.createMetaFileInBackup(zipOutputStream)
                 .onFailure {
                     Timber.e(it, "Error writing meta file to backup")
                     failuresOccurred = true

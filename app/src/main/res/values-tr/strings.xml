@@ -20,6 +20,7 @@
     <string name="common_create">Oluştur</string>
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
+    <string name="common_try_again">Try again</string> <!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
@@ -242,8 +243,8 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">NEW: Import Menu</string> <!-- TODO -->
-    <string name="news_summary_1">New import menu that allowing importing images and videos together</string> <!-- TODO -->
+    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
+    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
 
     <string name="news_title_2">YENİ: Bağışlar</string>
     <string name="news_summary_2">Photok\'u desteklemek için ayarlarda "Bağış Yap" düğmesini görebilirsiniz</string>
@@ -258,4 +259,33 @@
     <string name="recovery_subtitle">Kurtarma Menüsü</string>
     <string name="recovery_menu_item_open_photok">Photok\'u Aç</string>
     <string name="recovery_subtitle_reset_hide_app">Uygulamayı Gizleme Ayarını Sıfırla</string>
+
+
+    <!-- Migration -->
+    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
+    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
+    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+
+    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+
+    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+
+    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+
+    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
+    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
+    <string name="migration_running_advice">You may leave this screen while the migration is running</string> <!-- TODO -->
+
+    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
+    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+
+    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
+    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+
+    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
 </resources>

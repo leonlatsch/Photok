@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.model.io
 
 import android.app.Application
 import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
@@ -44,6 +43,14 @@ class EncryptedStorageManager @Inject constructor(
 
     // region internal
 
+    fun internalFileExists(fileName: String): Boolean {
+        return try {
+            app.openFileInput(fileName).use { true }
+        } catch (e: IOException) {
+            false
+        }
+    }
+
     /**
      * Opens a [CipherInputStream] for an internal file.
      */
@@ -53,7 +60,10 @@ class EncryptedStorageManager @Inject constructor(
     ): CipherInputStream? =
         try {
             val inputStream = app.openFileInput(fileName)
-            encryptionManager.createCipherInputStream(inputStream, password)
+            encryptionManager.createCipherInputStream(
+                input = inputStream,
+                password = password,
+            )
         } catch (e: IOException) {
             Timber.d("Error opening internal file: $fileName: $e")
             null
@@ -111,7 +121,7 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Rename a file in internal storage.
      */
-    private fun internalRenameFile(currentFileName: String, newFileName: String): Boolean {
+    fun internalRenameFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
@@ -120,11 +130,11 @@ class EncryptedStorageManager @Inject constructor(
     /**
      * Re-encrypt a file with a new password.
      */
-    fun reEncryptFile(fileName: String, password: String): Boolean {
+    fun reEncryptFile(fileName: String, oldPassword: String): Boolean {
         val tmpFileName = ".tmp~$fileName"
 
-        val origInput = internalOpenEncryptedFileInput(fileName)
-        val tmpOutput = internalOpenEncryptedFileOutput(tmpFileName, password)
+        val origInput = internalOpenEncryptedFileInput(fileName, oldPassword)
+        val tmpOutput = internalOpenEncryptedFileOutput(tmpFileName)
 
         origInput ?: return false
         tmpOutput ?: return false
@@ -176,9 +186,6 @@ class EncryptedStorageManager @Inject constructor(
         }
     }
 
-    /**
-     * Deletes an external file.
-     */
     fun externalDeleteFile(fileUri: Uri): Boolean? =
         try {
             val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri);

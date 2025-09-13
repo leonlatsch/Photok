@@ -18,7 +18,8 @@ package dev.leonlatsch.photok.databinding
 
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * Converters for data binding.
@@ -64,5 +65,5 @@ object BindingConverters {
 
     fun toStringConverter(obj: Any?) = obj.toString()
 
-    fun upperCaseConverter(str: String?): String? = str?.toUpperCase(Locale.ROOT)
+    fun upperCaseConverter(str: String?): String? = str?.uppercase()
 }
