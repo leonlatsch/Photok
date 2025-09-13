@@ -148,7 +148,8 @@ class MigrationService : Service() {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, NotificationChannels.BACKGROUND_TASKS.id)
-            .setContentTitle(error?.message ?: resources.getString(R.string.common_error))
+            .setContentTitle(resources.getString(R.string.migration_error_title))
+            .setContentText(error?.message ?: resources.getString(R.string.common_error))
             .setSmallIcon(R.drawable.ic_warning)
             .setContentIntent(pendingIntent)
             .setOngoing(false)

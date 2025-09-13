@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
@@ -44,6 +45,9 @@ class EncryptionMigrationFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+
+                BackHandler { activity?.finish() }
+
                 AppTheme {
                     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
