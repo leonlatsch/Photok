@@ -71,12 +71,17 @@ class LegacyEncryptionMigrator @Inject constructor(
         config.legacyCurrentlyMigrating = true
 
         try {
-            val legacyFiles = app.fileList()
-                .filter {
+            val legacyFiles = app.fileList().filter {
                     it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(
                         MIGRATIED_FILE_PREFIX
                     )
                 }
+
+            if (legacyFiles.isEmpty()) {
+                state.update { LegacyEncryptionState.Success }
+                postMigrate()
+                return@withLock
+            }
 
             state.update {
                 LegacyEncryptionState.Running(

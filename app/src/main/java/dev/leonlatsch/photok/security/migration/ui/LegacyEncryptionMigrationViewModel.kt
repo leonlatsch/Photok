@@ -74,7 +74,7 @@ sealed interface LegacyEncryptionMigrationUiEvent {
 @HiltViewModel
 class LegacyEncryptionMigrationViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    legacyEncryptionMigrator: LegacyEncryptionMigrator,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     config: Config,
 ) : ViewModel() {
 
@@ -108,8 +108,10 @@ class LegacyEncryptionMigrationViewModel @Inject constructor(
     fun handleUiEvent(event: LegacyEncryptionMigrationUiEvent) {
         when (event) {
             is LegacyEncryptionMigrationUiEvent.StartMigration -> {
-                val serviceIntent = Intent(event.context, MigrationService::class.java)
-                startForegroundService(event.context, serviceIntent)
+                if (legacyEncryptionMigrator.state.value !is LegacyEncryptionState.Running) {
+                    val serviceIntent = Intent(event.context, MigrationService::class.java)
+                    startForegroundService(event.context, serviceIntent)
+                }
             }
             is LegacyEncryptionMigrationUiEvent.SwitchStage -> {
                 initialStage.update { event.stage }
