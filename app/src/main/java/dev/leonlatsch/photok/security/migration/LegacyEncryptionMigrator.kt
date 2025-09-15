@@ -17,15 +17,19 @@
 package dev.leonlatsch.photok.security.migration
 
 import android.app.Application
+import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.security.GeneralSecurityException
+import java.security.SecureRandom
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +53,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val app: Application,
     private val config: Config,
+    private val io: IO,
 ) {
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
@@ -72,10 +77,10 @@ class LegacyEncryptionMigrator @Inject constructor(
 
         try {
             val legacyFiles = app.fileList().filter {
-                    it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(
-                        MIGRATIED_FILE_PREFIX
-                    )
-                }
+                it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(
+                    MIGRATIED_FILE_PREFIX
+                )
+            }
 
             if (legacyFiles.isEmpty()) {
                 state.update { LegacyEncryptionState.Success }
@@ -140,7 +145,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         config.legacyCurrentlyMigrating = false
     }
 
-    private fun migrateSingleFile(legacyName: String): Result<Unit> = runCatching {
+    private suspend fun migrateSingleFile(legacyName: String): Result<Unit> = runCatching {
         require(legacyName.contains(LEGACY_PHOTOK_FILE_EXTENSION)) { "Not legacy file" }
 
         val tmpName = "$MIGRATIED_FILE_PREFIX$legacyName"
@@ -152,24 +157,53 @@ class LegacyEncryptionMigrator @Inject constructor(
         // Clean any stale temp from prior crashes
         encryptedStorageManager.internalDeleteFile(tmpName)
 
-        app.openFileInput(legacyName).use { origInput ->
-            val legacyIn = legacyEncryptionManager.createCipherInputStream(
-                input = origInput,
-                password = null,
-            ) ?: error("Legacy cipher stream null")
+        val originalInput = app.openFileInput(legacyName)
+        val encryptedLegacyInput = legacyEncryptionManager.createCipherInputStream(originalInput)
+        val encryptedOutput = encryptedStorageManager.internalOpenEncryptedFileOutput(tmpName)
 
-            encryptedStorageManager.internalOpenEncryptedFileOutput(tmpName).use { newOut ->
-                requireNotNull(newOut) { "New output was null" }
-                legacyIn.use { it.copyTo(newOut) }
-                newOut.flush()
-            }
+        requireNotNull(encryptedLegacyInput) { "Legacy input was null" }
+        requireNotNull(encryptedOutput) { "New output was null" }
+
+        io.copy(
+            input = encryptedLegacyInput,
+            output = encryptedOutput,
+        ).onFailure {
+            throw Exception( buildError(it, legacyName, tmpName), it )
         }
 
+        encryptedLegacyInput.close()
+        encryptedOutput.flush()
+        encryptedOutput.close()
+
         // Finalize atomically: temp -> final (non-overwriting)
-        require(!encryptedStorageManager.internalFileExists(finalName)) { "Target exists: $finalName" }
+        encryptedStorageManager.internalDeleteFile(finalName)
         encryptedStorageManager.internalRenameFile(tmpName, finalName)
 
         // Only now delete original
         encryptedStorageManager.internalDeleteFile(legacyName)
+    }
+
+    private fun buildError(error: Throwable, legacyFileName: String, tmpName: String): String {
+        val legacyFile = app.openFileInput(legacyFileName)
+        val size = BindingConverters.formatByteSizeConverter(legacyFile.available().toLong())
+
+        val filesList = app.fileList()
+        val numLegacyFiles = filesList.count { it.contains(LEGACY_PHOTOK_FILE_EXTENSION) }
+        val numFinishedFiles = filesList.count { it.contains(PHOTOK_FILE_EXTENSION) }
+        val numTempFiles = filesList.count { it.contains(MIGRATIED_FILE_PREFIX) }
+
+        return """
+            Migration Error.
+             
+            File Size: $size
+            File Name: $legacyFileName
+            Temp Name: $tmpName
+            
+            Legacy Files: $numLegacyFiles
+            Finished Files: $numFinishedFiles
+            Temp Files: $numTempFiles
+            
+            Causing Exception: ${error.message}
+        """.trimIndent()
     }
 }
