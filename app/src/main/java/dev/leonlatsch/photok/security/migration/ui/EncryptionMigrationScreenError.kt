@@ -50,6 +50,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import okio.IOException
+import java.lang.Exception
 
 @Composable
 fun EncryptionMigrationScreenError(
@@ -126,7 +127,8 @@ fun EncryptionMigrationScreenError(
                     Text(
                         maxLines = 5,
                         overflow = TextOverflow.Ellipsis,
-                        text = uiState.error.localizedMessage
+                        text = uiState.error.cause?.message
+                            ?: uiState.error.message
                             ?: stringResource(R.string.common_error),
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center,
@@ -172,7 +174,10 @@ private fun PreviewError() {
     AppTheme {
         EncryptionMigrationScreenError(
             uiState = LegacyEncryptionMigrationUiState.Error(
-                IOException("Some error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkj Some error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkj")
+                IOException(
+                    "Some error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkj Some error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkjSome error message from exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkj",
+                    Exception("Causing exception skdjgsjdgijsdgjskdjgiosdjigvjskjvskdjfgsdlkgvmskdgkskdgklskgljasöflkvmlkasgvsajgkljsafkgjlsöakvlkösjakvmasdklgjfsaklmgdlkj ")
+                )
             ),
             handleUiEvent = {},
         )
