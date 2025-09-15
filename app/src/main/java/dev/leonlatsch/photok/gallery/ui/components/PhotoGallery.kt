@@ -43,7 +43,6 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -71,6 +70,7 @@ import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -358,20 +358,22 @@ private fun GalleryPhotoTile(
 @Preview
 @Composable
 private fun PhotoGridPreview() {
-    PhotoGallery(
-        photos = listOf(
-            PhotoTile("", PhotoType.JPEG, "1"),
-            PhotoTile("", PhotoType.JPEG, "2"),
-            PhotoTile("", PhotoType.JPEG, "3"),
-            PhotoTile("", PhotoType.JPEG, "4"),
-            PhotoTile("", PhotoType.JPEG, "5"),
-            PhotoTile("", PhotoType.JPEG, "6"),
-        ),
-        multiSelectionState = MultiSelectionState(listOf("2", "3", "5")),
-        onOpenPhoto = {},
-        onDelete = {},
-        onExport = {},
-        onImportChoice = {},
-        additionalMultiSelectionActions = {},
-    )
+    AppTheme {
+        PhotoGallery(
+            photos = listOf(
+                PhotoTile("", PhotoType.JPEG, "1"),
+                PhotoTile("", PhotoType.JPEG, "2"),
+                PhotoTile("", PhotoType.JPEG, "3"),
+                PhotoTile("", PhotoType.JPEG, "4"),
+                PhotoTile("", PhotoType.JPEG, "5"),
+                PhotoTile("", PhotoType.JPEG, "6"),
+            ),
+            multiSelectionState = MultiSelectionState(listOf("2", "3", "5")),
+            onOpenPhoto = {},
+            onDelete = {},
+            onExport = {},
+            onImportChoice = {},
+            additionalMultiSelectionActions = {},
+        )
+    }
 }
