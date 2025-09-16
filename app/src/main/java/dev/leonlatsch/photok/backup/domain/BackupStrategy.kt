@@ -28,6 +28,9 @@ interface BackupStrategy {
         UnEncrypted(R.string.migration_error_extracting_title);
     }
 
+    suspend fun preBackup() {}
+    suspend fun postBackup() {}
+
     suspend fun writePhotoToBackup(
         photo: Photo,
         zipOutputStream: ZipOutputStream,
