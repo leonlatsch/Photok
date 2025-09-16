@@ -159,7 +159,8 @@ class LegacyEncryptionMigrator @Inject constructor(
         encryptedStorageManager.internalDeleteFile(tmpName)
 
         if (app.getFileStreamPath(legacyName).length() == 0L) {
-            Timber.d("Skipping empty file: $legacyName")
+            encryptedStorageManager.internalDeleteFile(legacyName)
+            Timber.d("Empty legacy file: $legacyName - Deleting and continuing")
             return@runCatching
         }
 
