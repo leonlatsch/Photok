@@ -43,7 +43,7 @@ class UnEncryptedBackupStrategy @Inject constructor(
         photo: Photo,
         zipOutputStream: ZipOutputStream
     ): Result<Unit> {
-        val filename = if (usedFilenames.contains(photo.fileName)) {
+        val filename = if (usedFilenames.toList().contains(photo.fileName)) {
             photo.fileName + "-copy"
         } else {
             photo.fileName
@@ -53,7 +53,9 @@ class UnEncryptedBackupStrategy @Inject constructor(
 
         input ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
 
-        return io.zip.writeZipEntry(filename, input, zipOutputStream)
+        return io.zip.writeZipEntry(filename, input, zipOutputStream).also {
+            usedFilenames.add(filename)
+        }
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
@@ -81,5 +83,11 @@ class UnEncryptedBackupStrategy @Inject constructor(
         }
 
         return null
+    }
+
+    override suspend fun postBackup() {
+        super.postBackup()
+
+        usedFilenames.clear()
     }
 }

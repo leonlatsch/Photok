@@ -67,6 +67,7 @@ class BackupViewModel @Inject constructor(
         items = photoRepository.getAll()
         elementsToProcess = items.size
         zipOutputStream = io.zip.openZipOutput(uri)
+        strategy.preBackup()
         super.preProcess()
     }
 
@@ -88,6 +89,7 @@ class BackupViewModel @Inject constructor(
         }
 
         zipOutputStream.lazyClose()
+        strategy.postBackup()
         super.postProcess()
     }
 }
