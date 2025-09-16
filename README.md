@@ -41,15 +41,15 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-73%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-73%25-orange)
-![French](https://img.shields.io/badge/French-87%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-72%25-orange)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-72%25-orange)
+![French](https://img.shields.io/badge/French-86%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-71%25-orange)
-![Russian](https://img.shields.io/badge/Russian-86%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-90%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-86%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-70%25-orange)
+![Russian](https://img.shields.io/badge/Russian-85%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-89%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-85%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
