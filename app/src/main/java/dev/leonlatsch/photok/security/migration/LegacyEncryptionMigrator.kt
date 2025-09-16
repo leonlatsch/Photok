@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import timber.log.Timber
 import java.security.GeneralSecurityException
 import java.security.SecureRandom
 import javax.inject.Inject
@@ -157,12 +158,18 @@ class LegacyEncryptionMigrator @Inject constructor(
         // Clean any stale temp from prior crashes
         encryptedStorageManager.internalDeleteFile(tmpName)
 
+        if (app.getFileStreamPath(legacyName).length() == 0L) {
+            Timber.d("Skipping empty file: $legacyName")
+            return@runCatching
+        }
+
         val originalInput = app.openFileInput(legacyName)
         val encryptedLegacyInput = legacyEncryptionManager.createCipherInputStream(originalInput)
         val encryptedOutput = encryptedStorageManager.internalOpenEncryptedFileOutput(tmpName)
 
         requireNotNull(encryptedLegacyInput) { "Legacy input was null" }
         requireNotNull(encryptedOutput) { "New output was null" }
+
 
         io.copy(
             input = encryptedLegacyInput,
