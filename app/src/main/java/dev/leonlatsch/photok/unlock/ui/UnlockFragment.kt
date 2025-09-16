@@ -57,9 +57,6 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private val viewModel: UnlockViewModel by viewModels()
 
     @Inject
-    lateinit var legacyEncryptionManager: LegacyEncryptionManagerImpl
-
-    @Inject
     lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
 
     @Inject
@@ -111,7 +108,6 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
             lifecycleScope.launch {
-                legacyEncryptionManager.initialize(viewModel.password)
                 findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
             }
         } else {
