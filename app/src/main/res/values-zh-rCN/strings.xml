@@ -305,4 +305,7 @@
     <string name="migration_error_button">发送错误报告</string>
 
     <string name="notification_channel_background_tasks">后台任务</string>
+    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
+    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
+    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
 </resources>

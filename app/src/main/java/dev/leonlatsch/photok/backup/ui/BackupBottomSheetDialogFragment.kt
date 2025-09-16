@@ -37,9 +37,9 @@ class BackupBottomSheetDialogFragment(
     private val uri: Uri,
     private val strategy: BackupStrategy.Name
 ) : BaseProcessBottomSheetDialogFragment<Photo>(
-    null,
-    R.string.backup_processing_title,
-    true
+    itemSource = null,
+    processingLabelTextResource = strategy.title,
+    canAbort = true,
 ) {
     override val viewModel: BackupViewModel by viewModels()
 

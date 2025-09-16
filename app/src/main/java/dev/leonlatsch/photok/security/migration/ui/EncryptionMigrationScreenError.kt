@@ -16,6 +16,10 @@
 
 package dev.leonlatsch.photok.security.migration.ui
 
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +38,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -47,7 +56,14 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
+import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.other.areNotificationsEnabled
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
 import dev.leonlatsch.photok.ui.components.AppName
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import okio.IOException
 import java.lang.Exception
@@ -58,6 +74,19 @@ fun EncryptionMigrationScreenError(
     handleUiEvent: (LegacyEncryptionMigrationUiEvent) -> Unit
 ) {
     val context = LocalContext.current
+    val activity = LocalActivity.current
+
+    val extractDataLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
+            it ?: return@rememberLauncherForActivityResult
+            if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
+
+            BackupBottomSheetDialogFragment(
+                uri = it,
+                strategy = BackupStrategy.Name.UnEncrypted,
+            ).show(activity.supportFragmentManager)
+        }
+
+    var showExtractConfirmationDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -136,34 +165,71 @@ fun EncryptionMigrationScreenError(
                 }
             }
 
-            TextButton(
+
+            Row(
                 modifier = Modifier
                     .padding(20.dp)
                     .align(Alignment.BottomCenter),
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error,
-                ),
-                onClick = {
-                    handleUiEvent(
-                        LegacyEncryptionMigrationUiEvent.SendErrorReport(
-                            context,
-                            uiState.error
-                        )
-                    )
-                },
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                TextButton(
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                    onClick = {
+                        handleUiEvent(
+                            LegacyEncryptionMigrationUiEvent.SendErrorReport(
+                                context,
+                                uiState.error
+                            )
+                        )
+                    },
                 ) {
-                    Icon(
-                        painterResource(R.drawable.ic_email),
-                        contentDescription = null,
-                    )
-                    Text(stringResource(R.string.migration_error_button))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_email),
+                            contentDescription = null,
+                        )
+                        Text(stringResource(R.string.migration_error_button))
+                    }
                 }
+
+                VerticalDivider(
+                    modifier = Modifier.height(30.dp),
+                    color = MaterialTheme.colorScheme.error,
+                )
+
+
+                TextButton(
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                    onClick = { showExtractConfirmationDialog = true },
+                ) {
+                    Text(stringResource(R.string.migration_error_extract_data))
+                }
+
             }
         }
+
+
+        ConfirmationDialog(
+            show = showExtractConfirmationDialog,
+            onDismissRequest = {
+                showExtractConfirmationDialog = false
+            },
+            text = stringResource(R.string.migration_error_extract_confirmation_text),
+            onConfirm = {
+                extractDataLauncher.launchAndIgnoreTimer(
+                    input = "photok_data_unencrypted.zip",
+                    activity = activity,
+                )
+                showExtractConfirmationDialog = false
+            },
+        )
     }
 }
 
