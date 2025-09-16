@@ -24,11 +24,12 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
-import java.io.FileInputStream
 import java.io.InputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UnEncryptedBackupStrategy @Inject constructor(
     @ApplicationContext private val context: Context,
     private val io: IO,
@@ -36,16 +37,23 @@ class UnEncryptedBackupStrategy @Inject constructor(
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
 ) : BackupStrategy {
 
+    private val usedFilenames = mutableListOf<String>()
+
     override suspend fun writePhotoToBackup(
         photo: Photo,
         zipOutputStream: ZipOutputStream
     ): Result<Unit> {
+        val filename = if (usedFilenames.contains(photo.fileName)) {
+            photo.fileName + "-copy"
+        } else {
+            photo.fileName
+        }
 
         val input = getInputStreamForPhoto(photo)
 
         input ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
 
-        return io.zip.writeZipEntry(photo.fileName, input, zipOutputStream)
+        return io.zip.writeZipEntry(filename, input, zipOutputStream)
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
