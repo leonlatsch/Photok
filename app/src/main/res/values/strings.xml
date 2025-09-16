@@ -295,7 +295,7 @@
 
     <string name="migration_running_title">Migrating your gallery</string>
     <string name="migration_running_progress">%d of %d files processed</string>
-    <string name="migration_running_advice">You may leave this screen while the migration is running</string>
+    <string name="migration_running_advice">If this screen stays open, the migration will run faster.</string>
 
     <string name="migration_done_title">Gallery migration done</string>
     <string name="migration_done_progress">All files migrated</string>
