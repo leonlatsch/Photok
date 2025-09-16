@@ -23,7 +23,8 @@ interface BackupStrategy {
 
     enum class Name {
         Default,
-        Legacy;
+        Legacy,
+        UnEncrypted;
     }
 
     suspend fun writePhotoToBackup(

@@ -306,4 +306,6 @@
     <string name="migration_error_button">Fehlerbericht senden</string>
 
     <string name="notification_channel_background_tasks">Hintergrundprozesse</string>
+    <string name="migration_error_extract_data">Daten extrahieren</string>
+    <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
 </resources>
