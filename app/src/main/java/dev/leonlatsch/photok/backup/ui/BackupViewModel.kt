@@ -22,6 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.domain.BackupStrategyImpl
 import dev.leonlatsch.photok.backup.domain.LegacyBackupStrategyImpl
+import dev.leonlatsch.photok.backup.domain.UnEncryptedBackupStrategy
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -44,7 +45,8 @@ class BackupViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val io: IO,
     private val defaultBackupStrategy: BackupStrategyImpl,
-    private val legacyBackupStrategy: LegacyBackupStrategyImpl
+    private val legacyBackupStrategy: LegacyBackupStrategyImpl,
+    private val unEncryptedBackupStrategy: UnEncryptedBackupStrategy,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
@@ -55,6 +57,7 @@ class BackupViewModel @Inject constructor(
         when (strategyName) {
             BackupStrategy.Name.Default -> defaultBackupStrategy
             BackupStrategy.Name.Legacy -> legacyBackupStrategy
+            BackupStrategy.Name.UnEncrypted -> unEncryptedBackupStrategy
         }
     }
 
@@ -64,6 +67,7 @@ class BackupViewModel @Inject constructor(
         items = photoRepository.getAll()
         elementsToProcess = items.size
         zipOutputStream = io.zip.openZipOutput(uri)
+        strategy.preBackup()
         super.preProcess()
     }
 
@@ -85,6 +89,7 @@ class BackupViewModel @Inject constructor(
         }
 
         zipOutputStream.lazyClose()
+        strategy.postBackup()
         super.postProcess()
     }
 }

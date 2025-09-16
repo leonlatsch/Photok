@@ -296,7 +296,7 @@
 
     <string name="migration_running_title">迁移图库</string>
     <string name="migration_running_progress">已经处理了 %d 个文件中的 %d 个</string>
-    <string name="migration_running_advice">迁移运行时你可以离开此屏幕</string>
+    <string name="migration_running_advice">保持此屏幕打开，迁移会更快。</string>
 
     <string name="migration_done_title">图库迁移完毕</string>
     <string name="migration_done_progress">所有文件以迁移</string>
@@ -305,4 +305,7 @@
     <string name="migration_error_button">发送错误报告</string>
 
     <string name="notification_channel_background_tasks">后台任务</string>
+    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
+    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
+    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
 </resources>
