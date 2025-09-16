@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -42,6 +43,7 @@ import javax.inject.Inject
 class UnlockViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val passwordManager: PasswordManager,
 ) : ObservableViewModel(app) {
 
@@ -66,6 +68,8 @@ class UnlockViewModel @Inject constructor(
         unlockState.update {
             if (passwordManager.checkPassword(password)) {
                 encryptionManager.initialize(password)
+                legacyEncryptionManager.initialize(password)
+
                 UnlockState.UNLOCKED
             } else {
                 UnlockState.LOCKED
