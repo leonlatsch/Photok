@@ -20,6 +20,8 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.other.extensions.remove
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ import javax.inject.Inject
 class CleanupDeadFilesUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     @ApplicationContext private val context: Context,
+    private val encryptedStorageManager: EncryptedStorageManager
 ) {
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -41,9 +44,11 @@ class CleanupDeadFilesUseCase @Inject constructor(
             }
 
             for (file in allFiles) {
-                if (allExisting.none { file.contains(it.uuid) }) {
+                val uuid  = file.substringBefore(".")
+
+                if (allExisting.none { uuid == it.uuid }) {
                     Timber.i("Deleting dead file: $file")
-                    context.deleteFile(file)
+                    encryptedStorageManager.internalRenameFile(file, "${uuid}_deleted_by_cleanup")
                 }
             }
         }
