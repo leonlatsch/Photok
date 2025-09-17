@@ -51,7 +51,6 @@ class PhotoRepository @Inject constructor(
     private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
     private val config: Config,
-    private val io: IO,
 ) {
 
     // region DATABASE
