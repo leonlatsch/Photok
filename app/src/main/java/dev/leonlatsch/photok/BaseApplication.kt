@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
@@ -43,6 +44,8 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var encryptionManager: EncryptionManager
+    @Inject
+    lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
 
     val state = MutableStateFlow(ApplicationState.LOCKED)
 
@@ -58,6 +61,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
         }
 
         setAppDesign(config.systemDesign)
+        cleanupDeadFilesUseCase()
     }
 
     override fun onDestroy(owner: LifecycleOwner) {

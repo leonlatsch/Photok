@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
@@ -50,6 +51,7 @@ class PhotoRepository @Inject constructor(
     private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
     private val config: Config,
+    private val io: IO,
 ) {
 
     // region DATABASE
@@ -148,6 +150,10 @@ class PhotoRepository @Inject constructor(
 
             val photoId = insert(photo)
             success = photoId != -1L
+        }
+
+        if (!success) {
+            deleteInternalPhotoData(photo)
         }
 
         return success
