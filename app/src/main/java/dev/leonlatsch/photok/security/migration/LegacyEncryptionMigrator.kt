@@ -22,6 +22,7 @@ import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,6 +56,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val app: Application,
     private val config: Config,
     private val io: IO,
+    private val photoRepository: PhotoRepository,
 ) {
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
@@ -77,13 +79,16 @@ class LegacyEncryptionMigrator @Inject constructor(
         config.legacyCurrentlyMigrating = true
 
         try {
-            val legacyFiles = app.fileList().filter {
-                it.contains(LEGACY_PHOTOK_FILE_EXTENSION) && !it.startsWith(
-                    MIGRATIED_FILE_PREFIX
-                )
+
+            val allPhotos = photoRepository.getAll()
+
+            val legacyFiles = app.fileList().filter { legacyFile ->
+                legacyFile.contains(LEGACY_PHOTOK_FILE_EXTENSION) // Is .photok file
+                        && !legacyFile.startsWith(MIGRATIED_FILE_PREFIX) // Is not migrated tmp file
+                        && allPhotos.any { legacyFile.contains(it.uuid) } // Has a matching photo
             }
 
-            if (legacyFiles.isEmpty()) {
+            if (legacyFiles.isEmpty() || allPhotos.isEmpty()) {
                 state.update { LegacyEncryptionState.Success }
                 postMigrate()
                 return@withLock

@@ -84,6 +84,14 @@ class RestoreBackupV3 @Inject constructor(
                 continue
             }
 
+            // Skip files that are not mentioned in the metadata
+            // These might be dead files from old versions of photok
+            if (metaData.photos.none { ze.name.contains(it.uuid) }) {
+                ze = stream.nextEntry
+                Timber.i("Skipping dead file in backup: ${ze.name}")
+                continue
+            }
+
             val encryptedZipInput =
                 legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
             val internalOutputStream =
