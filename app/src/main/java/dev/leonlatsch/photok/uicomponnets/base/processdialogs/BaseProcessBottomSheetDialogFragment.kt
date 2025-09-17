@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.uicomponnets.base.processdialogs
 
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -62,6 +64,8 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
 
         viewModel.processState = ProcessState.INITIALIZE
 
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         viewModel.addOnPropertyChange<ProcessState>(BR.processState) {
             val label: String = when (it) {
                 ProcessState.INITIALIZE -> {
@@ -105,6 +109,8 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
     }
 
     open fun onProcessingDone() {
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         isCancelable = true
         binding.processCloseButton.show()
         binding.processAbortButton.hide()
