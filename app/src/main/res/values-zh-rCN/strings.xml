@@ -299,7 +299,7 @@
     <string name="migration_running_advice">保持此屏幕开启，迁移会更快。</string>
 
     <string name="migration_done_title">图库迁移完毕</string>
-    <string name="migration_done_progress">所有文件以迁移</string>
+    <string name="migration_done_progress">所有文件已迁移</string>
 
     <string name="migration_error_title">迁移图库时出错</string>
     <string name="migration_error_button">发送错误报告</string>
