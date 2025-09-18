@@ -48,7 +48,7 @@ class CleanupDeadFilesUseCase @Inject constructor(
 
                 if (allExisting.none { uuid == it.uuid }) {
                     Timber.i("Deleting dead file: $file")
-                    encryptedStorageManager.internalRenameFile(file, "${uuid}_deleted_by_cleanup")
+                    encryptedStorageManager.internalDeleteFile(file)
                 }
             }
         }
