@@ -115,11 +115,6 @@ class IO @Inject constructor(
             output.flush()
             output.close()
 
-            if (bytesWritten <= 0) {
-                continuation.resume(Result.failure(IOException("$bytesWritten bytes written from zip entry")))
-                return@suspendCoroutine
-            }
-
             continuation.resume(Result.success(bytesWritten))
         } catch (e: Exception) {
             continuation.resume(Result.failure(e))
