@@ -112,6 +112,10 @@ class Config(context: Context) {
         get() = getString("user^salt", null)
         set(value) = putString("user^salt", value)
 
+    var biometricAuthenticationEnabled: Boolean
+        get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, false)
+        set(value) = putBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, value)
+
     // region put/get methods
 
     private fun getString(key: String, default: String?) = preferences.getString(key, default)
@@ -196,5 +200,7 @@ class Config(context: Context) {
 
         const val TIMESTAMP_LAST_RECOVERY_START = "internal^timestampLastRecoveryStart"
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L
+
+        const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED = "security^biometricAuthenticationEnabled"
     }
 }

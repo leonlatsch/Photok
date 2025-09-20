@@ -51,20 +51,28 @@ class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
     @Deprecated("Legacy encryption manager does not support key caching")
     override var keyCacheEnabled: Boolean = false
 
-    override fun initialize(password: String) {
+    override fun initialize(password: String): Result<Unit> {
         if (password.length < 6) {
             isReady = false
-            return
+            return Result.failure(IllegalArgumentException("Password too short"))
         }
 
         try {
             key = genSecKey(password)
             iv = genLegacyIv(password)
             isReady = true
+            return Result.success(Unit)
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
             reset()
+            return Result.failure(e)
         }
+    }
+
+    override fun initializeWithBiometrics(): Result<Unit> {
+        return Result.failure(
+            UnsupportedOperationException("Legacy encryption manager does not support biometrics")
+        )
     }
 
     override fun reset() {

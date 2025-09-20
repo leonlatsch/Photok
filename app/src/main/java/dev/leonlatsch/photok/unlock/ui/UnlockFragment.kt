@@ -33,12 +33,13 @@ import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.biometricAuthentication
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -91,7 +92,32 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
 
         super.onViewCreated(view, savedInstanceState)
+
+        if (config.biometricAuthenticationEnabled) {
+            launchBiometricUnlock()
+        }
     }
+
+    private fun launchBiometricUnlock() {
+        lifecycleScope.launch {
+            delay(500)
+
+            biometricAuthentication(
+                title = getString(R.string.biometric_unlock_title),
+                subtitle = getString(R.string.biometric_unlock_subtitle),
+                negativeButtonText = getString(R.string.biometric_unlock_cancel),
+            ).onSuccess {
+                viewModel.encryptionManager.initializeWithBiometrics()
+                    .onSuccess {
+                        unlock()
+                    }
+                    .onFailure {
+                        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+                    }
+            }
+        }
+    }
+
 
     private fun unlock() {
         val activity = activity

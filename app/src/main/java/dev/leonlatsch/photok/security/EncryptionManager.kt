@@ -24,7 +24,8 @@ import javax.crypto.CipherOutputStream
 interface EncryptionManager {
     val isReady: Boolean
     var keyCacheEnabled: Boolean
-    fun initialize(password: String)
+    fun initialize(password: String): Result<Unit>
+    fun initializeWithBiometrics(): Result<Unit>
     fun reset()
 
     fun createCipherInputStream(

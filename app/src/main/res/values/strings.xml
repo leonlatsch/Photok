@@ -154,6 +154,8 @@
     <string name="settings_security_allow_screenshots_summary">Allow taking screenshot. Requires restart.</string>
     <string name="settings_security_change_password_title">Change Password</string>
     <string name="settings_security_change_password_summary">Change your password</string>
+    <string name="settings_security_biometric_title">Biometric Unlock</string>
+    <string name="settings_security_biometric_summary">Your encryption key will be protected by biometric authentication.</string>"
     <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
     <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
     <string name="settings_security_timeout_immediately">Immediately</string>
@@ -307,4 +309,12 @@
     <string name="migration_error_extract_data">Extract data</string>
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string>
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string>
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Unlock Photok</string>"
+    <string name="biometric_unlock_subtitle">Unlock using your biometric credentials</string>
+    <string name="biometric_unlock_cancel">Use Photok password</string>
+
+    <string name="biometric_unlock_setup_title">Enable biometric unlock</string>
+    <string name="biometric_unlock_setup_subtitle">To enabled biometric unlock, confirm your biometric credentials</string>
 </resources>

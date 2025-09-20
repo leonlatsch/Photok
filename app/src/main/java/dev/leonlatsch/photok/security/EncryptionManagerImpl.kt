@@ -104,10 +104,10 @@ class EncryptionManagerImpl @Inject constructor(
             field = value
         }
 
-    override fun initialize(password: String) {
+    override fun initialize(password: String): Result<Unit> {
         if (password.length < 6) {
             state.update { State.Error }
-            return
+            return Result.failure(IllegalArgumentException("Password too short"))
         }
         try {
             state.update {
@@ -115,10 +115,20 @@ class EncryptionManagerImpl @Inject constructor(
                     key = deriveAesKey(password, getOrCreateUserSalt())
                 )
             }
+            return Result.success(Unit)
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
             state.update { State.Error }
+            return Result.failure(e)
         }
+    }
+
+    override fun initializeWithBiometrics(): Result<Unit> {
+        // TODO
+        // get key from prefs
+        // decrypt wrapped key with key from keystore
+        // set state to ready with decrypted key
+        return initialize("abc123")
     }
 
     override fun reset() {
