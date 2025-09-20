@@ -27,6 +27,7 @@ import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
+import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Qualifier
@@ -69,7 +70,7 @@ class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
         }
     }
 
-    override fun initializeWithBiometrics(): Result<Unit> {
+    override fun initialize(key: SecretKey): Result<Unit> {
         return Result.failure(
             UnsupportedOperationException("Legacy encryption manager does not support biometrics")
         )
@@ -79,6 +80,10 @@ class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
         key = null
         iv = null
         isReady = false
+    }
+
+    override fun getKeyOrNull(): SecretKey? {
+        return key
     }
 
     override fun createCipherInputStream(

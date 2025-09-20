@@ -44,7 +44,8 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
-import dev.leonlatsch.photok.security.biometricAuthentication
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
+import dev.leonlatsch.photok.security.biometric.biometricAuthentication
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
@@ -77,6 +78,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var config: Config
+
+    @Inject
+    lateinit var biometricUnlock: BiometricUnlock
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -111,20 +115,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             enabled as Boolean
 
             if (!enabled) {
-                // TODO: delete stored keys
+                lifecycleScope.launch {
+                    biometricUnlock.reset()
+                }
                 return@addCallbackTo true
             }
 
-
             lifecycleScope.launch {
-                val enableBiometrics = biometricAuthentication(
-                    title = getString(R.string.biometric_unlock_setup_title),
-                    subtitle = getString(R.string.biometric_unlock_setup_subtitle),
-                    negativeButtonText = getString(R.string.common_cancel),
-                ).isSuccess
+                val wasEnabled = biometricUnlock.setup(this@SettingsFragment).isSuccess
 
-                config.biometricAuthenticationEnabled = enabled
-                findPreference<SwitchPreferenceCompat>(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED)?.isChecked = enableBiometrics
+                config.biometricAuthenticationEnabled = wasEnabled
+                findPreference<SwitchPreferenceCompat>(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED)?.isChecked = wasEnabled
             }
 
             false // Don't apply change. Enabled only after verifying biometrics

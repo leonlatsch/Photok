@@ -33,7 +33,7 @@ import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.security.biometricAuthentication
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -63,6 +63,9 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     @Inject
     lateinit var config: Config
 
+    @Inject
+    lateinit var biometricUnlock: BiometricUnlock
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
 
@@ -74,7 +77,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.unlockState.collectLatest {
                 when (it) {
                     UnlockState.CHECKING -> binding.loadingOverlay.show()
-                    UnlockState.UNLOCKED -> unlock()
+                    UnlockState.UNLOCKED -> goToGallery()
                     UnlockState.LOCKED -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
@@ -93,7 +96,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         super.onViewCreated(view, savedInstanceState)
 
-        if (config.biometricAuthenticationEnabled) {
+        // Check for migration should not be needed. But double check because in this case we don't have the legacy key
+        if (config.biometricAuthenticationEnabled && !legacyEncryptionMigrator.migrationNeeded()) {
             launchBiometricUnlock()
         }
     }
@@ -102,24 +106,19 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         lifecycleScope.launch {
             delay(500)
 
-            biometricAuthentication(
-                title = getString(R.string.biometric_unlock_title),
-                subtitle = getString(R.string.biometric_unlock_subtitle),
-                negativeButtonText = getString(R.string.biometric_unlock_cancel),
-            ).onSuccess {
-                viewModel.encryptionManager.initializeWithBiometrics()
-                    .onSuccess {
-                        unlock()
-                    }
-                    .onFailure {
-                        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-                    }
-            }
+            biometricUnlock.unlock(this@UnlockFragment)
+                .onSuccess { goToGallery() }
+                .onFailure {
+                    Dialogs.showLongToast(
+                        context = requireContext(),
+                        message = it.message ?: getString(R.string.common_error),
+                    )
+                }
         }
     }
 
 
-    private fun unlock() {
+    private fun goToGallery() {
         val activity = activity
 
         (activity as? BaseActivity)?.hideKeyboard()
