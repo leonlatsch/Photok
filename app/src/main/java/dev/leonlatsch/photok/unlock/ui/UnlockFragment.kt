@@ -111,7 +111,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                 .onFailure {
                     Dialogs.showLongToast(
                         context = requireContext(),
-                        message = it.message ?: getString(R.string.common_error),
+                        message = getString(R.string.common_error),
                     )
                 }
         }

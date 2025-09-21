@@ -1,19 +1,3 @@
-/*
- *   Copyright 2020-2024 Leon Latsch
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
 package dev.leonlatsch.photok.security.biometric
 
 import android.content.Context
@@ -22,12 +6,10 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.security.AES
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -38,10 +20,10 @@ import kotlin.io.encoding.Base64
  */
 annotation class ProtectedByBiometric
 
-private const val ENCRYPTED_USER_KEY = "user_key_bio_protected"
-private const val PROTECTION_KEY_ALIAS = "bio_protection_key"
-private const val PROTECTION_KEY_ALGORITHM = "AES/GCM/NoPadding"
+private const val WRAPPED_USER_KEY = "wrapped_user_key"
+private const val RSA_ALIAS = "bio_protection_rsa"
 private const val ANDROID_KEY_STORE = "AndroidKeyStore"
+private const val RSA_ALGORITHM = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"
 
 @Singleton
 class BiometricKeyStore @Inject constructor(
@@ -53,73 +35,67 @@ class BiometricKeyStore @Inject constructor(
 
     fun removeStoredUserKey() {
         prefs.edit {
-            remove(ENCRYPTED_USER_KEY)
+            remove(WRAPPED_USER_KEY)
             apply()
         }
+
+        loadAndroidKeyStore().deleteEntry(RSA_ALIAS)
     }
 
     @ProtectedByBiometric
-    fun storeUserKey(key: SecretKey): Result<Unit> = runCatching {
-        createProtectionKeyIfNeeded()
+    fun storeUserKey(userKey: SecretKey): Result<Unit> = runCatching {
+        createRsaKeyIfNeeded()
+        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
+        val publicKey = keyStore.getCertificate(RSA_ALIAS).publicKey
 
-        val keyStore = loadAndroidKeyStore()
-        val protectionKey = keyStore.getKey(PROTECTION_KEY_ALIAS, null) as SecretKey
-
-        val cipher = Cipher.getInstance(PROTECTION_KEY_ALGORITHM)
-        cipher.init(Cipher.ENCRYPT_MODE, protectionKey)
-        val iv = cipher.iv
-        val wrapped = cipher.doFinal(key.encoded)
-
-        val blob = iv + wrapped
+        val cipher = Cipher.getInstance(RSA_ALGORITHM)
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey)
+        val wrapped = cipher.doFinal(userKey.encoded)
 
         prefs.edit {
-            putString(ENCRYPTED_USER_KEY, Base64.encode(blob))
+            putString(WRAPPED_USER_KEY, Base64.encode(wrapped))
             apply()
         }
     }
 
     @ProtectedByBiometric
     fun getUserKey(): Result<SecretKey> = runCatching {
-        val blobBase64 = prefs.getString(ENCRYPTED_USER_KEY, null) ?: error("User key not stored")
+        val blobBase64 = prefs.getString(WRAPPED_USER_KEY, null)
+            ?: error("User key not stored")
 
-        val blob = Base64.decode(blobBase64)
-        val iv = blob.copyOfRange(0, 12)
-        val key = blob.copyOfRange(12, blob.size)
+        val wrapped = Base64.Default.decode(blobBase64)
 
-        val keyStore = loadAndroidKeyStore()
-        val protectionKey = keyStore.getKey(PROTECTION_KEY_ALIAS, null) as SecretKey
+        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
+        val privateKey = keyStore.getKey(RSA_ALIAS, null)
 
-        val cipher = Cipher.getInstance(PROTECTION_KEY_ALGORITHM)
-        cipher.init(Cipher.DECRYPT_MODE, protectionKey, GCMParameterSpec(128, iv))
-        val keyBytes = cipher.doFinal(key)
+        val cipher = Cipher.getInstance(RSA_ALGORITHM)
+        cipher.init(Cipher.DECRYPT_MODE, privateKey)
 
-        SecretKeySpec(keyBytes, AES)
+        val keyBytes = cipher.doFinal(wrapped)
+        SecretKeySpec(keyBytes, "AES")
     }
 
     @ProtectedByBiometric
-    private fun createProtectionKeyIfNeeded() {
-        val keyStore = loadAndroidKeyStore()
-        if (!keyStore.containsAlias(PROTECTION_KEY_ALIAS)) {
-            val keyGenerator = KeyGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_AES,
+    private fun createRsaKeyIfNeeded() {
+        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
+        if (!keyStore.containsAlias(RSA_ALIAS)) {
+            val kpg = KeyPairGenerator.getInstance(
+                KeyProperties.KEY_ALGORITHM_RSA,
                 ANDROID_KEY_STORE
             )
             val spec = KeyGenParameterSpec.Builder(
-                PROTECTION_KEY_ALIAS,
+                RSA_ALIAS,
                 KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
             )
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                .setUserAuthenticationRequired(true) // Requires biometric authentication
+                .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
+                .setUserAuthenticationRequired(true)
                 .build()
-
-            keyGenerator.init(spec)
-            keyGenerator.generateKey()
+            kpg.initialize(spec)
+            kpg.generateKeyPair()
         }
     }
-
     private fun loadAndroidKeyStore(): KeyStore {
         return KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
     }
-
 }

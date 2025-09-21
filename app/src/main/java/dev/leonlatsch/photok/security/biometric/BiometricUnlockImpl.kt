@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
+import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
@@ -66,13 +67,15 @@ class BiometricUnlockImpl @Inject constructor(
         )
 
         result.onFailure {
-            Timber.d("Biometric unlock failed: $it")
+            Timber.w("Biometric unlock failed: $it")
             return Result.failure(it)
         }
 
-        val userKey = biometricKeyStore.getUserKey().getOrNull()
+        val userKey = biometricKeyStore.getUserKey().onFailure {
+            Timber.w("Getting user key failed: $it")
+        }.getOrNull()
 
-        userKey ?: return Result.failure(IllegalStateException("User key not stored"))
+        userKey ?: return Result.failure(IllegalStateException("Could not load user key"))
 
         return encryptionManager.initialize(userKey).onFailure {
             Timber.d("EncryptionManager initialization failed: $it")
@@ -115,7 +118,10 @@ suspend fun Fragment.biometricAuthentication(
         .setTitle(title)
         .setSubtitle(subtitle)
         .setNegativeButtonText(negativeButtonText)
+        .setConfirmationRequired(true)
         .build()
 
-    biometricPrompt.authenticate(promptInfo)
+    val cipher: Cipher = TODO()
+
+    biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
 }
