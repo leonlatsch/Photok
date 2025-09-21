@@ -155,7 +155,7 @@
     <string name="settings_security_change_password_title">Change Password</string>
     <string name="settings_security_change_password_summary">Change your password</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string>
-    <string name="settings_security_biometric_summary">Your encryption key will be protected by biometric authentication.</string>"
+    <string name="settings_security_biometric_summary">Unlock Photok with your biometric credentials.</string>
     <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
     <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
     <string name="settings_security_timeout_immediately">Immediately</string>
@@ -318,6 +318,6 @@
     <string name="biometric_unlock_setup_title">Enable biometric unlock</string>
     <string name="biometric_unlock_setup_subtitle">To enabled biometric unlock, confirm your biometric credentials</string>
 
-    <string name="biometric_unlock_error">Biometric unlock failed. Please use your password.</string>
-    <string name="biometric_unlock_hint_button">Use biometric unlock</string>
+    <string name="biometric_unlock_error">Biometric unlock failed. Please use your Photok password.</string>
+    <string name="biometric_unlock_hint_button">Unlock with biometrics</string>
 </resources>
