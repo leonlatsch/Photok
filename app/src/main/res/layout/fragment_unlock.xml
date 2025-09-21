@@ -93,6 +93,20 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/unlockUseBiometricUnlockButton"
+            android:onClick="@{() -> context.launchBiometricUnlock(0L)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:maxLines="1"
+            android:text="@string/biometric_unlock_hint_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <include
             android:id="@+id/loadingOverlay"
             layout="@layout/loading_overlay" />

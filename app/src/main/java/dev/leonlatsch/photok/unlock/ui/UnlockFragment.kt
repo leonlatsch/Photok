@@ -97,21 +97,24 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         // Check for migration should not be needed. But double check because in this case we don't have the legacy key
-        if (config.biometricAuthenticationEnabled && !legacyEncryptionMigrator.migrationNeeded()) {
+        if (biometricUnlock.isAvailableAndSetup && !legacyEncryptionMigrator.migrationNeeded()) {
+            binding.unlockUseBiometricUnlockButton.show()
             launchBiometricUnlock()
+        } else {
+            binding.unlockUseBiometricUnlockButton.hide()
         }
     }
 
-    private fun launchBiometricUnlock() {
+    fun launchBiometricUnlock(delay: Long = 500L) {
         lifecycleScope.launch {
-            delay(500)
+            delay(delay)
 
             biometricUnlock.unlock(this@UnlockFragment)
                 .onSuccess { goToGallery() }
                 .onFailure {
                     Dialogs.showLongToast(
                         context = requireContext(),
-                        message = getString(R.string.common_error),
+                        message = getString(R.string.biometric_unlock_error),
                     )
                 }
         }

@@ -317,4 +317,7 @@
 
     <string name="biometric_unlock_setup_title">Enable biometric unlock</string>
     <string name="biometric_unlock_setup_subtitle">To enabled biometric unlock, confirm your biometric credentials</string>
+
+    <string name="biometric_unlock_error">Biometric unlock failed. Please use your password.</string>
+    <string name="biometric_unlock_hint_button">Use biometric unlock</string>
 </resources>

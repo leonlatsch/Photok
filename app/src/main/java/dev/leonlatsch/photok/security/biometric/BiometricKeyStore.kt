@@ -32,6 +32,10 @@ class BiometricKeyStore @Inject constructor(
         context.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
     }
 
+    fun userKeyExists(): Boolean {
+        return prefs.getString(WRAPPED_USER_KEY, null).isNullOrEmpty().not()
+    }
+
     fun removeStoredUserKey() {
         prefs.edit {
             remove(WRAPPED_USER_KEY)

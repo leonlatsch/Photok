@@ -20,17 +20,22 @@ import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.data.Config
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class BiometricUnlockImpl @Inject constructor(
+    private val config: Config,
     private val resources: Resources,
     private val encryptionManager: EncryptionManager,
     private val biometricKeyStore: BiometricKeyStore,
     private val unlockCipher: UnlockCipherUseCase,
 ) : BiometricUnlock {
+
+    override val isAvailableAndSetup: Boolean
+        get() = config.biometricAuthenticationEnabled && biometricKeyStore.userKeyExists()
 
     override suspend fun setup(fragment: Fragment): Result<Unit> {
         val currentUserKey = encryptionManager.getKeyOrNull()

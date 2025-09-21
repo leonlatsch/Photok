@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.security.biometric
 import androidx.fragment.app.Fragment
 
 interface BiometricUnlock {
+    val isAvailableAndSetup: Boolean
     suspend fun setup(fragment: Fragment): Result<Unit>
     suspend fun unlock(fragment: Fragment): Result<Unit>
     suspend fun reset(): Result<Unit>
