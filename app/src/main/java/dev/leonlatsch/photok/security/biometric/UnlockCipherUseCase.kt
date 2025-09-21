@@ -66,11 +66,6 @@ class UnlockCipherUseCase @Inject constructor() {
 
                     continuation.resume(Result.failure(error))
                 }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    continuation.resume(Result.failure(Exception("Authentication failed")))
-                }
             }
         )
 
