@@ -63,11 +63,12 @@ class BiometricKeyStore @Inject constructor(
     }
 
     fun encryptUserKey(userKey: SecretKey, unlockedCipher: Cipher): Result<Unit> = runCatching {
-        unlockedCipher.update(unlockedCipher.iv)
         val wrapped = unlockedCipher.doFinal(userKey.encoded)
 
+        val finalBytes = unlockedCipher.iv + wrapped
+
         prefs.edit {
-            putString(WRAPPED_USER_KEY, Base64.Default.encode(wrapped))
+            putString(WRAPPED_USER_KEY, Base64.Default.encode(finalBytes))
             apply()
         }
     }
@@ -77,8 +78,9 @@ class BiometricKeyStore @Inject constructor(
             ?: error("User key not stored")
 
         val wrapped = Base64.Default.decode(blobBase64)
+        val cipherText = wrapped.copyOfRange(IV_SIZE, wrapped.size)
 
-        val keyBytes = unlockedCipher.doFinal(wrapped)
+        val keyBytes = unlockedCipher.doFinal(cipherText)
         SecretKeySpec(keyBytes, AES)
     }
 
