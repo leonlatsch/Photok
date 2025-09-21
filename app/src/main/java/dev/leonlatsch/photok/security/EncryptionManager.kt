@@ -20,12 +20,15 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
+import javax.crypto.SecretKey
 
 interface EncryptionManager {
     val isReady: Boolean
     var keyCacheEnabled: Boolean
-    fun initialize(password: String)
+    fun initialize(password: String): Result<Unit>
+    fun initialize(key: SecretKey): Result<Unit>
     fun reset()
+    fun getKeyOrNull(): SecretKey?
 
     fun createCipherInputStream(
         input: InputStream,

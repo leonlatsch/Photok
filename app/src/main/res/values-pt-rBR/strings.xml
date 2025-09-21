@@ -155,6 +155,8 @@
     <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
     <string name="settings_security_change_password_title">Alterar a senha</string>
     <string name="settings_security_change_password_summary">Alterar sua senha</string>
+    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -309,4 +311,15 @@
     <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
+    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+
+    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
+    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
+    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 </resources>

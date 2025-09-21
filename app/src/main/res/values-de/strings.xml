@@ -156,6 +156,8 @@
     <string name="settings_security_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
     <string name="settings_security_change_password_title">Passwort ändern</string>
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
+    <string name="settings_security_biometric_summary">Entsperre Photok mit Fingerabdruck oder Gesichtserkennung.</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
@@ -310,4 +312,16 @@
     <string name="migration_error_extract_data">Daten extrahieren</string>
     <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
     <string name="migration_error_extracting_title">Entschlüssele in ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Photok entsperren</string>"
+    <string name="biometric_unlock_subtitle">Bestätige deine Identität zum entsperren</string>
+    <string name="biometric_unlock_cancel">Photok Passwort benutzen</string>
+
+    <string name="biometric_unlock_setup_title">Biometrisches Entsperren aktivieren</string>
+    <string name="biometric_unlock_setup_subtitle">Bestätige deine Identität zum aktivieren</string>
+
+    <string name="biometric_unlock_error">Biometrisches entsperren fehlgeschlagen. Benutze dein Photok Passwort.</string>
+    <string name="biometric_unlock_hint_button">Mit Biometrie entsperren</string>
 </resources>

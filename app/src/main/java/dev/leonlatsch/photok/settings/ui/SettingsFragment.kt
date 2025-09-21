@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.settings.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -26,11 +24,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
@@ -43,11 +44,14 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
+import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 fun createBackupFilename(): String {
@@ -75,6 +79,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     @Inject
     lateinit var config: Config
 
+    @Inject
+    lateinit var biometricUnlock: BiometricUnlock
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.statusBarPadding()
@@ -95,12 +102,40 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupAppCategory() {
         addCallbackTo<ListPreference>(Config.SYSTEM_DESIGN) {
             setAppDesign(it as String)
+            true
         }
     }
 
     private fun setupSecurityCategory() {
         addActionTo(KEY_ACTION_CHANGE_PASSWORD) {
             ChangePasswordDialog().show(childFragmentManager)
+        }
+
+        addCallbackTo<SwitchPreference>(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED) { enabled ->
+            enabled as Boolean
+
+            if (!enabled) {
+                lifecycleScope.launch {
+                    biometricUnlock.reset()
+                }
+                return@addCallbackTo true
+            }
+
+            lifecycleScope.launch {
+                val wasEnabled = biometricUnlock.setup(this@SettingsFragment).onFailure {
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(
+                            requireContext(),
+                            it.localizedMessage ?: getString(R.string.common_error),
+                        )
+                }
+                }.isSuccess
+
+                config.biometricAuthenticationEnabled = wasEnabled
+                findPreference<SwitchPreferenceCompat>(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED)?.isChecked = wasEnabled
+            }
+
+            false // Don't apply change. Enabled only after verifying biometrics
         }
 
         addActionTo(KEY_ACTION_HIDE_APP) {
@@ -175,20 +210,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun addActionTo(preferenceId: String, action: () -> Unit) {
+    private fun addActionTo(preferenceId: String, action: (Preference) -> Unit) {
         preferenceManager
             .findPreference<Preference>(preferenceId)
             ?.setOnPreferenceClickListener {
-                action()
+                action(it)
                 true
             }
     }
 
-    private fun <T : Preference> addCallbackTo(preferenceId: String, action: (value: Any) -> Unit) {
+    private fun <T : Preference> addCallbackTo(preferenceId: String, action: (newValue: Any) -> Boolean) {
         preferenceManager.findPreference<T>(preferenceId)
             ?.setOnPreferenceChangeListener { _, newValue ->
                 action(newValue)
-                true
             }
     }
 

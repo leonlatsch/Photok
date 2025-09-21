@@ -27,6 +27,7 @@ import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
+import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Qualifier
@@ -51,26 +52,38 @@ class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
     @Deprecated("Legacy encryption manager does not support key caching")
     override var keyCacheEnabled: Boolean = false
 
-    override fun initialize(password: String) {
+    override fun initialize(password: String): Result<Unit> {
         if (password.length < 6) {
             isReady = false
-            return
+            return Result.failure(IllegalArgumentException("Password too short"))
         }
 
         try {
             key = genSecKey(password)
             iv = genLegacyIv(password)
             isReady = true
+            return Result.success(Unit)
         } catch (e: GeneralSecurityException) {
             Timber.d("Error initializing EncryptionManager: $e")
             reset()
+            return Result.failure(e)
         }
+    }
+
+    override fun initialize(key: SecretKey): Result<Unit> {
+        return Result.failure(
+            UnsupportedOperationException("Legacy encryption manager does not support biometrics")
+        )
     }
 
     override fun reset() {
         key = null
         iv = null
         isReady = false
+    }
+
+    override fun getKeyOrNull(): SecretKey? {
+        return key
     }
 
     override fun createCipherInputStream(
