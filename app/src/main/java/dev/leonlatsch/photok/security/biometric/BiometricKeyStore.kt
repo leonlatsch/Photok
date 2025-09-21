@@ -6,24 +6,23 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.security.AES
 import java.security.KeyPairGenerator
 import java.security.KeyStore
+import java.security.SecureRandom
 import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.io.encoding.Base64
 
-/**
- * Marks a method as protected by biometric authentication.
- */
-annotation class ProtectedByBiometric
-
+private const val IV_SIZE = 16
 private const val WRAPPED_USER_KEY = "wrapped_user_key"
-private const val RSA_ALIAS = "bio_protection_rsa"
 private const val ANDROID_KEY_STORE = "AndroidKeyStore"
-private const val RSA_ALGORITHM = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"
+private const val WRAPPING_KEY_ALIAS = "user_key_wrapper"
 
 @Singleton
 class BiometricKeyStore @Inject constructor(
@@ -38,62 +37,74 @@ class BiometricKeyStore @Inject constructor(
             remove(WRAPPED_USER_KEY)
             apply()
         }
-
-        loadAndroidKeyStore().deleteEntry(RSA_ALIAS)
     }
 
-    @ProtectedByBiometric
-    fun storeUserKey(userKey: SecretKey): Result<Unit> = runCatching {
-        createRsaKeyIfNeeded()
-        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
-        val publicKey = keyStore.getCertificate(RSA_ALIAS).publicKey
+    fun getEncryptionCipher(): Result<Cipher> = runCatching {
+        val key = getOrCreateSecretKey()
 
-        val cipher = Cipher.getInstance(RSA_ALGORITHM)
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey)
-        val wrapped = cipher.doFinal(userKey.encoded)
-
-        prefs.edit {
-            putString(WRAPPED_USER_KEY, Base64.encode(wrapped))
-            apply()
+        Cipher.getInstance("AES/CBC/PKCS7Padding").apply {
+            init(Cipher.ENCRYPT_MODE, key)
         }
     }
 
-    @ProtectedByBiometric
-    fun getUserKey(): Result<SecretKey> = runCatching {
+
+    fun getDecryptionCipher(): Result<Cipher> = runCatching {
         val blobBase64 = prefs.getString(WRAPPED_USER_KEY, null)
             ?: error("User key not stored")
 
         val wrapped = Base64.Default.decode(blobBase64)
 
-        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
-        val privateKey = keyStore.getKey(RSA_ALIAS, null)
+        val key = getOrCreateSecretKey()
+        val iv = wrapped.copyOfRange(0, IV_SIZE)
 
-        val cipher = Cipher.getInstance(RSA_ALGORITHM)
-        cipher.init(Cipher.DECRYPT_MODE, privateKey)
-
-        val keyBytes = cipher.doFinal(wrapped)
-        SecretKeySpec(keyBytes, "AES")
+        Cipher.getInstance("AES/CBC/PKCS7Padding").apply {
+            init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
+        }
     }
 
-    @ProtectedByBiometric
-    private fun createRsaKeyIfNeeded() {
-        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
-        if (!keyStore.containsAlias(RSA_ALIAS)) {
-            val kpg = KeyPairGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_RSA,
-                ANDROID_KEY_STORE
-            )
-            val spec = KeyGenParameterSpec.Builder(
-                RSA_ALIAS,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-            )
-                .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
-                .setUserAuthenticationRequired(true)
-                .build()
-            kpg.initialize(spec)
-            kpg.generateKeyPair()
+    fun encryptUserKey(userKey: SecretKey, unlockedCipher: Cipher): Result<Unit> = runCatching {
+        unlockedCipher.update(unlockedCipher.iv)
+        val wrapped = unlockedCipher.doFinal(userKey.encoded)
+
+        prefs.edit {
+            putString(WRAPPED_USER_KEY, Base64.Default.encode(wrapped))
+            apply()
         }
+    }
+
+    fun decryptUserKey(unlockedCipher: Cipher): Result<SecretKey> = runCatching {
+        val blobBase64 = prefs.getString(WRAPPED_USER_KEY, null)
+            ?: error("User key not stored")
+
+        val wrapped = Base64.Default.decode(blobBase64)
+
+        val keyBytes = unlockedCipher.doFinal(wrapped)
+        SecretKeySpec(keyBytes, AES)
+    }
+
+
+    private fun getOrCreateSecretKey(): SecretKey {
+        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
+        keyStore.load(null)
+        keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let { return it as SecretKey }
+
+        // if you reach here, then a new SecretKey must be generated for that keyName
+        val keyGenParams = KeyGenParameterSpec.Builder(
+            WRAPPING_KEY_ALIAS,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+            .setUserAuthenticationRequired(true)
+            .setKeySize(256)
+            .setInvalidatedByBiometricEnrollment(true)
+            .build()
+
+        val keyGenerator = KeyGenerator.getInstance(
+            KeyProperties.KEY_ALGORITHM_AES,
+            ANDROID_KEY_STORE
+        )
+        keyGenerator.init(keyGenParams)
+        return keyGenerator.generateKey()
     }
     private fun loadAndroidKeyStore(): KeyStore {
         return KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }

@@ -17,23 +17,19 @@
 package dev.leonlatsch.photok.security.biometric
 
 import android.content.res.Resources
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
-import javax.crypto.Cipher
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 @Singleton
 class BiometricUnlockImpl @Inject constructor(
     private val resources: Resources,
     private val encryptionManager: EncryptionManager,
     private val biometricKeyStore: BiometricKeyStore,
+    private val unlockCipher: UnlockCipherUseCase,
 ) : BiometricUnlock {
 
     override suspend fun setup(fragment: Fragment): Result<Unit> {
@@ -42,44 +38,50 @@ class BiometricUnlockImpl @Inject constructor(
             return Result.failure(IllegalStateException("EncryptionManager not ready"))
         }
 
+        val encryptionCipher = biometricKeyStore.getEncryptionCipher().onFailure {
+            Timber.e("Getting encryption cipher failed: $it")
+            return Result.failure(it)
+        }.getOrThrow()
 
-        val result = fragment.biometricAuthentication(
+        val unlockedCipher = unlockCipher(
+            fragment = fragment,
+            cipher = encryptionCipher,
             title = resources.getString(R.string.biometric_unlock_setup_title),
             subtitle = resources.getString(R.string.biometric_unlock_setup_subtitle),
             negativeButtonText = resources.getString(R.string.common_cancel),
-        )
-
-        result.onFailure {
-            Timber.d("Biometric setup failed: $it")
+        ).onFailure {
+            Timber.e("Unlocking cipher failed: $it")
             return Result.failure(it)
-        }
+        }.getOrThrow()
 
-        return biometricKeyStore.storeUserKey(currentUserKey).onFailure {
-            Timber.d("Storing user key failed: $it")
-        }
+        return biometricKeyStore.encryptUserKey(currentUserKey, unlockedCipher).onFailure {
+                Timber.e("Encrypting user key failed: $it")
+            }
     }
 
     override suspend fun unlock(fragment: Fragment): Result<Unit> {
-        val result = fragment.biometricAuthentication(
+        val encryptionCipher = biometricKeyStore.getDecryptionCipher().onFailure {
+            Timber.e("Getting decryption cipher failed: $it")
+            return Result.failure(it)
+        }.getOrThrow()
+
+        val unlockedCipher = unlockCipher(
+            fragment = fragment,
+            cipher = encryptionCipher,
             title = resources.getString(R.string.biometric_unlock_title),
             subtitle = resources.getString(R.string.biometric_unlock_subtitle),
             negativeButtonText = resources.getString(R.string.biometric_unlock_cancel),
-        )
-
-        result.onFailure {
-            Timber.w("Biometric unlock failed: $it")
+        ).onFailure {
+            Timber.e("Unlocking cipher failed: $it")
             return Result.failure(it)
-        }
+        }.getOrThrow()
 
-        val userKey = biometricKeyStore.getUserKey().onFailure {
-            Timber.w("Getting user key failed: $it")
-        }.getOrNull()
+        val userKey = biometricKeyStore.decryptUserKey(unlockedCipher).onFailure {
+            Timber.e("Decrypting user key failed: $it")
+            return Result.failure(it)
+        }.getOrThrow()
 
-        userKey ?: return Result.failure(IllegalStateException("Could not load user key"))
-
-        return encryptionManager.initialize(userKey).onFailure {
-            Timber.d("EncryptionManager initialization failed: $it")
-        }
+        return encryptionManager.initialize(userKey)
     }
 
     override suspend fun reset(): Result<Unit> = runCatching {
@@ -87,41 +89,3 @@ class BiometricUnlockImpl @Inject constructor(
     }
 }
 
-suspend fun Fragment.biometricAuthentication(
-    title: String,
-    subtitle: String,
-    negativeButtonText: String,
-): Result<BiometricPrompt.AuthenticationResult> = suspendCoroutine { continuation ->
-    val biometricPrompt = BiometricPrompt(
-        this,
-        ContextCompat.getMainExecutor(requireContext()),
-        object : BiometricPrompt.AuthenticationCallback() {
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                continuation.resume(Result.success(result))
-            }
-
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                continuation.resume(Result.failure(Exception(errString.toString())))
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                continuation.resume(Result.failure(Exception("Authentication failed")))
-            }
-        }
-    )
-
-    val promptInfo = BiometricPrompt.PromptInfo.Builder()
-        .setTitle(title)
-        .setSubtitle(subtitle)
-        .setNegativeButtonText(negativeButtonText)
-        .setConfirmationRequired(true)
-        .build()
-
-    val cipher: Cipher = TODO()
-
-    biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
-}

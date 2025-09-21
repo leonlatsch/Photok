@@ -45,7 +45,6 @@ import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
-import dev.leonlatsch.photok.security.biometric.biometricAuthentication
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
