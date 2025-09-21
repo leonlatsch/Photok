@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
+import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -112,10 +113,12 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             biometricUnlock.unlock(this@UnlockFragment)
                 .onSuccess { goToGallery() }
                 .onFailure {
-                    Dialogs.showLongToast(
-                        context = requireContext(),
-                        message = getString(R.string.biometric_unlock_error),
-                    )
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(
+                            context = requireContext(),
+                            message = getString(R.string.biometric_unlock_error),
+                        )
+                    }
                 }
         }
     }
