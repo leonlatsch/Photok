@@ -7,9 +7,7 @@ import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.security.AES
-import java.security.KeyPairGenerator
 import java.security.KeyStore
-import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -24,6 +22,18 @@ private const val WRAPPED_USER_KEY = "wrapped_user_key"
 private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 private const val WRAPPING_KEY_ALIAS = "user_key_wrapper"
 
+/**
+ * Provides secure storage of the user’s encryption key using Android’s KeyStore
+ * with biometric authentication.
+ *
+ * Generates or retrieves a biometric-protected AES key, then wraps/unwraps the user key,
+ * which is stored in [SharedPreferences].
+ *
+ * Main tasks:
+ * - Create and access biometric-bound AES keys
+ * - Provide ciphers for encrypting and decrypting the user key
+ * - Persist and remove wrapped keys
+ */
 @Singleton
 class BiometricKeyStore @Inject constructor(
     @ApplicationContext context: Context,
@@ -66,6 +76,10 @@ class BiometricKeyStore @Inject constructor(
         }
     }
 
+    /**
+     * Encrypts the user key with the given [unlockedCipher].
+     * [unlockedCipher] has to be a cipher that has been unlocked with biometric authentication.
+     */
     fun encryptUserKey(userKey: SecretKey, unlockedCipher: Cipher): Result<Unit> = runCatching {
         val wrapped = unlockedCipher.doFinal(userKey.encoded)
 
@@ -77,6 +91,10 @@ class BiometricKeyStore @Inject constructor(
         }
     }
 
+    /**
+     * Decrypts the user key with the given [unlockedCipher].
+     * [unlockedCipher] has to be a cipher that has been unlocked with biometric authentication.
+     */
     fun decryptUserKey(unlockedCipher: Cipher): Result<SecretKey> = runCatching {
         val blobBase64 = prefs.getString(WRAPPED_USER_KEY, null)
             ?: error("User key not stored")
@@ -94,7 +112,6 @@ class BiometricKeyStore @Inject constructor(
         keyStore.load(null)
         keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let { return it as SecretKey }
 
-        // if you reach here, then a new SecretKey must be generated for that keyName
         val keyGenParams = KeyGenParameterSpec.Builder(
             WRAPPING_KEY_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)

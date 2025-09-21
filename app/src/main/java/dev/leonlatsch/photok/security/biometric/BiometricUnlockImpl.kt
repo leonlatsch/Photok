@@ -25,6 +25,12 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Implementation of [BiometricUnlock] for managing biometric setup and unlock.
+ *
+ * <p>Uses [BiometricKeyStore], [EncryptionManager], and [UnlockCipherUseCase]
+ * to securely store and retrieve the user’s encryption key with biometric protection.</p>
+ */
 @Singleton
 class BiometricUnlockImpl @Inject constructor(
     private val config: Config,

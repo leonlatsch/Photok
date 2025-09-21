@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.security.biometric
 
 import androidx.biometric.BiometricPrompt
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import javax.crypto.Cipher
@@ -27,6 +26,16 @@ import kotlin.coroutines.suspendCoroutine
 
 class UserCanceledBiometricsException : Exception()
 
+/**
+ * Unlocks a [Cipher] that is protected by biometric authentication.
+ *
+ * Shows a [BiometricPrompt] on a [Fragment] and returns the unlocked cipher
+ * if authentication succeeds, or an error if it fails or is canceled.
+ *
+ * Main tasks:
+ * - Display biometric prompt with title, subtitle, and cancel option
+ * - Return unlocked cipher or error result
+ */
 class UnlockCipherUseCase @Inject constructor() {
     suspend operator fun invoke(
         fragment: Fragment,
