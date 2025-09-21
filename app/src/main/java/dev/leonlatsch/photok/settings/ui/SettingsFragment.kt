@@ -122,10 +122,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
 
             lifecycleScope.launch {
-                val wasEnabled = biometricUnlock.setup(this@SettingsFragment) .onFailure {
+                val wasEnabled = biometricUnlock.setup(this@SettingsFragment).onFailure {
                     if (it !is UserCanceledBiometricsException) {
-                        Dialogs.showLongToast(requireContext(), it.localizedMessage ?: getString(R.string.common_error))
-                    }
+                        Dialogs.showLongToast(
+                            requireContext(),
+                            it.localizedMessage ?: getString(R.string.common_error),
+                        )
+                }
                 }.isSuccess
 
                 config.biometricAuthenticationEnabled = wasEnabled
