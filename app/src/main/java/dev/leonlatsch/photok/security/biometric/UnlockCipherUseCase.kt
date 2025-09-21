@@ -17,12 +17,15 @@
 package dev.leonlatsch.photok.security.biometric
 
 import androidx.biometric.BiometricPrompt
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import javax.crypto.Cipher
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+class UserCanceledBiometricsException : Exception()
 
 class UnlockCipherUseCase @Inject constructor() {
     suspend operator fun invoke(
@@ -50,7 +53,18 @@ class UnlockCipherUseCase @Inject constructor() {
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    continuation.resume(Result.failure(Exception(errString.toString())))
+                    val noErrorMessages = setOf(
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON,
+                        BiometricPrompt.ERROR_USER_CANCELED,
+                    )
+
+                    val error = if (noErrorMessages.contains(errorCode)) {
+                        UserCanceledBiometricsException()
+                    } else {
+                        Exception(errString.toString())
+                    }
+
+                    continuation.resume(Result.failure(error))
                 }
 
                 override fun onAuthenticationFailed() {

@@ -45,6 +45,7 @@ import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
+import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
@@ -122,7 +123,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             lifecycleScope.launch {
                 val wasEnabled = biometricUnlock.setup(this@SettingsFragment) .onFailure {
-                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(requireContext(), it.localizedMessage ?: getString(R.string.common_error))
+                    }
                 }.isSuccess
 
                 config.biometricAuthenticationEnabled = wasEnabled
