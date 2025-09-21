@@ -310,8 +310,9 @@
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string>
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string>
 
+
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string>"
+    <string name="biometric_unlock_title">Unlock Photok</string>
     <string name="biometric_unlock_subtitle">Verify your identity to unlock</string>
     <string name="biometric_unlock_cancel">Use Photok password</string>
 

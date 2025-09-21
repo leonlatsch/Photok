@@ -154,6 +154,8 @@
     <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
     <string name="settings_security_change_password_title">更改密码</string>
     <string name="settings_security_change_password_summary">更改你的密码</string>
+    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
     <string name="settings_security_timeout_immediately">立即</string>
@@ -308,4 +310,15 @@
     <string name="migration_error_extract_data">提取数据</string>
     <string name="migration_error_extract_confirmation_text">确定要从图库提取所有文件并不加密地放在 ZIP 文件中吗？</string>
     <string name="migration_error_extracting_title">正在解密以制作 ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
+    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+
+    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
+    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
+    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 </resources>

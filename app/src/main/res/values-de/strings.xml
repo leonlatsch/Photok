@@ -313,6 +313,7 @@
     <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
     <string name="migration_error_extracting_title">Entschlüssele in ZIP…</string>
 
+
     <!-- Biometric -->
     <string name="biometric_unlock_title">Photok entsperren</string>"
     <string name="biometric_unlock_subtitle">Bestätige deine Identität zum entsperren</string>
