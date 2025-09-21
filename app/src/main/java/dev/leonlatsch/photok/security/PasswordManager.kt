@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.security
 
 import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.settings.data.Config
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
@@ -28,7 +29,8 @@ import javax.inject.Inject
  * @since 1.3.1
  */
 class PasswordManager @Inject constructor(
-    private val config: Config
+    private val config: Config,
+    private val biometricUnlock: BiometricUnlock,
 ) {
 
     /**
@@ -55,7 +57,8 @@ class PasswordManager @Inject constructor(
     /**
      * Set stored password to empty string
      */
-    fun resetPassword() {
+    suspend fun resetPassword() {
         config.securityPassword = String.empty
+        biometricUnlock.reset()
     }
 }
