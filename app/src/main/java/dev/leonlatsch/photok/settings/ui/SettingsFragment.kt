@@ -121,7 +121,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
 
             lifecycleScope.launch {
-                val wasEnabled = biometricUnlock.setup(this@SettingsFragment).isSuccess
+                val wasEnabled = biometricUnlock.setup(this@SettingsFragment) .onFailure {
+                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+                }.isSuccess
 
                 config.biometricAuthenticationEnabled = wasEnabled
                 findPreference<SwitchPreferenceCompat>(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED)?.isChecked = wasEnabled
@@ -215,7 +217,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preferenceManager.findPreference<T>(preferenceId)
             ?.setOnPreferenceChangeListener { _, newValue ->
                 action(newValue)
-                true
             }
     }
 
