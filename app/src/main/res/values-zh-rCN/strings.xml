@@ -154,8 +154,8 @@
     <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
     <string name="settings_security_change_password_title">更改密码</string>
     <string name="settings_security_change_password_summary">更改你的密码</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">生物特征解锁</string>
+    <string name="settings_security_biometric_summary">用指纹或面部识别解锁 Photok</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
     <string name="settings_security_timeout_immediately">立即</string>
@@ -313,12 +313,12 @@
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">解锁 Photok</string>
+    <string name="biometric_unlock_subtitle">验证身份以解锁</string>
+    <string name="biometric_unlock_cancel">使用 Photok 密码</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">启用生物特征解锁</string>
+    <string name="biometric_unlock_setup_subtitle">要启用生物特征解锁，请确认身份</string>
+    <string name="biometric_unlock_error">生物特征解锁失败了。请使用 Photok 密码。</string>
+    <string name="biometric_unlock_hint_button">用生物特征解锁</string>
 </resources>
