@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
 
       - name: Update Translation Badges
-        run: ./gradlew updateTranslations
+        run: ./gradlew updateTranslationBadges
 
       - name: Commit and Push
         uses: github-actions-x/commit@v2.9

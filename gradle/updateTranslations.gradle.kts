@@ -16,7 +16,41 @@ import java.util.*
  *   limitations under the License.
  */
 
+fun String.findStringName(): String {
+    val first = this.indexOfFirst { it == '"'}
+    val second = this.indexOfLast { it == '"'}
+    println(this)
+    println(first)
+    println(second)
+    return this.substring(first, second)
+}
+
 tasks.register("updateTranslations") {
+    val resPath = "app/src/main/res"
+    val bytes = java.io.FileInputStream(File("$resPath/values/strings.xml")).readBytes()
+    val enLines = String(bytes).split("\n")
+
+    File(resPath).walk().forEach { dir ->
+        if (dir.isDirectory &&
+            dir.name.contains("values") &&
+            dir.name != "values"
+        ) {
+            dir.walk().forEach { stringsFile ->
+                if (stringsFile.name == "strings.xml") {
+                    val lines = String(java.io.FileInputStream(stringsFile).readBytes()).split("\n")
+
+                    val missingForThisLocale = enLines.filter { enLine ->
+                        enLine.contains("<string") && lines.map { it.findStringName() }.contains(enLine.findStringName())
+                    }
+
+                    println("Missing for $stringsFile: ${lines.size}")
+                }
+            }
+        }
+    }
+}
+
+tasks.register("updateTranslationBadges") {
     val resPath = "app/src/main/res"
     val bytes = java.io.FileInputStream(File("$resPath/values/strings.xml")).readBytes()
     val enLines = String(bytes).split("\n")
@@ -38,13 +72,10 @@ tasks.register("updateTranslations") {
             dir.walk().forEach { stringsFile ->
                 if (stringsFile.name == "strings.xml") {
                     var strings = 0
-                    var author = "UNKNOWN"
                     val lines = String(java.io.FileInputStream(stringsFile).readBytes()).split("\n")
                     for (line in lines) {
                         if (line.contains("<string") && !line.contains("TODO")) {
                             strings++
-                        } else if (line.contains("MAINTAINED BY")) {
-                            author = line.substring(line.indexOf("(") + 1, line.indexOf(")"))
                         }
                     }
                     val localeName = dir.name.replace("values-", "")
