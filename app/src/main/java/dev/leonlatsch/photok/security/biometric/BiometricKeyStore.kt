@@ -42,21 +42,35 @@ class BiometricKeyStore @Inject constructor(
         context.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
     }
 
-    fun userKeyExists(): Boolean {
-        return prefs.getString(WRAPPED_USER_KEY, null).isNullOrEmpty().not()
+    fun validate(): Boolean {
+        val keyStore = getKeyStore()
+
+        val userKeyStored = prefs.getString(WRAPPED_USER_KEY, null).isNullOrEmpty().not()
+
+        val validWrappingKey = runCatching {
+            keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let {
+                createCipher(it as SecretKey).apply {
+                    init(Cipher.ENCRYPT_MODE, it)
+                }
+            }
+        }.isSuccess
+
+        return userKeyStored && validWrappingKey
     }
 
-    fun removeStoredUserKey() {
+    fun reset() {
         prefs.edit {
             remove(WRAPPED_USER_KEY)
             apply()
         }
+
+        getKeyStore().deleteEntry(WRAPPING_KEY_ALIAS)
     }
 
     fun getEncryptionCipher(): Result<Cipher> = runCatching {
         val key = getOrCreateSecretKey()
 
-        Cipher.getInstance("AES/CBC/PKCS7Padding").apply {
+        createCipher(key).apply {
             init(Cipher.ENCRYPT_MODE, key)
         }
     }
@@ -108,8 +122,7 @@ class BiometricKeyStore @Inject constructor(
 
 
     private fun getOrCreateSecretKey(): SecretKey {
-        val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
-        keyStore.load(null)
+        val keyStore = getKeyStore()
         keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let { return it as SecretKey }
 
         val keyGenParams = KeyGenParameterSpec.Builder(
@@ -129,7 +142,14 @@ class BiometricKeyStore @Inject constructor(
         keyGenerator.init(keyGenParams)
         return keyGenerator.generateKey()
     }
-    private fun loadAndroidKeyStore(): KeyStore {
+
+    private fun getKeyStore(): KeyStore {
         return KeyStore.getInstance(ANDROID_KEY_STORE).apply { load(null) }
+    }
+
+    private fun createCipher(key: SecretKey): Cipher {
+        return Cipher.getInstance("AES/CBC/PKCS7Padding").apply {
+            init(Cipher.ENCRYPT_MODE, key)
+        }
     }
 }

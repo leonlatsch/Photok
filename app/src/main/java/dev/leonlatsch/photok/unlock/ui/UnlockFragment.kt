@@ -98,7 +98,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         // Check for migration should not be needed. But double check because in this case we don't have the legacy key
-        if (biometricUnlock.isAvailableAndSetup && !legacyEncryptionMigrator.migrationNeeded()) {
+        if (biometricUnlock.isSetupAndValid() && !legacyEncryptionMigrator.migrationNeeded()) {
             binding.unlockUseBiometricUnlockButton.show()
             launchBiometricUnlock()
         } else {

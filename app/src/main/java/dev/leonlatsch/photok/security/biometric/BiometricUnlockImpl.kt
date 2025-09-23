@@ -40,8 +40,16 @@ class BiometricUnlockImpl @Inject constructor(
     private val unlockCipher: UnlockCipherUseCase,
 ) : BiometricUnlock {
 
-    override val isAvailableAndSetup: Boolean
-        get() = config.biometricAuthenticationEnabled && biometricKeyStore.userKeyExists()
+    override fun isSetupAndValid(): Boolean {
+        val keyStoreValid = biometricKeyStore.validate()
+
+        if (!keyStoreValid) {
+            config.biometricAuthenticationEnabled = false
+            biometricKeyStore.reset()
+        }
+
+        return keyStoreValid && config.biometricAuthenticationEnabled
+    }
 
     override suspend fun setup(fragment: Fragment): Result<Unit> {
         val currentUserKey = encryptionManager.getKeyOrNull()
@@ -96,7 +104,7 @@ class BiometricUnlockImpl @Inject constructor(
     }
 
     override suspend fun reset(): Result<Unit> = runCatching {
-        biometricKeyStore.removeStoredUserKey()
+        biometricKeyStore.reset()
     }
 }
 
