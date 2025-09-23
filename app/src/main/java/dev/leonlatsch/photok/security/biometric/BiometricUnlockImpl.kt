@@ -16,8 +16,12 @@
 
 package dev.leonlatsch.photok.security.biometric
 
+import android.content.Context
 import android.content.res.Resources
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
@@ -33,12 +37,18 @@ import javax.inject.Singleton
  */
 @Singleton
 class BiometricUnlockImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val config: Config,
     private val resources: Resources,
     private val encryptionManager: EncryptionManager,
     private val biometricKeyStore: BiometricKeyStore,
     private val unlockCipher: UnlockCipherUseCase,
 ) : BiometricUnlock {
+
+    override fun areBiometricsAvailable(): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        return biometricManager.canAuthenticate(BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
+    }
 
     override fun isSetupAndValid(): Boolean {
         val keyStoreValid = biometricKeyStore.validate()
@@ -56,6 +66,8 @@ class BiometricUnlockImpl @Inject constructor(
         if (currentUserKey == null) {
             return Result.failure(IllegalStateException("EncryptionManager not ready"))
         }
+
+        biometricKeyStore.reset() // Reset before attempt to setup
 
         val encryptionCipher = biometricKeyStore.getEncryptionCipher().onFailure {
             Timber.e("Getting encryption cipher failed: $it")

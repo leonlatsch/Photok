@@ -156,6 +156,7 @@
     <string name="settings_security_change_password_summary">Change your password</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string>
     <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string>
+    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string>
     <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
     <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
     <string name="settings_security_timeout_immediately">Immediately</string>

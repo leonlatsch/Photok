@@ -158,6 +158,7 @@
     <string name="settings_security_change_password_summary">Définir un nouveau mot de passe</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
     <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
     <string name="settings_security_timeout_summary">Se verrouille en arrière-plan après un certain temps</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>

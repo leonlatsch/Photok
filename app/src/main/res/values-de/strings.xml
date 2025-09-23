@@ -158,6 +158,7 @@
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
     <string name="settings_security_biometric_summary">Entsperre Photok mit Fingerabdruck oder Gesichtserkennung.</string>
+    <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht vervügbar</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>

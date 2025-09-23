@@ -115,10 +115,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
             enabled as Boolean
 
             if (!enabled) {
-                lifecycleScope.launch {
-                    biometricUnlock.reset()
-                }
+                lifecycleScope.launch { biometricUnlock.reset() }
                 return@addCallbackTo true
+            }
+
+            if (!biometricUnlock.areBiometricsAvailable()) {
+                Dialogs.showLongToast(
+                    requireContext(),
+                    getString(R.string.settings_security_biometric_not_available),
+                )
+                return@addCallbackTo false
             }
 
             lifecycleScope.launch {

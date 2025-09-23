@@ -156,6 +156,7 @@
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
     <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Автоматическая блокировка</string>
     <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
     <string name="settings_security_timeout_immediately">Немедленно</string>
