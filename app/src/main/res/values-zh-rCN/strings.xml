@@ -263,11 +263,11 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Enhanced Encryption</string>
-    <string name="news_summary_1">改进的加密方法极大提升安全性和效率</string>
+    <string name="news_title_1">Biometric Unlock</string> <!-- TODO -->
+    <string name="news_summary_1">Unlock Photok with biometric authentication</string> <!-- TODO -->
 
-    <string name="news_title_2">新：捐赠</string>
-    <string name="news_summary_2">查看设置中的“捐赠”按钮来支持 Photok</string>
+    <string name="news_title_2">Improvements for selecting Files</string> <!-- TODO -->
+    <string name="news_summary_2">Improved animations and shapes for multi selection</string> <!-- TODO -->
 
     <string name="news_title_3">新：导出后删除</string>
     <string name="news_summary_3">导出文件后自动删除这些导出的文件</string>

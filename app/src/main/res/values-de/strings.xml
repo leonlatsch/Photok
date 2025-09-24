@@ -265,11 +265,11 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Verbesserte Verschlüsselung</string>
-    <string name="news_summary_1">Ein optimiertes Verschlüsselungsverfahren steigert Sicherheit und Effizienz erheblich</string>
+    <string name="news_title_1">Biometrisches Ensperren</string>
+    <string name="news_summary_1">Entsperre Photok mit Biometrie</string>
 
-    <string name="news_title_2">NEU: Spenden</string>
-    <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>
+    <string name="news_title_2">Verbesserungen für Dateiauswahl</string>
+    <string name="news_summary_2">Verbesserte Animationen und Formen für die Multi-Auswahl</string>
 
     <string name="news_title_3">Neu: Automatisches löschen</string>
     <string name="news_summary_3">Automatisches Löschen von Dateien beim exportieren aus Photok.</string>

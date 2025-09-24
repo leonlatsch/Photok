@@ -262,11 +262,11 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
-    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
+    <string name="news_title_1">Biometric Unlock</string> <!-- TODO -->
+    <string name="news_summary_1">Unlock Photok with biometric authentication</string> <!-- TODO -->
 
-    <string name="news_title_2">NEW: Donations</string> <!-- TODO -->
-    <string name="news_summary_2">See the "Donate" button in the settings to support Photok</string> <!-- TODO -->
+    <string name="news_title_2">Improvements for selecting Files</string> <!-- TODO -->
+    <string name="news_summary_2">Improved animations and shapes for multi selection</string> <!-- TODO -->
 
     <string name="news_title_3">NEW: Delete after export</string> <!-- TODO -->
     <string name="news_summary_3">Have files automatically deleted after exporting them</string> <!-- TODO -->
