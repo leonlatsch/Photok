@@ -52,6 +52,13 @@
             android:summary="@string/settings_security_change_password_summary"
             android:title="@string/settings_security_change_password_title" />
 
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_fingerprint"
+            android:key="security^biometricAuthenticationEnabled"
+            android:summary="@string/settings_security_biometric_summary"
+            android:title="@string/settings_security_biometric_title"
+            android:defaultValue="false" />
+
         <ListPreference
             android:defaultValue="300000"
             android:entries="@array/timeoutStrings"

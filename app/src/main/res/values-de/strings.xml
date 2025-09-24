@@ -156,6 +156,9 @@
     <string name="settings_security_allow_screenshots_summary">Erlaube das erstellen von Screenshots. Erfordert Neustart.</string>
     <string name="settings_security_change_password_title">Passwort ändern</string>
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
+    <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
+    <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
+    <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht vervügbar</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
@@ -166,7 +169,7 @@
     <string name="settings_security_timeout_never">Niemals</string>
     <string name="settings_security_launch_code_title">Geheimer Start-Code</string>
     <string name="settings_security_launch_code_summary">Geheimer Code um Photok von der Wahltastatur aus zu starten.</string>
-    <string name="settings_security_launch_code_message">Gib *#*#{dein code]#*#* in die Wahltastatur ein, um Photok zu starten.</string>
+    <string name="settings_security_launch_code_message">Gib *#*#[dein code]#*#* in die Wahltastatur ein, um Photok zu starten.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">App Verstecken</string>
@@ -262,11 +265,11 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Verbesserte Verschlüsselung</string>
-    <string name="news_summary_1">Ein optimiertes Verschlüsselungsverfahren steigert Sicherheit und Effizienz erheblich</string>
+    <string name="news_title_1">Biometrisches Ensperren</string>
+    <string name="news_summary_1">Entsperre Photok mit Biometrie</string>
 
-    <string name="news_title_2">NEU: Spenden</string>
-    <string name="news_summary_2">Benutze die "Spenden" Option in den Einstellungen um Photok zu unterstützen</string>
+    <string name="news_title_2">Verbesserungen für Dateiauswahl</string>
+    <string name="news_summary_2">Verbesserte Animationen und Formen für die Multi-Auswahl</string>
 
     <string name="news_title_3">Neu: Automatisches löschen</string>
     <string name="news_summary_3">Automatisches Löschen von Dateien beim exportieren aus Photok.</string>
@@ -310,4 +313,16 @@
     <string name="migration_error_extract_data">Daten extrahieren</string>
     <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
     <string name="migration_error_extracting_title">Entschlüssele in ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Photok entsperren</string>"
+    <string name="biometric_unlock_subtitle">Bestätige deine Identität zum entsperren</string>
+    <string name="biometric_unlock_cancel">Photok Passwort benutzen</string>
+
+    <string name="biometric_unlock_setup_title">Biometrisches Entsperren aktivieren</string>
+    <string name="biometric_unlock_setup_subtitle">Bestätige deine Identität zum aktivieren</string>
+
+    <string name="biometric_unlock_error">Biometrisches entsperren fehlgeschlagen. Benutze dein Photok Passwort.</string>
+    <string name="biometric_unlock_hint_button">Mit Biometrie entsperren</string>
 </resources>

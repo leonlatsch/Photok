@@ -154,6 +154,9 @@
     <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
     <string name="settings_security_change_password_title">Изменить пароль</string>
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
+    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Автоматическая блокировка</string>
     <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
     <string name="settings_security_timeout_immediately">Немедленно</string>
@@ -260,11 +263,11 @@
     <string name="news_view_changelog">Посмотреть список изменений</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
-    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
+    <string name="news_title_1">Biometric Unlock</string> <!-- TODO -->
+    <string name="news_summary_1">Unlock Photok with biometric authentication</string> <!-- TODO -->
 
-    <string name="news_title_2">NEW: Поддержка</string>
-    <string name="news_summary_2">Найдите кнопку \'Поддержать разработку\' в настройках, чтобы помочь в развитии Photok</string>
+    <string name="news_title_2">Improvements for selecting Files</string> <!-- TODO -->
+    <string name="news_summary_2">Improved animations and shapes for multi selection</string> <!-- TODO -->
 
     <string name="news_title_3">NEW: Удаление после экспорта</string>
     <string name="news_summary_3">Автоматически удаляйте файлы после их экспорта</string>
@@ -308,4 +311,15 @@
     <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
+    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+
+    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
+    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
+    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 </resources>

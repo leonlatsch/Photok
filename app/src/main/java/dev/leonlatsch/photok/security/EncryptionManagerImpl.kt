@@ -42,7 +42,7 @@ const val SALT_SIZE = 16
 private const val KEY_SIZE = 256
 private const val ITERATION_COUNT = 100_000
 private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
-private const val ALGORITHM = "AES"
+const val AES = "AES"
 
 
 /**
@@ -104,10 +104,10 @@ class EncryptionManagerImpl @Inject constructor(
             field = value
         }
 
-    override fun initialize(password: String) {
+    override fun initialize(password: String): Result<Unit> {
         if (password.length < 6) {
             state.update { State.Error }
-            return
+            return Result.failure(IllegalArgumentException("Password too short"))
         }
         try {
             state.update {
@@ -115,15 +115,37 @@ class EncryptionManagerImpl @Inject constructor(
                     key = deriveAesKey(password, getOrCreateUserSalt())
                 )
             }
-        } catch (e: GeneralSecurityException) {
+            return Result.success(Unit)
+        } catch (e: Exception) {
             Timber.d("Error initializing EncryptionManager: $e")
             state.update { State.Error }
+            return Result.failure(e)
+        }
+    }
+
+    override fun initialize(key: SecretKey): Result<Unit> {
+        try {
+            state.update {
+                State.Ready(
+                    key = key
+                )
+            }
+
+            return Result.success(Unit )
+        } catch (e: Exception) {
+            Timber.d("Error initializing EncryptionManager: $e")
+            state.update { State.Error }
+            return Result.failure(e)
         }
     }
 
     override fun reset() {
         state.update { State.Initial }
         keyCache.clear()
+    }
+
+    override fun getKeyOrNull(): SecretKey? {
+        return (state.value as? State.Ready)?.key
     }
 
     override fun createCipherInputStream(
@@ -199,7 +221,7 @@ class EncryptionManagerImpl @Inject constructor(
         val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
         val keyBytes = factory.generateSecret(spec).encoded
 
-        return SecretKeySpec(keyBytes, ALGORITHM).also {
+        return SecretKeySpec(keyBytes, AES).also {
             if (keyCacheEnabled) {
                 val hash = "${password}_${Base64.encode(salt)}"
                 keyCache[hash] = it

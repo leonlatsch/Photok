@@ -33,12 +33,14 @@ import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManagerImpl
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
+import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -62,6 +64,9 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     @Inject
     lateinit var config: Config
 
+    @Inject
+    lateinit var biometricUnlock: BiometricUnlock
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
 
@@ -73,7 +78,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.unlockState.collectLatest {
                 when (it) {
                     UnlockState.CHECKING -> binding.loadingOverlay.show()
-                    UnlockState.UNLOCKED -> unlock()
+                    UnlockState.UNLOCKED -> goToGallery()
                     UnlockState.LOCKED -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
@@ -91,9 +96,35 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
 
         super.onViewCreated(view, savedInstanceState)
+
+        // Check for migration should not be needed. But double check because in this case we don't have the legacy key
+        if (biometricUnlock.isSetupAndValid() && !legacyEncryptionMigrator.migrationNeeded()) {
+            binding.unlockUseBiometricUnlockButton.show()
+            launchBiometricUnlock()
+        } else {
+            binding.unlockUseBiometricUnlockButton.hide()
+        }
     }
 
-    private fun unlock() {
+    fun launchBiometricUnlock(delay: Long = 500L) {
+        lifecycleScope.launch {
+            delay(delay)
+
+            biometricUnlock.unlock(this@UnlockFragment)
+                .onSuccess { goToGallery() }
+                .onFailure {
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(
+                            context = requireContext(),
+                            message = getString(R.string.biometric_unlock_error),
+                        )
+                    }
+                }
+        }
+    }
+
+
+    private fun goToGallery() {
         val activity = activity
 
         (activity as? BaseActivity)?.hideKeyboard()

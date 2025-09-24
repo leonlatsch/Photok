@@ -137,6 +137,9 @@
     <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver. Yeniden başlatma gerektirir.</string>
     <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
+    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
     <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
     <string name="settings_security_timeout_immediately">Hemen</string>
@@ -243,11 +246,11 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Enhanced Encryption</string> <!-- TODO -->
-    <string name="news_summary_1">An improved encryption approach greatly boosts both security and efficiency</string> <!-- TODO -->
+    <string name="news_title_1">Biometric Unlock</string> <!-- TODO -->
+    <string name="news_summary_1">Unlock Photok with biometric authentication</string> <!-- TODO -->
 
-    <string name="news_title_2">YENİ: Bağışlar</string>
-    <string name="news_summary_2">Photok\'u desteklemek için ayarlarda "Bağış Yap" düğmesini görebilirsiniz</string>
+    <string name="news_title_2">Improvements for selecting Files</string> <!-- TODO -->
+    <string name="news_summary_2">Improved animations and shapes for multi selection</string> <!-- TODO -->
 
     <string name="news_title_3">YENİ: Dışa aktarma sonrası sil</string>
     <string name="news_summary_3">Dosyalarınızı dışa aktardıktan sonra otomatik olarak silinmesini sağlayın</string>
@@ -291,4 +294,15 @@
     <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
+    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+
+    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
+    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
+    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 </resources>

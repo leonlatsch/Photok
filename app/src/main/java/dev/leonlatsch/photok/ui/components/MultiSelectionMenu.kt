@@ -16,6 +16,9 @@
 
 package dev.leonlatsch.photok.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
@@ -23,22 +26,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,61 +49,69 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun MultiSelectionMenu(
-    modifier: Modifier = Modifier,
     multiSelectionState: MultiSelectionState,
-    actions: @Composable (ColumnScope.(closeMore: () -> Unit) -> Unit),
+    modifier: Modifier = Modifier,
+    actions: @Composable (ColumnScope.() -> Unit),
 ) {
-    val showMoreDefault = LocalInspectionMode.current
-    var showMore by remember { mutableStateOf(showMoreDefault) }
-
-    Card(
-        shape = CircleShape,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = multiSelectionState.isActive.value,
+        enter = slideInVertically { it },
+        exit = slideOutVertically { it },
     ) {
-        Box {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = { multiSelectionState.cancelSelection() }) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_close),
-                        contentDescription = stringResource(R.string.process_close),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                Text(
-                    text = stringResource(
-                        R.string.menu_ms_info,
-                        multiSelectionState.selectedItems.value.size
-                    ),
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                IconButton(onClick = { showMore = true }) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_more_vert),
-                        contentDescription = stringResource(R.string.common_more),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .matchParentSize()
-            ) {
-                DropdownMenu(
-                    expanded = showMore,
-                    onDismissRequest = { showMore = false },
-                    modifier = Modifier.clip(MaterialTheme.shapes.medium),
-                    content = {
-                        actions { showMore = false }
+        Card(
+            shape = CircleShape,
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+        ) {
+            Box {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    IconButton(onClick = { multiSelectionState.cancelSelection() }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_close),
+                            contentDescription = stringResource(R.string.process_close),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
                     }
-                )
+                    Text(
+                        text = stringResource(
+                            R.string.menu_ms_info,
+                            multiSelectionState.selectedItems.value.size
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    IconButton(onClick = { multiSelectionState.showMore() }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_more_vert),
+                            contentDescription = stringResource(R.string.common_more),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .matchParentSize()
+                ) {
+                    DropdownMenu(
+                        shape = RoundedCornerShape(16.dp),
+                        expanded = multiSelectionState.showMore.value,
+                        onDismissRequest = {
+                            multiSelectionState.dismissMore()
+                        },
+                        modifier = Modifier.clip(MaterialTheme.shapes.medium),
+                        content = {
+                            actions()
+                        }
+                    )
+                }
             }
         }
     }
@@ -115,9 +123,25 @@ private fun MultiSelectionMenuPreview() {
     AppTheme {
         MultiSelectionMenu(
             multiSelectionState = MultiSelectionState(emptyList()).apply {
+                isActive.value = true
                 selectedItems.value = listOf("", "")
+                showMore.value = false
             },
-            actions = {}
+            actions = {},
+        )
+    }
+}
+@Preview
+@Composable
+private fun MultiSelectionMenuPreviewOptions() {
+    AppTheme {
+        MultiSelectionMenu(
+            multiSelectionState = MultiSelectionState(emptyList()).apply {
+                isActive.value = true
+                selectedItems.value = listOf("", "")
+                showMore.value = true
+            },
+            actions = {},
         )
     }
 }
