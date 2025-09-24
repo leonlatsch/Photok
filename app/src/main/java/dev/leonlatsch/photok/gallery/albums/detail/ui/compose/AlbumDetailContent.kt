@@ -65,13 +65,13 @@ fun AlbumDetailContent(
         onImportChoice = {
             handleUiEvent(AlbumDetailUiEvent.OnImportChoice(it))
         },
-        additionalMultiSelectionActions = { closeActions ->
+        additionalMultiSelectionActions = {
             HorizontalDivider()
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.menu_ms_remove_from_album)) },
                 onClick = {
                     handleUiEvent(AlbumDetailUiEvent.RemoveFromAlbum(multiSelectionState.selectedItems.value.toList()))
-                    closeActions()
+                    multiSelectionState.dismissMore()
                     multiSelectionState.cancelSelection()
                 },
                 leadingIcon = {
