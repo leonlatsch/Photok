@@ -84,7 +84,7 @@ fun MultiSelectionMenu(
                         ),
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    IconButton(onClick = { multiSelectionState.showMore.value = true }) {
+                    IconButton(onClick = { multiSelectionState.showMore() }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_more_vert),
                             contentDescription = stringResource(R.string.common_more),

@@ -54,6 +54,10 @@ class MultiSelectionState(
         selectedItems.value -= uuid
     }
 
+    fun showMore() {
+        showMore.value = true
+    }
+
     fun dismissMore() {
         showMore.value = false
     }
