@@ -156,7 +156,7 @@
     <string name="settings_security_change_password_summary">更改你的密码</string>
     <string name="settings_security_biometric_title">生物特征解锁</string>
     <string name="settings_security_biometric_summary">用指纹或面部识别解锁 Photok</string>
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">生物特征解锁不可用</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
     <string name="settings_security_timeout_immediately">立即</string>
