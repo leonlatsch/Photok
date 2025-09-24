@@ -25,12 +25,13 @@ fun rememberMultiSelectionState(items: List<String>) = remember(items) {
     MultiSelectionState(items)
 }
 
-class MultiSelectionState constructor(
+class MultiSelectionState(
     private val allItems: List<String>,
 ) {
 
     var isActive = mutableStateOf(false)
     var selectedItems = mutableStateOf(emptyList<String>())
+    val showMore = mutableStateOf(false)
 
     fun selectAll() {
         isActive.value = true
@@ -51,5 +52,9 @@ class MultiSelectionState constructor(
         }
 
         selectedItems.value -= uuid
+    }
+
+    fun dismissMore() {
+        showMore.value = false
     }
 }

@@ -23,14 +23,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -47,8 +46,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -62,12 +59,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -95,7 +90,7 @@ fun PhotoGallery(
     onExport: (Uri?) -> Unit,
     onDelete: () -> Unit,
     onImportChoice: (ImportChoice) -> Unit,
-    additionalMultiSelectionActions: @Composable (ColumnScope.(closeActions: () -> Unit) -> Unit),
+    additionalMultiSelectionActions: @Composable (ColumnScope.() -> Unit),
     modifier: Modifier = Modifier,
 ) {
     val activity = LocalActivity.current
@@ -122,6 +117,8 @@ fun PhotoGallery(
 
         AnimatedVisibility(
             visible = magicFabVisible.value,
+            enter = slideInVertically { it },
+            exit = slideOutVertically { it },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
         ) {
@@ -185,60 +182,54 @@ fun PhotoGallery(
             }
         )
 
-        AnimatedVisibility(
-            visible = multiSelectionState.isActive.value,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(vertical = 24.dp, horizontal = 12.dp)
+        MultiSelectionMenu(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            multiSelectionState = multiSelectionState,
         ) {
-            MultiSelectionMenu(
-                multiSelectionState = multiSelectionState,
-            ) { closeActions ->
-                DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_select_all),
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(stringResource(R.string.menu_ms_select_all)) },
-                    onClick = {
-                        multiSelectionState.selectAll()
-                        closeActions()
-                    },
-                )
-                DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_delete),
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(stringResource(R.string.common_delete)) },
-                    onClick = {
-                        showDeleteConfirmationDialog = true
-                        closeActions()
-                    },
-                )
-                DropdownMenuItem(
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_export),
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(stringResource(R.string.common_export)) },
-                    onClick = {
-                        pickExportTargetLauncher.launchAndIgnoreTimer(
-                            input = null,
-                            activity = activity,
-                        )
-                        closeActions()
-                    },
-                )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_select_all),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.menu_ms_select_all)) },
+                onClick = {
+                    multiSelectionState.selectAll()
+                    multiSelectionState.dismissMore()
+                },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_delete),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.common_delete)) },
+                onClick = {
+                    showDeleteConfirmationDialog = true
+                    multiSelectionState.dismissMore()
+                },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_export),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.common_export)) },
+                onClick = {
+                    pickExportTargetLauncher.launchAndIgnoreTimer(
+                        input = null,
+                        activity = activity,
+                    )
+                    multiSelectionState.dismissMore()
+                },
+            )
 
-                additionalMultiSelectionActions(closeActions)
-            }
+            additionalMultiSelectionActions()
         }
     }
 }
@@ -371,7 +362,7 @@ private fun GalleryPhotoTile(
             Icon(
                 painter = painterResource(R.drawable.ic_check_circle),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.inversePrimary,
+                tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
                     .padding(CheckmarkPadding)
                     .clip(CircleShape)
@@ -398,8 +389,34 @@ private fun PhotoGridPreview() {
             ),
             multiSelectionState = MultiSelectionState(
                 allItems = listOf("1", "2", "3"),
+            ),
+            onOpenPhoto = {},
+            onDelete = {},
+            onExport = {},
+            onImportChoice = {},
+            additionalMultiSelectionActions = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PhotoGridPreviewWithSelection() {
+    AppTheme {
+        PhotoGallery(
+            photos = listOf(
+                PhotoTile("", PhotoType.JPEG, "1"),
+                PhotoTile("", PhotoType.MP4, "2"),
+                PhotoTile("", PhotoType.MP4, "3"),
+                PhotoTile("", PhotoType.JPEG, "4"),
+                PhotoTile("", PhotoType.JPEG, "5"),
+                PhotoTile("", PhotoType.MP4, "6"),
+            ),
+            multiSelectionState = MultiSelectionState(
+                allItems = listOf("1", "2", "3"),
             ).apply {
                 selectItem("2")
+                selectItem("3")
             },
             onOpenPhoto = {},
             onDelete = {},

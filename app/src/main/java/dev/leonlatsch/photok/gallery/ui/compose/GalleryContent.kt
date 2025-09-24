@@ -67,7 +67,7 @@ fun GalleryContent(
         onImportChoice = {
             handleUiEvent(GalleryUiEvent.OnImportChoice(it))
         },
-        additionalMultiSelectionActions = { closeActions ->
+        additionalMultiSelectionActions = {
             HorizontalDivider()
             DropdownMenuItem(
                 leadingIcon = {
@@ -79,7 +79,7 @@ fun GalleryContent(
                 text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
                 onClick = {
                     handleUiEvent(GalleryUiEvent.OnAddToAlbum)
-                    closeActions()
+                    multiSelectionState.dismissMore()
                 },
             )
         }
