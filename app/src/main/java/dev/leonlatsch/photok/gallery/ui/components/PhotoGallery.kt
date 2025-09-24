@@ -22,10 +22,17 @@ import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.aspectRatio
@@ -38,10 +45,13 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,12 +63,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -278,6 +290,22 @@ fun PhotoGrid(
 }
 
 private val VideoIconSize = 20.dp
+private val SelectedPadding = 15.dp
+private val CheckmarkPadding = SelectedPadding - 7.dp
+
+@Composable
+fun Modifier.multiSelectionItem(selected: Boolean): Modifier {
+    val animatedPadding by animateDpAsState(
+        targetValue = if (selected) { SelectedPadding } else { 0.dp }
+    )
+    val animatedShape by animateDpAsState(
+        targetValue = if (selected) { 12.dp } else { 0.dp }
+    )
+
+    return this
+        .padding(animatedPadding)
+        .clip(RoundedCornerShape(animatedShape))
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -292,11 +320,15 @@ private fun GalleryPhotoTile(
         modifier = Modifier
             .padding(.5.dp)
             .combinedClickable(
+                role = Role.Image,
                 onClick = onClicked,
-                onLongClick = onLongPress
+                onLongClick = onLongPress,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
             )
     ) {
         val contentModifier = Modifier
+            .multiSelectionItem(selected)
             .fillMaxSize()
             .aspectRatio(1f)
 
@@ -319,7 +351,7 @@ private fun GalleryPhotoTile(
             )
         }
 
-        if (photoTile.type.isVideo) {
+        AnimatedVisibility(photoTile.type.isVideo && !selected) {
             Icon(
                 painter = painterResource(R.drawable.ic_videocam),
                 contentDescription = null,
@@ -331,25 +363,21 @@ private fun GalleryPhotoTile(
             )
         }
 
-        if (multiSelectionActive) {
-
-            if (selected) {
-                Box(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .alpha(0.4f)
-                        .background(Color.Black)
-                )
-            }
-
-            Checkbox(
-                checked = selected,
-                onCheckedChange = { onClicked() },
-                modifier = Modifier.align(Alignment.BottomEnd),
-                colors = CheckboxDefaults.colors().copy(
-                    checkedBoxColor = colorResource(R.color.colorPrimary),
-                    checkedBorderColor = colorResource(R.color.colorPrimaryDark)
-                )
+        AnimatedVisibility(
+            visible = multiSelectionActive && selected,
+            enter = scaleIn(),
+            exit = scaleOut(),
+            ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_check_circle),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.inversePrimary,
+                modifier = Modifier
+                    .padding(CheckmarkPadding)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.background)
+                    .size(VideoIconSize)
+                    .align(Alignment.TopStart)
             )
         }
     }
@@ -362,13 +390,17 @@ private fun PhotoGridPreview() {
         PhotoGallery(
             photos = listOf(
                 PhotoTile("", PhotoType.JPEG, "1"),
-                PhotoTile("", PhotoType.JPEG, "2"),
-                PhotoTile("", PhotoType.JPEG, "3"),
+                PhotoTile("", PhotoType.MP4, "2"),
+                PhotoTile("", PhotoType.MP4, "3"),
                 PhotoTile("", PhotoType.JPEG, "4"),
                 PhotoTile("", PhotoType.JPEG, "5"),
-                PhotoTile("", PhotoType.JPEG, "6"),
+                PhotoTile("", PhotoType.MP4, "6"),
             ),
-            multiSelectionState = MultiSelectionState(listOf("2", "3", "5")),
+            multiSelectionState = MultiSelectionState(
+                allItems = listOf("1", "2", "3"),
+            ).apply {
+                selectItem("2")
+            },
             onOpenPhoto = {},
             onDelete = {},
             onExport = {},
