@@ -49,6 +49,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -325,7 +326,7 @@ private fun GalleryPhotoTile(
 
         if (LocalInspectionMode.current) {
             Box(
-                modifier = contentModifier.background(Color.Red)
+                modifier = contentModifier.background(Color.LightGray)
             )
         } else {
             val requestData = remember(photoTile) {
@@ -378,24 +379,27 @@ private fun GalleryPhotoTile(
 @Composable
 private fun PhotoGridPreview() {
     AppTheme {
-        PhotoGallery(
-            photos = listOf(
-                PhotoTile("", PhotoType.JPEG, "1"),
-                PhotoTile("", PhotoType.MP4, "2"),
-                PhotoTile("", PhotoType.MP4, "3"),
-                PhotoTile("", PhotoType.JPEG, "4"),
-                PhotoTile("", PhotoType.JPEG, "5"),
-                PhotoTile("", PhotoType.MP4, "6"),
-            ),
-            multiSelectionState = MultiSelectionState(
-                allItems = listOf("1", "2", "3"),
-            ),
-            onOpenPhoto = {},
-            onDelete = {},
-            onExport = {},
-            onImportChoice = {},
-            additionalMultiSelectionActions = {},
-        )
+        Scaffold {
+            PhotoGallery(
+                modifier = Modifier.padding(it),
+                photos = listOf(
+                    PhotoTile("", PhotoType.JPEG, "1"),
+                    PhotoTile("", PhotoType.MP4, "2"),
+                    PhotoTile("", PhotoType.MP4, "3"),
+                    PhotoTile("", PhotoType.JPEG, "4"),
+                    PhotoTile("", PhotoType.JPEG, "5"),
+                    PhotoTile("", PhotoType.MP4, "6"),
+                ),
+                multiSelectionState = MultiSelectionState(
+                    allItems = listOf("1", "2", "3"),
+                ),
+                onOpenPhoto = {},
+                onDelete = {},
+                onExport = {},
+                onImportChoice = {},
+                additionalMultiSelectionActions = {},
+            )
+        }
     }
 }
 
@@ -403,26 +407,29 @@ private fun PhotoGridPreview() {
 @Composable
 private fun PhotoGridPreviewWithSelection() {
     AppTheme {
-        PhotoGallery(
-            photos = listOf(
-                PhotoTile("", PhotoType.JPEG, "1"),
-                PhotoTile("", PhotoType.MP4, "2"),
-                PhotoTile("", PhotoType.MP4, "3"),
-                PhotoTile("", PhotoType.JPEG, "4"),
-                PhotoTile("", PhotoType.JPEG, "5"),
-                PhotoTile("", PhotoType.MP4, "6"),
-            ),
-            multiSelectionState = MultiSelectionState(
-                allItems = listOf("1", "2", "3"),
-            ).apply {
-                selectItem("2")
-                selectItem("3")
-            },
-            onOpenPhoto = {},
-            onDelete = {},
-            onExport = {},
-            onImportChoice = {},
-            additionalMultiSelectionActions = {},
-        )
+        Scaffold {
+            PhotoGallery(
+                modifier = Modifier.padding(it),
+                photos = listOf(
+                    PhotoTile("", PhotoType.JPEG, "1"),
+                    PhotoTile("", PhotoType.MP4, "2"),
+                    PhotoTile("", PhotoType.MP4, "3"),
+                    PhotoTile("", PhotoType.JPEG, "4"),
+                    PhotoTile("", PhotoType.JPEG, "5"),
+                    PhotoTile("", PhotoType.MP4, "6"),
+                ),
+                multiSelectionState = MultiSelectionState(
+                    allItems = listOf("1", "2", "3"),
+                ).apply {
+                    selectItem("2")
+                    selectItem("3")
+                },
+                onOpenPhoto = {},
+                onDelete = {},
+                onExport = {},
+                onImportChoice = {},
+                additionalMultiSelectionActions = {},
+            )
+        }
     }
 }
