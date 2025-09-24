@@ -157,7 +157,7 @@
     <string name="settings_security_change_password_title">Passwort ändern</string>
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
-    <string name="settings_security_biometric_summary">Entsperre Photok mit Fingerabdruck oder Gesichtserkennung.</string>
+    <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
     <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht vervügbar</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
@@ -169,7 +169,7 @@
     <string name="settings_security_timeout_never">Niemals</string>
     <string name="settings_security_launch_code_title">Geheimer Start-Code</string>
     <string name="settings_security_launch_code_summary">Geheimer Code um Photok von der Wahltastatur aus zu starten.</string>
-    <string name="settings_security_launch_code_message">Gib *#*#{dein code]#*#* in die Wahltastatur ein, um Photok zu starten.</string>
+    <string name="settings_security_launch_code_message">Gib *#*#[dein code]#*#* in die Wahltastatur ein, um Photok zu starten.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">App Verstecken</string>

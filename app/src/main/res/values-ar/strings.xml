@@ -155,7 +155,7 @@
     <string name="settings_security_change_password_title">تغيير كلمة المرور</string>
     <string name="settings_security_change_password_summary">غير كلمة المرور الخاصة بك</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
     <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">مهلة القفل التلقائي</string>
     <string name="settings_security_timeout_summary">قفل تلقائي بعد وقت معين في الخلفية</string>

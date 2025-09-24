@@ -138,7 +138,7 @@
     <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
     <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with fingerprint or face recognition.</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
     <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
     <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
