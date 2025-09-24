@@ -42,14 +42,14 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-69%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
 ![Dutch](https://img.shields.io/badge/Dutch-69%25-orange)
-![French](https://img.shields.io/badge/French-82%25-yellow)
+![French](https://img.shields.io/badge/French-81%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-67%25-orange)
-![Russian](https://img.shields.io/badge/Russian-82%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-85%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-82%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-81%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-84%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-81%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
