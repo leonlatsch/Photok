@@ -49,6 +49,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -282,7 +283,7 @@ fun PhotoGrid(
 
 private val VideoIconSize = 20.dp
 private val SelectedPadding = 15.dp
-private val CheckmarkPadding = SelectedPadding - 7.dp
+private val CheckmarkPadding = SelectedPadding - 9.dp
 
 @Composable
 fun Modifier.multiSelectionItem(selected: Boolean): Modifier {
@@ -325,7 +326,7 @@ private fun GalleryPhotoTile(
 
         if (LocalInspectionMode.current) {
             Box(
-                modifier = contentModifier.background(Color.Red)
+                modifier = contentModifier.background(Color.DarkGray)
             )
         } else {
             val requestData = remember(photoTile) {
@@ -342,15 +343,19 @@ private fun GalleryPhotoTile(
             )
         }
 
-        AnimatedVisibility(photoTile.type.isVideo && !selected) {
+        AnimatedVisibility(
+            visible = photoTile.type.isVideo && !selected,
+            enter = scaleIn(),
+            exit = scaleOut(),
+            modifier = Modifier
+                .padding(2.dp)
+                .size(VideoIconSize)
+                .align(Alignment.BottomStart)
+        ) {
             Icon(
                 painter = painterResource(R.drawable.ic_videocam),
                 contentDescription = null,
                 tint = Color.LightGray,
-                modifier = Modifier
-                    .padding(2.dp)
-                    .size(VideoIconSize)
-                    .align(Alignment.BottomStart)
             )
         }
 
@@ -367,7 +372,6 @@ private fun GalleryPhotoTile(
                     .padding(CheckmarkPadding)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.background)
-                    .size(VideoIconSize)
                     .align(Alignment.TopStart)
             )
         }
@@ -378,24 +382,27 @@ private fun GalleryPhotoTile(
 @Composable
 private fun PhotoGridPreview() {
     AppTheme {
-        PhotoGallery(
-            photos = listOf(
-                PhotoTile("", PhotoType.JPEG, "1"),
-                PhotoTile("", PhotoType.MP4, "2"),
-                PhotoTile("", PhotoType.MP4, "3"),
-                PhotoTile("", PhotoType.JPEG, "4"),
-                PhotoTile("", PhotoType.JPEG, "5"),
-                PhotoTile("", PhotoType.MP4, "6"),
-            ),
-            multiSelectionState = MultiSelectionState(
-                allItems = listOf("1", "2", "3"),
-            ),
-            onOpenPhoto = {},
-            onDelete = {},
-            onExport = {},
-            onImportChoice = {},
-            additionalMultiSelectionActions = {},
-        )
+        Scaffold {
+            PhotoGallery(
+                modifier = Modifier.padding(it),
+                photos = listOf(
+                    PhotoTile("", PhotoType.JPEG, "1"),
+                    PhotoTile("", PhotoType.MP4, "2"),
+                    PhotoTile("", PhotoType.MP4, "3"),
+                    PhotoTile("", PhotoType.JPEG, "4"),
+                    PhotoTile("", PhotoType.JPEG, "5"),
+                    PhotoTile("", PhotoType.MP4, "6"),
+                ),
+                multiSelectionState = MultiSelectionState(
+                    allItems = listOf("1", "2", "3"),
+                ),
+                onOpenPhoto = {},
+                onDelete = {},
+                onExport = {},
+                onImportChoice = {},
+                additionalMultiSelectionActions = {},
+            )
+        }
     }
 }
 
@@ -403,26 +410,29 @@ private fun PhotoGridPreview() {
 @Composable
 private fun PhotoGridPreviewWithSelection() {
     AppTheme {
-        PhotoGallery(
-            photos = listOf(
-                PhotoTile("", PhotoType.JPEG, "1"),
-                PhotoTile("", PhotoType.MP4, "2"),
-                PhotoTile("", PhotoType.MP4, "3"),
-                PhotoTile("", PhotoType.JPEG, "4"),
-                PhotoTile("", PhotoType.JPEG, "5"),
-                PhotoTile("", PhotoType.MP4, "6"),
-            ),
-            multiSelectionState = MultiSelectionState(
-                allItems = listOf("1", "2", "3"),
-            ).apply {
-                selectItem("2")
-                selectItem("3")
-            },
-            onOpenPhoto = {},
-            onDelete = {},
-            onExport = {},
-            onImportChoice = {},
-            additionalMultiSelectionActions = {},
-        )
+        Scaffold {
+            PhotoGallery(
+                modifier = Modifier.padding(it),
+                photos = listOf(
+                    PhotoTile("", PhotoType.JPEG, "1"),
+                    PhotoTile("", PhotoType.MP4, "2"),
+                    PhotoTile("", PhotoType.MP4, "3"),
+                    PhotoTile("", PhotoType.JPEG, "4"),
+                    PhotoTile("", PhotoType.JPEG, "5"),
+                    PhotoTile("", PhotoType.MP4, "6"),
+                ),
+                multiSelectionState = MultiSelectionState(
+                    allItems = listOf("1", "2", "3"),
+                ).apply {
+                    selectItem("2")
+                    selectItem("3")
+                },
+                onOpenPhoto = {},
+                onDelete = {},
+                onExport = {},
+                onImportChoice = {},
+                additionalMultiSelectionActions = {},
+            )
+        }
     }
 }

@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.other.extensions
 
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
@@ -45,4 +46,10 @@ inline fun <FactoryType, reified ViewModelType : ViewModel> Fragment.assistedVie
             viewModelProducer(factory)
         }
     )[ViewModelType::class.java]
+}
+
+fun Fragment.finishOnBackWhileStarted() {
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+        activity?.finish()
+    }
 }

@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -27,12 +28,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
@@ -74,6 +77,7 @@ class GalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        finishOnBackWhileStarted()
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->
@@ -88,5 +92,6 @@ class GalleryFragment : Fragment() {
         }
 
         viewModel.checkForNewFeatures()
+
     }
 }
