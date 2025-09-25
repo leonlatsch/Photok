@@ -283,7 +283,7 @@ fun PhotoGrid(
 
 private val VideoIconSize = 20.dp
 private val SelectedPadding = 15.dp
-private val CheckmarkPadding = SelectedPadding - 7.dp
+private val CheckmarkPadding = SelectedPadding - 9.dp
 
 @Composable
 fun Modifier.multiSelectionItem(selected: Boolean): Modifier {
@@ -326,7 +326,7 @@ private fun GalleryPhotoTile(
 
         if (LocalInspectionMode.current) {
             Box(
-                modifier = contentModifier.background(Color.LightGray)
+                modifier = contentModifier.background(Color.DarkGray)
             )
         } else {
             val requestData = remember(photoTile) {
@@ -343,15 +343,19 @@ private fun GalleryPhotoTile(
             )
         }
 
-        AnimatedVisibility(photoTile.type.isVideo && !selected) {
+        AnimatedVisibility(
+            visible = photoTile.type.isVideo && !selected,
+            enter = scaleIn(),
+            exit = scaleOut(),
+            modifier = Modifier
+                .padding(2.dp)
+                .size(VideoIconSize)
+                .align(Alignment.BottomStart)
+        ) {
             Icon(
                 painter = painterResource(R.drawable.ic_videocam),
                 contentDescription = null,
                 tint = Color.LightGray,
-                modifier = Modifier
-                    .padding(2.dp)
-                    .size(VideoIconSize)
-                    .align(Alignment.BottomStart)
             )
         }
 
@@ -368,7 +372,6 @@ private fun GalleryPhotoTile(
                     .padding(CheckmarkPadding)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.background)
-                    .size(VideoIconSize)
                     .align(Alignment.TopStart)
             )
         }
