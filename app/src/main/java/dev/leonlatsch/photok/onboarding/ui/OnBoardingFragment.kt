@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentOnboardingBinding
+import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.ViewPagerAdapter
@@ -49,6 +50,7 @@ class OnBoardingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.systemBarsPadding()
+        finishOnBackWhileStarted()
 
         binding.onBoardingDotSelector1.isSelected = true
         binding.onBoardingDotSelector2.isSelected = false
