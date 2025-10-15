@@ -293,7 +293,9 @@
     <string name="notification_channel_background_tasks">Arka Plan İşlemleri</string>
     <string name="migration_error_extract_data">Verileri dışa aktar</string>
     <string name="migration_error_extract_confirmation_text">Tüm dosyalarınızı ŞİFRESİZ olarak bir ZIP dosyasına dışa aktarmak istediğinizden emin misiniz?</string>
+
     <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)…</string>
+
 
 
     <string name="biometric_unlock_title">Photok Kilidini Aç</string>
@@ -304,6 +306,7 @@
     <string name="biometric_unlock_setup_subtitle">Biyometrik kilidi etkinleştirmek için kimliğini onayla</string>
     <string name="biometric_unlock_error">Biyometrik kilit başarısız. Photok şifreni kullan.</string>
     <string name="biometric_unlock_hint_button">Biyometri ile kilidi aç</string>
+
 
     <!-- Sorting -->
     <string name="sorting_sort">Sort</string> <!-- TODO -->
