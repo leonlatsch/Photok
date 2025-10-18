@@ -20,7 +20,7 @@
     <string name="common_create">Oluştur</string>
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">Tekrar deneyin</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
@@ -56,15 +56,15 @@
     <string name="gallery_albums_select_title">Bir Albüm Seçin</string>
     <string name="gallery_albums_deleted">Albüm silindi</string>
     <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Yeni Albüm</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
+    <string name="import_menu_fab_label">İçeri Aktar</string>
+    <string name="import_menu_new_files_title">Yeni dosyaları içe aktar</string>
+    <string name="import_menu_new_files_description">Galeri'nizden fotoğraf ve videoları içe aktarın.</string>
+    <string name="import_menu_restore_title">Yedeklemeyi geri yükle</string>
+    <string name="import_menu_restore_description">Photok yedeklemesini geri yükleyin. Dosyalar mevcut dosyalarınıza eklenecektir.</string>
+    <string name="import_menu_delete_warning">İçe aktarılan dosyalar silinecektir</string>
 
     <!-- PROCESS -->
     <string name="process_close">Kapat</string>
@@ -137,9 +137,9 @@
     <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver. Yeniden başlatma gerektirir.</string>
     <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Biyometrik Kilit Açma</string>
+    <string name="settings_security_biometric_summary">Biyometrik kimlik doğrulama ile Photok'un kilidini açın.</string>
+    <string name="settings_security_biometric_not_available">Biyometrik Kilit Açma özelliği mevcut değildir.</string>
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
     <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
     <string name="settings_security_timeout_immediately">Hemen</string>
@@ -202,7 +202,7 @@
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok\'u Gizle</string>
@@ -246,11 +246,11 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Biometric Unlock</string> <!-- TODO -->
-    <string name="news_summary_1">Unlock Photok with biometric authentication</string> <!-- TODO -->
+    <string name="news_title_1">Biyometrik Kilit Açma</string>
+    <string name="news_summary_1">Biyometrik kimlik doğrulama ile Photok'un kilidini açın</string>
 
-    <string name="news_title_2">Improvements for selecting Files</string> <!-- TODO -->
-    <string name="news_summary_2">Improved animations and shapes for multi selection</string> <!-- TODO -->
+    <string name="news_title_2">Dosya seçme konusunda iyileştirmeler</string>
+    <string name="news_summary_2">Çoklu seçim için geliştirilmiş animasyonlar ve şekiller</string>
 
     <string name="news_title_3">YENİ: Dışa aktarma sonrası sil</string>
     <string name="news_summary_3">Dosyalarınızı dışa aktardıktan sonra otomatik olarak silinmesini sağlayın</string>
@@ -265,44 +265,43 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Hoşgeldiniz</string>
+    <string name="migration_initial_explaination">Bu Photok sürümü yeni bir şifreleme yöntemi sunmaktadır. Galerinize devam etmek için bir geçiş işlemi gereklidir.</string>
+    <string name="migration_initial_button">Başlayın</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Verilerinizi yedekleyin</string>
+    <string name="migration_initial_stage_backup_explanation">Devam etmeden önce verilerinizin yedeğini alın.</string>
+    <string name="migration_initial_stage_backup_button">Yedek oluşturun</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">İzin ver</string>
+    <string name="migration_initial_stage_permission_explanation">Arka planda güvenilir bir şekilde geçiş işlemini gerçekleştirmek için lütfen bildirim izinlerini verin.</string>
+    <string name="migration_initial_stage_permission_button">İzin ver</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Her şey hazır.</string>
+    <string name="migration_initial_stage_ready_button">Taşıma işlemini başlat</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Galerinizi taşıma</string>
+    <string name="migration_running_progress">%d dosyadan %d dosyası işlendi</string>
+    <string name="migration_running_advice">Bu ekran açık kalırsa, geçiş işlemi daha hızlı gerçekleşir.</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Galeri taşıma işlemi tamamlandı</string>
+    <string name="migration_done_progress">Tüm dosyalar taşındı</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Galerinizi taşırken hata oluştu</string>
+    <string name="migration_error_button">Hata raporu gönder</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Arka Plan İşlemleri</string>
+    <string name="migration_error_extract_data">Verileri dışa aktar</string>
+    <string name="migration_error_extract_confirmation_text">Tüm dosyalarınızı ŞİFRESİZ olarak bir ZIP dosyasına dışa aktarmak istediğinizden emin misiniz?</string>
+    <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)...</string>
 
 
-    <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Photok Kilidini Aç</string>
+    <string name="biometric_unlock_subtitle">Kilidi açmak için kimliğini doğrula</string>
+    <string name="biometric_unlock_cancel">Photok şifresini kullan</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Biyometrik kilidi etkinleştir</string>
+    <string name="biometric_unlock_setup_subtitle">Biyometrik kilidi etkinleştirmek için kimliğini onayla</string>
+    <string name="biometric_unlock_error">Biyometrik kilit başarısız. Photok şifreni kullan.</string>
+    <string name="biometric_unlock_hint_button">Biyometri ile kilidi aç</string>
 </resources>
