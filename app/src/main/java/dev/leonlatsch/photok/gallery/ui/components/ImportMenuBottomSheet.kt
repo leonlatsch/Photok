@@ -128,8 +128,6 @@ private fun ImportMenuDialogContent(
 
     val activity = LocalActivity.current
 
-    val deleteImportedFiles = remember { config?.deleteImportedFiles }
-
     Column(
         modifier = modifier.padding(bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -139,9 +137,7 @@ private fun ImportMenuDialogContent(
             description = stringResource(R.string.import_menu_new_files_description),
             iconPainter = painterResource(R.drawable.ic_add),
             chips = { modifier ->
-
-                val showWarningChip =
-                    deleteImportedFiles == true || isPreview
+                val showWarningChip = remember { config?.deleteImportedFiles == true || isPreview }
 
                 if (showWarningChip) {
                     ImportWarningChip(modifier = modifier)
