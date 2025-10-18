@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.gallery.ui.components
 import android.net.Uri
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -110,10 +109,6 @@ private fun ImportMenuDialogContent(
         }
     }
 
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia()
-    ) { onImportNewItems(it) }
-
     val openDocumentLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenMultipleDocuments()
     ) { onImportNewItems(it) }
@@ -153,16 +148,10 @@ private fun ImportMenuDialogContent(
                 }
             },
             onClick = {
-                if (deleteImportedFiles == true) {
-                    openDocumentLauncher.launchAndIgnoreTimer(
-                        input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
-                        activity = activity,
-                    )
-                } else {
-                    photoPickerLauncher.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo)
-                    )
-                }
+                openDocumentLauncher.launchAndIgnoreTimer(
+                    input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
+                    activity = activity,
+                )
             }
         )
 
