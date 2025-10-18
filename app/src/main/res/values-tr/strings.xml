@@ -61,7 +61,7 @@
     <!-- IMPORT MENU -->
     <string name="import_menu_fab_label">İçeri Aktar</string>
     <string name="import_menu_new_files_title">Yeni dosyaları içe aktar</string>
-    <string name="import_menu_new_files_description">Galeri'nizden fotoğraf ve videoları içe aktarın.</string>
+    <string name="import_menu_new_files_description">Galeri\'nizden fotoğraf ve videoları içe aktarın.</string>
     <string name="import_menu_restore_title">Yedeklemeyi geri yükle</string>
     <string name="import_menu_restore_description">Photok yedeklemesini geri yükleyin. Dosyalar mevcut dosyalarınıza eklenecektir.</string>
     <string name="import_menu_delete_warning">İçe aktarılan dosyalar silinecektir</string>
@@ -138,7 +138,7 @@
     <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
     <string name="settings_security_biometric_title">Biyometrik Kilit Açma</string>
-    <string name="settings_security_biometric_summary">Biyometrik kimlik doğrulama ile Photok'un kilidini açın.</string>
+    <string name="settings_security_biometric_summary">Biyometrik kimlik doğrulama ile Photok\'un kilidini açın.</string>
     <string name="settings_security_biometric_not_available">Biyometrik Kilit Açma özelliği mevcut değildir.</string>
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
     <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
@@ -247,7 +247,7 @@
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <string name="news_title_1">Biyometrik Kilit Açma</string>
-    <string name="news_summary_1">Biyometrik kimlik doğrulama ile Photok'un kilidini açın</string>
+    <string name="news_summary_1">Biyometrik kimlik doğrulama ile Photok\'un kilidini açın</string>
 
     <string name="news_title_2">Dosya seçme konusunda iyileştirmeler</string>
     <string name="news_summary_2">Çoklu seçim için geliştirilmiş animasyonlar ve şekiller</string>
@@ -293,7 +293,7 @@
     <string name="notification_channel_background_tasks">Arka Plan İşlemleri</string>
     <string name="migration_error_extract_data">Verileri dışa aktar</string>
     <string name="migration_error_extract_confirmation_text">Tüm dosyalarınızı ŞİFRESİZ olarak bir ZIP dosyasına dışa aktarmak istediğinizden emin misiniz?</string>
-    <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)...</string>
+    <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)…</string>
 
 
     <string name="biometric_unlock_title">Photok Kilidini Aç</string>
