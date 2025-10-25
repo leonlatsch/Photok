@@ -64,11 +64,7 @@ class GalleryViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     private val photosFlow = sortFlow.flatMapLatest { sort ->
         photoRepository.observeAll(sort)
-    }
-        .onEach {
-            Timber.d("$it")
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), listOf())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), listOf())
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 
