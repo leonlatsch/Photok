@@ -69,7 +69,7 @@ fun GalleryScreen(
 
                             IconButton(onClick = { showSortMenu = true }) {
                                 Icon(
-                                    painter = painterResource(R.drawable.ic_close),
+                                    painter = painterResource(R.drawable.ic_sort),
                                     contentDescription = "Sort",
                                 )
                             }
