@@ -37,12 +37,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMap
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,9 +62,13 @@ class GalleryViewModel @Inject constructor(
     private val sortFlow = MutableStateFlow(Sort.Default)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val photosFlow = sortFlow.flatMapConcat { sort ->
+    private val photosFlow = sortFlow.flatMapLatest { sort ->
         photoRepository.observeAll(sort)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
+    }
+        .onEach {
+            Timber.d("$it")
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), listOf())
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 

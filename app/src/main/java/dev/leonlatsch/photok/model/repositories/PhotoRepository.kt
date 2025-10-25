@@ -82,7 +82,7 @@ class PhotoRepository @Inject constructor(
 
     fun observeAll(sort: Sort): Flow<List<Photo>> = when (sort.order) {
         Sort.Order.ASC -> photoDao.observeAllSortedAsc(sort.field.columnName)
-        Sort.Order.DESC -> photoDao.observeAllSortedAsc(sort.field.columnName)
+        Sort.Order.DESC -> photoDao.observeAllSortedDesc(sort.field.columnName)
     }
 
     /**

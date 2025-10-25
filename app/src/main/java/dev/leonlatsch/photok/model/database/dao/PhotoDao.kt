@@ -83,6 +83,6 @@ interface PhotoDao {
     @Query("SELECT * FROM photo ORDER BY :sortField ASC")
     fun observeAllSortedAsc(sortField: String): Flow<List<Photo>>
 
-    @Query("SELECT * FROM photo ORDER BY :sortField ASC")
+    @Query("SELECT * FROM photo ORDER BY :sortField DESC")
     fun observeAllSortedDesc(sortField: String): Flow<List<Photo>>
 }
