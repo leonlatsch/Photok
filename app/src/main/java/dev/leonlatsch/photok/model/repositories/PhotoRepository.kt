@@ -20,6 +20,7 @@ import android.app.Application
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
+import dev.leonlatsch.photok.model.database.dao.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
@@ -29,6 +30,7 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -78,6 +80,11 @@ class PhotoRepository @Inject constructor(
     suspend fun getAll() = photoDao.getAll()
 
     fun observeAll() = photoDao.observeAll()
+
+    fun observeAll(sort: Sort): Flow<List<Photo>> = when (sort.order) {
+        Sort.Order.ASK -> photoDao.observeAllSortedAsc(sort.field.columnName)
+        Sort.Order.DESC -> photoDao.observeAllSortedAsc(sort.field.columnName)
+    }
 
     /**
      * @see PhotoDao.countAll

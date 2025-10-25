@@ -77,4 +77,12 @@ interface PhotoDao {
      */
     @Query("SELECT COUNT(*) FROM photo")
     suspend fun countAll(): Int
+
+    // Sorted
+
+    @Query("SELECT * FROM photo ORDER BY :sortField ASC")
+    fun observeAllSortedAsc(sortField: String): Flow<List<Photo>>
+
+    @Query("SELECT * FROM photo ORDER BY :sortField ASC")
+    fun observeAllSortedDesc(sortField: String): Flow<List<Photo>>
 }
