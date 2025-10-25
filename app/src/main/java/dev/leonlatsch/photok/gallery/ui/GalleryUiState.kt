@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 sealed class GalleryUiState {
@@ -24,5 +25,6 @@ sealed class GalleryUiState {
     data class Content(
         val photos: List<PhotoTile>,
         val showAlbumSelectionDialog: Boolean,
+        val sort: Sort,
     ) : GalleryUiState()
 }

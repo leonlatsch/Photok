@@ -58,6 +58,6 @@ data class Photo(
     companion object {
         const val COL_FILENAME = "fileName"
         const val COL_IMPORTED_AT = "importedAt"
-        const val COL_SIZE = "Size"
+        const val COL_SIZE = "size"
     }
 }

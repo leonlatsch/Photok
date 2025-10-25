@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
@@ -30,13 +31,17 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,17 +54,23 @@ class GalleryViewModel @Inject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val photosFlow = photoRepository.observeAll()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
+    // TODO: Persist sort (prefs)
+    private val sortFlow = MutableStateFlow(Sort.Default)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val photosFlow = sortFlow.flatMapConcat { sort ->
+        photoRepository.observeAll(sort)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
         showAlbumSelectionDialog,
-    ) { photos, showAlbumSelection ->
-        galleryUiStateFactory.create(photos, showAlbumSelection)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
+        sortFlow,
+    ) { photos, showAlbumSelection, sort ->
+        galleryUiStateFactory.create(photos, showAlbumSelection, sort)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
     val eventsFlow = eventsChannel.receiveAsFlow()
@@ -76,6 +87,7 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
+            is GalleryUiEvent.SortChanged -> sortFlow.update { event.sort }
         }
     }
 

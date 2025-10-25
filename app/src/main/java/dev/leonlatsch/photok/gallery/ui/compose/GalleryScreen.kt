@@ -21,14 +21,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.sort.ui.SortingMenu
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
@@ -55,6 +63,27 @@ fun GalleryScreen(
                     title = { AppName() },
                     windowInsets = WindowInsets.statusBars,
                     scrollBehavior = scrollBehavior,
+                    actions = {
+                        if (uiState is GalleryUiState.Content) {
+                            var showSortMenu by remember { mutableStateOf(false) }
+
+                            IconButton(onClick = { showSortMenu = true }) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_close),
+                                    contentDescription = "Sort",
+                                )
+                            }
+
+                            SortingMenu(
+                                expanded = showSortMenu,
+                                onDismissRequest = { showSortMenu = false },
+                                sort = (uiState as GalleryUiState.Content).sort,
+                                onSortChanged = { sort ->
+                                    viewModel.handleUiEvent(GalleryUiEvent.SortChanged(sort))
+                                }
+                            )
+                        }
+                    }
                 )
             },
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
