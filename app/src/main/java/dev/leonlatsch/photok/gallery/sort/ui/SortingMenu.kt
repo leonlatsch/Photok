@@ -16,8 +16,15 @@
 
 package dev.leonlatsch.photok.gallery.sort.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,7 +38,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -60,7 +68,8 @@ fun SortingMenu(
                 trailingIcon = {
                     if (sort.field == field) {
                         Icon(
-                            painterResource(R.drawable.ic_check),
+                            modifier = Modifier.size(18.dp),
+                            painter = painterResource(R.drawable.ic_check),
                             contentDescription = "Selected",
                         )
                     }
@@ -91,19 +100,40 @@ fun SortingMenu(
                 trailingIcon = {
                     if (sort.order == order) {
                         Icon(
-                            painterResource(R.drawable.ic_check),
+                            modifier = Modifier.size(18.dp),
+                            painter = painterResource(R.drawable.ic_check),
                             contentDescription = "Selected",
                         )
                     }
                 },
-                onClick = { onSortChanged(sort.copy(order = order)) }
+                onClick = { onSortChanged(sort.copy(order = order)) },
+            )
+        }
+
+        AnimatedVisibility(
+            visible = sort != Sort.Default,
+            enter = slideInVertically(),
+            exit = slideOutVertically(),
+        ) {
+            DropdownMenuItem(
+                contentPadding = PaddingValues(10.dp),
+                text = {
+                    Button(
+                        onClick = { onSortChanged(Sort.Default) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = "Restore Default")
+                    }
+                },
+                onClick = { onSortChanged(Sort.Default) },
             )
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@PreviewLightDark
 @Composable
 private fun Preview() {
     AppTheme {
@@ -115,7 +145,7 @@ private fun Preview() {
                         SortingMenu(
                             expanded = true,
                             onDismissRequest = {},
-                            sort = Sort.Default,
+                            sort = Sort.Default.copy(field = Sort.Field.Size),
                             onSortChanged = {}
                         )
                     }
