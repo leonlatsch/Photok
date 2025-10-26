@@ -10,3 +10,5 @@
 .cxx
 
 .kotlin/
+
+kls_database.db
