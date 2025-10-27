@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+~   Copyright 2020-2022 Leon Latsch
+~
+~   Licensed under the Apache License, Version 2.0 (the "License");
+~   you may not use this file except in compliance with the License.
+~   You may obtain a copy of the License at
+~
+~        http://www.apache.org/licenses/LICENSE-2.0
+~
+~   Unless required by applicable law or agreed to in writing, software
+~   distributed under the License is distributed on an "AS IS" BASIS,
+~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~   See the License for the specific language governing permissions and
+~   limitations under the License.
+-->
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="app_name">Photok</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2025 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Caricamento in corso…</string>
+    <string name="common_password">Password</string>
+    <string name="common_delete">Elimina</string>
+    <string name="common_export">Esporta</string>
+    <string name="common_error">Si è verificato un errore. Riprovare.</string>
+    <string name="common_yes">Sì</string>
+    <string name="common_no">No</string>
+    <string name="common_ok">OK</string>
+    <string name="common_are_you_sure">Sei sicuro?</string>
+    <string name="common_bullet">•</string>
+    <string name="common_more">Altro</string>
+    <string name="common_cancel">Annulla</string>
+    <string name="common_create">Crea</string>
+    <string name="common_empty">Vuoto</string>
+    <string name="common_rename">Rinomina</string>
+    <string name="common_try_again">Riprova</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Importazione file in corso</string>
+    <string name="import_permission_rationale">Photok ha bisogno di accedere alla tua memoria per importare i file.</string>
+    <string name="import_sharted_question">Vuoi importare %1$d file?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Crea la tua password</string>
+    <string name="setup_enter_password">Inserisci la tua password</string>
+    <string name="setup_confirm_password">Conferma la tua password</string>
+    <string name="setup_password_strength_label">Sicurezza password:</string>
+    <string name="setup_button">Crea</string>
+    <string name="setup_password_strength_weak">Debole</string>
+    <string name="setup_password_strength_moderate">Moderata</string>
+    <string name="setup_password_strength_strong">Forte</string>
+    <string name="setup_password_match_warning">\u26A0 Le password non corrispondono</string>
+    <string name="setupSetup">Configurazione</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Sblocca la tua Safe</string>
+    <string name="unlock_enter_password">Inserire password</string>
+    <string name="unlock_button">Sblocca</string>
+    <string name="unlock_wrong_password">\u26A0 Password errata</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">Non ci sono file nella tua Safe</string>
+    <string name="gallery_all_photos_label">Tutti i file</string>
+    <string name="gallery_albums_label">Album</string>
+    <string name="gallery_albums_placeholder">Crea il tuo primo album</string>
+    <string name="gallery_albums_create_title">Crea Album</string>
+    <string name="gallery_albums_rename_title">Rinomina Album</string>
+    <string name="gallery_albums_create_placeholder">Compiti a casa ;)</string>
+    <string name="gallery_albums_select_title">Seleziona un Album</string>
+    <string name="gallery_albums_deleted">Album eliminato</string>
+    <string name="gallery_albums_photos_added">%1$d elemento(i) aggiunti</string>
+    <string name="magic_fab_new_album_label">Nuovo Album</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_fab_label">Importa</string>
+    <string name="import_menu_new_files_title">Importa nuovi file</string>
+    <string name="import_menu_new_files_description">Importa foto e video dalla tua galleria.</string>
+    <string name="import_menu_restore_title">Ripristina un backup</string>
+    <string name="import_menu_restore_description">Ripristina un backup Photok. I file verranno aggiunti ai tuoi file attuali.</string>
+    <string name="import_menu_delete_warning">I file importati verranno eliminati</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Chiudi</string>
+    <string name="process_abort">Interrompi</string>
+    <string name="process_finished">Finito</string>
+    <string name="process_initialize">Preparazione in corso…</string>
+    <string name="process_aborted">Interrotto</string>
+    <string name="process_failures_occurred">\u26A0 Alcuni elementi non sono stati elaborati</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Dettagli</string>
+    <string name="view_photo_detail_file_name_label">Nome file:</string>
+    <string name="view_photo_detail_import_at_label">Importato il:</string>
+    <string name="view_photo_detail_file_type_label">Tipo di file:</string>
+    <string name="view_photo_detail_size_label">Dimensione file:</string>
+    <string name="view_photo_play_button_description">Riproduci video</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Blocca</string>
+    <string name="menu_main_settings">Impostazioni</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Seleziona tutto</string>
+    <string name="menu_ms_delete">Elimina</string>
+    <string name="menu_ms_export">Esporta</string>
+    <string name="menu_ms_info">%1$d elemento(i) selezionati</string>
+    <string name="menu_ms_add_to_album">Aggiungi ad un album</string>
+    <string name="menu_ms_remove_from_album">Rimuovi dall\'album</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Sei sicuro di voler <b>eliminare</b> %1$d file?</string>
+    <string name="delete_are_you_sure_this">Sei sicuro di voler <b>eliminare</b> questo file?</string>
+    <string name="delete_deleting">Eliminazione file…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Sei sicuro di voler <b>esportare</b> %1$d file nella tua galleria?</string>
+    <string name="export_and_delete_are_you_sure">Sei sicuro di voler <b>esportare</b> %1$d file nella tua galleria ed eliminarli?</string>
+    <string name="export_are_you_sure_this">Sei sicuro di voler <b>esportare</b> questo file nella tua galleria?</string>
+    <string name="export_and_delete_are_you_sure_this">Sei sicuro di voler <b>esportare</b> questo file nella tua galleria ed eliminarlo?</string>
+    <string name="export_exporting">Esportazione file…</string>
+    <string name="export_permission_rationale">Photok deve accedere alla tua memoria per esportare file.</string>
+    <string name="export_finished">Esportato</string>
+    <string name="export_and_delete_finished">Esportato ed eliminato</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Versione:</string>
+    <string name="about_developed_by">Sviluppato da:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Software di terze parti</string>
+    <string name="about_privacy_policy">Informativa sulla privacy</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">Novità</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Impostazioni</string>
+
+    <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Stile</string>
+    <string name="settings_app_design_system_default">Impostazione di sistema</string>
+    <string name="settings_app_design_system_light">Chiaro</string>
+    <string name="settings_app_design_system_dark">Scuro</string>
+
+    <string name="settings_category_gallery">Galleria</string>
+    <string name="settings_gallery_auto_fullscreen_title">Schermo intero automatico</string>
+    <string name="settings_gallery_auto_fullscreen_summary">Entra in modalità a schermo intero quando apri un file</string>
+
+    <string name="settings_category_security">Sicurezza</string>
+    <string name="settings_security_allow_screenshots_title">Consenti screenshot</string>
+    <string name="settings_security_allow_screenshots_summary">Consenti di acquisire screenshot. Richiede il riavvio.</string>
+    <string name="settings_security_change_password_title">Modifica Password</string>
+    <string name="settings_security_change_password_summary">Modifica la tua password</string>
+    <string name="settings_security_biometric_title">Sblocco Biometrico</string>
+    <string name="settings_security_biometric_summary">Sblocca Photok con l\'autenticazione biometrica.</string>
+    <string name="settings_security_biometric_not_available">Lo Sblocco Biometrico non è disponibile</string>
+    <string name="settings_security_timeout_title">Timeout Blocco Automatico</string>
+    <string name="settings_security_timeout_summary">Blocco automatico dopo un determinato periodo di tempo in background</string>
+    <string name="settings_security_timeout_immediately">Immediatamente</string>
+    <string name="settings_security_timeout_one_minute">1 Minuto</string>
+    <string name="settings_security_timeout_two_minute">2 Minuti</string>
+    <string name="settings_security_timeout_five_minute">5 Minuti</string>
+    <string name="settings_security_timeout_ten_minute">10 Minuti</string>
+    <string name="settings_security_timeout_never">Mai</string>
+    <string name="settings_security_launch_code_title">Codice segreto di lancio</string>
+    <string name="settings_security_launch_code_summary">Codice segreto per avviare Photok dal tastierino numerico del telefono.</string>
+    <string name="settings_security_launch_code_message">Digita *#*#[il tuo codice]#*#* nel tastierino numerico del telefono per avviare Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Nascondi App</string>
+    <string name="settings_security_hide_app_summary">Nascondi l\'icona dell\'app dalla lista delle applicazioni.</string>
+
+    <string name="settings_category_advanced">Avanzato</string>
+    <string name="settings_category_advanced_summary">Usare con cautela</string>
+    <string name="settings_advanced_reset_title">Reimposta Safe</string>
+    <string name="settings_advanced_reset_summary">Cancella dati e reimposta password</string>
+    <string name="settings_advanced_reset_confirmation">Vuoi DAVVERO reimpostare la tua safe? Tutti i dati andranno persi!</string>
+    <string name="settings_advanced_backup_title">Backup</string>
+    <string name="settings_advanced_backup_summary">Crea un backup della tua safe</string>
+    <string name="settings_advanced_delete_imported_title">Elimina file importati</string>
+    <string name="settings_advanced_delete_imported_summary">Elimina i file dopo averli importati</string>
+    <string name="settings_advanced_delete_exported_title">Elimina file esportati</string>
+    <string name="settings_advanced_delete_exported_summary">Elimina i file dopo averli esportati</string>
+
+    <string name="settings_other_title">Altro</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Inviami un\'email con il tuo feedback</string>
+    <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- KEPT IN ENGLISH FOR EMAIL SUBJECT -->
+    <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- KEPT IN ENGLISH FOR EMAIL BODY -->
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">Dona</string>
+    <string name="settings_other_donate_summary">Supporta lo sviluppo di Photok</string>
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+    <string name="settings_other_sourcecode_title">Codice Sorgente</string>
+    <string name="settings_other_sourcecode_summary">Contribuisci a Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Crediti</string>
+    <string name="settings_other_credits_summary">Collaboratori e crediti</string>
+    <string name="settings_other_about_title">Info</string>
+    <string name="settings_other_about_summary">Informazioni su Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Collaboratori</string>
+    <string name="credits_contributors_hint">Visita Photok su GitHub per visualizzare tutti i collaboratori</string>
+    <string name="credits_icons_title">Icone</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Modifica la tua password</string>
+    <string name="change_password_old_password">Vecchia Password</string>
+    <string name="change_password_new_password">Nuova Password</string>
+    <string name="change_password_check">Controlla</string>
+    <string name="change_password_enter_new_password">Inserisci la nuova password</string>
+    <string name="change_password_confirm_new_password">Conferma la nuova password</string>
+    <string name="change_password_button">Modifica Password</string>
+    <string name="change_password_confirm_message">Backup consigliato!<br /> La modifica della password richiede la ricrittografia di tutti i file! Vuoi continuare?</string>
+    <string name="change_password_reencrypting">Ricrittografia file…</string>
+
+    <!-- CHECk PASSWORD -->
+    <string name="settings_security_check_password_title">Verifica Password</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Nascondi Photok</string>
+    <string name="hide_app_title_show">Mostra Photok</string>
+    <string name="hide_app_status_label">Photok è attualmente:</string>
+    <string name="hide_app_status_visible">VISIBILE</string>
+    <string name="hide_app_status_hidden">NASCOSTO</string>
+    <string name="hide_app_app_name_stealth">Telefono</string>
+    <string name="hide_app_confirm_hide">Vuoi davvero nascondere Photok?</string>
+    <string name="hide_app_confirm_show">Vuoi mostrare di nuovo Photok?</string>
+    <string name="hide_app_hint">Una volta nascosto, Photok può essere avviato solo dal tastierino numerico del telefono, utilizzando il codice di avvio segreto.</string>
+    <string name="hide_app_hint_current_code">Codice di lancio attuale:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Avanti</string>
+    <string name="onboarding_finish">Fine</string>
+    <string name="onboarding_skip"><u>Salta</u></string>
+
+    <string name="onboarding_slide1_title">Benvenuto su</string>
+    <string name="onboarding_slide1_description">Un luogo sicuro per le tue foto.</string>
+    <string name="onboarding_slide2_title">Crea una password</string>
+    <string name="onboarding_slide2_description">Crea una password sicura. La tua password viene utilizzata per crittografare le tue foto direttamente sul tuo telefono.</string>
+    <string name="onboarding_slide3_title">Inizia a importare</string>
+    <string name="onboarding_slide3_description">Inizia a importare le tue foto e tienile al sicuro dagli altri.\nSuccessivamente potrai eliminarle dalla tua galleria.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Creazione backup…</string>
+    <string name="backup_restore_title">Ripristina Backup</string>
+    <string name="backup_restore_validating">Convalida backup…</string>
+    <string name="backup_restore_details_created_at">Creato il:</string>
+    <string name="backup_restore_details_photos_contained">File Contenuti:</string>
+    <string name="backup_restore_details_compatible">Compatibile:</string>
+    <string name="backup_restore_details_size">Dimensioni:</string>
+    <string name="backup_restore_button">Sblocca e Ripristina</string>
+    <string name="backup_restore_invalid_file">\u26A0 File non valido</string>
+    <string name="backup_restore_processing">Ripristino Backup…</string>
+    <string name="backup_unlock_title">Sblocco Backup</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Novità in</string> 
+    <string name="news_view_changelog">Visualizza Changelog</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">Sblocco biometrico</string>
+    <string name="news_summary_1">Sblocca Photok con l\'autenticazione biometrica</string>
+
+    <string name="news_title_2">Miglioramenti nella selezione dei file</string>
+    <string name="news_summary_2">Animazioni e forme migliorate per la selezione multipla</string>
+
+    <string name="news_title_3">NOVITÀ: Elimina dopo l\'esportazione</string>
+    <string name="news_summary_3">Elimina automaticamente i file dopo averli esportati</string>
+
+    <string name="news_title_4">Altre lingue</string>
+    <string name="news_summary_4">Photok è ora disponibile anche in arabo e russo</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Menu di ripristino</string>
+    <string name="recovery_menu_item_open_photok">Apri Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Reimposta impostazione Nascondi App</string>
+
+    <!-- Migration -->
+    <string name="migration_initial_title_welcome">Benvenuto su</string>
+    <string name="migration_initial_explaination">Questa versione di Photok introduce un nuovo metodo di crittografia. Per continuare ad accedere alla tua galleria, è necessaria una migrazione.</string>
+    <string name="migration_initial_button">Inizia</string>
+
+    <string name="migration_initial_stage_backup_checklist">Crea un backup dei tuoi dati</string>
+    <string name="migration_initial_stage_backup_explanation">Crea un backup dei tuoi dati prima di continuare</string>
+    <string name="migration_initial_stage_backup_button">Crea backup</string>
+
+    <string name="migration_initial_stage_permission_checklist">Concedi permesso</string>
+    <string name="migration_initial_stage_permission_explanation">Concedi il permesso per le notifiche per eseguire la migrazione in modo affidabile in background.</string>
+    <string name="migration_initial_stage_permission_button">Concedi permesso</string>
+
+    <string name="migration_initial_stage_ready_explanation">È tutto pronto.</string>
+    <string name="migration_initial_stage_ready_button">Avvia migrazione</string>
+
+    <string name="migration_running_title">Migrazione della tua galleria</string>
+    <string name="migration_running_progress">%d di %d file elaborati</string>
+    <string name="migration_running_advice">Se questa schermata rimane aperta, la migrazione verrà eseguita più rapidamente.</string>
+
+    <string name="migration_done_title">Migrazione della galleria completata</string>
+    <string name="migration_done_progress">Tutti i file migrati</string>
+
+    <string name="migration_error_title">Errore durante la migrazione della tua galleria</string>
+    <string name="migration_error_button">Invia segnalazione errore</string>
+
+    <string name="notification_channel_background_tasks">Attività in background</string>
+    <string name="migration_error_extract_data">Estrai dati</string>
+    <string name="migration_error_extract_confirmation_text">Sei sicuro di voler estrarre tutti i tuoi file NON CRITTOGRAFATI in un file ZIP?</string>
+    <string name="migration_error_extracting_title">Decrittografia in formato ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Sblocca Photok</string>
+    <string name="biometric_unlock_subtitle">Verifica la tua identità per sbloccare</string>
+    <string name="biometric_unlock_cancel">Usa la password Photok</string>
+
+    <string name="biometric_unlock_setup_title">Abilita sblocco biometrico</string>
+    <string name="biometric_unlock_setup_subtitle">Per abilitare lo sblocco biometrico, conferma la tua identità</string>
+
+    <string name="biometric_unlock_error">Sblocco biometrico non riuscito. Utilizza la tua password Photok.</string>
+    <string name="biometric_unlock_hint_button">Sblocca con dati biometrici</string>
+</resources>
