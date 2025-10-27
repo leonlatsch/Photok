@@ -252,13 +252,13 @@ class PhotoRepository @Inject constructor(
 
             wrote != -1L && deleted
         } catch (e: IOException) {
-            Timber.d("Error exporting file: ${photo.fileName}")
+            Timber.d("Error exporting file: ${photo.fileName} $e")
             false
         }
     }
 
     private fun createExternalOutputStream(photo: Photo, uri: Uri): OutputStream? {
-        val fileName = "photok_export_${photo.fileName}"
+        val fileName = photo.fileName
         val mimeType = photo.type.mimeType
 
         return encryptedStorageManager.externalOpenFileOutput(

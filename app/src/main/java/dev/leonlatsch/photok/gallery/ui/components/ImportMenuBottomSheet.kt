@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.gallery.ui.components
 import android.net.Uri
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -110,10 +109,6 @@ private fun ImportMenuDialogContent(
         }
     }
 
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia()
-    ) { onImportNewItems(it) }
-
     val openDocumentLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenMultipleDocuments()
     ) { onImportNewItems(it) }
@@ -133,8 +128,6 @@ private fun ImportMenuDialogContent(
 
     val activity = LocalActivity.current
 
-    val deleteImportedFiles = remember { config?.deleteImportedFiles }
-
     Column(
         modifier = modifier.padding(bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -144,25 +137,17 @@ private fun ImportMenuDialogContent(
             description = stringResource(R.string.import_menu_new_files_description),
             iconPainter = painterResource(R.drawable.ic_add),
             chips = { modifier ->
-
-                val showWarningChip =
-                    deleteImportedFiles == true || isPreview
+                val showWarningChip = remember { config?.deleteImportedFiles == true || isPreview }
 
                 if (showWarningChip) {
                     ImportWarningChip(modifier = modifier)
                 }
             },
             onClick = {
-                if (deleteImportedFiles == true) {
-                    openDocumentLauncher.launchAndIgnoreTimer(
-                        input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
-                        activity = activity,
-                    )
-                } else {
-                    photoPickerLauncher.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo)
-                    )
-                }
+                openDocumentLauncher.launchAndIgnoreTimer(
+                    input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
+                    activity = activity,
+                )
             }
         )
 

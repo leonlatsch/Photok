@@ -188,7 +188,7 @@ class EncryptedStorageManager @Inject constructor(
 
     fun externalDeleteFile(fileUri: Uri): Boolean? =
         try {
-            val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri);
+            val srcDoc = DocumentFile.fromSingleUri(app.baseContext, fileUri)
             srcDoc?.delete()
         } catch (e: IOException) {
             Timber.d("Error deleting external file at $fileUri: $e")
