@@ -36,6 +36,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.Photo
+import me.saket.telephoto.zoomable.EnabledZoomGestures
+import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 
@@ -74,9 +76,9 @@ fun PhotoViewHolderContent(
                 contentDescription = photo.fileName,
                 modifier = contentModifier.zoomable(
                     onClick = { onClick() },
-                    state =  rememberZoomableState(),
-                    enabled = !photo.type.isVideo
-                ),
+                    state =  rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                    gestures = if (photo.type.isVideo) EnabledZoomGestures.None else EnabledZoomGestures.ZoomAndPan,
+),
             )
         }
 
