@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.model.database
 
 import androidx.room.TypeConverter
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 /**
@@ -38,4 +39,17 @@ class Converters {
      */
     @TypeConverter
     fun toPhotoType(photoType: Int): PhotoType = PhotoType.fromValue(photoType)
+
+
+    @TypeConverter
+    fun toSortOrder(value: Int): Sort.Order = Sort.Order.fromValue(value)
+
+    @TypeConverter
+    fun fromSortOrder(order: Sort.Order) = order.sql
+
+    @TypeConverter
+    fun toSortField(value: Int): Sort.Field = Sort.Field.fromValue(value)
+
+    @TypeConverter
+    fun fromSortField(field: Sort.Field) = field.columnName
 }
