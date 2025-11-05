@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
@@ -55,11 +56,11 @@ class GalleryViewModel @Inject constructor(
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
     private val albumRepository: AlbumRepository,
+    private val sortRepository: SortRepository,
     private val resources: Resources,
 ) : ViewModel() {
 
-    // TODO: Persist sort (prefs)
-    private val sortFlow = MutableStateFlow(Sort.Default)
+    private val sortFlow = sortRepository.observeSortFor(album = null)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val photosFlow = sortFlow.flatMapLatest { sort ->
@@ -91,7 +92,9 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
-            is GalleryUiEvent.SortChanged -> sortFlow.update { event.sort }
+            is GalleryUiEvent.SortChanged -> viewModelScope.launch {
+                sortRepository.updateSortFor(album = null, sort = event.sort)
+            }
         }
     }
 

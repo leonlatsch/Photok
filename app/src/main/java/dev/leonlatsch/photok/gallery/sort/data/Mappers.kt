@@ -14,22 +14,25 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.entity
+package dev.leonlatsch.photok.gallery.sort.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import java.util.UUID
 
-@Entity(tableName = AlbumTable.TABLE_NAME)
-data class AlbumTable(
-    val name: String,
-    @PrimaryKey
-    @ColumnInfo(name = ALBUM_UUID)
-    val uuid: String = UUID.randomUUID().toString(),
-) {
-    companion object {
-        const val TABLE_NAME = "album"
-        const val ALBUM_UUID = "album_uuid"
-    }
+fun Sort.toData(album: Album?): SortTable {
+    return SortTable(
+        uuid = UUID.randomUUID().toString(),
+        album = album?.uuid,
+        field = field,
+        order = order,
+    )
+}
+
+fun SortTable.toDomain(): Sort {
+    return Sort(
+        field = field,
+        order = order,
+    )
 }

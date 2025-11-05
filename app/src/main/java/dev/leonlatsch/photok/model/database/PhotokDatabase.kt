@@ -23,6 +23,7 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
 import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
@@ -72,6 +73,7 @@ abstract class PhotokDatabase : RoomDatabase() {
     abstract fun getPhotoDao(): PhotoDao
 
     abstract fun getAlbumDao(): AlbumDao
+    abstract fun getSortDao(): SortDao
 }
 
 @DeleteColumn.Entries(

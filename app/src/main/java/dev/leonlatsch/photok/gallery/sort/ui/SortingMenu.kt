@@ -182,13 +182,6 @@ fun SortingMenu(
                 onClick = { onSortChanged(Sort.Default) },
             )
         }
-
-//        AnimatedVisibility(
-//            visible = sort != Sort.Default,
-//            enter = slideInVertically(),
-//            exit = slideOutVertically(),
-//        ) {
-//        }
     }
 }
 
@@ -202,6 +195,11 @@ private fun Preview() {
                 TopAppBar(
                     title = {},
                     actions = {
+                        SortingMenuIconButton(
+                            sort = Sort.Default.copy(field = Sort.Field.Size),
+                            onClick = {}
+                        )
+
                         SortingMenu(
                             expanded = true,
                             onDismissRequest = {},

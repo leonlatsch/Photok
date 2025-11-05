@@ -14,22 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.entity
+package dev.leonlatsch.photok.gallery.sort.domain
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.util.UUID
+import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import kotlinx.coroutines.flow.Flow
 
-@Entity(tableName = AlbumTable.TABLE_NAME)
-data class AlbumTable(
-    val name: String,
-    @PrimaryKey
-    @ColumnInfo(name = ALBUM_UUID)
-    val uuid: String = UUID.randomUUID().toString(),
-) {
-    companion object {
-        const val TABLE_NAME = "album"
-        const val ALBUM_UUID = "album_uuid"
-    }
+interface SortRepository {
+    fun observeSortFor(album: Album? = null): Flow<Sort>
+    suspend fun updateSortFor(album: Album? = null, sort: Sort)
 }

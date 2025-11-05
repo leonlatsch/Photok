@@ -22,15 +22,14 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
-import java.util.UUID
 
 
 @Entity(
-    tableName = "sort",
+    tableName = SortTable.TABLE_NAME,
     foreignKeys = [
         ForeignKey(
             entity = AlbumTable::class,
-            parentColumns = arrayOf("album_uuid"),
+            parentColumns = arrayOf(AlbumTable.ALBUM_UUID),
             childColumns = arrayOf("album"),
             onDelete = ForeignKey.CASCADE,
         ),
@@ -38,9 +37,13 @@ import java.util.UUID
 )
 data class SortTable(
     @PrimaryKey
-    val uuid: String = UUID.randomUUID().toString(),
+    val uuid: String,
     @ColumnInfo(index = true)
     val album: String? = null,
     val field: Sort.Field,
     val order: Sort.Order,
-)
+) {
+    companion object {
+        const val TABLE_NAME = "sort"
+    }
+}
