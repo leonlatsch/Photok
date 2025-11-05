@@ -17,6 +17,11 @@
 package dev.leonlatsch.photok.gallery.sort.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateBounds
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
@@ -30,19 +35,62 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.ui.theme.AppTheme
+
+@Composable
+fun SortingMenuIconButton(
+    sort: Sort,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val filterChangedColor = MaterialTheme.colorScheme.tertiaryContainer
+
+    val buttonContainerColor = remember(sort) {
+        if (sort != Sort.Default) {
+            filterChangedColor
+        } else {
+            Color.Unspecified
+        }
+    }
+
+    Crossfade(
+        targetState = buttonContainerColor,
+        modifier = modifier,
+    ) {
+        IconButton(
+            onClick = onClick,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = it,
+            ),
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_sort),
+                contentDescription = "Sort",
+            )
+        }
+    }
+}
 
 
 @Composable
@@ -53,12 +101,13 @@ fun SortingMenu(
     onSortChanged: (Sort) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     DropdownMenu(
-        modifier = modifier.clip(MaterialTheme.shapes.large),
         expanded = expanded,
         onDismissRequest = onDismissRequest,
         shape = MaterialTheme.shapes.large,
+        modifier = modifier
+            .clip(MaterialTheme.shapes.large)
+            .animateContentSize()
     ) {
         for (field in Sort.Field.entries) {
             DropdownMenuItem(
@@ -66,7 +115,11 @@ fun SortingMenu(
                     Text(field.label)
                 },
                 trailingIcon = {
-                    if (sort.field == field) {
+                    AnimatedVisibility(
+                        visible = sort.field == field,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ) {
                         Icon(
                             modifier = Modifier.size(18.dp),
                             painter = painterResource(R.drawable.ic_check),
@@ -98,7 +151,11 @@ fun SortingMenu(
                     )
                 },
                 trailingIcon = {
-                    if (sort.order == order) {
+                    AnimatedVisibility(
+                        visible = sort.order == order,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ) {
                         Icon(
                             modifier = Modifier.size(18.dp),
                             painter = painterResource(R.drawable.ic_check),
@@ -110,16 +167,12 @@ fun SortingMenu(
             )
         }
 
-        AnimatedVisibility(
-            visible = sort != Sort.Default,
-            enter = slideInVertically(),
-            exit = slideOutVertically(),
-        ) {
+        if (sort != Sort.Default) {
             DropdownMenuItem(
-                contentPadding = PaddingValues(10.dp),
                 text = {
-                    Button(
+                    TextButton(
                         onClick = { onSortChanged(Sort.Default) },
+                        contentPadding = PaddingValues(),
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
@@ -129,6 +182,13 @@ fun SortingMenu(
                 onClick = { onSortChanged(Sort.Default) },
             )
         }
+
+//        AnimatedVisibility(
+//            visible = sort != Sort.Default,
+//            enter = slideInVertically(),
+//            exit = slideOutVertically(),
+//        ) {
+//        }
     }
 }
 

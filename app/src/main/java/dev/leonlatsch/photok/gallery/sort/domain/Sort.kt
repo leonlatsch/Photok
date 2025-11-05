@@ -20,7 +20,6 @@ import androidx.annotation.DrawableRes
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
 
-// TODO: Use real icon/texts
 data class Sort(
     val field: Field,
     val order: Order,
