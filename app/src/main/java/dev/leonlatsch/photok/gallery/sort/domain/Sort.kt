@@ -26,20 +26,20 @@ data class Sort(
     val order: Order,
 ) {
     enum class Order(@DrawableRes val icon: Int, val label: String, val sql: String) {
-        Asc(R.drawable.ic_close, "Ascending", "ASC"),
-        Desc(R.drawable.ic_close, "Descending", "DESC"),
+        Asc(R.drawable.ic_double_arrow_up, "Ascending", "ASC"),
+        Desc(R.drawable.ic_double_arrow_down, "Descending", "DESC"),
     }
 
     enum class Field(val columnName: String, @DrawableRes val icon: Int, val label: String) {
-        Import(Photo.Companion.COL_IMPORTED_AT, R.drawable.ic_close, "Import date"),
-        FileName(Photo.Companion.COL_FILENAME, R.drawable.ic_close, "Filename"),
-        Size(Photo.Companion.COL_SIZE, R.drawable.ic_close, "Size"),
+        ImportDate(Photo.Companion.COL_IMPORTED_AT, R.drawable.ic_calendar_today, "Import date"),
+        FileName(Photo.Companion.COL_FILENAME, R.drawable.ic_abc, "Filename"),
+        Size(Photo.Companion.COL_SIZE, R.drawable.ic_photo_size, "Size"),
 
     }
 
     companion object {
         val Default = Sort(
-            field = Field.Import,
+            field = Field.ImportDate,
             order = Order.Desc,
         )
     }
