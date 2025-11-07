@@ -67,7 +67,7 @@ fun SortingMenuIconButton(
     val filterChangedColor = MaterialTheme.colorScheme.tertiaryContainer
 
     val buttonContainerColor = remember(sort) {
-        if (sort != Sort.Default) {
+        if (sort.isModified()) {
             filterChangedColor
         } else {
             Color.Unspecified
@@ -167,7 +167,7 @@ fun SortingMenu(
             )
         }
 
-        if (sort != Sort.Default) {
+        if (sort.isModified()) {
             DropdownMenuItem(
                 text = {
                     TextButton(

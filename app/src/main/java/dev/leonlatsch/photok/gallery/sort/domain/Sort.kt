@@ -24,6 +24,10 @@ data class Sort(
     val field: Field,
     val order: Order,
 ) {
+    fun isModified(): Boolean {
+        return this != Default
+    }
+
     enum class Order(val value: Int, @DrawableRes val icon: Int, val label: String, val sql: String) {
         Asc(0, R.drawable.ic_double_arrow_up, "Ascending", "ASC"),
         Desc(1, R.drawable.ic_double_arrow_down, "Descending", "DESC");

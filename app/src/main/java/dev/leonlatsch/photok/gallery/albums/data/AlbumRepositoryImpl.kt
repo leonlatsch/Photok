@@ -44,7 +44,7 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.observeAlbumWithPhotos(uuid, sort)
             .map { it.toDomain() }
             .map { album ->
-                if (sort == Sort.Default) {
+                if (!sort.isModified()) {
                     album.sortPhotos()
                 } else {
                     album

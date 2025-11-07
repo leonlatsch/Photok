@@ -42,7 +42,7 @@ class SortRepositoryImpl @Inject constructor(
         database.withTransaction {
             sortDao.deleteSortFor(albumUuid)
 
-            if (sort != Sort.Default) {
+            if (sort.isModified()) {
                 sortDao.updateSortFor(sort.toData(albumUuid))
             }
         }
