@@ -20,6 +20,6 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import kotlinx.coroutines.flow.Flow
 
 interface SortRepository {
-    fun observeSortFor(album: Album? = null): Flow<Sort>
-    suspend fun updateSortFor(album: Album? = null, sort: Sort)
+    fun observeSortFor(albumUuid: String? = null): Flow<Sort>
+    suspend fun updateSortFor(albumUuid: String? = null, sort: Sort)
 }

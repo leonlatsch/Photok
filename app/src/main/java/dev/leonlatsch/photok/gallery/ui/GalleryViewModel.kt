@@ -60,7 +60,7 @@ class GalleryViewModel @Inject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val sortFlow = sortRepository.observeSortFor(album = null)
+    private val sortFlow = sortRepository.observeSortFor(albumUuid = null)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val photosFlow = sortFlow.flatMapLatest { sort ->
@@ -93,7 +93,7 @@ class GalleryViewModel @Inject constructor(
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
             is GalleryUiEvent.SortChanged -> viewModelScope.launch {
-                sortRepository.updateSortFor(album = null, sort = event.sort)
+                sortRepository.updateSortFor(albumUuid = null, sort = event.sort)
             }
         }
     }

@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import android.net.Uri
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
@@ -28,4 +30,5 @@ sealed interface AlbumDetailUiEvent {
     data object DeleteAlbum : AlbumDetailUiEvent
     data class RenameAlbum(val newName: String) : AlbumDetailUiEvent
     data class OnImportChoice(val choice: ImportChoice) : AlbumDetailUiEvent
+    data class SortChanged(val sort: Sort) : AlbumDetailUiEvent
 }

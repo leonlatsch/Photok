@@ -21,6 +21,7 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
+import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -39,7 +40,8 @@ class AlbumRepositoryImpl @Inject constructor(
     override suspend fun getAlbums(): List<Album> = albumDao.getAllAlbums()
         .map { album -> album.toDomain() }
 
-    override fun observeAlbumWithPhotos(uuid: String): Flow<Album> =
+    override fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<Album> =
+        // TODO: Apply sort. Maybe needs to be done in code :(
         albumDao.observeAlbumWithPhotos(uuid)
             .map { it.toDomain() }
             .map { album -> album.sortPhotos() }

@@ -24,14 +24,20 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.*
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
+import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -43,16 +49,24 @@ const val ALBUM_DETAIL_UUID = "album_uuid"
 class AlbumDetailViewModel @AssistedInject constructor(
     @Assisted(ALBUM_DETAIL_UUID) private val albumUUID: String,
     private val albumsRepository: AlbumRepository,
+    private val sortRepository: SortRepository,
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val albumFlow = albumsRepository.observeAlbumWithPhotos(albumUUID)
-        .stateIn(viewModelScope, SharingStarted.Lazily, Album("", "", emptyList()))
+    private val sortFlow = sortRepository.observeSortFor(albumUuid = albumUUID)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val albumFlow = sortFlow.flatMapLatest { sort ->
+        albumsRepository.observeAlbumWithPhotos(albumUUID, sort)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, Album("", "", emptyList()))
 
     private val photoActionsChannel = Channel<PhotoAction>()
     val photoActions = photoActionsChannel.receiveAsFlow()
 
-    val uiState = albumFlow.map { album ->
+    val uiState = combine(
+        albumFlow,
+        sortFlow,
+    ) { album, sort ->
         AlbumDetailUiState(
             albumId = album.uuid,
             albumName = album.name,
@@ -62,9 +76,11 @@ class AlbumDetailViewModel @AssistedInject constructor(
                     it.type,
                     it.uuid
                 )
-            }
+            },
+            sort = sort,
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumDetailUiState())
+
 
     private val navEventsChannel = Channel<AlbumDetailNavigator.NavigationEvent>()
     val navEvents = navEventsChannel.receiveAsFlow()
@@ -73,19 +89,19 @@ class AlbumDetailViewModel @AssistedInject constructor(
         when (event) {
             is AlbumDetailUiEvent.OnDelete -> {
                 val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
-                photoActionsChannel.trySend(PhotoAction.DeletePhotos(photos))
+                photoActionsChannel.trySend(DeletePhotos(photos))
             }
 
             is AlbumDetailUiEvent.OnExport -> {
                 if (event.target != null) {
                     val photos = albumFlow.value.files.filter { event.items.contains(it.uuid) }
-                    photoActionsChannel.trySend(PhotoAction.ExportPhotos(photos, event.target))
+                    photoActionsChannel.trySend(ExportPhotos(photos, event.target))
                 }
             }
 
             is AlbumDetailUiEvent.OpenPhoto -> {
                 photoActionsChannel.trySend(
-                    PhotoAction.OpenPhoto(
+                    OpenPhoto(
                         event.item.uuid,
                         albumFlow.value.uuid
                     )
@@ -97,7 +113,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                     albumsRepository.deleteAlbum(albumFlow.value)
                         .onSuccess {
                             navEventsChannel.trySend(
-                                AlbumDetailNavigator.NavigationEvent.ShowToast(
+                                ShowToast(
                                     resources.getString(R.string.gallery_albums_deleted)
                                 )
                             )
@@ -105,7 +121,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                         }
                         .onFailure {
                             navEventsChannel.trySend(
-                                AlbumDetailNavigator.NavigationEvent.ShowToast(
+                                ShowToast(
                                     resources.getString(R.string.common_error)
                                 )
                             )
@@ -117,7 +133,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                 viewModelScope.launch {
                     albumsRepository.unlink(event.items, albumFlow.value.uuid)
                     navEventsChannel.trySend(
-                        AlbumDetailNavigator.NavigationEvent.ShowToast(
+                        ShowToast(
                             resources.getString(R.string.common_ok)
                         )
                     )
@@ -126,6 +142,9 @@ class AlbumDetailViewModel @AssistedInject constructor(
 
             is AlbumDetailUiEvent.RenameAlbum -> renameAlbum(event.newName)
             is AlbumDetailUiEvent.OnImportChoice -> onImportChoice(event.choice)
+            is AlbumDetailUiEvent.SortChanged -> viewModelScope.launch {
+                sortRepository.updateSortFor(albumUuid = albumUUID, sort = event.sort)
+            }
         }
     }
 
@@ -135,6 +154,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                 fileUris = choice.fileUris,
                 albumUuid = albumFlow.value.uuid,
             )
+
             is ImportChoice.RestoreBackup -> AlbumDetailNavigator.NavigationEvent.StartRestoreBackup(
                 choice.backupUri,
             )

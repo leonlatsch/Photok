@@ -20,10 +20,10 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 
-fun Sort.toData(album: Album?): SortTable {
+fun Sort.toData(albumUuid: String?): SortTable {
     return SortTable(
         id = 0,
-        album = album?.uuid,
+        album = albumUuid,
         field = field,
         order = order,
     )

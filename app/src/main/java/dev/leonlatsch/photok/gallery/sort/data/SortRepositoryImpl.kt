@@ -31,19 +31,19 @@ class SortRepositoryImpl @Inject constructor(
     private val database: PhotokDatabase,
 ) : SortRepository {
 
-    override fun observeSortFor(album: Album?): Flow<Sort> {
-        return sortDao.observeSort(album = album?.uuid).map { it?.toDomain() ?: Sort.Default }
+    override fun observeSortFor(albumUuid: String?): Flow<Sort> {
+        return sortDao.observeSort(album = albumUuid).map { it?.toDomain() ?: Sort.Default }
     }
 
     override suspend fun updateSortFor(
-        album: Album?,
+        albumUuid: String?,
         sort: Sort
     ) {
         database.withTransaction {
-            sortDao.deleteSortFor(album?.uuid)
+            sortDao.deleteSortFor(albumUuid)
 
             if (sort != Sort.Default) {
-                sortDao.updateSortFor(sort.toData(album))
+                sortDao.updateSortFor(sort.toData(albumUuid))
             }
         }
     }
