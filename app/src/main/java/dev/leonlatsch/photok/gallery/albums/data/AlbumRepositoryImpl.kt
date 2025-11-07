@@ -41,10 +41,15 @@ class AlbumRepositoryImpl @Inject constructor(
         .map { album -> album.toDomain() }
 
     override fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<Album> =
-        // TODO: Apply sort. Maybe needs to be done in code :(
-        albumDao.observeAlbumWithPhotos(uuid)
+        albumDao.observeAlbumWithPhotos(uuid, sort)
             .map { it.toDomain() }
-            .map { album -> album.sortPhotos() }
+            .map { album ->
+                if (sort == Sort.Default) {
+                    album.sortPhotos()
+                } else {
+                    album
+                }
+            }
 
     override suspend fun getAlbumWithPhotos(uuid: String): Album =
         albumDao.getAlbumWithPhotos(uuid)

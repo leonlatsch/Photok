@@ -29,7 +29,7 @@ import java.util.UUID
  * @author Leon Latsch
  */
 // TODO: Add a domain model for photos
-@Entity(tableName = "photo")
+@Entity(tableName = Photo.TABLE_NAME)
 data class Photo(
     @Expose
     @ColumnInfo(name = COL_FILENAME)
@@ -59,5 +59,6 @@ data class Photo(
         const val COL_FILENAME = "fileName"
         const val COL_IMPORTED_AT = "importedAt"
         const val COL_SIZE = "size"
+        const val TABLE_NAME = "photo"
     }
 }

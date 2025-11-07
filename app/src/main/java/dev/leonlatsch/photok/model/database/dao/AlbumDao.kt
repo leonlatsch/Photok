@@ -22,12 +22,18 @@ import androidx.room.Insert
 import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Transaction
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import org.intellij.lang.annotations.Language
 
 @Dao
 abstract class AlbumDao {
@@ -45,12 +51,33 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album")
     abstract fun observeAllAlbumsWithPhotos(): Flow<List<AlbumWithPhotos>>
 
+
     @Query("SELECT * FROM album")
     abstract suspend fun getAllAlbums(): List<AlbumTable>
 
-    @Transaction
+    open fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<AlbumWithPhotos> {
+        @Language("roomsql")
+        val refSql = """
+            SELECT p.*
+            FROM ${Photo.TABLE_NAME} p
+            INNER JOIN ${AlbumPhotoCroffRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
+            WHERE ref.album_uuid = ?
+            ORDER BY ${sort.field.columnName} ${sort.order.sql}
+        """.trimIndent()
+
+        return combine(
+            observeAlbum(uuid),
+            observePhotosForAlbum(SimpleSQLiteQuery(refSql, arrayOf(uuid)))
+        ) { album, photos ->
+            AlbumWithPhotos(album, photos)
+        }
+    }
+
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
-    abstract fun observeAlbumWithPhotos(uuid: String): Flow<AlbumWithPhotos>
+    abstract fun observeAlbum(uuid: String): Flow<AlbumTable>
+
+    @RawQuery(observedEntities = [Photo::class, AlbumPhotoCroffRefTable::class])
+    abstract fun observePhotosForAlbum(query: SupportSQLiteQuery): Flow<List<Photo>>
 
     @Transaction
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")

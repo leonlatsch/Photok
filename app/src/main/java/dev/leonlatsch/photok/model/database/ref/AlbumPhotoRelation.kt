@@ -29,7 +29,7 @@ private const val PHOTO_UUID = "photo_uuid"
 
 @Entity(
     primaryKeys = [ALBUM_UUID, PHOTO_UUID],
-    tableName = "album_photos_cross_ref",
+    tableName = AlbumPhotoCroffRefTable.TABLE_NAME,
 )
 data class AlbumPhotoCroffRefTable(
     @ColumnInfo(name = ALBUM_UUID) val albumUUID: String,
@@ -37,7 +37,11 @@ data class AlbumPhotoCroffRefTable(
 
     @ColumnInfo(name = "linked_at")
     val linkedAt: Long
-)
+) {
+    companion object {
+        const val TABLE_NAME = "album_photos_cross_ref"
+    }
+}
 
 data class AlbumWithPhotos(
     @Embedded val album: AlbumTable,
