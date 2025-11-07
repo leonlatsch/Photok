@@ -45,11 +45,11 @@ class Converters {
     fun toSortOrder(value: Int): Sort.Order = Sort.Order.fromValue(value)
 
     @TypeConverter
-    fun fromSortOrder(order: Sort.Order) = order.sql
+    fun fromSortOrder(order: Sort.Order) = order.value
 
     @TypeConverter
     fun toSortField(value: Int): Sort.Field = Sort.Field.fromValue(value)
 
     @TypeConverter
-    fun fromSortField(field: Sort.Field) = field.columnName
+    fun fromSortField(field: Sort.Field): Int = field.value
 }

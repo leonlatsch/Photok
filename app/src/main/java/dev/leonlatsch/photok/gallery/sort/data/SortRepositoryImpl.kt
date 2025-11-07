@@ -16,16 +16,19 @@
 
 package dev.leonlatsch.photok.gallery.sort.data
 
+import androidx.room.withTransaction
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.model.database.PhotokDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SortRepositoryImpl @Inject constructor(
     private val sortDao: SortDao,
+    private val database: PhotokDatabase,
 ) : SortRepository {
 
     override fun observeSortFor(album: Album?): Flow<Sort> {
@@ -36,10 +39,12 @@ class SortRepositoryImpl @Inject constructor(
         album: Album?,
         sort: Sort
     ) {
-        sortDao.deleteSortFor(album?.uuid)
+        database.withTransaction {
+            sortDao.deleteSortFor(album?.uuid)
 
-        if (sort != Sort.Default) {
-            sortDao.updateSortFor(sort.toData(album))
+            if (sort != Sort.Default) {
+                sortDao.updateSortFor(sort.toData(album))
+            }
         }
     }
 }
