@@ -19,11 +19,10 @@ package dev.leonlatsch.photok.gallery.sort.data
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
-import java.util.UUID
 
 fun Sort.toData(album: Album?): SortTable {
     return SortTable(
-        uuid = UUID.randomUUID().toString(),
+        id = 0,
         album = album?.uuid,
         field = field,
         order = order,

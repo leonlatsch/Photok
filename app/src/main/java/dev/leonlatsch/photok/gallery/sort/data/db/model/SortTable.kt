@@ -36,8 +36,8 @@ import dev.leonlatsch.photok.model.database.entity.AlbumTable
     ]
 )
 data class SortTable(
-    @PrimaryKey
-    val uuid: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
     @ColumnInfo(index = true)
     val album: String? = null,
     val field: Sort.Field,

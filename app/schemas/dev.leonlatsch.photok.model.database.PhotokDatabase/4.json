@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "828f8f719b1daf509aa3562823032619",
+    "identityHash": "05f19a54f80dfc4518cea1e5c3167d06",
     "entities": [
       {
         "tableName": "photo",
@@ -114,12 +114,12 @@
       },
       {
         "tableName": "sort",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `album` TEXT, `field` INTEGER NOT NULL, `order` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`album`) REFERENCES `album`(`album_uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `album` TEXT, `field` INTEGER NOT NULL, `order` INTEGER NOT NULL, FOREIGN KEY(`album`) REFERENCES `album`(`album_uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -141,9 +141,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
-            "uuid"
+            "id"
           ]
         },
         "indices": [
@@ -174,7 +174,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '828f8f719b1daf509aa3562823032619')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '05f19a54f80dfc4518cea1e5c3167d06')"
     ]
   }
 }
