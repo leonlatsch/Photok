@@ -54,19 +54,20 @@ object AppModule {
         app,
         PhotokDatabase::class.java,
         DATABASE_NAME
-    )
-        .setQueryCallback(object : RoomDatabase.QueryCallback {
-            override fun onQuery(
-                sqlQuery: String,
-                bindArgs: List<Any?>
-            ) {
-                if (BuildConfig.DEBUG) {
+    ).apply {
+        if (BuildConfig.DEBUG) {
+            setQueryCallback(object : RoomDatabase.QueryCallback {
+                override fun onQuery(
+                    sqlQuery: String,
+                    bindArgs: List<Any?>
+                ) {
                     Timber.d("SQL: $sqlQuery | args: $bindArgs")
                 }
-            }
-
-        }, Executors.newSingleThreadExecutor())
-        .build()
+            }, Executors.newSingleThreadExecutor())
+        } else {
+            this
+        }
+    }.build()
 
     @Provides
     @Singleton
