@@ -322,4 +322,15 @@
     <string name="biometric_unlock_setup_subtitle">要启用生物特征解锁，请确认身份</string>
     <string name="biometric_unlock_error">生物特征解锁失败了。请使用 Photok 密码。</string>
     <string name="biometric_unlock_hint_button">用生物特征解锁</string>
+
+    <!-- Sorting -->
+    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
+    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+
+    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
+    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
+    <string name="sorting_field_size_label">File Size</string> <!-- TODO -->
+    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+
+    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
 </resources>

@@ -305,4 +305,15 @@
     <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
     <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
     <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+
+    <!-- Sorting -->
+    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
+    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+
+    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
+    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
+    <string name="sorting_field_size_label">File Size</string> <!-- TODO -->
+    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+
+    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
 </resources>
