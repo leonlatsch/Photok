@@ -96,11 +96,6 @@ fun PhotoGallery(
 ) {
     val activity = LocalActivity.current
     val importMenuBottomSheetVisible = remember { mutableStateOf(false) }
-    val magicFabVisible = remember {
-        derivedStateOf {
-            multiSelectionState.isActive.value.not()
-        }
-    }
 
     // Hide magic fab menu when multi selection active
     LaunchedEffect(multiSelectionState.isActive.value) {
@@ -117,7 +112,7 @@ fun PhotoGallery(
         )
 
         AnimatedVisibility(
-            visible = magicFabVisible.value,
+            visible = multiSelectionState.isActive.value.not(),
             enter = slideInVertically { it },
             exit = slideOutVertically { it },
             modifier = Modifier
