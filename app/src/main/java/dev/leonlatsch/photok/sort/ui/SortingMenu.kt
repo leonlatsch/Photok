@@ -123,7 +123,7 @@ fun SortingMenu(
                         Icon(
                             modifier = Modifier.size(18.dp),
                             painter = painterResource(R.drawable.ic_check),
-                            contentDescription = "Selected",
+                            contentDescription = null,
                         )
                     }
                 },

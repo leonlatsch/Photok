@@ -26,34 +26,15 @@ import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
+import dev.leonlatsch.photok.sort.domain.Sort
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import org.intellij.lang.annotations.Language
 
-private fun createSortedPhotosQuery(album: String, sort: Sort, limit: Int?): SupportSQLiteQuery {
-    val limitSql = if (limit != null) {
-        "LIMIT $limit"
-    } else {
-        ""
-    }
-
-    @Language("roomsql")
-    val sql = """
-            SELECT p.*
-            FROM ${Photo.TABLE_NAME} p
-            INNER JOIN ${AlbumPhotoCrossRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
-            WHERE ref.album_uuid = ?
-            ORDER BY ${sort.field.columnName} ${sort.order.sql}
-            $limitSql
-        """.trimIndent()
-
-    return SimpleSQLiteQuery(sql, arrayOf(album))
-}
 
 @Dao
 abstract class AlbumDao {
@@ -67,13 +48,7 @@ abstract class AlbumDao {
     @Query("DELETE FROM album")
     abstract suspend fun deleteAll()
 
-    @RawQuery
-    abstract suspend fun getCoverForAlbum(query: SupportSQLiteQuery): Photo
 
-    open suspend fun getCoverForAlbum(uuid: String, sort: Sort): Photo {
-        val query = createSortedPhotosQuery(uuid, sort, 1)
-        return getCoverForAlbum(query)
-    }
 
     @Query("SELECT * FROM album")
     abstract suspend fun getAllAlbums(): List<AlbumTable>
@@ -81,21 +56,6 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album")
     abstract fun observeAllAlbums(): Flow<List<AlbumTable>>
 
-    open fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<AlbumWithPhotos> {
-        val query = createSortedPhotosQuery(uuid, sort, null)
-
-        return combine(
-            observeAlbum(uuid),
-            observePhotosForAlbum(query)
-        ) { album, photos ->
-            AlbumWithPhotos(album, photos)
-        }
-    }
-
-    open suspend fun getPhotosForAlbum(uuid: String, sort: Sort): List<Photo> {
-        val query = createSortedPhotosQuery(uuid, sort, null)
-        return getPhotosForAlbum(query)
-    }
 
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun observeAlbum(uuid: String): Flow<AlbumTable>
@@ -103,14 +63,6 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract suspend fun getAlbum(uuid: String): AlbumTable?
 
-    @RawQuery(observedEntities = [Photo::class, AlbumPhotoCrossRefTable::class])
-    abstract fun observePhotosForAlbum(query: SupportSQLiteQuery): Flow<List<Photo>>
-
-    @RawQuery
-    abstract suspend fun getPhotosForAlbum(query: SupportSQLiteQuery): List<Photo>
-
-    @RawQuery
-    abstract suspend fun getAlbumWithPhotos(query: SupportSQLiteQuery): AlbumWithPhotos
 
     @Query("SELECT photo_uuid, linked_at FROM album_photos_cross_ref WHERE photo_uuid in (:photoUUIDs)")
     abstract suspend fun getLinkedAtFor(
@@ -150,4 +102,56 @@ abstract class AlbumDao {
 
     @Query("SELECT * FROM album_photos_cross_ref")
     abstract suspend fun getAllAlbumPhotoRefs(): List<AlbumPhotoCrossRefTable>
+
+    // Sorting
+
+    open fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<AlbumWithPhotos> {
+        val query = createSortedPhotosQuery(uuid, sort, null)
+
+        return combine(
+            observeAlbum(uuid),
+            observePhotosForAlbum(query)
+        ) { album, photos ->
+            AlbumWithPhotos(album, photos)
+        }
+    }
+
+    @RawQuery(observedEntities = [Photo::class, AlbumPhotoCrossRefTable::class])
+    abstract fun observePhotosForAlbum(query: SupportSQLiteQuery): Flow<List<Photo>>
+
+    open suspend fun getPhotosForAlbum(uuid: String, sort: Sort): List<Photo> {
+        val query = createSortedPhotosQuery(uuid, sort, null)
+        return getPhotosForAlbum(query)
+    }
+
+    @RawQuery
+    abstract suspend fun getPhotosForAlbum(query: SupportSQLiteQuery): List<Photo>
+
+    open suspend fun getCoverForAlbum(uuid: String, sort: Sort): Photo {
+        val query = createSortedPhotosQuery(uuid, sort, 1)
+        return getCoverForAlbum(query)
+    }
+
+    @RawQuery
+    abstract suspend fun getCoverForAlbum(query: SupportSQLiteQuery): Photo
+
+    private fun createSortedPhotosQuery(album: String, sort: Sort, limit: Int?): SupportSQLiteQuery {
+        val limitSql = if (limit != null) {
+            "LIMIT $limit"
+        } else {
+            ""
+        }
+
+        @Language("roomsql")
+        val sql = """
+            SELECT p.*
+            FROM ${Photo.TABLE_NAME} p
+            INNER JOIN ${AlbumPhotoCrossRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
+            WHERE ref.album_uuid = ?
+            ORDER BY ${sort.field.columnName} ${sort.order.sql}
+            $limitSql
+        """.trimIndent()
+
+        return SimpleSQLiteQuery(sql, arrayOf(album))
+    }
 }
