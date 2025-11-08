@@ -16,9 +16,9 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui
 
-import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.SortConfig
 
 data class AlbumDetailUiState(
     val albumId: String = "",

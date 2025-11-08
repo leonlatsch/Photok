@@ -27,14 +27,14 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.ShowToast
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
-import dev.leonlatsch.photok.sort.domain.SortRepository
-import dev.leonlatsch.photok.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.DeletePhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.ExportPhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.OpenPhoto
+import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.domain.SortRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel

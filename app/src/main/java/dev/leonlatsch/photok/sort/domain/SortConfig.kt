@@ -14,9 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.sort.ui
-
-import dev.leonlatsch.photok.sort.domain.Sort
+package dev.leonlatsch.photok.sort.domain
 
 enum class SortConfig(
     val fields: List<Sort.Field>,
