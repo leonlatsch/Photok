@@ -50,7 +50,6 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     val state = MutableStateFlow(ApplicationState.LOCKED)
 
-    val importShareMedias = ArrayList<Uri>()
 
     private var wentToBackgroundAt = 0L
     private var ignoreNextTimeout = false

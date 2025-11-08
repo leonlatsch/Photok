@@ -73,14 +73,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.consumedUrisFromStore.collectLatest {
-                if (it.isNotEmpty()) {
-                    getBaseApplication().importShareMedias.addAll(it)
-                }
-            }
-        }
-
         launchLifecycleAwareJob {
             getBaseApplication().state.collect {
                 if (it == ApplicationState.UNLOCKED) {

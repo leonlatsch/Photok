@@ -63,6 +63,8 @@ val md_theme_dark_surfaceTint = Color(0xFF4EDAD4)
 val md_theme_dark_outlineVariant = Color(0xFF3F4948)
 val md_theme_dark_scrim = Color(0xFF000000)
 
+val positiveButton = Color(0xFF50C954)
+
 
 object Colors {
     val Warning = Color(0xFFD27D2D)

@@ -18,6 +18,9 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.content.res.Resources
 import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +28,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -47,7 +51,10 @@ class GalleryViewModel @Inject constructor(
     private val config: Config,
     private val albumRepository: AlbumRepository,
     private val resources: Resources,
+    private val sharedUrisStore: SharedUrisStore
 ) : ViewModel() {
+
+    var showImportDialogue by mutableStateOf(false)
 
     private val photosFlow = photoRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
@@ -127,6 +134,17 @@ class GalleryViewModel @Inject constructor(
 
         eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
         config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
+    }
+
+    fun getSharedUriList() = sharedUrisStore.getUris()
+
+    fun clearSharedUriList() {
+        sharedUrisStore.clear()
+        showImportDialogue = false
+    }
+
+    fun setSharedUriList(uri: Uri) {
+        sharedUrisStore.safeAddUri(uri)
     }
 }
 

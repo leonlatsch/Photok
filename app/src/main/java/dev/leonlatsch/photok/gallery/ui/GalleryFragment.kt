@@ -16,14 +16,21 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -39,11 +46,10 @@ import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
-import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
-import dev.leonlatsch.photok.uicomponnets.Dialogs
+import dev.leonlatsch.photok.ui.theme.positiveButton
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,7 +77,8 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            importSharedQuestion()
+            dispatchIntent(intent = requireActivity().intent)
+            ImportSharedQuestion()
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides encryptedImageLoader,
                 LocalConfig provides config,
@@ -81,38 +88,50 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    private fun importSharedQuestion(){
-        val filePathCollection = activity?.getBaseApplication()?.importShareMedias ?: emptyList()
-        if(filePathCollection.isNotEmpty()) {
-            confirmImport(filePathCollection.size) {
-                startImportOfSharedUris(filePathCollection)
-            }
+    @Composable
+    private fun ImportSharedQuestion(){
+        if(viewModel.showImportDialogue) {
+            val filePathCollection = viewModel.getSharedUriList() ?: emptyList()
+            ImportDialogue(
+                content = String.format(
+                    requireContext().getString(R.string.import_sharted_question),
+                    filePathCollection.size
+                ),
+                onNegativeTextOnClick = {
+                    viewModel.clearSharedUriList()
+                },
+                onPositiveTextOnClick = {
+                    startImportOfSharedUris(filePathCollection)
+                }
+            )
         }
-    }
-
-    private fun confirmImport(amount: Int, onImportConfirmed: () -> Unit) {
-        Dialogs.showConfirmDialog(
-            requireContext(),
-            String.format(
-                getString(R.string.import_sharted_question),
-                amount
-            ),
-            onPositiveButtonClicked = { _, _ ->
-                onImportConfirmed()
-            }, onNegativeButtonClicked = { _, _ ->
-                activity?.getBaseApplication()?.importShareMedias?.clear()
-            }
-        )
     }
 
     /**
      * Start importing after the overview of photos.
      */
     private fun startImportOfSharedUris(uriCollection: List<Uri>) {
-        ImportBottomSheetDialogFragment(uriCollection, importSource = ImportSource.Share, onProcessDone = { activity?.getBaseApplication()?.importShareMedias?.clear() }).show(
+        ImportBottomSheetDialogFragment(uriCollection, importSource = ImportSource.Share, onProcessDone = { viewModel.clearSharedUriList() }).show(
             this.parentFragmentManager,
             ImportBottomSheetDialogFragment::class.qualifiedName
         )
+    }
+
+    private fun dispatchIntent(intent: Intent) {
+        when (intent.action) {
+            Intent.ACTION_SEND -> intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let { uri ->
+                viewModel.setSharedUriList(uri)
+            }
+
+            Intent.ACTION_SEND_MULTIPLE ->
+                intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.forEach { uri ->
+                    viewModel.setSharedUriList(uri)
+                }
+        }
+        if(viewModel.getSharedUriList().isNotEmpty())
+        {
+            viewModel.showImportDialogue = true
+        }
     }
 
 
@@ -134,5 +153,27 @@ class GalleryFragment : Fragment() {
 
         viewModel.checkForNewFeatures()
 
+    }
+
+
+    @Composable
+    private fun ImportDialogue(content: String = "", onPositiveTextOnClick: ()-> Unit, onNegativeTextOnClick: ()-> Unit) {
+        AlertDialog(
+            onDismissRequest = onNegativeTextOnClick,
+            title =  null,
+            text = {
+                Text(content, color = Color.Black, fontSize = 15.sp)
+            },
+            confirmButton = {
+                TextButton(onClick = onPositiveTextOnClick) {
+                    Text("YES", color = positiveButton, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onNegativeTextOnClick) {
+                    Text("NO", color = Color.Red, fontWeight = FontWeight.Bold)
+                }
+            }
+        )
     }
 }
