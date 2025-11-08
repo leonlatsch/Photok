@@ -7,6 +7,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
+![Twitch Status](https://img.shields.io/twitch/status/leonlatsch?style=flat&logo=twitch)
 
 Encrypt images and videos on your device and keep them safe from others.
 
