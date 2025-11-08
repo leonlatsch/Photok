@@ -20,7 +20,7 @@ import android.app.Application
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
@@ -29,7 +29,6 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.settings.data.Config
-import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream

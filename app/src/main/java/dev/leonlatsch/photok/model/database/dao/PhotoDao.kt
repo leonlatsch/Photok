@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.model.database.dao
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.flow.Flow
 

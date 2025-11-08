@@ -31,9 +31,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
-import dev.leonlatsch.photok.gallery.sort.ui.SortingMenu
-import dev.leonlatsch.photok.gallery.sort.ui.SortingMenuIconButton
+import dev.leonlatsch.photok.sort.ui.SortConfig
+import dev.leonlatsch.photok.sort.ui.SortingMenu
+import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel

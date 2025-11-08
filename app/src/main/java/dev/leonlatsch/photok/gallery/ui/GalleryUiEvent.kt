@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.net.Uri
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 

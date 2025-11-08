@@ -26,7 +26,7 @@ import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable

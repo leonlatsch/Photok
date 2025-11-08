@@ -21,9 +21,9 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
-import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.SortRepository
+import dev.leonlatsch.photok.sort.ui.SortConfig
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.Dispatchers.IO

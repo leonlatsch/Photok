@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.model.database
 
 import androidx.room.TypeConverter
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 /**

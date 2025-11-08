@@ -14,24 +14,20 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.data
+package dev.leonlatsch.photok.sort.ui
 
-import dev.leonlatsch.photok.gallery.albums.domain.model.Album
-import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 
-fun Sort.toData(albumUuid: String?): SortTable {
-    return SortTable(
-        id = 0,
-        album = albumUuid,
-        field = field,
-        order = order,
-    )
-}
-
-fun SortTable.toDomain(): Sort {
-    return Sort(
-        field = field,
-        order = order,
-    )
+enum class SortConfig(
+    val fields: List<Sort.Field>,
+    val default: Sort,
+) {
+    Gallery(
+        fields = listOf(Sort.Field.ImportDate, Sort.Field.FileName, Sort.Field.Size),
+        default = Sort(field = Sort.Field.ImportDate, Sort.Order.Desc),
+    ),
+    Album(
+        fields = listOf(Sort.Field.LinkedAt, Sort.Field.FileName, Sort.Field.Size),
+        default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
+    ),
 }

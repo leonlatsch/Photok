@@ -16,8 +16,8 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui
 
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
 data class AlbumDetailUiState(

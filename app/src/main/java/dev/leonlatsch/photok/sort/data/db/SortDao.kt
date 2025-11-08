@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.data.db
+package dev.leonlatsch.photok.sort.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
+import dev.leonlatsch.photok.sort.data.db.model.SortTable
 import kotlinx.coroutines.flow.Flow
 
 @Dao

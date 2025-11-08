@@ -14,20 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.ui
+package dev.leonlatsch.photok.sort.domain
 
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import kotlinx.coroutines.flow.Flow
 
-enum class SortConfig(
-    val fields: List<Sort.Field>,
-    val default: Sort,
-) {
-    Gallery(
-        fields = listOf(Sort.Field.ImportDate, Sort.Field.FileName, Sort.Field.Size),
-        default = Sort(field = Sort.Field.ImportDate, Sort.Order.Desc),
-    ),
-    Album(
-        fields = listOf(Sort.Field.LinkedAt, Sort.Field.FileName, Sort.Field.Size),
-        default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
-    ),
+interface SortRepository {
+    fun observeSortFor(albumUuid: String? = null, default: Sort): Flow<Sort>
+    fun observeSortsForAlbums(): Flow<Map<String, Sort>>
+    suspend fun updateSortFor(albumUuid: String? = null, sort: Sort)
+    suspend fun getSortForAlbum(albumUuid: String? = null): Sort?
 }

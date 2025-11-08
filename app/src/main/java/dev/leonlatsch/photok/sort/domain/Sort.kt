@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.domain
+package dev.leonlatsch.photok.sort.domain
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

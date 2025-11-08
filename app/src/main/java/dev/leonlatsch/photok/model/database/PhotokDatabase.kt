@@ -23,8 +23,8 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
-import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
-import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
+import dev.leonlatsch.photok.sort.data.db.SortDao
+import dev.leonlatsch.photok.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable

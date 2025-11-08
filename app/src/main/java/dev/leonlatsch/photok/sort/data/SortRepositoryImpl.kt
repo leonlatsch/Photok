@@ -14,12 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.data
+package dev.leonlatsch.photok.sort.data
 
 import androidx.room.withTransaction
-import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.sort.data.db.SortDao
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow

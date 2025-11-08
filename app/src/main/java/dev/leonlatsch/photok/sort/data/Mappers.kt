@@ -14,13 +14,23 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.domain
+package dev.leonlatsch.photok.sort.data
 
-import kotlinx.coroutines.flow.Flow
+import dev.leonlatsch.photok.sort.data.db.model.SortTable
+import dev.leonlatsch.photok.sort.domain.Sort
 
-interface SortRepository {
-    fun observeSortFor(albumUuid: String? = null, default: Sort): Flow<Sort>
-    fun observeSortsForAlbums(): Flow<Map<String, Sort>>
-    suspend fun updateSortFor(albumUuid: String? = null, sort: Sort)
-    suspend fun getSortForAlbum(albumUuid: String? = null): Sort?
+fun Sort.toData(albumUuid: String?): SortTable {
+    return SortTable(
+        id = 0,
+        album = albumUuid,
+        field = field,
+        order = order,
+    )
+}
+
+fun SortTable.toDomain(): Sort {
+    return Sort(
+        field = field,
+        order = order,
+    )
 }

@@ -14,15 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.di
+package dev.leonlatsch.photok.sort.di
 
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.leonlatsch.photok.gallery.sort.data.SortRepositoryImpl
-import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.sort.data.SortRepositoryImpl
+import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 
 @Module

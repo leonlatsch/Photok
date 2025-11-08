@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.sort.data.db.model
+package dev.leonlatsch.photok.sort.data.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 
 

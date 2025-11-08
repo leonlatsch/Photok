@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.gallery.albums.domain
 
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.flow.Flow
 
