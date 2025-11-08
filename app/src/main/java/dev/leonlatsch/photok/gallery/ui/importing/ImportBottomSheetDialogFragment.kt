@@ -36,6 +36,7 @@ class ImportBottomSheetDialogFragment(
     uris: List<Uri>,
     private val albumUUID: String? = "",
     private val importSource: ImportSource,
+    private val onProcessDone: ()-> Unit = {},
 ) : BaseProcessBottomSheetDialogFragment<Uri>(
     uris,
     R.string.import_importing,
@@ -48,5 +49,10 @@ class ImportBottomSheetDialogFragment(
         viewModel.albumUUID = albumUUID
         viewModel.importSource = importSource
         super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
+    }
+
+    override fun onProcessingDone() {
+        super.onProcessingDone()
+        onProcessDone()
     }
 }

@@ -18,6 +18,7 @@ package dev.leonlatsch.photok
 
 import android.app.Application
 import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.*
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
@@ -48,6 +49,8 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
 
     val state = MutableStateFlow(ApplicationState.LOCKED)
+
+    val importShareMedias = ArrayList<Uri>()
 
     private var wentToBackgroundAt = 0L
     private var ignoreNextTimeout = false

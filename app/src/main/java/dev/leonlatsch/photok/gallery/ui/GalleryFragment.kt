@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,14 +32,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
+import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -66,6 +71,7 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
+            importSharedQuestion()
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides encryptedImageLoader,
                 LocalConfig provides config,
@@ -74,6 +80,41 @@ class GalleryFragment : Fragment() {
             }
         }
     }
+
+    private fun importSharedQuestion(){
+        val filePathCollection = activity?.getBaseApplication()?.importShareMedias ?: emptyList()
+        if(filePathCollection.isNotEmpty()) {
+            confirmImport(filePathCollection.size) {
+                startImportOfSharedUris(filePathCollection)
+            }
+        }
+    }
+
+    private fun confirmImport(amount: Int, onImportConfirmed: () -> Unit) {
+        Dialogs.showConfirmDialog(
+            requireContext(),
+            String.format(
+                getString(R.string.import_sharted_question),
+                amount
+            ),
+            onPositiveButtonClicked = { _, _ ->
+                onImportConfirmed()
+            }, onNegativeButtonClicked = { _, _ ->
+                activity?.getBaseApplication()?.importShareMedias?.clear()
+            }
+        )
+    }
+
+    /**
+     * Start importing after the overview of photos.
+     */
+    private fun startImportOfSharedUris(uriCollection: List<Uri>) {
+        ImportBottomSheetDialogFragment(uriCollection, importSource = ImportSource.Share, onProcessDone = { activity?.getBaseApplication()?.importShareMedias?.clear() }).show(
+            this.parentFragmentManager,
+            ImportBottomSheetDialogFragment::class.qualifiedName
+        )
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
