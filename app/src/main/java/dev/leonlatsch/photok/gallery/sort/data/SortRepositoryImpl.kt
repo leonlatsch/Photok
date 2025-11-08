@@ -21,8 +21,10 @@ import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
 import dev.leonlatsch.photok.model.database.PhotokDatabase
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SortRepositoryImpl @Inject constructor(
@@ -34,13 +36,29 @@ class SortRepositoryImpl @Inject constructor(
         return sortDao.observeSort(album = albumUuid).map { it?.toDomain() ?: default }
     }
 
+    override suspend fun getSortForAlbum(albumUuid: String?): Sort? = withContext(IO) {
+        sortDao.getSortForAlbum(albumUuid)
+    }
+
+    override fun observeSortsForAlbums(): Flow<Map<String, Sort>> {
+        return sortDao.observeSortsForAlbums().map { sorts ->
+            buildMap {
+                for (sort in sorts) {
+                    sort.album ?: continue
+                    put(sort.album, sort.toDomain())
+                }
+            }
+        }
+    }
+
     override suspend fun updateSortFor(
         albumUuid: String?,
         sort: Sort
-    ) {
+    ) = withContext(IO) {
         database.withTransaction {
             sortDao.deleteSortFor(albumUuid)
             sortDao.updateSortFor(sort.toData(albumUuid))
         }
     }
+
 }

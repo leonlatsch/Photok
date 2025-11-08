@@ -36,13 +36,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val albumsRepositoryImpl: AlbumRepository,
-    private val albumUiStateFactory: AlbumUiStateFactory
+    private val albumUiStateFactory: AlbumUiStateFactory,
 ) : ViewModel() {
 
     private val showCreateDialog = MutableStateFlow(false)
 
+
     val uiState: StateFlow<AlbumsUiState> = combine(
-        albumsRepositoryImpl.observeAlbumsWithPhotos(),
+        albumsRepositoryImpl.observeAlbumsWithCovers(),
         showCreateDialog
     ) { albums, showCreateDialog ->
         albumUiStateFactory.create(albums, showCreateDialog)

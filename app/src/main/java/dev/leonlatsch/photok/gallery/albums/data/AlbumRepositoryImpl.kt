@@ -22,20 +22,35 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.gallery.albums.toData
 import dev.leonlatsch.photok.gallery.albums.toDomain
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
+import dev.leonlatsch.photok.model.database.entity.Photo
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
 class AlbumRepositoryImpl @Inject constructor(
-    private val albumDao: AlbumDao
+    private val albumDao: AlbumDao,
+    private val sortRepository: SortRepository,
 ) : AlbumRepository {
 
-    // TODO: add sort?
-    override fun observeAlbumsWithPhotos(): Flow<List<Album>> =
-        albumDao.observeAllAlbumsWithPhotos()
-            .map { albums -> albums.map { it.toDomain() } }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun observeAlbumsWithCovers(): Flow<List<Album>> {
+        return sortRepository.observeSortsForAlbums().flatMapLatest { sorts ->
+            albumDao.observeAllAlbums().map { albums ->
+                albums.map { album ->
+                    val cover = albumDao.getCoverForAlbum(album.uuid, sorts[album.uuid] ?: SortConfig.Album.default)
+                    album.toDomain().copy(files = listOf(cover))
+                }
+            }
+        }
+    }
 
     override suspend fun getAlbums(): List<Album> = albumDao.getAllAlbums()
         .map { album -> album.toDomain() }
@@ -44,10 +59,11 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.observeAlbumWithPhotos(uuid, sort)
             .map { it.toDomain() }
 
-    // TODO: add sort?
-    override suspend fun getAlbumWithPhotos(uuid: String): Album =
-        albumDao.getAlbumWithPhotos(uuid)
-            .toDomain()
+    override suspend fun getPhotosForAlbum(uuid: String): List<Photo> = withContext(IO) {
+        val sort = sortRepository.getSortForAlbum(uuid) ?: SortConfig.Album.default
+
+        albumDao.getPhotosForAlbum(uuid, sort)
+    }
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {

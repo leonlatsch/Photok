@@ -31,7 +31,7 @@ class AlbumPickerViewModel @Inject constructor(
     private val albumRepository: AlbumRepository
 ) : ViewModel() {
 
-    val uiState = albumRepository.observeAlbumsWithPhotos().map { albums ->
+    val uiState = albumRepository.observeAlbumsWithCovers().map { albums ->
         AlbumPickerUiState(
             albums = albums.map { it.toUi() }
         )
