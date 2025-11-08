@@ -32,10 +32,10 @@ class AlbumRepositoryImpl @Inject constructor(
     private val albumDao: AlbumDao
 ) : AlbumRepository {
 
+    // TODO: add sort?
     override fun observeAlbumsWithPhotos(): Flow<List<Album>> =
         albumDao.observeAllAlbumsWithPhotos()
             .map { albums -> albums.map { it.toDomain() } }
-            .map { albums -> albums.map { album -> album.sortPhotos() } }
 
     override suspend fun getAlbums(): List<Album> = albumDao.getAllAlbums()
         .map { album -> album.toDomain() }
@@ -43,18 +43,11 @@ class AlbumRepositoryImpl @Inject constructor(
     override fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<Album> =
         albumDao.observeAlbumWithPhotos(uuid, sort)
             .map { it.toDomain() }
-            .map { album ->
-                if (!sort.isModified()) {
-                    album.sortPhotos()
-                } else {
-                    album
-                }
-            }
 
+    // TODO: add sort?
     override suspend fun getAlbumWithPhotos(uuid: String): Album =
         albumDao.getAlbumWithPhotos(uuid)
             .toDomain()
-            .sortPhotos()
 
     override suspend fun createAlbum(album: Album): Result<Album> =
         when (albumDao.insert(album.toData())) {
@@ -102,12 +95,4 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.getAllAlbumPhotoRefs().map { ref ->
             ref.toDomain()
         }
-
-    private suspend fun Album.sortPhotos(): Album {
-        val linkedAt = albumDao.getLinkedAtFor(files.map { it.uuid })
-
-        return this.copy(
-            files = files.sortedByDescending { photo -> linkedAt[photo.uuid] }
-        )
-    }
 }

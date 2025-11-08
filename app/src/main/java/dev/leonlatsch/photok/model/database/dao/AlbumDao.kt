@@ -29,7 +29,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -60,7 +60,7 @@ abstract class AlbumDao {
         val refSql = """
             SELECT p.*
             FROM ${Photo.TABLE_NAME} p
-            INNER JOIN ${AlbumPhotoCroffRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
+            INNER JOIN ${AlbumPhotoCrossRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
             WHERE ref.album_uuid = ?
             ORDER BY ${sort.field.columnName} ${sort.order.sql}
         """.trimIndent()
@@ -76,7 +76,7 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun observeAlbum(uuid: String): Flow<AlbumTable>
 
-    @RawQuery(observedEntities = [Photo::class, AlbumPhotoCroffRefTable::class])
+    @RawQuery(observedEntities = [Photo::class, AlbumPhotoCrossRefTable::class])
     abstract fun observePhotosForAlbum(query: SupportSQLiteQuery): Flow<List<Photo>>
 
     @Transaction
@@ -120,5 +120,5 @@ abstract class AlbumDao {
     }
 
     @Query("SELECT * FROM album_photos_cross_ref")
-    abstract suspend fun getAllAlbumPhotoRefs(): List<AlbumPhotoCroffRefTable>
+    abstract suspend fun getAllAlbumPhotoRefs(): List<AlbumPhotoCrossRefTable>
 }

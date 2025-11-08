@@ -24,21 +24,23 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.*
+import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.ShowToast
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
-import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.*
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.DeletePhotos
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.ExportPhotos
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.OpenPhoto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -53,7 +55,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val sortFlow = sortRepository.observeSortFor(albumUuid = albumUUID)
+    private val sortFlow = sortRepository.observeSortFor(albumUuid = albumUUID, default = SortConfig.Album.default)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val albumFlow = sortFlow.flatMapLatest { sort ->

@@ -19,15 +19,12 @@ package dev.leonlatsch.photok.gallery.sort.domain
 import androidx.annotation.DrawableRes
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 
 data class Sort(
     val field: Field,
     val order: Order,
 ) {
-    fun isModified(): Boolean {
-        return this != Default
-    }
-
     enum class Order(val value: Int, @DrawableRes val icon: Int, val label: String, val sql: String) {
         Asc(0, R.drawable.ic_double_arrow_up, "Ascending", "ASC"),
         Desc(1, R.drawable.ic_double_arrow_down, "Descending", "DESC");
@@ -36,30 +33,25 @@ data class Sort(
             fun fromValue(value: Int) = when (value) {
                 Asc.value -> Asc
                 Desc.value -> Desc
-                else -> Default.order
+                else -> error("Invalid value $value")
             }
         }
     }
 
     enum class Field(val value: Int, val columnName: String, @DrawableRes val icon: Int, val label: String) {
-        ImportDate(0, Photo.Companion.COL_IMPORTED_AT, R.drawable.ic_calendar_today, "Import date"),
-        FileName(1, Photo.Companion.COL_FILENAME, R.drawable.ic_abc, "Filename"),
-        Size(2, Photo.Companion.COL_SIZE, R.drawable.ic_photo_size, "Size");
+        ImportDate(0, Photo.COL_IMPORTED_AT, R.drawable.ic_calendar_today, "Import date"),
+        FileName(1, Photo.COL_FILENAME, R.drawable.ic_abc, "Filename"),
+        Size(2, Photo.COL_SIZE, R.drawable.ic_photo_size, "Size"),
+        LinkedAt(3, AlbumPhotoCrossRefTable.COL_LINKED_AT, R.drawable.ic_calendar_today, "Added to album");
 
         companion object {
             fun fromValue(value: Int) = when (value) {
                 ImportDate.value -> ImportDate
                 FileName.value -> FileName
                 Size.value -> Size
-                else -> Default.field
+                LinkedAt.value -> LinkedAt
+                else -> error("Invalid value $value")
             }
         }
-    }
-
-    companion object {
-        val Default = Sort(
-            field = Field.ImportDate,
-            order = Order.Desc,
-        )
     }
 }

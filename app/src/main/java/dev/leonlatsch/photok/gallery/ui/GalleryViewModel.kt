@@ -23,8 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
+import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
@@ -38,16 +38,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMap
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,7 +54,7 @@ class GalleryViewModel @Inject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val sortFlow = sortRepository.observeSortFor(albumUuid = null)
+    private val sortFlow = sortRepository.observeSortFor(albumUuid = null, default = SortConfig.Gallery.default)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val photosFlow = sortFlow.flatMapLatest { sort ->

@@ -18,18 +18,14 @@ package dev.leonlatsch.photok.gallery.sort.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateBounds
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,10 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -55,19 +48,19 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun SortingMenuIconButton(
     sort: Sort,
+    config: SortConfig,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val filterChangedColor = MaterialTheme.colorScheme.tertiaryContainer
 
     val buttonContainerColor = remember(sort) {
-        if (sort.isModified()) {
+        if (sort != config.default) {
             filterChangedColor
         } else {
             Color.Unspecified
@@ -92,9 +85,9 @@ fun SortingMenuIconButton(
     }
 }
 
-
 @Composable
 fun SortingMenu(
+    config: SortConfig,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     sort: Sort,
@@ -109,7 +102,7 @@ fun SortingMenu(
             .clip(MaterialTheme.shapes.large)
             .animateContentSize()
     ) {
-        for (field in Sort.Field.entries) {
+        for (field in config.fields) {
             DropdownMenuItem(
                 text = {
                     Text(field.label)
@@ -167,11 +160,11 @@ fun SortingMenu(
             )
         }
 
-        if (sort.isModified()) {
+        if (sort != config.default) {
             DropdownMenuItem(
                 text = {
                     TextButton(
-                        onClick = { onSortChanged(Sort.Default) },
+                        onClick = { onSortChanged(config.default) },
                         contentPadding = PaddingValues(),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -179,7 +172,7 @@ fun SortingMenu(
                         Text(text = "Restore Default")
                     }
                 },
-                onClick = { onSortChanged(Sort.Default) },
+                onClick = { onSortChanged(config.default) },
             )
         }
     }
@@ -196,14 +189,16 @@ private fun Preview() {
                     title = {},
                     actions = {
                         SortingMenuIconButton(
-                            sort = Sort.Default.copy(field = Sort.Field.Size),
+                            sort = SortConfig.Gallery.default.copy(field = Sort.Field.Size),
+                            config = SortConfig.Gallery,
                             onClick = {}
                         )
 
                         SortingMenu(
+                            config = SortConfig.Gallery,
                             expanded = true,
                             onDismissRequest = {},
-                            sort = Sort.Default.copy(field = Sort.Field.Size),
+                            sort = SortConfig.Gallery.default.copy(field = Sort.Field.Size),
                             onSortChanged = {}
                         )
                     }

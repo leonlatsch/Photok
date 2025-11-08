@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.gallery.sort.data
 
 import androidx.room.withTransaction
-import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.sort.data.db.SortDao
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.sort.domain.SortRepository
@@ -31,8 +30,8 @@ class SortRepositoryImpl @Inject constructor(
     private val database: PhotokDatabase,
 ) : SortRepository {
 
-    override fun observeSortFor(albumUuid: String?): Flow<Sort> {
-        return sortDao.observeSort(album = albumUuid).map { it?.toDomain() ?: Sort.Default }
+    override fun observeSortFor(albumUuid: String?, default: Sort): Flow<Sort> {
+        return sortDao.observeSort(album = albumUuid).map { it?.toDomain() ?: default }
     }
 
     override suspend fun updateSortFor(
@@ -41,10 +40,7 @@ class SortRepositoryImpl @Inject constructor(
     ) {
         database.withTransaction {
             sortDao.deleteSortFor(albumUuid)
-
-            if (sort.isModified()) {
-                sortDao.updateSortFor(sort.toData(albumUuid))
-            }
+            sortDao.updateSortFor(sort.toData(albumUuid))
         }
     }
 }

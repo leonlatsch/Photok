@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
@@ -111,7 +111,7 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 ),
                 showAlbumSelectionDialog = false,
-                sort = Sort.Default,
+                sort = SortConfig.Gallery.default,
             ),
             handleUiEvent = {},
             multiSelectionState = rememberMultiSelectionState(items = emptyList())

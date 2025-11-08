@@ -46,7 +46,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.gallery.sort.ui.SortConfig
 import dev.leonlatsch.photok.gallery.sort.ui.SortingMenu
 import dev.leonlatsch.photok.gallery.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
@@ -84,11 +84,13 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                         var showSortMenu by remember { mutableStateOf(false) }
 
                         SortingMenuIconButton(
+                            config = SortConfig.Album,
                             sort = uiState.sort,
                             onClick = { showSortMenu = true }
                         )
 
                         SortingMenu(
+                            config = SortConfig.Album,
                             expanded = showSortMenu,
                             onDismissRequest = {showSortMenu = false },
                             sort = uiState.sort,
