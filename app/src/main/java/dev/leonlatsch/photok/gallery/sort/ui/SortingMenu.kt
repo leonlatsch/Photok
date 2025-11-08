@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -41,13 +40,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.sort.domain.Sort
+import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -94,13 +93,10 @@ fun SortingMenu(
     onSortChanged: (Sort) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    DropdownMenu(
+    RoundedDropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        shape = MaterialTheme.shapes.large,
-        modifier = modifier
-            .clip(MaterialTheme.shapes.large)
-            .animateContentSize()
+        modifier = modifier.animateContentSize()
     ) {
         for (field in config.fields) {
             DropdownMenuItem(
