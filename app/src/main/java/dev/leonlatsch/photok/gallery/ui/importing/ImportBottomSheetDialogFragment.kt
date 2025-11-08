@@ -36,7 +36,6 @@ class ImportBottomSheetDialogFragment(
     uris: List<Uri>,
     private val albumUUID: String? = "",
     private val importSource: ImportSource,
-    private val onProcessDone: ()-> Unit = {},
 ) : BaseProcessBottomSheetDialogFragment<Uri>(
     uris,
     R.string.import_importing,
@@ -53,6 +52,5 @@ class ImportBottomSheetDialogFragment(
 
     override fun onProcessingDone() {
         super.onProcessingDone()
-        onProcessDone()
     }
 }

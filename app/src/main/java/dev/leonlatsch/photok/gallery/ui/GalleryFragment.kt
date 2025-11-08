@@ -111,10 +111,14 @@ class GalleryFragment : Fragment() {
      * Start importing after the overview of photos.
      */
     private fun startImportOfSharedUris(uriCollection: List<Uri>) {
-        ImportBottomSheetDialogFragment(uriCollection, importSource = ImportSource.Share, onProcessDone = { viewModel.clearSharedUriList() }).show(
-            this.parentFragmentManager,
-            ImportBottomSheetDialogFragment::class.qualifiedName
-        )
+        ImportBottomSheetDialogFragment(uriCollection, importSource = ImportSource.Share)
+            .apply {
+                this.onProcessDone = { this@GalleryFragment.viewModel.clearSharedUriList() }
+            }
+            .show(
+                this.parentFragmentManager,
+                ImportBottomSheetDialogFragment::class.qualifiedName
+            )
     }
 
     private fun dispatchIntent(intent: Intent) {

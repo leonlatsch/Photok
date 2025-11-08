@@ -59,6 +59,8 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
      */
     abstract val viewModel: BaseProcessViewModel<T>
 
+    var onProcessDone: (()-> Unit)? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -118,6 +120,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
         if (viewModel.failuresOccurred) {
             binding.processFailuresWarnMessage.show()
         }
+        onProcessDone?.invoke()
     }
 
     /**
