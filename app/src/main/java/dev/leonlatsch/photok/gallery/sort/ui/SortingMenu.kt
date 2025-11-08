@@ -42,6 +42,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -99,13 +102,20 @@ fun SortingMenu(
         modifier = modifier.animateContentSize()
     ) {
         for (field in config.fields) {
+            val selected = remember(sort.field) {
+                sort.field == field
+            }
+
             DropdownMenuItem(
+                modifier = Modifier.semantics {
+                    this.selected = selected
+                },
                 text = {
-                    Text(field.label)
+                    Text(stringResource(field.label))
                 },
                 trailingIcon = {
                     AnimatedVisibility(
-                        visible = sort.field == field,
+                        visible = selected,
                         enter = fadeIn(),
                         exit = fadeOut(),
                     ) {
@@ -129,9 +139,16 @@ fun SortingMenu(
         HorizontalDivider()
 
         for (order in Sort.Order.entries) {
+            val selected = remember(sort.order) {
+                sort.order == order
+            }
+
             DropdownMenuItem(
+                modifier = Modifier.semantics {
+                    this.selected = selected
+                },
                 text = {
-                    Text(order.label)
+                    Text(stringResource(order.label))
                 },
                 leadingIcon = {
                     Icon(
@@ -141,14 +158,14 @@ fun SortingMenu(
                 },
                 trailingIcon = {
                     AnimatedVisibility(
-                        visible = sort.order == order,
+                        visible = selected,
                         enter = fadeIn(),
                         exit = fadeOut(),
                     ) {
                         Icon(
                             modifier = Modifier.size(18.dp),
                             painter = painterResource(R.drawable.ic_check),
-                            contentDescription = "Selected",
+                            contentDescription = null,
                         )
                     }
                 },
@@ -165,7 +182,7 @@ fun SortingMenu(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = "Restore Default")
+                        Text(text = stringResource(R.string.sorting_restore_default))
                     }
                 },
                 onClick = { onSortChanged(config.default) },

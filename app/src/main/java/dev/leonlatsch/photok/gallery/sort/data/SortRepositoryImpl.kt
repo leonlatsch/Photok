@@ -37,7 +37,7 @@ class SortRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSortForAlbum(albumUuid: String?): Sort? = withContext(IO) {
-        sortDao.getSortForAlbum(albumUuid)
+        sortDao.getSortForAlbum(albumUuid)?.toDomain()
     }
 
     override fun observeSortsForAlbums(): Flow<Map<String, Sort>> {

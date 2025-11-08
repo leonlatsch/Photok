@@ -322,4 +322,15 @@
 
     <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string>
     <string name="biometric_unlock_hint_button">Unlock with biometrics</string>
+
+    <!-- Sorting -->
+    <string name="sorting_order_asc_label">Ascending</string>
+    <string name="sorting_order_desc_label">Descending</string>
+
+    <string name="sorting_field_import_date_label">Import date</string>
+    <string name="sorting_field_filename_label">Filename</string>
+    <string name="sorting_field_size_label">File Size</string>
+    <string name="sorting_field_added_to_album_label">Added to album</string>
+
+    <string name="sorting_restore_default">Restore Default</string>
 </resources>

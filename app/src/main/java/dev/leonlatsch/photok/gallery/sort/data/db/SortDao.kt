@@ -21,7 +21,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.leonlatsch.photok.gallery.sort.data.db.model.SortTable
-import dev.leonlatsch.photok.gallery.sort.domain.Sort
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -31,7 +30,7 @@ interface SortDao {
     fun observeSort(album: String? = null): Flow<SortTable?>
 
     @Query("SELECT * FROM sort WHERE album = :album OR (album IS NULL AND :album IS NULL)")
-    fun getSortForAlbum(album: String?): Sort?
+    fun getSortForAlbum(album: String?): SortTable?
 
     @Query("SELECT * FROM sort WHERE album IS NOT NULL")
     fun observeSortsForAlbums(): Flow<List<SortTable>>
