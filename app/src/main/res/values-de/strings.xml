@@ -328,6 +328,8 @@
 
 
     <!-- Sorting -->
+    <string name="sorting_sort">Sortierung</string>
+
     <string name="sorting_order_asc_label">Aufsteigend</string>
     <string name="sorting_order_desc_label">Absteigend</string>
 

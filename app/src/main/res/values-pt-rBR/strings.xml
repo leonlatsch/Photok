@@ -325,6 +325,8 @@
     <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 
     <!-- Sorting -->
+    <string name="sorting_sort">Sort</string> <!-- TODO -->
+
     <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
     <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
 

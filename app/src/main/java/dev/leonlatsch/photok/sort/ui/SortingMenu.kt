@@ -82,7 +82,7 @@ fun SortingMenuIconButton(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_sort),
-                contentDescription = "Sort",
+                contentDescription = stringResource(R.string.sorting_sort),
             )
         }
     }
