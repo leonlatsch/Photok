@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigationEvent
 import kotlinx.coroutines.channels.Channel
@@ -30,7 +29,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,17 +51,6 @@ class AlbumsViewModel @Inject constructor(
 
     fun handleUiEvent(event: AlbumsUiEvent) {
         when (event) {
-            is AlbumsUiEvent.CreateAlbum -> {
-                viewModelScope.launch {
-                    albumsRepositoryImpl.createAlbum(
-                        Album(
-                            name = event.name,
-                            files = emptyList()
-                        )
-                    )
-                }
-            }
-
             AlbumsUiEvent.ShowCreateDialog -> showCreateDialog.value = true
             AlbumsUiEvent.HideCreateDialog -> showCreateDialog.value = false
             is AlbumsUiEvent.OpenAlbum -> navEventChannel.trySend(
