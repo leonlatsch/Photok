@@ -33,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,6 +46,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -97,6 +99,10 @@ fun SortingMenu(
     onSortChanged: (Sort) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val itemColors = MenuDefaults.itemColors(
+        trailingIconColor = MaterialTheme.colorScheme.primary,
+    )
+
     RoundedDropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
@@ -106,13 +112,19 @@ fun SortingMenu(
             val selected = remember(sort.field) {
                 sort.field == field
             }
-
+            val fontWeight = remember(selected) {
+                if (selected) FontWeight.Bold else FontWeight.Normal
+            }
             DropdownMenuItem(
+                colors = itemColors,
                 modifier = Modifier.semantics {
                     this.selected = selected
                 },
                 text = {
-                    Text(stringResource(field.label))
+                    Text(
+                        text = stringResource(field.label),
+                        fontWeight = fontWeight,
+                    )
                 },
                 trailingIcon = {
                     AnimatedVisibility(
@@ -144,12 +156,20 @@ fun SortingMenu(
                 sort.order == order
             }
 
+            val fontWeight = remember(selected) {
+                if (selected) FontWeight.Bold else FontWeight.Normal
+            }
+
             DropdownMenuItem(
+                colors = itemColors,
                 modifier = Modifier.semantics {
                     this.selected = selected
                 },
                 text = {
-                    Text(stringResource(order.label))
+                    Text(
+                        text = stringResource(order.label),
+                        fontWeight = fontWeight,
+                    )
                 },
                 leadingIcon = {
                     Icon(
