@@ -43,14 +43,8 @@ class MainViewModel @Inject constructor(
     private val _mainMenuUiState = MutableStateFlow(MainMenuUiState(R.id.galleryFragment))
     val mainMenuUiState = _mainMenuUiState.asStateFlow()
 
-    val consumedUrisFromStore = MutableStateFlow(emptyList<Uri>())
 
     fun addUriToSharedUriStore(uri: Uri) = sharedUrisStore.safeAddUri(uri)
-
-    fun consumeSharedUris() {
-        consumedUrisFromStore.value = sharedUrisStore.getUris()
-        sharedUrisStore.clear()
-    }
 
     fun onDestinationChanged(id: Int) {
         _mainMenuUiState.update { it.copy(currentFragmentId = id) }
