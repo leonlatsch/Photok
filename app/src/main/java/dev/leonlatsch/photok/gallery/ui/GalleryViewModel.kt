@@ -83,6 +83,8 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
+            is GalleryUiEvent.OnImportConfirmationDialogue -> showImportDialogue = true
+            is GalleryUiEvent.OnImportConfirmationDialogueCancel -> showImportDialogue = false
         }
     }
 
@@ -140,7 +142,7 @@ class GalleryViewModel @Inject constructor(
 
     fun clearSharedUriList() {
         sharedUrisStore.clear()
-        showImportDialogue = false
+        handleUiEvent(GalleryUiEvent.OnImportConfirmationDialogueCancel)
     }
 
     fun setSharedUriList(uri: Uri) {

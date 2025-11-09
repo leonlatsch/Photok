@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +50,7 @@ import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
-import dev.leonlatsch.photok.ui.theme.positiveButton
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -77,7 +78,9 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            dispatchIntent(intent = requireActivity().intent)
+            LaunchedEffect(Unit) {
+                dispatchIntent(intent = requireActivity().intent)
+            }
             ImportSharedQuestion()
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides encryptedImageLoader,
@@ -90,21 +93,20 @@ class GalleryFragment : Fragment() {
 
     @Composable
     private fun ImportSharedQuestion(){
-        if(viewModel.showImportDialogue) {
-            val filePathCollection = viewModel.getSharedUriList() ?: emptyList()
-            ImportDialogue(
-                content = String.format(
-                    requireContext().getString(R.string.import_sharted_question),
-                    filePathCollection.size
-                ),
-                onNegativeTextOnClick = {
-                    viewModel.clearSharedUriList()
-                },
-                onPositiveTextOnClick = {
-                    startImportOfSharedUris(filePathCollection)
-                }
-            )
-        }
+        val filePathCollection = viewModel.getSharedUriList()
+        ImportDialogue(
+            showDialogue = viewModel.showImportDialogue,
+            content = String.format(
+                requireContext().getString(R.string.import_sharted_question),
+                filePathCollection.size
+            ),
+            onNegativeTextOnClick = {
+                viewModel.clearSharedUriList()
+            },
+            onPositiveTextOnClick = {
+                startImportOfSharedUris(filePathCollection)
+            }
+        )
     }
 
     /**
@@ -134,7 +136,7 @@ class GalleryFragment : Fragment() {
         }
         if(viewModel.getSharedUriList().isNotEmpty())
         {
-            viewModel.showImportDialogue = true
+            viewModel.handleUiEvent(GalleryUiEvent.OnImportConfirmationDialogue)
         }
     }
 
@@ -161,23 +163,12 @@ class GalleryFragment : Fragment() {
 
 
     @Composable
-    private fun ImportDialogue(content: String = "", onPositiveTextOnClick: ()-> Unit, onNegativeTextOnClick: ()-> Unit) {
-        AlertDialog(
+    private fun ImportDialogue(showDialogue: Boolean, content: String = "", onPositiveTextOnClick: ()-> Unit, onNegativeTextOnClick: ()-> Unit) {
+        ConfirmationDialog(
+            show = showDialogue,
             onDismissRequest = onNegativeTextOnClick,
-            title =  null,
-            text = {
-                Text(content, color = Color.Black, fontSize = 15.sp)
-            },
-            confirmButton = {
-                TextButton(onClick = onPositiveTextOnClick) {
-                    Text("YES", color = positiveButton, fontWeight = FontWeight.Bold)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onNegativeTextOnClick) {
-                    Text("NO", color = Color.Red, fontWeight = FontWeight.Bold)
-                }
-            }
+            text = content,
+            onConfirm = onPositiveTextOnClick,
         )
     }
 }
