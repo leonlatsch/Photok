@@ -35,6 +35,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import org.intellij.lang.annotations.Language
 
+@Language("roomsql")
+const val SELECT_ALL_ALBUMS_QUERY = """
+    SELECT * FROM album
+    ORDER BY modified_at DESC
+"""
 
 @Dao
 abstract class AlbumDao {
@@ -49,11 +54,10 @@ abstract class AlbumDao {
     abstract suspend fun deleteAll()
 
 
-
-    @Query("SELECT * FROM album")
+    @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract suspend fun getAllAlbums(): List<AlbumTable>
 
-    @Query("SELECT * FROM album")
+    @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract fun observeAllAlbums(): Flow<List<AlbumTable>>
 
 
@@ -70,12 +74,22 @@ abstract class AlbumDao {
     ): Map<@MapColumn(columnName = "photo_uuid") String, @MapColumn(columnName = "linked_at") Long>
 
     @Query("INSERT OR IGNORE INTO album_photos_cross_ref (album_uuid, photo_uuid, linked_at) VALUES (:albumId, :photoId, :linkedAt)")
-    abstract suspend fun link(photoId: String, albumId: String, linkedAt: Long)
+    protected abstract suspend fun internalLink(photoId: String, albumId: String, linkedAt: Long)
+
+    @Query("UPDATE album SET modified_at = :modifiedAt WHERE album_uuid = :uuid")
+    abstract suspend fun updateModifiedAt(uuid: String, modifiedAt: Long)
+
+    @Transaction
+    open suspend fun link(photoId: String, albumId: String, linkedAt: Long) {
+        internalLink(photoId, albumId, linkedAt)
+        updateModifiedAt(albumId, linkedAt)
+    }
 
     @Transaction
     open suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
+        val linkedAt = System.currentTimeMillis()
         photoUUIDs.forEach {
-            link(it, albumUUID, System.currentTimeMillis())
+            link(it, albumUUID, linkedAt)
         }
     }
 

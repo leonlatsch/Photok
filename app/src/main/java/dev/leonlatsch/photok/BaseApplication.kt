@@ -18,14 +18,17 @@ package dev.leonlatsch.photok
 
 import android.app.Application
 import android.content.Intent
-import android.net.Uri
-import androidx.lifecycle.*
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -39,6 +42,9 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class BaseApplication : Application(), DefaultLifecycleObserver {
+
+    @Inject
+    lateinit var appScope: CoroutineScope
 
     @Inject
     lateinit var config: Config
@@ -68,6 +74,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
+        appScope.cancel()
         ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
     }
 

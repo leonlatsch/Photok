@@ -49,9 +49,13 @@ import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestDat
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 
 @Composable
-fun AlbumTile(album: AlbumItem, onAlbumClicked: (String) -> Unit) {
+fun AlbumTile(
+    album: AlbumItem,
+    onAlbumClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(12.dp)
             .clickable { onAlbumClicked(album.id) }
     ) {

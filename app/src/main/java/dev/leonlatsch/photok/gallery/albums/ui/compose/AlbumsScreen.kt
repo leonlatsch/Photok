@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -64,7 +65,12 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
                 )
             }
 
-            CreateAlbumDialog(uiState = uiState, handleUiEvent = { viewModel.handleUiEvent(it) })
+            CreateAlbumDialog(
+                show = uiState.showCreateDialog,
+                onDismissRequest = {
+                    viewModel.handleUiEvent(AlbumsUiEvent.HideCreateDialog)
+                },
+            )
         }
     }
 }

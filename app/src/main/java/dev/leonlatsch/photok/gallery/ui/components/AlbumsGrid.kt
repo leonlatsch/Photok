@@ -37,7 +37,8 @@ fun AlbumsGrid(
         items(albums, key = { it.id }) { album ->
             AlbumTile(
                 album = album,
-                onAlbumClicked = onAlbumClicked
+                onAlbumClicked = onAlbumClicked,
+                modifier = Modifier.animateItem(),
             )
         }
     }

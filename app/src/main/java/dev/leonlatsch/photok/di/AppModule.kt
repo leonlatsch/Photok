@@ -31,11 +31,12 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import timber.log.Timber
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 /**
@@ -92,4 +93,7 @@ object AppModule {
     fun provideGson(): Gson = GsonBuilder()
         .setPrettyPrinting()
         .create()
+
+    @Provides
+    fun provideAppScope() = CoroutineScope(Dispatchers.Default)
 }
