@@ -28,6 +28,6 @@ sealed interface GalleryUiEvent {
     data class OnAlbumSelected(val photoIds: List<String>, val albumId: String) : GalleryUiEvent
     data object CancelAlbumSelection : GalleryUiEvent
     data class OnImportChoice(val choice: ImportChoice) : GalleryUiEvent
-    data object OnImportConfirmationDialogue : GalleryUiEvent
-    data object OnImportConfirmationDialogueCancel : GalleryUiEvent
+    data object CancelImportShared : GalleryUiEvent
+    data object StartImportShared : GalleryUiEvent
 }

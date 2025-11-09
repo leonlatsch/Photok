@@ -19,16 +19,19 @@ package dev.leonlatsch.photok.gallery.ui.compose
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
@@ -36,6 +39,7 @@ import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.ui.components.AppName
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,6 +51,12 @@ fun GalleryScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    val showConfirmImportSharedDialog by remember {
+        derivedStateOf {
+            uiState.sharedUris.isNotEmpty()
+        }
+    }
 
     AppTheme {
         Scaffold(
@@ -97,6 +107,17 @@ fun GalleryScreen(
                     }
                 }
             }
+
+            ConfirmationDialog(
+                show = showConfirmImportSharedDialog,
+                onDismissRequest = {
+                    viewModel.handleUiEvent(GalleryUiEvent.CancelImportShared)
+                },
+                text = stringResource(R.string.import_sharted_question, uiState.sharedUris.size),
+                onConfirm = {
+                    viewModel.handleUiEvent(GalleryUiEvent.StartImportShared)
+                },
+            )
         }
     }
 }

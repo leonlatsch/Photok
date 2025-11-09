@@ -20,29 +20,20 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
-import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
-import dev.leonlatsch.photok.model.repositories.ImportSource
-import dev.leonlatsch.photok.other.extensions.getBaseApplication
-import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
-import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.albumsFragment, R.id.settingsFragment, R.id.albumDetailFragment)
@@ -72,14 +63,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
-
-        launchLifecycleAwareJob {
-            getBaseApplication().state.collect {
-                if (it == ApplicationState.UNLOCKED) {
-                    viewModel.consumeSharedUris()
-                }
-            }
-        }
 
         findNavController(R.id.mainNavHostFragment).let { navController ->
             navController.addOnDestinationChangedListener { controller, destination, arguments ->

@@ -18,9 +18,6 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.content.res.Resources
 import android.net.Uri
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +28,7 @@ import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
@@ -54,8 +52,6 @@ class GalleryViewModel @Inject constructor(
     private val sharedUrisStore: SharedUrisStore
 ) : ViewModel() {
 
-    var showImportDialogue by mutableStateOf(false)
-
     private val photosFlow = photoRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
 
@@ -64,9 +60,10 @@ class GalleryViewModel @Inject constructor(
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
         showAlbumSelectionDialog,
-    ) { photos, showAlbumSelection ->
-        galleryUiStateFactory.create(photos, showAlbumSelection)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty)
+        sharedUrisStore.observeSharedUris(),
+    ) { photos, showAlbumSelection, sharedUris ->
+        galleryUiStateFactory.create(photos, showAlbumSelection, sharedUris)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty())
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
     val eventsFlow = eventsChannel.receiveAsFlow()
@@ -83,14 +80,25 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
-            is GalleryUiEvent.OnImportConfirmationDialogue -> showImportDialogue = true
-            is GalleryUiEvent.OnImportConfirmationDialogueCancel -> showImportDialogue = false
+            is GalleryUiEvent.CancelImportShared -> sharedUrisStore.reset()
+            is GalleryUiEvent.StartImportShared -> {
+                eventsChannel.trySend(
+                    GalleryNavigationEvent.StartImport(
+                        fileUris = uiState.value.sharedUris.toList(),
+                        importSource = ImportSource.Share,
+                    )
+                )
+                sharedUrisStore.reset()
+            }
         }
     }
 
     private fun onImportChoice(choice: ImportChoice) {
         val navEvent = when (choice) {
-            is ImportChoice.AddNewFiles -> GalleryNavigationEvent.StartImport(choice.fileUris)
+            is ImportChoice.AddNewFiles -> GalleryNavigationEvent.StartImport(
+                fileUris = choice.fileUris,
+                importSource = ImportSource.InApp,
+            )
             is ImportChoice.RestoreBackup -> GalleryNavigationEvent.StartRestoreBackup(choice.backupUri)
         }
 
@@ -136,17 +144,6 @@ class GalleryViewModel @Inject constructor(
 
         eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
         config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
-    }
-
-    fun getSharedUriList() = sharedUrisStore.getUris()
-
-    fun clearSharedUriList() {
-        sharedUrisStore.clear()
-        handleUiEvent(GalleryUiEvent.OnImportConfirmationDialogueCancel)
-    }
-
-    fun setSharedUriList(uri: Uri) {
-        sharedUrisStore.safeAddUri(uri)
     }
 }
 

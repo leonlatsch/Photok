@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.uicomponnets.base.processdialogs
 
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -58,8 +57,6 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
      * Needs to be set in the child, handles processing.
      */
     abstract val viewModel: BaseProcessViewModel<T>
-
-    var onProcessDone: (()-> Unit)? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,7 +117,6 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
         if (viewModel.failuresOccurred) {
             binding.processFailuresWarnMessage.show()
         }
-        onProcessDone?.invoke()
     }
 
     /**
