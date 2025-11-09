@@ -231,13 +231,14 @@ fun PhotoGallery(
 }
 
 @Composable
-fun PhotoGrid(
+private fun PhotoGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
     modifier: Modifier = Modifier,
-    gridState: LazyGridState = rememberLazyGridState(),
 ) {
+    val gridState: LazyGridState = rememberLazyGridState()
+
     val columnCount = when (LocalConfiguration.current.orientation) {
         Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
         Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_COLUMN_COUNT
@@ -270,7 +271,8 @@ fun PhotoGrid(
                     if (multiSelectionState.isActive.value.not()) {
                         multiSelectionState.selectItem(it.uuid)
                     }
-                }
+                },
+                modifier = Modifier.animateItem(),
             )
         }
     }
@@ -297,6 +299,7 @@ fun Modifier.multiSelectionItem(selected: Boolean): Modifier {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun GalleryPhotoTile(
+    modifier: Modifier = Modifier,
     photoTile: PhotoTile,
     multiSelectionActive: Boolean,
     selected: Boolean,
@@ -304,7 +307,7 @@ private fun GalleryPhotoTile(
     onLongPress: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(.5.dp)
             .combinedClickable(
                 role = Role.Image,

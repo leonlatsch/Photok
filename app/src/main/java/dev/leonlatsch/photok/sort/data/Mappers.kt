@@ -14,15 +14,23 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.albums.detail.ui
+package dev.leonlatsch.photok.sort.data
 
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.sort.domain.SortConfig
 
-data class AlbumDetailUiState(
-    val albumId: String = "",
-    val albumName: String = "",
-    val photos: List<PhotoTile> = emptyList(),
-    val sort: Sort = SortConfig.Album.default,
-)
+fun Sort.toData(albumUuid: String?): SortTable {
+    return SortTable(
+        id = 0,
+        album = albumUuid,
+        field = field,
+        order = order,
+    )
+}
+
+fun SortTable.toDomain(): Sort {
+    return Sort(
+        field = field,
+        order = order,
+    )
+}

@@ -325,4 +325,18 @@
 
     <string name="biometric_unlock_error">Biometrisches entsperren fehlgeschlagen. Benutze dein Photok Passwort.</string>
     <string name="biometric_unlock_hint_button">Mit Biometrie entsperren</string>
+
+
+    <!-- Sorting -->
+    <string name="sorting_sort">Sortierung</string>
+
+    <string name="sorting_order_asc_label">Aufsteigend</string>
+    <string name="sorting_order_desc_label">Absteigend</string>
+
+    <string name="sorting_field_import_date_label">Import Datum</string>
+    <string name="sorting_field_filename_label">Dateiname</string>
+    <string name="sorting_field_size_label">Dateigröße</string>
+    <string name="sorting_field_added_to_album_label">Zum Album hinzugefügt</string>
+
+    <string name="sorting_restore_default">Standard wiederherstellen</string>
 </resources>

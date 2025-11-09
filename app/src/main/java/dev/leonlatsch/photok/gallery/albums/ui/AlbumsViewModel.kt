@@ -34,17 +34,18 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val albumsRepositoryImpl: AlbumRepository,
-    private val albumUiStateFactory: AlbumUiStateFactory
+    private val albumUiStateFactory: AlbumUiStateFactory,
 ) : ViewModel() {
 
     private val showCreateDialog = MutableStateFlow(false)
 
+
     val uiState: StateFlow<AlbumsUiState> = combine(
-        albumsRepositoryImpl.observeAlbumsWithPhotos(),
+        albumsRepositoryImpl.observeAllAlbumsWithPhotos(),
         showCreateDialog
     ) { albums, showCreateDialog ->
         albumUiStateFactory.create(albums, showCreateDialog)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumsUiState.Empty())
 
     private val navEventChannel = Channel<AlbumsNavigationEvent>()
     val navEvent = navEventChannel.receiveAsFlow()

@@ -21,7 +21,7 @@ import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumCover
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
-import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 import dev.leonlatsch.photok.model.database.ref.AlbumWithPhotos
 
 // Nullable is a safety mechanism for race condition when deleting album from detail view
@@ -61,15 +61,15 @@ fun Album.toUi(): AlbumItem = AlbumItem(
     }
 )
 
-fun AlbumPhotoCroffRefTable.toDomain(): AlbumPhotoRef =
+fun AlbumPhotoCrossRefTable.toDomain(): AlbumPhotoRef =
     AlbumPhotoRef(
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
     )
 
-fun AlbumPhotoRef.toData(): AlbumPhotoCroffRefTable =
-    AlbumPhotoCroffRefTable(
+fun AlbumPhotoRef.toData(): AlbumPhotoCrossRefTable =
+    AlbumPhotoCrossRefTable(
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
