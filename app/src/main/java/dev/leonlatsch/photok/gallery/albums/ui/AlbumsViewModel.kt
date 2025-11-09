@@ -47,7 +47,7 @@ class AlbumsViewModel @Inject constructor(
         showCreateDialog
     ) { albums, showCreateDialog ->
         albumUiStateFactory.create(albums, showCreateDialog)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumsUiState.Empty())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumsUiState.Empty())
 
     private val navEventChannel = Channel<AlbumsNavigationEvent>()
     val navEvent = navEventChannel.receiveAsFlow()

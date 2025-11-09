@@ -35,5 +35,5 @@ class AlbumPickerViewModel @Inject constructor(
         AlbumPickerUiState(
             albums = albums.map { it.toUi() }
         )
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumPickerUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
 }

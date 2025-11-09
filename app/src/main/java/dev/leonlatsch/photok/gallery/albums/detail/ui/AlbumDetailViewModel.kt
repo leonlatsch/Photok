@@ -60,7 +60,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     private val albumFlow = sortFlow.flatMapLatest { sort ->
         albumsRepository.observeAlbumWithPhotos(albumUUID, sort)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, Album("", "", emptyList()))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Album("", "", emptyList()))
 
     private val photoActionsChannel = Channel<PhotoAction>()
     val photoActions = photoActionsChannel.receiveAsFlow()
@@ -81,7 +81,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
             },
             sort = sort,
         )
-    }.stateIn(viewModelScope, SharingStarted.Lazily, AlbumDetailUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumDetailUiState())
 
 
     private val navEventsChannel = Channel<AlbumDetailNavigator.NavigationEvent>()
