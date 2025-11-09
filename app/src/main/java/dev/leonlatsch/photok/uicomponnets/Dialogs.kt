@@ -35,13 +35,14 @@ object Dialogs {
     fun showConfirmDialog(
         context: Context,
         title: String,
-        onPositiveButtonClicked: DialogInterface.OnClickListener
+        onNegativeButtonClicked: DialogInterface.OnClickListener? = null,
+        onPositiveButtonClicked: DialogInterface.OnClickListener,
     ) {
         onMain {
             AlertDialog.Builder(context)
                 .setMessage(HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY))
                 .setPositiveButton(R.string.common_yes, onPositiveButtonClicked)
-                .setNegativeButton(R.string.common_no, null)
+                .setNegativeButton(R.string.common_no, onNegativeButtonClicked)
                 .show()
         }
     }

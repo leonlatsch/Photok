@@ -49,4 +49,6 @@ class ImportBottomSheetDialogFragment(
         viewModel.importSource = importSource
         super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
     }
+
+    override fun onProcessingDone() {}
 }

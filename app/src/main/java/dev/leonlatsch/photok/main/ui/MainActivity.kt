@@ -73,16 +73,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.consumedUrisFromStore.collectLatest {
-                if (it.isNotEmpty()) {
-                    confirmImport(it.size) {
-                        startImportOfSharedUris()
-                    }
-                }
-            }
-        }
-
         launchLifecycleAwareJob {
             getBaseApplication().state.collect {
                 if (it == ApplicationState.UNLOCKED) {
@@ -117,30 +107,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                     viewModel.addUriToSharedUriStore(uri)
                 }
         }
-    }
-
-    private fun confirmImport(amount: Int, onImportConfirmed: () -> Unit) {
-        Dialogs.showConfirmDialog(
-            this,
-            String.format(
-                getString(R.string.import_sharted_question),
-                amount
-            )
-        ) { _, _ ->
-            onImportConfirmed()
-        }
-    }
-
-    /**
-     * Start importing after the overview of photos.
-     */
-    private fun startImportOfSharedUris() {
-        val urisToImport = viewModel.consumedUrisFromStore.value
-
-        ImportBottomSheetDialogFragment(urisToImport, importSource = ImportSource.Share).show(
-            supportFragmentManager,
-            ImportBottomSheetDialogFragment::class.qualifiedName
-        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
