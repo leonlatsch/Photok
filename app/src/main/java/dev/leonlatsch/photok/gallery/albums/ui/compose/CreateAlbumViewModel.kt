@@ -34,6 +34,7 @@ class CreateAlbumViewModel @Inject constructor(
         appScope.launch {
             val album = Album(
                 name = name,
+                createdAt = System.currentTimeMillis(),
                 files = emptyList(),
             )
             albumRepository.createAlbum(album)

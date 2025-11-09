@@ -57,6 +57,7 @@ data class PhotoBackup(
 data class AlbumBackup(
     val uuid: String,
     val name: String,
+    val createdAt: Long?,
 )
 
 data class AlbumPhotoRefBackup(

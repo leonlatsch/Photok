@@ -27,6 +27,8 @@ data class AlbumTable(
     @PrimaryKey
     @ColumnInfo(name = ALBUM_UUID)
     val uuid: String = UUID.randomUUID().toString(),
+    @ColumnInfo(defaultValue = "0")
+    val createdAt: Long,
 ) {
     companion object {
         const val TABLE_NAME = "album"

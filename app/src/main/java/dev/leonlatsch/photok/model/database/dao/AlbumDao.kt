@@ -35,6 +35,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import org.intellij.lang.annotations.Language
 
+@Language("roomsql")
+const val SELECT_ALL_ALBUMS_QUERY = """
+    SELECT DISTINCT a.* FROM album a
+    LEFT JOIN album_photos_cross_ref ref ON ref.album_uuid = a.album_uuid
+    ORDER BY ref.linked_at DESC, a.createdAt DESC
+"""
 
 @Dao
 abstract class AlbumDao {
@@ -49,11 +55,10 @@ abstract class AlbumDao {
     abstract suspend fun deleteAll()
 
 
-
-    @Query("SELECT * FROM album")
+    @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract suspend fun getAllAlbums(): List<AlbumTable>
 
-    @Query("SELECT * FROM album")
+    @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract fun observeAllAlbums(): Flow<List<AlbumTable>>
 
 

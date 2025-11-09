@@ -22,5 +22,10 @@ import java.util.UUID
 data class Album(
     val uuid: String = UUID.randomUUID().toString(),
     val name: String,
+    val createdAt: Long,
     val files: List<Photo>,
-)
+) {
+    companion object {
+        val Placeholder = Album(name = "", createdAt = 0, files = emptyList())
+    }
+}

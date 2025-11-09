@@ -41,6 +41,7 @@ fun PhotoBackup.toDomain(): Photo =
 fun Album.toBackup(): AlbumBackup =
     AlbumBackup(
         uuid = uuid,
+        createdAt = createdAt,
         name = name,
     )
 
@@ -48,6 +49,7 @@ fun AlbumBackup.toDomain(): Album =
     Album(
         uuid = uuid,
         name = name,
+        createdAt = createdAt ?: System.currentTimeMillis(),
         files = emptyList(),
     )
 
