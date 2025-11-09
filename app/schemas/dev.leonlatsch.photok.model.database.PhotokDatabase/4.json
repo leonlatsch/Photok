@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "d6aa00dd906568966f85bfde3e720b1b",
+    "identityHash": "fdb24ac3627270efd99d4351ee825dab",
     "entities": [
       {
         "tableName": "photo",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "album",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `album_uuid` TEXT NOT NULL, `createdAt` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`album_uuid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `album_uuid` TEXT NOT NULL, `modified_at` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`album_uuid`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -63,8 +63,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
-            "columnName": "createdAt",
+            "fieldPath": "modifiedAt",
+            "columnName": "modified_at",
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "0"
@@ -181,7 +181,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6aa00dd906568966f85bfde3e720b1b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fdb24ac3627270efd99d4351ee825dab')"
     ]
   }
 }
