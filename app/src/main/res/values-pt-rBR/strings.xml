@@ -332,7 +332,7 @@
 
     <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
     <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File Size</string> <!-- TODO -->
+    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
     <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
 
     <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
