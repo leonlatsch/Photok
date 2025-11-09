@@ -32,11 +32,15 @@ import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.domain.SortRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -48,12 +52,17 @@ class GalleryViewModel @Inject constructor(
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val config: Config,
     private val albumRepository: AlbumRepository,
+    private val sortRepository: SortRepository,
     private val resources: Resources,
     private val sharedUrisStore: SharedUrisStore
 ) : ViewModel() {
 
-    private val photosFlow = photoRepository.observeAll()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, listOf())
+    private val sortFlow = sortRepository.observeSortFor(albumUuid = null, default = SortConfig.Gallery.default)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val photosFlow = sortFlow.flatMapLatest { sort ->
+        photoRepository.observeAll(sort)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), listOf())
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 
@@ -61,9 +70,10 @@ class GalleryViewModel @Inject constructor(
         photosFlow,
         showAlbumSelectionDialog,
         sharedUrisStore.observeSharedUris(),
-    ) { photos, showAlbumSelection, sharedUris ->
-        galleryUiStateFactory.create(photos, showAlbumSelection, sharedUris)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, GalleryUiState.Empty())
+        sortFlow,
+    ) { photos, showAlbumSelection, sharedUris, sort ->
+        galleryUiStateFactory.create(photos, showAlbumSelection, sharedUris, sort)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), GalleryUiState.Empty())
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
     val eventsFlow = eventsChannel.receiveAsFlow()
@@ -89,6 +99,9 @@ class GalleryViewModel @Inject constructor(
                     )
                 )
                 sharedUrisStore.reset()
+            }
+            is GalleryUiEvent.SortChanged -> viewModelScope.launch {
+                sortRepository.updateSortFor(albumUuid = null, sort = event.sort)
             }
         }
     }

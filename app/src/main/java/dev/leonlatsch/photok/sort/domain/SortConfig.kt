@@ -14,15 +14,18 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.albums.detail.ui
+package dev.leonlatsch.photok.sort.domain
 
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.sort.domain.SortConfig
-
-data class AlbumDetailUiState(
-    val albumId: String = "",
-    val albumName: String = "",
-    val photos: List<PhotoTile> = emptyList(),
-    val sort: Sort = SortConfig.Album.default,
-)
+enum class SortConfig(
+    val fields: List<Sort.Field>,
+    val default: Sort,
+) {
+    Gallery(
+        fields = listOf(Sort.Field.ImportDate, Sort.Field.FileName, Sort.Field.Size),
+        default = Sort(field = Sort.Field.ImportDate, Sort.Order.Desc),
+    ),
+    Album(
+        fields = listOf(Sort.Field.LinkedAt, Sort.Field.FileName, Sort.Field.Size),
+        default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
+    ),
+}

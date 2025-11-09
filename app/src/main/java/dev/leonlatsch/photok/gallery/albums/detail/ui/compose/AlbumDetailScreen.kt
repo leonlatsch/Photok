@@ -16,10 +16,10 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -43,7 +43,11 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
+import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.ui.SortingMenu
+import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
+import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,6 +79,22 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                     windowInsets = WindowInsets.statusBars,
                     scrollBehavior = scrollBehavior,
                     actions = {
+                        var showSortMenu by remember { mutableStateOf(false) }
+
+                        SortingMenuIconButton(
+                            config = SortConfig.Album,
+                            sort = uiState.sort,
+                            onClick = { showSortMenu = true }
+                        )
+
+                        SortingMenu(
+                            config = SortConfig.Album,
+                            expanded = showSortMenu,
+                            onDismissRequest = {showSortMenu = false },
+                            sort = uiState.sort,
+                            onSortChanged = { viewModel.handleUiEvent(AlbumDetailUiEvent.SortChanged(it)) },
+                        )
+
                         IconButton(onClick = { showMore = true }) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_more),
@@ -82,9 +102,10 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                             )
                         }
 
-                        DropdownMenu(
+                        RoundedDropdownMenu(
                             expanded = showMore,
                             onDismissRequest = { showMore = false },
+                            modifier = Modifier.animateContentSize()
                         ) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.common_delete)) },

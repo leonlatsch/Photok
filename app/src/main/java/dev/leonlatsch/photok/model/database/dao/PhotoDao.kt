@@ -17,6 +17,9 @@
 package dev.leonlatsch.photok.model.database.dao
 
 import androidx.room.*
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import kotlinx.coroutines.flow.Flow
 
@@ -77,4 +80,15 @@ interface PhotoDao {
      */
     @Query("SELECT COUNT(*) FROM photo")
     suspend fun countAll(): Int
+
+    // Sorted
+
+    fun observeAllSorted(sort: Sort): Flow<List<Photo>> {
+        val query = SimpleSQLiteQuery("SELECT * FROM photo ORDER BY ${sort.field.columnName} ${sort.order.sql}")
+
+        return observeAll(query)
+    }
+
+    @RawQuery(observedEntities = [Photo::class])
+    fun observeAll(query: SupportSQLiteQuery): Flow<List<Photo>>
 }

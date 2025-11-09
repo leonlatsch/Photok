@@ -322,4 +322,17 @@
 
     <string name="biometric_unlock_error">Sblocco biometrico non riuscito. Utilizza la tua password Photok.</string>
     <string name="biometric_unlock_hint_button">Sblocca con dati biometrici</string>
+
+    <!-- Sorting -->
+    <string name="sorting_sort">Sort</string> <!-- TODO -->
+
+    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
+    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+
+    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
+    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
+    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
+    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+
+    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
 </resources>

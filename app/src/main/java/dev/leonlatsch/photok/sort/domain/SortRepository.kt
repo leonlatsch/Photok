@@ -14,15 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.albums.detail.ui
+package dev.leonlatsch.photok.sort.domain
 
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.sort.domain.SortConfig
+import kotlinx.coroutines.flow.Flow
 
-data class AlbumDetailUiState(
-    val albumId: String = "",
-    val albumName: String = "",
-    val photos: List<PhotoTile> = emptyList(),
-    val sort: Sort = SortConfig.Album.default,
-)
+interface SortRepository {
+    fun observeSortFor(albumUuid: String? = null, default: Sort): Flow<Sort>
+    fun observeSortsForAlbums(): Flow<Map<String, Sort>>
+    suspend fun updateSortFor(albumUuid: String? = null, sort: Sort)
+    suspend fun getSortForAlbum(albumUuid: String? = null): Sort?
+}

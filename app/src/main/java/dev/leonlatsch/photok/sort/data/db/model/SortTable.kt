@@ -14,22 +14,36 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.database.entity
+package dev.leonlatsch.photok.sort.data.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.UUID
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.model.database.entity.AlbumTable
 
-@Entity(tableName = AlbumTable.TABLE_NAME)
-data class AlbumTable(
-    val name: String,
-    @PrimaryKey
-    @ColumnInfo(name = ALBUM_UUID)
-    val uuid: String = UUID.randomUUID().toString(),
+
+@Entity(
+    tableName = SortTable.TABLE_NAME,
+    foreignKeys = [
+        ForeignKey(
+            entity = AlbumTable::class,
+            parentColumns = arrayOf(AlbumTable.ALBUM_UUID),
+            childColumns = arrayOf("album"),
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ]
+)
+data class SortTable(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    @ColumnInfo(index = true)
+    val album: String? = null,
+    val field: Sort.Field,
+    val order: Sort.Order,
 ) {
     companion object {
-        const val TABLE_NAME = "album"
-        const val ALBUM_UUID = "album_uuid"
+        const val TABLE_NAME = "sort"
     }
 }
