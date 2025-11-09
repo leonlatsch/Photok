@@ -43,7 +43,7 @@ class AlbumsViewModel @Inject constructor(
 
 
     val uiState: StateFlow<AlbumsUiState> = combine(
-        albumsRepositoryImpl.observeAlbumsWithCovers(),
+        albumsRepositoryImpl.observeAllAlbumsWithPhotos(),
         showCreateDialog
     ) { albums, showCreateDialog ->
         albumUiStateFactory.create(albums, showCreateDialog)

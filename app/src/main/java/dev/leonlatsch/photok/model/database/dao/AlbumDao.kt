@@ -106,7 +106,7 @@ abstract class AlbumDao {
     // Sorting
 
     open fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<AlbumWithPhotos> {
-        val query = createSortedPhotosQuery(uuid, sort, null)
+        val query = createSortedPhotosQuery(uuid, sort)
 
         return combine(
             observeAlbum(uuid),
@@ -120,28 +120,14 @@ abstract class AlbumDao {
     abstract fun observePhotosForAlbum(query: SupportSQLiteQuery): Flow<List<Photo>>
 
     open suspend fun getPhotosForAlbum(uuid: String, sort: Sort): List<Photo> {
-        val query = createSortedPhotosQuery(uuid, sort, null)
+        val query = createSortedPhotosQuery(uuid, sort)
         return getPhotosForAlbum(query)
     }
 
     @RawQuery
     abstract suspend fun getPhotosForAlbum(query: SupportSQLiteQuery): List<Photo>
 
-    open suspend fun getCoverForAlbum(uuid: String, sort: Sort): Photo {
-        val query = createSortedPhotosQuery(uuid, sort, 1)
-        return getCoverForAlbum(query)
-    }
-
-    @RawQuery
-    abstract suspend fun getCoverForAlbum(query: SupportSQLiteQuery): Photo
-
-    private fun createSortedPhotosQuery(album: String, sort: Sort, limit: Int?): SupportSQLiteQuery {
-        val limitSql = if (limit != null) {
-            "LIMIT $limit"
-        } else {
-            ""
-        }
-
+    private fun createSortedPhotosQuery(album: String, sort: Sort): SupportSQLiteQuery {
         @Language("roomsql")
         val sql = """
             SELECT p.*
@@ -149,7 +135,6 @@ abstract class AlbumDao {
             INNER JOIN ${AlbumPhotoCrossRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
             WHERE ref.album_uuid = ?
             ORDER BY ${sort.field.columnName} ${sort.order.sql}
-            $limitSql
         """.trimIndent()
 
         return SimpleSQLiteQuery(sql, arrayOf(album))

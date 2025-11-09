@@ -41,12 +41,12 @@ class AlbumRepositoryImpl @Inject constructor(
 ) : AlbumRepository {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun observeAlbumsWithCovers(): Flow<List<Album>> {
+    override fun observeAllAlbumsWithPhotos(): Flow<List<Album>> {
         return sortRepository.observeSortsForAlbums().flatMapLatest { sorts ->
             albumDao.observeAllAlbums().map { albums ->
                 albums.map { album ->
-                    val cover = albumDao.getCoverForAlbum(album.uuid, sorts[album.uuid] ?: SortConfig.Album.default)
-                    album.toDomain().copy(files = listOf(cover))
+                    val photos = albumDao.getPhotosForAlbum(album.uuid, sorts[album.uuid] ?: SortConfig.Album.default)
+                    album.toDomain().copy(files = photos)
                 }
             }
         }
