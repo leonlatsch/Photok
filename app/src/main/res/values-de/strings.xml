@@ -265,14 +265,14 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Biometrisches Ensperren</string>
-    <string name="news_summary_1">Entsperre Photok mit Biometrie</string>
+    <string name="news_title_1">Galerie organisieren</string>
+    <string name="news_summary_1">Du kannst jetzt eine eigene Sortierreihenfolge für alle Dateien oder einzelne Alben festlegen.</string>
 
-    <string name="news_title_2">Verbesserungen für Dateiauswahl</string>
-    <string name="news_summary_2">Verbesserte Animationen und Formen für die Multi-Auswahl</string>
+    <string name="news_title_2">Alben direkt erstellen</string>
+    <string name="news_summary_2">Beim Auswählen eines Albums kannst du nun sofort ein neues Album anlegen.</string>
 
-    <string name="news_title_3">Neu: Automatisches löschen</string>
-    <string name="news_summary_3">Automatisches Löschen von Dateien beim exportieren aus Photok.</string>
+    <string name="news_title_3">Intelligentere Albumübersicht</string>
+    <string name="news_summary_3">Die Albumübersicht wird jetzt automatisch nach dem Änderungsdatum sortiert – für eine deutlich einfachere Navigation.</string>
 
     <string name="news_title_4">Mehr Sprachen</string>
     <string name="news_summary_4">Photok gibts jetzt auch in Arabisch und Russisch</string>

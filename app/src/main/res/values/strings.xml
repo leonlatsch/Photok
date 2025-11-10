@@ -263,14 +263,14 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Biometric Unlock</string>
-    <string name="news_summary_1">Unlock Photok with biometric authentication</string>
+    <string name="news_title_1">Organize Your Gallery</string>
+    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string>
 
-    <string name="news_title_2">Improvements for selecting Files</string>
-    <string name="news_summary_2">Improved animations and shapes for multi selection</string>
+    <string name="news_title_2">Create Albums on the Fly</string>
+    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string>
 
-    <string name="news_title_3">NEW: Delete after export</string>
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string>
+    <string name="news_title_3">Smarter Album Overview</string>
+    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string>
 
     <string name="news_title_4">More Languages</string>
     <string name="news_summary_4">Photok is now available in arabic and russian too</string>
