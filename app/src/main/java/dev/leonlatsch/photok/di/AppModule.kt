@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.di
 import android.content.Context
 import android.content.res.Resources
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,11 +27,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
+import timber.log.Timber
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 /**
@@ -49,7 +55,20 @@ object AppModule {
         app,
         PhotokDatabase::class.java,
         DATABASE_NAME
-    ).build()
+    ).apply {
+        if (BuildConfig.DEBUG) {
+            setQueryCallback(object : RoomDatabase.QueryCallback {
+                override fun onQuery(
+                    sqlQuery: String,
+                    bindArgs: List<Any?>
+                ) {
+                    Timber.d("SQL: $sqlQuery | args: $bindArgs")
+                }
+            }, Executors.newSingleThreadExecutor())
+        } else {
+            this
+        }
+    }.build()
 
     @Provides
     @Singleton
@@ -74,4 +93,7 @@ object AppModule {
     fun provideGson(): Gson = GsonBuilder()
         .setPrettyPrinting()
         .create()
+
+    @Provides
+    fun provideAppScope() = CoroutineScope(Dispatchers.Default)
 }

@@ -263,14 +263,14 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Biometric Unlock</string>
-    <string name="news_summary_1">Unlock Photok with biometric authentication</string>
+    <string name="news_title_1">Organize Your Gallery</string>
+    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string>
 
-    <string name="news_title_2">Improvements for selecting Files</string>
-    <string name="news_summary_2">Improved animations and shapes for multi selection</string>
+    <string name="news_title_2">Create Albums on the Fly</string>
+    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string>
 
-    <string name="news_title_3">NEW: Delete after export</string>
-    <string name="news_summary_3">Have files automatically deleted after exporting them</string>
+    <string name="news_title_3">Smarter Album Overview</string>
+    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string>
 
     <string name="news_title_4">More Languages</string>
     <string name="news_summary_4">Photok is now available in arabic and russian too</string>
@@ -322,4 +322,17 @@
 
     <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string>
     <string name="biometric_unlock_hint_button">Unlock with biometrics</string>
+
+    <!-- Sorting -->
+    <string name="sorting_sort">Sort</string>
+
+    <string name="sorting_order_asc_label">Ascending</string>
+    <string name="sorting_order_desc_label">Descending</string>
+
+    <string name="sorting_field_import_date_label">Import date</string>
+    <string name="sorting_field_filename_label">Filename</string>
+    <string name="sorting_field_size_label">File size</string>
+    <string name="sorting_field_added_to_album_label">Added to album</string>
+
+    <string name="sorting_restore_default">Restore Default</string>
 </resources>

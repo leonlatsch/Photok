@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
 
@@ -110,6 +111,7 @@ fun GalleryContentPreview() {
                     PhotoTile("", PhotoType.PNG, UUID.randomUUID().toString()),
                 ),
                 showAlbumSelectionDialog = false,
+                sort = SortConfig.Gallery.default,
             ),
             handleUiEvent = {},
             multiSelectionState = rememberMultiSelectionState(items = emptyList())

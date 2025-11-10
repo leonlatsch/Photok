@@ -69,7 +69,7 @@ class ImageViewerViewModel @Inject constructor(
         photos = if (albumUUID.isEmpty()) {
             photoRepository.getAll()
         } else {
-            albumRepository.getAlbumWithPhotos(albumUUID).files
+            albumRepository.getPhotosForAlbum(albumUUID)
         }
 
         onFinished(photos)

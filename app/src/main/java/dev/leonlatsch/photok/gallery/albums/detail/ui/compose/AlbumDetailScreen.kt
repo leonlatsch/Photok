@@ -16,10 +16,10 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,7 +29,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,18 +37,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
+import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.ui.SortingMenu
+import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
+import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavController) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     var showConfirmDeleteDialog by remember { mutableStateOf(false) }
@@ -75,6 +79,22 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                     windowInsets = WindowInsets.statusBars,
                     scrollBehavior = scrollBehavior,
                     actions = {
+                        var showSortMenu by remember { mutableStateOf(false) }
+
+                        SortingMenuIconButton(
+                            config = SortConfig.Album,
+                            sort = uiState.sort,
+                            onClick = { showSortMenu = true }
+                        )
+
+                        SortingMenu(
+                            config = SortConfig.Album,
+                            expanded = showSortMenu,
+                            onDismissRequest = {showSortMenu = false },
+                            sort = uiState.sort,
+                            onSortChanged = { viewModel.handleUiEvent(AlbumDetailUiEvent.SortChanged(it)) },
+                        )
+
                         IconButton(onClick = { showMore = true }) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_more),
@@ -82,9 +102,10 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                             )
                         }
 
-                        DropdownMenu(
+                        RoundedDropdownMenu(
                             expanded = showMore,
                             onDismissRequest = { showMore = false },
+                            modifier = Modifier.animateContentSize()
                         ) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.common_delete)) },

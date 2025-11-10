@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.uicomponnets.base.processdialogs
 
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat

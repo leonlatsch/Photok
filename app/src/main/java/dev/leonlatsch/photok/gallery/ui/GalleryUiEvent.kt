@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.net.Uri
+import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
 import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
 
@@ -28,4 +29,7 @@ sealed interface GalleryUiEvent {
     data class OnAlbumSelected(val photoIds: List<String>, val albumId: String) : GalleryUiEvent
     data object CancelAlbumSelection : GalleryUiEvent
     data class OnImportChoice(val choice: ImportChoice) : GalleryUiEvent
+    data object CancelImportShared : GalleryUiEvent
+    data object StartImportShared : GalleryUiEvent
+    data class SortChanged(val sort: Sort) : GalleryUiEvent
 }

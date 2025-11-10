@@ -41,59 +41,82 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
-fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> Unit) {
+fun CreateAlbumDialog(
+    show: Boolean,
+    onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val viewModel: CreateAlbumViewModel = hiltViewModel()
+
+    if (show) {
+        Dialog(
+            onDismissRequest = onDismissRequest,
+        ) {
+            CreateAlbumDialogContent(
+                onDismissRequest = onDismissRequest,
+                onCreatePressed = { viewModel.createAlbum(it) },
+                modifier = modifier,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CreateAlbumDialogContent(
+    onCreatePressed: (String) -> Unit,
+    onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val focusRequester = remember {
         FocusRequester()
     }
 
-    if (uiState.showCreateDialog) {
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
-        Dialog(onDismissRequest = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
-            Card {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.padding(16.dp)
+    Card(
+        modifier = modifier,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            var albumName by remember { mutableStateOf("") }
+
+            Text(
+                stringResource(R.string.gallery_albums_create_title),
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            OutlinedTextField(
+                value = albumName,
+                onValueChange = { albumName = it },
+                placeholder = { Text(stringResource(R.string.gallery_albums_create_placeholder)) },
+                modifier = Modifier.focusRequester(focusRequester)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                TextButton(onClick = onDismissRequest) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+                Button(
+                    onClick = {
+                        onCreatePressed(albumName)
+                        onDismissRequest()
+                    },
+                    enabled = albumName.isNotEmpty()
                 ) {
-                    var albumName by remember { mutableStateOf("") }
-
-                    Text(
-                        stringResource(R.string.gallery_albums_create_title),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-
-                    OutlinedTextField(
-                        value = albumName,
-                        onValueChange = { albumName = it },
-                        placeholder = { Text(stringResource(R.string.gallery_albums_create_placeholder)) },
-                        modifier = Modifier.focusRequester(focusRequester)
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        TextButton(onClick = { handleUiEvent(AlbumsUiEvent.HideCreateDialog) }) {
-                            Text(stringResource(R.string.common_cancel))
-                        }
-                        Button(
-                            onClick = {
-                                handleUiEvent(AlbumsUiEvent.CreateAlbum(albumName))
-                                handleUiEvent(AlbumsUiEvent.HideCreateDialog)
-                            },
-                            enabled = albumName.isNotEmpty()
-                        ) {
-                            Text(stringResource(R.string.common_create))
-                        }
-                    }
+                    Text(stringResource(R.string.common_create))
                 }
             }
         }
@@ -104,8 +127,9 @@ fun CreateAlbumDialog(uiState: AlbumsUiState, handleUiEvent: (AlbumsUiEvent) -> 
 @Composable
 private fun CreateAlbumDialogPreview() {
     AppTheme {
-        CreateAlbumDialog(
-            uiState = AlbumsUiState.Empty(showCreateDialog = true),
-            handleUiEvent = {})
+        CreateAlbumDialogContent(
+            onCreatePressed = {},
+            onDismissRequest = {},
+        )
     }
 }

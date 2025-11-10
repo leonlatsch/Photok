@@ -7,6 +7,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
+![Twitch Status](https://img.shields.io/twitch/status/leonlatsch?style=flat&logo=twitch)
 
 Encrypt images and videos on your device and keep them safe from others.
 
@@ -42,16 +43,16 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-69%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-69%25-orange)
-![French](https://img.shields.io/badge/French-81%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-67%25-orange)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-94%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-67%25-orange)
+![French](https://img.shields.io/badge/French-78%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Italian](https://img.shields.io/badge/Italian-100%25-brightgreen)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-67%25-orange)
-![Russian](https://img.shields.io/badge/Russian-81%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-84%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
+![Italian](https://img.shields.io/badge/Italian-94%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-65%25-orange)
+![Russian](https://img.shields.io/badge/Russian-77%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-80%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-94%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)

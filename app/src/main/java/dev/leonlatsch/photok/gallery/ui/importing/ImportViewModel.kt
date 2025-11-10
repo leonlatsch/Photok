@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.gallery.ui.importing
 
 import android.app.Application
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.ImportSource
@@ -37,6 +36,7 @@ class ImportViewModel @Inject constructor(
     app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
+    private val sharedUrisStore: SharedUrisStore,
 ) : BaseProcessViewModel<Uri>(app) {
 
     var albumUUID: String? = null
@@ -55,5 +55,11 @@ class ImportViewModel @Inject constructor(
         albumUUID?.let {
             albumRepository.link(listOf(photoUUID), it)
         }
+    }
+
+    override suspend fun postProcess() {
+        super.postProcess()
+
+        sharedUrisStore.reset()
     }
 }

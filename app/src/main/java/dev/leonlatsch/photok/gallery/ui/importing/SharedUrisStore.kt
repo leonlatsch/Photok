@@ -17,19 +17,24 @@
 package dev.leonlatsch.photok.gallery.ui.importing
 
 import android.net.Uri
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class SharedUrisStore {
 
-    private val sharedUris = mutableListOf<Uri>()
+    private val sharedUris = MutableStateFlow<List<Uri>>(emptyList())
 
     /**
      * Only add uri if its not already in [sharedUris]
      */
     fun safeAddUri(uri: Uri) {
-        sharedUris.find { it == uri } ?: sharedUris.add(uri)
+        sharedUris.update { it + uri }
     }
 
-    fun getUris(): List<Uri> = sharedUris.toList()
+    fun observeSharedUris() = sharedUris.asStateFlow()
 
-    fun clear() = sharedUris.clear()
+    fun reset() {
+        sharedUris.update { emptyList() }
+    }
 }

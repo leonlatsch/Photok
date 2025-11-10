@@ -29,12 +29,17 @@ import java.util.UUID
  * @author Leon Latsch
  */
 // TODO: Add a domain model for photos
-@Entity(tableName = "photo")
+@Entity(tableName = Photo.TABLE_NAME)
 data class Photo(
-    @Expose val fileName: String,
+    @Expose
+    @ColumnInfo(name = COL_FILENAME)
+    val fileName: String,
+    @ColumnInfo(name = COL_IMPORTED_AT)
     var importedAt: Long,
     @Expose val type: PhotoType,
-    @Expose var size: Long = 0L,
+    @Expose
+    @ColumnInfo(name = COL_SIZE)
+    var size: Long = 0L,
     @Expose
     @PrimaryKey
     @ColumnInfo(name = "photo_uuid")
@@ -49,4 +54,11 @@ data class Photo(
 
     val internalVideoPreviewFileName: String
         get() = internalVideoPreviewFileName(uuid)
+
+    companion object {
+        const val COL_FILENAME = "fileName"
+        const val COL_IMPORTED_AT = "importedAt"
+        const val COL_SIZE = "size"
+        const val TABLE_NAME = "photo"
+    }
 }

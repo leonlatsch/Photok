@@ -23,13 +23,15 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import dev.leonlatsch.photok.sort.data.db.SortDao
+import dev.leonlatsch.photok.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCroffRefTable
+import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 
-private const val DATABASE_VERSION = 3
+private const val DATABASE_VERSION = 4
 const val DATABASE_NAME = "photok.db"
 
 /**
@@ -42,7 +44,8 @@ const val DATABASE_NAME = "photok.db"
     entities = [
         Photo::class,
         AlbumTable::class,
-        AlbumPhotoCroffRefTable::class
+        AlbumPhotoCrossRefTable::class,
+        SortTable::class,
     ],
     version = DATABASE_VERSION,
     autoMigrations = [
@@ -55,6 +58,10 @@ const val DATABASE_NAME = "photok.db"
             from = 2,
             to = 3,
         ),
+        AutoMigration(
+            from = 3,
+            to = 4,
+        )
     ]
 )
 @TypeConverters(Converters::class)
@@ -66,6 +73,7 @@ abstract class PhotokDatabase : RoomDatabase() {
     abstract fun getPhotoDao(): PhotoDao
 
     abstract fun getAlbumDao(): AlbumDao
+    abstract fun getSortDao(): SortDao
 }
 
 @DeleteColumn.Entries(
