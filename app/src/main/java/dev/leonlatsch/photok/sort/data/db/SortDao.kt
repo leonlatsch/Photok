@@ -26,18 +26,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SortDao {
 
-    @Query("SELECT * FROM sort WHERE album = :album OR (album IS NULL AND :album IS NULL)")
+    @Query("SELECT * FROM sort WHERE album_uuid = :album OR (album_uuid IS NULL AND :album IS NULL)")
     fun observeSort(album: String? = null): Flow<SortTable?>
 
-    @Query("SELECT * FROM sort WHERE album = :album OR (album IS NULL AND :album IS NULL)")
+    @Query("SELECT * FROM sort WHERE album_uuid = :album OR (album_uuid IS NULL AND :album IS NULL)")
     fun getSortForAlbum(album: String?): SortTable?
 
-    @Query("SELECT * FROM sort WHERE album IS NOT NULL")
+    @Query("SELECT * FROM sort WHERE album_uuid IS NOT NULL")
     fun observeSortsForAlbums(): Flow<List<SortTable>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateSortFor(sort: SortTable)
 
-    @Query("DELETE FROM sort WHERE album = :album OR (album IS NULL AND :album IS NULL)")
+    @Query("DELETE FROM sort WHERE album_uuid = :album OR (album_uuid IS NULL AND :album IS NULL)")
     suspend fun deleteSortFor(album: String? = null)
 }

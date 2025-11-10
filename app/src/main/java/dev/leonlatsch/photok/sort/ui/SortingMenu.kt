@@ -62,11 +62,11 @@ fun SortingMenuIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val filterChangedColor = MaterialTheme.colorScheme.tertiaryContainer
+    val filterChangedColor = MaterialTheme.colorScheme.secondaryContainer
 
     val buttonContainerColor = remember(sort) {
         if (sort != config.default) {
-            filterChangedColor
+            filterChangedColor.copy(alpha = 0.5f)
         } else {
             Color.Unspecified
         }
