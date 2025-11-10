@@ -22,7 +22,7 @@ import dev.leonlatsch.photok.sort.domain.Sort
 fun Sort.toData(albumUuid: String?): SortTable {
     return SortTable(
         id = 0,
-        album = albumUuid,
+        albumUuid = albumUuid,
         field = field,
         order = order,
     )
