@@ -246,14 +246,14 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Organize Your Gallery</string> <!-- TODO -->
-    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string> <!-- TODO -->
+    <string name="news_title_1">Galerini Düzenleyin</string>
+    <string name="news_summary_1">Artık tüm dosyalar veya tek tek albümler için özel bir sıralama düzeni seçebilirsiniz.</string>
 
-    <string name="news_title_2">Create Albums on the Fly</string> <!-- TODO -->
-    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string> <!-- TODO -->
+    <string name="news_title_2">Anında Albüm Oluşturun</string>
+    <string name="news_summary_2">Dosyalarınızı eklemek için bir albüm seçerken, artık anında yeni bir albüm oluşturabilirsiniz.</string>
 
-    <string name="news_title_3">Smarter Album Overview</string> <!-- TODO -->
-    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string> <!-- TODO -->
+    <string name="news_title_3">Akıllı Albüm Genel Bakışı</string>
+    <string name="news_summary_3">Albüm özeti artık otomatik olarak değiştirilme tarihine göre sıralanıyor, bu da gezinmeyi çok daha kolay hale getiriyor.</string>
 
     <string name="news_title_4">Daha Fazla Dil</string>
     <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da kullanılabilir</string>
@@ -309,15 +309,15 @@
 
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Sırala</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Artan</string>
+    <string name="sorting_order_desc_label">Azalan</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Ekleme Tarihi</string>
+    <string name="sorting_field_filename_label">Dosya adı</string>
+    <string name="sorting_field_size_label">Dosya boyutu</string>
+    <string name="sorting_field_added_to_album_label">Albüme eklendi</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
 </resources>
