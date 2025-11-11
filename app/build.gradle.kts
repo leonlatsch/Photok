@@ -8,6 +8,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
 }
 
+val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
+
 val appVersionName: String by project
 val appVersionCode: String by project
 
@@ -35,7 +37,30 @@ android {
         }
     }
 
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("play") {
+            dimension = "distribution"
+            if (!isReleaseBuildInvocation) {
+                applicationIdSuffix = ".play"
+                versionNameSuffix = "play"
+            }
+        }
+
+        create("foss") {
+            dimension = "distribution"
+            if (!isReleaseBuildInvocation) {
+                applicationIdSuffix = ".foss"
+                versionNameSuffix = "foss"
+            }
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
