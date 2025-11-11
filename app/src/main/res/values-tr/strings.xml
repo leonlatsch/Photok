@@ -1,6 +1,5 @@
 <resources>
     <!-- COMMON -->
-    <string name="app_name">Photok</string>
     <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2025 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>

@@ -43,7 +43,7 @@ android {
             dimension = "distribution"
             if (!isReleaseBuildInvocation) {
                 applicationIdSuffix = ".play"
-                versionNameSuffix = "play"
+                versionNameSuffix = "-play-debug"
             }
         }
 
@@ -51,7 +51,7 @@ android {
             dimension = "distribution"
             if (!isReleaseBuildInvocation) {
                 applicationIdSuffix = ".foss"
-                versionNameSuffix = "foss"
+                versionNameSuffix = "-foss-debug"
             }
         }
     }
