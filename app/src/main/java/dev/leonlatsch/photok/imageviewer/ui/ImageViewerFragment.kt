@@ -31,6 +31,7 @@ import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
+import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
@@ -84,7 +85,7 @@ class ImageViewerFragment :
         }
 
         initializeSystemUI()
-
+        viewModel.getAlbumsList()
         binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -121,6 +122,24 @@ class ImageViewerFragment :
      */
     fun onDetailsClicked() {
         DetailsBottomSheetDialog(viewModel.currentPhoto).show(childFragmentManager)
+    }
+
+    /**
+     * On Album button clicked.
+     * Called by ui.
+     */
+    fun onAddToAlbumButtonClicked() {
+        AlbumsBottomSheetDialog(viewModel.albumReader.value, onClickAlbum = { album ->
+            viewModel.currentPhoto?.let {
+                viewModel.connectPhotoIntoAlbum(
+                    AlbumPhotoRef(
+                        albumUUID = album.uuid,
+                        photoUUID = it.uuid,
+                        linkedAt = it.importedAt
+                    )
+                )
+            }
+        }).show(childFragmentManager)
     }
 
     /**

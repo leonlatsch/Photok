@@ -22,12 +22,15 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.gallery.albums.data.AlbumRepositoryImpl
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,9 +45,30 @@ class ImageViewerViewModel @Inject constructor(
     app: Application,
     val photoRepository: PhotoRepository,
     val albumRepository: AlbumRepository,
+    val albumRepositoryImpl: AlbumRepositoryImpl
 ) : ObservableViewModel(app) {
 
     var photos = listOf<Photo>()
+
+    var _albums = MutableStateFlow<AlbumCollectionUIState>(AlbumCollectionUIState.Loading)
+    val albumReader = _albums
+
+
+    fun connectPhotoIntoAlbum(ref: AlbumPhotoRef) = viewModelScope.launch {
+        albumRepositoryImpl.link(ref)
+    }
+
+    fun getAlbumsList() = viewModelScope.launch {
+        albumRepository.observeAllAlbumsWithPhotos().collect { albums->
+            if(albums.isEmpty())
+            {
+                _albums.emit(AlbumCollectionUIState.NoDataFound)
+            }
+            else{
+                _albums.emit(AlbumCollectionUIState.Result(albums))
+            }
+        }
+    }
 
     @get:Bindable
     var currentPhoto: Photo? = null

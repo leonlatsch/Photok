@@ -320,4 +320,7 @@
     <string name="sorting_field_added_to_album_label">Albüme eklendi</string>
 
     <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
+    <string name="add_to_album">Add to Album</string>
+    <string name="no_albums_available">No Albums Available</string>
+    <string name="photo_added_to_album_successfully">Photo Added to Album Successfully</string>
 </resources>

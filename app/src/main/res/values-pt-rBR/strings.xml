@@ -335,5 +335,8 @@
     <string name="sorting_field_size_label">File size</string> <!-- TODO -->
     <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Restore Default</string>
+    <string name="add_to_album">Add to Album</string>
+    <string name="no_albums_available">No Albums Available</string>
+    <string name="photo_added_to_album_successfully">Photo Added to Album Successfully</string> <!-- TODO -->
 </resources>
