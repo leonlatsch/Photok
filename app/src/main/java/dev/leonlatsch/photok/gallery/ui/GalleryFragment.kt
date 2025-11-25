@@ -36,6 +36,7 @@ import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.data.StartPage
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import javax.inject.Inject
 
@@ -75,7 +76,9 @@ class GalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        finishOnBackWhileStarted()
+        finishOnBackWhileStarted(
+            enabled = config.galleryStartPage == StartPage.AllFiles,
+        )
 
         launchLifecycleAwareJob {
             viewModel.eventsFlow.collect { event ->

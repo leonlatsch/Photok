@@ -148,6 +148,7 @@
     <string name="settings_category_gallery">Галерея</string>
     <string name="settings_gallery_auto_fullscreen_title">Автоматический полный экран</string>
     <string name="settings_gallery_auto_fullscreen_summary">Входить в полноэкранный режим при открытии файла</string>
+    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>

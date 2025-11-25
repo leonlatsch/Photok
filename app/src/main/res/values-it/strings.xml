@@ -148,6 +148,7 @@
     <string name="settings_category_gallery">Galleria</string>
     <string name="settings_gallery_auto_fullscreen_title">Schermo intero automatico</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entra in modalità a schermo intero quando apri un file</string>
+    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
 
     <string name="settings_category_security">Sicurezza</string>
     <string name="settings_security_allow_screenshots_title">Consenti screenshot</string>
