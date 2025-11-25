@@ -148,6 +148,7 @@
     <string name="settings_category_gallery">المعرض</string>
     <string name="settings_gallery_auto_fullscreen_title">ملء الشاشة تلقائيًا</string>
     <string name="settings_gallery_auto_fullscreen_summary">أدخل وضع ملء الشاشة عند فتح ملف</string>
+    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
 
     <string name="settings_category_security">حماية</string>
     <string name="settings_security_allow_screenshots_title">السماح بلقطات الشاشة</string>

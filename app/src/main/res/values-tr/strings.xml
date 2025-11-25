@@ -131,6 +131,7 @@
     <string name="settings_category_gallery">Galeri</string>
     <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
     <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
+    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>

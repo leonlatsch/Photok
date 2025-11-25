@@ -148,6 +148,7 @@
     <string name="settings_category_gallery">图库</string>
     <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
     <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
+    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
 
     <string name="settings_category_security">安全</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
