@@ -264,17 +264,17 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">组织你的图库</string>
-    <string name="news_summary_1">你现在可以选择所有文件或单独相册的自定义排序。</string>
+    <string name="news_title_1">Choose your startpage</string> <!-- TODO -->
+    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">实时创建相册</string>
-    <string name="news_summary_2">选中添加文件的相册时，你现在可以立即创建新的相册。</string>
+    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
+    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
 
-    <string name="news_title_3">更智能的相册概览</string>
-    <string name="news_summary_3">相册概览现在自动按照修改日期排列，提供更为顺滑的浏览。</string>
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">更多语言</string>
-    <string name="news_summary_4">Photok 界面现在可以以阿拉伯语和俄语显示了</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>

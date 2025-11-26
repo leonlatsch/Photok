@@ -247,17 +247,17 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Galerini Düzenleyin</string>
-    <string name="news_summary_1">Artık tüm dosyalar veya tek tek albümler için özel bir sıralama düzeni seçebilirsiniz.</string>
+    <string name="news_title_1">Choose your startpage</string> <!-- TODO -->
+    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">Anında Albüm Oluşturun</string>
-    <string name="news_summary_2">Dosyalarınızı eklemek için bir albüm seçerken, artık anında yeni bir albüm oluşturabilirsiniz.</string>
+    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
+    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
 
-    <string name="news_title_3">Akıllı Albüm Genel Bakışı</string>
-    <string name="news_summary_3">Albüm özeti artık otomatik olarak değiştirilme tarihine göre sıralanıyor, bu da gezinmeyi çok daha kolay hale getiriyor.</string>
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">Daha Fazla Dil</string>
-    <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da kullanılabilir</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>

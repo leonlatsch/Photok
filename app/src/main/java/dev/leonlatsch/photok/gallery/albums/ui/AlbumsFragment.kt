@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.news.newfeatures.ui.ShowNewsDialogUseCase
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
@@ -51,6 +52,9 @@ class AlbumsFragment : Fragment() {
 
     @Inject
     lateinit var config: Config
+
+    @Inject
+    lateinit var showNewsDialog: ShowNewsDialogUseCase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,5 +82,7 @@ class AlbumsFragment : Fragment() {
                 albumsNavigator.navigate(event, findNavController())
             }
         }
+
+        showNewsDialog(parentFragmentManager)
     }
 }
