@@ -14,13 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.navigation
+package dev.leonlatsch.photok.settings.data
 
-import android.net.Uri
-import dev.leonlatsch.photok.model.repositories.ImportSource
+enum class StartPage(val value: String) {
+    AllFiles("all_files"),
+    Albums("albums");
 
-sealed interface GalleryNavigationEvent {
-    data class ShowToast(val text: String) : GalleryNavigationEvent
-    data class StartImport(val fileUris: List<Uri>, val importSource: ImportSource) : GalleryNavigationEvent
-    data class StartRestoreBackup(val backupUri: Uri) : GalleryNavigationEvent
+    companion object {
+        fun fromValue(value: String?): StartPage {
+            return entries.find { it.value == value } ?: AllFiles
+        }
+    }
 }

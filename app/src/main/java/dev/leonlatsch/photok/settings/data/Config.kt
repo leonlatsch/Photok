@@ -59,6 +59,13 @@ class Config(context: Context) {
         set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
 
     /**
+     * Determines the start page of the gallery.
+     */
+    var galleryStartPage: StartPage
+        get() = StartPage.fromValue(getString("gallery^startPage", StartPage.AllFiles.value))
+        set(value) = putString("gallery^startPage", value.value)
+
+    /**
      * Determines if screenshots should be allowed.
      */
     var securityAllowScreenshots: Boolean

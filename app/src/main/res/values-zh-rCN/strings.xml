@@ -148,6 +148,7 @@
     <string name="settings_category_gallery">图库</string>
     <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
     <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
+    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">安全</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
@@ -263,17 +264,17 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Organize Your Gallery</string> <!-- TODO -->
-    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string> <!-- TODO -->
+    <string name="news_title_1">Choose your start page</string> <!-- TODO -->
+    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">Create Albums on the Fly</string> <!-- TODO -->
-    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string> <!-- TODO -->
+    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
+    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
 
-    <string name="news_title_3">Smarter Album Overview</string> <!-- TODO -->
-    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string> <!-- TODO -->
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">更多语言</string>
-    <string name="news_summary_4">Photok 界面现在可以以阿拉伯语和俄语显示了</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>
@@ -324,15 +325,15 @@
     <string name="biometric_unlock_hint_button">用生物特征解锁</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">排序</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">降序</string>
+    <string name="sorting_order_desc_label">升序</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">导入日期</string>
+    <string name="sorting_field_filename_label">文件名</string>
+    <string name="sorting_field_size_label">文件大小</string>
+    <string name="sorting_field_added_to_album_label">已添加到相册</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">恢复默认</string>
 </resources>

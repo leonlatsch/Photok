@@ -38,6 +38,7 @@ import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.data.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -144,7 +145,12 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                 findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
             }
         } else {
-            findNavController().navigate(R.id.action_unlockFragment_to_galleryFragment)
+            val startPageDest = when (config.galleryStartPage) {
+                StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
+                StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
+            }
+
+            findNavController().navigate(startPageDest)
         }
     }
 

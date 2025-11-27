@@ -149,6 +149,7 @@
     <string name="settings_category_gallery">Galeria</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto tela completa</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir um arquivo</string>
+    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Segurança</string>
     <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
@@ -262,17 +263,17 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Organize Your Gallery</string> <!-- TODO -->
-    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string> <!-- TODO -->
+    <string name="news_title_1">Choose your start page</string> <!-- TODO -->
+    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">Create Albums on the Fly</string> <!-- TODO -->
-    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string> <!-- TODO -->
+    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
+    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
 
-    <string name="news_title_3">Smarter Album Overview</string> <!-- TODO -->
-    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string> <!-- TODO -->
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">More Languages</string> <!-- TODO -->
-    <string name="news_summary_4">Photok is now available in arabic and russian too</string> <!-- TODO -->
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->

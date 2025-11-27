@@ -131,6 +131,7 @@
     <string name="settings_category_gallery">Galeri</string>
     <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
     <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
+    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>
@@ -246,17 +247,17 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Organize Your Gallery</string> <!-- TODO -->
-    <string name="news_summary_1">You can now choose a custom sorting order for all files or individual albums.</string> <!-- TODO -->
+    <string name="news_title_1">Choose your start page</string> <!-- TODO -->
+    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
-    <string name="news_title_2">Create Albums on the Fly</string> <!-- TODO -->
-    <string name="news_summary_2">When selecting an album to add your files to, you can now create a new one instantly.</string> <!-- TODO -->
+    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
+    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
 
-    <string name="news_title_3">Smarter Album Overview</string> <!-- TODO -->
-    <string name="news_summary_3">The album overview is now automatically sorted by modification date, making navigation much smoother.</string> <!-- TODO -->
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">Daha Fazla Dil</string>
-    <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da kullanılabilir</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>
@@ -293,7 +294,9 @@
     <string name="notification_channel_background_tasks">Arka Plan İşlemleri</string>
     <string name="migration_error_extract_data">Verileri dışa aktar</string>
     <string name="migration_error_extract_confirmation_text">Tüm dosyalarınızı ŞİFRESİZ olarak bir ZIP dosyasına dışa aktarmak istediğinizden emin misiniz?</string>
+
     <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)…</string>
+
 
 
     <string name="biometric_unlock_title">Photok Kilidini Aç</string>
@@ -305,16 +308,17 @@
     <string name="biometric_unlock_error">Biyometrik kilit başarısız. Photok şifreni kullan.</string>
     <string name="biometric_unlock_hint_button">Biyometri ile kilidi aç</string>
 
+
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Sırala</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Artan</string>
+    <string name="sorting_order_desc_label">Azalan</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Ekleme Tarihi</string>
+    <string name="sorting_field_filename_label">Dosya adı</string>
+    <string name="sorting_field_size_label">Dosya boyutu</string>
+    <string name="sorting_field_added_to_album_label">Albüme eklendi</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
 </resources>

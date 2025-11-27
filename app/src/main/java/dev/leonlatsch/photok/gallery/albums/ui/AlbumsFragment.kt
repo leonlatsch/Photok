@@ -31,7 +31,11 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.news.newfeatures.ui.ShowNewsDialogUseCase
+import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
+import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.data.StartPage
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +49,12 @@ class AlbumsFragment : Fragment() {
     @EncryptedImageLoader
     @Inject
     lateinit var encryptedImageLoader: ImageLoader
+
+    @Inject
+    lateinit var config: Config
+
+    @Inject
+    lateinit var showNewsDialog: ShowNewsDialogUseCase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,10 +73,16 @@ class AlbumsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        finishOnBackWhileStarted(
+            enabled = config.galleryStartPage == StartPage.Albums,
+        )
+
         launchLifecycleAwareJob {
             viewModel.navEvent.collect { event ->
                 albumsNavigator.navigate(event, findNavController())
             }
         }
+
+        showNewsDialog(parentFragmentManager)
     }
 }

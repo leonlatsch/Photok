@@ -79,6 +79,13 @@
             app:destination="@id/encryptionMigrationFragment"
             app:popUpTo="@id/unlockFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_unlockFragment_to_albumsFragment"
+            app:destination="@id/albumsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/unlockFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"

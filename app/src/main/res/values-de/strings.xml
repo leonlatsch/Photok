@@ -150,6 +150,7 @@
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
     <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen einer Datei</string>
+    <string name="settings_gallery_start_page_title">Startseite</string>
 
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
@@ -158,7 +159,7 @@
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
     <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
-    <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht vervügbar</string>
+    <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht verfügbar</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
@@ -265,17 +266,17 @@
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Galerie organisieren</string>
-    <string name="news_summary_1">Du kannst jetzt eine eigene Sortierreihenfolge für alle Dateien oder einzelne Alben festlegen.</string>
+    <string name="news_title_1">Wähle deine Startseite</string>
+    <string name="news_summary_1">Wähle welche Seite angezeigt werden soll, wenn du Photok öffnest.</string>
 
-    <string name="news_title_2">Alben direkt erstellen</string>
-    <string name="news_summary_2">Beim Auswählen eines Albums kannst du nun sofort ein neues Album anlegen.</string>
+    <string name="news_title_2">Verbesserte Übersetzung</string>
+    <string name="news_summary_2">Türkische und Chinesische Übersetzungen wurden aktualisiert.</string>
 
-    <string name="news_title_3">Intelligentere Albumübersicht</string>
-    <string name="news_summary_3">Die Albumübersicht wird jetzt automatisch nach dem Änderungsdatum sortiert – für eine deutlich einfachere Navigation.</string>
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">Mehr Sprachen</string>
-    <string name="news_summary_4">Photok gibts jetzt auch in Arabisch und Russisch</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>
