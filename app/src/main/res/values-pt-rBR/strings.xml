@@ -149,7 +149,7 @@
     <string name="settings_category_gallery">Galeria</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto tela completa</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir um arquivo</string>
-    <string name="settings_gallery_start_page_title">Start Page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Segurança</string>
     <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
@@ -263,7 +263,7 @@
     <string name="news_view_changelog">Ver registro de mudanças</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Choose your startpage</string> <!-- TODO -->
+    <string name="news_title_1">Choose your start page</string> <!-- TODO -->
     <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
 
     <string name="news_title_2">Improved Translations</string> <!-- TODO -->
