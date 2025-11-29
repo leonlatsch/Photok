@@ -21,7 +21,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.other.extensions.remove
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +36,7 @@ class CleanupDeadFilesUseCase @Inject constructor(
 
     operator fun invoke() {
         scope.launch {
-            val allExisting = photoRepository.getAll()
+            val allExisting = photoRepository.findAllPhotosByImportDateDesc()
 
             val allFiles = context.fileList().filter {
                 it.contains(LEGACY_PHOTOK_FILE_EXTENSION) || it.contains(PHOTOK_FILE_EXTENSION)

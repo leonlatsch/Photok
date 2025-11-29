@@ -30,8 +30,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
-import java.security.GeneralSecurityException
-import java.security.SecureRandom
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -80,7 +78,7 @@ class LegacyEncryptionMigrator @Inject constructor(
 
         try {
 
-            val allPhotos = photoRepository.getAll()
+            val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
 
             val legacyFiles = app.fileList().filter { legacyFile ->
                 legacyFile.contains(LEGACY_PHOTOK_FILE_EXTENSION) // Is .photok file

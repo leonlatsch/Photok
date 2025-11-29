@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
@@ -120,7 +121,7 @@ class RestoreBackupV4 @Inject constructor(
 
         encryptionManager.keyCacheEnabled = false
 
-        metaData.photos.forEach { photoBackup ->
+        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
             val newPhoto = photoBackup
                 .toDomain()
                 .copy(importedAt = System.currentTimeMillis())
