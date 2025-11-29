@@ -45,7 +45,7 @@ class SettingsViewModel @Inject constructor(
      * Reset all components and call [BaseApplication.lockApp]
      */
     fun resetComponents() = viewModelScope.launch {
-        val allPhotos = photoRepository.getAll()
+        val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
         for (photo in allPhotos) {
             photoRepository.deleteInternalPhotoData(photo)
         }

@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.data.PhotoBackup
+import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -79,7 +81,8 @@ class RestoreBackupV1 @Inject constructor(
                 continue
             }
 
-            val newPhoto = photoBackup.toDomain().copy(importedAt = System.currentTimeMillis())
+            // Dummy. Used for method that need a photo object
+            val dummyPhoto = photoBackup.toDomain()
 
             val encryptedZipInput =
                 legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
@@ -94,7 +97,7 @@ class RestoreBackupV1 @Inject constructor(
             val photoBytesInputStream = ByteArrayInputStream(photoBytes)
 
             val photoFileCreated =
-                photoRepository.createPhotoFile(newPhoto, photoBytesInputStream) != -1L
+                photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
 
             if (!photoFileCreated) {
                 errors++
@@ -102,16 +105,17 @@ class RestoreBackupV1 @Inject constructor(
                 continue
             }
 
-            createThumbnails(newPhoto, photoBytes)
-                .onSuccess {
-                    photoRepository.insert(newPhoto)
-                }
-                .onFailure {
-                    errors++
-                }
+            createThumbnails(dummyPhoto, photoBytes)
+                .onFailure { errors++ }
 
             ze = stream.nextEntry
         }
+
+        metaData
+            .getPhotosInOriginalOrder()
+            .forEach {
+                photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
+            }
 
         return RestoreResult(errors)
     }

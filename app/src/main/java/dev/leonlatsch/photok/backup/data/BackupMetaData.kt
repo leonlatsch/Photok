@@ -46,6 +46,12 @@ data class BackupMetaData(
     }
 }
 
+fun BackupMetaData.getPhotosInOriginalOrder(): List<PhotoBackup> {
+    return photos.sortedBy {
+        it.importedAt
+    } // ASC to keep original order. Dump is created with DESC
+}
+
 data class PhotoBackup(
     val fileName: String,
     val importedAt: Long,

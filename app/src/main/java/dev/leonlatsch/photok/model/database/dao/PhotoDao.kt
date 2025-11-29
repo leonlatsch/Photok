@@ -70,7 +70,7 @@ interface PhotoDao {
      * @return all photos as [List]
      */
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
-    suspend fun getAll(): List<Photo>
+    suspend fun findAllPhotosByImportDateDesc(): List<Photo>
 
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     fun observeAll(): Flow<List<Photo>>
