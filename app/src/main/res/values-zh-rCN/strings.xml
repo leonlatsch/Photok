@@ -148,7 +148,7 @@
     <string name="settings_category_gallery">图库</string>
     <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
     <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">启动页</string>
 
     <string name="settings_category_security">安全</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
@@ -264,11 +264,11 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Choose your start page</string> <!-- TODO -->
-    <string name="news_summary_1">You can now choose what page to show when you open Photok.</string> <!-- TODO -->
+    <string name="news_title_1">选择启动页</string> <!-- TODO -->
+    <string name="news_summary_1">现在可以选择打开 Photok 时展示的页面</string>
 
-    <string name="news_title_2">Improved Translations</string> <!-- TODO -->
-    <string name="news_summary_2">Turkish and Chinese Translations have been updated.</string> <!-- TODO -->
+    <string name="news_title_2">完善翻译</string> <!-- TODO -->
+    <string name="news_summary_2">更新了中文和土耳其语翻译</string>
 
     <string name="news_title_3">NOT_USED</string>
     <string name="news_summary_3">NOT_USED</string>
