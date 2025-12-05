@@ -46,7 +46,7 @@ class ReEncryptViewModel @Inject constructor(
     lateinit var newPassword: String
 
     override suspend fun preProcess() {
-        items = photoRepository.getAll()
+        items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
 
         passwordManager.storePassword(newPassword)

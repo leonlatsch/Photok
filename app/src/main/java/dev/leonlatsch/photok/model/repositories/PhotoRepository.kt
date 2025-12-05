@@ -20,7 +20,6 @@ import android.app.Application
 import android.net.Uri
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
-import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
@@ -29,6 +28,7 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.sort.domain.Sort
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
@@ -73,11 +73,9 @@ class PhotoRepository @Inject constructor(
     suspend fun get(uuid: String) = photoDao.get(uuid)
 
     /**
-     * @see PhotoDao.getAll
+     * @see PhotoDao.findAllPhotosByImportDateDesc
      */
-    suspend fun getAll() = photoDao.getAll()
-
-    fun observeAll() = photoDao.observeAll()
+    suspend fun findAllPhotosByImportDateDesc() = photoDao.findAllPhotosByImportDateDesc()
 
     fun observeAll(sort: Sort) = photoDao.observeAllSorted(sort)
 
