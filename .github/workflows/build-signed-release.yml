@@ -26,18 +26,18 @@ jobs:
           
       # Build .aab file
       - name: Build GPlay AAB
-        run: ./gradlew bundleRelease
+        run: ./gradlew bundlePlayRelease
       
       # Build .apk file
-      - name: Build Standalone APK
-        run: ./gradlew assembleRelease
+      - name: Build FOSS APK
+        run: ./gradlew assembleFossRelease
       
       # Sign .aab file
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1
         id: sign_aab
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: app/build/outputs/bundle/play/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_PASSWORD }}
@@ -51,7 +51,7 @@ jobs:
         uses: r0adkll/sign-android-release@v1
         id: sign_apk
         with:
-          releaseDirectory: app/build/outputs/apk/release
+          releaseDirectory: app/build/outputs/apk/foss/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_PASSWORD }}
@@ -64,12 +64,12 @@ jobs:
       - name: Upload GPlay AAB Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Photok ${{ github.event.inputs.version }} GPlay AAB
+          name: Photok ${{ github.event.inputs.version }} Play AAB
           path: ${{ steps.sign_aab.outputs.signedReleaseFile }}
 
       # Upload .apk Artifact
       - name: Upload Standalone APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Photok ${{ github.event.inputs.version }} Standalone APK
+          name: Photok ${{ github.event.inputs.version }} FOSS APK
           path: ${{ steps.sign_apk.outputs.signedReleaseFile }}
