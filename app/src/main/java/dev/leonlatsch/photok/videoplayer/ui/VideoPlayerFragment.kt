@@ -21,6 +21,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -54,9 +55,12 @@ class VideoPlayerFragment :
             binding.playerView.player = it
         }
 
-        binding.playerView.setControllerVisibilityListener {
-            binding.videoPlayerAppBarLayout.visibility = it
-        }
+        binding.playerView.setControllerVisibilityListener(
+            StyledPlayerView.ControllerVisibilityListener { visibility ->
+                binding.videoPlayerAppBarLayout.visibility = visibility
+            }
+        )
+
         binding.playerView.showController()
 
         val photoUUID = arguments?.getString(IntentParams.PHOTO_UUID)
