@@ -18,10 +18,12 @@ package dev.leonlatsch.photok.videoplayer.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.OptIn
 import androidx.fragment.app.viewModels
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import androidx.navigation.fragment.findNavController
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.StyledPlayerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -42,6 +44,7 @@ class VideoPlayerFragment :
 
     private val viewModel: VideoPlayerViewModel by viewModels()
 
+    @OptIn(UnstableApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().hideSystemUI()
@@ -50,13 +53,13 @@ class VideoPlayerFragment :
             findNavController().navigateUp()
         }
 
-        viewModel.addOnPropertyChange<SimpleExoPlayer?>(BR.player) {
+        viewModel.addOnPropertyChange<ExoPlayer?>(BR.player) {
             it ?: return@addOnPropertyChange
             binding.playerView.player = it
         }
 
         binding.playerView.setControllerVisibilityListener(
-            StyledPlayerView.ControllerVisibilityListener { visibility ->
+            PlayerView.ControllerVisibilityListener { visibility ->
                 binding.videoPlayerAppBarLayout.visibility = visibility
             }
         )

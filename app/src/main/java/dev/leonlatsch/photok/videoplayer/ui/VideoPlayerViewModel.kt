@@ -18,17 +18,18 @@ package dev.leonlatsch.photok.videoplayer.ui
 
 import android.app.Application
 import android.net.Uri
+import androidx.annotation.OptIn
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSourceFactory
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
+import androidx.media3.common.MediaItem
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -52,7 +53,7 @@ class VideoPlayerViewModel @Inject constructor(
 ) : ObservableViewModel(app) {
 
     @get:Bindable
-    var player: SimpleExoPlayer? = null
+    var player: ExoPlayer? = null
         set(value) {
             field = value
             notifyChange(BR.player, value)
@@ -67,7 +68,7 @@ class VideoPlayerViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val photo = photoRepository.get(photoUUID)
 
-            player = SimpleExoPlayer.Builder(app)
+            player = ExoPlayer.Builder(app)
                 .setMediaSourceFactory(createMediaSourceFactory())
                 .build()
                 .apply {
@@ -80,7 +81,8 @@ class VideoPlayerViewModel @Inject constructor(
         }
     }
 
-    private fun createMediaSourceFactory(): MediaSourceFactory {
+    @OptIn(UnstableApi::class)
+    private fun createMediaSourceFactory(): MediaSource.Factory {
         val aesDataSource = AesDataSource(
             encryptionManager = encryptionManager,
         )
