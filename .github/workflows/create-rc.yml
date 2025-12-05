@@ -59,10 +59,10 @@ jobs:
         run: ./gradlew updateVersion -Pversion=${{ github.event.inputs.version }}
       
       - name: Update Play Open Source Licenses
-        run: ./gradlew licensePlayReleaseReport && mv app/src/main/assets/open_source_licenses.html app/src/play/assets/open_source_licenses.html
+        run: ./gradlew licensePlayReleaseReport && mv app/src/playRelease/assets/open_source_licenses.html app/src/play/assets/open_source_licenses.html
 
       - name: Update FOSS Open Source Licenses
-        run: ./gradlew licenseFossReleaseReport && mv app/src/main/assets/open_source_licenses.html app/src/foss/assets/open_source_licenses.html
+        run: ./gradlew licenseFossReleaseReport && mv app/src/fossRelease/assets/open_source_licenses.html app/src/foss/assets/open_source_licenses.html
 
       - name: Commit and Push
         uses: github-actions-x/commit@v2.9

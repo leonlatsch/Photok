@@ -91,9 +91,19 @@ android {
 }
 
 licenseReport {
-    copyCsvReportToAssets = false
+    generateCsvReport = false
+    generateHtmlReport = true
+    generateJsonReport = false
+    generateTextReport = false
+
     copyHtmlReportToAssets = true
-    copyJsonReportToAssets = false
+
+    useVariantSpecificAssetDirs = true
+}
+
+fun DependencyHandler.playImplementation(dependencyNotation: Any) {
+    add("playImplementation", dependencyNotation)
+    add("fossImplementation", dependencyNotation)
 }
 
 dependencies {
