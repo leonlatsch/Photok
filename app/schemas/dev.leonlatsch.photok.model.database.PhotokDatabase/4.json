@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "fdb24ac3627270efd99d4351ee825dab",
+    "identityHash": "2a27816567553848b8aadad3ea0db1f8",
     "entities": [
       {
         "tableName": "photo",
@@ -121,7 +121,7 @@
       },
       {
         "tableName": "sort",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `album` TEXT, `field` INTEGER NOT NULL, `order` INTEGER NOT NULL, FOREIGN KEY(`album`) REFERENCES `album`(`album_uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `album_uuid` TEXT, `field` INTEGER NOT NULL, `order` INTEGER NOT NULL, FOREIGN KEY(`album_uuid`) REFERENCES `album`(`album_uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -130,8 +130,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "album",
-            "columnName": "album",
+            "fieldPath": "albumUuid",
+            "columnName": "album_uuid",
             "affinity": "TEXT"
           },
           {
@@ -155,13 +155,13 @@
         },
         "indices": [
           {
-            "name": "index_sort_album",
+            "name": "index_sort_album_uuid",
             "unique": false,
             "columnNames": [
-              "album"
+              "album_uuid"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_sort_album` ON `${TABLE_NAME}` (`album`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sort_album_uuid` ON `${TABLE_NAME}` (`album_uuid`)"
           }
         ],
         "foreignKeys": [
@@ -170,7 +170,7 @@
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "album"
+              "album_uuid"
             ],
             "referencedColumns": [
               "album_uuid"
@@ -181,7 +181,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fdb24ac3627270efd99d4351ee825dab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2a27816567553848b8aadad3ea0db1f8')"
     ]
   }
 }

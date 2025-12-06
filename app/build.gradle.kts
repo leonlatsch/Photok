@@ -8,6 +8,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
 }
 
+val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
+
 val appVersionName: String by project
 val appVersionCode: String by project
 
@@ -35,7 +37,30 @@ android {
         }
     }
 
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("play") {
+            dimension = "distribution"
+            if (!isReleaseBuildInvocation) {
+                applicationIdSuffix = ".play"
+                versionNameSuffix = "-play-debug"
+            }
+        }
+
+        create("foss") {
+            dimension = "distribution"
+            if (!isReleaseBuildInvocation) {
+                applicationIdSuffix = ".foss"
+                versionNameSuffix = "-foss-debug"
+            }
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
@@ -66,24 +91,34 @@ android {
 }
 
 licenseReport {
-    copyCsvReportToAssets = false
+    generateCsvReport = false
+    generateHtmlReport = true
+    generateJsonReport = false
+    generateTextReport = false
+
     copyHtmlReportToAssets = true
-    copyJsonReportToAssets = false
+
+    useVariantSpecificAssetDirs = true
+}
+
+fun DependencyHandler.playImplementation(dependencyNotation: Any) {
+    add("playImplementation", dependencyNotation)
+    add("fossImplementation", dependencyNotation)
 }
 
 dependencies {
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.8.3")
-    implementation("androidx.room:room-paging:2.8.3")
-    kapt("androidx.room:room-compiler:2.8.3")
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-paging:2.8.4")
+    kapt("androidx.room:room-compiler:2.8.4")
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.8.3")
+    implementation("androidx.room:room-ktx:2.8.4")
 
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
@@ -93,12 +128,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.9.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.9.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.9.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.9.6")
 
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.3.6")
@@ -118,10 +153,10 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.3.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.11.0")
+    implementation("androidx.activity:activity-ktx:1.12.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2025.10.01"))
+    implementation(platform("androidx.compose:compose-bom:2025.11.01"))
     implementation("androidx.compose.material3:material3:1.4.0")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.activity:activity-compose")
@@ -154,7 +189,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.activity:activity:1.11.0")
+    implementation("androidx.activity:activity:1.12.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     // Biometric

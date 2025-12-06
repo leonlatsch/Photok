@@ -48,8 +48,11 @@ inline fun <FactoryType, reified ViewModelType : ViewModel> Fragment.assistedVie
     )[ViewModelType::class.java]
 }
 
-fun Fragment.finishOnBackWhileStarted() {
-    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner) {
+fun Fragment.finishOnBackWhileStarted(enabled: Boolean = true) {
+    activity?.onBackPressedDispatcher?.addCallback(
+        owner = viewLifecycleOwner,
+        enabled = enabled,
+    ) {
         activity?.finish()
     }
 }

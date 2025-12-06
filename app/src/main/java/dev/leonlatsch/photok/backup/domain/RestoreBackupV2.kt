@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
@@ -112,7 +113,7 @@ class RestoreBackupV2 @Inject constructor(
             ze = stream.nextEntry
         }
 
-        metaData.photos.forEach { photoBackup ->
+        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
             val newPhoto = photoBackup
                 .toDomain()
                 .copy(importedAt = System.currentTimeMillis())

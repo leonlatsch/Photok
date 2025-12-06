@@ -18,19 +18,34 @@ package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogNewsBinding
 import dev.leonlatsch.photok.news.newfeatures.ui.model.NewFeatureViewData
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.FixLinearLayoutManager
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import javax.inject.Inject
+
+class ShowNewsDialogUseCase @Inject constructor(
+    private val config: Config,
+) {
+    operator fun invoke(fragmentManager: FragmentManager) {
+        if (config.systemLastFeatureVersionCode >= FEATURE_VERSION_CODE) return
+
+        NewFeaturesDialog().show(fragmentManager)
+        config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
+    }
+}
 
 /**
  * Increase for this Dialog to show on the next update.
  * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
  */
-const val FEATURE_VERSION_CODE = 9
+const val FEATURE_VERSION_CODE = 10
 
 /**
  * Dialog for displaying new features.

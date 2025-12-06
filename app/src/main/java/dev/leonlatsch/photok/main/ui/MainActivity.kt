@@ -22,10 +22,10 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -103,7 +103,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.context = this
 
         binding.mainMenuComposeContainer.setContent {
-            val uiState by viewModel.mainMenuUiState.collectAsState()
+            val uiState by viewModel.mainMenuUiState.collectAsStateWithLifecycle()
 
             AppTheme {
                 MainMenu(uiState) {

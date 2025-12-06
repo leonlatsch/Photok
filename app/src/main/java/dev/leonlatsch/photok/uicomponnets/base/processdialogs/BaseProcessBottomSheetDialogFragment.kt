@@ -90,7 +90,7 @@ abstract class BaseProcessBottomSheetDialogFragment<T>(
                     // auto dismiss
                     lifecycleScope.launch {
                         delay(1500)
-                        dismiss()
+                        runCatching { dismiss() } // May throw if already dismissed by user
                     }
                     getString(R.string.process_finished)
                 }

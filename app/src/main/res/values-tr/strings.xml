@@ -1,6 +1,5 @@
 <resources>
     <!-- COMMON -->
-    <string name="app_name">Photok</string>
     <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2025 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
@@ -131,6 +130,7 @@
     <string name="settings_category_gallery">Galeri</string>
     <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
     <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
+    <string name="settings_gallery_start_page_title">Başlangıç Sayfası</string>
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>
@@ -246,17 +246,17 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Galerini Düzenleyin</string>
-    <string name="news_summary_1">Artık tüm dosyalar veya tek tek albümler için özel bir sıralama düzeni seçebilirsiniz.</string>
+    <string name="news_title_1">Başlangıç Sayfanı Seç</string>
+    <string name="news_summary_1">Artık Photok\'u açtığında ilk çıkacak sayfayı seçebilirsin.</string>
 
-    <string name="news_title_2">Anında Albüm Oluşturun</string>
-    <string name="news_summary_2">Dosyalarınızı eklemek için bir albüm seçerken, artık anında yeni bir albüm oluşturabilirsiniz.</string>
+    <string name="news_title_2">Çeviriler Güncellendi</string>
+    <string name="news_summary_2">Türkçe ve Çince çevirileri geliştirildi.</string>
 
-    <string name="news_title_3">Akıllı Albüm Genel Bakışı</string>
-    <string name="news_summary_3">Albüm özeti artık otomatik olarak değiştirilme tarihine göre sıralanıyor, bu da gezinmeyi çok daha kolay hale getiriyor.</string>
+    <string name="news_title_3">NOT_USED</string>
+    <string name="news_summary_3">NOT_USED</string>
 
-    <string name="news_title_4">Daha Fazla Dil</string>
-    <string name="news_summary_4">Photok artık Arapça ve Rusça olarak da kullanılabilir</string>
+    <string name="news_title_4">NOT_USED</string>
+    <string name="news_summary_4">NOT_USED</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>

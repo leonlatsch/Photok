@@ -23,7 +23,6 @@ import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.model.repositories.ImportSource
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import javax.inject.Inject
 
@@ -34,10 +33,6 @@ class GalleryNavigator @Inject constructor() {
         fragment: Fragment,
     ) {
         when (event) {
-            is GalleryNavigationEvent.ShowNewFeaturesDialog -> navigateShowNewFeaturesDialog(
-                fragment.childFragmentManager
-            )
-
             is GalleryNavigationEvent.ShowToast -> showToast(event, fragment)
             is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, fragment.childFragmentManager, event.importSource)
             is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, fragment.childFragmentManager)
@@ -62,9 +57,5 @@ class GalleryNavigator @Inject constructor() {
         fragment.context?.let { context ->
             Toast.makeText(context, event.text, Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun navigateShowNewFeaturesDialog(fragmentManager: FragmentManager) {
-        NewFeaturesDialog().show(fragmentManager)
     }
 }

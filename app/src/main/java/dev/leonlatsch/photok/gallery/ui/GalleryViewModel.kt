@@ -30,8 +30,6 @@ import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.news.newfeatures.ui.FEATURE_VERSION_CODE
-import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -50,7 +48,6 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
     private val galleryUiStateFactory: GalleryUiStateFactory,
-    private val config: Config,
     private val albumRepository: AlbumRepository,
     private val sortRepository: SortRepository,
     private val resources: Resources,
@@ -150,13 +147,6 @@ class GalleryViewModel @Inject constructor(
 
     private fun navigateToPhoto(item: PhotoTile) {
         photoActionsChannel.trySend(PhotoAction.OpenPhoto(item.uuid))
-    }
-
-    fun checkForNewFeatures() = viewModelScope.launch {
-        if (config.systemLastFeatureVersionCode >= FEATURE_VERSION_CODE) return@launch
-
-        eventsChannel.trySend(GalleryNavigationEvent.ShowNewFeaturesDialog)
-        config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
     }
 }
 

@@ -40,12 +40,12 @@ jobs:
             
             Release Version ${{ github.event.inputs.version }}
             
-            **Checklist BEFOORE release:**
-            - [ ] Build runs
-            - [ ] Tests run
-            - [ ] All Features are working as expected
-            - [ ] Update works
+            **Checklist BEFORE release:**
+            - [ ] CI checks passing
+            - [ ] All related features were tested
+            - [ ] Update / migration was tested
             - [ ] Version was updated by actions bot
+            - [ ] Open Source Notices wer updated for FOSS and PLAY
 
             **DO NOT SQUASH THE COMMITS!**
       
@@ -58,15 +58,18 @@ jobs:
       - name: Update Version
         run: ./gradlew updateVersion -Pversion=${{ github.event.inputs.version }}
       
-      - name: Update Open Source Licenses
-        run: ./gradlew licenseReleaseReport
-      
+      - name: Update Play Open Source Licenses
+        run: ./gradlew licensePlayReleaseReport && mv app/src/playRelease/assets/open_source_licenses.html app/src/play/assets/open_source_licenses.html
+
+      - name: Update FOSS Open Source Licenses
+        run: ./gradlew licenseFossReleaseReport && mv app/src/fossRelease/assets/open_source_licenses.html app/src/foss/assets/open_source_licenses.html
+
       - name: Commit and Push
         uses: github-actions-x/commit@v2.9
         with:
           name: Release Bot
           push-branch: release/${{ github.event.inputs.version }}
           commit-message: Update version to ${{ github.event.inputs.version }} and update open source licenses
-          files: gradle.properties app/src/main/assets/open_source_licenses.html
+          files: gradle.properties app/src/play/assets/open_source_licenses.html app/src/foss/assets/open_source_licenses.html
           
 

@@ -14,23 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.sort.data
+package dev.leonlatsch.photok.settings.data
 
-import dev.leonlatsch.photok.sort.data.db.model.SortTable
-import dev.leonlatsch.photok.sort.domain.Sort
+enum class StartPage(val value: String) {
+    AllFiles("all_files"),
+    Albums("albums");
 
-fun Sort.toData(albumUuid: String?): SortTable {
-    return SortTable(
-        id = 0,
-        albumUuid = albumUuid,
-        field = field,
-        order = order,
-    )
-}
-
-fun SortTable.toDomain(): Sort {
-    return Sort(
-        field = field,
-        order = order,
-    )
+    companion object {
+        fun fromValue(value: String?): StartPage {
+            return entries.find { it.value == value } ?: AllFiles
+        }
+    }
 }

@@ -64,7 +64,7 @@ class BackupViewModel @Inject constructor(
     private lateinit var zipOutputStream: ZipOutputStream
 
     override suspend fun preProcess() {
-        items = photoRepository.getAll()
+        items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
         zipOutputStream = io.zip.openZipOutput(uri)
         strategy.preBackup()

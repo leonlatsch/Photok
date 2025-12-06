@@ -17,10 +17,10 @@
 package dev.leonlatsch.photok.sort.data
 
 import androidx.room.withTransaction
+import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.sort.data.db.SortDao
 import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.sort.domain.SortRepository
-import dev.leonlatsch.photok.model.database.PhotokDatabase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -44,8 +44,8 @@ class SortRepositoryImpl @Inject constructor(
         return sortDao.observeSortsForAlbums().map { sorts ->
             buildMap {
                 for (sort in sorts) {
-                    sort.album ?: continue
-                    put(sort.album, sort.toDomain())
+                    sort.albumUuid ?: continue
+                    put(sort.albumUuid, sort.toDomain())
                 }
             }
         }

@@ -36,6 +36,14 @@
             android:key="gallery^fullscreen.auto"
             android:summary="@string/settings_gallery_auto_fullscreen_summary"
             android:title="@string/settings_gallery_auto_fullscreen_title" />
+        <ListPreference
+            android:defaultValue="all_files"
+            android:entries="@array/startPageStrings"
+            android:entryValues="@array/startPage"
+            android:icon="@drawable/ic_gallery_thumbnail"
+            android:key="gallery^startPage"
+            android:title="@string/settings_gallery_start_page_title"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_security">
