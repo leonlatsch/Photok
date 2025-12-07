@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -95,6 +96,14 @@ fun setAppDesign(design: String?) {
 
 fun Fragment.openUrl(url: String?) {
     url ?: return
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    startActivity(intent)
+}
+
+fun Context.openUrl(url: String?) {
+    url ?: return
+
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
     startActivity(intent)

@@ -17,19 +17,15 @@
 package dev.leonlatsch.photok.settings.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentAboutBinding
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.openUrl
-import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.LocalFragment
 
 /**
  * Fragment to display a info about the app and some links.
@@ -37,56 +33,28 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
  * @since 1.0.0
  * @author Leon Latsch
  */
-class AboutFragment : BindableFragment<FragmentAboutBinding>(R.layout.fragment_about) {
+class AboutFragment : Fragment() {
 
-    val version = BuildConfig.VERSION_NAME
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.systemBarsPadding()
-        super.onViewCreated(view, savedInstanceState)
-
-        setHasOptionsMenu(true)
-        setToolbar(binding.aboutToolbar)
-        binding.aboutToolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                CompositionLocalProvider(
+                    LocalFragment provides this@AboutFragment
+                ) {
+                    AboutScreen(
+                        handleUiEvent = {
+                            when (it) {
+                                AboutUiEvent.Close -> findNavController().navigateUp()
+                                AboutUiEvent.OpenThirdParty -> findNavController().navigate(R.id.action_aboutFragment_to_ossLicensesFragment)
+                            }
+                        }
+                    )
+                }
+            }
         }
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_about, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menuAboutNews -> NewFeaturesDialog().show(childFragmentManager)
-        }
-        return true
-    }
-
-    /**
-     * Open the website in new activity.
-     */
-    fun openWebsite() {
-        openUrl(getString(R.string.about_website_url))
-    }
-
-    /**
-     * * Open the third party in new activity.
-     */
-    fun openThirdPartySoftware() {
-        findNavController().navigate(R.id.action_aboutFragment_to_ossLicensesFragment)
-    }
-
-    /**
-     * Open the privacy policy in new activity.
-     */
-    fun openPrivacyPolicy() {
-        openUrl(getString(R.string.about_privacy_policy_url))
-    }
-
-    override fun bind(binding: FragmentAboutBinding) {
-        super.bind(binding)
-        binding.context = this
     }
 }
