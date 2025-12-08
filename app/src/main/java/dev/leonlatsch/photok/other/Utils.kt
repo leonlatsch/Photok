@@ -39,28 +39,6 @@ import androidx.fragment.app.Fragment
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-/**
- * Get a file's name.
- *
- * @param contentResolver used to get the file name.
- * @param uri the uri to file file.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-fun getFileName(contentResolver: ContentResolver, uri: Uri): String? = try {
-    val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-    contentResolver.query(uri, projection, null, null, null)?.use {
-        if (it.moveToFirst()) {
-            return it.getString(0)
-
-        }
-    }
-    null
-} catch (e: SecurityException) {
-    null
-}
-
 data class FileMetaData(
     val fileName: String?,
     val mimeType: String?,
@@ -107,17 +85,6 @@ fun ContentResolver.getMetadataFor(uri: Uri): FileMetaData {
         size = size,
         lastModified = lastModified,
     )
-}
-
-/**
- * Get the size of a file in bytes
- */
-fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
-    contentResolver.openFileDescriptor(uri, "r")?.use {
-        return it.statSize
-    }
-
-    return -1L
 }
 
 /**

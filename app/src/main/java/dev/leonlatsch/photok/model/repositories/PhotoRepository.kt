@@ -28,7 +28,6 @@ import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
-import dev.leonlatsch.photok.other.getFileName
 import dev.leonlatsch.photok.other.getMetadataFor
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.Sort
