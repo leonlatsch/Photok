@@ -25,6 +25,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
 import android.view.WindowInsets
@@ -58,6 +59,54 @@ fun getFileName(contentResolver: ContentResolver, uri: Uri): String? = try {
     null
 } catch (e: SecurityException) {
     null
+}
+
+data class FileMetaData(
+    val fileName: String?,
+    val mimeType: String?,
+    val size: Long?,
+    val lastModified: Long?,
+)
+
+fun ContentResolver.getMetadataFor(uri: Uri): FileMetaData {
+    val projection = arrayOf(
+        MediaStore.MediaColumns.DISPLAY_NAME,
+        MediaStore.MediaColumns.MIME_TYPE,
+        MediaStore.MediaColumns.SIZE,
+        MediaStore.Images.Media.DATE_TAKEN,
+        DocumentsContract.Document.COLUMN_LAST_MODIFIED
+    )
+
+    var fileName: String? = null
+    var mimeType: String? = null
+    var size: Long? = null
+    var lastModified: Long? = null
+
+    query(uri, projection, null, null, null)?.use {
+        try {
+            val fileNameColIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+            val mimeTypeColIndex = it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)
+            val sizeColIndex = it.getColumnIndex(MediaStore.MediaColumns.SIZE)
+            val dateModifiedColIndex = it.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
+
+            if (!it.moveToFirst()) return@use
+
+            if (fileNameColIndex != -1) fileName = it.getString(fileNameColIndex)
+            if (mimeTypeColIndex != -1) mimeType = it.getString(mimeTypeColIndex)
+            if (sizeColIndex != -1) size = it.getLong(sizeColIndex)
+            if (dateModifiedColIndex != -1) lastModified = it.getLong(dateModifiedColIndex)
+
+        } catch (e: Exception) {
+            Timber.w("Could not get metadata for $uri $e")
+        }
+    }
+
+    return FileMetaData(
+        fileName = fileName,
+        mimeType = mimeType,
+        size = size,
+        lastModified = lastModified,
+    )
 }
 
 /**

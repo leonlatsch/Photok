@@ -23,6 +23,7 @@ import androidx.room.RenameColumn
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.leonlatsch.photok.sort.data.db.SortDao
 import dev.leonlatsch.photok.sort.data.db.model.SortTable
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
@@ -31,7 +32,7 @@ import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
 
-private const val DATABASE_VERSION = 4
+private const val DATABASE_VERSION = 5
 const val DATABASE_NAME = "photok.db"
 
 /**
@@ -52,7 +53,7 @@ const val DATABASE_NAME = "photok.db"
         AutoMigration(
             from = 1,
             to = 2,
-            spec = MigrationSpec1To2::class
+            spec = MigrationSpec1To2::class,
         ),
         AutoMigration(
             from = 2,
@@ -61,7 +62,11 @@ const val DATABASE_NAME = "photok.db"
         AutoMigration(
             from = 3,
             to = 4,
-        )
+        ),
+        AutoMigration(
+            from = 4,
+            to = 5,
+        ),
     ]
 )
 @TypeConverters(Converters::class)
