@@ -21,11 +21,11 @@ enum class SortConfig(
     val default: Sort,
 ) {
     Gallery(
-        fields = listOf(Sort.Field.ImportDate, Sort.Field.FileName, Sort.Field.Size),
+        fields = listOf(Sort.Field.ImportDate, Sort.Field.LastModified, Sort.Field.FileName, Sort.Field.Size),
         default = Sort(field = Sort.Field.ImportDate, Sort.Order.Desc),
     ),
     Album(
-        fields = listOf(Sort.Field.LinkedAt, Sort.Field.FileName, Sort.Field.Size),
+        fields = listOf(Sort.Field.LinkedAt, Sort.Field.LastModified, Sort.Field.FileName, Sort.Field.Size),
         default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
     ),
 }

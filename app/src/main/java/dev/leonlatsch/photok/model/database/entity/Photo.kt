@@ -43,7 +43,7 @@ data class Photo(
     @ColumnInfo(name = COL_SIZE)
     var size: Long = 0L,
 
-    @ColumnInfo(name = LAST_MODIFIED, defaultValue = "NULL")
+    @ColumnInfo(name = COL_LAST_MODIFIED, defaultValue = "NULL")
     @Expose
     var lastModified: Long?,
 
@@ -65,7 +65,7 @@ data class Photo(
     companion object {
         const val COL_FILENAME = "fileName"
         const val COL_IMPORTED_AT = "importedAt"
-        const val LAST_MODIFIED = "lastModified"
+        const val COL_LAST_MODIFIED = "lastModified"
         const val DATE_TAKEN = "dateTaken"
         const val COL_SIZE = "size"
         const val TABLE_NAME = "photo"
