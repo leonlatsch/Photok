@@ -33,7 +33,12 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okio.FileHandle
+import okio.FileMetadata
 import okio.FileSystem
+import okio.Path
+import okio.Sink
+import okio.Source
 import okio.buffer
 import okio.source
 import java.io.InputStream
@@ -70,8 +75,8 @@ class EncryptedImageFetcher(
                     fileSystem = FileSystem.SYSTEM,
                     metadata = null,
                 ),
-                mimeType = requestData.mimeType,
-                DataSource.DISK,
+                mimeType = null,
+                dataSource = DataSource.DISK,
             )
         }
     }
