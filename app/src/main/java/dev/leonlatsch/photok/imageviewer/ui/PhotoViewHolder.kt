@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.runtime.CompositionLocalProvider
@@ -24,12 +23,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
+import coil3.ImageLoader
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageviewer.ui.compose.PhotoViewHolderContent
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.other.*
+import dev.leonlatsch.photok.other.IntentParams
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 /**
@@ -38,8 +37,6 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
  *
  * @param parent for inflating layout
  * @param context Needed to load data
- * @param photoRepository To load photo data
- * @param onZoomed Block top be called on image zoomed
  * @param onClick Block to be called on image click
  *
  * @since 1.0.0
@@ -48,7 +45,6 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 class PhotoViewHolder(
     parent: ViewGroup,
     private val encryptedImageLoader: ImageLoader,
-    private val context: Context,
     private val onClick: () -> Unit,
     private val navController: NavController,
 ) : RecyclerView.ViewHolder(

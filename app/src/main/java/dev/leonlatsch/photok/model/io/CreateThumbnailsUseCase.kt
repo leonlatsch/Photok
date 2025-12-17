@@ -18,9 +18,11 @@ package dev.leonlatsch.photok.model.io
 
 import android.content.Context
 import android.graphics.Bitmap
-import coil.request.ImageRequest
-import coil.size.Size
-import coil.transform.Transformation
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.request.transformations
+import coil3.size.Size
+import coil3.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.imageloading.domain.ImageStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -90,7 +92,7 @@ class CreateThumbnailsUseCase @Inject constructor(
         }
 }
 
-object CenterCropTransformation : Transformation {
+object CenterCropTransformation : Transformation() {
 
     override val cacheKey: String = javaClass.name
 

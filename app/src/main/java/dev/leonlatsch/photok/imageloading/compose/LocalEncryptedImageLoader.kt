@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.imageloading.compose
 
 import androidx.compose.runtime.compositionLocalOf
-import coil.ImageLoader
+import coil3.ImageLoader
 
 /**
  * Provides the current EncryptedImageLoader. Null of not provided by viewModel

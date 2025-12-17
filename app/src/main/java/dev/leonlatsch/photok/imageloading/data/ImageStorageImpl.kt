@@ -16,11 +16,13 @@
 
 package dev.leonlatsch.photok.imageloading.data
 
+import android.content.res.Resources
 import androidx.core.graphics.drawable.toBitmap
-import coil.ImageLoader
-import coil.request.ErrorResult
-import coil.request.ImageRequest
-import coil.request.SuccessResult
+import coil3.ImageLoader
+import coil3.asDrawable
+import coil3.request.ErrorResult
+import coil3.request.ImageRequest
+import coil3.request.SuccessResult
 import dev.leonlatsch.photok.imageloading.domain.ImageStorage
 import dev.leonlatsch.photok.other.extensions.writeTo
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +34,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class ImageStorageImpl @Inject constructor(
     private val imageLoader: ImageLoader,
+    private val resources: Resources,
 ) : ImageStorage {
 
     /**
@@ -47,7 +50,7 @@ class ImageStorageImpl @Inject constructor(
             is SuccessResult -> suspendCoroutine { continuation ->
                 try {
                     outputStream.use { out ->
-                        imageResult.drawable.toBitmap().writeTo(out)
+                        imageResult.image.asDrawable(resources).toBitmap().writeTo(out)
                     }
 
                     continuation.resume(Result.success(Unit))

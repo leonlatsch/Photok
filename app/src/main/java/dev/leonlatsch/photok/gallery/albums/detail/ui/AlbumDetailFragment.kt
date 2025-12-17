@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.ImageLoader
+import coil3.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.detail.ui.compose.AlbumDetailScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator

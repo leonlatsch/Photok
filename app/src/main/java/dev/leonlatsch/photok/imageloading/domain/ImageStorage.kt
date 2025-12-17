@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.imageloading.domain
 
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
 import java.io.OutputStream
 
 interface ImageStorage {

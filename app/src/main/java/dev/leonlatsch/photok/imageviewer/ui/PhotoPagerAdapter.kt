@@ -19,15 +19,13 @@ package dev.leonlatsch.photok.imageviewer.ui
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
+import coil3.ImageLoader
 import dev.leonlatsch.photok.model.database.entity.Photo
 
 /**
  * Adapter for fullscreen photos in a ViewPager.
  *
  * @param photos [List] of photo ids
- * @param photoRepository To load photo data
- * @param onZoomed Block top be called on image zoomed
  * @param onClick Block to be called on image click
  *
  * @since 1.0.0
@@ -44,7 +42,6 @@ class PhotoPagerAdapter(
         PhotoViewHolder(
             parent = parent,
             encryptedImageLoader = encryptedImageLoader,
-            context = parent.context,
             onClick = onClick,
             navController = navController
         )

@@ -174,13 +174,12 @@ dependencies {
     implementation("androidx.exifinterface", "exifinterface", "1.4.1")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.18.0")
+    implementation("me.saket.telephoto:zoomable-image-coil3:0.18.0")
 
     // Coil
-    val coilVersion = "2.7.0"
-    implementation("io.coil-kt:coil-compose:$coilVersion")
-    implementation("io.coil-kt:coil-gif:$coilVersion")
-    implementation("io.coil-kt:coil-video:$coilVersion")
+    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+    implementation("io.coil-kt.coil3:coil-gif:3.3.0")
+    implementation("io.coil-kt.coil3:coil-video:3.3.0")
 
     // Exoplayer
     implementation("androidx.media3:media3-exoplayer:1.8.0")

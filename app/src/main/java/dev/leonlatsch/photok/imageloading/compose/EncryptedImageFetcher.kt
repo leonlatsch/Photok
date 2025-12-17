@@ -16,29 +16,26 @@
 
 package dev.leonlatsch.photok.imageloading.compose
 
-import android.content.Context
 import android.graphics.ImageDecoder
 import android.graphics.Movie
 import android.os.Build
 import android.os.Build.VERSION_CODES
-import coil.decode.DataSource
-import coil.decode.DecodeResult
-import coil.decode.Decoder
-import coil.decode.ImageSource
-import coil.drawable.MovieDrawable
-import coil.fetch.DrawableResult
-import coil.fetch.FetchResult
-import coil.fetch.Fetcher
-import coil.fetch.SourceResult
+import coil3.asImage
+import coil3.decode.DataSource
+import coil3.decode.ImageSource
+import coil3.fetch.FetchResult
+import coil3.fetch.Fetcher
+import coil3.fetch.ImageFetchResult
+import coil3.fetch.SourceFetchResult
+import coil3.gif.MovieDrawable
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okio.BufferedSource
+import okio.FileSystem
 import okio.buffer
 import okio.source
-import java.io.ByteArrayInputStream
 import java.io.InputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -52,7 +49,6 @@ import kotlin.coroutines.suspendCoroutine
 class EncryptedImageFetcher(
     private val encryptedStorageManager: EncryptedStorageManager,
     private val requestData: EncryptedImageRequestData,
-    private val context: Context,
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
@@ -62,28 +58,22 @@ class EncryptedImageFetcher(
 
         if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
             val drawable = decodeGif(inputStream)
-            DrawableResult(
-                drawable = drawable,
+            ImageFetchResult(
+                image = drawable.asImage(),
                 isSampled = false,
                 dataSource = DataSource.DISK,
             )
         } else {
-            SourceResult(
+            SourceFetchResult(
                 source = ImageSource(
-                    source = inputStream.inMemoryBufferedSource(),
-                    context = context,
+                    source = inputStream.source().buffer(),
+                    fileSystem = FileSystem.SYSTEM,
+                    metadata = null,
                 ),
                 mimeType = requestData.mimeType,
-                DataSource.MEMORY,
+                DataSource.DISK,
             )
         }
-    }
-
-    private suspend fun InputStream.inMemoryBufferedSource(): BufferedSource {
-        val rawBytes = this.use { it.readBytesSuspending() }
-        val byteStream = ByteArrayInputStream(rawBytes)
-
-        return byteStream.source().buffer()
     }
 
     private suspend fun decodeGif(inputStream: InputStream) =

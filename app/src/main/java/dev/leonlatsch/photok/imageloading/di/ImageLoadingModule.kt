@@ -17,11 +17,11 @@
 package dev.leonlatsch.photok.imageloading.di
 
 import android.content.Context
-import coil.ImageLoader
-import coil.decode.VideoFrameDecoder
-import coil.memory.MemoryCache
-import coil.request.CachePolicy
-import coil.util.DebugLogger
+import coil3.ImageLoader
+import coil3.memory.MemoryCache
+import coil3.request.CachePolicy
+import coil3.util.DebugLogger
+import coil3.video.VideoFrameDecoder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -48,10 +48,10 @@ object ImageLoadingModule {
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
-        .memoryCachePolicy(CachePolicy.READ_ONLY)
+        .memoryCachePolicy(CachePolicy.ENABLED)
         .memoryCache {
-            MemoryCache.Builder(context)
-                .maxSizePercent(0.25)
+            MemoryCache.Builder()
+                .maxSizePercent(context)
                 .build()
         }
         .apply {
@@ -65,7 +65,9 @@ object ImageLoadingModule {
     fun provideDefaultImageLoader(
         @ApplicationContext context: Context,
     ): ImageLoader = ImageLoader.Builder(context)
-        .components { add(VideoFrameDecoder.Factory()) }
+        .components {
+            add(VideoFrameDecoder.Factory())
+        }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
         .memoryCachePolicy(CachePolicy.DISABLED)
