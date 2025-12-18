@@ -85,6 +85,7 @@ class ImageViewerFragment :
 
         initializeSystemUI()
 
+        binding.viewPhotoViewPager.offscreenPageLimit = 1
         binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
