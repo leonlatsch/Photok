@@ -37,7 +37,8 @@ object BindingConverters {
     private const val KB_SUFFIX = " KB"
     private const val BYTES_SUFFIX = " Bytes"
 
-    fun millisToFormattedDateConverter(millis: Long): String? {
+    fun millisToFormattedDateConverter(millis: Long?): String? {
+        millis ?: return "-"
         val date = Date(millis)
         return dateFormat.format(date)
     }
