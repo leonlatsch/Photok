@@ -28,9 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
-import dev.leonlatsch.photok.gallery.ui.components.PhotoGallery
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
-import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
+import dev.leonlatsch.photok.gallery.components.PhotoGallery
+import dev.leonlatsch.photok.gallery.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.theme.AppTheme
 

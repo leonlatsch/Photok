@@ -40,7 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.ui.components.MultiSelectionState
+import dev.leonlatsch.photok.gallery.components.MultiSelectionState
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable

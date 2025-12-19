@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.components
+package dev.leonlatsch.photok.gallery.components
 
 import android.net.Uri
 import androidx.activity.compose.LocalActivity

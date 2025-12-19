@@ -23,8 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.ImportChoice
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction

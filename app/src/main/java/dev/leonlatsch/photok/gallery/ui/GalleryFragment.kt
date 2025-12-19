@@ -27,7 +27,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
+import dev.leonlatsch.photok.gallery.components.AlbumPickerViewModel
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator

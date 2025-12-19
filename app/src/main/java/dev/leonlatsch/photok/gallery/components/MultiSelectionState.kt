@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.components
+package dev.leonlatsch.photok.gallery.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf

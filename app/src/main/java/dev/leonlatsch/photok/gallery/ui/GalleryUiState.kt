@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.gallery.ui
 
 import android.net.Uri
 import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 
 sealed interface GalleryUiState {
     val sharedUris: List<Uri>

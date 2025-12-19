@@ -37,7 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
-import dev.leonlatsch.photok.gallery.ui.components.ImportMenuBottomSheet
+import dev.leonlatsch.photok.gallery.components.ImportMenuBottomSheet
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
