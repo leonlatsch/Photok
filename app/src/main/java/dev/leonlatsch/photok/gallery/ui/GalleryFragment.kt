@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.data.StartPage
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.ui.LocalFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -72,6 +73,7 @@ class GalleryFragment : Fragment() {
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides encryptedImageLoader,
                 LocalConfig provides config,
+                LocalFragment provides this@GalleryFragment,
             ) {
                 GalleryScreen(viewModel, albumPickerViewModel)
             }

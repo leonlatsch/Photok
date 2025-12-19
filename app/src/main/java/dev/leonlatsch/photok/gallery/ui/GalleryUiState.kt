@@ -21,14 +21,12 @@ import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 
 sealed interface GalleryUiState {
-    val sharedUris: List<Uri>
 
-    data class Empty(override val sharedUris: List<Uri> = emptyList()) : GalleryUiState
+    data object Empty : GalleryUiState
 
     data class Content(
         val photos: List<PhotoTile> = emptyList(),
         val showAlbumSelectionDialog: Boolean = false,
-        override val sharedUris: List<Uri> = emptyList(),
         val sort: Sort,
     ) : GalleryUiState
 }
