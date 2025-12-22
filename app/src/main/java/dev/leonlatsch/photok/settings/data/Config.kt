@@ -81,29 +81,29 @@ class Config(context: Context) {
      * Sets the app design to "light", "dark" or "system"
      */
     var systemDesign: SystemDesignEnum
-        get() = SystemDesignEnum.fromValue(getString(Entries.SystemDesign.key, Entries.SystemDesign.default.value))
-        set(value) = putString(Entries.SystemDesign.key, value.value)
+        get() = SystemDesignEnum.fromValue(getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT.value))
+        set(value) = putString(SYSTEM_DESIGN, value.value)
 
     /**
      * Determines if the full screen photo view, should hide the system ui at start.
      */
     var galleryAutoFullscreen: Boolean
-        get() = getBoolean(Entries.GalleryAutoFullscreen.key, Entries.GalleryAutoFullscreen.default)
-        set(value) = putBoolean(Entries.GalleryAutoFullscreen.key, value)
+        get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
+        set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
 
     /**
      * Determines the start page of the gallery.
      */
     var galleryStartPage: StartPage
-        get() = StartPage.fromValue(getString(Entries.GalleryStartPage.key, Entries.GalleryStartPage.default.value))
-        set(value) = putString(Entries.GalleryStartPage.key, value.value)
+        get() = StartPage.fromValue(getString(GALLERY_START_PAGE, GALLERY_START_PAGE_DEFAULT.value))
+        set(value) = putString(GALLERY_START_PAGE, value.value)
 
     /**
      * Determines if screenshots should be allowed.
      */
     var securityAllowScreenshots: Boolean
-        get() = getBoolean(Entries.SecurityAllowScreenshots.key, Entries.SecurityAllowScreenshots.default)
-        set(value) = putBoolean(Entries.SecurityAllowScreenshots.key, value)
+        get() = getBoolean(SECURITY_ALLOW_SCREENSHOTS, SECURITY_ALLOW_SCREENSHOTS_DEFAULT)
+        set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
 
     /**
      * Password hash to check when unlocking.
@@ -198,41 +198,7 @@ class Config(context: Context) {
 
     // endregion
 
-    object Entries {
-
-        val SystemDesign = SettingsEntry(
-            key = "system^design",
-            default = SystemDesignEnum.System,
-            icon = R.drawable.ic_brush,
-            title = R.string.settings_app_design_title,
-            summary = null,
-        )
-
-        val GalleryAutoFullscreen = SettingsEntry(
-            key = "gallery^fullscreen.auto",
-            default = true,
-            icon = R.drawable.ic_fullscreen,
-            title = R.string.settings_gallery_auto_fullscreen_title,
-            summary = R.string.settings_gallery_auto_fullscreen_summary,
-        )
-
-        val GalleryStartPage = SettingsEntry(
-            key = "gallery^startPage",
-            default = StartPage.AllFiles,
-            icon = R.drawable.ic_gallery_thumbnail,
-            title = R.string.settings_gallery_start_page_title,
-            summary = null,
-        )
-
-        val SecurityAllowScreenshots = SettingsEntry(
-            key = "security^allowScreenshots",
-            default = false,
-            icon = R.drawable.ic_screen_lock,
-            title = R.string.settings_security_allow_screenshots_title,
-            summary = R.string.settings_security_allow_screenshots_summary,
-        )
-    }
-
+    // Single source of truth for config keys and defaults. Always use these constants
     companion object {
         /**
          * The filename used to store the preferences.
@@ -250,8 +216,17 @@ class Config(context: Context) {
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
 
+        const val SYSTEM_DESIGN = "system^design"
+        val SYSTEM_DESIGN_DEFAULT = SystemDesignEnum.System
 
+        const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
+        const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
 
+        const val GALLERY_START_PAGE = "gallery^startPage"
+        val GALLERY_START_PAGE_DEFAULT = StartPage.AllFiles
+
+        const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
+        const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
 
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""

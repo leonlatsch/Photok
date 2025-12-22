@@ -20,14 +20,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -46,6 +43,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +64,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
@@ -72,6 +72,7 @@ import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
+val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
 
 @Composable
 fun SettingsScreen() {
@@ -79,10 +80,14 @@ fun SettingsScreen() {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    SettingsContent(
-        uiState = uiState,
-        handleUiEvent = viewModel::handleUiEvent,
-    )
+    CompositionLocalProvider(
+        LocalPreferencesValues provides uiState.preferencesValues
+    ) {
+        SettingsContent(
+            uiState = uiState,
+            handleUiEvent = viewModel::handleUiEvent,
+        )
+    }
 }
 
 
@@ -113,36 +118,39 @@ fun SettingsContent(
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
             ) {
-                SettingsSection("App") {
-                    SettingsEnumRow(
-                        entry = Config.Entries.SystemDesign,
-                        values = uiState.values,
+                PreferenceSection("App") {
+                    EnumPreference(
+                        entry = PreferencesEntries.SystemDesign,
                         possibleValues = SystemDesignEnum.entries,
-                        onItemSelected = {
-                            // TODO: Store
-                        },
+                        onItemSelected = { key, value ->
+                            handleUiEvent(
+                                SettingsUiEvent.SetEnumValue(
+                                    key,
+                                    value,
+                                )
+                            )
+                            setAppDesign(value)
+                        }
                     )
                 }
 
                 HorizontalDivider()
 
-                SettingsSection("Gallery") {
-                    SettingsSwitchRow(
-                        entry = Config.Entries.GalleryAutoFullscreen,
-                        values = uiState.values,
+                PreferenceSection("Gallery") {
+                    SwitchPreference(
+                        entry = PreferencesEntries.GalleryAutoFullscreen,
                         onSwitchChange = { key, value ->
                             handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
                         },
                     )
-                    SettingsEnumRow(
-                        entry = Config.Entries.GalleryStartPage,
-                        values = uiState.values,
+                    EnumPreference(
+                        entry = PreferencesEntries.GalleryStartPage,
                         possibleValues = StartPage.entries,
-                        onItemSelected = {
+                        onItemSelected = { key, value ->
                             handleUiEvent(
                                 SettingsUiEvent.SetEnumValue(
-                                    Config.Entries.GalleryStartPage.key,
-                                    it
+                                    key,
+                                    value,
                                 )
                             )
                         }
@@ -151,21 +159,20 @@ fun SettingsContent(
 
                 HorizontalDivider()
 
-                SettingsSection("Security") {
+                PreferenceSection("Security") {
 
-                    SettingsSwitchRow(
-                        values = uiState.values,
+                    SwitchPreference(
                         onSwitchChange = { key, value ->
                             handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
                         },
-                        entry = Config.Entries.SecurityAllowScreenshots,
+                        entry = PreferencesEntries.SecurityAllowScreenshots,
                     )
-                    SettingsRow(
+                    Preference(
                         icon = painterResource(R.drawable.ic_key),
                         title = stringResource(R.string.settings_security_change_password_title),
                         summary = stringResource(R.string.settings_security_change_password_summary),
                     )
-                    SettingsRow(
+                    Preference(
                         icon = painterResource(R.drawable.ic_fingerprint),
                         title = stringResource(R.string.settings_security_biometric_title),
                         summary = stringResource(R.string.settings_security_biometric_summary),
@@ -183,7 +190,7 @@ fun SettingsContent(
 }
 
 @Composable
-fun SettingsSection(
+fun PreferenceSection(
     headline: String,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
@@ -210,30 +217,29 @@ fun SettingsSection(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T : SettingsEnum> SettingsEnumRow(
+fun <T : SettingsEnum> EnumPreference(
     entry: SettingsEntry<T>,
-    values: Map<String, *>,
     possibleValues: List<T>,
-    onItemSelected: (T) -> Unit,
+    onItemSelected: (String, T) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val preferencesValues = LocalPreferencesValues.current
+
     var showDialog by remember { mutableStateOf(false) }
 
-    val rawValue = values[entry.key] as? String ?: entry.default.value
+    val rawValue = preferencesValues[entry.key] as? String ?: entry.default.value
     val value = possibleValues.find { it.value == rawValue } ?: entry.default
 
-    SettingsRow(
+    Preference(
         icon = painterResource(entry.icon),
         title = stringResource(entry.title),
         summary = stringResource(value.label),
-        modifier = modifier.clickable {
-            showDialog = true
-        }
+        onClick = { showDialog = true },
+        modifier = modifier,
     )
 
     if (showDialog) {
 
-        // TODO: Layout
         BasicAlertDialog(
             onDismissRequest = { showDialog = false },
         ) {
@@ -260,14 +266,14 @@ fun <T : SettingsEnum> SettingsEnumRow(
                                 .clip(CircleShape)
                                 .clickable {
                                     showDialog = false
-                                    onItemSelected(v)
+                                    onItemSelected(entry.key, v)
                                 }
                         ) {
                             RadioButton(
                                 selected = value == v,
                                 onClick = {
                                     showDialog = false
-                                    onItemSelected(v)
+                                    onItemSelected(entry.key, v)
                                 },
                             )
 
@@ -291,24 +297,20 @@ fun <T : SettingsEnum> SettingsEnumRow(
 }
 
 @Composable
-fun SettingsSwitchRow(
+fun SwitchPreference(
     entry: SettingsEntry<Boolean>,
-    values: Map<String, *>,
     onSwitchChange: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val summary = if (entry.summary != null) {
-        stringResource(entry.summary)
-    } else {
-        null
-    }
+    val preferencesValues = LocalPreferencesValues.current
+    
+    val summary = entry.summary?.let { stringResource(it) }.orEmpty()
+    val value = preferencesValues[entry.key] as? Boolean ?: entry.default
 
-    val value = values[entry.key] as? Boolean ?: entry.default
-
-    SettingsRow(
+    Preference(
         icon = painterResource(entry.icon),
         title = stringResource(entry.title),
-        summary = summary ?: values[entry.key].toString(),
+        summary = summary,
         trailing = {
             Switch(
                 checked = value,
@@ -325,17 +327,21 @@ fun SettingsSwitchRow(
 }
 
 @Composable
-fun SettingsRow(
+fun Preference(
     icon: Painter,
     title: String,
     summary: String,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         modifier = modifier
+            .clickable(enabled = onClick != null) {
+                onClick?.invoke()
+            }
             .fillMaxWidth()
             .padding(
                 horizontal = 20.dp,

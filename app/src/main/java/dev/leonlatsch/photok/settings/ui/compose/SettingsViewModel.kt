@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 data class SettingsUiState(
-    val values: Map<String, *>,
+    val preferencesValues: Map<String, *>,
 )
 
 sealed interface SettingsUiEvent {
@@ -41,7 +41,7 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState = config.valuesFlow.map {  values ->
         SettingsUiState(
-            values = values,
+            preferencesValues = values,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SettingsUiState(config.values))
 

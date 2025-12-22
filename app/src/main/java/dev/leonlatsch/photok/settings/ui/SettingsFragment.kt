@@ -101,7 +101,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
     private fun setupAppCategory() {
-        addCallbackTo<ListPreference>(Config.Entries.SystemDesign.key) {
+        addCallbackTo<ListPreference>(Config.SYSTEM_DESIGN) {
             it as String
             setAppDesign(SystemDesignEnum.fromValue(it))
             true
