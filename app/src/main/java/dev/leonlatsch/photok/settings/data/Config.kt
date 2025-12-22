@@ -18,7 +18,19 @@ package dev.leonlatsch.photok.settings.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+
 
 /**
  * Manages reading and writing with the config file.
@@ -28,7 +40,25 @@ import dev.leonlatsch.photok.BuildConfig
  */
 class Config(context: Context) {
 
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
     private val preferences: SharedPreferences = context.getSharedPreferences(FILE_NAME, MODE)
+
+    val values: Map<String, *>
+        get() = preferences.all
+
+    val valuesFlow: StateFlow<Map<String, *>> = callbackFlow {
+        send(preferences.all)
+
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, _ ->
+            coroutineScope.launch { send(sharedPreferences.all) }
+        }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+
+        awaitClose {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }.stateIn(coroutineScope, SharingStarted.Eagerly, preferences.all)
 
     /**
      * Determines if the app has started before.
@@ -49,29 +79,29 @@ class Config(context: Context) {
      * Sets the app design to "light", "dark" or "system"
      */
     var systemDesign: String?
-        get() = getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT)
-        set(value) = putString(SYSTEM_DESIGN, value!!)
+        get() = getString(SystemDesign.key, SystemDesign.default)
+        set(value) = putString(SystemDesign.key, value!!)
 
     /**
      * Determines if the full screen photo view, should hide the system ui at start.
      */
     var galleryAutoFullscreen: Boolean
-        get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
-        set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
+        get() = getBoolean(GalleryAutoFullscreen.key, GalleryAutoFullscreen.default)
+        set(value) = putBoolean(GalleryAutoFullscreen.key, value)
 
     /**
      * Determines the start page of the gallery.
      */
     var galleryStartPage: StartPage
-        get() = StartPage.fromValue(getString("gallery^startPage", StartPage.AllFiles.value))
-        set(value) = putString("gallery^startPage", value.value)
+        get() = StartPage.fromValue(getString(GALLERY_START_PAGE, StartPage.AllFiles.value))
+        set(value) = putString(GALLERY_START_PAGE, value.value)
 
     /**
      * Determines if screenshots should be allowed.
      */
     var securityAllowScreenshots: Boolean
-        get() = getBoolean(SECURITY_ALLOW_SCREENSHOTS, SECURITY_ALLOW_SCREENSHOTS_DEFAULT)
-        set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
+        get() = getBoolean(SecurityAllowScreenshots.key, SecurityAllowScreenshots.default)
+        set(value) = putBoolean(SecurityAllowScreenshots.key, value)
 
     /**
      * Password hash to check when unlocking.
@@ -126,42 +156,43 @@ class Config(context: Context) {
 
     // region put/get methods
 
-    private fun getString(key: String, default: String?) = preferences.getString(key, default)
+    fun getString(key: String, default: String?) = preferences.getString(key, default)
 
-    private fun getInt(key: String, default: Int) = preferences.getInt(key, default)
+    fun getInt(key: String, default: Int) = preferences.getInt(key, default)
 
-    private fun getIntFromString(key: String, default: Int): Int {
+    fun getIntFromString(key: String, default: Int): Int {
         val stringValue = preferences.getString(key, default.toString())
         return stringValue?.toInt() ?: default
     }
 
-    private fun getLong(key: String, default: Long): Long = preferences.getLong(key, default)
+    fun getLong(key: String, default: Long): Long = preferences.getLong(key, default)
 
-    private fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
+    fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
-    private fun putString(key: String, value: String?) {
-        val edit = preferences.edit()
-        edit.putString(key, value)
-        edit.apply()
+    fun putString(key: String, value: String?) {
+        preferences.edit {
+            putString(key, value)
+        }
     }
 
-    private fun putInt(key: String, value: Int) {
-        val edit = preferences.edit()
-        edit.putInt(key, value)
-        edit.apply()
+    fun putInt(key: String, value: Int) {
+        preferences.edit {
+            putInt(key, value)
+        }
     }
 
-    private fun putBoolean(key: String, value: Boolean) {
-        val edit = preferences.edit()
-        edit.putBoolean(key, value)
-        edit.apply()
+    fun putBoolean(key: String, value: Boolean) {
+        preferences.edit {
+            putBoolean(key, value)
+        }
     }
 
-    private fun putLong(key: String, value: Long) {
-        val edit = preferences.edit()
-        edit.putLong(key, value)
-        edit.apply()
+    fun putLong(key: String, value: Long) {
+        preferences.edit {
+            putLong(key, value)
+        }
     }
+
 
     // endregion
 
@@ -182,14 +213,31 @@ class Config(context: Context) {
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
 
-        const val SYSTEM_DESIGN = "system^design"
-        const val SYSTEM_DESIGN_DEFAULT = "system"
+        val SystemDesign = SettingsEntry(
+            key = "system^design",
+            default = "system",
+            icon = R.drawable.ic_brush,
+            title = R.string.settings_app_design_title,
+            summary = null,
+        )
 
-        const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
-        const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
+        val GalleryAutoFullscreen = SettingsEntry(
+            key = "gallery^fullscreen.auto",
+            default = true,
+            icon = R.drawable.ic_fullscreen,
+            title = R.string.settings_gallery_auto_fullscreen_title,
+            summary = R.string.settings_gallery_auto_fullscreen_summary,
+        )
 
-        const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
-        const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false
+        const val GALLERY_START_PAGE = "gallery^startPage"
+
+        val SecurityAllowScreenshots = SettingsEntry(
+            key = "security^allowScreenshots",
+            default = false,
+            icon = R.drawable.ic_screen_lock,
+            title = R.string.settings_security_allow_screenshots_title,
+            summary = R.string.settings_security_allow_screenshots_summary,
+        )
 
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""

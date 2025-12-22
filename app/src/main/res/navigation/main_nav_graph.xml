@@ -208,4 +208,8 @@
             app:popUpTo="@id/encryptionMigrationFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/newSettingsFragment"
+        android:name="dev.leonlatsch.photok.settings.ui.compose.NewSettingsFragment"
+        android:label="NewSettingsFragment" />
 </navigation>
