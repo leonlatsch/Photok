@@ -70,6 +70,7 @@ import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
+import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
@@ -84,7 +85,6 @@ fun SettingsScreen() {
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         SettingsContent(
-            uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
         )
     }
@@ -94,7 +94,6 @@ fun SettingsScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsContent(
-    uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
 ) {
     AppTheme {
@@ -167,20 +166,20 @@ fun SettingsContent(
                         },
                         entry = PreferencesEntries.SecurityAllowScreenshots,
                     )
+
                     Preference(
                         icon = painterResource(R.drawable.ic_key),
                         title = stringResource(R.string.settings_security_change_password_title),
                         summary = stringResource(R.string.settings_security_change_password_summary),
                     )
-                    Preference(
-                        icon = painterResource(R.drawable.ic_fingerprint),
-                        title = stringResource(R.string.settings_security_biometric_title),
-                        summary = stringResource(R.string.settings_security_biometric_summary),
-                        trailing = {
-                            Switch(
-                                checked = false,
-                                onCheckedChange = {},
-                            )
+
+                    val fragment = LocalFragment.current
+
+                    SwitchPreference(
+                        entry = PreferencesEntries.BiometricUnlock,
+                        onSwitchChange = { _, value ->
+                            fragment ?: return@SwitchPreference
+                            handleUiEvent(SettingsUiEvent.ToggleBiometricUnlock(value, fragment))
                         }
                     )
                 }
@@ -319,10 +318,9 @@ fun SwitchPreference(
                 },
             )
         },
-        modifier = modifier
-            .clickable {
-                onSwitchChange(entry.key, !value)
-            }
+        onClick = {
+            onSwitchChange(entry.key, !value)
+        },
     )
 }
 
@@ -382,7 +380,6 @@ private fun Preview() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
-                uiState = SettingsUiState(emptyMap<String, String>()),
                 handleUiEvent = {},
             )
         }

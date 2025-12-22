@@ -153,7 +153,7 @@ class Config(context: Context) {
         set(value) = putString("user^salt", value)
 
     var biometricAuthenticationEnabled: Boolean
-        get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, false)
+        get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT)
         set(value) = putBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, value)
 
     // region put/get methods
@@ -247,5 +247,6 @@ class Config(context: Context) {
         const val TIMESTAMP_LAST_RECOVERY_START_DEFAULT = 0L
 
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED = "security^biometricAuthenticationEnabled"
+        const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT = false
     }
 }

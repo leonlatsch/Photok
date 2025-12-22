@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.ui.LocalFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,7 +37,11 @@ class NewSettingsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                SettingsScreen()
+                CompositionLocalProvider(
+                    LocalFragment provides this@NewSettingsFragment
+                ) {
+                    SettingsScreen()
+                }
             }
         }
     }

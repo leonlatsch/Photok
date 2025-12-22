@@ -23,6 +23,8 @@ import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_ALLOW_SCREENSHOTS
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_ALLOW_SCREENSHOTS_DEFAULT
+import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED
+import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN_DEFAULT
 import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
@@ -63,5 +65,13 @@ object PreferencesEntries {
         icon = R.drawable.ic_screen_lock,
         title = R.string.settings_security_allow_screenshots_title,
         summary = R.string.settings_security_allow_screenshots_summary,
+    )
+
+    val BiometricUnlock = SettingsEntry(
+        key = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED,
+        default = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT,
+        icon = R.drawable.ic_fingerprint,
+        title = R.string.settings_security_biometric_title,
+        summary = R.string.settings_security_biometric_summary,
     )
 }
