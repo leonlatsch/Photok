@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -31,6 +32,7 @@ data class SettingsUiState(
 
 sealed interface SettingsUiEvent {
     data class ToggleSwitch(val key: String, val value: Boolean) : SettingsUiEvent
+    data class SetEnumValue(val key: String, val value: SettingsEnum) : SettingsUiEvent
 }
 
 @HiltViewModel
@@ -46,6 +48,7 @@ class SettingsViewModel @Inject constructor(
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {
             is SettingsUiEvent.ToggleSwitch -> config.putBoolean(event.key, event.value)
+            is SettingsUiEvent.SetEnumValue -> config.putString(event.key, event.value.value)
         }
     }
 }

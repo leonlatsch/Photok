@@ -20,8 +20,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -36,6 +39,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -60,6 +64,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -119,16 +124,19 @@ fun SettingsContent(
 
                 SettingsSection("Gallery") {
                     SettingsSwitchRow(
+                        entry = Config.Entries.GalleryAutoFullscreen,
                         values = uiState.values,
                         onSwitchChange = { key, value ->
                             handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
                         },
-                        entry = Config.Entries.GalleryAutoFullscreen,
                     )
-                    SettingsRow(
-                        icon = painterResource(R.drawable.ic_gallery_thumbnail),
-                        title = stringResource(R.string.settings_gallery_start_page_title),
-                        summary = "All Files",
+                    SettingsEnumRow(
+                        entry = Config.Entries.GalleryStartPage,
+                        values = uiState.values,
+                        possibleValues = StartPage.entries,
+                        onItemSelected = {
+                            handleUiEvent(SettingsUiEvent.SetEnumValue(Config.Entries.GalleryStartPage.key, it))
+                        }
                     )
                 }
 
@@ -221,15 +229,24 @@ fun <T : SettingsEnum> SettingsEnumRow(
             onDismissRequest = { showDialog = false },
         ) {
             Surface(
-                shape = MaterialTheme.shapes.large,
+                shape = MaterialTheme.shapes.extraLarge,
             ) {
-                Column() {
+                Column(
+                    modifier = Modifier
+                        .padding(12.dp)
+                ) {
+                    Text(
+                        text = stringResource(entry.title),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(start = 12.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     for (v in possibleValues) {
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .padding(12.dp)
                         ) {
                             RadioButton(
                                 selected = value == v,
@@ -243,6 +260,13 @@ fun <T : SettingsEnum> SettingsEnumRow(
                                 text = stringResource(v.label),
                             )
                         }
+                    }
+
+                    TextButton(
+                        onClick = { showDialog = false },
+                        modifier = Modifier.align(Alignment.End),
+                    ) {
+                        Text(stringResource(R.string.common_cancel))
                     }
                 }
             }

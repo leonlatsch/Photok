@@ -95,8 +95,8 @@ class Config(context: Context) {
      * Determines the start page of the gallery.
      */
     var galleryStartPage: StartPage
-        get() = StartPage.fromValue(getString(GALLERY_START_PAGE, StartPage.AllFiles.value))
-        set(value) = putString(GALLERY_START_PAGE, value.value)
+        get() = StartPage.fromValue(getString(Entries.GalleryStartPage.key, Entries.GalleryStartPage.default.value))
+        set(value) = putString(Entries.GalleryStartPage.key, value.value)
 
     /**
      * Determines if screenshots should be allowed.
@@ -216,6 +216,14 @@ class Config(context: Context) {
             summary = R.string.settings_gallery_auto_fullscreen_summary,
         )
 
+        val GalleryStartPage = SettingsEntry(
+            key = "gallery^startPage",
+            default = StartPage.AllFiles,
+            icon = R.drawable.ic_gallery_thumbnail,
+            title = R.string.settings_gallery_start_page_title,
+            summary = null,
+        )
+
         val SecurityAllowScreenshots = SettingsEntry(
             key = "security^allowScreenshots",
             default = false,
@@ -243,8 +251,6 @@ class Config(context: Context) {
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
 
 
-
-        const val GALLERY_START_PAGE = "gallery^startPage"
 
 
         const val SECURITY_PASSWORD = "security^password"
