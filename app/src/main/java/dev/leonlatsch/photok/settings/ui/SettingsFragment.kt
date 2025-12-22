@@ -47,6 +47,7 @@ import dev.leonlatsch.photok.other.statusBarPadding
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
@@ -100,8 +101,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
     private fun setupAppCategory() {
-        addCallbackTo<ListPreference>(Config.SystemDesign.key) {
-            setAppDesign(it as String)
+        addCallbackTo<ListPreference>(Config.Entries.SystemDesign.key) {
+            it as String
+            setAppDesign(SystemDesignEnum.fromValue(it))
             true
         }
     }

@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -96,17 +97,13 @@ fun onMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operati
 /**
  * Update the app design.
  */
-fun setAppDesign(design: String?) {
-    design ?: return
-
+fun setAppDesign(design: SystemDesignEnum) {
     val nightMode = when (design) {
-        "system" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        "light" -> AppCompatDelegate.MODE_NIGHT_NO
-        "dark" -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> null
+        SystemDesignEnum.System -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        SystemDesignEnum.Light -> AppCompatDelegate.MODE_NIGHT_NO
+        SystemDesignEnum.Dark -> AppCompatDelegate.MODE_NIGHT_YES
     }
 
-    nightMode ?: return
     AppCompatDelegate.setDefaultNightMode(nightMode)
 }
 

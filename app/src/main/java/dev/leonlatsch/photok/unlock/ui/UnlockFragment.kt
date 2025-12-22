@@ -38,7 +38,7 @@ import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.data.StartPage
+import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment

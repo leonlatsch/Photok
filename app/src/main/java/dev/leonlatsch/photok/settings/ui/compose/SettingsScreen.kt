@@ -25,18 +25,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -53,6 +59,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
+import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 
@@ -97,10 +105,13 @@ fun SettingsContent(
                     .padding(contentPadding)
             ) {
                 SettingsSection("App") {
-                    SettingsRow(
-                        icon = painterResource(R.drawable.ic_brush),
-                        title = stringResource(R.string.settings_app_design_title),
-                        summary = "System Design",
+                    SettingsEnumRow(
+                        entry = Config.Entries.SystemDesign,
+                        values = uiState.values,
+                        possibleValues = SystemDesignEnum.entries,
+                        onItemSelected = {
+                            // TODO: Store
+                        },
                     )
                 }
 
@@ -112,7 +123,7 @@ fun SettingsContent(
                         onSwitchChange = { key, value ->
                             handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
                         },
-                        entry = Config.GalleryAutoFullscreen,
+                        entry = Config.Entries.GalleryAutoFullscreen,
                     )
                     SettingsRow(
                         icon = painterResource(R.drawable.ic_gallery_thumbnail),
@@ -130,7 +141,7 @@ fun SettingsContent(
                         onSwitchChange = { key, value ->
                             handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
                         },
-                        entry = Config.SecurityAllowScreenshots,
+                        entry = Config.Entries.SecurityAllowScreenshots,
                     )
                     SettingsRow(
                         icon = painterResource(R.drawable.ic_key),
@@ -177,6 +188,65 @@ fun SettingsSection(
         )
 
          content()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T : SettingsEnum> SettingsEnumRow(
+    entry: SettingsEntry<T>,
+    values: Map<String, *>,
+    possibleValues: List<T>,
+    onItemSelected: (T) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    val rawValue = values[entry.key] as? String ?: entry.default.value
+    val value = possibleValues.find { it.value == rawValue } ?: entry.default
+
+    SettingsRow(
+        icon = painterResource(entry.icon),
+        title = stringResource(entry.title),
+        summary = stringResource(value.label),
+        modifier = modifier.clickable {
+            showDialog = true
+        }
+    )
+
+    if (showDialog) {
+
+        // TODO: Layout
+        BasicAlertDialog(
+            onDismissRequest = { showDialog = false },
+        ) {
+            Surface(
+                shape = MaterialTheme.shapes.large,
+            ) {
+                Column() {
+                    for (v in possibleValues) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .padding(12.dp)
+                        ) {
+                            RadioButton(
+                                selected = value == v,
+                                onClick = {
+                                    showDialog = false
+                                    onItemSelected(v)
+                                },
+                            )
+
+                            Text(
+                                text = stringResource(v.label),
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
