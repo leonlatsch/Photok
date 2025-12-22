@@ -21,12 +21,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,6 +52,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -135,7 +139,12 @@ fun SettingsContent(
                         values = uiState.values,
                         possibleValues = StartPage.entries,
                         onItemSelected = {
-                            handleUiEvent(SettingsUiEvent.SetEnumValue(Config.Entries.GalleryStartPage.key, it))
+                            handleUiEvent(
+                                SettingsUiEvent.SetEnumValue(
+                                    Config.Entries.GalleryStartPage.key,
+                                    it
+                                )
+                            )
                         }
                     )
                 }
@@ -195,7 +204,7 @@ fun SettingsSection(
                 )
         )
 
-         content()
+        content()
     }
 }
 
@@ -247,6 +256,12 @@ fun <T : SettingsEnum> SettingsEnumRow(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .clickable {
+                                    showDialog = false
+                                    onItemSelected(v)
+                                }
                         ) {
                             RadioButton(
                                 selected = value == v,
@@ -258,6 +273,7 @@ fun <T : SettingsEnum> SettingsEnumRow(
 
                             Text(
                                 text = stringResource(v.label),
+                                modifier = Modifier.weight(1f)
                             )
                         }
                     }
