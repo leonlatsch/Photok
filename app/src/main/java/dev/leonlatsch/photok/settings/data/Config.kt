@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.settings.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import dev.leonlatsch.photok.BuildConfig
 
 /**
  * Manages reading and writing with the config file.
@@ -168,7 +169,7 @@ class Config(context: Context) {
         /**
          * The filename used to store the preferences.
          */
-        const val FILE_NAME = "dev.leonlatsch.photok_preferences"
+        const val FILE_NAME = "${BuildConfig.APPLICATION_ID}_preferences"
 
         /**
          * Always use private mode to open preferences.

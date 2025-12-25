@@ -34,12 +34,19 @@ data class Photo(
     @Expose
     @ColumnInfo(name = COL_FILENAME)
     val fileName: String,
+
     @ColumnInfo(name = COL_IMPORTED_AT)
     var importedAt: Long,
+
     @Expose val type: PhotoType,
     @Expose
     @ColumnInfo(name = COL_SIZE)
     var size: Long = 0L,
+
+    @ColumnInfo(name = COL_LAST_MODIFIED, defaultValue = "NULL")
+    @Expose
+    var lastModified: Long?,
+
     @Expose
     @PrimaryKey
     @ColumnInfo(name = "photo_uuid")
@@ -58,7 +65,11 @@ data class Photo(
     companion object {
         const val COL_FILENAME = "fileName"
         const val COL_IMPORTED_AT = "importedAt"
+        const val COL_LAST_MODIFIED = "lastModified"
+        const val DATE_TAKEN = "dateTaken"
         const val COL_SIZE = "size"
         const val TABLE_NAME = "photo"
+
+
     }
 }

@@ -14,15 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.components
+package dev.leonlatsch.photok.ui
 
-import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
+import androidx.fragment.app.Fragment
 
-data class PhotoTile(
-    val fileName: String,
-    val type: PhotoType,
-    val uuid: String,
-) {
-    val internalThumbnailFileName = internalThumbnailFileName(uuid)
-}
+val LocalFragment: ProvidableCompositionLocal<Fragment?> = compositionLocalOf { null }

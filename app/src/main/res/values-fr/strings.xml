@@ -97,6 +97,7 @@
     <string name="view_photo_detail_import_at_label">Importé le :</string>
     <string name="view_photo_detail_file_type_label">Type de fichier :</string>
     <string name="view_photo_detail_size_label">Taille du fichier :</string>
+    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
     <string name="view_photo_play_button_description">Lire la vidéo</string>
 
     <!-- MAIN MENU -->
@@ -335,6 +336,7 @@
     <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
     <string name="sorting_field_size_label">File size</string> <!-- TODO -->
     <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
+    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
 
     <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
 </resources>

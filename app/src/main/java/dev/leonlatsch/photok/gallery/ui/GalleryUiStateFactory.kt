@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.gallery.ui
 
 import dev.leonlatsch.photok.sort.domain.Sort
 import android.net.Uri
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.Photo
 import javax.inject.Inject
 
@@ -26,11 +26,10 @@ class GalleryUiStateFactory @Inject constructor() {
     fun create(
         photos: List<Photo>,
         showAlbumSelectionDialog: Boolean,
-        sharedUris: List<Uri>,
         sort: Sort,
     ): GalleryUiState {
         return if (photos.isEmpty()) {
-            GalleryUiState.Empty(sharedUris = sharedUris)
+            GalleryUiState.Empty
         } else {
             GalleryUiState.Content(
                 photos = photos.map {
@@ -41,7 +40,6 @@ class GalleryUiStateFactory @Inject constructor() {
                     )
                 },
                 showAlbumSelectionDialog = showAlbumSelectionDialog,
-                sharedUris = sharedUris,
                 sort = sort,
             )
         }

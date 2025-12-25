@@ -17,10 +17,10 @@
 package dev.leonlatsch.photok.videoplayer.data
 
 import android.net.Uri
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.TransferListener
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.TransferListener
 import dev.leonlatsch.photok.other.extensions.forceSkip
 import dev.leonlatsch.photok.security.EncryptionManager
 import java.io.File
@@ -34,6 +34,7 @@ import javax.crypto.CipherInputStream
  * @since 1.3.0
  * @author Leon Latsch
  */
+@UnstableApi
 class AesDataSource(
     private val encryptionManager: EncryptionManager,
 ) : DataSource {

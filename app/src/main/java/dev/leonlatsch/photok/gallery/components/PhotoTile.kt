@@ -14,18 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.sort.domain
+package dev.leonlatsch.photok.gallery.components
 
-enum class SortConfig(
-    val fields: List<Sort.Field>,
-    val default: Sort,
+import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+
+data class PhotoTile(
+    val fileName: String,
+    val type: PhotoType,
+    val uuid: String,
 ) {
-    Gallery(
-        fields = listOf(Sort.Field.ImportDate, Sort.Field.LastModified, Sort.Field.FileName, Sort.Field.Size),
-        default = Sort(field = Sort.Field.ImportDate, Sort.Order.Desc),
-    ),
-    Album(
-        fields = listOf(Sort.Field.LinkedAt, Sort.Field.LastModified, Sort.Field.FileName, Sort.Field.Size),
-        default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
-    ),
+    val internalThumbnailFileName = internalThumbnailFileName(uuid)
 }

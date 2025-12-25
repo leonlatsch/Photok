@@ -24,6 +24,7 @@ fun Photo.toBackup(): PhotoBackup =
     PhotoBackup(
         fileName = fileName,
         importedAt = importedAt,
+        lastModified = lastModified,
         type = type,
         size = size,
         uuid = uuid,
@@ -33,6 +34,7 @@ fun PhotoBackup.toDomain(): Photo =
     Photo(
         fileName = fileName,
         importedAt = importedAt,
+        lastModified = lastModified,
         type = type,
         size = size,
         uuid = uuid,

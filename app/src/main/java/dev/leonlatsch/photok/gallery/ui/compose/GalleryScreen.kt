@@ -37,9 +37,10 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
-import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerDialog
-import dev.leonlatsch.photok.gallery.ui.components.AlbumPickerViewModel
-import dev.leonlatsch.photok.gallery.ui.components.rememberMultiSelectionState
+import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
+import dev.leonlatsch.photok.gallery.components.AlbumPickerViewModel
+import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
@@ -56,12 +57,6 @@ fun GalleryScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-
-    val showConfirmImportSharedDialog by remember {
-        derivedStateOf {
-            uiState.sharedUris.isNotEmpty()
-        }
-    }
 
     AppTheme {
         Scaffold(
@@ -136,16 +131,7 @@ fun GalleryScreen(
                 }
             }
 
-            ConfirmationDialog(
-                show = showConfirmImportSharedDialog,
-                onDismissRequest = {
-                    viewModel.handleUiEvent(GalleryUiEvent.CancelImportShared)
-                },
-                text = stringResource(R.string.import_sharted_question, uiState.sharedUris.size),
-                onConfirm = {
-                    viewModel.handleUiEvent(GalleryUiEvent.StartImportShared)
-                },
-            )
+            ImportSharedDialog()
         }
     }
 }

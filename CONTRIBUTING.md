@@ -14,6 +14,12 @@ However, there are a few guidelines you should respect.
 
 If you want to help translate Photok you are very welcome to do so.
 
+**Translation guidelines:**
+- Use informal wording when mentioning the user. For example in german its always "du" and never "sie".
+- Also use direct wording. Example: 
+    - DO: "Enable notification permission to receive this notificatin"
+    - DONT: "Please enable notification permission to receive this notification"
+
 **Improve an existing language**
 
 There are several `strings.xml`  files in `app/src/main/res/values[your_language]/strings.xml`.

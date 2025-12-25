@@ -18,8 +18,8 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import android.net.Uri
 import dev.leonlatsch.photok.sort.domain.Sort
-import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.ImportChoice
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 
 sealed interface AlbumDetailUiEvent {
     data class OpenPhoto(val item: PhotoTile) : AlbumDetailUiEvent

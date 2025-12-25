@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~   Copyright 2020-2021 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +15,10 @@
   ~   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="300"
+    android:fromXDelta="0%p"
+    android:toXDelta="100%p"
+    >
 
-    <item
-        android:id="@+id/menuAboutNews"
-        android:icon="@drawable/ic_outline_campaign"
-        android:title="@string/about_menu_news"
-        app:showAsAction="always">
-
-    </item>
-
-</menu>
+</translate>

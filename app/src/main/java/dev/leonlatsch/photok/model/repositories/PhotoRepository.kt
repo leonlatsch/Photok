@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
 import android.net.Uri
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -26,13 +28,14 @@ import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
-import dev.leonlatsch.photok.other.getFileName
+import dev.leonlatsch.photok.other.getMetadataFor
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.Sort
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.Exception
 import java.util.UUID
 import javax.inject.Inject
 
@@ -97,17 +100,21 @@ class PhotoRepository @Inject constructor(
      * Returns re created uuid
      */
     suspend fun safeImportPhoto(sourceUri: Uri, importSource: ImportSource): String {
-        val mimeType = app.contentResolver.getType(sourceUri)
-        val type = PhotoType.fromMimeType(mimeType)
+        val metaData = app.contentResolver.getMetadataFor(sourceUri)
 
+        val type = PhotoType.fromMimeType(metaData.mimeType)
         if (type == PhotoType.UNDEFINED) return String.empty
 
-        val fileName =
-            getFileName(app.contentResolver, sourceUri) ?: UUID.randomUUID().toString()
 
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(sourceUri)
-        val photo = Photo(fileName, System.currentTimeMillis(), type)
+        val photo = Photo(
+            fileName = metaData.fileName ?: UUID.randomUUID().toString(),
+            importedAt = System.currentTimeMillis(),
+            lastModified = metaData.lastModified,
+            type = type,
+            size = metaData.size ?: 0,
+        )
 
         val created = safeCreatePhoto(photo, inputStream, sourceUri)
         inputStream?.lazyClose()

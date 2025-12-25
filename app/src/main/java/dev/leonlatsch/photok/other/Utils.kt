@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.other
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -25,6 +26,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
 import android.view.WindowInsets
@@ -38,37 +40,52 @@ import androidx.fragment.app.Fragment
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-/**
- * Get a file's name.
- *
- * @param contentResolver used to get the file name.
- * @param uri the uri to file file.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-fun getFileName(contentResolver: ContentResolver, uri: Uri): String? = try {
-    val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-    contentResolver.query(uri, projection, null, null, null)?.use {
-        if (it.moveToFirst()) {
-            return it.getString(0)
+data class FileMetaData(
+    val fileName: String?,
+    val mimeType: String?,
+    val size: Long?,
+    val lastModified: Long?,
+)
 
+fun ContentResolver.getMetadataFor(uri: Uri): FileMetaData {
+    val projection = arrayOf(
+        MediaStore.MediaColumns.DISPLAY_NAME,
+        MediaStore.MediaColumns.MIME_TYPE,
+        MediaStore.MediaColumns.SIZE,
+        MediaStore.Images.Media.DATE_TAKEN,
+        DocumentsContract.Document.COLUMN_LAST_MODIFIED
+    )
+
+    var fileName: String? = null
+    var mimeType: String? = null
+    var size: Long? = null
+    var lastModified: Long? = null
+
+    query(uri, projection, null, null, null)?.use {
+        try {
+            val fileNameColIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+            val mimeTypeColIndex = it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)
+            val sizeColIndex = it.getColumnIndex(MediaStore.MediaColumns.SIZE)
+            val dateModifiedColIndex = it.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
+
+            if (!it.moveToFirst()) return@use
+
+            if (fileNameColIndex != -1) fileName = it.getString(fileNameColIndex)
+            if (mimeTypeColIndex != -1) mimeType = it.getString(mimeTypeColIndex)
+            if (sizeColIndex != -1) size = it.getLong(sizeColIndex)
+            if (dateModifiedColIndex != -1) lastModified = it.getLong(dateModifiedColIndex)
+
+        } catch (e: Exception) {
+            Timber.w("Could not get metadata for $uri $e")
         }
     }
-    null
-} catch (e: SecurityException) {
-    null
-}
 
-/**
- * Get the size of a file in bytes
- */
-fun getFileSize(contentResolver: ContentResolver, uri: Uri): Long {
-    contentResolver.openFileDescriptor(uri, "r")?.use {
-        return it.statSize
-    }
-
-    return -1L
+    return FileMetaData(
+        fileName = fileName,
+        mimeType = mimeType,
+        size = size,
+        lastModified = lastModified,
+    )
 }
 
 /**
@@ -95,6 +112,14 @@ fun setAppDesign(design: String?) {
 
 fun Fragment.openUrl(url: String?) {
     url ?: return
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    startActivity(intent)
+}
+
+fun Context.openUrl(url: String?) {
+    url ?: return
+
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
     startActivity(intent)

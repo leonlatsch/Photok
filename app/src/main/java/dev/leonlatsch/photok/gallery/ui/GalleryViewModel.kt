@@ -23,8 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.ImportChoice
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
@@ -51,7 +51,6 @@ class GalleryViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val sortRepository: SortRepository,
     private val resources: Resources,
-    private val sharedUrisStore: SharedUrisStore
 ) : ViewModel() {
 
     private val sortFlow = sortRepository.observeSortFor(albumUuid = null, default = SortConfig.Gallery.default)
@@ -66,11 +65,10 @@ class GalleryViewModel @Inject constructor(
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
         showAlbumSelectionDialog,
-        sharedUrisStore.observeSharedUris(),
         sortFlow,
-    ) { photos, showAlbumSelection, sharedUris, sort ->
-        galleryUiStateFactory.create(photos, showAlbumSelection, sharedUris, sort)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), GalleryUiState.Empty())
+    ) { photos, showAlbumSelection, sort ->
+        galleryUiStateFactory.create(photos, showAlbumSelection, sort)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>()
     val eventsFlow = eventsChannel.receiveAsFlow()
@@ -87,16 +85,6 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
-            is GalleryUiEvent.CancelImportShared -> sharedUrisStore.reset()
-            is GalleryUiEvent.StartImportShared -> {
-                eventsChannel.trySend(
-                    GalleryNavigationEvent.StartImport(
-                        fileUris = uiState.value.sharedUris.toList(),
-                        importSource = ImportSource.Share,
-                    )
-                )
-                sharedUrisStore.reset()
-            }
             is GalleryUiEvent.SortChanged -> viewModelScope.launch {
                 sortRepository.updateSortFor(albumUuid = null, sort = event.sort)
             }

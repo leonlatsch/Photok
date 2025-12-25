@@ -27,8 +27,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.ShowToast
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
-import dev.leonlatsch.photok.gallery.ui.components.ImportChoice
-import dev.leonlatsch.photok.gallery.ui.components.PhotoTile
+import dev.leonlatsch.photok.gallery.components.ImportChoice
+import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.DeletePhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.ExportPhotos

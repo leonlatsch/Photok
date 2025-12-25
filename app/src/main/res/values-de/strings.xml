@@ -97,6 +97,7 @@
     <string name="view_photo_detail_import_at_label">Importiert am:</string>
     <string name="view_photo_detail_file_type_label">Datei Typ:</string>
     <string name="view_photo_detail_size_label">Dateigröße:</string>
+    <string name="view_photo_detail_last_modified">Zuletzt geändert:</string>
     <string name="view_photo_play_button_description">Video Abspielen</string>
 
     <!-- MAIN MENU -->
@@ -337,6 +338,7 @@
     <string name="sorting_field_filename_label">Dateiname</string>
     <string name="sorting_field_size_label">Dateigröße</string>
     <string name="sorting_field_added_to_album_label">Zum Album hinzugefügt</string>
+    <string name="sorting_field_last_modified">Zuletzt geändert</string>
 
     <string name="sorting_restore_default">Standard wiederherstellen</string>
 </resources>

@@ -43,7 +43,8 @@ data class Sort(
         ImportDate(0, Photo.COL_IMPORTED_AT, R.drawable.ic_calendar_today, R.string.sorting_field_import_date_label),
         FileName(1, Photo.COL_FILENAME, R.drawable.ic_abc, R.string.sorting_field_filename_label),
         Size(2, Photo.COL_SIZE, R.drawable.ic_photo_size, R.string.sorting_field_size_label),
-        LinkedAt(3, AlbumPhotoCrossRefTable.COL_LINKED_AT, R.drawable.ic_calendar_today, R.string.sorting_field_added_to_album_label);
+        LinkedAt(3, AlbumPhotoCrossRefTable.COL_LINKED_AT, R.drawable.ic_calendar_today, R.string.sorting_field_added_to_album_label),
+        LastModified(4, Photo.COL_LAST_MODIFIED, R.drawable.ic_edit, R.string.sorting_field_last_modified);
 
         companion object {
             fun fromValue(value: Int) = when (value) {
@@ -51,6 +52,7 @@ data class Sort(
                 FileName.value -> FileName
                 Size.value -> Size
                 LinkedAt.value -> LinkedAt
+                LastModified.value -> LastModified
                 else -> error("Invalid value $value")
             }
         }

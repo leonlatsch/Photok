@@ -55,6 +55,7 @@ fun BackupMetaData.getPhotosInOriginalOrder(): List<PhotoBackup> {
 data class PhotoBackup(
     val fileName: String,
     val importedAt: Long,
+    val lastModified: Long?,
     val type: PhotoType,
     val size: Long,
     val uuid: String,
