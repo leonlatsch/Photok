@@ -81,6 +81,7 @@
     <string name="import_menu_restore_title">Restore a backup</string>
     <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string>
     <string name="import_menu_delete_warning">Imported files will be deleted</string>
+    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string>
 
     <!-- PROCESS -->
     <string name="process_close">Close</string>

@@ -64,6 +64,7 @@
     <string name="import_menu_restore_title">Yedeklemeyi geri yükle</string>
     <string name="import_menu_restore_description">Photok yedeklemesini geri yükleyin. Dosyalar mevcut dosyalarınıza eklenecektir.</string>
     <string name="import_menu_delete_warning">İçe aktarılan dosyalar silinecektir</string>
+    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">Kapat</string>

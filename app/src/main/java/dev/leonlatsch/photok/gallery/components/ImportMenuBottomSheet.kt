@@ -227,7 +227,7 @@ fun AlbumNameChip(
         state = tooltipState,
         tooltip = {
             PlainTooltip(shape = RoundedCornerShape(8.dp)) {
-                Text(text = "Files will be added to \"$albumName\" after importing")
+                Text(text = stringResource(R.string.import_menu_album_tooltip, albumName))
             }
         }
     ) {

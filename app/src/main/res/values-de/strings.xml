@@ -82,6 +82,7 @@
     <string name="import_menu_restore_title">Ein Backup wiederherstellen</string>
     <string name="import_menu_restore_description">Stelle ein Photok Backup wieder her. Die Dateien werden zu den aktuellen Dateien hinzugefügt.</string>
     <string name="import_menu_delete_warning">Importierte Dateien werden gelöscht</string>
+    <string name="import_menu_album_tooltip">Dateien werden nach dem Importieren zu \"%s\" hinzugefügt</string>
 
     <!-- PROCESS -->
     <string name="process_close">Schließen</string>

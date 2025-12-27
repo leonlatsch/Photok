@@ -81,6 +81,7 @@
     <string name="import_menu_restore_title">Ripristina un backup</string>
     <string name="import_menu_restore_description">Ripristina un backup Photok. I file verranno aggiunti ai tuoi file attuali.</string>
     <string name="import_menu_delete_warning">I file importati verranno eliminati</string>
+    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">Chiudi</string>
