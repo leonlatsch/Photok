@@ -96,7 +96,7 @@
     <string name="view_photo_detail_import_at_label">导入于:</string>
     <string name="view_photo_detail_file_type_label">文件类型:</string>
     <string name="view_photo_detail_size_label">文件大小:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">上次修改：</string>
     <string name="view_photo_play_button_description">播放视频</string>
 
     <!-- MAIN MENU -->
@@ -334,7 +334,7 @@
     <string name="sorting_field_filename_label">文件名</string>
     <string name="sorting_field_size_label">文件大小</string>
     <string name="sorting_field_added_to_album_label">已添加到相册</string>
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_last_modified">上次修改</string>
 
     <string name="sorting_restore_default">恢复默认</string>
 </resources>
