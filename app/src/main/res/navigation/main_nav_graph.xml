@@ -208,24 +208,4 @@
             app:popUpTo="@id/encryptionMigrationFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/newSettingsFragment"
-        android:name="dev.leonlatsch.photok.settings.ui.compose.NewSettingsFragment"
-        android:label="NewSettingsFragment" >
-
-        <action
-            android:id="@+id/action_newSettingsFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-        <action
-            android:id="@+id/action_newSettingsFragment_to_creditsFragment"
-            app:destination="@id/creditsFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-    </fragment>
 </navigation>

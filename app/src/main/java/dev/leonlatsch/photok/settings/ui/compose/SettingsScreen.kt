@@ -80,6 +80,10 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.Preference
+import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
+import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
+import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
@@ -185,12 +189,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CREDITS) {
-            fragment.findNavController().navigate(R.id.action_newSettingsFragment_to_creditsFragment)
+            fragment.findNavController().navigate(R.id.action_settingsFragment_to_creditsFragment)
             false
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_ABOUT) {
-            fragment.findNavController().navigate(R.id.action_newSettingsFragment_to_aboutFragment)
+            fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
         }
     }

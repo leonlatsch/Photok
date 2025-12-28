@@ -61,15 +61,6 @@ fun MainMenu(
             label = stringResource(R.string.menu_main_settings),
             onNavigationItemClicked = onNavigationItemClicked
         )
-
-        // TODO: Remove this and replace old settings with it
-        MainNavItem(
-            fragmentsId = R.id.newSettingsFragment,
-            currentSelectedFragmentId = uiState.currentFragmentId,
-            iconRes = R.drawable.ic_settings,
-            label = "New Settings",
-            onNavigationItemClicked = onNavigationItemClicked
-        )
     }
 }
 

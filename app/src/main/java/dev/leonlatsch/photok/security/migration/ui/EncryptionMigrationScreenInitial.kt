@@ -69,7 +69,7 @@ import dev.leonlatsch.photok.other.openNotificationSettings
 import dev.leonlatsch.photok.other.requestInSettings
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
 import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
-import dev.leonlatsch.photok.settings.ui.createBackupFilename
+import dev.leonlatsch.photok.settings.ui.compose.createBackupFilename
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 

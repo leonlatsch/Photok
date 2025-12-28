@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.ui.compose
+package dev.leonlatsch.photok.settings.domain
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -140,7 +140,7 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 default = LockTimeout.FiveMinute,
                 possibleValues = LockTimeout.entries,
             ),
-            Preference.Simple( // TODO: Impl new dialog for this. Old one uses androix.preferences dialog
+            Preference.Simple(
                 key = Config.SECURITY_DIAL_LAUNCH_CODE,
                 icon = R.drawable.ic_dialpad,
                 title = R.string.settings_security_launch_code_title,
