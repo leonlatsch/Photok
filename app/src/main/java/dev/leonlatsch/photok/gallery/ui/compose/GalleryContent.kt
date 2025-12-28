@@ -48,6 +48,7 @@ fun GalleryContent(
     PhotoGallery(
         modifier = modifier.fillMaxSize(),
         photos = uiState.photos,
+        albumName = null,
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
         onExport = { targetUri ->

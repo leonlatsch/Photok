@@ -18,7 +18,7 @@
 <resources>
 
     <!-- COMMON -->
-    <string name="common_copyright_notice">Copyright \u00A9 2020-2025 Leon Latsch</string>
+    <string name="common_copyright_notice">Copyright \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -82,6 +82,7 @@
     <string name="import_menu_restore_title">Restaurar una copia de seguridad</string>
     <string name="import_menu_restore_description">Restaurar una copia de seguridad de Photok. Los archivos serán añadidos a tus archivos actuales.</string>
     <string name="import_menu_delete_warning">Los archivos importados se eliminarán</string>
+    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>

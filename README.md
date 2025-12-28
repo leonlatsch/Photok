@@ -6,7 +6,7 @@
 [![IzzyOnDroid](https://img.shields.io/f-droid/v/dev.leonlatsch.photok.svg?logo=f-droid&label=IzzyOnDroid&baseUrl=https%3A%2F%2Fapt.izzysoft.de%2Ffdroid)](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/leonlatsch/Photok/android.yml?branch=develop)
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
-![Maintenance](https://img.shields.io/maintenance/yes/2025)
+![Maintenance](https://img.shields.io/maintenance/yes/2026)
 ![Twitch Status](https://img.shields.io/twitch/status/leonlatsch?style=flat&logo=twitch)
 
 Encrypt images and videos on your device and keep them safe from others.
@@ -63,7 +63,7 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 
 LICENSE
 =======
-    Copyright 2020-2025 Leon Latsch
+    Copyright 2020-2026 Leon Latsch
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

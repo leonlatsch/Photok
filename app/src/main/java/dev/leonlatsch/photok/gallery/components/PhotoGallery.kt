@@ -56,6 +56,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,6 +81,7 @@ import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -87,6 +89,7 @@ private const val LANDSCAPE_COLUMN_COUNT = 6
 @Composable
 fun PhotoGallery(
     photos: List<PhotoTile>,
+    albumName: String?,
     multiSelectionState: MultiSelectionState,
     onOpenPhoto: (PhotoTile) -> Unit,
     onExport: (Uri?) -> Unit,
@@ -96,12 +99,13 @@ fun PhotoGallery(
     modifier: Modifier = Modifier,
 ) {
     val activity = LocalActivity.current
-    val importMenuBottomSheetVisible = remember { mutableStateOf(false) }
+    var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     // Hide magic fab menu when multi selection active
     LaunchedEffect(multiSelectionState.isActive.value) {
         if (multiSelectionState.isActive.value) {
-            importMenuBottomSheetVisible.value = false
+            importMenuBottomSheetVisible = false
         }
     }
 
@@ -122,14 +126,18 @@ fun PhotoGallery(
             MagicFab(
                 label = stringResource(R.string.import_menu_fab_label),
                 onClick = {
-                    importMenuBottomSheetVisible.value = true
+                    importMenuBottomSheetVisible = true
                 }
             )
         }
 
         ImportMenuBottomSheet(
-            openState = importMenuBottomSheetVisible,
+            open = importMenuBottomSheetVisible,
+            onDismissRequest = {
+                importMenuBottomSheetVisible = false
+            },
             onImportChoice = onImportChoice,
+            albumName = albumName,
         )
 
         var showDeleteConfirmationDialog by remember {
@@ -397,6 +405,7 @@ private fun PhotoGridPreview() {
                     PhotoTile("", PhotoType.JPEG, "5"),
                     PhotoTile("", PhotoType.MP4, "6"),
                 ),
+                albumName = null,
                 multiSelectionState = MultiSelectionState(
                     allItems = listOf("1", "2", "3"),
                 ),
@@ -425,6 +434,7 @@ private fun PhotoGridPreviewWithSelection() {
                     PhotoTile("", PhotoType.JPEG, "5"),
                     PhotoTile("", PhotoType.MP4, "6"),
                 ),
+                albumName = null,
                 multiSelectionState = MultiSelectionState(
                     allItems = listOf("1", "2", "3"),
                 ).apply {

@@ -36,10 +36,11 @@ class PasswordManager @Inject constructor(
     /**
      * Hashes and stores a new password
      */
-    fun storePassword(password: String) {
+    suspend fun storePassword(password: String) {
         val hashedPw = BCrypt.hashpw(password, BCrypt.gensalt())
         config.securityPassword = hashedPw
         config.userSalt = null
+        biometricUnlock.reset()
     }
 
     /**

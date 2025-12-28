@@ -1,6 +1,6 @@
 <resources>
     <!-- COMMON -->
-    <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2025 Leon Latsch</string>
+    <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -64,6 +64,7 @@
     <string name="import_menu_restore_title">Yedeklemeyi geri yükle</string>
     <string name="import_menu_restore_description">Photok yedeklemesini geri yükleyin. Dosyalar mevcut dosyalarınıza eklenecektir.</string>
     <string name="import_menu_delete_warning">İçe aktarılan dosyalar silinecektir</string>
+    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
 
     <!-- PROCESS -->
     <string name="process_close">Kapat</string>
@@ -79,7 +80,7 @@
     <string name="view_photo_detail_import_at_label">İçe Aktarma Tarihi:</string>
     <string name="view_photo_detail_file_type_label">Dosya Türü:</string>
     <string name="view_photo_detail_size_label">Dosya Boyutu:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Son düzenleme:</string>
     <string name="view_photo_play_button_description">Videoyu Oynat</string>
 
     <!-- MAIN MENU -->
@@ -319,7 +320,7 @@
     <string name="sorting_field_filename_label">Dosya adı</string>
     <string name="sorting_field_size_label">Dosya boyutu</string>
     <string name="sorting_field_added_to_album_label">Albüme eklendi</string>
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_last_modified">Son düzenleme</string>
 
     <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
 </resources>

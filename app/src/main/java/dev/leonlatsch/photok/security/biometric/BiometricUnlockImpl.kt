@@ -116,6 +116,7 @@ class BiometricUnlockImpl @Inject constructor(
     }
 
     override suspend fun reset(): Result<Unit> = runCatching {
+        config.biometricAuthenticationEnabled = false
         biometricKeyStore.reset()
     }
 }

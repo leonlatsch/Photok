@@ -77,7 +77,7 @@ class Config(context: Context) {
         get() = getInt(SYSTEM_LAST_FEATURE_VERSION_CODE, SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT)
         set(value) = putInt(SYSTEM_LAST_FEATURE_VERSION_CODE, value)
 
-    /**
+    /*
      * Sets the app design to "light", "dark" or "system"
      */
     var systemDesign: SystemDesignEnum
