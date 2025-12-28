@@ -82,6 +82,7 @@ private fun CreateAlbumDialogContent(
 
     Card(
         modifier = modifier,
+        shape = MaterialTheme.shapes.extraLarge,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
