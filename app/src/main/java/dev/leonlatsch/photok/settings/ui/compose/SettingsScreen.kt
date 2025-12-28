@@ -64,13 +64,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
-import dev.leonlatsch.photok.settings.domain.models.StartPage
-import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
@@ -85,6 +80,7 @@ fun SettingsScreen() {
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         SettingsContent(
+            screenConfig = uiState.screenConfig,
             handleUiEvent = viewModel::handleUiEvent,
         )
     }
@@ -94,6 +90,7 @@ fun SettingsScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsContent(
+    screenConfig: PreferenceScreenConfig,
     handleUiEvent: (SettingsUiEvent) -> Unit,
 ) {
     AppTheme {
@@ -117,71 +114,49 @@ fun SettingsContent(
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
             ) {
-                PreferenceSection("App") {
-                    EnumPreference(
-                        entry = PreferencesEntries.SystemDesign,
-                        possibleValues = SystemDesignEnum.entries,
-                        onItemSelected = { key, value ->
-                            handleUiEvent(
-                                SettingsUiEvent.SetEnumValue(
-                                    key,
-                                    value,
-                                )
-                            )
-                            setAppDesign(value)
+                for (section in screenConfig.sections) {
+                    val isLast = section == screenConfig.sections.last()
+
+                    PreferenceSectionView(
+                        section = section,
+                    ) {
+                        for (preference in section.preferences) {
+                            when (preference) {
+                                is Preference.Simple -> {
+                                    PreferenceView(
+                                        icon = painterResource(preference.icon),
+                                        title = stringResource(preference.title),
+                                        summary = stringResource(preference.summary),
+                                    )
+                                }
+                                is Preference.Switch -> {
+                                    PreferenceSwitchView(
+                                        preference = preference,
+                                        onSwitchChange = { key, value ->
+                                            handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
+                                        },
+                                    )
+                                }
+                                is Preference.Enum<*> -> {
+                                    PreferenceEnumView(
+                                        preference = preference,
+                                        onItemSelected = { key, value ->
+                                            handleUiEvent(
+                                                SettingsUiEvent.SetEnumValue(
+                                                    key,
+                                                    value,
+                                                )
+                                            )
+                                        },
+                                    )
+                                }
+                            }
                         }
-                    )
-                }
+                    }
 
-                HorizontalDivider()
-
-                PreferenceSection("Gallery") {
-                    SwitchPreference(
-                        entry = PreferencesEntries.GalleryAutoFullscreen,
-                        onSwitchChange = { key, value ->
-                            handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
-                        },
-                    )
-                    EnumPreference(
-                        entry = PreferencesEntries.GalleryStartPage,
-                        possibleValues = StartPage.entries,
-                        onItemSelected = { key, value ->
-                            handleUiEvent(
-                                SettingsUiEvent.SetEnumValue(
-                                    key,
-                                    value,
-                                )
-                            )
-                        }
-                    )
-                }
-
-                HorizontalDivider()
-
-                PreferenceSection("Security") {
-
-                    SwitchPreference(
-                        onSwitchChange = { key, value ->
-                            handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
-                        },
-                        entry = PreferencesEntries.SecurityAllowScreenshots,
-                    )
-
-                    Preference(
-                        icon = painterResource(R.drawable.ic_key),
-                        title = stringResource(R.string.settings_security_change_password_title),
-                        summary = stringResource(R.string.settings_security_change_password_summary),
-                    )
-
-                    val fragment = LocalFragment.current
-
-                    SwitchPreference(
-                        entry = PreferencesEntries.BiometricUnlock,
-                        onSwitchChange = { _, value ->
-                            fragment ?: return@SwitchPreference
-                            handleUiEvent(SettingsUiEvent.ToggleBiometricUnlock(value, fragment))
-                        }
-                    )
+                    if (!isLast) {
+                        HorizontalDivider()
+                    }
                 }
             }
         }
@@ -189,8 +164,8 @@ fun SettingsContent(
 }
 
 @Composable
-fun PreferenceSection(
-    headline: String,
+fun PreferenceSectionView(
+    section: PreferenceSection,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -198,7 +173,7 @@ fun PreferenceSection(
         modifier = modifier,
     ) {
         Text(
-            text = headline,
+            text = stringResource(section.title),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier
@@ -216,9 +191,8 @@ fun PreferenceSection(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T : SettingsEnum> EnumPreference(
-    entry: SettingsEntry<T>,
-    possibleValues: List<T>,
+fun <T : SettingsEnum> PreferenceEnumView(
+    preference: Preference.Enum<T>,
     onItemSelected: (String, T) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -226,12 +200,12 @@ fun <T : SettingsEnum> EnumPreference(
 
     var showDialog by remember { mutableStateOf(false) }
 
-    val rawValue = preferencesValues[entry.key] as? String ?: entry.default.value
-    val value = possibleValues.find { it.value == rawValue } ?: entry.default
+    val rawValue = preferencesValues[preference.key] as? String ?: preference.default.value
+    val value = preference.possibleValues.find { it.value == rawValue } ?: preference.default
 
-    Preference(
-        icon = painterResource(entry.icon),
-        title = stringResource(entry.title),
+    PreferenceView(
+        icon = painterResource(preference.icon),
+        title = stringResource(preference.title),
         summary = stringResource(value.label),
         onClick = { showDialog = true },
         modifier = modifier,
@@ -250,14 +224,14 @@ fun <T : SettingsEnum> EnumPreference(
                         .padding(12.dp)
                 ) {
                     Text(
-                        text = stringResource(entry.title),
+                        text = stringResource(preference.title),
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(start = 12.dp)
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    for (v in possibleValues) {
+                    for (v in preference.possibleValues) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -265,14 +239,14 @@ fun <T : SettingsEnum> EnumPreference(
                                 .clip(CircleShape)
                                 .clickable {
                                     showDialog = false
-                                    onItemSelected(entry.key, v)
+                                    onItemSelected(preference.key, v)
                                 }
                         ) {
                             RadioButton(
                                 selected = value == v,
                                 onClick = {
                                     showDialog = false
-                                    onItemSelected(entry.key, v)
+                                    onItemSelected(preference.key, v)
                                 },
                             )
 
@@ -296,36 +270,36 @@ fun <T : SettingsEnum> EnumPreference(
 }
 
 @Composable
-fun SwitchPreference(
-    entry: SettingsEntry<Boolean>,
+fun PreferenceSwitchView(
+    preference: Preference.Switch,
     onSwitchChange: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
     
-    val summary = entry.summary?.let { stringResource(it) }.orEmpty()
-    val value = preferencesValues[entry.key] as? Boolean ?: entry.default
+    val summary = stringResource(preference.summary)
+    val value = preferencesValues[preference.key] as? Boolean ?: preference.default
 
-    Preference(
-        icon = painterResource(entry.icon),
-        title = stringResource(entry.title),
+    PreferenceView(
+        icon = painterResource(preference.icon),
+        title = stringResource(preference.title),
         summary = summary,
         trailing = {
             Switch(
                 checked = value,
                 onCheckedChange = {
-                    onSwitchChange(entry.key, it)
+                    onSwitchChange(preference.key, it)
                 },
             )
         },
         onClick = {
-            onSwitchChange(entry.key, !value)
+            onSwitchChange(preference.key, !value)
         },
     )
 }
 
 @Composable
-fun Preference(
+fun PreferenceView(
     icon: Painter,
     title: String,
     summary: String,
@@ -380,6 +354,7 @@ private fun Preview() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
+                screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
                 handleUiEvent = {},
             )
         }

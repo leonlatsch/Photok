@@ -33,7 +33,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SettingsUiState(
-    val preferencesValues: Map<String, *>,
+    val screenConfig: PreferenceScreenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+    val preferencesValues: Map<String, *> = emptyMap<String, String>(),
 )
 
 sealed interface SettingsUiEvent {
@@ -50,9 +51,10 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState = config.valuesFlow.map {  values ->
         SettingsUiState(
+            screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
             preferencesValues = values,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SettingsUiState(config.values))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SettingsUiState(preferencesValues = config.values))
 
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {

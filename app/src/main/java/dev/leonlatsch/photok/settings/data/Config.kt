@@ -21,7 +21,6 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.settings.domain.models.SettingsEntry
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import kotlinx.coroutines.CoroutineScope
