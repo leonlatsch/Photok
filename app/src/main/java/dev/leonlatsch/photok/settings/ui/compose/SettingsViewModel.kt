@@ -26,7 +26,9 @@ import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -77,8 +79,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     private val callbacks: Map<String, (value: Any?, Fragment) -> Boolean> = mapOf(
-        "action_change_password" to ::onChangePassword,
+        SettingsFragment.KEY_ACTION_CHANGE_PASSWORD to ::onChangePassword,
         Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED to ::onBiometricUnlockChanged,
+        SettingsFragment.KEY_ACTION_HIDE_APP to ::onHideApp,
     )
 
     private fun onChangePassword(value: Any?, fragment: Fragment): Boolean {
@@ -121,6 +124,11 @@ class SettingsViewModel @Inject constructor(
             config.biometricAuthenticationEnabled = result.isSuccess
         }
 
+        return false
+    }
+
+    private fun onHideApp(value: Any?, fragment: Fragment): Boolean {
+        ToggleAppVisibilityDialog().show(fragment.childFragmentManager)
         return false
     }
 }

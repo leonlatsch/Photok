@@ -19,13 +19,14 @@ package dev.leonlatsch.photok.settings.ui.hideapp.usecase
 import android.app.Application
 import android.content.ComponentName
 import android.content.pm.PackageManager
+import dev.leonlatsch.photok.BuildConfig
 import javax.inject.Inject
 
 private val MAIN_LAUNCHER_COMPONENT =
-    ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.MainLauncher")
+    ComponentName(BuildConfig.APPLICATION_ID, "${BuildConfig.APPLICATION_ID}.MainLauncher")
 
 private val STEALTH_LAUNCHER_COMPONENT =
-    ComponentName("dev.leonlatsch.photok", "dev.leonlatsch.photok.StealthLauncher")
+    ComponentName(BuildConfig.APPLICATION_ID, "${BuildConfig.APPLICATION_ID}.StealthLauncher")
 
 class ToggleMainComponentUseCase @Inject constructor(
     private val app: Application

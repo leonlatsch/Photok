@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.settings.ui.compose
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_AUTO_FULLSCREEN
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_AUTO_FULLSCREEN_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE
@@ -29,9 +30,11 @@ import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_A
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN_DEFAULT
+import dev.leonlatsch.photok.settings.domain.models.LockTimeout
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
+import dev.leonlatsch.photok.settings.ui.SettingsFragment
 
 data class PreferenceScreenConfig(
     val sections: List<PreferenceSection>,
@@ -114,7 +117,7 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
             ),
             Preference.Simple(
-                key = "action_change_password",
+                key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
                 icon = R.drawable.ic_key,
                 title = R.string.change_password_title,
                 summary = R.string.settings_security_change_password_summary,
@@ -125,54 +128,28 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 title = R.string.settings_security_biometric_title,
                 summary = R.string.settings_security_biometric_summary,
                 default = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT,
-            )
+            ),
+            Preference.Enum(
+                key = Config.SECURITY_LOCK_TIMEOUT,
+                icon = R.drawable.ic_schedule,
+                title = R.string.settings_security_timeout_title,
+                default = LockTimeout.FiveMinute,
+                possibleValues = LockTimeout.entries,
+            ),
+            Preference.Simple( // TODO: Impl new dialog for this. Old one uses androix.preferences dialog
+                key = Config.SECURITY_DIAL_LAUNCH_CODE,
+                icon = R.drawable.ic_dialpad,
+                title = R.string.settings_security_launch_code_title,
+                summary = R.string.settings_security_launch_code_summary,
+            ),
+
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_HIDE_APP,
+                icon = R.drawable.ic_app_blocking,
+                title = R.string.settings_security_hide_app_title,
+                summary = R.string.settings_security_hide_app_summary,
+            ),
         ),
     )
 )
 
-/**
- * Entries for the preferences screen. Used for visual representation.
- * Use const values from Config for key and default.
- */
-//object PreferencesEntries {
-//
-//    val SystemDesign = SettingsEntry(
-//        key = SYSTEM_DESIGN,
-//        default = SYSTEM_DESIGN_DEFAULT,
-//        icon = R.drawable.ic_brush,
-//        title = R.string.settings_app_design_title,
-//        summary = null,
-//    )
-//
-//    val GalleryAutoFullscreen = SettingsEntry(
-//        key = GALLERY_AUTO_FULLSCREEN,
-//        default = GALLERY_AUTO_FULLSCREEN_DEFAULT,
-//        icon = R.drawable.ic_fullscreen,
-//        title = R.string.settings_gallery_auto_fullscreen_title,
-//        summary = R.string.settings_gallery_auto_fullscreen_summary,
-//    )
-//
-//    val GalleryStartPage = SettingsEntry(
-//        key = GALLERY_START_PAGE,
-//        default = GALLERY_START_PAGE_DEFAULT,
-//        icon = R.drawable.ic_gallery_thumbnail,
-//        title = R.string.settings_gallery_start_page_title,
-//        summary = null,
-//    )
-//
-//    val SecurityAllowScreenshots = SettingsEntry(
-//        key = SECURITY_ALLOW_SCREENSHOTS,
-//        default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
-//        icon = R.drawable.ic_screen_lock,
-//        title = R.string.settings_security_allow_screenshots_title,
-//        summary = R.string.settings_security_allow_screenshots_summary,
-//    )
-//
-//    val BiometricUnlock = SettingsEntry(
-//        key = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED,
-//        default = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT,
-//        icon = R.drawable.ic_fingerprint,
-//        title = R.string.settings_security_biometric_title,
-//        summary = R.string.settings_security_biometric_summary,
-//    )
-//}
