@@ -16,9 +16,9 @@
 
 package dev.leonlatsch.photok.settings.ui.checkpassword
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR

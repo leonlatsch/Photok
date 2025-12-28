@@ -20,17 +20,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 
