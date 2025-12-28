@@ -111,7 +111,7 @@ private fun CreateAlbumDialogContent(
                 }
                 Button(
                     onClick = {
-                        onCreatePressed(albumName)
+                        onCreatePressed(albumName.trim())
                         onDismissRequest()
                     },
                     enabled = albumName.isNotEmpty()

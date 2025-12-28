@@ -91,7 +91,7 @@ fun RenameAlbumDialog(
                         Button(
                             onClick = {
                                 onDismiss()
-                                onRename(albumName)
+                                onRename(albumName.trim())
                             },
                             enabled = albumName.isNotEmpty()
                         ) {

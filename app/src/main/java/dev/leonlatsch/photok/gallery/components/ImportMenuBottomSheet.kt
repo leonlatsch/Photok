@@ -38,8 +38,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionProvider
+import androidx.compose.material3.TooltipDefaults.rememberTooltipPositionProvider
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
@@ -181,7 +183,9 @@ fun ImportWarningChip(modifier: Modifier = Modifier) {
     val tooltipState = rememberTooltipState(isPersistent = false)
 
     TooltipBox(
-        positionProvider = rememberPlainTooltipPositionProvider(),
+        positionProvider = rememberTooltipPositionProvider(
+            positioning = TooltipAnchorPosition.Above,
+        ),
         state = tooltipState,
         tooltip = {
             PlainTooltip(shape = RoundedCornerShape(8.dp)) {
@@ -223,11 +227,13 @@ fun AlbumNameChip(
     val tooltipState = rememberTooltipState(isPersistent = false)
 
     TooltipBox(
-        positionProvider = rememberPlainTooltipPositionProvider(),
+        positionProvider = rememberTooltipPositionProvider(
+            positioning = TooltipAnchorPosition.Above,
+        ),
         state = tooltipState,
         tooltip = {
             PlainTooltip(shape = RoundedCornerShape(8.dp)) {
-                Text(text = stringResource(R.string.import_menu_album_tooltip, albumName))
+                Text(text = stringResource(R.string.import_menu_album_tooltip, albumName.trim()))
             }
         }
     ) {
@@ -242,7 +248,7 @@ fun AlbumNameChip(
             },
             label = {
                 Text(
-                    text = albumName,
+                    text = albumName.trim(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
