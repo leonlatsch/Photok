@@ -78,8 +78,10 @@ import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
+import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
@@ -108,6 +110,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
+
+        viewModel.registerPreferenceCallback(Config.SYSTEM_DESIGN) {
+            it as SystemDesignEnum
+            setAppDesign(it)
+            true
+        }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CHANGE_PASSWORD) {
             ChangePasswordDialog().show(fragment.childFragmentManager)
@@ -294,10 +302,21 @@ fun PreferenceSectionView(
                 .padding(
                     horizontal = 60.dp
                 )
-                .padding(
-                    bottom = 10.dp
-                )
         )
+
+        if (section.summary != null) {
+            Text(
+                text = stringResource(section.summary),
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 60.dp
+                    )
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         content()
     }
