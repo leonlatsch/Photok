@@ -193,7 +193,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.activity:activity:1.12.0")
-    implementation("androidx.preference:preference-ktx:1.2.1")
 
     // Biometric
     implementation("androidx.biometric:biometric:1.1.0")

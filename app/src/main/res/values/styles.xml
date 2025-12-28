@@ -43,7 +43,6 @@
         <item name="editTextStyle">@style/editTextStyle</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogBaseStyle</item>
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
-        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
     </style>
 
     <style name="ActionModeCloseButtonStyle">
@@ -173,10 +172,5 @@
 
     <style name="AlertDialogButtonBarNeutralStyle" parent="AlertDialogButtonBarStyle">
         <item name="android:textColor">@color/textColor</item>
-    </style>
-
-    <!-- SETTINGS -->
-    <style name="AppTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
-        <item name="android:layout">@layout/preference_layout_template</item>
     </style>
 </resources>
