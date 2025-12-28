@@ -30,6 +30,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewSettingsFragment : Fragment() {
+
+    @Inject
+    lateinit var config: Config
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +42,8 @@ class NewSettingsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 CompositionLocalProvider(
-                    LocalFragment provides this@NewSettingsFragment
+                    LocalFragment provides this@NewSettingsFragment,
+                    LocalConfig provides config,
                 ) {
                     SettingsScreen()
                 }

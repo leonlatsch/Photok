@@ -85,6 +85,7 @@ import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
+import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -108,6 +109,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(fragment.parentFragmentManager)
     }
 
+    var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
 
@@ -124,6 +127,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
         viewModel.registerPreferenceCallback(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED) {
             viewModel.onBiometricUnlockChanged(it, fragment)
+        }
+
+        viewModel.registerPreferenceCallback(Config.SECURITY_DIAL_LAUNCH_CODE) {
+            showSecretLaunchCodeDialog = true
+            false
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_HIDE_APP) {
@@ -186,6 +194,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
     }
+
+    SecretLaunchCodeDialog(
+        show = showSecretLaunchCodeDialog,
+        onDismissRequest = { showSecretLaunchCodeDialog = false },
+    )
 }
 
 @Composable
@@ -203,6 +216,7 @@ fun SettingsScreen() {
     }
 
     SettingsCallbacks(viewModel)
+
 }
 
 
