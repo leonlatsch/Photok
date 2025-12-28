@@ -79,7 +79,7 @@
     <string name="view_photo_detail_import_at_label">İçe Aktarma Tarihi:</string>
     <string name="view_photo_detail_file_type_label">Dosya Türü:</string>
     <string name="view_photo_detail_size_label">Dosya Boyutu:</string>
-    <string name="view_photo_detail_last_modified">Son düzenleme</string>
+    <string name="view_photo_detail_last_modified">Son düzenleme:</string>
     <string name="view_photo_play_button_description">Videoyu Oynat</string>
 
     <!-- MAIN MENU -->
