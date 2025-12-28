@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
@@ -48,7 +49,7 @@ class Config(context: Context) {
     val values: Map<String, *>
         get() = preferences.all
 
-    val valuesFlow: StateFlow<Map<String, *>> = callbackFlow {
+    val valuesFlow: Flow<Map<String, *>> = callbackFlow {
         send(preferences.all)
 
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, _ ->
@@ -59,7 +60,7 @@ class Config(context: Context) {
         awaitClose {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
-    }.stateIn(coroutineScope, SharingStarted.Eagerly, preferences.all)
+    }
 
     /**
      * Determines if the app has started before.
