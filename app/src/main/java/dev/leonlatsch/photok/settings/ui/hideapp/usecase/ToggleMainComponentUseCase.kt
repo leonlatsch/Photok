@@ -23,10 +23,10 @@ import dev.leonlatsch.photok.BuildConfig
 import javax.inject.Inject
 
 private val MAIN_LAUNCHER_COMPONENT =
-    ComponentName(BuildConfig.APPLICATION_ID, "${BuildConfig.APPLICATION_ID}.MainLauncher")
+    ComponentName(BuildConfig.APPLICATION_ID, "dev.leonlatsch.photok.MainLauncher")
 
 private val STEALTH_LAUNCHER_COMPONENT =
-    ComponentName(BuildConfig.APPLICATION_ID, "${BuildConfig.APPLICATION_ID}.StealthLauncher")
+    ComponentName(BuildConfig.APPLICATION_ID, "dev.leonlatsch.photok.StealthLauncher")
 
 class ToggleMainComponentUseCase @Inject constructor(
     private val app: Application
