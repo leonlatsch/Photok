@@ -42,6 +42,7 @@ data class PreferenceScreenConfig(
 
 data class PreferenceSection(
     @get:StringRes val title: Int,
+    @get:StringRes val summary: Int?,
     val preferences: List<Preference>,
 )
 
@@ -77,6 +78,7 @@ sealed interface Preference {
 val PreferenceScreenConfigContent = listOf<PreferenceSection>(
     PreferenceSection(
         title = R.string.settings_category_app,
+        summary = null,
         preferences = listOf(
             Preference.Enum(
                 key = SYSTEM_DESIGN,
@@ -89,6 +91,7 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
     ),
     PreferenceSection(
         title = R.string.settings_category_gallery,
+        summary = null,
         preferences = listOf(
             Preference.Switch(
                 key = GALLERY_AUTO_FULLSCREEN,
@@ -108,6 +111,7 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
     ),
     PreferenceSection(
         title = R.string.settings_category_security,
+        summary = null,
         preferences = listOf(
             Preference.Switch(
                 key = SECURITY_ALLOW_SCREENSHOTS,
@@ -148,6 +152,38 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 icon = R.drawable.ic_app_blocking,
                 title = R.string.settings_security_hide_app_title,
                 summary = R.string.settings_security_hide_app_summary,
+            ),
+        ),
+    ),
+    PreferenceSection(
+        title = R.string.settings_category_advanced,
+        summary = R.string.settings_category_advanced_summary,
+        preferences = listOf(
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_RESET,
+                icon = R.drawable.ic_warning,
+                title = R.string.settings_advanced_reset_title,
+                summary = R.string.settings_advanced_reset_summary,
+            ),
+            Preference.Simple(
+                SettingsFragment.KEY_ACTION_BACKUP,
+                icon = R.drawable.ic_save_as,
+                title = R.string.settings_advanced_backup_title,
+                summary = R.string.settings_advanced_backup_summary,
+            ),
+            Preference.Switch(
+                Config.ADVANCED_DELETE_IMPORTED_FILES,
+                icon = R.drawable.ic_delete,
+                title = R.string.settings_advanced_delete_imported_title,
+                summary = R.string.settings_advanced_delete_imported_summary,
+                default = Config.ADVANCED_DELETE_IMPORTED_FILES_DEFAULT,
+            ),
+            Preference.Switch(
+                Config.ADVANCED_DELETE_EXPORTED_FILES,
+                icon = R.drawable.ic_delete,
+                title = R.string.settings_advanced_delete_exported_title,
+                summary = R.string.settings_advanced_delete_exported_summary,
+                default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
             ),
         ),
     )

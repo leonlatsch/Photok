@@ -16,18 +16,24 @@
 
 package dev.leonlatsch.photok.settings.ui.compose
 
+import android.app.Application
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,13 +48,17 @@ data class SettingsUiState(
 )
 
 sealed interface SettingsUiEvent {
-    data class OnPreferenceClick(val preference: Preference, val value: Any?, val fragment: Fragment) : SettingsUiEvent
+    data class OnPreferenceClick(val preference: Preference, val value: Any?) : SettingsUiEvent
 }
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val config: Config,
     private val biometricUnlock: BiometricUnlock,
+    private val app: Application,
+    private val photoRepository: PhotoRepository,
+    private val albumRepository: AlbumRepository,
+    private val passwordManager: PasswordManager,
 ) : ViewModel() {
 
 
@@ -62,7 +72,7 @@ class SettingsViewModel @Inject constructor(
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {
             is SettingsUiEvent.OnPreferenceClick -> {
-                val proceed = callbacks[event.preference.key]?.invoke(event.value, event.fragment) ?: true
+                val proceed = callbacks[event.preference.key]?.invoke(event.value) ?: true
 
                 if (!proceed) {
                     return
@@ -78,18 +88,14 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private val callbacks: Map<String, (value: Any?, Fragment) -> Boolean> = mapOf(
-        SettingsFragment.KEY_ACTION_CHANGE_PASSWORD to ::onChangePassword,
-        Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED to ::onBiometricUnlockChanged,
-        SettingsFragment.KEY_ACTION_HIDE_APP to ::onHideApp,
-    )
 
-    private fun onChangePassword(value: Any?, fragment: Fragment): Boolean {
-        ChangePasswordDialog().show(fragment.childFragmentManager)
-        return true
+    fun registerPreferenceCallback(key: String, callback: (value: Any?) -> Boolean) {
+        callbacks[key] = callback
     }
 
-    private fun onBiometricUnlockChanged(value: Any?, fragment: Fragment): Boolean {
+    private val callbacks: MutableMap<String, (value: Any?) -> Boolean> = mutableMapOf()
+
+    fun onBiometricUnlockChanged(value: Any?, fragment: Fragment): Boolean {
         value as Boolean
 
         if (!value) {
@@ -127,8 +133,16 @@ class SettingsViewModel @Inject constructor(
         return false
     }
 
-    private fun onHideApp(value: Any?, fragment: Fragment): Boolean {
-        ToggleAppVisibilityDialog().show(fragment.childFragmentManager)
-        return false
+    fun resetComponents() = viewModelScope.launch {
+        val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
+        for (photo in allPhotos) {
+            photoRepository.deleteInternalPhotoData(photo)
+        }
+        photoRepository.deleteAll()
+        albumRepository.deleteAll()
+        albumRepository.unlinkAll()
+
+        passwordManager.resetPassword()
+        (app as BaseApplication).lockApp()
     }
 }

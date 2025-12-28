@@ -16,6 +16,9 @@
 
 package dev.leonlatsch.photok.settings.ui.compose
 
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,6 +46,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
@@ -64,17 +68,81 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupStrategy
+import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.ui.SettingsFragment
+import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
+import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
+
+fun createBackupFilename(): String {
+    return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
+}
+
+@Composable
+fun SettingsCallbacks(viewModel: SettingsViewModel) {
+    val fragment = LocalFragment.current
+    val context = LocalContext.current
+    val activity = LocalActivity.current
+
+    val backupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+        fragment ?: return@rememberLauncherForActivityResult
+        BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(fragment.parentFragmentManager)
+    }
+
+    LaunchedEffect(Unit) {
+        fragment ?: return@LaunchedEffect
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CHANGE_PASSWORD) {
+            ChangePasswordDialog().show(fragment.childFragmentManager)
+            false
+        }
+
+        viewModel.registerPreferenceCallback(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED) {
+            viewModel.onBiometricUnlockChanged(it, fragment)
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_HIDE_APP) {
+            ToggleAppVisibilityDialog().show(fragment.childFragmentManager)
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RESET) {
+            CheckPasswordDialog {
+                Dialogs.showConfirmDialog(
+                    context,
+                    context.getString(R.string.settings_advanced_reset_confirmation)
+                ) { _, _ ->
+                    viewModel.resetComponents()
+                }
+            }.show(fragment.childFragmentManager)
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BACKUP) {
+            backupLauncher.launchAndIgnoreTimer(
+                createBackupFilename(),
+                activity = activity,
+            )
+            false
+        }
+    }
+}
 
 @Composable
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CompositionLocalProvider(
@@ -85,6 +153,8 @@ fun SettingsScreen() {
             handleUiEvent = viewModel::handleUiEvent,
         )
     }
+
+    SettingsCallbacks(viewModel)
 }
 
 
@@ -132,7 +202,7 @@ fun SettingsContent(
                                         summary = stringResource(preference.summary),
                                         onClick = {
                                             fragment ?: return@PreferenceView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null, fragment))
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
                                         }
                                     )
                                 }
@@ -141,7 +211,7 @@ fun SettingsContent(
                                         preference = preference,
                                         onSwitchChange = { value ->
                                             fragment ?: return@PreferenceSwitchView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value, fragment))
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
                                     )
                                 }
@@ -150,7 +220,7 @@ fun SettingsContent(
                                         preference = preference,
                                         onItemSelected = { value ->
                                             fragment ?: return@PreferenceEnumView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value, fragment))
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
                                     )
                                 }
