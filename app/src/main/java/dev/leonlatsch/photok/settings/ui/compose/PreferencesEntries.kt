@@ -186,6 +186,42 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
             ),
         ),
+    ),
+    PreferenceSection(
+        title = R.string.settings_other_title,
+        summary = null,
+        preferences = listOf(
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_FEEDBACK,
+                icon = R.drawable.ic_feedback,
+                title = R.string.settings_other_feedback_title,
+                summary = R.string.settings_other_feedback_summary,
+            ),
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_DONATE,
+                icon = R.drawable.ic_money,
+                title = R.string.settings_other_donate_title,
+                summary = R.string.settings_other_donate_summary,
+            ),
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_SOURCECODE,
+                icon = R.drawable.ic_code,
+                title = R.string.settings_other_sourcecode_title,
+                summary = R.string.settings_other_sourcecode_summary,
+            ),
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_CREDITS,
+                icon = R.drawable.ic_book,
+                title = R.string.settings_other_credits_title,
+                summary = R.string.settings_other_credits_summary,
+            ),
+            Preference.Simple(
+                key = SettingsFragment.KEY_ACTION_ABOUT,
+                icon = R.drawable.ic_info,
+                title = R.string.settings_other_about_title,
+                summary = R.string.settings_other_about_summary,
+            ),
+        ),
     )
 )
 

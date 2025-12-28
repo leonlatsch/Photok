@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.settings.ui.compose
 
+import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -67,12 +68,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
@@ -135,6 +140,41 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
                 createBackupFilename(),
                 activity = activity,
             )
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_FEEDBACK) {
+            val email = context.getString(R.string.settings_other_feedback_mail_emailaddress)
+            val subject =
+                "${context.getString(R.string.settings_other_feedback_mail_subject)} (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
+            val text = context.getString(R.string.settings_other_feedback_mail_body)
+
+            context.sendEmail(
+                email = email,
+                subject = subject,
+                text = text,
+                chooserTitle = context.getString(R.string.settings_other_feedback_title)
+            )
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_DONATE) {
+            fragment.openUrl(context.getString(R.string.settings_other_donate_url))
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_SOURCECODE) {
+            fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CREDITS) {
+            fragment.findNavController().navigate(R.id.action_newSettingsFragment_to_creditsFragment)
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_ABOUT) {
+            fragment.findNavController().navigate(R.id.action_newSettingsFragment_to_aboutFragment)
             false
         }
     }
