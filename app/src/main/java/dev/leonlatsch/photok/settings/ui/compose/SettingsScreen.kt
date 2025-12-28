@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -40,7 +40,6 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -363,25 +362,23 @@ fun <T : SettingsEnum> PreferenceEnumView(
     )
 
     if (showDialog) {
-
-        BasicAlertDialog(
+        AlertDialog(
             onDismissRequest = { showDialog = false },
-        ) {
-            Surface(
-                shape = MaterialTheme.shapes.extraLarge,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(12.dp)
+            confirmButton = {},
+            dismissButton = {
+                TextButton(
+                    onClick = { showDialog = false },
                 ) {
-                    Text(
-                        text = stringResource(preference.title),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(start = 12.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
+                    Text(stringResource(R.string.common_cancel))
+                }
+            },
+            title = {
+                Text(
+                    text = stringResource(preference.title),
+                )
+            },
+            text = {
+                Column {
                     for (v in preference.possibleValues) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -407,16 +404,9 @@ fun <T : SettingsEnum> PreferenceEnumView(
                             )
                         }
                     }
-
-                    TextButton(
-                        onClick = { showDialog = false },
-                        modifier = Modifier.align(Alignment.End),
-                    ) {
-                        Text(stringResource(R.string.common_cancel))
-                    }
                 }
-            }
-        }
+            },
+        )
     }
 }
 
