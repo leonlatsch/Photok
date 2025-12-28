@@ -66,6 +66,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
@@ -93,6 +94,8 @@ fun SettingsContent(
     screenConfig: PreferenceScreenConfig,
     handleUiEvent: (SettingsUiEvent) -> Unit,
 ) {
+    val fragment = LocalFragment.current
+
     AppTheme {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
         Scaffold(
@@ -127,26 +130,27 @@ fun SettingsContent(
                                         icon = painterResource(preference.icon),
                                         title = stringResource(preference.title),
                                         summary = stringResource(preference.summary),
+                                        onClick = {
+                                            fragment ?: return@PreferenceView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null, fragment))
+                                        }
                                     )
                                 }
                                 is Preference.Switch -> {
                                     PreferenceSwitchView(
                                         preference = preference,
-                                        onSwitchChange = { key, value ->
-                                            handleUiEvent(SettingsUiEvent.ToggleSwitch(key, value))
+                                        onSwitchChange = { value ->
+                                            fragment ?: return@PreferenceSwitchView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value, fragment))
                                         },
                                     )
                                 }
                                 is Preference.Enum<*> -> {
                                     PreferenceEnumView(
                                         preference = preference,
-                                        onItemSelected = { key, value ->
-                                            handleUiEvent(
-                                                SettingsUiEvent.SetEnumValue(
-                                                    key,
-                                                    value,
-                                                )
-                                            )
+                                        onItemSelected = { value ->
+                                            fragment ?: return@PreferenceEnumView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value, fragment))
                                         },
                                     )
                                 }
@@ -193,7 +197,7 @@ fun PreferenceSectionView(
 @Composable
 fun <T : SettingsEnum> PreferenceEnumView(
     preference: Preference.Enum<T>,
-    onItemSelected: (String, T) -> Unit,
+    onItemSelected: (T) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -239,14 +243,14 @@ fun <T : SettingsEnum> PreferenceEnumView(
                                 .clip(CircleShape)
                                 .clickable {
                                     showDialog = false
-                                    onItemSelected(preference.key, v)
+                                    onItemSelected(v)
                                 }
                         ) {
                             RadioButton(
                                 selected = value == v,
                                 onClick = {
                                     showDialog = false
-                                    onItemSelected(preference.key, v)
+                                    onItemSelected(v)
                                 },
                             )
 
@@ -272,7 +276,7 @@ fun <T : SettingsEnum> PreferenceEnumView(
 @Composable
 fun PreferenceSwitchView(
     preference: Preference.Switch,
-    onSwitchChange: (String, Boolean) -> Unit,
+    onSwitchChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -288,13 +292,14 @@ fun PreferenceSwitchView(
             Switch(
                 checked = value,
                 onCheckedChange = {
-                    onSwitchChange(preference.key, it)
+                    onSwitchChange(it)
                 },
             )
         },
         onClick = {
-            onSwitchChange(preference.key, !value)
+            onSwitchChange(!value)
         },
+        modifier = modifier
     )
 }
 

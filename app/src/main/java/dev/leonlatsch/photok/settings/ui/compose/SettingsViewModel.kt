@@ -21,10 +21,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
+import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -38,10 +40,7 @@ data class SettingsUiState(
 )
 
 sealed interface SettingsUiEvent {
-    data class ToggleSwitch(val key: String, val value: Boolean) : SettingsUiEvent
-    data class SetEnumValue(val key: String, val value: SettingsEnum) : SettingsUiEvent
-
-    data class ToggleBiometricUnlock(val value: Boolean, val fragment: Fragment) : SettingsUiEvent
+    data class OnPreferenceClick(val preference: Preference, val value: Any?, val fragment: Fragment) : SettingsUiEvent
 }
 
 @HiltViewModel
@@ -49,6 +48,8 @@ class SettingsViewModel @Inject constructor(
     private val config: Config,
     private val biometricUnlock: BiometricUnlock,
 ) : ViewModel() {
+
+
     val uiState = config.valuesFlow.map {  values ->
         SettingsUiState(
             screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
@@ -58,41 +59,68 @@ class SettingsViewModel @Inject constructor(
 
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {
-            is SettingsUiEvent.ToggleSwitch -> config.putBoolean(event.key, event.value)
-            is SettingsUiEvent.SetEnumValue -> config.putString(event.key, event.value.value)
-            is SettingsUiEvent.ToggleBiometricUnlock -> {
-                if (!event.value) {
-                    viewModelScope.launch { biometricUnlock.reset() }
-                    config.biometricAuthenticationEnabled = false
+            is SettingsUiEvent.OnPreferenceClick -> {
+                val proceed = callbacks[event.preference.key]?.invoke(event.value, event.fragment) ?: true
+
+                if (!proceed) {
                     return
                 }
 
-                val context = event.fragment.context ?: return
+                when (event.preference) {
 
-                if (!biometricUnlock.areBiometricsAvailable()) {
-                    Dialogs.showLongToast(
-                        context,
-                        context.getString(R.string.settings_security_biometric_not_available),
-                    )
-                    return
-                }
-
-                viewModelScope.launch {
-
-                    val result = biometricUnlock.setup(event.fragment)
-
-                    result.onFailure {
-                        if (it !is UserCanceledBiometricsException) {
-                            Dialogs.showLongToast(
-                                context,
-                                it.localizedMessage ?: context.getString(R.string.common_error),
-                            )
-                        }
-                    }
-
-                    config.biometricAuthenticationEnabled = result.isSuccess
+                    is Preference.Enum<*> -> config.putString(event.preference.key, (event.value as SettingsEnum).value)
+                    is Preference.Switch -> config.putBoolean(event.preference.key, event.value as Boolean)
+                    is Preference.Simple -> Unit
                 }
             }
         }
+    }
+
+    private val callbacks: Map<String, (value: Any?, Fragment) -> Boolean> = mapOf(
+        "action_change_password" to ::onChangePassword,
+        Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED to ::onBiometricUnlockChanged,
+    )
+
+    private fun onChangePassword(value: Any?, fragment: Fragment): Boolean {
+        ChangePasswordDialog().show(fragment.childFragmentManager)
+        return true
+    }
+
+    private fun onBiometricUnlockChanged(value: Any?, fragment: Fragment): Boolean {
+        value as Boolean
+
+        if (!value) {
+            viewModelScope.launch { biometricUnlock.reset() }
+            config.biometricAuthenticationEnabled = false
+            return false
+        }
+
+        val context = fragment.context ?: return false
+
+        if (!biometricUnlock.areBiometricsAvailable()) {
+            Dialogs.showLongToast(
+                context,
+                context.getString(R.string.settings_security_biometric_not_available),
+            )
+            return false
+        }
+
+        viewModelScope.launch {
+
+            val result = biometricUnlock.setup(fragment)
+
+            result.onFailure {
+                if (it !is UserCanceledBiometricsException) {
+                    Dialogs.showLongToast(
+                        context,
+                        it.localizedMessage ?: context.getString(R.string.common_error),
+                    )
+                }
+            }
+
+            config.biometricAuthenticationEnabled = result.isSuccess
+        }
+
+        return false
     }
 }
