@@ -116,4 +116,18 @@ class ImageViewerViewModel @Inject constructor(
             }
 
         }
+
+    /**
+     * Adds the current photo to an album.
+     *
+     * @param albumId The UUID of the album to add the photo to
+     * @param onSuccess Block called on success
+     */
+    fun addCurrentPhotoToAlbum(albumId: String, onSuccess: () -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
+            currentPhoto?.let { photo ->
+                albumRepository.link(listOf(photo.uuid), albumId)
+                onMain { onSuccess() }
+            }
+        }
 }

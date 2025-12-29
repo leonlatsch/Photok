@@ -81,6 +81,31 @@ interface PhotoDao {
     @Query("SELECT COUNT(*) FROM photo")
     suspend fun countAll(): Int
 
+    /**
+     * Get total size of all photos in bytes.
+     */
+    @Query("SELECT COALESCE(SUM(size), 0) FROM photo")
+    suspend fun getTotalSize(): Long
+
+    /**
+     * Observe photos that are not in any album.
+     */
+    @Query("""
+        SELECT * FROM photo 
+        WHERE photo_uuid NOT IN (SELECT photo_uuid FROM album_photos_cross_ref)
+        ORDER BY importedAt DESC
+    """)
+    fun observeUnsortedPhotos(): Flow<List<Photo>>
+
+    /**
+     * Count photos that are not in any album.
+     */
+    @Query("""
+        SELECT COUNT(*) FROM photo 
+        WHERE photo_uuid NOT IN (SELECT photo_uuid FROM album_photos_cross_ref)
+    """)
+    fun observeUnsortedCount(): Flow<Int>
+
     // Sorted
 
     fun observeAllSorted(sort: Sort): Flow<List<Photo>> {

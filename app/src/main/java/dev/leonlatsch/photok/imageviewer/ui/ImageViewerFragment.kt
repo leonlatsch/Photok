@@ -174,6 +174,18 @@ class ImageViewerFragment :
         }
     }
 
+    /**
+     * On add to album clicked.
+     * Called by ui.
+     */
+    private fun onAddToAlbumClicked() {
+        AlbumPickerBottomSheetDialogFragment { albumId ->
+            viewModel.addCurrentPhotoToAlbum(albumId) {
+                Dialogs.showShortToast(requireContext(), getString(R.string.image_viewer_added_to_album))
+            }
+        }.show(childFragmentManager, "album_picker")
+    }
+
     @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
 
@@ -200,6 +212,11 @@ class ImageViewerFragment :
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menuViewPhotoInfo -> {
             onDetailsClicked()
+            true
+        }
+
+        R.id.menuViewPhotoAddToAlbum -> {
+            onAddToAlbumClicked()
             true
         }
 

@@ -69,7 +69,7 @@ fun AlbumPickerDialog(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AlbumPickerContent(
+internal fun AlbumPickerContent(
     uiState: AlbumPickerUiState,
     onAlbumSelected: (String) -> Unit,
     onCreateNewAlbum: () -> Unit,

@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.settings.ui
 
+import android.text.format.Formatter
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -50,6 +52,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.settings.domain.VaultStats
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -62,6 +65,7 @@ sealed interface AboutUiEvent {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
+    vaultStats: VaultStats?,
     handleUiEvent: (AboutUiEvent) -> Unit,
 ) {
     val context = LocalContext.current
@@ -161,6 +165,22 @@ fun AboutScreen(
                     Text(BuildConfig.VERSION_NAME)
                 }
 
+                if (vaultStats != null) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        Text(text = stringResource(R.string.about_vault_stats))
+                        Text(
+                            text = stringResource(
+                                R.string.about_vault_stats_format,
+                                vaultStats.totalFiles,
+                                Formatter.formatFileSize(context, vaultStats.totalSizeBytes)
+                            )
+                        )
+                    }
+                }
+
                 Text(
                     text = stringResource(R.string.about_developed_by),
                     modifier = Modifier
@@ -188,6 +208,7 @@ fun AboutScreen(
 @Composable
 private fun Preview() {
     AboutScreen(
+        vaultStats = VaultStats(42, 1024 * 1024 * 100),
         handleUiEvent = {},
     )
 }

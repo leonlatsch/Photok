@@ -106,7 +106,14 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 title = R.string.settings_gallery_start_page_title,
                 default = GALLERY_START_PAGE_DEFAULT,
                 possibleValues = StartPage.entries,
-            )
+            ),
+            Preference.Switch(
+                key = Config.VIDEO_LOOP_ENABLED,
+                icon = R.drawable.ic_loop,
+                title = R.string.settings_gallery_video_loop_title,
+                summary = R.string.settings_gallery_video_loop_summary,
+                default = Config.VIDEO_LOOP_ENABLED_DEFAULT,
+            ),
         )
     ),
     PreferenceSection(

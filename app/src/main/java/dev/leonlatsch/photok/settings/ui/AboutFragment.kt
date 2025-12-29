@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2021 Leon Latsch
+ *   Copyright 2020-2024 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -21,9 +21,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.LocalFragment
 
@@ -33,7 +37,10 @@ import dev.leonlatsch.photok.ui.LocalFragment
  * @since 1.0.0
  * @author Leon Latsch
  */
+@AndroidEntryPoint
 class AboutFragment : Fragment() {
+
+    private val viewModel: AboutViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +49,13 @@ class AboutFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                val vaultStats by viewModel.vaultStats.collectAsStateWithLifecycle()
+
                 CompositionLocalProvider(
                     LocalFragment provides this@AboutFragment
                 ) {
                     AboutScreen(
+                        vaultStats = vaultStats,
                         handleUiEvent = {
                             when (it) {
                                 AboutUiEvent.Close -> findNavController().navigateUp()

@@ -95,6 +95,13 @@ class Config(context: Context) {
         set(value) = putString(GALLERY_START_PAGE, value.value)
 
     /**
+     * Determines if videos should loop automatically.
+     */
+    var videoLoopEnabled: Boolean
+        get() = getBoolean(VIDEO_LOOP_ENABLED, VIDEO_LOOP_ENABLED_DEFAULT)
+        set(value) = putBoolean(VIDEO_LOOP_ENABLED, value)
+
+    /**
      * Determines if screenshots should be allowed.
      */
     var securityAllowScreenshots: Boolean
@@ -220,6 +227,9 @@ class Config(context: Context) {
 
         const val GALLERY_START_PAGE = "gallery^startPage"
         val GALLERY_START_PAGE_DEFAULT = StartPage.AllFiles
+
+        const val VIDEO_LOOP_ENABLED = "gallery^videoLoopEnabled"
+        const val VIDEO_LOOP_ENABLED_DEFAULT = false
 
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false

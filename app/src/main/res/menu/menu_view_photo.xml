@@ -23,4 +23,10 @@
         android:title="@string/view_photo_detail_title"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menuViewPhotoAddToAlbum"
+        android:icon="@drawable/ic_folder"
+        android:title="@string/menu_ms_add_to_album"
+        app:showAsAction="ifRoom" />
+
 </menu>
