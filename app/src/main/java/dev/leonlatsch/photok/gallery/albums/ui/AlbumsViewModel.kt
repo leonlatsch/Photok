@@ -22,6 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigationEvent
+import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,16 +36,17 @@ import javax.inject.Inject
 class AlbumsViewModel @Inject constructor(
     private val albumsRepositoryImpl: AlbumRepository,
     private val albumUiStateFactory: AlbumUiStateFactory,
+    private val photoDao: PhotoDao,
 ) : ViewModel() {
 
     private val showCreateDialog = MutableStateFlow(false)
 
-
     val uiState: StateFlow<AlbumsUiState> = combine(
         albumsRepositoryImpl.observeAllAlbumsWithPhotos(),
-        showCreateDialog
-    ) { albums, showCreateDialog ->
-        albumUiStateFactory.create(albums, showCreateDialog)
+        showCreateDialog,
+        photoDao.observeUnsortedCount()
+    ) { albums, showCreateDialog, unsortedCount ->
+        albumUiStateFactory.create(albums, showCreateDialog, unsortedCount)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumsUiState.Empty())
 
     private val navEventChannel = Channel<AlbumsNavigationEvent>()
@@ -62,4 +64,3 @@ class AlbumsViewModel @Inject constructor(
         }
     }
 }
-

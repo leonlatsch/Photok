@@ -22,6 +22,7 @@ import coil.decode.VideoFrameDecoder
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.util.DebugLogger
+import com.awxkee.jxlcoder.coil.JxlDecoder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -45,6 +46,7 @@ object ImageLoadingModule {
     ): ImageLoader = ImageLoader.Builder(context)
         .components {
             add(encryptedImageFetcherFactory)
+            add(JxlDecoder.Factory())
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)

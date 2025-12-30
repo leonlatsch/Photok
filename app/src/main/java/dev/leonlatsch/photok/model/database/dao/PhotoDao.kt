@@ -82,10 +82,22 @@ interface PhotoDao {
     suspend fun countAll(): Int
 
     /**
+     * Observe count of all photos.
+     */
+    @Query("SELECT COUNT(*) FROM photo")
+    fun observeCount(): Flow<Int>
+
+    /**
      * Get total size of all photos in bytes.
      */
     @Query("SELECT COALESCE(SUM(size), 0) FROM photo")
     suspend fun getTotalSize(): Long
+
+    /**
+     * Observe total size of all photos in bytes.
+     */
+    @Query("SELECT COALESCE(SUM(size), 0) FROM photo")
+    fun observeTotalSize(): Flow<Long>
 
     /**
      * Observe photos that are not in any album.

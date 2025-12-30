@@ -19,13 +19,20 @@ package dev.leonlatsch.photok.settings.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.settings.domain.GetVaultStatsUseCase
+import dev.leonlatsch.photok.settings.domain.ObserveVaultStatsUseCase
 import dev.leonlatsch.photok.settings.domain.VaultStats
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+
+/**
+ * UI State for About screen.
+ */
+data class AboutUiState(
+    val vaultStats: VaultStats? = null,
+)
 
 /**
  * ViewModel for the About screen.
@@ -34,19 +41,13 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AboutViewModel @Inject constructor(
-    private val getVaultStats: GetVaultStatsUseCase,
+    observeVaultStats: ObserveVaultStatsUseCase,
 ) : ViewModel() {
 
-    private val _vaultStats = MutableStateFlow<VaultStats?>(null)
-    val vaultStats: StateFlow<VaultStats?> = _vaultStats.asStateFlow()
-
-    init {
-        loadVaultStats()
-    }
-
-    private fun loadVaultStats() {
-        viewModelScope.launch {
-            _vaultStats.value = getVaultStats()
-        }
-    }
+    val uiState: StateFlow<AboutUiState> = observeVaultStats().map { stats ->
+        AboutUiState(
+            vaultStats = stats,
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AboutUiState())
 }
+

@@ -182,6 +182,9 @@ dependencies {
     implementation("io.coil-kt:coil-gif:$coilVersion")
     implementation("io.coil-kt:coil-video:$coilVersion")
 
+    // JXL (JPEG XL) Decoder for Coil
+    implementation("io.github.awxkee:jxl-coder-coil:2.2.0")
+
     // Exoplayer
     implementation("androidx.media3:media3-exoplayer:1.8.0")
     implementation("androidx.media3:media3-ui:1.8.0")

@@ -49,13 +49,13 @@ class AboutFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                val vaultStats by viewModel.vaultStats.collectAsStateWithLifecycle()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
                 CompositionLocalProvider(
                     LocalFragment provides this@AboutFragment
                 ) {
                     AboutScreen(
-                        vaultStats = vaultStats,
+                        uiState = uiState,
                         handleUiEvent = {
                             when (it) {
                                 AboutUiEvent.Close -> findNavController().navigateUp()
@@ -68,3 +68,4 @@ class AboutFragment : Fragment() {
         }
     }
 }
+

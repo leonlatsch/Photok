@@ -21,10 +21,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.toUi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+sealed interface AlbumPickerEvent {
+    data object LinkSuccess : AlbumPickerEvent
+}
 
 @HiltViewModel
 class AlbumPickerViewModel @Inject constructor(
@@ -36,4 +43,14 @@ class AlbumPickerViewModel @Inject constructor(
             albums = albums.map { it.toUi() }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
+
+    private val eventChannel = Channel<AlbumPickerEvent>()
+    val events = eventChannel.receiveAsFlow()
+
+    fun linkPhotosToAlbum(photoUUIDs: List<String>, albumUUID: String) {
+        viewModelScope.launch {
+            albumRepository.link(photoUUIDs, albumUUID)
+            eventChannel.trySend(AlbumPickerEvent.LinkSuccess)
+        }
+    }
 }

@@ -179,11 +179,12 @@ class ImageViewerFragment :
      * Called by ui.
      */
     private fun onAddToAlbumClicked() {
-        AlbumPickerBottomSheetDialogFragment { albumId ->
-            viewModel.addCurrentPhotoToAlbum(albumId) {
+        val currentPhotoUuid = viewModel.currentPhoto?.uuid ?: return
+        AlbumPickerBottomSheetDialogFragment()
+            .setPhotosToLink(listOf(currentPhotoUuid)) {
                 Dialogs.showShortToast(requireContext(), getString(R.string.image_viewer_added_to_album))
             }
-        }.show(childFragmentManager, "album_picker")
+            .show(childFragmentManager, "album_picker")
     }
 
     @Suppress("DEPRECATION")

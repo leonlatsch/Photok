@@ -37,3 +37,4 @@ class AlbumsNavigator @Inject constructor() {
 sealed interface AlbumsNavigationEvent {
     data class OpenAlbumDetail(val uuid: String) : AlbumsNavigationEvent
 }
+

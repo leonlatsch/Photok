@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,6 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -65,7 +68,7 @@ sealed interface AboutUiEvent {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    vaultStats: VaultStats?,
+    uiState: AboutUiState,
     handleUiEvent: (AboutUiEvent) -> Unit,
 ) {
     val context = LocalContext.current
@@ -112,7 +115,36 @@ fun AboutScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding()
+                        .padding(bottom = 8.dp)
                 ) {
+                    // Vault Stats Card
+                    uiState.vaultStats?.let { stats ->
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            ),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.about_vault_stats),
+                                    fontFamily = FontFamily.Monospace,
+                                )
+                                Text(
+                                    text = stringResource(
+                                        R.string.about_vault_stats_format,
+                                        stats.totalFiles,
+                                        Formatter.formatFileSize(context, stats.totalSizeBytes)
+                                    ),
+                                    fontFamily = FontFamily.Monospace,
+                                )
+                            }
+                        }
+                    }
+
                     Text(
                         text = stringResource(R.string.common_copyright_notice),
                         color = MaterialTheme.colorScheme.outline,
@@ -165,22 +197,6 @@ fun AboutScreen(
                     Text(BuildConfig.VERSION_NAME)
                 }
 
-                if (vaultStats != null) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Text(text = stringResource(R.string.about_vault_stats))
-                        Text(
-                            text = stringResource(
-                                R.string.about_vault_stats_format,
-                                vaultStats.totalFiles,
-                                Formatter.formatFileSize(context, vaultStats.totalSizeBytes)
-                            )
-                        )
-                    }
-                }
-
                 Text(
                     text = stringResource(R.string.about_developed_by),
                     modifier = Modifier
@@ -208,7 +224,7 @@ fun AboutScreen(
 @Composable
 private fun Preview() {
     AboutScreen(
-        vaultStats = VaultStats(42, 1024 * 1024 * 100),
+        uiState = AboutUiState(vaultStats = VaultStats(42, 1024 * 1024 * 100)),
         handleUiEvent = {},
     )
 }

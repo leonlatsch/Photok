@@ -14,31 +14,18 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.domain
+package dev.leonlatsch.photok.settings.di
 
-import dev.leonlatsch.photok.model.database.dao.PhotoDao
-import javax.inject.Inject
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.settings.data.VaultRepositoryImpl
+import dev.leonlatsch.photok.settings.domain.VaultRepository
 
-/**
- * Data class representing vault statistics.
- */
-data class VaultStats(
-    val totalFiles: Int,
-    val totalSizeBytes: Long,
-)
-
-/**
- * Use case to retrieve vault statistics.
- *
- * @since 2.0.0
- */
-class GetVaultStatsUseCase @Inject constructor(
-    private val photoDao: PhotoDao,
-) {
-    suspend operator fun invoke(): VaultStats {
-        return VaultStats(
-            totalFiles = photoDao.countAll(),
-            totalSizeBytes = photoDao.getTotalSize(),
-        )
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+interface SettingsModule {
+    @Binds
+    fun bindVaultRepository(impl: VaultRepositoryImpl): VaultRepository
 }

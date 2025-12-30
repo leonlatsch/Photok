@@ -22,7 +22,8 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import javax.inject.Inject
 
 class AlbumUiStateFactory @Inject constructor() {
-    fun create(albums: List<Album>, showCreateDialog: Boolean): AlbumsUiState {
+    fun create(albums: List<Album>, showCreateDialog: Boolean, unsortedCount: Int): AlbumsUiState {
+        // Note: unsortedCount is available for future use when unsorted album navigation is implemented
         if (albums.isEmpty()) {
             return AlbumsUiState.Empty(showCreateDialog)
         }
@@ -33,3 +34,4 @@ class AlbumUiStateFactory @Inject constructor() {
         )
     }
 }
+
