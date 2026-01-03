@@ -81,7 +81,7 @@
     <string name="import_menu_restore_title">恢复备份</string>
     <string name="import_menu_restore_description">恢复 Photok 备份。恢复的文件将被添加至当前文件中。</string>
     <string name="import_menu_delete_warning">导入的文件将被删除</string>
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_album_tooltip">导入后文件将被添加到 \"%s\"</string>
 
     <!-- PROCESS -->
     <string name="process_close">关闭</string>
