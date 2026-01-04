@@ -1,19 +1,3 @@
-/*
- *   Copyright 2020-2024 Leon Latsch
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
 package dev.leonlatsch.photok.model.database.dao
 
 import androidx.room.Dao
@@ -53,20 +37,17 @@ abstract class AlbumDao {
     @Query("DELETE FROM album")
     abstract suspend fun deleteAll()
 
-
     @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract suspend fun getAllAlbums(): List<AlbumTable>
 
     @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract fun observeAllAlbums(): Flow<List<AlbumTable>>
 
-
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun observeAlbum(uuid: String): Flow<AlbumTable>
 
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract suspend fun getAlbum(uuid: String): AlbumTable?
-
 
     @Query("SELECT photo_uuid, linked_at FROM album_photos_cross_ref WHERE photo_uuid in (:photoUUIDs)")
     abstract suspend fun getLinkedAtFor(

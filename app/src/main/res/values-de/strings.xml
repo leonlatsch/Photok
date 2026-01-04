@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~   Copyright 2020-2022 Leon Latsch
-  ~
-  ~   Licensed under the Apache License, Version 2.0 (the "License");
-  ~   you may not use this file except in compliance with the License.
-  ~   You may obtain a copy of the License at
-  ~
-  ~        http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~   Unless required by applicable law or agreed to in writing, software
-  ~   distributed under the License is distributed on an "AS IS" BASIS,
-  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~   See the License for the specific language governing permissions and
-  ~   limitations under the License.
-  -->
 
 <resources>
 
@@ -137,7 +122,6 @@
     <string name="about_privacy_policy">Datenschutzerklärung</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
     <string name="about_menu_news">Neuigkeiten</string>
-
 
     <!-- SETTINGS -->
     <string name="settings_title">Einstellungen</string>
@@ -304,7 +288,6 @@
     <string name="migration_running_progress">%d von %d Dateien verarbeitet</string>
     <string name="migration_running_advice">Bleibt dieser Bildschirm geöffnet, verläuft die Migration schneller.</string>
 
-
     <string name="migration_done_title">Galerie-Migration abgeschlossen</string>
     <string name="migration_done_progress">Alle Dateien migriert</string>
 
@@ -316,7 +299,6 @@
     <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
     <string name="migration_error_extracting_title">Entschlüssele in ZIP…</string>
 
-
     <!-- Biometric -->
     <string name="biometric_unlock_title">Photok entsperren</string>"
     <string name="biometric_unlock_subtitle">Bestätige deine Identität zum entsperren</string>
@@ -327,7 +309,6 @@
 
     <string name="biometric_unlock_error">Biometrisches entsperren fehlgeschlagen. Benutze dein Photok Passwort.</string>
     <string name="biometric_unlock_hint_button">Mit Biometrie entsperren</string>
-
 
     <!-- Sorting -->
     <string name="sorting_sort">Sortierung</string>

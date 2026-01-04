@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~   Copyright 2020-2022 Leon Latsch
-  ~
-  ~   Licensed under the Apache License, Version 2.0 (the "License");
-  ~   you may not use this file except in compliance with the License.
-  ~   You may obtain a copy of the License at
-  ~
-  ~        http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~   Unless required by applicable law or agreed to in writing, software
-  ~   distributed under the License is distributed on an "AS IS" BASIS,
-  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~   See the License for the specific language governing permissions and
-  ~   limitations under the License.
-  -->
 
 <resources>
 
@@ -137,7 +122,6 @@
     <string name="about_privacy_policy">Política de Privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
     <string name="about_menu_news">Novedades</string>
-
 
     <!-- SETTINGS -->
     <string name="settings_title">Ajustes</string>
@@ -284,7 +268,6 @@
     <string name="recovery_menu_item_open_photok">Abrir Photok</string>
     <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de Ocultar Aplicación</string>
 
-
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
     <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
@@ -315,7 +298,6 @@
     <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
-
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->

@@ -1,19 +1,3 @@
-/*
- *   Copyright 2020-2022 Leon Latsch
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
 package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
@@ -38,7 +22,6 @@ import java.io.OutputStream
 import java.lang.Exception
 import java.util.UUID
 import javax.inject.Inject
-
 
 /**
  * Repository for [Photo].
@@ -104,7 +87,6 @@ class PhotoRepository @Inject constructor(
 
         val type = PhotoType.fromMimeType(metaData.mimeType)
         if (type == PhotoType.UNDEFINED) return String.empty
-
 
         val inputStream =
             encryptedStorageManager.externalOpenFileInput(sourceUri)
@@ -229,7 +211,6 @@ class PhotoRepository @Inject constructor(
         encryptedStorageManager.internalDeleteFile(photo.internalFileName)
                 && encryptedStorageManager.internalDeleteFile(photo.internalThumbnailFileName)
                 && (!photo.type.isVideo || encryptedStorageManager.internalDeleteFile(photo.internalVideoPreviewFileName))
-
 
     // endregion
 
