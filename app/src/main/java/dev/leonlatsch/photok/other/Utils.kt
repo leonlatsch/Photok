@@ -1,18 +1,212 @@
-/*
- *   Copyright 2020-2022 Leon Latsch
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
+
+
+
+package dev.leonlatsch.photok.other
+
+import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.net.Uri
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.provider.DocumentsContract
+import android.provider.MediaStore
+import android.view.View
+import android.view.WindowInsets
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.exifinterface.media.ExifInterface
+import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
+import timber.log.Timber
+import java.io.ByteArrayInputStream
+
+data class FileMetaData(
+    val fileName: String?,
+    val mimeType: String?,
+    val size: Long?,
+    val lastModified: Long?,
+)
+
+fun ContentResolver.getMetadataFor(uri: Uri): FileMetaData {
+    val projection = arrayOf(
+        MediaStore.MediaColumns.DISPLAY_NAME,
+        MediaStore.MediaColumns.MIME_TYPE,
+        MediaStore.MediaColumns.SIZE,
+        MediaStore.Images.Media.DATE_TAKEN,
+        DocumentsContract.Document.COLUMN_LAST_MODIFIED
+    )
+
+    var fileName: String? = null
+    var mimeType: String? = null
+    var size: Long? = null
+    var lastModified: Long? = null
+
+    query(uri, projection, null, null, null)?.use {
+        try {
+            val fileNameColIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+            val mimeTypeColIndex = it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)
+            val sizeColIndex = it.getColumnIndex(MediaStore.MediaColumns.SIZE)
+            val dateModifiedColIndex = it.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
+
+            if (!it.moveToFirst()) return@use
+
+            if (fileNameColIndex != -1) fileName = it.getString(fileNameColIndex)
+            if (mimeTypeColIndex != -1) mimeType = it.getString(mimeTypeColIndex)
+            if (sizeColIndex != -1) size = it.getLong(sizeColIndex)
+            if (dateModifiedColIndex != -1) lastModified = it.getLong(dateModifiedColIndex)
+
+        } catch (e: Exception) {
+            Timber.w("Could not get metadata for $uri $e")
+        }
+    }
+
+    return FileMetaData(
+        fileName = fileName,
+        mimeType = mimeType,
+        size = size,
+        lastModified = lastModified,
+    )
+}
+
+/**
+ * Post a [operation] to the main looper.
  */
+fun onMain(operation: () -> Unit) = Handler(Looper.getMainLooper()).post(operation)
+
+/**
+ * Update the app design.
+ */
+fun setAppDesign(design: SystemDesignEnum) {
+    val nightMode = when (design) {
+        SystemDesignEnum.System -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        SystemDesignEnum.Light -> AppCompatDelegate.MODE_NIGHT_NO
+        SystemDesignEnum.Dark -> AppCompatDelegate.MODE_NIGHT_YES
+    }
+
+    AppCompatDelegate.setDefaultNightMode(nightMode)
+}
+
+fun Fragment.openUrl(url: String?) {
+    url ?: return
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    startActivity(intent)
+}
+
+fun Context.openUrl(url: String?) {
+    url ?: return
+
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    startActivity(intent)
+}
+
+/**
+ * Reset all orientation exif tags for creating thumbnails
+ * and displaying photos with exif data properly.
+ */
+fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
+    bytesWithExif ?: return null
+    val bitmap = BitmapFactory.decodeByteArray(bytesWithExif, 0, bytesWithExif.size)
+    val orientation = ExifInterface(ByteArrayInputStream(bytesWithExif)).getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_NORMAL
+    )
+    val matrix = Matrix()
+    when (orientation) {
+        ExifInterface.ORIENTATION_NORMAL -> return bitmap
+
+        ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+        ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+        ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+
+        ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+        ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+            matrix.setRotate(180f)
+            matrix.postScale(-1f, 1f)
+        }
+
+        ExifInterface.ORIENTATION_TRANSPOSE -> {
+            matrix.setRotate(90f)
+            matrix.postScale(-1f, 1f)
+        }
+        ExifInterface.ORIENTATION_TRANSVERSE -> {
+            matrix.setRotate(-90f)
+            matrix.postScale(-1f, 1f)
+        }
+        else -> return bitmap
+    }
+    return try {
+        val bmRotated: Bitmap = Bitmap.createBitmap(
+            bitmap,
+            0,
+            0,
+            bitmap.width,
+            bitmap.height,
+            matrix,
+            true
+        )
+        bitmap.recycle()
+        bmRotated
+    } catch (e: OutOfMemoryError) {
+        Timber.e(e)
+        bitmap
+    }
+}
+
+operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingValues(
+    start = this.calculateStartPadding(LayoutDirection.Ltr) +
+            other.calculateStartPadding(LayoutDirection.Ltr),
+    top = this.calculateTopPadding() + other.calculateTopPadding(),
+    end = this.calculateEndPadding(LayoutDirection.Ltr) +
+            other.calculateEndPadding(LayoutDirection.Ltr),
+    bottom = this.calculateBottomPadding() + other.calculateBottomPadding(),
+)
+
+fun View.statusBarPadding() {
+    setOnApplyWindowInsetsListener { v, insets ->
+        v.setPadding(0, insets.top(), 0, 0)
+        insets
+    }
+}
+
+fun View.systemBarsPadding() {
+    setOnApplyWindowInsetsListener { v, insets ->
+        v.setPadding(0, insets.top(), 0, insets.bottom())
+        insets
+    }
+}
+
+/**
+ * Thx mozilla
+ *
+ * https://github.com/mozilla-mobile/android-components/pull/9680/files#diff-9d900219329132b059f18f83b6e2952c5509bcfbf063a571ee5d647f76fa6554
+ */
+fun WindowInsets.top(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        this.getInsets(WindowInsets.Type.systemBars()).top
+
+    } else {
+        @Suppress("DEPRECATION")
+        this.systemWindowInsetTop
+    }
+
+fun WindowInsets.bottom(): Int =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        this.getInsets(WindowInsets.Type.systemBars()).bottom
+
+    } else {
+        @Suppress("DEPRECATION")
+        this.systemWindowInsetBottom
+    }
 
 package dev.leonlatsch.photok.other
 

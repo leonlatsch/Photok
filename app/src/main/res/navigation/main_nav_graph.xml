@@ -1,18 +1,201 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright 2020-2022 Leon Latsch
-  ~
-  ~   Licensed under the Apache License, Version 2.0 (the "License");
-  ~   you may not use this file except in compliance with the License.
-  ~   You may obtain a copy of the License at
-  ~
-  ~        http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~   Unless required by applicable law or agreed to in writing, software
-  ~   distributed under the License is distributed on an "AS IS" BASIS,
-  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~   See the License for the specific language governing permissions and
-  ~   limitations under the License.
-  -->
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/initialFragment">
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dev.leonlatsch.photok.settings.ui.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_creditsFragment"
+            app:destination="@id/creditsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="dev.leonlatsch.photok.settings.ui.AboutFragment"
+        android:label="AboutFragment">
+        <action
+            android:id="@+id/action_aboutFragment_to_ossLicensesFragment"
+            app:destination="@id/ossLicensesFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="dev.leonlatsch.photok.setup.ui.SetupFragment"
+        android:label="fragment_setup"
+        tools:layout="@layout/fragment_setup">
+        <action
+            android:id="@+id/action_setupFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/setupFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_setupFragment_to_encryptionMigrationFragment"
+            app:destination="@id/encryptionMigrationFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/unlockFragment"
+        android:name="dev.leonlatsch.photok.unlock.ui.UnlockFragment"
+        android:label="fragment_unlock"
+        tools:layout="@layout/fragment_unlock">
+        <action
+            android:id="@+id/action_unlockFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/unlockFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
+            app:destination="@id/encryptionMigrationFragment"
+            app:popUpTo="@id/unlockFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_unlockFragment_to_albumsFragment"
+            app:destination="@id/albumsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/slide_to_bottom"
+            app:popUpTo="@id/unlockFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="dev.leonlatsch.photok.onboarding.ui.OnBoardingFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_onboarding">
+        <action
+            android:id="@+id/action_onBoardingFragment_to_setupFragment"
+            app:destination="@id/setupFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/onBoardingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/initialFragment"
+        android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
+        android:label="InitialFragment">
+        <action
+            android:id="@+id/action_initialFragment_to_unlockFragment"
+            app:destination="@id/unlockFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/initialFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_initialFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/initialFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_initialFragment_to_setupFragment"
+            app:destination="@id/setupFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/initialFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="dev.leonlatsch.photok.settings.ui.credits.CreditsFragment"
+        android:label="CreditsFragment" />
+    <fragment
+        android:id="@+id/ossLicensesFragment"
+        android:name="dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesFragment"
+        android:label="OssLicensesFragment" />
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragment"
+        android:label="ImageViewerFragment">
+        <argument
+            android:name="photo_uuid"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="album_uuid"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment"
+            app:enterAnim="@anim/slide_to_top"
+            app:exitAnim="@anim/slide_to_bottom" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="dev.leonlatsch.photok.videoplayer.ui.VideoPlayerFragment"
+        android:label="VideoPlayerFragment">
+        <argument
+            android:name="video"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="dev.leonlatsch.photok.gallery.ui.GalleryFragment"
+        android:label="GalleryFragment" />
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="dev.leonlatsch.photok.gallery.albums.ui.AlbumsFragment"
+        android:label="GalleryFragment">
+        <action
+            android:id="@+id/action_albumsFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailFragment"
+        android:label="AlbumDetailFragment">
+        <argument
+            android:name="album_uuid"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_imageViewerFragment"
+        app:destination="@id/imageViewerFragment" />
+    <action
+        android:id="@+id/action_global_albumDetailFragment"
+        app:destination="@id/albumDetailFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/encryptionMigrationFragment"
+        android:name="dev.leonlatsch.photok.security.migration.ui.EncryptionMigrationFragment"
+        android:label="EncryptionMigrationFragment" >
+        <action
+            android:id="@+id/action_encryptionMigrationFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:popUpTo="@id/encryptionMigrationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

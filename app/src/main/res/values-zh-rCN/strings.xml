@@ -1,18 +1,332 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright 2020-2022 Leon Latsch
-  ~
-  ~   Licensed under the Apache License, Version 2.0 (the "License");
-  ~   you may not use this file except in compliance with the License.
-  ~   You may obtain a copy of the License at
-  ~
-  ~        http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~   Unless required by applicable law or agreed to in writing, software
-  ~   distributed under the License is distributed on an "AS IS" BASIS,
-  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~   See the License for the specific language governing permissions and
-  ~   limitations under the License.
-  -->
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <!-- COMMON -->
+    <string name="common_copyright_notice">版权所有 \u00A9 2020-2026 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">加载中 ……</string>
+    <string name="common_password">密码</string>
+    <string name="common_delete">删除</string>
+    <string name="common_export">导出</string>
+    <string name="common_error">有一个错误。请再试。</string>
+    <string name="common_yes">是</string>
+    <string name="common_no">否</string>
+    <string name="common_ok">好</string>
+    <string name="common_are_you_sure">你确定吗？</string>
+    <string name="common_bullet">•</string>
+    <string name="common_more">更多</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_create">创建</string>
+    <string name="common_empty">空</string>
+    <string name="common_rename">重命名</string>
+    <string name="common_try_again">重试</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">正在导入文件</string>
+    <string name="import_permission_rationale">Photok 需要访问你的存储来导入文件</string>
+    <string name="import_sharted_question">你想导入 %1$d 个文件吗？</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">创建你的密码</string>
+    <string name="setup_enter_password">输入你的密码</string>
+    <string name="setup_confirm_password">确认你的密码</string>
+    <string name="setup_password_strength_label">密码强度:</string>
+    <string name="setup_button">创建</string>
+    <string name="setup_password_strength_weak">弱</string>
+    <string name="setup_password_strength_moderate">中等</string>
+    <string name="setup_password_strength_strong">强</string>
+    <string name="setup_password_match_warning">\u26A0 密码不匹配</string>
+    <string name="setupSetup">设置</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">解锁你的文件库</string>
+    <string name="unlock_enter_password">输入密码</string>
+    <string name="unlock_button">解锁</string>
+    <string name="unlock_wrong_password">\u26A0 密码错误</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">你的库里没有文件</string>
+    <string name="gallery_all_photos_label">所有文件</string>
+    <string name="gallery_albums_label">相簿</string>
+    <string name="gallery_albums_placeholder">创建你的首个相簿</string>
+    <string name="gallery_albums_create_title">创建相簿</string>
+    <string name="gallery_albums_rename_title">重命名相簿</string>
+    <string name="gallery_albums_create_placeholder">家庭作业 ;)</string>
+    <string name="gallery_albums_select_title">选择相簿</string>
+    <string name="gallery_albums_deleted">已删除相簿</string>
+    <string name="gallery_albums_photos_added">添加了 %1$d 个项目 </string>
+    <string name="magic_fab_new_album_label">新相簿</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_fab_label">导入</string>
+    <string name="import_menu_new_files_title">导入新文件</string>
+    <string name="import_menu_new_files_description">从图库中导入相片和视频</string>
+    <string name="import_menu_restore_title">恢复备份</string>
+    <string name="import_menu_restore_description">恢复 Photok 备份。恢复的文件将被添加至当前文件中。</string>
+    <string name="import_menu_delete_warning">导入的文件将被删除</string>
+    <string name="import_menu_album_tooltip">导入后文件将被添加到 \"%s\"</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">关闭</string>
+    <string name="process_abort">中断</string>
+    <string name="process_finished">已完成</string>
+    <string name="process_initialize">准备中……</string>
+    <string name="process_aborted">已中断</string>
+    <string name="process_failures_occurred">\u26A0 无法处理一些元素</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">细节</string>
+    <string name="view_photo_detail_file_name_label">文件名:</string>
+    <string name="view_photo_detail_import_at_label">导入于:</string>
+    <string name="view_photo_detail_file_type_label">文件类型:</string>
+    <string name="view_photo_detail_size_label">文件大小:</string>
+    <string name="view_photo_detail_last_modified">上次修改：</string>
+    <string name="view_photo_play_button_description">播放视频</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">锁定</string>
+    <string name="menu_main_settings">设置</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">选择全部</string>
+    <string name="menu_ms_delete">删除</string>
+    <string name="menu_ms_export">导出</string>
+    <string name="menu_ms_info">选中了 %1$d 个项目 </string>
+    <string name="menu_ms_add_to_album">添加到相簿</string>
+    <string name="menu_ms_remove_from_album">从相簿中删除</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">你确定要 <b>删除</b> %1$d 个文件吗？</string>
+    <string name="delete_are_you_sure_this">你确定要 <b>删除</b> 这个文件吗？</string>
+    <string name="delete_deleting">删除文件中……</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">你确定要把 %1$d 个文件 <b>导</b> 回到系统图库吗？</string>
+    <string name="export_are_you_sure_this">你确定要把这个文件 <b>导</b> 回到系统图库吗？</string>
+    <string name="export_and_delete_are_you_sure">你确定要把  %1$d 个文件<b>导回</b>图库并删除它们吗？</string>
+    <string name="export_and_delete_are_you_sure_this">你确定要把这个文件<b>导入</b>图库并删除它吗？</string>
+    <string name="export_exporting">导出文件中……</string>
+    <string name="export_and_delete_finished">已导出并删除</string>
+    <string name="export_permission_rationale">Photok 需要访问你的存储来导出文件。</string>
+    <string name="export_finished">已导出</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">版本号:</string>
+    <string name="about_developed_by">开发者:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">第三方软件</string>
+    <string name="about_privacy_policy">隐私政策</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">新功能</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">设置</string>
+
+    <string name="settings_category_app">应用程序</string>
+    <string name="settings_app_design_title">设计</string>
+    <string name="settings_app_design_system_default">系统默认</string>
+    <string name="settings_app_design_system_light">浅色</string>
+    <string name="settings_app_design_system_dark">深色</string>
+
+    <string name="settings_category_gallery">图库</string>
+    <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
+    <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
+    <string name="settings_gallery_start_page_title">启动页</string>
+
+    <string name="settings_category_security">安全</string>
+    <string name="settings_security_allow_screenshots_title">允许截屏</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
+    <string name="settings_security_change_password_title">更改密码</string>
+    <string name="settings_security_change_password_summary">更改你的密码</string>
+    <string name="settings_security_biometric_title">生物特征解锁</string>
+    <string name="settings_security_biometric_summary">使用生物识别解锁 Photok</string>
+    <string name="settings_security_biometric_not_available">生物特征解锁不可用</string>
+    <string name="settings_security_timeout_title">自动锁定超时</string>
+    <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
+    <string name="settings_security_timeout_immediately">立即</string>
+    <string name="settings_security_timeout_one_minute">1 分钟</string>
+    <string name="settings_security_timeout_two_minute">2 分钟</string>
+    <string name="settings_security_timeout_five_minute">5 分钟</string>
+    <string name="settings_security_timeout_ten_minute">10 分钟</string>
+    <string name="settings_security_timeout_never">永不</string>
+    <string name="settings_security_launch_code_title">秘密启动代码</string>
+    <string name="settings_security_launch_code_summary">从拨号器启动 Photok 的秘密代码</string>
+    <string name="settings_security_launch_code_message">在拨号器中输入 *#*#[your code]#*#* 来启动 Photok</string>
+    <string name="settings_security_hide_app_title">隐藏应用</string>
+    <string name="settings_security_hide_app_summary">在应用抽屉中隐藏应用图标</string>
+
+    <string name="settings_category_advanced">高级设置</string>
+    <string name="settings_category_advanced_summary">小心使用</string>
+    <string name="settings_advanced_reset_title">重置文件保险库</string>
+    <string name="settings_advanced_reset_summary">抹去数据并重置密码</string>
+    <string name="settings_advanced_reset_confirmation">你真想要重置保险库吗？ 你将失去所有数据！</string>
+    <string name="settings_advanced_backup_title">备份</string>
+    <string name="settings_advanced_backup_summary">创建文件保险库的备份</string>
+    <string name="settings_advanced_delete_imported_title">删除导入的文件</string>
+    <string name="settings_advanced_delete_imported_summary">导入文件后删除它们</string>
+    <string name="settings_advanced_delete_exported_title">删除已导出的文件</string>
+    <string name="settings_advanced_delete_exported_summary">导出文件后删除它们</string>
+
+    <string name="settings_other_title">其他</string>
+    <string name="settings_other_feedback_title">反馈</string>
+    <string name="settings_other_feedback_summary">给我发送一封带反馈的电子邮件</string>
+    <string name="settings_other_feedback_mail_subject">向 Photok 提供反馈</string>
+    <string name="settings_other_feedback_mail_body">写一则 Photok 的反馈 :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">捐赠</string>
+    <string name="settings_other_donate_summary">支持 Photok 开发</string>
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+    <string name="settings_other_sourcecode_title">源代码</string>
+    <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">致谢</string>
+    <string name="settings_other_credits_summary">贡献者和致谢</string>
+    <string name="settings_other_about_title">关于</string>
+    <string name="settings_other_about_summary">有关 Photok 的信息</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">贡献者</string>
+    <string name="credits_contributors_hint">访问 Github 上的 Photok 代码库查看所有贡献者</string>
+    <string name="credits_icons_title">图标</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">更改你的密码</string>
+    <string name="change_password_old_password">旧密码</string>
+    <string name="change_password_new_password">新密码</string>
+    <string name="change_password_check">检查</string>
+    <string name="change_password_enter_new_password">输入你的新密码</string>
+    <string name="change_password_confirm_new_password">确认你的新密码</string>
+    <string name="change_password_button">更改密码</string>
+    <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有文件！你想继续吗？</string>
+    <string name="change_password_reencrypting">重新加密文件中……</string>
+
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">验证密码</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">隐藏 Photok</string>
+    <string name="hide_app_title_show">显示 Photok</string>
+    <string name="hide_app_status_label">Photok 当前状态：</string>
+    <string name="hide_app_status_visible">可见</string>
+    <string name="hide_app_status_hidden">隐藏</string>
+    <string name="hide_app_app_name_stealth">电话</string>
+    <string name="hide_app_confirm_hide">你真想隐藏 Photok 吗？</string>
+    <string name="hide_app_confirm_show">你想再次显示 Photok 吗？</string>
+    <string name="hide_app_hint">一旦隐藏起来，Photok 只能用你的秘密启动代码从手机拨号器启动。</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="hide_app_hint_current_code">当前启动代码：</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_finish">完成</string>
+    <string name="onboarding_skip"><u>跳过</u></string>
+
+    <string name="onboarding_slide1_title">欢迎来到</string>
+    <string name="onboarding_slide1_description">一个安全存放照片的地方</string>
+    <string name="onboarding_slide2_title">创建一个密码</string>
+    <string name="onboarding_slide2_description">创建一个安全密码。你的密码用来直接在你的手机上加密你的照片。</string>
+    <string name="onboarding_slide3_title">开始导入</string>
+    <string name="onboarding_slide3_description">开始导入你的照片，并保护它们不被其他人窥视。\n你可以在导入后从系统图库中删除它们。</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">创建备份中……</string>
+    <string name="backup_restore_title">还原备份</string>
+    <string name="backup_restore_validating">验证备份中…</string>
+    <string name="backup_restore_details_created_at">创建于:</string>
+    <string name="backup_restore_details_photos_contained">包含的文件:</string>
+    <string name="backup_restore_details_compatible">兼容性:</string>
+    <string name="backup_restore_details_size">大小:</string>
+    <string name="backup_restore_button">解锁并还原</string>
+    <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
+    <string name="backup_restore_processing">还原备份中……</string>
+    <string name="backup_unlock_title">解锁备份</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">新功能</string>
+    <string name="news_view_changelog">查看变更记录</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">Improved Video Player</string> <!-- TODO -->
+    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string> <!-- TODO -->
+
+    <string name="news_title_2">Better Photo Browsing and Sorting</string> <!-- TODO -->
+    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string> <!-- TODO -->
+
+    <string name="news_title_3">Refined Settings UI</string> <!-- TODO -->
+    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string> <!-- TODO -->
+
+    <string name="news_title_4">Translations and Stability Fixes</string> <!-- TODO -->
+    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string> <!-- TODO -->
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">恢复菜单</string>
+    <string name="recovery_menu_item_open_photok">打开 Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">重置“隐藏应用”设置</string>
+
+
+    <!-- Migration -->
+    <string name="migration_initial_title_welcome">欢迎来到</string>
+    <string name="migration_initial_explaination">此版 Photok 引入新的加密方法。为了继续使用现有图库，需要进行迁移。</string>
+    <string name="migration_initial_button">开始</string>
+
+    <string name="migration_initial_stage_backup_checklist">备份数据</string>
+    <string name="migration_initial_stage_backup_explanation">继续前创建数据备份</string>
+    <string name="migration_initial_stage_backup_button">创建备份</string>
+
+    <string name="migration_initial_stage_permission_checklist">授予权限</string>
+    <string name="migration_initial_stage_permission_explanation">请授予通知权限以可靠地在后台运行迁移</string>
+    <string name="migration_initial_stage_permission_button">授予权限</string>
+
+    <string name="migration_initial_stage_ready_explanation">准备好了</string>
+    <string name="migration_initial_stage_ready_button">开始迁移</string>
+
+    <string name="migration_running_title">迁移图库</string>
+    <string name="migration_running_progress">已经处理了 %d 个文件，共 %d 个</string>
+    <string name="migration_running_advice">保持此屏幕开启，迁移会更快。</string>
+
+    <string name="migration_done_title">图库迁移完毕</string>
+    <string name="migration_done_progress">所有文件已迁移</string>
+
+    <string name="migration_error_title">迁移图库时出错</string>
+    <string name="migration_error_button">发送错误报告</string>
+
+    <string name="notification_channel_background_tasks">后台任务</string>
+    <string name="migration_error_extract_data">提取数据</string>
+    <string name="migration_error_extract_confirmation_text">确定要从图库提取所有文件并不加密地放在 ZIP 文件中吗？</string>
+    <string name="migration_error_extracting_title">正在解密以制作 ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">解锁 Photok</string>
+    <string name="biometric_unlock_subtitle">验证身份以解锁</string>
+    <string name="biometric_unlock_cancel">使用 Photok 密码</string>
+
+    <string name="biometric_unlock_setup_title">启用生物特征解锁</string>
+    <string name="biometric_unlock_setup_subtitle">要启用生物特征解锁，请确认身份</string>
+    <string name="biometric_unlock_error">生物特征解锁失败了。请使用 Photok 密码。</string>
+    <string name="biometric_unlock_hint_button">用生物特征解锁</string>
+
+    <!-- Sorting -->
+    <string name="sorting_sort">排序</string>
+
+    <string name="sorting_order_asc_label">降序</string>
+    <string name="sorting_order_desc_label">升序</string>
+
+    <string name="sorting_field_import_date_label">导入日期</string>
+    <string name="sorting_field_filename_label">文件名</string>
+    <string name="sorting_field_size_label">文件大小</string>
+    <string name="sorting_field_added_to_album_label">已添加到相册</string>
+    <string name="sorting_field_last_modified">上次修改</string>
+
+    <string name="sorting_restore_default">恢复默认</string>
+</resources>
+
 
 <resources>
 

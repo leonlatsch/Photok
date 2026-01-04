@@ -1,18 +1,112 @@
-/*
- *   Copyright 2020-2024 Leon Latsch
+
+
+
+package dev.leonlatsch.photok.backup.domain
+
+import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.data.PhotoBackup
+import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
+import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
+import java.io.ByteArrayInputStream
+import java.util.zip.ZipInputStream
+import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
+/**
+ * Backup Format V1
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *  A ZIP archive with the following structure:
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ *  ┌───────────────────────────────┐
+ *  │           backup.zip          │
+ *  ├───────────────────────────────┤
+ *  │ meta.json                     │
+ *  │   {                           │
+ *  │     "password": String,       │
+ *  │     "photos": [PhotoBackup],  │
+ *  │     "createdAt": Long,        │
+ *  │     "backupVersion": Int      │
+ *  │   }                           │
+ *  │                               │
+ *  │ <uuid>.photok                 │  ← Encrypted photo/video
+ *  │ ...                           │
+ *  └───────────────────────────────┘
  *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
+ * Notes:
+ *  - `password` is used to check before decryption.
+ *  - Only `photos` are tracked (no albums or albumPhotoRefs).
+ *  - Media files are encrypted and stored as `<uuid>.photok`.
+ *  - No thumbnails (`.tn`) or video previews (`.vp`) in this version.
+ *  - `backupVersion` must equal 1 for this format.
  */
+class RestoreBackupV1 @Inject constructor(
+    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
+    private val photoRepository: PhotoRepository,
+    private val createThumbnails: CreateThumbnailsUseCase,
+) : RestoreBackupStrategy {
+    override suspend fun restore(
+        metaData: BackupMetaData,
+        stream: ZipInputStream,
+        originalPassword: String,
+    ): RestoreResult {
+        var errors = 0
+
+        var ze = stream.nextEntry
+
+        while (ze != null) {
+            val photoBackup = metaData.photos.find {
+                ze.name.contains(it.uuid)
+            }
+
+            if (photoBackup == null) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            // Dummy. Used for method that need a photo object
+            val dummyPhoto = photoBackup.toDomain()
+
+            val encryptedZipInput =
+                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
+            if (encryptedZipInput == null) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            val photoBytes = suspendCoroutine {
+                it.resume(encryptedZipInput.readBytes())
+            }
+            val photoBytesInputStream = ByteArrayInputStream(photoBytes)
+
+            val photoFileCreated =
+                photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
+
+            if (!photoFileCreated) {
+                errors++
+                ze = stream.nextEntry
+                continue
+            }
+
+            createThumbnails(dummyPhoto, photoBytes)
+                .onFailure { errors++ }
+
+            ze = stream.nextEntry
+        }
+
+        metaData
+            .getPhotosInOriginalOrder()
+            .forEach {
+                photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
+            }
+
+        return RestoreResult(errors)
+    }
+}
 
 package dev.leonlatsch.photok.backup.domain
 
