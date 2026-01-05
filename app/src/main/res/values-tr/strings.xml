@@ -258,8 +258,7 @@
     <string name="news_summary_3">Ayarlar sayfası devam etmekte olan tasarım değişimiyle yeniden tasarlandı.</string>
 
     <string name="news_title_4">Çeviriler ve Stabilite Düzeltildi</string>
-    <string name="news_summary_4">Çeviriler güncellendi ve birçok güvenlik sorunu düzeltildi.
-        Updated translations and multiple fixes improve overall reliability.</string>
+    <string name="news_summary_4">Çeviriler güncellendi ve birçok güvenlik sorunu düzeltildi.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>
