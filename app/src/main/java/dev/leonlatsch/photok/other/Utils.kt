@@ -49,36 +49,38 @@ data class FileMetaData(
 )
 
 fun ContentResolver.getMetadataFor(uri: Uri): FileMetaData {
+    val mimeType: String? = this.getType(uri)
+
     val projection = arrayOf(
         MediaStore.MediaColumns.DISPLAY_NAME,
-        MediaStore.MediaColumns.MIME_TYPE,
         MediaStore.MediaColumns.SIZE,
-        MediaStore.Images.Media.DATE_TAKEN,
-        DocumentsContract.Document.COLUMN_LAST_MODIFIED
+        DocumentsContract.Document.COLUMN_LAST_MODIFIED,
     )
 
     var fileName: String? = null
-    var mimeType: String? = null
     var size: Long? = null
     var lastModified: Long? = null
 
     query(uri, projection, null, null, null)?.use {
         try {
             val fileNameColIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
-            val mimeTypeColIndex = it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)
             val sizeColIndex = it.getColumnIndex(MediaStore.MediaColumns.SIZE)
             val dateModifiedColIndex = it.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
 
             if (!it.moveToFirst()) return@use
 
             if (fileNameColIndex != -1) fileName = it.getString(fileNameColIndex)
-            if (mimeTypeColIndex != -1) mimeType = it.getString(mimeTypeColIndex)
             if (sizeColIndex != -1) size = it.getLong(sizeColIndex)
             if (dateModifiedColIndex != -1) lastModified = it.getLong(dateModifiedColIndex)
 
         } catch (e: Exception) {
-            Timber.w("Could not get metadata for $uri $e")
+            Timber.e("Could not get metadata for $uri $e")
         }
+    }
+
+    // 0 is likely also not correct and would be shown as 1970
+    if (lastModified == 0L) {
+        lastModified = -1L
     }
 
     return FileMetaData(
@@ -151,10 +153,12 @@ fun normalizeExifOrientation(bytesWithExif: ByteArray?): Bitmap? {
             matrix.setRotate(90f)
             matrix.postScale(-1f, 1f)
         }
+
         ExifInterface.ORIENTATION_TRANSVERSE -> {
             matrix.setRotate(-90f)
             matrix.postScale(-1f, 1f)
         }
+
         else -> return bitmap
     }
     return try {
