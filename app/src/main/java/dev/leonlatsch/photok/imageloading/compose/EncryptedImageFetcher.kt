@@ -22,8 +22,6 @@ import android.graphics.Movie
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import coil.decode.DataSource
-import coil.decode.DecodeResult
-import coil.decode.Decoder
 import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
 import coil.fetch.DrawableResult
@@ -60,12 +58,18 @@ class EncryptedImageFetcher(
             encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
         inputStream ?: return@withContext null
 
-        if (requestData.mimeType == PhotoType.GIF.mimeType && requestData.playGif) {
-            val drawable = decodeGif(inputStream)
+        val mayBeAnimatedImage = when (requestData.mimeType) {
+            PhotoType.GIF.mimeType -> true
+            PhotoType.WEBP.mimeType -> true
+            else -> false
+        }
+
+        if (mayBeAnimatedImage && requestData.playAnimation) {
+            val drawable = decodeAnimatedImage(inputStream)
             DrawableResult(
                 drawable = drawable,
                 isSampled = false,
-                dataSource = DataSource.DISK,
+                dataSource = DataSource.MEMORY,
             )
         } else {
             SourceResult(
@@ -86,7 +90,7 @@ class EncryptedImageFetcher(
         return byteStream.source().buffer()
     }
 
-    private suspend fun decodeGif(inputStream: InputStream) =
+    private suspend fun decodeAnimatedImage(inputStream: InputStream) =
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
             val bytes = inputStream.use { it.readBytesSuspending() }
             val source = ImageDecoder.createSource(bytes)
