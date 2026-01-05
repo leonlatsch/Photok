@@ -51,7 +51,7 @@
     <string name="gallery_albums_placeholder">İlk albümünüzü oluşturun</string>
     <string name="gallery_albums_create_title">Albüm Oluştur</string>
     <string name="gallery_albums_rename_title">Albümü Yeniden Adlandır</string>
-    <string name="gallery_albums_create_placeholder">Anatomi Dersi ;)</string>
+    <string name="gallery_albums_create_placeholder">Belgeseller ;)</string>
     <string name="gallery_albums_select_title">Bir Albüm Seçin</string>
     <string name="gallery_albums_deleted">Albüm silindi</string>
     <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
