@@ -265,17 +265,17 @@
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Improved Video Player</string> <!-- TODO -->
-    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string> <!-- TODO -->
+    <string name="news_title_1">完善视频播放器</string>
+    <string name="news_summary_1">升级视频播放器到新的 Media3 API。</string>
 
-    <string name="news_title_2">Better Photo Browsing and Sorting</string> <!-- TODO -->
-    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string> <!-- TODO -->
+    <string name="news_title_2">更好的照片浏览和排序</string>
+    <string name="news_summary_2">改进了图片浏览性能，现在可以按最后修改日期对照片排序。</string>
 
-    <string name="news_title_3">Refined Settings UI</string> <!-- TODO -->
-    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string> <!-- TODO -->
+    <string name="news_title_3">改善设置用户界面</string>
+    <string name="news_summary_3">重新设计了设置屏幕匹配进行中的设计重构。</string>
 
-    <string name="news_title_4">Translations and Stability Fixes</string> <!-- TODO -->
-    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string> <!-- TODO -->
+    <string name="news_title_4">翻译和稳定性修复</string>
+    <string name="news_summary_4">更新了翻译， 多处修复改善整体可靠性。</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>
