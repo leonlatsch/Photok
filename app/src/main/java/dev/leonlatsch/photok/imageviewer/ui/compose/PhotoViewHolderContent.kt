@@ -18,21 +18,24 @@ package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import dev.leonlatsch.photok.R
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.compose.ContentFrame
+import androidx.media3.ui.compose.material3.buttons.PlayPauseButton
+import androidx.media3.ui.compose.material3.buttons.SeekBackButton
+import androidx.media3.ui.compose.material3.buttons.SeekForwardButton
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -48,11 +51,56 @@ fun PhotoViewHolderContent(
     onPlayVideo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier
-        .background(Color.Black)) {
-        val contentModifier = Modifier.fillMaxSize()
-        if (LocalInspectionMode.current) {
-            Box(modifier = contentModifier.background(Color.Red))
+    val context = LocalContext.current
+
+    Box(
+        modifier = modifier
+            .background(Color.Black)
+    ) {
+        if (photo.type.isVideo) {
+            var player: Player? by remember { mutableStateOf(null) }
+
+            LifecycleStartEffect(photo) {
+                player = ExoPlayer.Builder(context)
+//                .setMediaSourceFactory() TODO
+                    .build()
+                    .apply {
+                        // TODO: set media item
+                        prepare()
+                        playWhenReady = true // TODO: Make this configurable
+                    }
+
+                onStopOrDispose {
+                    player?.release()
+                    player = null
+                }
+            }
+
+            ContentFrame(
+                player = player,
+            )
+
+            player?.let {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
+                    SeekBackButton(it)
+                    PlayPauseButton(it)
+                    SeekForwardButton(it)
+                }
+            }
+
+//            Icon(
+//                painter = painterResource(R.drawable.ic_play_circle),
+//                contentDescription = stringResource(R.string.view_photo_play_button_description),
+//                modifier = Modifier
+//                    .align(Alignment.Center)
+//                    .size(62.dp)
+//                    .clickable { onPlayVideo() },
+//                tint = Color.LightGray,
+//            )
+
         } else {
             val requestData = remember(photo) {
                 val fileName = if (photo.type.isVideo) {
@@ -74,23 +122,11 @@ fun PhotoViewHolderContent(
                     placeholder = android.R.color.black,
                 ),
                 contentDescription = photo.fileName,
-                modifier = contentModifier.zoomable(
+                modifier = Modifier.zoomable(
                     onClick = { onClick() },
-                    state =  rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                    state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                     gestures = if (photo.type.isVideo) EnabledZoomGestures.None else EnabledZoomGestures.ZoomAndPan,
-),
-            )
-        }
-
-        if (photo.type.isVideo) {
-            Icon(
-                painter = painterResource(R.drawable.ic_play_circle),
-                contentDescription = stringResource(R.string.view_photo_play_button_description),
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .size(62.dp)
-                    .clickable { onPlayVideo() },
-                tint = Color.LightGray,
+                ),
             )
         }
     }
