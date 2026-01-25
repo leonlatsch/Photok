@@ -93,11 +93,11 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Детали</string>
-    <string name="view_photo_detail_file_name_label">Наименование файла:</string>
-    <string name="view_photo_detail_import_at_label">Импортировано:</string>
-    <string name="view_photo_detail_file_type_label">Тип файла:</string>
-    <string name="view_photo_detail_size_label">Размер файла:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_file_name_label">Наименование файла</string>
+    <string name="view_photo_detail_import_at_label">Импортировано</string>
+    <string name="view_photo_detail_file_type_label">Тип файла</string>
+    <string name="view_photo_detail_size_label">Размер файла</string>
+    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
     <string name="view_photo_play_button_description">Воспроизвести видео</string>
 
     <!-- MAIN MENU -->

@@ -93,11 +93,11 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Dettagli</string>
-    <string name="view_photo_detail_file_name_label">Nome file:</string>
-    <string name="view_photo_detail_import_at_label">Importato il:</string>
-    <string name="view_photo_detail_file_type_label">Tipo di file:</string>
-    <string name="view_photo_detail_size_label">Dimensione file:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_file_name_label">Nome file</string>
+    <string name="view_photo_detail_import_at_label">Importato il</string>
+    <string name="view_photo_detail_file_type_label">Tipo di file</string>
+    <string name="view_photo_detail_size_label">Dimensione file</string>
+    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
     <string name="view_photo_play_button_description">Riproduci video</string>
 
     <!-- MAIN MENU -->

@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import android.net.Uri
-import android.widget.ImageView
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,28 +24,22 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -69,7 +62,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -78,7 +70,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -91,6 +82,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
+import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -244,6 +236,8 @@ fun ImageViewerControls(
                         .background(topGradient)
                 )
 
+                var showMoreMenu by remember { mutableStateOf(false) }
+
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
@@ -271,13 +265,20 @@ fun ImageViewerControls(
                     },
                     actions = {
                         IconButton(
-                            onClick = {},
+                            onClick = { showMoreMenu = true },
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_more),
                                 contentDescription = stringResource(R.string.common_more),
                             )
                         }
+
+                        // Placed in actions for alignment
+                        MoreMenu(
+                            visible = showMoreMenu,
+                            onDismissRequest = { showMoreMenu = false },
+                            currentItem = currentItem,
+                        )
                     },
                 )
 
@@ -376,6 +377,48 @@ fun ImageViewerControls(
                     )
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun MoreMenu(
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    currentItem: ImageViewerItem?,
+    modifier: Modifier = Modifier,
+) {
+    var showDetailsSheet by remember { mutableStateOf(false) }
+
+    RoundedDropdownMenu(
+        expanded = visible,
+        onDismissRequest = onDismissRequest,
+        modifier = modifier,
+    ) {
+        DropdownMenuItem(
+            text = {
+                Text(
+                    text = stringResource(R.string.view_photo_detail_title),
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_info),
+                    contentDescription = null,
+                )
+            },
+            onClick = {
+                onDismissRequest()
+                showDetailsSheet = true
+            }
+        )
+    }
+
+    currentItem?.let {
+        ImageDetailsSheet(
+            visible = showDetailsSheet,
+            onDismissRequest = { showDetailsSheet = false },
+            photo = it.photo
         )
     }
 }

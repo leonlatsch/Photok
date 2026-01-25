@@ -93,11 +93,11 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Detail</string>
-    <string name="view_photo_detail_file_name_label">Nama file:</string>
-    <string name="view_photo_detail_import_at_label">Diimpor pada:</string>
-    <string name="view_photo_detail_file_type_label">Jenis file:</string>
-    <string name="view_photo_detail_size_label">Ukuran file:</string>
-    <string name="view_photo_detail_last_modified">Terakhir diubah:</string>
+    <string name="view_photo_detail_file_name_label">Nama file</string>
+    <string name="view_photo_detail_import_at_label">Diimpor pada</string>
+    <string name="view_photo_detail_file_type_label">Jenis file</string>
+    <string name="view_photo_detail_size_label">Ukuran file</string>
+    <string name="view_photo_detail_last_modified">Terakhir diubah</string>
     <string name="view_photo_play_button_description">Putar Video</string>
 
     <!-- MAIN MENU -->

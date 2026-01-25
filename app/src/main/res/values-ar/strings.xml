@@ -93,11 +93,11 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">تفاصيل</string>
-    <string name="view_photo_detail_file_name_label">اسم الملف:</string>
-    <string name="view_photo_detail_import_at_label">مستورد في:</string>
-    <string name="view_photo_detail_file_type_label">نوع الملف:</string>
-    <string name="view_photo_detail_size_label">حجم الملف:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_file_name_label">اسم الملف</string>
+    <string name="view_photo_detail_import_at_label">مستورد في</string>
+    <string name="view_photo_detail_file_type_label">نوع الملف</string>
+    <string name="view_photo_detail_size_label">حجم الملف</string>
+    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
     <string name="view_photo_play_button_description">Play Video</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
