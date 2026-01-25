@@ -69,6 +69,7 @@ fun ImageViewerPage(
                 item = item,
                 onClick = onClick,
             )
+
             is ImageViewerItem.Video -> VideoPage(
                 item = item,
                 player = player,
@@ -106,16 +107,18 @@ private fun ImagePage(
             placeholder = android.R.color.black,
         ),
         contentDescription = photo.fileName,
-        modifier = modifier.zoomable(
-            onClick = { onClick() },
-            state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
-            gestures = EnabledZoomGestures.ZoomAndPan,
-        ),
+        modifier = modifier
+            .fillMaxSize()
+            .zoomable(
+                onClick = { onClick() },
+                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                gestures = EnabledZoomGestures.ZoomAndPan,
+            ),
     )
 }
 
 @Composable
-fun VideoPage(
+private fun VideoPage(
     item: ImageViewerItem.Video,
     player: Player,
     onClick: () -> Unit,
@@ -130,7 +133,7 @@ fun VideoPage(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VideoPageContent(
+private fun VideoPageContent(
     onClick: () -> Unit,
     player: Player?,
     modifier: Modifier = Modifier,
@@ -178,7 +181,10 @@ fun VideoPageContent(
                     player.seekTo(it.toLong())
                     currentPosition = it.toLong()
                 },
-                valueRange = 0f..player.duration.coerceIn(minimumValue = 0L, maximumValue = Long.MAX_VALUE).toFloat(),
+                valueRange = 0f..player.duration.coerceIn(
+                    minimumValue = 0L,
+                    maximumValue = Long.MAX_VALUE
+                ).toFloat(),
                 colors = colors,
                 steps = 1,
                 modifier = Modifier
@@ -187,14 +193,5 @@ fun VideoPageContent(
                     .align(Alignment.BottomCenter)
             )
         }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .background(Color.Black.copy(alpha = 0.5f))
-                .align(Alignment.BottomCenter)
-        )
     }
-
 }

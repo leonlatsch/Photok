@@ -182,6 +182,8 @@ fun ImageViewerScreen(
     }
 }
 
+private val GradientExtraSpace = 40.dp
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ImageViewerControls(
@@ -238,7 +240,7 @@ fun ImageViewerControls(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(TopAppBarDefaults.TopAppBarExpandedHeight + statusBarsHeight)
+                        .height(TopAppBarDefaults.TopAppBarExpandedHeight + statusBarsHeight + GradientExtraSpace)
                         .background(topGradient)
                 )
 
@@ -302,7 +304,7 @@ fun ImageViewerControls(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .height(80.dp + navBarHeight) // TODO: More height if video for video controls
+                        .height(80.dp + navBarHeight + GradientExtraSpace) // TODO: More height if video for video controls
                         .background(bottomGradient)
                 )
 
