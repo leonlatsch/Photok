@@ -64,12 +64,6 @@ class ImageViewerFragment : Fragment() {
 
     private var systemUiVisible = true
 
-    private val pickExportTargetLauncher =
-        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            uri ?: return@registerForActivityResult
-            onExportTargetPicked(uri)
-        }
-
     private val args: ImageViewerFragmentArgs by navArgs()
 
     @EncryptedImageLoader
@@ -91,7 +85,11 @@ class ImageViewerFragment : Fragment() {
                         LocalEncryptedImageLoader provides encryptedImageLoader,
                         LocalConfig provides config,
                     ) {
-                        ImageViewerScreen(args.photoUuid, args.albumUuid)
+                        ImageViewerScreen(
+                            navController = findNavController(),
+                            photoUuid = args.photoUuid,
+                            albumUuid = args.albumUuid,
+                        )
                     }
                 }
             }
@@ -102,42 +100,6 @@ class ImageViewerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeSystemUI()
-    }
-
-    /**
-     * On Detail button clicked.
-     * Called by ui.
-     */
-    fun onDetailsClicked() {
-        DetailsBottomSheetDialog(viewModel.currentPhoto).show(childFragmentManager)
-    }
-
-    /**
-     * On delete button clicked.
-     * Called by ui.
-     */
-    fun onDeleteClicked() {
-        Dialogs.showConfirmDialog(
-            requireContext(),
-            getString(R.string.delete_are_you_sure_this)
-        ) { _, _ ->
-            viewModel.deletePhoto(
-                onSuccess = { findNavController().navigateUp() },
-                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
-            )
-        }
-    }
-
-    /**
-     * On export clicked.
-     * May request permission WRITE_EXTERNAL_STORAGE.
-     * Called by ui.
-     */
-    fun onExportClicked() {
-        pickExportTargetLauncher.launchAndIgnoreTimer(
-            input = null,
-            activity = activity,
-        )
     }
 
     private fun onExportTargetPicked(target: Uri) {

@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.imageviewer.ui
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.databinding.Bindable
@@ -43,6 +44,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+sealed interface ImageViewerUiEvent {
+    data class ConfirmDelete(val item: ImageViewerItem) : ImageViewerUiEvent
+    data class ConfirmExport(
+        val item: ImageViewerItem,
+        val target: Uri,
+        val context: Context,
+    ) : ImageViewerUiEvent
+}
+
 /**
  * ViewModel for loading the full size photo to [ViewPhotoActivity].
  *
@@ -61,7 +71,19 @@ class ImageViewerViewModel @Inject constructor(
 
     val items = MutableStateFlow<List<ImageViewerItem>>(emptyList())
 
-    fun loadItems(albumUuid: String) {
+    fun handleUiEvent(event: ImageViewerUiEvent) {
+        when (event) {
+            is ImageViewerUiEvent.ConfirmDelete -> viewModelScope.launch {
+                photoRepository.safeDeletePhoto(event.item.photo)
+            }
+
+            is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {
+                photoRepository.exportPhoto(event.item.photo, event.target)
+            }
+        }
+    }
+
+    fun loadItems(albumUuid: String) { // TODO: Make this observe and map to uiState
         viewModelScope.launch {
             val mappedItems = if (albumUuid.isEmpty()) {
                 photoRepository.findAllPhotosByImportDateDesc()
@@ -137,46 +159,4 @@ class ImageViewerViewModel @Inject constructor(
 
         onFinished(photos)
     }
-
-    /**
-     * Loads a photo. Gets called after onViewCreated
-     */
-    fun updateDetails(position: Int) = viewModelScope.launch {
-        currentPhoto = photos[position]
-    }
-
-    /**
-     * Deletes a single photo. Called after verification.
-     *
-     * @param onSuccess Block called on success
-     * @param onError Block called on error
-     */
-    fun deletePhoto(onSuccess: () -> Unit, onError: () -> Unit) =
-        viewModelScope.launch(Dispatchers.IO) {
-            currentPhoto ?: return@launch
-
-            photoRepository.safeDeletePhoto(currentPhoto!!).let {
-                onMain {
-                    if (it) onSuccess() else onError()
-                }
-            }
-        }
-
-    /**
-     * Exports a single photo. Called after verification.
-     *
-     * @param onSuccess Block called on success
-     * @param onError Block called on error
-     */
-    fun exportPhoto(target: Uri, onSuccess: () -> Unit, onError: () -> Unit) =
-        viewModelScope.launch(Dispatchers.IO) {
-            currentPhoto?.let { safeCurrentPhoto ->
-                photoRepository.exportPhoto(safeCurrentPhoto, target).let { success ->
-                    onMain {
-                        if (success) onSuccess() else onError()
-                    }
-                }
-            }
-
-        }
 }

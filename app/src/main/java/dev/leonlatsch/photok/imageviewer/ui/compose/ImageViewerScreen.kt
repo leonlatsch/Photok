@@ -75,8 +75,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -87,6 +90,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun ImageViewerScreen(
+    navController: NavController,
     photoUuid: String,
     albumUuid: String,
 ) {
@@ -96,6 +100,7 @@ fun ImageViewerScreen(
         val viewModel: ImageViewerViewModel = hiltViewModel()
 
         val items by viewModel.items.collectAsStateWithLifecycle()
+        val handleUiEvent = viewModel::handleUiEvent
 
 
         LaunchedEffect(Unit) {
@@ -167,6 +172,8 @@ fun ImageViewerScreen(
         ImageViewerControls(
             visible = showControls,
             currentItem = currentItem,
+            handleUiEvent = handleUiEvent,
+            navController = navController,
         )
     }
 }
@@ -176,8 +183,11 @@ fun ImageViewerScreen(
 fun ImageViewerControls(
     visible: Boolean,
     currentItem: ImageViewerItem?,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
     var showDeleteConfirmationDialog by remember {
@@ -243,7 +253,7 @@ fun ImageViewerControls(
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = {}
+                            onClick = { navController.navigateUp() }
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back),
@@ -302,11 +312,11 @@ fun ImageViewerControls(
                             )
                         },
                     )
-                    BottomActionItem(
-                        text = "Add to album",
-                        icon = R.drawable.ic_add,
-                        action = {},
-                    )
+//                    BottomActionItem(
+//                        text = "Add to album",
+//                        icon = R.drawable.ic_add,
+//                        action = {},
+//                    )
                     BottomActionItem(
                         text = stringResource(R.string.common_delete),
                         icon = R.drawable.ic_delete,
@@ -329,7 +339,17 @@ fun ImageViewerControls(
                 },
             ),
             onConfirm = {
-                // TODO
+                if (currentItem != null) {
+                    exportDirectoryUri?.let {
+                        handleUiEvent(
+                            ImageViewerUiEvent.ConfirmExport(
+                                item = currentItem,
+                                target = it,
+                                context = context,
+                            )
+                        )
+                    }
+                }
             }
         )
 
@@ -338,7 +358,13 @@ fun ImageViewerControls(
             onDismissRequest = { showDeleteConfirmationDialog = false },
             text = stringResource(R.string.delete_are_you_sure_this),
             onConfirm = {
-                // TODO
+                if (currentItem != null) {
+                    handleUiEvent(
+                        ImageViewerUiEvent.ConfirmDelete(
+                            item = currentItem,
+                        )
+                    )
+                }
             }
         )
     }
@@ -392,7 +418,9 @@ private fun ControlsPreview() {
                         size = 512L,
                         lastModified = null,
                     )
-                )
+                ),
+                handleUiEvent = {},
+                navController = rememberNavController(),
             )
         }
     }
