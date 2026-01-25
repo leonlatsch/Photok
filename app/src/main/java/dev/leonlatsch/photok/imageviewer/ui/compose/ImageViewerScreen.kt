@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import android.net.Uri
+import android.widget.ImageView
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -74,6 +75,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -92,21 +94,19 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun ImageViewerScreen(
     navController: NavController,
     photoUuid: String,
-    albumUuid: String,
+    albumUuid: String?,
 ) {
     CompositionLocalProvider(
         LocalContentColor provides Color.White
     ) {
-        val viewModel: ImageViewerViewModel = hiltViewModel()
+        val viewModel: ImageViewerViewModel = hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
+            creationCallback = { factory ->
+                factory.create(albumUuid)
+            }
+        )
 
-        val items by viewModel.items.collectAsStateWithLifecycle()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val handleUiEvent = viewModel::handleUiEvent
-
-
-        LaunchedEffect(Unit) {
-            viewModel.loadItems(albumUuid)
-        }
-
 
         val context = LocalContext.current
 
@@ -122,16 +122,16 @@ fun ImageViewerScreen(
             }
         }
 
-        val pagerState = rememberPagerState { items.size }
+        val pagerState = rememberPagerState { uiState.items.size }
 
         val currentItem by remember {
             derivedStateOf {
-                items.getOrNull(pagerState.currentPage)
+                uiState.items.getOrNull(pagerState.currentPage)
             }
         }
 
-        LaunchedEffect(pagerState.currentPage, items) {
-            val item = items.getOrNull(pagerState.currentPage)
+        LaunchedEffect(pagerState.currentPage, uiState.items) {
+            val item = uiState.items.getOrNull(pagerState.currentPage)
             if (item is ImageViewerItem.Video) {
                 player.apply {
                     setMediaItem(item.mediaItem)
@@ -143,13 +143,13 @@ fun ImageViewerScreen(
             }
         }
 
-        LaunchedEffect(items.size) {
-            if (items.isNotEmpty()) {
-                val initial = items.find { it.photo.uuid == photoUuid }
+        LaunchedEffect(uiState.items.size) {
+            if (uiState.items.isNotEmpty()) {
+                val initial = uiState.items.find { it.photo.uuid == photoUuid }
                 initial ?: return@LaunchedEffect
 
                 pagerState.scrollToPage(
-                    items.indexOf(initial)
+                    uiState.items.indexOf(initial)
                 )
             }
         }
@@ -161,7 +161,7 @@ fun ImageViewerScreen(
             beyondViewportPageCount = 1,
         ) {
             ImageViewerPage(
-                item = items[it],
+                item = uiState.items[it],
                 player = player,
                 onClick = {
                     showControls = !showControls

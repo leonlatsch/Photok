@@ -34,7 +34,6 @@ import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.imageviewer.ui.compose.ImageViewerScreen
@@ -59,8 +58,6 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class ImageViewerFragment : Fragment() {
-
-    private val viewModel: ImageViewerViewModel by viewModels()
 
     private var systemUiVisible = true
 
@@ -88,7 +85,7 @@ class ImageViewerFragment : Fragment() {
                         ImageViewerScreen(
                             navController = findNavController(),
                             photoUuid = args.photoUuid,
-                            albumUuid = args.albumUuid,
+                            albumUuid = args.albumUuid.takeIf { it.isNotEmpty() },
                         )
                     }
                 }
@@ -102,46 +99,11 @@ class ImageViewerFragment : Fragment() {
         initializeSystemUI()
     }
 
-    private fun onExportTargetPicked(target: Uri) {
-        var toastStringAreYouSure = getString(R.string.export_are_you_sure_this)
-        var toastStringFinishedExport = getString(R.string.export_finished)
-        if (config.deleteExportedFiles) {
-            toastStringAreYouSure = getString(R.string.export_and_delete_are_you_sure_this)
-            toastStringFinishedExport = getString(R.string.export_and_delete_finished)
-        }
-
-        Dialogs.showConfirmDialog(requireContext(), toastStringAreYouSure) { _, _ ->
-            viewModel.exportPhoto(
-                target = target,
-                onSuccess = {
-                    if (config.deleteExportedFiles) {
-                        findNavController().navigateUp()
-                    }
-                    Dialogs.showShortToast(requireContext(), toastStringFinishedExport)
-                },
-                onError = { Dialogs.showLongToast(requireContext(), getString(R.string.common_error)) }
-            )
-        }
-    }
-
     private fun initializeSystemUI() {
         if (config.galleryAutoFullscreen) { // Hide system ui if configured
             toggleSystemUI()
         }
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.menu_view_photo, menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-//        R.id.menuViewPhotoInfo -> {
-//            onDetailsClicked()
-//            true
-//        }
-//
-//        else -> false
-//    }
 
     private fun toggleSystemUI() {
         if (systemUiVisible) {

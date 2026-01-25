@@ -20,29 +20,32 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.OptIn
-import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.other.onMain
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.settings.ui.compose.PreferenceView
+import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import dev.leonlatsch.photok.videoplayer.data.AesDataSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import kotlinx.coroutines.runBlocking
+import kotlin.collections.map
 
 sealed interface ImageViewerUiEvent {
     data class ConfirmDelete(val item: ImageViewerItem) : ImageViewerUiEvent
@@ -53,6 +56,12 @@ sealed interface ImageViewerUiEvent {
     ) : ImageViewerUiEvent
 }
 
+data class ImageViewerUiState(
+    val items: List<ImageViewerItem> = emptyList(),
+)
+
+const val ALBUM_UUID = "albumUuid"
+
 /**
  * ViewModel for loading the full size photo to [ViewPhotoActivity].
  *
@@ -60,36 +69,19 @@ sealed interface ImageViewerUiEvent {
  * @author Leon Latsch
  */
 @OptIn(UnstableApi::class)
-@HiltViewModel
-class ImageViewerViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
+class ImageViewerViewModel @AssistedInject constructor(
+    @Assisted(ALBUM_UUID) private val albumUuid: String?,
     private val app: Application,
     private val encryptionManager: EncryptionManager,
     val photoRepository: PhotoRepository,
     val albumRepository: AlbumRepository,
+    val sortRepository: SortRepository,
 ) : ObservableViewModel(app) {
 
-
-    val items = MutableStateFlow<List<ImageViewerItem>>(emptyList())
-
-    fun handleUiEvent(event: ImageViewerUiEvent) {
-        when (event) {
-            is ImageViewerUiEvent.ConfirmDelete -> viewModelScope.launch {
-                photoRepository.safeDeletePhoto(event.item.photo)
-            }
-
-            is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {
-                photoRepository.exportPhoto(event.item.photo, event.target)
-            }
-        }
-    }
-
-    fun loadItems(albumUuid: String) { // TODO: Make this observe and map to uiState
-        viewModelScope.launch {
-            val mappedItems = if (albumUuid.isEmpty()) {
-                photoRepository.findAllPhotosByImportDateDesc()
-            } else {
-                albumRepository.getPhotosForAlbum(albumUuid)
-            }.map { photo ->
+    val uiState = createPhotosFlow().map { photos ->
+        ImageViewerUiState(
+            items = photos.map { photo ->
                 if (photo.type.isVideo) {
                     ImageViewerItem.Video(
                         photo = photo,
@@ -101,8 +93,18 @@ class ImageViewerViewModel @Inject constructor(
                     )
                 }
             }
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
 
-            items.update { mappedItems }
+    fun handleUiEvent(event: ImageViewerUiEvent) {
+        when (event) {
+            is ImageViewerUiEvent.ConfirmDelete -> viewModelScope.launch {
+                photoRepository.safeDeletePhoto(event.item.photo)
+            }
+
+            is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {
+                photoRepository.exportPhoto(event.item.photo, event.target)
+            }
         }
     }
 
@@ -127,36 +129,25 @@ class ImageViewerViewModel @Inject constructor(
         ProgressiveMediaSource.Factory(factory)
     }
 
-    // LEGACY
-
-    var photos = listOf<Photo>()
-
-    @get:Bindable
-    var currentPhoto: Photo? = null
-        set(value) {
-            field = value
-            notifyChange(BR.currentPhoto, value)
+    private fun createPhotosFlow(): Flow<List<Photo>> {
+        val sort = runBlocking {
+            sortRepository.getSortForAlbum(albumUuid) ?: SortConfig.defaultFor(albumUuid)
         }
 
-    /**
-     * Load all photo Ids.
-     * Save them in viewModel and pass them to [onFinished].
-     */
-    fun preloadData(
-        albumUUID: String,
-        onFinished: (List<Photo>) -> Unit
-    ) = viewModelScope.launch {
-        if (photos.isNotEmpty()) {
-            onFinished(photos)
-            return@launch
-        }
-
-        photos = if (albumUUID.isEmpty()) {
-            photoRepository.findAllPhotosByImportDateDesc()
+        return if (albumUuid == null) {
+            photoRepository.observeAll(sort)
         } else {
-            albumRepository.getPhotosForAlbum(albumUUID)
+            albumRepository.observeAlbumWithPhotos(
+                uuid = albumUuid,
+                sort = sort
+            ).map { it.files }
         }
+    }
 
-        onFinished(photos)
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted(ALBUM_UUID) albumUuid: String?
+        ): ImageViewerViewModel
     }
 }
