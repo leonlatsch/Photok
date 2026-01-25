@@ -27,6 +27,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -35,8 +36,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -99,11 +102,12 @@ fun ImageViewerScreen(
     CompositionLocalProvider(
         LocalContentColor provides Color.White
     ) {
-        val viewModel: ImageViewerViewModel = hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
-            creationCallback = { factory ->
-                factory.create(albumUuid)
-            }
-        )
+        val viewModel: ImageViewerViewModel =
+            hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
+                creationCallback = { factory ->
+                    factory.create(albumUuid)
+                }
+            )
 
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val handleUiEvent = viewModel::handleUiEvent
@@ -178,7 +182,7 @@ fun ImageViewerScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ImageViewerControls(
     visible: Boolean,
@@ -217,8 +221,10 @@ fun ImageViewerControls(
             ) {
                 // Top
 
-                val statusBarsHeight =
-                    WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+                val statusBarsHeight = WindowInsets
+                    .statusBarsIgnoringVisibility
+                    .asPaddingValues()
+                    .calculateTopPadding()
 
                 val topGradient = remember {
                     Brush.verticalGradient(
@@ -278,8 +284,10 @@ fun ImageViewerControls(
                 val activity = LocalActivity.current
 
 
-                val navBarHeight =
-                    WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                val navBarHeight = WindowInsets
+                    .navigationBarsIgnoringVisibility
+                    .asPaddingValues()
+                    .calculateBottomPadding()
 
                 val bottomGradient = remember {
                     Brush.verticalGradient(
@@ -394,6 +402,7 @@ fun RowScope.BottomActionItem(
             )
             Text(
                 text = text,
+                maxLines = 1,
             )
         }
     }
