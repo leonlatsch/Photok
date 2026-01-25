@@ -37,9 +37,13 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import dev.leonlatsch.photok.videoplayer.data.AesDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -61,22 +65,23 @@ class VideoPlayerViewModel @Inject constructor(
      * Create and prepare the [player] to play the passed video.
      */
     fun setupPlayer(photoUUID: String) {
-        releasePlayer()
-
-        viewModelScope.launch(Dispatchers.IO) {
+        Timber.d("setupPlayer")
+        viewModelScope.launch(IO) {
+            releasePlayer()
             val photo = photoRepository.get(photoUUID)
 
-            player.update {
-                ExoPlayer.Builder(app)
-                    .setMediaSourceFactory(createMediaSourceFactory())
-                    .build()
-                    .apply {
-                        onMain {
-                            setMediaItem(createMediaItem(photo))
-                            prepare()
-                            playWhenReady = true
-                        }
-                    }
+            val newPlayer = ExoPlayer.Builder(app)
+                .setMediaSourceFactory(createMediaSourceFactory())
+                .build()
+
+            player.update { newPlayer }
+
+            withContext(Main) {
+                newPlayer.apply {
+                    setMediaItem(createMediaItem(photo))
+                    prepare()
+                    playWhenReady = true
+                }
             }
         }
     }
@@ -107,6 +112,7 @@ class VideoPlayerViewModel @Inject constructor(
      * Release the current player
      */
     fun releasePlayer() {
+        Timber.d("releasePLayer")
         player.value?.release()
         player.update { null }
     }

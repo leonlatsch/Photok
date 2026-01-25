@@ -18,28 +18,35 @@ package dev.leonlatsch.photok.imageviewer.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager2.widget.ViewPager2
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentImageViewerBinding
+import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
+import dev.leonlatsch.photok.imageviewer.ui.compose.ImageViewerScreen
 import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.showSystemUI
-import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import javax.inject.Inject
@@ -51,8 +58,7 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ImageViewerFragment :
-    BindableFragment<FragmentImageViewerBinding>(R.layout.fragment_image_viewer) {
+class ImageViewerFragment : Fragment() {
 
     private val viewModel: ImageViewerViewModel by viewModels()
 
@@ -64,56 +70,38 @@ class ImageViewerFragment :
             onExportTargetPicked(uri)
         }
 
-    @Inject
-    lateinit var config: Config
-
     private val args: ImageViewerFragmentArgs by navArgs()
 
     @EncryptedImageLoader
     @Inject
     lateinit var encryptedImageLoader: ImageLoader
 
+    @Inject
+    lateinit var config: Config
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AppTheme {
+                    CompositionLocalProvider(
+                        LocalEncryptedImageLoader provides encryptedImageLoader,
+                        LocalConfig provides config,
+                    ) {
+                        ImageViewerScreen(args.photoUuid, args.albumUuid)
+                    }
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.systemBarsPadding()
-
-        setHasOptionsMenu(true)
-        setToolbar(binding.viewPhotoToolbar)
-        binding.viewPhotoToolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
 
         initializeSystemUI()
-
-        binding.viewPhotoViewPager.offscreenPageLimit = 1
-        binding.viewPhotoViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                viewModel.updateDetails(position)
-            }
-        })
-
-        viewModel.preloadData(args.albumUuid) { photos ->
-            val photoPagerAdapter =
-                PhotoPagerAdapter(
-                    photos = photos,
-                    encryptedImageLoader = encryptedImageLoader,
-                    navController = findNavController(),
-                    onClick = {
-                        toggleSystemUI()
-                    }
-                )
-            binding.viewPhotoViewPager.adapter = photoPagerAdapter
-
-            val photoUUID = args.photoUuid
-            val startingPhoto = photos.find { it.uuid == photoUUID }
-            val startingAt = if (!photoUUID.isNullOrEmpty() || startingPhoto != null) {
-                photos.indexOf(startingPhoto)
-            } else {
-                0
-            }
-            binding.viewPhotoViewPager.setCurrentItem(startingAt, false)
-        }
     }
 
     /**
@@ -174,37 +162,24 @@ class ImageViewerFragment :
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun initializeSystemUI() {
-
-        requireActivity().window.addSystemUIVisibilityListener {
-            systemUiVisible = it
-            if (it) {
-                binding.viewPhotoAppBarLayout.show()
-                binding.viewPhotoBottomToolbarLayout.show()
-            } else {
-                binding.viewPhotoAppBarLayout.hide()
-                binding.viewPhotoBottomToolbarLayout.hide()
-            }
-        }
-
         if (config.galleryAutoFullscreen) { // Hide system ui if configured
             toggleSystemUI()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_view_photo, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menuViewPhotoInfo -> {
-            onDetailsClicked()
-            true
-        }
-
-        else -> false
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_view_photo, menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+//        R.id.menuViewPhotoInfo -> {
+//            onDetailsClicked()
+//            true
+//        }
+//
+//        else -> false
+//    }
 
     private fun toggleSystemUI() {
         if (systemUiVisible) {
@@ -217,11 +192,5 @@ class ImageViewerFragment :
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().showSystemUI()
-    }
-
-    override fun bind(binding: FragmentImageViewerBinding) {
-        super.bind(binding)
-        binding.context = this
-        binding.viewModel = viewModel
     }
 }
