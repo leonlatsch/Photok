@@ -47,6 +47,7 @@ fun Activity.hideSystemUI() {
 fun Activity.showSystemUI() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         window.insetsController?.show(WindowInsets.Type.systemBars())
+        window.insetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_DEFAULT
     } else {
         @Suppress("DEPRECATION")
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE

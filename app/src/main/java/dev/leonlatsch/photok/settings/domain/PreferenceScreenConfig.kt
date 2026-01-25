@@ -20,8 +20,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_AUTO_FULLSCREEN
-import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_AUTO_FULLSCREEN_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_ALLOW_SCREENSHOTS
@@ -93,13 +91,6 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
         title = R.string.settings_category_gallery,
         summary = null,
         preferences = listOf(
-            Preference.Switch(
-                key = GALLERY_AUTO_FULLSCREEN,
-                icon = R.drawable.ic_fullscreen,
-                title = R.string.settings_gallery_auto_fullscreen_title,
-                summary = R.string.settings_gallery_auto_fullscreen_summary,
-                default = GALLERY_AUTO_FULLSCREEN_DEFAULT,
-            ),
             Preference.Enum(
                 key = GALLERY_START_PAGE,
                 icon = R.drawable.ic_gallery_thumbnail,

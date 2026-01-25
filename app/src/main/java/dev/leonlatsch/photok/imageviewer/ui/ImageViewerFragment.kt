@@ -59,8 +59,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ImageViewerFragment : Fragment() {
 
-    private var systemUiVisible = true
-
     private val args: ImageViewerFragmentArgs by navArgs()
 
     @EncryptedImageLoader
@@ -90,26 +88,6 @@ class ImageViewerFragment : Fragment() {
                     }
                 }
             }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initializeSystemUI()
-    }
-
-    private fun initializeSystemUI() {
-        if (config.galleryAutoFullscreen) { // Hide system ui if configured
-            toggleSystemUI()
-        }
-    }
-
-    private fun toggleSystemUI() {
-        if (systemUiVisible) {
-            requireActivity().hideSystemUI()
-        } else {
-            requireActivity().showSystemUI()
         }
     }
 

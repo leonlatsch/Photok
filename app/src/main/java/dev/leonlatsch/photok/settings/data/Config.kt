@@ -81,13 +81,6 @@ class Config(context: Context) {
         set(value) = putString(SYSTEM_DESIGN, value.value)
 
     /**
-     * Determines if the full screen photo view, should hide the system ui at start.
-     */
-    var galleryAutoFullscreen: Boolean
-        get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
-        set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
-
-    /**
      * Determines the start page of the gallery.
      */
     var galleryStartPage: StartPage
@@ -214,9 +207,6 @@ class Config(context: Context) {
 
         const val SYSTEM_DESIGN = "system^design"
         val SYSTEM_DESIGN_DEFAULT = SystemDesignEnum.System
-
-        const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
-        const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
 
         const val GALLERY_START_PAGE = "gallery^startPage"
         val GALLERY_START_PAGE_DEFAULT = StartPage.AllFiles

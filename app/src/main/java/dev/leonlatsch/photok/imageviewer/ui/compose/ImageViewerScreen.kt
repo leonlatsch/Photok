@@ -79,7 +79,9 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.showSystemUI
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
@@ -105,6 +107,7 @@ fun ImageViewerScreen(
         val handleUiEvent = viewModel::handleUiEvent
 
         val context = LocalContext.current
+        val activity = LocalActivity.current
 
         val player = remember {
             ExoPlayer.Builder(context)
@@ -150,7 +153,15 @@ fun ImageViewerScreen(
             }
         }
 
-        var showControls by remember { mutableStateOf(true) }
+        var showControls by remember { mutableStateOf(false) }
+
+        LaunchedEffect(showControls) {
+            if (showControls) {
+                activity?.showSystemUI()
+            } else {
+                activity?.hideSystemUI()
+            }
+        }
 
         HorizontalPager(
             state = pagerState,
@@ -164,6 +175,7 @@ fun ImageViewerScreen(
                 }
             )
         }
+
 
         ImageViewerControls(
             visible = showControls,
@@ -186,6 +198,8 @@ fun ImageViewerControls(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+
+
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
     var showDeleteConfirmationDialog by remember {
