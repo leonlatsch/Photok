@@ -75,13 +75,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsController
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.other.extensions.hideSystemUI
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
-import dev.leonlatsch.photok.other.extensions.showSystemUI
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
@@ -129,8 +128,8 @@ fun ImageViewerScreen(
             }
         }
 
-        LaunchedEffect(pagerState.currentPage, uiState.items) {
-            val item = uiState.items.getOrNull(pagerState.currentPage)
+        LaunchedEffect(pagerState.settledPage, uiState.items) {
+            val item = uiState.items.getOrNull(pagerState.settledPage)
             if (item is ImageViewerItem.Video) {
                 player.apply {
                     setMediaItem(item.mediaItem)
@@ -155,13 +154,7 @@ fun ImageViewerScreen(
 
         var showControls by remember { mutableStateOf(false) }
 
-        LaunchedEffect(showControls) {
-            if (showControls) {
-                activity?.showSystemUI()
-            } else {
-                activity?.hideSystemUI()
-            }
-        }
+        ImageViewerSystemBarsController(visible = showControls)
 
         HorizontalPager(
             state = pagerState,

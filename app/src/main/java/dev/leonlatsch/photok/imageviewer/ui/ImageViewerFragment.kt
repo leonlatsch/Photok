@@ -16,38 +16,24 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.net.Uri
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.imageviewer.ui.compose.ImageViewerScreen
-import dev.leonlatsch.photok.other.extensions.addSystemUIVisibilityListener
-import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.hideSystemUI
-import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.extensions.showSystemUI
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import javax.inject.Inject
 
 /**
@@ -74,6 +60,7 @@ class ImageViewerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return ComposeView(requireContext()).apply {
+            setBackgroundColor(Color.BLACK)
             setContent {
                 AppTheme {
                     CompositionLocalProvider(
@@ -89,10 +76,5 @@ class ImageViewerFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().showSystemUI()
     }
 }
