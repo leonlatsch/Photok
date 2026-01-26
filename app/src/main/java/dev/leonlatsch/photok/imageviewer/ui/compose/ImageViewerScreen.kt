@@ -159,13 +159,12 @@ fun ImageViewerScreen(
         HorizontalPager(
             state = pagerState,
             beyondViewportPageCount = 1,
-        ) {
+        ) { pageIndex ->
             ImageViewerPage(
-                item = uiState.items[it],
+                item = uiState.items[pageIndex],
                 player = player,
-                onClick = {
-                    showControls = !showControls
-                }
+                updateShowControls = { newValue -> showControls = newValue },
+                showControls = showControls,
             )
         }
 
@@ -308,11 +307,18 @@ fun ImageViewerControls(
                     )
                 }
 
+                // Extra large gradient for videos because of controls
+                val videoExtraSpace = if (currentItem is ImageViewerItem.Video) {
+                    50.dp
+                } else {
+                    0.dp
+                }
+
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .height(80.dp + navBarHeight + GradientExtraSpace) // TODO: More height if video for video controls
+                        .height(80.dp + navBarHeight + GradientExtraSpace + videoExtraSpace)
                         .background(bottomGradient)
                 )
 
