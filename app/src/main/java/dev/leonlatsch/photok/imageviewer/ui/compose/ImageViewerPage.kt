@@ -29,8 +29,11 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -131,6 +134,14 @@ private fun VideoPage(
     )
 }
 
+@Stable
+private class PlaybackUiState {
+    var position by mutableLongStateOf(0L)
+    var duration by mutableLongStateOf(0L)
+    var isPlaying by mutableStateOf(false)
+    var isScrubbing by mutableStateOf(false)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun VideoPageContent(
@@ -138,6 +149,46 @@ private fun VideoPageContent(
     player: Player?,
     modifier: Modifier = Modifier,
 ) {
+    val state = remember { PlaybackUiState() }
+
+    DisposableEffect(player) {
+        if (player == null) return@DisposableEffect onDispose { }
+
+        val listener = object : Player.Listener {
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                state.isPlaying = isPlaying
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                state.duration = player.duration.coerceAtLeast(0L)
+            }
+
+            override fun onEvents(player: Player, events: Player.Events) {
+                if (!state.isScrubbing) {
+                    state.position = player.currentPosition
+                }
+            }
+        }
+
+        player.addListener(listener)
+
+        onDispose {
+            player.removeListener(listener)
+        }
+    }
+
+    LaunchedEffect(player, state.isScrubbing) {
+        if (player == null) return@LaunchedEffect
+
+        val delay = 1000L / 60 // 60 FPS controls update
+
+        while (isActive && !state.isScrubbing) {
+            state.position = player.currentPosition
+            delay(delay)
+        }
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -159,34 +210,20 @@ private fun VideoPageContent(
                 inactiveTrackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.4f)
             )
 
-            val scope = rememberCoroutineScope()
-            var currentPosition by remember { mutableLongStateOf(0L) }
-
-            DisposableEffect(Unit) {
-                val job = scope.launch {
-                    while (this.isActive) {
-                        currentPosition = player.currentPosition
-                        delay(10L)
-                    }
-                }
-
-                onDispose {
-                    job.cancel()
-                }
-            }
-
             Slider(
-                value = currentPosition.toFloat(),
+                value = state.position.toFloat(),
                 onValueChange = {
-                    player.seekTo(it.toLong())
-                    currentPosition = it.toLong()
+                    player.pause()
+                    state.isScrubbing = true
+                    state.position = it.toLong()
                 },
-                valueRange = 0f..player.duration.coerceIn(
-                    minimumValue = 0L,
-                    maximumValue = Long.MAX_VALUE
-                ).toFloat(),
+                onValueChangeFinished = {
+                    player.seekTo(state.position)
+                    player.play()
+                    state.isScrubbing = false
+                },
+                valueRange = 0f..player.duration.coerceAtLeast(minimumValue = 0L).toFloat(),
                 colors = colors,
-                steps = 1,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(bottom = 70.dp)
