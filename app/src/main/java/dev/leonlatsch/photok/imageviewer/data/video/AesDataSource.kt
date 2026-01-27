@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.videoplayer.data
+package dev.leonlatsch.photok.imageviewer.data.video
 
 import android.net.Uri
 import androidx.media3.common.util.UnstableApi
@@ -29,7 +29,7 @@ import javax.crypto.CipherInputStream
 
 /**
  * DataSource to process AES/GCM/Encrypted Video.
- * Uses [CipherInputStream.forceSkip] extension to be able to skip.
+ * Uses [forceSkip] extension to be able to skip.
  *
  * @since 1.3.0
  * @author Leon Latsch

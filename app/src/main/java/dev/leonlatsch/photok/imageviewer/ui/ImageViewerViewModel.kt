@@ -34,11 +34,10 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import dev.leonlatsch.photok.videoplayer.data.AesDataSource
+import dev.leonlatsch.photok.imageviewer.data.video.AesDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
