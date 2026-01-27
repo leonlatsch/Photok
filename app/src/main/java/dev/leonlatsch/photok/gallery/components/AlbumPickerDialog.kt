@@ -34,46 +34,52 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.gallery.albums.ui.compose.CreateAlbumDialog
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumPickerDialog(
-    viewModel: AlbumPickerViewModel,
-    onAlbumSelected: (String) -> Unit,
-    onDismiss: () -> Unit,
+    visible: Boolean,
+    selectedItemIds: List<String>,
+    onDismissRequest: () -> Unit,
+    onAlbumSelected: () -> Unit = {},
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var showCreateDialog by remember { mutableStateOf(false) }
+    if (visible) {
+        val viewModel: AlbumPickerViewModel = hiltViewModel()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        AlbumPickerContent(
-            uiState = uiState,
-            onAlbumSelected = onAlbumSelected,
-            onCreateNewAlbum = { showCreateDialog = true }
-        )
+        ModalBottomSheet(onDismissRequest = onDismissRequest) {
+            AlbumPickerContent(
+                selectedItemIds = selectedItemIds,
+                uiState = uiState,
+                handleUiEvent = viewModel::handleUiEvent,
+                onDismissRequest = onDismissRequest,
+                onAlbumSelected = onAlbumSelected,
+            )
+        }
     }
-
-
-    CreateAlbumDialog(
-        show = showCreateDialog,
-        onDismissRequest = { showCreateDialog = false },
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AlbumPickerContent(
+    selectedItemIds: List<String>,
     uiState: AlbumPickerUiState,
-    onAlbumSelected: (String) -> Unit,
-    onCreateNewAlbum: () -> Unit,
+    handleUiEvent: (AlbumPickerUiEvent) -> Unit,
+    onDismissRequest: () -> Unit,
+    onAlbumSelected: () -> Unit,
 ) {
+    var showCreateDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -90,7 +96,7 @@ private fun AlbumPickerContent(
             ),
             actions = {
                 IconButton(
-                    onClick = { onCreateNewAlbum() }
+                    onClick = { showCreateDialog = true }
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_add),
@@ -100,11 +106,24 @@ private fun AlbumPickerContent(
             }
         )
 
+        val context = LocalContext.current
+        val addedMessage = stringResource(R.string.gallery_albums_photos_added, selectedItemIds.size)
+
         AlbumsGrid(
             albums = uiState.albums,
-            onAlbumClicked = onAlbumSelected,
+            onAlbumClicked = { uuid ->
+                handleUiEvent(AlbumPickerUiEvent.OnAlbumSelected(selectedItemIds, uuid))
+                Dialogs.showLongToast(context, addedMessage)
+                onAlbumSelected()
+                onDismissRequest()
+            },
         )
     }
+
+    CreateAlbumDialog(
+        show = showCreateDialog,
+        onDismissRequest = { showCreateDialog = false },
+    )
 }
 
 @Preview(showBackground = true)
@@ -140,7 +159,9 @@ private fun AlbumPickerPreview() {
                 ),
             ),
         ),
+        selectedItemIds = emptyList(),
+        handleUiEvent = {},
+        onDismissRequest = {},
         onAlbumSelected = {},
-        onCreateNewAlbum = {},
     )
 }

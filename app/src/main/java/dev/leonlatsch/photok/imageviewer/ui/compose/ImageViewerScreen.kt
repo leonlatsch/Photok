@@ -23,12 +23,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -55,6 +58,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,15 +69,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsController
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
@@ -194,11 +201,15 @@ fun ImageViewerControls(
 
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
-    var showDeleteConfirmationDialog by remember {
+    var showDeleteConfirmationDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
-    var showExportConfirmationDialog by remember {
+    var showExportConfirmationDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var showAlbumPickerDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -326,28 +337,32 @@ fun ImageViewerControls(
                     modifier = Modifier.align(Alignment.BottomCenter),
                     containerColor = Color.Transparent,
                 ) {
-                    BottomActionItem(
-                        text = stringResource(R.string.common_export),
-                        icon = R.drawable.ic_export,
-                        action = {
-                            pickExportTargetLauncher.launchAndIgnoreTimer(
-                                input = null,
-                                activity = activity,
-                            )
-                        },
-                    )
-//                    BottomActionItem(
-//                        text = "Add to album",
-//                        icon = R.drawable.ic_add,
-//                        action = {},
-//                    )
-                    BottomActionItem(
-                        text = stringResource(R.string.common_delete),
-                        icon = R.drawable.ic_delete,
-                        action = {
-                            showDeleteConfirmationDialog = true
-                        },
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        BottomActionItem(
+                            text = stringResource(R.string.common_export),
+                            icon = R.drawable.ic_export,
+                            action = {
+                                pickExportTargetLauncher.launchAndIgnoreTimer(
+                                    input = null,
+                                    activity = activity,
+                                )
+                            },
+                        )
+                        BottomActionItem(
+                            text = stringResource(R.string.menu_ms_add_to_album),
+                            icon = R.drawable.ic_add,
+                            action = { showAlbumPickerDialog = true },
+                        )
+                        BottomActionItem(
+                            text = stringResource(R.string.common_delete),
+                            icon = R.drawable.ic_delete,
+                            action = { showDeleteConfirmationDialog = true },
+                        )
+                    }
                 }
             }
         }
@@ -390,6 +405,12 @@ fun ImageViewerControls(
                     )
                 }
             }
+        )
+
+        AlbumPickerDialog(
+            visible = showAlbumPickerDialog,
+            selectedItemIds = if (currentItem == null) emptyList() else listOf(currentItem.photo.uuid),
+            onDismissRequest = { showAlbumPickerDialog = false },
         )
     }
 }
@@ -444,7 +465,7 @@ fun RowScope.BottomActionItem(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier.weight(1f),
+        modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -461,6 +482,8 @@ fun RowScope.BottomActionItem(
             Text(
                 text = text,
                 maxLines = 1,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
             )
         }
     }

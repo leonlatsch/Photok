@@ -46,7 +46,6 @@ import javax.inject.Inject
 class GalleryFragment : Fragment() {
 
     private val viewModel: GalleryViewModel by viewModels()
-    private val albumPickerViewModel: AlbumPickerViewModel by viewModels()
 
     @Inject
     lateinit var navigator: GalleryNavigator
@@ -75,7 +74,7 @@ class GalleryFragment : Fragment() {
                 LocalConfig provides config,
                 LocalFragment provides this@GalleryFragment,
             ) {
-                GalleryScreen(viewModel, albumPickerViewModel)
+                GalleryScreen(viewModel)
             }
         }
     }

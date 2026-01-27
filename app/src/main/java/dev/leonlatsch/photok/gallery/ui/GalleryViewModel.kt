@@ -48,9 +48,7 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     photoRepository: PhotoRepository,
     private val galleryUiStateFactory: GalleryUiStateFactory,
-    private val albumRepository: AlbumRepository,
     private val sortRepository: SortRepository,
-    private val resources: Resources,
 ) : ViewModel() {
 
     private val sortFlow = sortRepository.observeSortFor(albumUuid = null, default = SortConfig.Gallery.default)
@@ -82,7 +80,6 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.OnDelete -> onDeleteSelectedItems(event.items)
             is GalleryUiEvent.OnExport -> onExportSelectedItems(event.items, event.target)
             is GalleryUiEvent.OnAddToAlbum -> showAlbumSelectionDialog.value = true
-            is GalleryUiEvent.OnAlbumSelected -> addPhotosToSelectedAlbum(event.photoIds, event.albumId)
             GalleryUiEvent.CancelAlbumSelection -> showAlbumSelectionDialog.value = false
             is GalleryUiEvent.OnImportChoice -> onImportChoice(event.choice)
             is GalleryUiEvent.SortChanged -> viewModelScope.launch {
@@ -101,18 +98,6 @@ class GalleryViewModel @Inject constructor(
         }
 
         eventsChannel.trySend(navEvent)
-    }
-
-    private fun addPhotosToSelectedAlbum(items: List<String>, albumId: String) {
-        viewModelScope.launch {
-            albumRepository.link(items, albumId)
-        }
-        showAlbumSelectionDialog.value = false
-        eventsChannel.trySend(
-            GalleryNavigationEvent.ShowToast(
-                resources.getString(R.string.gallery_albums_photos_added, items.size)
-            )
-        )
     }
 
     private fun onExportSelectedItems(selectedItems: List<String>, target: Uri?) {
