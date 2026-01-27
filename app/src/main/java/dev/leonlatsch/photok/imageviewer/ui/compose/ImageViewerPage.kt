@@ -44,6 +44,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -162,6 +163,7 @@ private fun VideoPage(
 private class PlaybackUiState {
     var position by mutableLongStateOf(0L)
     var duration by mutableLongStateOf(0L)
+    var playbackState by mutableIntStateOf(0)
     var isPlaying by mutableStateOf(false)
     var isScrubbing by mutableStateOf(false)
     var isMute by mutableStateOf(false)
@@ -189,6 +191,8 @@ private fun VideoPageContent(
 
             override fun onPlaybackStateChanged(playbackState: Int) {
                 state.duration = player.duration.coerceAtLeast(0L)
+                state.playbackState = playbackState
+
                 if (playbackState == Player.STATE_ENDED) {
                     updateControlsVisible(true)
                 }
@@ -286,7 +290,14 @@ private fun VideoPageContent(
                         }
                         IconButton(
                             onClick = {
-                                if (isPlaying) player?.pause() else player?.play()
+                                if (isPlaying) {
+                                    player?.pause()
+                                } else {
+                                    if (state.playbackState == Player.STATE_ENDED) {
+                                        player?.seekTo(0L)
+                                    }
+                                    player?.play()
+                                }
                             }
                         ) {
                             Icon(
