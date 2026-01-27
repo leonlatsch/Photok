@@ -145,6 +145,10 @@ class Config(context: Context) {
         get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT)
         set(value) = putBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, value)
 
+    var loopVideos: Boolean
+        get() = getBoolean(IMAGE_VIEWER_LOOP_VIDEO, IMAGE_VIEWER_LOOP_VIDEO_DEFAULT)
+        set(value) = putBoolean(IMAGE_VIEWER_LOOP_VIDEO, value)
+
     // region put/get methods
 
     fun getString(key: String, default: String?) = preferences.getString(key, default)
@@ -234,5 +238,8 @@ class Config(context: Context) {
 
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED = "security^biometricAuthenticationEnabled"
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT = false
+
+        const val IMAGE_VIEWER_LOOP_VIDEO = "imageViewer^loopVideo"
+        const val IMAGE_VIEWER_LOOP_VIDEO_DEFAULT = false
     }
 }

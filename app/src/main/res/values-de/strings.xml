@@ -99,7 +99,8 @@
     <string name="view_photo_detail_file_type_label">Datei Typ</string>
     <string name="view_photo_detail_size_label">Dateigröße</string>
     <string name="view_photo_detail_last_modified">Zuletzt geändert</string>
-    <string name="view_photo_play_button_description">Video Abspielen</string>
+    <string name="view_photo_loop_video_disabled">Wiederholung deaktiviert</string>
+    <string name="view_photo_loop_video_enabled">Wiederholdung aktiviert</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Sperren</string>

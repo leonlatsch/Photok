@@ -84,6 +84,7 @@ import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsController
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -113,7 +114,6 @@ fun ImageViewerScreen(
         val handleUiEvent = viewModel::handleUiEvent
 
         val context = LocalContext.current
-        val activity = LocalActivity.current
 
         val player = remember {
             ExoPlayer.Builder(context)
@@ -124,6 +124,14 @@ fun ImageViewerScreen(
         DisposableEffect(Unit) {
             onDispose {
                 player.release()
+            }
+        }
+
+        LaunchedEffect(player, uiState.loopVideos) {
+            player.repeatMode = if (uiState.loopVideos) {
+                ExoPlayer.REPEAT_MODE_ONE
+            } else {
+                ExoPlayer.REPEAT_MODE_OFF
             }
         }
 
@@ -180,6 +188,7 @@ fun ImageViewerScreen(
             visible = showControls,
             currentItem = currentItem,
             handleUiEvent = handleUiEvent,
+            uiState = uiState,
             navController = navController,
         )
     }
@@ -192,6 +201,7 @@ private val GradientExtraSpace = 40.dp
 fun ImageViewerControls(
     visible: Boolean,
     currentItem: ImageViewerItem?,
+    uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -295,6 +305,8 @@ fun ImageViewerControls(
                             visible = showMoreMenu,
                             onDismissRequest = { showMoreMenu = false },
                             currentItem = currentItem,
+                            uiState = uiState,
+                            handleUiEvent = handleUiEvent,
                         )
                     },
                 )
@@ -420,6 +432,8 @@ private fun MoreMenu(
     visible: Boolean,
     onDismissRequest: () -> Unit,
     currentItem: ImageViewerItem?,
+    uiState: ImageViewerUiState,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showDetailsSheet by remember { mutableStateOf(false) }
@@ -446,6 +460,42 @@ private fun MoreMenu(
                 showDetailsSheet = true
             }
         )
+        if (currentItem is ImageViewerItem.Video) {
+
+            DropdownMenuItem(
+                text = {
+                    val text = remember(uiState.loopVideos) {
+                        if (uiState.loopVideos) {
+                            R.string.view_photo_loop_video_enabled
+                        } else {
+                            R.string.view_photo_loop_video_disabled
+                        }
+                    }
+
+                    Text(
+                        text = stringResource(text)
+                    )
+                },
+                leadingIcon = {
+                    val icon = remember(uiState.loopVideos) {
+                        if (uiState.loopVideos) {
+                            R.drawable.media3_icon_repeat_all // Icon for all but we just do repeat one
+                        } else {
+                            R.drawable.ic_repeat_off
+                        }
+                    }
+
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = null,
+                    )
+                },
+                onClick = {
+                    handleUiEvent(ImageViewerUiEvent.UpdateLoopVideos(!uiState.loopVideos))
+                    onDismissRequest()
+                }
+            )
+        }
     }
 
     currentItem?.let {
@@ -509,6 +559,7 @@ private fun ControlsPreview() {
                         lastModified = null,
                     )
                 ),
+                uiState = ImageViewerUiState(),
                 handleUiEvent = {},
                 navController = rememberNavController(),
             )

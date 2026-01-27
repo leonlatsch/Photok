@@ -38,8 +38,10 @@ import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import dev.leonlatsch.photok.imageviewer.data.video.AesDataSource
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -53,10 +55,12 @@ sealed interface ImageViewerUiEvent {
         val target: Uri,
         val context: Context,
     ) : ImageViewerUiEvent
+    data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
 }
 
 data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
+    val loopVideos: Boolean = false,
 )
 
 const val ALBUM_UUID = "albumUuid"
@@ -73,12 +77,16 @@ class ImageViewerViewModel @AssistedInject constructor(
     @Assisted(ALBUM_UUID) private val albumUuid: String?,
     private val app: Application,
     private val encryptionManager: EncryptionManager,
-    val photoRepository: PhotoRepository,
-    val albumRepository: AlbumRepository,
-    val sortRepository: SortRepository,
+    private val photoRepository: PhotoRepository,
+    private val albumRepository: AlbumRepository,
+    private val sortRepository: SortRepository,
+    private val config: Config,
 ) : ObservableViewModel(app) {
 
-    val uiState = createPhotosFlow().map { photos ->
+    val uiState = combine(
+        createPhotosFlow(),
+        config.valuesFlow,
+    ) { photos, configValues ->
         ImageViewerUiState(
             items = photos.map { photo ->
                 if (photo.type.isVideo) {
@@ -91,7 +99,8 @@ class ImageViewerViewModel @AssistedInject constructor(
                         photo = photo
                     )
                 }
-            }
+            },
+            loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
 
@@ -103,6 +112,10 @@ class ImageViewerViewModel @AssistedInject constructor(
 
             is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {
                 photoRepository.exportPhoto(event.item.photo, event.target)
+            }
+
+            is ImageViewerUiEvent.UpdateLoopVideos -> viewModelScope.launch {
+                config.loopVideos = event.newValue
             }
         }
     }

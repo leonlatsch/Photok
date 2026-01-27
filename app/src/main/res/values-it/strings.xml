@@ -98,7 +98,8 @@
     <string name="view_photo_detail_file_type_label">Tipo di file</string>
     <string name="view_photo_detail_size_label">Dimensione file</string>
     <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_play_button_description">Riproduci video</string>
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Blocca</string>
