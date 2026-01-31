@@ -31,22 +31,23 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.imageviewer.data.video.AesDataSource
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import dev.leonlatsch.photok.imageviewer.data.video.AesDataSource
-import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlin.collections.map
 
 sealed interface ImageViewerUiEvent {
     data class ConfirmDelete(val item: ImageViewerItem) : ImageViewerUiEvent
@@ -56,12 +57,18 @@ sealed interface ImageViewerUiEvent {
         val context: Context,
     ) : ImageViewerUiEvent
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
+    data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
 }
 
 data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
     val loopVideos: Boolean = false,
-)
+    val showControls: Boolean = false,
+) {
+    data class Inputs(
+        val showControls: Boolean = false,
+    )
+}
 
 const val ALBUM_UUID = "albumUuid"
 
@@ -83,10 +90,13 @@ class ImageViewerViewModel @AssistedInject constructor(
     private val config: Config,
 ) : ObservableViewModel(app) {
 
+    private val inputs = MutableStateFlow(ImageViewerUiState.Inputs())
+
     val uiState = combine(
         createPhotosFlow(),
         config.valuesFlow,
-    ) { photos, configValues ->
+        inputs,
+    ) { photos, configValues, inputs ->
         ImageViewerUiState(
             items = photos.map { photo ->
                 if (photo.type.isVideo) {
@@ -101,6 +111,7 @@ class ImageViewerViewModel @AssistedInject constructor(
                 }
             },
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
+            showControls = inputs.showControls,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
 
@@ -116,6 +127,10 @@ class ImageViewerViewModel @AssistedInject constructor(
 
             is ImageViewerUiEvent.UpdateLoopVideos -> viewModelScope.launch {
                 config.loopVideos = event.newValue
+            }
+
+            is ImageViewerUiEvent.UpdateShowControls -> inputs.update {
+                it.copy(showControls = event.newValue)
             }
         }
     }

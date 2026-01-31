@@ -33,22 +33,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,7 +46,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
@@ -66,9 +55,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
-import dev.leonlatsch.photok.ui.theme.AppTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
@@ -78,9 +66,11 @@ import java.util.Locale
 @Composable
 fun ImageViewerPage(
     item: ImageViewerItem,
+    isCurrentItem: Boolean,
     player: Player,
-    updateShowControls: (Boolean) -> Unit,
-    showControls: Boolean,
+    exoPlayerState: ExoPlayerState,
+    uiState: ImageViewerUiState,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -89,16 +79,18 @@ fun ImageViewerPage(
     ) {
         when (item) {
             is ImageViewerItem.Image -> ImagePage(
+                uiState = uiState,
+                handleUiEvent = handleUiEvent,
                 item = item,
-                updateShowControls = updateShowControls,
-                showControls = showControls,
             )
 
             is ImageViewerItem.Video -> VideoPage(
                 item = item,
+                isCurrentItem = isCurrentItem,
+                uiState = uiState,
+                handleUiEvent = handleUiEvent,
                 player = player,
-                updateControlsVisible = updateShowControls,
-                showControls = showControls,
+                exoPlayerState = exoPlayerState,
             )
         }
     }
@@ -107,8 +99,8 @@ fun ImageViewerPage(
 @Composable
 private fun ImagePage(
     item: ImageViewerItem.Image,
-    updateShowControls: (Boolean) -> Unit,
-    showControls: Boolean,
+    uiState: ImageViewerUiState,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val photo = item.photo
@@ -136,7 +128,7 @@ private fun ImagePage(
         modifier = modifier
             .fillMaxSize()
             .zoomable(
-                onClick = { updateShowControls(!showControls) },
+                onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
@@ -146,121 +138,50 @@ private fun ImagePage(
 @Composable
 private fun VideoPage(
     item: ImageViewerItem.Video,
+    isCurrentItem: Boolean,
+    exoPlayerState: ExoPlayerState,
     player: Player,
-    updateControlsVisible: (Boolean) -> Unit,
-    showControls: Boolean,
+    uiState: ImageViewerUiState,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     VideoPageContent(
-        updateControlsVisible = updateControlsVisible,
-        showControls = showControls,
+        isCurrentItem = isCurrentItem,
+        exoPlayerState = exoPlayerState,
+        uiState = uiState,
+        handleUiEvent = handleUiEvent,
         player = player,
         modifier = modifier,
     )
-}
-
-@Stable
-private class PlaybackUiState {
-    var position by mutableLongStateOf(0L)
-    var duration by mutableLongStateOf(0L)
-    var playbackState by mutableIntStateOf(0)
-    var isPlaying by mutableStateOf(false)
-    var isScrubbing by mutableStateOf(false)
-    var isMute by mutableStateOf(false)
 }
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun VideoPageContent(
-    updateControlsVisible: (Boolean) -> Unit,
-    showControls: Boolean,
-    player: Player?,
+    isCurrentItem: Boolean,
+    exoPlayerState: ExoPlayerState,
+    uiState: ImageViewerUiState,
+    handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    player: Player,
     modifier: Modifier = Modifier,
 ) {
-    val state = remember { PlaybackUiState() }
-
-    DisposableEffect(player) {
-        if (player == null) return@DisposableEffect onDispose { }
-
-        val listener = object : Player.Listener {
-
-            override fun onIsPlayingChanged(isPlaying: Boolean) {
-                state.isPlaying = isPlaying
-            }
-
-            override fun onPlaybackStateChanged(playbackState: Int) {
-                state.duration = player.duration.coerceAtLeast(0L)
-                state.playbackState = playbackState
-
-                if (playbackState == Player.STATE_ENDED) {
-                    updateControlsVisible(true)
-                }
-            }
-
-            override fun onEvents(player: Player, events: Player.Events) {
-                if (!state.isScrubbing) {
-                    state.position = player.currentPosition
-                }
-            }
-        }
-
-        player.addListener(listener)
-
-        onDispose {
-            player.removeListener(listener)
-        }
-    }
-
-    // Update state.position while playing
-    LaunchedEffect(player, state.isScrubbing) {
-        if (player == null) return@LaunchedEffect
-
-        val delay = 1000L / 60 // 60 FPS controls update
-
-        while (isActive && !state.isScrubbing) {
-            state.position = player.currentPosition
-            delay(delay)
-        }
-    }
-
-    // Apply mute state to player
-    LaunchedEffect(player, state.isMute) {
-        if (state.isMute) {
-            player?.mute()
-        } else {
-            player?.unmute()
-        }
-    }
-
-    // Auto hide controls after 3 seconds of playing
-    LaunchedEffect(state.isPlaying, showControls) {
-        if (state.isPlaying && showControls) {
-            delay(3000)
-            if (isActive) {
-                updateControlsVisible(false)
-            }
-        }
-    }
-
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        if (player != null) {
-            ContentFrame(
-                player = player,
-                modifier = Modifier.zoomable(
-                    onClick = { updateControlsVisible(!showControls) },
-                    state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
-                    gestures = EnabledZoomGestures.ZoomAndPan,
-                ),
-            )
-        }
+        ContentFrame(
+            player = if (isCurrentItem) player else null, // ?
+            modifier = Modifier.zoomable(
+                onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
+                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                gestures = EnabledZoomGestures.ZoomAndPan,
+            ),
+        )
 
         AnimatedVisibility(
-            visible = showControls,
+            visible = uiState.showControls,
             enter = fadeIn(),
             exit = fadeOut(),
             modifier = Modifier
@@ -278,7 +199,7 @@ private fun VideoPageContent(
                         .padding(horizontal = 8.dp)
                 ) {
                     AnimatedContent(
-                        targetState = state.isPlaying,
+                        targetState = exoPlayerState.isPlaying,
                         transitionSpec = {
                             fadeIn() togetherWith fadeOut()
                         },
@@ -293,7 +214,7 @@ private fun VideoPageContent(
                                 if (isPlaying) {
                                     player?.pause()
                                 } else {
-                                    if (state.playbackState == Player.STATE_ENDED) {
+                                    if (exoPlayerState.playbackState == Player.STATE_ENDED) {
                                         player?.seekTo(0L)
                                     }
                                     player?.play()
@@ -307,11 +228,11 @@ private fun VideoPageContent(
                         }
                     }
 
-                    val formattedPosition = remember(state.position) {
-                        state.position.toVideoTime()
+                    val formattedPosition = remember(exoPlayerState.position) {
+                        exoPlayerState.position.toVideoTime()
                     }
-                    val formattedDuration = remember(state.duration) {
-                        state.duration.toVideoTime()
+                    val formattedDuration = remember(exoPlayerState.duration) {
+                        exoPlayerState.duration.toVideoTime()
                     }
 
                     Text(
@@ -325,7 +246,7 @@ private fun VideoPageContent(
                     )
 
                     AnimatedContent(
-                        targetState = state.isMute,
+                        targetState = exoPlayerState.isMute,
                         transitionSpec = {
                             fadeIn() togetherWith fadeOut()
                         },
@@ -336,7 +257,7 @@ private fun VideoPageContent(
                             R.drawable.media3_icon_volume_up
                         }
                         IconButton(
-                            onClick = { state.isMute = !state.isMute }
+                            onClick = { exoPlayerState.isMute = !exoPlayerState.isMute }
                         ) {
                             Icon(
                                 painter = painterResource(icon),
@@ -353,18 +274,18 @@ private fun VideoPageContent(
                 )
 
                 Slider(
-                    value = state.position.toFloat(),
+                    value = exoPlayerState.position.toFloat(),
                     onValueChange = {
-                        player?.pause()
-                        state.isScrubbing = true
-                        state.position = it.toLong()
+                        player.pause()
+                        exoPlayerState.isScrubbing = true
+                        exoPlayerState.position = it.toLong()
                     },
                     onValueChangeFinished = {
-                        player?.seekTo(state.position)
-                        player?.play()
-                        state.isScrubbing = false
+                        player.seekTo(exoPlayerState.position)
+                        player.play()
+                        exoPlayerState.isScrubbing = false
                     },
-                    valueRange = 0f..state.duration.coerceAtLeast(minimumValue = 0L).toFloat(),
+                    valueRange = 0f..exoPlayerState.duration.coerceAtLeast(minimumValue = 0L).toFloat(),
                     colors = sliderColors,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -385,21 +306,5 @@ fun Long.toVideoTime(): String {
     return when {
         hours > 0 -> String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
         else -> String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-    }
-}
-
-@Preview
-@Composable
-private fun VideoControlsPreview() {
-    AppTheme() {
-        CompositionLocalProvider(
-            LocalContentColor provides Color.White
-        ) {
-            VideoPageContent(
-                updateControlsVisible = {},
-                showControls = true,
-                player = null,
-            )
-        }
     }
 }
