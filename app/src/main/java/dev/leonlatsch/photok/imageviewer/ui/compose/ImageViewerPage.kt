@@ -137,14 +137,18 @@ private fun BoxScope.ImagePage(
         modifier = modifier
             .fillMaxSize()
             .zoomable(
-                onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
+                onClick = {
+                    handleUiEvent(
+                        ImageViewerUiEvent.UpdateShowControls(!uiState.inputs.showControls)
+                    )
+                },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )
 
-    TopGradient(visible = uiState.showControls)
-    BottomGradient(visible = uiState.showControls)
+    TopGradient(visible = uiState.inputs.showControls)
+    BottomGradient(visible = uiState.inputs.showControls)
 }
 
 @androidx.annotation.OptIn(UnstableApi::class)
@@ -192,17 +196,21 @@ private fun BoxScope.VideoPage(
         modifier = modifier
             .fillMaxSize()
             .zoomable(
-                onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
+                onClick = {
+                    handleUiEvent(
+                        ImageViewerUiEvent.UpdateShowControls(!uiState.inputs.showControls)
+                    )
+                },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )
 
-    TopGradient(visible = uiState.showControls)
-    BottomVideoGradient(visible = uiState.showControls)
+    TopGradient(visible = uiState.inputs.showControls)
+    BottomVideoGradient(visible = uiState.inputs.showControls)
 
     AnimatedVisibility(
-        visible = uiState.showControls,
+        visible = uiState.inputs.showControls,
         enter = fadeIn(),
         exit = fadeOut(),
         modifier = Modifier

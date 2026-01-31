@@ -59,17 +59,26 @@ sealed interface ImageViewerUiEvent {
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
     data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
     data object ToggleMuteVideoPlayer : ImageViewerUiEvent
+    data class UpdateCurrentDialog(val newValue: ImageViewerUiState.Dialog?) : ImageViewerUiEvent
 }
 
 data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
     val loopVideos: Boolean = false,
     val muteVideoPlayer: Boolean = false,
-    val showControls: Boolean = false,
+    val inputs: Inputs = Inputs(),
 ) {
     data class Inputs(
         val showControls: Boolean = false,
+        val currentDialog: Dialog? = null,
     )
+
+    enum class Dialog {
+        ConfirmDelete,
+        ConfirmExport,
+        MoreMenu,
+        AlbumPicker,
+    }
 }
 
 const val ALBUM_UUID = "albumUuid"
@@ -114,7 +123,7 @@ class ImageViewerViewModel @AssistedInject constructor(
             },
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
             muteVideoPlayer = configValues.getOrDefault(Config.IMAGE_VIEWER_MUTE_VIDEO_PLAYER, false) as Boolean,
-            showControls = inputs.showControls,
+            inputs = inputs,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
 
@@ -138,6 +147,10 @@ class ImageViewerViewModel @AssistedInject constructor(
 
             is ImageViewerUiEvent.ToggleMuteVideoPlayer -> viewModelScope.launch {
                 config.imageViewerMuteVideoPlayer = !uiState.value.muteVideoPlayer
+            }
+
+            is ImageViewerUiEvent.UpdateCurrentDialog -> inputs.update {
+                it.copy(currentDialog = event.newValue)
             }
         }
     }

@@ -46,7 +46,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -88,23 +87,12 @@ fun ImageViewerControls(
 
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
-    var showDeleteConfirmationDialog by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    var showExportConfirmationDialog by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    var showAlbumPickerDialog by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val pickExportTargetLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { exportTarget ->
             exportTarget ?: return@rememberLauncherForActivityResult
             exportDirectoryUri = exportTarget
-            showExportConfirmationDialog = true
+
+            handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.ConfirmExport))
         }
 
     CompositionLocalProvider(
@@ -117,8 +105,6 @@ fun ImageViewerControls(
                 modifier = modifier
                     .fillMaxSize()
             ) {
-                var showMoreMenu by remember { mutableStateOf(false) }
-
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
@@ -146,7 +132,13 @@ fun ImageViewerControls(
                     },
                     actions = {
                         IconButton(
-                            onClick = { showMoreMenu = true },
+                            onClick = {
+                                handleUiEvent(
+                                    ImageViewerUiEvent.UpdateCurrentDialog(
+                                        ImageViewerUiState.Dialog.MoreMenu,
+                                    )
+                                )
+                            },
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_more),
@@ -156,8 +148,10 @@ fun ImageViewerControls(
 
                         // Placed in actions for alignment
                         MoreMenu(
-                            visible = showMoreMenu,
-                            onDismissRequest = { showMoreMenu = false },
+                            visible = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.MoreMenu,
+                            onDismissRequest = {
+                                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+                            },
                             currentItem = currentItem,
                             uiState = uiState,
                             handleUiEvent = handleUiEvent,
@@ -191,12 +185,24 @@ fun ImageViewerControls(
                         BottomActionItem(
                             text = stringResource(R.string.menu_ms_add_to_album),
                             icon = R.drawable.ic_add,
-                            action = { showAlbumPickerDialog = true },
+                            action = {
+                                handleUiEvent(
+                                    ImageViewerUiEvent.UpdateCurrentDialog(
+                                        ImageViewerUiState.Dialog.AlbumPicker
+                                    )
+                                )
+                            },
                         )
                         BottomActionItem(
                             text = stringResource(R.string.common_delete),
                             icon = R.drawable.ic_delete,
-                            action = { showDeleteConfirmationDialog = true },
+                            action = {
+                                handleUiEvent(
+                                    ImageViewerUiEvent.UpdateCurrentDialog(
+                                        ImageViewerUiState.Dialog.ConfirmDelete
+                                    )
+                                )
+                            },
                         )
                     }
                 }
@@ -204,8 +210,10 @@ fun ImageViewerControls(
         }
 
         ConfirmationDialog(
-            show = showExportConfirmationDialog,
-            onDismissRequest = { showExportConfirmationDialog = false },
+            show = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.ConfirmExport,
+            onDismissRequest = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+            },
             text = stringResource(
                 if (LocalConfig.current?.deleteExportedFiles == true) {
                     R.string.export_and_delete_are_you_sure_this
@@ -229,8 +237,10 @@ fun ImageViewerControls(
         )
 
         ConfirmationDialog(
-            show = showDeleteConfirmationDialog,
-            onDismissRequest = { showDeleteConfirmationDialog = false },
+            show = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.ConfirmDelete,
+            onDismissRequest = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+            },
             text = stringResource(R.string.delete_are_you_sure_this),
             onConfirm = {
                 if (currentItem != null) {
@@ -244,9 +254,11 @@ fun ImageViewerControls(
         )
 
         AlbumPickerDialog(
-            visible = showAlbumPickerDialog,
+            visible = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.AlbumPicker,
             selectedItemIds = if (currentItem == null) emptyList() else listOf(currentItem.photo.uuid),
-            onDismissRequest = { showAlbumPickerDialog = false },
+            onDismissRequest = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+            },
         )
     }
 }

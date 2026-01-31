@@ -177,8 +177,8 @@ fun ImageViewerScreen(
         }
 
         // Auto hide controls after 3 seconds of playing
-        LaunchedEffect(exoPlayerState.isPlaying, uiState.showControls) {
-            if (exoPlayerState.isPlaying && uiState.showControls) {
+        LaunchedEffect(exoPlayerState.isPlaying, uiState) {
+            if (exoPlayerState.isPlaying && uiState.inputs.showControls && uiState.inputs.currentDialog == null) {
                 delay(3000)
                 if (isActive) {
                     handleUiEvent(ImageViewerUiEvent.UpdateShowControls(false))
@@ -203,14 +203,14 @@ fun ImageViewerScreen(
 
 
         ImageViewerControls(
-            visible = uiState.showControls,
+            visible = uiState.inputs.showControls,
             currentItem = currentItem,
             handleUiEvent = handleUiEvent,
             uiState = uiState,
             navController = navController,
         )
 
-        ImageViewerSystemBarsController(visible = uiState.showControls)
+        ImageViewerSystemBarsController(visible = uiState.inputs.showControls)
     }
 }
 
