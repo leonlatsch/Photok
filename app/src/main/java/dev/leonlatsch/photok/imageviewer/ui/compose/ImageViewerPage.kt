@@ -14,6 +14,8 @@
  *   limitations under the License.
  */
 
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import androidx.compose.animation.AnimatedContent
@@ -25,22 +27,29 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -49,7 +58,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.ContentFrame
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
@@ -97,7 +105,7 @@ fun ImageViewerPage(
 }
 
 @Composable
-private fun ImagePage(
+private fun BoxScope.ImagePage(
     item: ImageViewerItem.Image,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
@@ -133,10 +141,13 @@ private fun ImagePage(
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )
+
+    TopGradient(visible = uiState.showControls)
+    BottomGradient(visible = uiState.showControls)
 }
 
 @Composable
-private fun VideoPage(
+private fun BoxScope.VideoPage(
     item: ImageViewerItem.Video,
     isCurrentItem: Boolean,
     exoPlayerState: ExoPlayerState,
@@ -145,154 +156,234 @@ private fun VideoPage(
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    VideoPageContent(
-        isCurrentItem = isCurrentItem,
-        exoPlayerState = exoPlayerState,
-        uiState = uiState,
-        handleUiEvent = handleUiEvent,
-        player = player,
-        modifier = modifier,
-    )
-}
-
-@androidx.annotation.OptIn(UnstableApi::class)
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun VideoPageContent(
-    isCurrentItem: Boolean,
-    exoPlayerState: ExoPlayerState,
-    uiState: ImageViewerUiState,
-    handleUiEvent: (ImageViewerUiEvent) -> Unit,
-    player: Player,
-    modifier: Modifier = Modifier,
-) {
-    Box(
+    ContentFrame(
+        player = if (isCurrentItem) player else null, // ?
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
-    ) {
-        ContentFrame(
-            player = if (isCurrentItem) player else null, // ?
-            modifier = Modifier.zoomable(
+            .zoomable(
                 onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
-        )
+    )
 
-        AnimatedVisibility(
-            visible = uiState.showControls,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 120.dp)
+    TopGradient(visible = uiState.showControls)
+    BottomVideoGradient(visible = uiState.showControls)
+
+    AnimatedVisibility(
+        visible = uiState.showControls,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .padding(bottom = 120.dp)
+    ) {
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    AnimatedContent(
-                        targetState = exoPlayerState.isPlaying,
-                        transitionSpec = {
-                            fadeIn() togetherWith fadeOut()
-                        },
-                    ) { isPlaying ->
-                        val icon = if (isPlaying) {
-                            R.drawable.media3_icon_pause
-                        } else {
-                            R.drawable.media3_icon_play
-                        }
-                        IconButton(
-                            onClick = {
-                                if (isPlaying) {
-                                    player?.pause()
-                                } else {
-                                    if (exoPlayerState.playbackState == Player.STATE_ENDED) {
-                                        player?.seekTo(0L)
-                                    }
-                                    player?.play()
+                AnimatedContent(
+                    targetState = exoPlayerState.isPlaying,
+                    transitionSpec = {
+                        fadeIn() togetherWith fadeOut()
+                    },
+                ) { isPlaying ->
+                    val icon = if (isPlaying) {
+                        R.drawable.media3_icon_pause
+                    } else {
+                        R.drawable.media3_icon_play
+                    }
+                    IconButton(
+                        onClick = {
+                            if (isPlaying) {
+                                player.pause()
+                            } else {
+                                if (exoPlayerState.playbackState == Player.STATE_ENDED) {
+                                    player.seekTo(0L)
                                 }
+                                player.play()
                             }
-                        ) {
-                            Icon(
-                                painter = painterResource(icon),
-                                contentDescription = if (isPlaying) "pause" else "play",
-                            )
                         }
-                    }
-
-                    val formattedPosition = remember(exoPlayerState.position) {
-                        exoPlayerState.position.toVideoTime()
-                    }
-                    val formattedDuration = remember(exoPlayerState.duration) {
-                        exoPlayerState.duration.toVideoTime()
-                    }
-
-                    Text(
-                        text = "$formattedPosition / $formattedDuration",
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Center,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    AnimatedContent(
-                        targetState = exoPlayerState.isMute,
-                        transitionSpec = {
-                            fadeIn() togetherWith fadeOut()
-                        },
-                    ) { isMute ->
-                        val icon = if (isMute) {
-                            R.drawable.media3_icon_volume_off
-                        } else {
-                            R.drawable.media3_icon_volume_up
-                        }
-                        IconButton(
-                            onClick = { exoPlayerState.isMute = !exoPlayerState.isMute }
-                        ) {
-                            Icon(
-                                painter = painterResource(icon),
-                                contentDescription = if (isMute) "unmute" else "mute",
-                            )
-                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(icon),
+                            contentDescription = if (isPlaying) "pause" else "play",
+                        )
                     }
                 }
 
-                val sliderColors = SliderDefaults.colors(
-                    thumbColor = MaterialTheme.colorScheme.onPrimary,
-                    activeTrackColor = MaterialTheme.colorScheme.onPrimary,
-                    inactiveTrackColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.4f)
+                val formattedPosition = remember(exoPlayerState.position) {
+                    exoPlayerState.position.toVideoTime()
+                }
+                val formattedDuration = remember(exoPlayerState.duration) {
+                    exoPlayerState.duration.toVideoTime()
+                }
+
+                Text(
+                    text = "$formattedPosition / $formattedDuration",
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
                 )
 
-                Slider(
-                    value = exoPlayerState.position.toFloat(),
-                    onValueChange = {
-                        player.pause()
-                        exoPlayerState.isScrubbing = true
-                        exoPlayerState.position = it.toLong()
+                AnimatedContent(
+                    targetState = exoPlayerState.isMute,
+                    transitionSpec = {
+                        fadeIn() togetherWith fadeOut()
                     },
-                    onValueChangeFinished = {
-                        player.seekTo(exoPlayerState.position)
-                        player.play()
-                        exoPlayerState.isScrubbing = false
-                    },
-                    valueRange = 0f..exoPlayerState.duration.coerceAtLeast(minimumValue = 0L).toFloat(),
-                    colors = sliderColors,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                )
+                ) { isMute ->
+                    val icon = if (isMute) {
+                        R.drawable.media3_icon_volume_off
+                    } else {
+                        R.drawable.media3_icon_volume_up
+                    }
+                    IconButton(
+                        onClick = { exoPlayerState.isMute = !exoPlayerState.isMute }
+                    ) {
+                        Icon(
+                            painter = painterResource(icon),
+                            contentDescription = if (isMute) "unmute" else "mute",
+                        )
+                    }
+                }
             }
+
+            val sliderColors = SliderDefaults.colors(
+                thumbColor = Color.White,
+                activeTrackColor = Color.White,
+                inactiveTrackColor = Color.White.copy(alpha = 0.4f)
+            )
+
+            Slider(
+                value = exoPlayerState.position.toFloat(),
+                onValueChange = {
+                    player.pause()
+                    exoPlayerState.isScrubbing = true
+                    exoPlayerState.position = it.toLong()
+                },
+                onValueChangeFinished = {
+                    player.seekTo(exoPlayerState.position)
+                    player.play()
+                    exoPlayerState.isScrubbing = false
+                },
+                valueRange = 0f..exoPlayerState.duration.coerceAtLeast(minimumValue = 0L)
+                    .toFloat(),
+                colors = sliderColors,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
         }
+    }
+
+}
+
+@Composable
+private fun BoxScope.TopGradient(visible: Boolean) {
+    val statusBarsHeight = WindowInsets
+        .statusBarsIgnoringVisibility
+        .asPaddingValues()
+        .calculateTopPadding()
+
+
+    val brush = remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.Black.copy(alpha = 0.6f),
+                Color.Transparent,
+            )
+        )
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = Modifier.align(Alignment.TopCenter)
+
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(TopAppBarDefaults.TopAppBarExpandedHeight + statusBarsHeight + 40.dp)
+                .background(brush)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.BottomGradient(visible: Boolean) {
+    val navBarHeight = WindowInsets
+        .navigationBarsIgnoringVisibility
+        .asPaddingValues()
+        .calculateBottomPadding()
+
+    val brush = remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.Transparent,
+                Color.Black.copy(alpha = 0.6f),
+            )
+        )
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = Modifier.align(Alignment.BottomCenter)
+
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp + navBarHeight + 40.dp)
+                .background(brush)
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.BottomVideoGradient(visible: Boolean) {
+    val navBarHeight = WindowInsets
+        .navigationBarsIgnoringVisibility
+        .asPaddingValues()
+        .calculateBottomPadding()
+
+    val brush = remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.Transparent,
+                Color.Black.copy(alpha = 0.4f),
+                Color.Black.copy(alpha = 0.6f),
+            )
+        )
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = Modifier.align(Alignment.BottomCenter)
+
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp + navBarHeight + 180.dp)
+                .background(brush)
+        )
     }
 }
 
