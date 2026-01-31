@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
 import androidx.media3.ui.compose.ContentFrame
+import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
@@ -155,16 +156,41 @@ private fun BoxScope.VideoPage(
     modifier: Modifier = Modifier,
 ) {
     ContentFrame(
-        player = if (isCurrentItem) player else null, // ?
+        player = if (isCurrentItem) player else null,
+        surfaceType = SURFACE_TYPE_TEXTURE_VIEW, // Somehow cures a weird issue with small amount of black screen on start
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
             .zoomable(
                 onClick = { handleUiEvent(ImageViewerUiEvent.UpdateShowControls(!uiState.showControls)) },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )
+
+    // While scrolling, show a video preview instead of a black screen. Feels way better
+    if (!isCurrentItem) {
+        val photo = item.photo
+
+        val requestData = remember(photo) {
+
+            EncryptedImageRequestData(
+                internalFileName = photo.internalVideoPreviewFileName,
+                mimeType = photo.type.mimeType,
+                playAnimation = false,
+            )
+        }
+
+        Image(
+            painter = rememberEncryptedImagePainter(
+                data = requestData,
+                placeholder = android.R.color.black,
+            ),
+            contentDescription = photo.fileName,
+            modifier = modifier.fillMaxSize()
+        )
+
+    }
+
 
     TopGradient(visible = uiState.showControls)
     BottomVideoGradient(visible = uiState.showControls)
