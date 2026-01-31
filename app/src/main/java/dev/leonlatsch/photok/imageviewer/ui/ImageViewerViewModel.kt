@@ -58,11 +58,13 @@ sealed interface ImageViewerUiEvent {
     ) : ImageViewerUiEvent
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
     data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
+    data object ToggleMuteVideoPlayer : ImageViewerUiEvent
 }
 
 data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
     val loopVideos: Boolean = false,
+    val muteVideoPlayer: Boolean = false,
     val showControls: Boolean = false,
 ) {
     data class Inputs(
@@ -111,6 +113,7 @@ class ImageViewerViewModel @AssistedInject constructor(
                 }
             },
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
+            muteVideoPlayer = configValues.getOrDefault(Config.IMAGE_VIEWER_MUTE_VIDEO_PLAYER, false) as Boolean,
             showControls = inputs.showControls,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
@@ -126,11 +129,15 @@ class ImageViewerViewModel @AssistedInject constructor(
             }
 
             is ImageViewerUiEvent.UpdateLoopVideos -> viewModelScope.launch {
-                config.loopVideos = event.newValue
+                config.imageViewerLoopVideos = event.newValue
             }
 
             is ImageViewerUiEvent.UpdateShowControls -> inputs.update {
                 it.copy(showControls = event.newValue)
+            }
+
+            is ImageViewerUiEvent.ToggleMuteVideoPlayer -> viewModelScope.launch {
+                config.imageViewerMuteVideoPlayer = !uiState.value.muteVideoPlayer
             }
         }
     }

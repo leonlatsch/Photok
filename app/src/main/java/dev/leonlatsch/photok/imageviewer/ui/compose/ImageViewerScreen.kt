@@ -168,8 +168,8 @@ fun ImageViewerScreen(
         }
 
         // Apply mute state to player
-        LaunchedEffect(player, exoPlayerState.isMute) {
-            if (exoPlayerState.isMute) {
+        LaunchedEffect(player, uiState.muteVideoPlayer) {
+            if (uiState.muteVideoPlayer) {
                 player.mute()
             } else {
                 player.unmute()

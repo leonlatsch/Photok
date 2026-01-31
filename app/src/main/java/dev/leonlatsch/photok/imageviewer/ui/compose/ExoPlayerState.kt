@@ -30,5 +30,4 @@ class ExoPlayerState {
     var playbackState by mutableIntStateOf(0)
     var isPlaying by mutableStateOf(false)
     var isScrubbing by mutableStateOf(false)
-    var isMute by mutableStateOf(false)
 }

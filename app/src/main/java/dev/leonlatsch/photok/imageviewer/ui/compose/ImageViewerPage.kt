@@ -264,7 +264,7 @@ private fun BoxScope.VideoPage(
                 )
 
                 AnimatedContent(
-                    targetState = exoPlayerState.isMute,
+                    targetState = uiState.muteVideoPlayer,
                     transitionSpec = {
                         fadeIn() togetherWith fadeOut()
                     },
@@ -275,7 +275,9 @@ private fun BoxScope.VideoPage(
                         R.drawable.media3_icon_volume_up
                     }
                     IconButton(
-                        onClick = { exoPlayerState.isMute = !exoPlayerState.isMute }
+                        onClick = {
+                            handleUiEvent(ImageViewerUiEvent.ToggleMuteVideoPlayer)
+                        }
                     ) {
                         Icon(
                             painter = painterResource(icon),
