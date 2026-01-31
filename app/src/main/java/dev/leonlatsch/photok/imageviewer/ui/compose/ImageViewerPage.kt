@@ -14,8 +14,6 @@
  *   limitations under the License.
  */
 
-@file:OptIn(ExperimentalLayoutApi::class)
-
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import androidx.compose.animation.AnimatedContent
@@ -289,6 +287,7 @@ private fun BoxScope.VideoPage(
 
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun BoxScope.TopGradient(visible: Boolean) {
     val statusBarsHeight = WindowInsets
@@ -322,6 +321,7 @@ private fun BoxScope.TopGradient(visible: Boolean) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun BoxScope.BottomGradient(visible: Boolean) {
     val navBarHeight = WindowInsets
@@ -354,6 +354,7 @@ private fun BoxScope.BottomGradient(visible: Boolean) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun BoxScope.BottomVideoGradient(visible: Boolean) {
     val navBarHeight = WindowInsets
