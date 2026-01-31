@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
@@ -160,6 +161,34 @@ private fun BoxScope.VideoPage(
     ContentFrame(
         player = if (isCurrentItem) player else null,
         surfaceType = SURFACE_TYPE_TEXTURE_VIEW, // Somehow cures a weird issue with small amount of black screen on start
+        shutter = {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val photo = item.photo
+
+                val requestData = remember(photo) {
+
+                    EncryptedImageRequestData(
+                        internalFileName = photo.internalVideoPreviewFileName,
+                        mimeType = photo.type.mimeType,
+                        playAnimation = false,
+                    )
+                }
+
+                Image(
+                    painter = rememberEncryptedImagePainter(
+                        data = requestData,
+                        placeholder = android.R.color.black,
+                    ),
+                    contentDescription = photo.fileName,
+                    modifier = modifier.fillMaxSize()
+                )
+
+                CircularProgressIndicator()
+            }
+        },
         modifier = modifier
             .fillMaxSize()
             .zoomable(
@@ -168,31 +197,6 @@ private fun BoxScope.VideoPage(
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )
-
-    // While scrolling, show a video preview instead of a black screen. Feels way better
-    if (!isCurrentItem) {
-        val photo = item.photo
-
-        val requestData = remember(photo) {
-
-            EncryptedImageRequestData(
-                internalFileName = photo.internalVideoPreviewFileName,
-                mimeType = photo.type.mimeType,
-                playAnimation = false,
-            )
-        }
-
-        Image(
-            painter = rememberEncryptedImagePainter(
-                data = requestData,
-                placeholder = android.R.color.black,
-            ),
-            contentDescription = photo.fileName,
-            modifier = modifier.fillMaxSize()
-        )
-
-    }
-
 
     TopGradient(visible = uiState.showControls)
     BottomVideoGradient(visible = uiState.showControls)
