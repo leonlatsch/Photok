@@ -24,7 +24,6 @@ import android.view.WindowInsetsController
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun ImageViewerSystemBarsController(
@@ -47,7 +46,7 @@ fun ImageViewerSystemBarsController(
         }
 
         onDispose {
-            window.restoreDefaultSystemBarAppearance()
+            window.showSystemBars()
         }
     }
 }
@@ -71,9 +70,7 @@ private fun Window.forceLightSystemBarIcons() {
 
 private fun Window.showSystemBars() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        insetsController?.let {
-            it.show(WindowInsets.Type.systemBars())
-        }
+        insetsController?.show(WindowInsets.Type.systemBars())
     } else {
         @Suppress("DEPRECATION")
         decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
@@ -94,14 +91,3 @@ private fun Window.hideSystemBars() {
     }
 }
 
-private fun Window.restoreDefaultSystemBarAppearance() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        insetsController?.setSystemBarsAppearance(
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-        )
-        insetsController?.show(WindowInsets.Type.systemBars())
-    }
-}
