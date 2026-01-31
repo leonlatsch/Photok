@@ -56,6 +56,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
@@ -145,6 +146,7 @@ private fun BoxScope.ImagePage(
     BottomGradient(visible = uiState.showControls)
 }
 
+@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 private fun BoxScope.VideoPage(
     item: ImageViewerItem.Video,

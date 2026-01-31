@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -179,6 +180,7 @@ private fun DetailsRow(
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @PreviewLightDark
 @Composable
 private fun Preview() {
@@ -193,7 +195,7 @@ private fun Preview() {
                     type = PhotoType.JPEG,
                     size = 512L,
                     lastModified = System.currentTimeMillis() - 23942334234L,
-                )
+                ),
             )
         }
     }
