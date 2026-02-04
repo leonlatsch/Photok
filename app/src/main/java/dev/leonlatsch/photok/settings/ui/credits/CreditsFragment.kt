@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentCreditsBinding
 import dev.leonlatsch.photok.other.systemBarsPadding
@@ -36,6 +37,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
  * @since 1.2.0
  * @author Leon Latsch
  */
+@AndroidEntryPoint
 class CreditsFragment : BindableFragment<FragmentCreditsBinding>(R.layout.fragment_credits) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

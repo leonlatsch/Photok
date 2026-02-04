@@ -22,6 +22,7 @@ import dev.leonlatsch.photok.backup.data.ReadBackupMetadataUseCase
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.IO
+import timber.log.Timber
 import javax.inject.Inject
 
 class ValidateBackupUseCase @Inject constructor(
@@ -30,46 +31,51 @@ class ValidateBackupUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(uri: Uri): Result<BackupValidation> {
-        val zipInputStream = io.zip.openZipInput(uri)
+        try {
+            val zipInputStream = io.zip.openZipInput(uri)
 
-        var cryptFiles = 0
-        var photokFiles = 0
+            var cryptFiles = 0
+            var photokFiles = 0
 
-        var metaData: BackupMetaData? = null
-        var backupVersion: Int? = null
+            var metaData: BackupMetaData? = null
+            var backupVersion: Int? = null
 
-        var ze = zipInputStream.nextEntry
-        while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
-                metaData = readBackupMetadata(zipInputStream)
-                backupVersion = metaData.getBackupVersion()
-            } else if (ze.name.endsWith(PHOTOK_FILE_EXTENSION)) {
-                cryptFiles++
-            } else if (ze.name.endsWith(LEGACY_PHOTOK_FILE_EXTENSION)) {
-                photokFiles++
+            var ze = zipInputStream.nextEntry
+            while (ze != null) {
+                if (ze.name == BackupMetaData.FILE_NAME) {
+                    metaData = readBackupMetadata(zipInputStream)
+                    backupVersion = metaData.getBackupVersion()
+                } else if (ze.name.endsWith(PHOTOK_FILE_EXTENSION)) {
+                    cryptFiles++
+                } else if (ze.name.endsWith(LEGACY_PHOTOK_FILE_EXTENSION)) {
+                    photokFiles++
+                }
+
+                ze = zipInputStream.nextEntry
             }
 
-            ze = zipInputStream.nextEntry
+            if ((cryptFiles == 0) && (photokFiles == 0)) {
+                return Result.failure(IllegalStateException("No crypt files or photok files found"))
+            }
+
+            if (metaData == null || backupVersion == null) {
+                return Result.failure(IllegalStateException("No metadata found"))
+            }
+
+            val fileName = io.getFileName(uri)
+            val fileSize = io.getFileSize(uri)
+
+            val backupValidation = BackupValidation(
+                metaData = metaData,
+                fileName = fileName.orEmpty(),
+                fileSize = fileSize,
+            )
+
+            return Result.success(backupValidation)
+        } catch (e: Exception) {
+            Timber.e(e)
+            return Result.failure(e)
         }
-
-        if ((cryptFiles == 0) && (photokFiles == 0)) {
-            return Result.failure(IllegalStateException("No crypt files or photok files found"))
-        }
-
-        if (metaData == null || backupVersion == null) {
-            return Result.failure(IllegalStateException("No metadata found"))
-        }
-
-        val fileName = io.getFileName(uri)
-        val fileSize = io.getFileSize(uri)
-
-        val backupValidation = BackupValidation(
-            metaData = metaData,
-            fileName = fileName.orEmpty(),
-            fileSize = fileSize,
-        )
-
-        return Result.success(backupValidation)
     }
 }
 

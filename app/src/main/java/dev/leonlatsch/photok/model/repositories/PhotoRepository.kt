@@ -169,16 +169,21 @@ class PhotoRepository @Inject constructor(
      * Create the internal file for a photo.
      */
     fun createPhotoFile(photo: Photo, source: InputStream?): Long {
-        val encryptedDestination =
-            encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalFileName)
+        try {
+            val encryptedDestination =
+                encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalFileName)
 
-        source ?: return -1L
-        encryptedDestination ?: return -1L
+            source ?: return -1L
+            encryptedDestination ?: return -1L
 
-        val fileLen = source.copyTo(encryptedDestination)
-        encryptedDestination.lazyClose()
+            val fileLen = source.copyTo(encryptedDestination)
+            encryptedDestination.lazyClose()
 
-        return fileLen
+            return fileLen
+        } catch (e: IOException) {
+            Timber.e("Error while writing file: $e")
+            return -1L
+        }
     }
 
     // endregion

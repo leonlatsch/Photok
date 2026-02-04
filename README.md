@@ -13,8 +13,8 @@ Encrypt images and videos on your device and keep them safe from others.
 
 ## About
 Photok is a free and open-source gallery app for Android.
-Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
-This makes Photok different from other encrypted gallery apps.
+Imported media files are encrypted on the device using AES-256 encryption and are only decrypted in memory when the app is in use. 
+This distinguishes Photok from other encrypted gallery apps.
 
 Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
 
@@ -23,7 +23,7 @@ Photok is completely free, open source, and ad-free. It is developed as a hobby 
 </a>
 
 ## Download
-Photok is available at Google Play and F-Droid. Aswell as some alternatives.
+Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
       alt="Download from Google Play" 
@@ -44,7 +44,7 @@ Photok is available at Google Play and F-Droid. Aswell as some alternatives.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-66%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-96%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 ![Dutch](https://img.shields.io/badge/Dutch-66%25-orange)
 ![French](https://img.shields.io/badge/French-76%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
