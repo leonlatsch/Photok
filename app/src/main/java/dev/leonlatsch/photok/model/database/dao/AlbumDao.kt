@@ -62,7 +62,7 @@ abstract class AlbumDao {
 
 
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
-    abstract fun observeAlbum(uuid: String): Flow<AlbumTable>
+    abstract fun observeAlbum(uuid: String): Flow<AlbumTable?>
 
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract suspend fun getAlbum(uuid: String): AlbumTable?
@@ -126,6 +126,7 @@ abstract class AlbumDao {
             observeAlbum(uuid),
             observePhotosForAlbum(query)
         ) { album, photos ->
+            album ?: return@combine null
             AlbumWithPhotos(album, photos)
         }
     }
