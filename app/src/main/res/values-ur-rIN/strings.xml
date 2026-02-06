@@ -12,7 +12,7 @@
     <string name="common_yes">ہاں</string>
     <string name="common_no">نہیں</string>
     <string name="common_ok">ٹھیک ہے</string>
-    <string name="common_are_you_sure">کیا آپ یقیناً کرنا چاہتے ہیں؟</string>
+    <string name="common_are_you_sure">کیا آپ کو یقین ہے؟</string>
     <string name="common_bullet">•</string>
     <string name="common_more">مزید</string>
     <string name="common_cancel">کینسل کریں</string>
@@ -33,13 +33,13 @@
     <string name="setup_password_strength_weak">کمزور</string>
     <string name="setup_password_strength_moderate">درمیانہ</string>
     <string name="setup_password_strength_strong">بہت مضبوط</string>
-    <string name="setup_password_match_warning">\u26A0 پاس ورڈ ایک جیسے نہیں ہیں</string>
+    <string name="setup_password_match_warning">\u2۶A۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
     <string name="setupSetup">تیاری</string>
 
     <string name="unlock_title">اپنا سیف کھولیں</string>
     <string name="unlock_enter_password">پاس ورڈ ڈالیں</string>
     <string name="unlock_button">کھولیں</string>
-    <string name="unlock_wrong_password">\u26A0 غلط پاس ورڈ</string>
+    <string name="unlock_wrong_password">\u2۶A۰ غلط پاس ورڈ</string>
 
     <string name="gallery_placeholder">آپ کے سیف میں کچھ نہیں ہے</string>
     <string name="gallery_all_photos_label">تمام فائلیں</string>
@@ -66,7 +66,7 @@
     <string name="process_finished">مکمل ہو گیا</string>
     <string name="process_initialize">تیاری ہو رہی ہے…</string>
     <string name="process_aborted">روک دیا گیا</string>
-    <string name="process_failures_occurred">\u26A0 کچھ فائلوں پر کام نہیں ہو سکا</string>
+    <string name="process_failures_occurred">\u2۶A۰ کچھ فائلوں پر کام نہیں ہو سکا</string>
 
     <string name="view_photo_detail_title">تفصیلات</string>
     <string name="view_photo_detail_file_name_label">فائل کا نام:</string>
@@ -86,14 +86,14 @@
     <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
     <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
 
-    <string name="delete_are_you_sure">کیا آپ واقعی %1$d فائلیں <b>مٹانا</b> چاہتے ہیں؟</string>
-    <string name="delete_are_you_sure_this">کیا آپ واقعی یہ فائل <b>مٹانا</b> چاہتے ہیں؟</string>
+    <string name="delete_are_you_sure">کیا آپ واقعی %1$d فائلیں مٹانا چاہتے ہیں؟</string>
+    <string name="delete_are_you_sure_this">کیا آپ واقعی یہ فائل مٹانا چاہتے ہیں؟</string>
     <string name="delete_deleting">فائلیں مٹائی جا رہی ہیں…</string>
 
-    <string name="export_are_you_sure">کیا آپ %1$d فائلیں واپس گیلری میں <b>بھیجنا</b> چاہتے ہیں؟</string>
-    <string name="export_and_delete_are_you_sure">کیا آپ %1$d فائلیں گیلری میں <b>بھیج کر</b> یہاں سے مٹانا چاہتے ہیں؟</string>
-    <string name="export_are_you_sure_this">کیا آپ یہ فائل واپس گیلری میں <b>بھیجنا</b> چاہتے ہیں؟</string>
-    <string name="export_and_delete_are_you_sure_this">کیا آپ یہ فائل گیلری میں <b>بھیج کر</b> یہاں سے مٹانا چاہتے ہیں؟</string>
+    <string name="export_are_you_sure">کیا آپ %1$d فائلیں واپس گیلری میں بھیجنا چاہتے ہیں؟</string>
+    <string name="export_and_delete_are_you_sure">کیا آپ %1$d فائلیں گیلری میں بھیج کر یہاں سے مٹانا چاہتے ہیں؟</string>
+    <string name="export_are_you_sure_this">کیا آپ یہ فائل واپس گیلری میں بھیجنا چاہتے ہیں؟</string>
+    <string name="export_and_delete_are_you_sure_this">کیا آپ یہ فائل گیلری میں بھیج کر یہاں سے مٹانا چاہتے ہیں؟</string>
     <string name="export_exporting">فائلیں باہر نکالی جا رہی ہیں…</string>
     <string name="export_permission_rationale">باہر بھیجنے کے لیے Photok کو اسٹوریج کی اجازت چاہیے۔</string>
     <string name="export_finished">باہر بھیج دی گئیں</string>
@@ -220,7 +220,7 @@
     <string name="backup_restore_details_compatible">صحیح ہے:</string>
     <string name="backup_restore_details_size">سائز:</string>
     <string name="backup_restore_button">کھولیں اور واپس لائیں</string>
-    <string name="backup_restore_invalid_file">\u26A0 یہ فائل صحیح نہیں ہے</string>
+    <string name="backup_restore_invalid_file">\u2۶A۰ یہ فائل صحیح نہیں ہے</string>
     <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
     <string name="backup_unlock_title">بیک اپ کھولیں</string>
 
