@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+
+    <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020-2026 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">کام ہو رہا ہے …</string>
+    <string name="common_password">پاس ورڈ</string>
+    <string name="common_delete">مٹائیں</string>
+    <string name="common_export">باہر نکالیں</string>
+    <string name="common_error">کچھ غلط ہو گیا ہے۔ دوبارہ کوشش کریں۔</string>
+    <string name="common_yes">ہاں</string>
+    <string name="common_no">نہیں</string>
+    <string name="common_ok">ٹھیک ہے</string>
+    <string name="common_are_you_sure">کیا آپ یقیناً کرنا چاہتے ہیں؟</string>
+    <string name="common_bullet">•</string>
+    <string name="common_more">مزید</string>
+    <string name="common_cancel">کینسل کریں</string>
+    <string name="common_create">بنائیں</string>
+    <string name="common_empty">خالی</string>
+    <string name="common_rename">نام بدلیں</string>
+    <string name="common_try_again">دوبارہ کوشش کریں</string>
+
+    <string name="import_importing">فائلیں لائی جا رہی ہیں</string>
+    <string name="import_permission_rationale">فائلیں لانے کے لیے Photok کو آپ کے فون کی اسٹوریج استعمال کرنے کی اجازت چاہیے۔</string>
+    <string name="import_sharted_question">کیا آپ %1$d فائلیں لانا چاہتے ہیں؟</string>
+
+    <string name="setup_create_your_password">اپنا پاس ورڈ بنائیں</string>
+    <string name="setup_enter_password">پاس ورڈ لکھیں</string>
+    <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
+    <string name="setup_password_strength_label">پاس ورڈ کتنا مضبوط ہے:</string>
+    <string name="setup_button">بنائیں</string>
+    <string name="setup_password_strength_weak">کمزور</string>
+    <string name="setup_password_strength_moderate">درمیانہ</string>
+    <string name="setup_password_strength_strong">بہت مضبوط</string>
+    <string name="setup_password_match_warning">\u26A0 پاس ورڈ ایک جیسے نہیں ہیں</string>
+    <string name="setupSetup">تیاری</string>
+
+    <string name="unlock_title">اپنا سیف کھولیں</string>
+    <string name="unlock_enter_password">پاس ورڈ ڈالیں</string>
+    <string name="unlock_button">کھولیں</string>
+    <string name="unlock_wrong_password">\u26A0 غلط پاس ورڈ</string>
+
+    <string name="gallery_placeholder">آپ کے سیف میں کچھ نہیں ہے</string>
+    <string name="gallery_all_photos_label">تمام فائلیں</string>
+    <string name="gallery_albums_label">البمز</string>
+    <string name="gallery_albums_placeholder">اپنا پہلا البم بنائیں</string>
+    <string name="gallery_albums_create_title">البم بنائیں</string>
+    <string name="gallery_albums_rename_title">البم کا نام بدلیں</string>
+    <string name="gallery_albums_create_placeholder">گھر کا کام ;)</string>
+    <string name="gallery_albums_select_title">کوئی البم منتخب کریں</string>
+    <string name="gallery_albums_deleted">البم مٹا دیا گیا</string>
+    <string name="gallery_albums_photos_added">%1$d چیزیں شامل کر دی گئیں</string>
+    <string name="magic_fab_new_album_label">نیا البم</string>
+
+    <string name="import_menu_fab_label">اندر لائیں</string>
+    <string name="import_menu_new_files_title">نئی فائلیں لائیں</string>
+    <string name="import_menu_new_files_description">اپنی گیلری سے تصاویر اور ویڈیوز یہاں لائیں۔</string>
+    <string name="import_menu_restore_title">بیک اپ واپس لائیں</string>
+    <string name="import_menu_restore_description">پرانا بیک اپ واپس لائیں۔ فائلیں آپ کی موجودہ فائلوں میں جڑ جائیں گی۔</string>
+    <string name="import_menu_delete_warning">یہاں لائی گئی فائلیں گیلری سے مٹ جائیں گی</string>
+    <string name="import_menu_album_tooltip">فائلیں لانے کے بعد ”%s“ البم میں چلی جائیں گی</string>
+
+    <string name="process_close">بند کریں</string>
+    <string name="process_abort">روک دیں</string>
+    <string name="process_finished">مکمل ہو گیا</string>
+    <string name="process_initialize">تیاری ہو رہی ہے…</string>
+    <string name="process_aborted">روک دیا گیا</string>
+    <string name="process_failures_occurred">\u26A0 کچھ فائلوں پر کام نہیں ہو سکا</string>
+
+    <string name="view_photo_detail_title">تفصیلات</string>
+    <string name="view_photo_detail_file_name_label">فائل کا نام:</string>
+    <string name="view_photo_detail_import_at_label">یہاں لانے کا وقت:</string>
+    <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
+    <string name="view_photo_detail_size_label">سائز:</string>
+    <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
+    <string name="view_photo_play_button_description">ویڈیو چلائیں</string>
+
+    <string name="menu_main_lock">لاک کریں</string>
+    <string name="menu_main_settings">سیٹنگز</string>
+
+    <string name="menu_ms_select_all">سب منتخب کریں</string>
+    <string name="menu_ms_delete">مٹائیں</string>
+    <string name="menu_ms_export">باہر نکالیں</string>
+    <string name="menu_ms_info">%1$d چیزیں منتخب کر لیں</string>
+    <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
+    <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
+
+    <string name="delete_are_you_sure">کیا آپ واقعی %1$d فائلیں <b>مٹانا</b> چاہتے ہیں؟</string>
+    <string name="delete_are_you_sure_this">کیا آپ واقعی یہ فائل <b>مٹانا</b> چاہتے ہیں؟</string>
+    <string name="delete_deleting">فائلیں مٹائی جا رہی ہیں…</string>
+
+    <string name="export_are_you_sure">کیا آپ %1$d فائلیں واپس گیلری میں <b>بھیجنا</b> چاہتے ہیں؟</string>
+    <string name="export_and_delete_are_you_sure">کیا آپ %1$d فائلیں گیلری میں <b>بھیج کر</b> یہاں سے مٹانا چاہتے ہیں؟</string>
+    <string name="export_are_you_sure_this">کیا آپ یہ فائل واپس گیلری میں <b>بھیجنا</b> چاہتے ہیں؟</string>
+    <string name="export_and_delete_are_you_sure_this">کیا آپ یہ فائل گیلری میں <b>بھیج کر</b> یہاں سے مٹانا چاہتے ہیں؟</string>
+    <string name="export_exporting">فائلیں باہر نکالی جا رہی ہیں…</string>
+    <string name="export_permission_rationale">باہر بھیجنے کے لیے Photok کو اسٹوریج کی اجازت چاہیے۔</string>
+    <string name="export_finished">باہر بھیج دی گئیں</string>
+    <string name="export_and_delete_finished">باہر بھیج کر مٹا دی گئیں</string>
+
+    <string name="about_version">ورژن:</string>
+    <string name="about_developed_by">بنانے والا:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">دیگر سافٹ ویئر</string>
+    <string name="about_privacy_policy">رازداری کی پالیسی</string>
+    <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
+    <string name="about_menu_news">نئی خبریں</string>
+
+    <string name="settings_title">سیٹنگز</string>
+
+    <string name="settings_category_app">ایپ</string>
+    <string name="settings_app_design_title">ڈیزائن</string>
+    <string name="settings_app_design_system_default">فون جیسا</string>
+    <string name="settings_app_design_system_light">لائٹ (روشن)</string>
+    <string name="settings_app_design_system_dark">ڈارک (اندھیرا)</string>
+
+    <string name="settings_category_gallery">گیلری</string>
+    <string name="settings_gallery_auto_fullscreen_title">خود بخود پوری اسکرین</string>
+    <string name="settings_gallery_auto_fullscreen_summary">فائل کھولتے ہی پوری اسکرین پر دکھائیں</string>
+    <string name="settings_gallery_start_page_title">پہلا صفحہ</string>
+
+    <string name="settings_category_security">حفاظت</string>
+    <string name="settings_security_allow_screenshots_title">اسکرین شاٹ کی اجازت</string>
+    <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔ ایپ بند کر کے دوبارہ کھولنی پڑے گی۔</string>
+    <string name="settings_security_change_password_title">پاس ورڈ بدلیں</string>
+    <string name="settings_security_change_password_summary">اپنا نیا پاس ورڈ سیٹ کریں</string>
+    <string name="settings_security_biometric_title">فنگر پرنٹ یا چہرہ</string>
+    <string name="settings_security_biometric_summary">Photok کو فون کے لاک سے کھولیں۔</string>
+    <string name="settings_security_biometric_not_available">یہ سہولت دستیاب نہیں ہے</string>
+    <string name="settings_security_timeout_title">خودکار لاک کا وقت</string>
+    <string name="settings_security_timeout_summary">بیک گراؤنڈ میں جانے کے کتنی دیر بعد لاک ہو</string>
+    <string name="settings_security_timeout_immediately">فوراً</string>
+    <string name="settings_security_timeout_one_minute">۱ منٹ</string>
+    <string name="settings_security_timeout_two_minute">۲ منٹ</string>
+    <string name="settings_security_timeout_five_minute">۵ منٹ</string>
+    <string name="settings_security_timeout_ten_minute">۱۰ منٹ</string>
+    <string name="settings_security_timeout_never">کبھی نہیں</string>
+    <string name="settings_security_launch_code_title">خفیہ کوڈ</string>
+    <string name="settings_security_launch_code_summary">ڈائل پیڈ سے ایپ کھولنے کا کوڈ۔</string>
+    <string name="settings_security_launch_code_message">ایپ کھولنے کے لیے فون میں *#*#[آپ کا کوڈ]#*#* ملائیں۔</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">ایپ چھپائیں</string>
+    <string name="settings_security_hide_app_summary">ایپ کو مینو سے غائب کر دیں۔</string>
+
+    <string name="settings_category_advanced">بڑی سیٹنگز</string>
+    <string name="settings_category_advanced_summary">دھیان سے استعمال کریں</string>
+    <string name="settings_advanced_reset_title">سب کچھ صاف کریں</string>
+    <string name="settings_advanced_reset_summary">سارا ڈیٹا مٹائیں اور پاس ورڈ ری سیٹ کریں</string>
+    <string name="settings_advanced_reset_confirmation">کیا آپ واقعی سب کچھ مٹانا چاہتے ہیں؟ سارا ڈیٹا ضائع ہو جائے گا!</string>
+    <string name="settings_advanced_backup_title">بیک اپ</string>
+    <string name="settings_advanced_backup_summary">اپنے ڈیٹا کی ایک کاپی بنائیں</string>
+    <string name="settings_advanced_delete_imported_title">لانے کے بعد مٹائیں</string>
+    <string name="settings_advanced_delete_imported_summary">فائل یہاں لانے کے بعد پرانی جگہ سے مٹا دیں</string>
+    <string name="settings_advanced_delete_exported_title">بھیجنے کے بعد مٹائیں</string>
+    <string name="settings_advanced_delete_exported_summary">فائل گیلری میں بھیجنے کے بعد یہاں سے مٹا دیں</string>
+
+    <string name="settings_other_title">دیگر</string>
+    <string name="settings_other_feedback_title">اپنی رائے دیں</string>
+    <string name="settings_other_feedback_summary">ہمیں ای میل کر کے بتائیں کہ ایپ کیسی ہے</string>
+    <string name="settings_other_feedback_mail_subject">Photok کے بارے میں رائے</string>
+    <string name="settings_other_feedback_mail_body">Photok کے بارے میں کچھ لکھیں :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_donate_title">مدد کریں</string>
+    <string name="settings_other_donate_summary">ایپ کو بہتر بنانے کے لیے مالی مدد کریں</string>
+    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+    <string name="settings_other_sourcecode_title">سورس کوڈ</string>
+    <string name="settings_other_sourcecode_summary">ایپ بنانے میں حصہ لیں</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">شکریہ</string>
+    <string name="settings_other_credits_summary">مدد کرنے والوں کے نام</string>
+    <string name="settings_other_about_title">بارے میں</string>
+    <string name="settings_other_about_summary">ایپ کی معلومات</string>
+
+    <string name="credits_contributors_title">مدد کرنے والے</string>
+    <string name="credits_contributors_hint">سب کے نام دیکھنے کے لیے GitHub پر جائیں</string>
+    <string name="credits_icons_title">آئیکنز</string>
+
+    <string name="change_password_title">پاس ورڈ بدلیں</string>
+    <string name="change_password_old_password">پرانا پاس ورڈ</string>
+    <string name="change_password_new_password">نیا پاس ورڈ</string>
+    <string name="change_password_check">چیک کریں</string>
+    <string name="change_password_enter_new_password">نیا پاس ورڈ لکھیں</string>
+    <string name="change_password_confirm_new_password">نئے پاس ورڈ کی تصدیق کریں</string>
+    <string name="change_password_button">پاس ورڈ بدل دیں</string>
+    <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
+    <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
+
+    <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
+
+    <string name="hide_app_title_hide">Photok چھپائیں</string>
+    <string name="hide_app_title_show">Photok دکھائیں</string>
+    <string name="hide_app_status_label">Photok اس وقت:</string>
+    <string name="hide_app_status_visible">سب کو دکھ رہی ہے</string>
+    <string name="hide_app_status_hidden">چھپی ہوئی ہے</string>
+    <string name="hide_app_app_name_stealth">فون</string>
+    <string name="hide_app_confirm_hide">کیا آپ واقعی Photok چھپانا چاہتے ہیں؟</string>
+    <string name="hide_app_confirm_show">کیا آپ ایپ دوبارہ دکھانا چاہتے ہیں؟</string>
+    <string name="hide_app_hint">چھپانے کے بعد ایپ صرف ڈائلر سے خفیہ کوڈ کے ذریعے کھلے گی۔</string>
+    <string name="hide_app_hint_current_code">موجودہ خفیہ کوڈ:</string>
+
+    <string name="onboarding_next">اگلا</string>
+    <string name="onboarding_finish">شروع کریں</string>
+    <string name="onboarding_skip"><u>چھوڑ دیں</u></string>
+
+    <string name="onboarding_slide1_title">خوش آمدید</string>
+    <string name="onboarding_slide1_description">آپ کی تصاویر کے لیے محفوظ جگہ۔</string>
+    <string name="onboarding_slide2_title">پاس ورڈ بنائیں</string>
+    <string name="onboarding_slide2_description">ایک اچھا پاس ورڈ بنائیں جو آپ کی تصاویر کو فون میں لاک کر دے گا۔</string>
+    <string name="onboarding_slide3_title">فائلیں لانا شروع کریں</string>
+    <string name="onboarding_slide3_description">تصویریں یہاں لائیں اور دوسروں سے محفوظ رکھیں۔\nاس کے بعد آپ انہیں گیلری سے مٹا سکتے ہیں۔</string>
+
+    <string name="backup_processing_title">بیک اپ بن رہا ہے…</string>
+    <string name="backup_restore_title">بیک اپ واپس لائیں</string>
+    <string name="backup_restore_validating">بیک اپ چیک ہو رہا ہے…</string>
+    <string name="backup_restore_details_created_at">بنایا گیا:</string>
+    <string name="backup_restore_details_photos_contained">موجود فائلیں:</string>
+    <string name="backup_restore_details_compatible">صحیح ہے:</string>
+    <string name="backup_restore_details_size">سائز:</string>
+    <string name="backup_restore_button">کھولیں اور واپس لائیں</string>
+    <string name="backup_restore_invalid_file">\u26A0 یہ فائل صحیح نہیں ہے</string>
+    <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
+    <string name="backup_unlock_title">بیک اپ کھولیں</string>
+
+    <string name="news_new_in_title">نیا کیا ہے</string>
+    <string name="news_view_changelog">تبدیلیوں کی لسٹ دیکھیں</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+
+    <string name="news_title_1">بہتر ویڈیو پلیئر</string>
+    <string name="news_summary_1">ویڈیو پلیئر کو پہلے سے بہتر بنا دیا گیا ہے۔</string>
+
+    <string name="news_title_2">فوٹو دیکھنا اور ترتیب دینا آسان</string>
+    <string name="news_summary_2">اب تصاویر تیزی سے کھلیں گی اور آپ انہیں تاریخ کے حساب سے لگا سکتے ہیں۔</string>
+
+    <string name="news_title_3">نئی سیٹنگز</string>
+    <string name="news_summary_3">سیٹنگز کے پیج کو نیا اور خوبصورت ڈیزائن دیا گیا ہے۔</string>
+
+    <string name="news_title_4">ترجمہ اور بہتری</string>
+    <string name="news_summary_4">نئے تراجم شامل کیے گئے ہیں اور ایپ کو پہلے سے زیادہ پکا بنایا گیا ہے۔</string>
+
+    <string name="recovery_subtitle">واپسی کا مینو</string>
+    <string name="recovery_menu_item_open_photok">Photok کھولیں</string>
+    <string name="recovery_subtitle_reset_hide_app">ایپ چھپانے کی سیٹنگ ختم کریں</string>
+
+    <string name="migration_initial_title_welcome">خوش آمدید</string>
+    <string name="migration_initial_explaination">اس ورژن میں لاک کرنے کا طریقہ بدل گیا ہے۔ جاری رکھنے کے لیے ڈیٹا کو نئے طریقے پر لانا ضروری ہے۔</string>
+    <string name="migration_initial_button">شروع کریں</string>
+
+    <string name="migration_initial_stage_backup_checklist">بیک اپ لیں</string>
+    <string name="migration_initial_stage_backup_explanation">آگے بڑھنے سے پہلے اپنے ڈیٹا کی ایک کاپی بنا لیں</string>
+    <string name="migration_initial_stage_backup_button">بیک اپ بنائیں</string>
+
+    <string name="migration_initial_stage_permission_checklist">اجازت دیں</string>
+    <string name="migration_initial_stage_permission_explanation">کام کو بیک گراؤنڈ میں جاری رکھنے کے لیے نوٹیفکیشن کی اجازت دیں۔</string>
+    <string name="migration_initial_stage_permission_button">اجازت دیں</string>
+
+    <string name="migration_initial_stage_ready_explanation">سب تیار ہے</string>
+    <string name="migration_initial_stage_ready_button">کام شروع کریں</string>
+
+    <string name="migration_running_title">ڈیٹا نئے طریقے پر آ رہا ہے</string>
+    <string name="migration_running_progress">%d میں سے %d فائلیں ہو گئیں</string>
+    <string name="migration_running_advice">اگر یہ اسکرین کھلی رہے گی تو کام جلدی ہوگا۔</string>
+
+    <string name="migration_done_title">کام مکمل ہو گیا</string>
+    <string name="migration_done_progress">تمام فائلیں منتقل ہو گئیں</string>
+
+    <string name="migration_error_title">منتقلی کے دوران کوئی مسئلہ آ گیا</string>
+    <string name="migration_error_button">رپورٹ بھیجیں</string>
+
+    <string name="notification_channel_background_tasks">بیک گراؤنڈ کام</string>
+    <string name="migration_error_extract_data">ڈیٹا نکالیں</string>
+    <string name="migration_error_extract_confirmation_text">کیا آپ واقعی اپنا سارا ڈیٹا بغیر لاک کے ایک ZIP فائل میں نکالنا چاہتے ہیں؟</string>
+    <string name="migration_error_extracting_title">ZIP میں نکالا جا رہا ہے…</string>
+
+
+    <string name="biometric_unlock_title">Photok کھولیں</string>
+    <string name="biometric_unlock_subtitle">اپنی شناخت چیک کروائیں</string>
+    <string name="biometric_unlock_cancel">پاس ورڈ استعمال کریں</string>
+
+    <string name="biometric_unlock_setup_title">فنگر پرنٹ لاک لگائیں</string>
+    <string name="biometric_unlock_setup_subtitle">اسے شروع کرنے کے لیے پہلے اپنی شناخت بتائیں</string>
+
+    <string name="biometric_unlock_error">نشان میچ نہیں ہوا۔ پاس ورڈ استعمال کریں۔</string>
+    <string name="biometric_unlock_hint_button">فنگر پرنٹ سے کھولیں</string>
+
+    <string name="sorting_sort">ترتیب</string>
+
+    <string name="sorting_order_asc_label">سیدھی ترتیب</string>
+    <string name="sorting_order_desc_label">الٹی ترتیب</string>
+
+    <string name="sorting_field_import_date_label">لانے کی تاریخ</string>
+    <string name="sorting_field_filename_label">فائل کا نام</string>
+    <string name="sorting_field_size_label">سائز</string>
+    <string name="sorting_field_added_to_album_label">البم میں ڈالنے کی تاریخ</string>
+    <string name="sorting_field_last_modified">آخری تبدیلی</string>
+
+    <string name="sorting_restore_default">پہلے جیسا کریں</string>
+</resources>
