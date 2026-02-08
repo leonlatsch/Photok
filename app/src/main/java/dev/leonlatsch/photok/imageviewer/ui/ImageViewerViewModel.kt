@@ -58,6 +58,7 @@ sealed interface ImageViewerUiEvent {
     ) : ImageViewerUiEvent
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
     data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
+    data object ToggleShowControls : ImageViewerUiEvent
     data object ToggleMuteVideoPlayer : ImageViewerUiEvent
     data class UpdateCurrentDialog(val newValue: ImageViewerUiState.Dialog?) : ImageViewerUiEvent
 }
@@ -145,6 +146,10 @@ class ImageViewerViewModel @AssistedInject constructor(
                 it.copy(showControls = event.newValue)
             }
 
+            is ImageViewerUiEvent.ToggleShowControls -> inputs.update { old ->
+                old.copy(showControls = !old.showControls)
+            }
+
             is ImageViewerUiEvent.ToggleMuteVideoPlayer -> viewModelScope.launch {
                 config.imageViewerMuteVideoPlayer = !uiState.value.muteVideoPlayer
             }
@@ -152,6 +157,7 @@ class ImageViewerViewModel @AssistedInject constructor(
             is ImageViewerUiEvent.UpdateCurrentDialog -> inputs.update {
                 it.copy(currentDialog = event.newValue)
             }
+
         }
     }
 

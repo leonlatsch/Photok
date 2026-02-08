@@ -197,9 +197,7 @@ private fun BoxScope.VideoPage(
             .fillMaxSize()
             .zoomable(
                 onClick = {
-                    handleUiEvent(
-                        ImageViewerUiEvent.UpdateShowControls(!uiState.inputs.showControls)
-                    )
+                    handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
                 },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,

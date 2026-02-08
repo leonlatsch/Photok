@@ -36,8 +36,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -75,8 +77,24 @@ fun ImageViewerScreen(
         val context = LocalContext.current
 
         val player = remember {
+            val loadControl = DefaultLoadControl.Builder()
+                .setBufferDurationsMs(
+                    /* minBufferMs = */ 20_000,
+                    /* maxBufferMs = */ 90_000,
+                    /* bufferForPlaybackMs = */ 1_500,
+                    /* bufferForPlaybackAfterRebufferMs = */ 4_000,
+                )
+                // Let time-based buffering dominate (important for AES)
+                .setTargetBufferBytes(C.LENGTH_UNSET)
+                // Prefer smoother playback over aggressive start
+                .setPrioritizeTimeOverSizeThresholds(true)
+                .build()
+
             ExoPlayer.Builder(context)
                 .setMediaSourceFactory(viewModel.mediaSourceFactory)
+                .setSeekBackIncrementMs(5_000)
+                .setSeekForwardIncrementMs(5_000)
+                .setLoadControl(loadControl)
                 .build()
         }
 
