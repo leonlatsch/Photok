@@ -77,24 +77,8 @@ fun ImageViewerScreen(
         val context = LocalContext.current
 
         val player = remember {
-            val loadControl = DefaultLoadControl.Builder()
-                .setBufferDurationsMs(
-                    /* minBufferMs = */ 20_000,
-                    /* maxBufferMs = */ 90_000,
-                    /* bufferForPlaybackMs = */ 1_500,
-                    /* bufferForPlaybackAfterRebufferMs = */ 4_000,
-                )
-                // Let time-based buffering dominate (important for AES)
-                .setTargetBufferBytes(C.LENGTH_UNSET)
-                // Prefer smoother playback over aggressive start
-                .setPrioritizeTimeOverSizeThresholds(true)
-                .build()
-
             ExoPlayer.Builder(context)
                 .setMediaSourceFactory(viewModel.mediaSourceFactory)
-                .setSeekBackIncrementMs(5_000)
-                .setSeekForwardIncrementMs(5_000)
-                .setLoadControl(loadControl)
                 .build()
         }
 
