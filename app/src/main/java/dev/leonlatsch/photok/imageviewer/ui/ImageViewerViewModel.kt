@@ -31,7 +31,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.imageviewer.data.video.AesDataSource
+import dev.leonlatsch.photok.imageviewer.data.video.AesCbcRandomAccessDataSource
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
@@ -171,12 +171,12 @@ class ImageViewerViewModel @AssistedInject constructor(
     }
 
     val mediaSourceFactory: MediaSource.Factory by lazy {
-        val aesDataSource = AesDataSource(
+        val aesCbcRandomAccessDataSource = AesCbcRandomAccessDataSource(
             encryptionManager = encryptionManager,
         )
 
         val factory = DataSource.Factory {
-            aesDataSource
+            aesCbcRandomAccessDataSource
         }
 
         ProgressiveMediaSource.Factory(factory)

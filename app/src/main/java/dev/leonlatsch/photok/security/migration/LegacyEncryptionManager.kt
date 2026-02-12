@@ -86,6 +86,10 @@ class LegacyEncryptionManagerImpl @Inject constructor() : EncryptionManager {
         return key
     }
 
+    override fun requireKey(): SecretKey {
+        return key ?: error("LegacyEncryptionManager not initialized")
+    }
+
     override fun createCipherInputStream(
         input: InputStream,
         password: String?,
