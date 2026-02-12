@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 
 /** Maximum size of the thumbnail in pixels */
-private const val THUMBNAIL_SIZE = 256
+private const val THUMBNAIL_SIZE = 1000
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -62,6 +62,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
                 outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName),
+                compressionPercent = 40,
             )
 
             // Video Preview
@@ -74,6 +75,7 @@ class CreateThumbnailsUseCase @Inject constructor(
                 imageStorage.execAndWrite(
                     imageRequest = videoPreviewRequest,
                     outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName),
+                    compressionPercent = 90,
                 )
             } else {
                 // Success if not a video
