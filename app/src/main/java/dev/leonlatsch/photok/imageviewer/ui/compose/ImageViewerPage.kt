@@ -161,6 +161,7 @@ private fun BoxScope.ImagePage(
     BottomGradient(visible = uiState.inputs.showControls)
 }
 
+@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 private fun BoxScope.VideoPage(
     item: ImageViewerItem.Video,
