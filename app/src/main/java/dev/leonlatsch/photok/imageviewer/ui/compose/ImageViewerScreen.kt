@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
+import android.view.WindowManager
 import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -50,6 +51,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -185,6 +187,15 @@ fun ImageViewerScreen(
                 if (isActive) {
                     handleUiEvent(ImageViewerUiEvent.UpdateShowControls(false))
                 }
+            }
+        }
+
+        val window = findWindow()
+        LaunchedEffect(exoPlayerState.isPlaying) {
+            if (exoPlayerState.isPlaying) {
+                window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            } else {
+                window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
         }
 
