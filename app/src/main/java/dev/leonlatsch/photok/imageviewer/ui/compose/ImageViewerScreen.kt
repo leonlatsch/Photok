@@ -63,6 +63,8 @@ fun ImageViewerScreen(
     photoUuid: String,
     albumUuid: String?,
 ) {
+    val window = findWindow()
+
     CompositionLocalProvider(
         LocalContentColor provides Color.White
     ) {
@@ -84,7 +86,15 @@ fun ImageViewerScreen(
                 .build()
         }
 
+        val exoPlayerState = remember {
+            ExoPlayerState()
+        }
+
         LaunchedEffect(player, uiState.loopVideos) {
+            if (!exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SET_REPEAT_MODE)) {
+                return@LaunchedEffect
+            }
+
             player.repeatMode = if (uiState.loopVideos) {
                 ExoPlayer.REPEAT_MODE_ONE
             } else {
@@ -126,9 +136,6 @@ fun ImageViewerScreen(
 
 
 
-        val exoPlayerState = remember {
-            ExoPlayerState()
-        }
 
         DisposableEffect(player) {
             val listener = object : Player.Listener {
@@ -150,6 +157,11 @@ fun ImageViewerScreen(
                     if (!exoPlayerState.isScrubbing) {
                         exoPlayerState.position = player.currentPosition
                     }
+                }
+
+                override fun onAvailableCommandsChanged(availableCommands: Player.Commands) {
+                    super.onAvailableCommandsChanged(availableCommands)
+                    exoPlayerState.availableCommands = availableCommands
                 }
             }
 
@@ -190,7 +202,8 @@ fun ImageViewerScreen(
             }
         }
 
-        val window = findWindow()
+
+        // Keep screen on while playing
         LaunchedEffect(exoPlayerState.isPlaying) {
             if (exoPlayerState.isPlaying) {
                 window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

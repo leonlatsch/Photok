@@ -22,7 +22,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 
+@UnstableApi
 @Stable
 class ExoPlayerState {
     var position by mutableLongStateOf(0L)
@@ -30,4 +33,5 @@ class ExoPlayerState {
     var playbackState by mutableIntStateOf(0)
     var isPlaying by mutableStateOf(false)
     var isScrubbing by mutableStateOf(false)
+    var availableCommands by mutableStateOf(Player.Commands.Builder().build())
 }

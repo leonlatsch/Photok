@@ -65,6 +65,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
@@ -268,7 +269,8 @@ private fun BoxScope.VideoPage(
                                 }
                                 player.play()
                             }
-                        }
+                        },
+                        enabled = exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_PLAY_PAUSE)
                     ) {
                         Icon(
                             painter = painterResource(icon),
@@ -308,7 +310,8 @@ private fun BoxScope.VideoPage(
                     IconButton(
                         onClick = {
                             handleUiEvent(ImageViewerUiEvent.ToggleMuteVideoPlayer)
-                        }
+                        },
+                        enabled = exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SET_VOLUME)
                     ) {
                         Icon(
                             painter = painterResource(icon),
@@ -339,6 +342,7 @@ private fun BoxScope.VideoPage(
                 valueRange = 0f..exoPlayerState.duration.coerceAtLeast(minimumValue = 0L)
                     .toFloat(),
                 colors = sliderColors,
+                enabled = exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
