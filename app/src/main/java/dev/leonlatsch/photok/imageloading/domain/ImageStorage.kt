@@ -23,5 +23,6 @@ interface ImageStorage {
     suspend fun execAndWrite(
         imageRequest: ImageRequest,
         outputStream: OutputStream?,
+        compressionPercent: Int = 100,
     ): Result<Unit>
 }

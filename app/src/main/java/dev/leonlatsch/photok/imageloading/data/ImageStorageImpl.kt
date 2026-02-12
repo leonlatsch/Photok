@@ -16,13 +16,13 @@
 
 package dev.leonlatsch.photok.imageloading.data
 
+import android.graphics.Bitmap
 import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import dev.leonlatsch.photok.imageloading.domain.ImageStorage
-import dev.leonlatsch.photok.other.extensions.writeTo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.OutputStream
@@ -40,14 +40,18 @@ class ImageStorageImpl @Inject constructor(
     override suspend fun execAndWrite(
         imageRequest: ImageRequest,
         outputStream: OutputStream?,
+        compressionPercent: Int,
     ): Result<Unit> = withContext(Dispatchers.IO) {
+
         outputStream ?: return@withContext Result.failure(Exception("stream is null"))
 
         when (val imageResult = imageLoader.execute(imageRequest)) {
             is SuccessResult -> suspendCoroutine { continuation ->
                 try {
                     outputStream.use { out ->
-                        imageResult.drawable.toBitmap().writeTo(out)
+                        val bitmap = imageResult.drawable.toBitmap()
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, compressionPercent, out)
+                        bitmap.recycle()
                     }
 
                     continuation.resume(Result.success(Unit))
