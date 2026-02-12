@@ -37,7 +37,7 @@
     <string name="common_create">Créer</string>
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">Réessayer</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importation en cours</string>
@@ -73,16 +73,16 @@
     <string name="gallery_albums_select_title">Selectionner un album</string>
     <string name="gallery_albums_deleted">Album supprimé</string>
     <string name="gallery_albums_photos_added">%1$d élément(s) ajouté(s)</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Nouvel album</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importer</string>
+    <string name="import_menu_new_files_title">Importer de nouveaux fichiers</string>
+    <string name="import_menu_new_files_description">Importe des photos et vidéos depuis ta galerie.</string>
+    <string name="import_menu_restore_title">Restaurer une sauvegarde</string>
+    <string name="import_menu_restore_description">Restaure une sauvegarde Photok. Les fichiers seront ajoutés à tes fichiers actuels.</string>
+    <string name="import_menu_delete_warning">Les fichiers importés seront supprimés</string>
+    <string name="import_menu_album_tooltip">Les fichiers seront ajoutés à \"%s\" après l\'importation</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fermer</string>
@@ -98,7 +98,7 @@
     <string name="view_photo_detail_import_at_label">Importé le :</string>
     <string name="view_photo_detail_file_type_label">Type de fichier :</string>
     <string name="view_photo_detail_size_label">Taille du fichier :</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Dernière modification :</string>
     <string name="view_photo_play_button_description">Lire la vidéo</string>
 
     <!-- MAIN MENU -->
@@ -151,16 +151,16 @@
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Plein écran automatique</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran lors de l\'ouverture d\'un fichier</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Page de démarrage</string>
 
     <string name="settings_category_security">Sécurité</string>
     <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
     <string name="settings_security_allow_screenshots_summary">Autorise la capture d\'écran. Nécessite un redémarrage.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
     <string name="settings_security_change_password_summary">Définir un nouveau mot de passe</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Déverrouillage biométrique</string>
+    <string name="settings_security_biometric_summary">Déverrouille Photok avec l\'authentification biométrique.</string>
+    <string name="settings_security_biometric_not_available">Le déverrouillage biométrique n\'est pas disponible</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
     <string name="settings_security_timeout_summary">Se verrouille en arrière-plan après un certain temps</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>
@@ -267,17 +267,17 @@
     <string name="news_view_changelog">Voir le journal des modifications</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Improved Video Player</string> <!-- TODO -->
-    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string> <!-- TODO -->
+    <string name="news_title_1">Lecteur vidéo amélioré</string>
+    <string name="news_summary_1">Le lecteur vidéo a été mis à jour avec la nouvelle API Media3.</string>
 
-    <string name="news_title_2">Better Photo Browsing and Sorting</string> <!-- TODO -->
-    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string> <!-- TODO -->
+    <string name="news_title_2">Navigation et tri des photos améliorés</string>
+    <string name="news_summary_2">Les performances d\'affichage ont été améliorées et les photos peuvent maintenant être triées par date de dernière modification.</string>
 
-    <string name="news_title_3">Refined Settings UI</string> <!-- TODO -->
-    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string> <!-- TODO -->
+    <string name="news_title_3">Interface des réglages affinée</string>
+    <string name="news_summary_3">L\'écran des réglages a été repensé pour correspondre à la refonte en cours.</string>
 
-    <string name="news_title_4">Translations and Stability Fixes</string> <!-- TODO -->
-    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string> <!-- TODO -->
+    <string name="news_title_4">Traductions et corrections de stabilité</string>
+    <string name="news_summary_4">Traductions mises à jour et corrections multiples améliorant la fiabilité générale.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>
@@ -286,58 +286,58 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bienvenue sur</string>
+    <string name="migration_initial_explaination">Cette version de Photok introduit une nouvelle méthode de chiffrement. Pour accéder à ta galerie, une migration est nécessaire.</string>
+    <string name="migration_initial_button">Commencer</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Sauvegarde tes données</string>
+    <string name="migration_initial_stage_backup_explanation">Crée une sauvegarde de tes données avant de continuer</string>
+    <string name="migration_initial_stage_backup_button">Créer une sauvegarde</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Accorder la permission</string>
+    <string name="migration_initial_stage_permission_explanation">Accorde la permission de notification pour exécuter la migration de manière fiable en arrière-plan.</string>
+    <string name="migration_initial_stage_permission_button">Accorder la permission</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Tout est prêt</string>
+    <string name="migration_initial_stage_ready_button">Démarrer la migration</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Migration de ta galerie</string>
+    <string name="migration_running_progress">%d fichier(s) sur %d traité(s)</string>
+    <string name="migration_running_advice">Si cet écran reste ouvert, la migration sera plus rapide</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migration de la galerie terminée</string>
+    <string name="migration_done_progress">Tous les fichiers ont été migrés</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Erreur lors de la migration de ta galerie</string>
+    <string name="migration_error_button">Envoyer un rapport d\'erreur</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tâches en arrière-plan</string>
+    <string name="migration_error_extract_data">Extraire les données</string>
+    <string name="migration_error_extract_confirmation_text">Veux-tu vraiment extraire tous tes fichiers NON CHIFFRÉS dans un fichier ZIP ?</string>
+    <string name="migration_error_extracting_title">Déchiffrement en ZIP…</string>
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Déverrouiller Photok</string>
+    <string name="biometric_unlock_subtitle">Vérifie ton identité pour déverrouiller</string>
+    <string name="biometric_unlock_cancel">Utiliser le mot de passe Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Activer le déverrouillage biométrique</string>
+    <string name="biometric_unlock_setup_subtitle">Pour activer le déverrouillage biométrique, confirme ton identité</string>
+    <string name="biometric_unlock_error">Le déverrouillage biométrique a échoué. Utilise ton mot de passe Photok.</string>
+    <string name="biometric_unlock_hint_button">Déverrouiller avec la biométrie</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Trier</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Croissant</string>
+    <string name="sorting_order_desc_label">Décroissant</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Date d\'importation</string>
+    <string name="sorting_field_filename_label">Nom du fichier</string>
+    <string name="sorting_field_size_label">Taille du fichier</string>
+    <string name="sorting_field_added_to_album_label">Ajouté à l\'album</string>
+    <string name="sorting_field_last_modified">Dernière modification</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Restaurer les valeurs par défaut</string>
 </resources>
