@@ -14,8 +14,11 @@
  *   limitations under the License.
  */
 
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package dev.leonlatsch.photok.imageviewer.ui.compose
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -30,11 +33,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.WindowInsetsSides.Companion
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -57,7 +65,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.Player
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
@@ -151,7 +158,6 @@ private fun BoxScope.ImagePage(
     BottomGradient(visible = uiState.inputs.showControls)
 }
 
-@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 private fun BoxScope.VideoPage(
     item: ImageViewerItem.Video,
@@ -207,17 +213,32 @@ private fun BoxScope.VideoPage(
     TopGradient(visible = uiState.inputs.showControls)
     BottomVideoGradient(visible = uiState.inputs.showControls)
 
+    val navBarHeight = WindowInsets
+        .navigationBarsIgnoringVisibility
+        .asPaddingValues()
+        .calculateBottomPadding()
+
+    val sliderOffset = if (LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE) {
+        20.dp
+    } else {
+        110.dp
+    }
+
     AnimatedVisibility(
         visible = uiState.inputs.showControls,
         enter = fadeIn(),
         exit = fadeOut(),
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            .padding(bottom = 120.dp)
+            .padding(
+                WindowInsets.displayCutout
+                    .only(WindowInsetsSides.Horizontal)
+                    .asPaddingValues()
+            )
+            .padding(bottom = navBarHeight + sliderOffset)
     ) {
-
         Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -323,6 +344,7 @@ private fun BoxScope.VideoPage(
                     .padding(horizontal = 20.dp)
             )
         }
+
     }
 
 }
