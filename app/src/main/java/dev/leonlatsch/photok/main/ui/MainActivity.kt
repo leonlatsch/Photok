@@ -23,6 +23,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -105,9 +106,15 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         binding.mainMenuComposeContainer.setContent {
             val uiState by viewModel.mainMenuUiState.collectAsStateWithLifecycle()
 
+            val navController = remember {
+                findNavController(R.id.mainNavHostFragment)
+            }
+
             AppTheme {
                 MainMenu(uiState) {
-                    findNavController(R.id.mainNavHostFragment).navigate(it)
+                    if (navController.currentDestination?.id != it) {
+                        navController.navigate(it)
+                    }
                 }
             }
         }
