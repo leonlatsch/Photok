@@ -343,4 +343,10 @@
     <string name="sorting_field_last_modified">Zuletzt geändert</string>
 
     <string name="sorting_restore_default">Standard wiederherstellen</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pause</string>
+    <string name="video_player_mute">Stummschalten</string>
+    <string name="video_player_unmute">Stummschaltung aufheben</string>
 </resources>

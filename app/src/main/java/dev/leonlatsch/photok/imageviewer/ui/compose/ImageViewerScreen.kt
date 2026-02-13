@@ -90,7 +90,7 @@ fun ImageViewerScreen(
             ExoPlayerState()
         }
 
-        LaunchedEffect(player, uiState.loopVideos) {
+        LaunchedEffect(player, uiState.loopVideos, exoPlayerState.availableCommands) {
             if (!exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SET_REPEAT_MODE)) {
                 return@LaunchedEffect
             }
@@ -174,10 +174,10 @@ fun ImageViewerScreen(
         }
 
         // Update state.position while playing
-        LaunchedEffect(player, exoPlayerState.isScrubbing) {
+        LaunchedEffect(player, exoPlayerState.isScrubbing, exoPlayerState.isPlaying) {
             val delay = 1000L / 60 // 60 FPS controls update
 
-            while (isActive && !exoPlayerState.isScrubbing) {
+            while (isActive && !exoPlayerState.isScrubbing && exoPlayerState.isPlaying) {
                 exoPlayerState.position = player.currentPosition
                 delay(delay)
             }
@@ -192,10 +192,10 @@ fun ImageViewerScreen(
             }
         }
 
-        // Auto hide controls after 3 seconds of playing
+        // Auto hide controls after 5 seconds of playing
         LaunchedEffect(exoPlayerState.isPlaying, uiState) {
             if (exoPlayerState.isPlaying && uiState.inputs.showControls && uiState.inputs.currentDialog == null) {
-                delay(3000)
+                delay(5000)
                 if (isActive) {
                     handleUiEvent(ImageViewerUiEvent.UpdateShowControls(false))
                 }
@@ -204,10 +204,14 @@ fun ImageViewerScreen(
 
 
         // Keep screen on while playing
-        LaunchedEffect(exoPlayerState.isPlaying) {
+        DisposableEffect(exoPlayerState.isPlaying) {
             if (exoPlayerState.isPlaying) {
                 window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             } else {
+                window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            }
+
+            onDispose {
                 window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
         }

@@ -54,7 +54,6 @@ sealed interface ImageViewerUiEvent {
     data class ConfirmExport(
         val item: ImageViewerItem,
         val target: Uri,
-        val context: Context,
     ) : ImageViewerUiEvent
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
     data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
@@ -171,12 +170,10 @@ class ImageViewerViewModel @AssistedInject constructor(
     }
 
     val mediaSourceFactory: MediaSource.Factory by lazy {
-        val aesCbcRandomAccessDataSource = AesCbcRandomAccessDataSource(
-            encryptionManager = encryptionManager,
-        )
-
         val factory = DataSource.Factory {
-            aesCbcRandomAccessDataSource
+            AesCbcRandomAccessDataSource(
+                encryptionManager = encryptionManager,
+            )
         }
 
         ProgressiveMediaSource.Factory(factory)

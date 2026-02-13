@@ -59,6 +59,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -277,7 +278,9 @@ private fun BoxScope.VideoPage(
                     ) {
                         Icon(
                             painter = painterResource(icon),
-                            contentDescription = if (isPlaying) "pause" else "play",
+                            contentDescription = stringResource(
+                                if (isPlaying) R.string.video_player_pause else R.string.video_player_play
+                            ),
                         )
                     }
                 }
@@ -318,7 +321,9 @@ private fun BoxScope.VideoPage(
                     ) {
                         Icon(
                             painter = painterResource(icon),
-                            contentDescription = if (isMute) "unmute" else "mute",
+                            contentDescription = stringResource(
+                                if (isMute) R.string.video_player_unmute else R.string.video_player_mute
+                            )
                         )
                     }
                 }
@@ -331,7 +336,7 @@ private fun BoxScope.VideoPage(
             )
 
             Slider(
-                value = exoPlayerState.position.toFloat(),
+                value = exoPlayerState.position.coerceAtMost(exoPlayerState.duration).toFloat(),
                 onValueChange = {
                     player.pause()
                     exoPlayerState.isScrubbing = true

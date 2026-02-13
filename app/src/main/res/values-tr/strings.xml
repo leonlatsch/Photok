@@ -324,4 +324,10 @@
     <string name="sorting_field_last_modified">Son düzenleme</string>
 
     <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

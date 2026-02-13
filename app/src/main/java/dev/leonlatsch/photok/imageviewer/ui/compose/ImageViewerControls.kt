@@ -248,7 +248,6 @@ fun ImageViewerControls(
                             ImageViewerUiEvent.ConfirmExport(
                                 item = currentItem,
                                 target = it,
-                                context = context,
                             )
                         )
                     }

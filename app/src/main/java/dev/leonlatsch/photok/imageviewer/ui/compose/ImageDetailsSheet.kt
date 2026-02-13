@@ -59,14 +59,14 @@ fun ImageDetailsSheet(
     photo: Photo,
 ) {
     val dateFormat = remember {
-        SimpleDateFormat("E, dd. MMM. yyy • HH:mm", Locale.getDefault())
+        SimpleDateFormat("E, dd. MMM. yyyy • HH:mm", Locale.getDefault())
     }
 
     val formattedDateImported = remember(photo) {
         dateFormat.format(photo.importedAt)
     }
 
-    val formattedLastModified = remember {
+    val formattedLastModified = remember(photo) {
         if (photo.lastModified != null) {
             dateFormat.format(photo.lastModified)
         } else {
