@@ -29,8 +29,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-/** Maximum size of the thumbnail in pixels */
-private const val THUMBNAIL_SIZE = 1000
+/**
+ * Maximum size of the thumbnail in pixels
+ *
+ * Don't increase this any further. High impact on gallery scroll performance.
+ * This should be more than fine. We have 3 thumbnails each row.
+ * On a 1080p screen, this means each thumbnail will be around 360px. So 512px is more than enough.
+ */
+private const val THUMBNAIL_SIZE = 512
 
 /**
  * Use case to create all thumbnails for a photo or video.
