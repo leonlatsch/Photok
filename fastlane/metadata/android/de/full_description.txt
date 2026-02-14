@@ -1,23 +1,35 @@
-Photok ist eine freie Open-Source-Galerie-App für Android.
-Importierte Dateien werden lokal auf dem Gerät mit AES-256 verschlüsselt und nur beim Nutzen der App im Arbeitsspeicher entschlüsselt.
-Dies hebt Photok von anderen verschlüsselten Galerie-Apps ab.
+Schütze deine privaten Fotos und Videos wirklich sicher. Photok ist ein vertrauenswürdiger verschlüsselter Foto-Tresor, der deine sensiblen Medien mit militärischer AES-256-Verschlüsselung schützt.
 
-Photok ist komplett kostenlos, Open Source und werbefrei. Es wird von mir (Leon) und freiwilligen Helfern als ein Hobby entwickelt.
+<b>Warum Photok?</b>
 
-<b>Features</b>
+Deine Privatsphäre ist wichtig. Im Gegensatz zu anderen Galerie-Apps verschlüsselt Photok deine Fotos direkt auf deinem Gerät und entschlüsselt sie nur im Arbeitsspeicher beim Anzeigen - das bedeutet, deine privaten Momente bleiben privat, selbst wenn jemand Zugriff auf dein Handy erhält.
 
-- Importiere Fotos und Videos aus deiner Galerie
-- Sortieren von Dateien in Alben
-- Exportiere Fotos zurück in deine Galerie
-- Erstelle und stelle Backups wieder her
-- Senden an Photok
-- App verstecken
-- Automatisches Löschen beim Importieren & Exportieren
+<b>Sicher & Privat</b>
 
-<b>Vorteile</b>
+- Militärische AES-256-Verschlüsselung
+- Fotos werden nie unverschlüsselt auf dem Gerät gespeichert
+- Keine Cloud-Uploads - alles bleibt auf deinem Handy
+- Verstecke die App selbst für extra Privatsphäre
 
-- Verstecke deine sensiblen Fotos vor Anderen
-- Schütze deine Fotos vor Datendiebstahl
+<b>Einfach zu Nutzen</b>
+
+- Importiere Fotos und Videos mit einem Tippen
+- Organisiere deine Medien in eigenen Alben
+- Exportiere Fotos zurück, wenn du sie brauchst
+- Automatisches Löschen der Originale nach Import für Sicherheit
+
+<b>Vollständige Kontrolle</b>
+
+- Erstelle sichere Backups deines Tresors
+- Teile direkt zu Photok aus anderen Apps
+- Stelle deinen Tresor jederzeit wieder her
+- 100% kostenlos, keine Werbung, keine Abos
+
+<b>Open Source & Vertrauenswürdig</b>
+
+Photok ist komplett Open Source, entwickelt von sicherheitsbewussten Entwicklern und vertraut von Tausenden Nutzern weltweit. Kein verstecktes Tracking, keine Datensammlung, nur purer Schutz deiner Privatsphäre.
+
+Perfekt zum Schützen persönlicher Fotos, vertraulicher Dokumente oder jeglicher Medien, die du vor neugierigen Blicken bewahren möchtest.
 
 Photok on GitHub: https://github.com/leonlatsch/Photok
 

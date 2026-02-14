@@ -1,23 +1,35 @@
-Photok is a free and open-source gallery app for Android.
-Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
-This makes Photok different from other encrypted gallery apps.
+Keep your private photos and videos truly secure. Photok is a trusted encrypted photo vault that protects your sensitive media with military-grade AES-256 encryption.
 
-Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
+<b>Why Choose Photok?</b>
 
-<b>Features</b>
+Your privacy matters. Unlike other gallery apps, Photok encrypts your photos directly on your device and only decrypts them in memory while viewing - meaning your private moments stay private, even if someone gains access to your phone.
 
-- Import photos and videos from your gallery
-- Organize files in albums
-- Export photos back to your gallery
-- Create and restore backups
-- Share to Photok
-- Hide app
-- Auto-delete when importing & exporting
+<b>Secure & Private</b>
 
-<b>Benefits</b>
+- Military-grade AES-256 encryption
+- Photos never stored unencrypted on your device
+- No cloud uploads - everything stays on your phone
+- Hide the app itself for extra privacy
 
-- Hide your sensitive photos from others
-- Protect your photos from data theft
+<b>Easy to Use</b>
+
+- Import photos and videos with one tap
+- Organize your media in custom albums
+- Export photos back when you need them
+- Auto-delete originals after import for peace of mind
+
+<b>Complete Control</b>
+
+- Create secure backups of your vault
+- Share directly to Photok from other apps
+- Restore your vault anytime
+- 100% free, no ads, no subscriptions
+
+<b>Open Source & Trusted</b>
+
+Photok is completely open source, developed by security-conscious developers and trusted by thousands of users worldwide. No hidden tracking, no data collection, just pure privacy protection.
+
+Perfect for protecting personal photos, confidential documents, or any media you want to keep away from prying eyes.
 
 Photok on GitHub: https://github.com/leonlatsch/Photok
 
