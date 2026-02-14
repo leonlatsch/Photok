@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.net.Uri
-import android.widget.ImageView
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,6 +46,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,7 +80,7 @@ private val GradientExtraSpace = 40.dp
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ImageViewerControls(
-    visible: Boolean,
+    showControls: Boolean,
     currentItem: ImageViewerItem?,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
@@ -109,7 +109,7 @@ fun ImageViewerControls(
         ) {
 
             AnimatedVisibility(
-                visible = visible,
+                visible = showControls,
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
@@ -174,8 +174,14 @@ fun ImageViewerControls(
 
             val configuration = LocalConfiguration.current
 
-            val showButtons = remember(visible, currentItem, configuration.orientation) {
-                visible && currentItem is ImageViewerItem.Video && configuration.orientation != ORIENTATION_LANDSCAPE
+            val showButtons by remember(configuration.orientation, showControls, currentItem) {
+                derivedStateOf {
+                    when (currentItem) {
+                        is ImageViewerItem.Image -> showControls
+                        is ImageViewerItem.Video -> showControls && configuration.orientation != ORIENTATION_LANDSCAPE
+                        null -> showControls
+                    }
+                }
             }
 
             AnimatedVisibility(

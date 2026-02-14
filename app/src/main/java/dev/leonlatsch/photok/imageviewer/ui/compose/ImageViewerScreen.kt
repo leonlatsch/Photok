@@ -37,10 +37,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -233,7 +231,7 @@ fun ImageViewerScreen(
 
 
         ImageViewerControls(
-            visible = uiState.inputs.showControls,
+            showControls = uiState.inputs.showControls,
             currentItem = currentItem,
             handleUiEvent = handleUiEvent,
             uiState = uiState,
@@ -254,7 +252,7 @@ private fun ControlsPreview() {
                 .background(Color.Blue)
         ) {
             ImageViewerControls(
-                visible = true,
+                showControls = true,
                 currentItem = ImageViewerItem.Image(
                     photo = Photo(
                         fileName = "Preview File aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
