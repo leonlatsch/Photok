@@ -142,9 +142,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.6")
 
-    // Paging 3
-    implementation("androidx.paging:paging-runtime-ktx:3.3.6")
-
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
 
