@@ -29,13 +29,13 @@ import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
-import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
-import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.news.newfeatures.ui.ShowNewsDialogUseCase
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
+import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import dev.leonlatsch.photok.ui.LocalFragment
 import javax.inject.Inject
 

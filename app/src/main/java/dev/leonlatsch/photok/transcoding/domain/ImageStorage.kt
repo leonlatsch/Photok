@@ -14,10 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose.model
+package dev.leonlatsch.photok.transcoding.domain
 
-data class EncryptedImageRequestData(
-    val internalFileName: String,
-    val mimeType: String,
-    val playAnimation: Boolean = false,
-)
+import coil.request.ImageRequest
+import java.io.OutputStream
+
+interface ImageStorage {
+    suspend fun execAndWrite(
+        imageRequest: ImageRequest,
+        outputStream: OutputStream?,
+        compressionPercent: Int = 100,
+    ): Result<Unit>
+}

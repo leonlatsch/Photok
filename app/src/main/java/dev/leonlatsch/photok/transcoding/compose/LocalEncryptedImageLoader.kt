@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose
+package dev.leonlatsch.photok.transcoding.compose
 
 import androidx.compose.runtime.compositionLocalOf
 import coil.ImageLoader

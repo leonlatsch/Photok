@@ -45,8 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
-import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 
 @Composable
 fun AlbumTile(

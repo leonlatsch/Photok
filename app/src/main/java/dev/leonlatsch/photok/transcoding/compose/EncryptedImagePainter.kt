@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose
+package dev.leonlatsch.photok.transcoding.compose
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
@@ -24,7 +24,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.imageLoader
 import coil.request.ImageRequest
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 
 /**
  * Image Painter for encrypted images. Uses encrypted image fetcher if [LocalEncryptedImageLoader] provides it

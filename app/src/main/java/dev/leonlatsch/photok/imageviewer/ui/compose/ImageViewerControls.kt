@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -56,7 +55,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -75,8 +73,6 @@ import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 
-private val GradientExtraSpace = 40.dp
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ImageViewerControls(
@@ -87,9 +83,6 @@ fun ImageViewerControls(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
-
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
 
     val pickExportTargetLauncher =
@@ -369,7 +362,7 @@ private fun MoreMenu(
 }
 
 @Composable
-fun RowScope.BottomActionItem(
+fun BottomActionItem(
     text: String,
     icon: Int,
     action: () -> Unit,

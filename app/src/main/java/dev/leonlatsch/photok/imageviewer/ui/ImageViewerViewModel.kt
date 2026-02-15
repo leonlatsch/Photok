@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.imageviewer.ui
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
 import androidx.annotation.OptIn
 import androidx.lifecycle.viewModelScope
@@ -31,13 +30,13 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.imageviewer.data.video.AesCbcRandomAccessDataSource
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
+import dev.leonlatsch.photok.transcoding.data.AesCbcRandomAccessDataSource
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,12 +82,6 @@ data class ImageViewerUiState(
 
 const val ALBUM_UUID = "albumUuid"
 
-/**
- * ViewModel for loading the full size photo to [ViewPhotoActivity].
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
 @OptIn(UnstableApi::class)
 @HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
 class ImageViewerViewModel @AssistedInject constructor(

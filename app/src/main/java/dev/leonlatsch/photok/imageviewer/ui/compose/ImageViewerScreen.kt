@@ -219,14 +219,24 @@ fun ImageViewerScreen(
             beyondViewportPageCount = 1,
         ) { pageIndex ->
             val item = uiState.items[pageIndex]
-            ImageViewerPage(
-                item = uiState.items[pageIndex],
-                isCurrentItem = item.photo.uuid == currentItem?.photo?.uuid,
-                player = player,
-                exoPlayerState = exoPlayerState,
-                uiState = uiState,
-                handleUiEvent = handleUiEvent,
-            )
+
+            Box {
+                when (item) {
+                    is ImageViewerItem.Image -> ImageViewerImagePage(
+                        item = item,
+                        uiState = uiState,
+                        handleUiEvent = handleUiEvent,
+                    )
+                    is ImageViewerItem.Video -> ImageViewerVideoPage(
+                        item = item,
+                        isCurrentItem = item.photo.uuid == currentItem?.photo?.uuid,
+                        exoPlayerState = exoPlayerState,
+                        player = player,
+                        uiState = uiState,
+                        handleUiEvent = handleUiEvent,
+                    )
+                }
+            }
         }
 
 
@@ -245,7 +255,7 @@ fun ImageViewerScreen(
 @PreviewLightDark
 @Composable
 private fun ControlsPreview() {
-    AppTheme() {
+    AppTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()

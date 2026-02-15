@@ -28,11 +28,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.imageloading.compose.LocalEncryptedImageLoader
-import dev.leonlatsch.photok.imageloading.di.EncryptedImageLoader
 import dev.leonlatsch.photok.imageviewer.ui.compose.ImageViewerScreen
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 

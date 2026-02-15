@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.WindowInsetsSides.Companion
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
@@ -71,53 +70,19 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
-import dev.leonlatsch.photok.imageloading.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import java.util.Locale
 
-@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun ImageViewerPage(
-    item: ImageViewerItem,
-    isCurrentItem: Boolean,
-    player: Player,
-    exoPlayerState: ExoPlayerState,
-    uiState: ImageViewerUiState,
-    handleUiEvent: (ImageViewerUiEvent) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .background(Color.Black)
-    ) {
-        when (item) {
-            is ImageViewerItem.Image -> ImagePage(
-                uiState = uiState,
-                handleUiEvent = handleUiEvent,
-                item = item,
-            )
-
-            is ImageViewerItem.Video -> VideoPage(
-                item = item,
-                isCurrentItem = isCurrentItem,
-                uiState = uiState,
-                handleUiEvent = handleUiEvent,
-                player = player,
-                exoPlayerState = exoPlayerState,
-            )
-        }
-    }
-}
-
-@Composable
-private fun BoxScope.ImagePage(
+fun BoxScope.ImageViewerImagePage(
     item: ImageViewerItem.Image,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
@@ -162,9 +127,10 @@ private fun BoxScope.ImagePage(
     BottomGradient(visible = uiState.inputs.showControls)
 }
 
+
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-private fun BoxScope.VideoPage(
+fun BoxScope.ImageViewerVideoPage(
     item: ImageViewerItem.Video,
     isCurrentItem: Boolean,
     exoPlayerState: ExoPlayerState,

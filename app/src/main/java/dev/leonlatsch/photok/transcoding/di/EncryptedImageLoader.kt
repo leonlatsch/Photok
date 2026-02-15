@@ -14,15 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.domain
+package dev.leonlatsch.photok.transcoding.di
 
-import coil.request.ImageRequest
-import java.io.OutputStream
+import javax.inject.Qualifier
 
-interface ImageStorage {
-    suspend fun execAndWrite(
-        imageRequest: ImageRequest,
-        outputStream: OutputStream?,
-        compressionPercent: Int = 100,
-    ): Result<Unit>
-}
+@Retention
+@Qualifier
+annotation class EncryptedImageLoader
