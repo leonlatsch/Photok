@@ -115,7 +115,7 @@ fun BoxScope.ImageViewerImagePage(
             .zoomable(
                 onClick = {
                     handleUiEvent(
-                        ImageViewerUiEvent.UpdateShowControls(!uiState.inputs.showControls)
+                        ImageViewerUiEvent.ToggleShowControls
                     )
                 },
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
