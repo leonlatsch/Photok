@@ -51,6 +51,8 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -251,11 +253,19 @@ fun BoxScope.ImageViewerVideoPage(
                     }
                 }
 
-                val formattedPosition = remember(exoPlayerState.position) {
-                    exoPlayerState.position.toVideoTime()
+                val formattedPosition = remember(exoPlayerState.position, isCurrentItem) {
+                    if (isCurrentItem) {
+                        exoPlayerState.position.toVideoTime()
+                    } else {
+                        "00:00"
+                    }
                 }
-                val formattedDuration = remember(exoPlayerState.duration) {
-                    exoPlayerState.duration.toVideoTime()
+                val formattedDuration = remember(exoPlayerState.duration, isCurrentItem) {
+                    if (isCurrentItem) {
+                        exoPlayerState.duration.toVideoTime()
+                    } else {
+                        "00:00"
+                    }
                 }
 
                 Text(
@@ -301,8 +311,28 @@ fun BoxScope.ImageViewerVideoPage(
                 inactiveTrackColor = Color.White.copy(alpha = 0.4f)
             )
 
+            val safePosition by remember(isCurrentItem) {
+                derivedStateOf {
+                    if (isCurrentItem) {
+                        exoPlayerState.position.coerceAtMost(exoPlayerState.duration)
+                    } else {
+                        0L
+                    }
+                }
+            }
+
+            val safeDuration by remember(isCurrentItem) {
+                derivedStateOf {
+                    if (isCurrentItem) {
+                        exoPlayerState.duration.coerceAtLeast(minimumValue = 0L)
+                    } else {
+                        1L
+                    }
+                }
+            }
+
             Slider(
-                value = exoPlayerState.position.coerceAtMost(exoPlayerState.duration).toFloat(),
+                value = safePosition.toFloat(),
                 onValueChange = {
                     player.pause()
                     exoPlayerState.isScrubbing = true
@@ -313,8 +343,7 @@ fun BoxScope.ImageViewerVideoPage(
                     player.play()
                     exoPlayerState.isScrubbing = false
                 },
-                valueRange = 0f..exoPlayerState.duration.coerceAtLeast(minimumValue = 0L)
-                    .toFloat(),
+                valueRange = 0f..safeDuration.toFloat(),
                 colors = sliderColors,
                 enabled = exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM),
                 modifier = Modifier
