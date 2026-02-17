@@ -1,0 +1,1408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.1)" variant="all" version="8.13.1">
+
+    <issue
+        id="LocaleFolder"
+        message="The locale folder &quot;`id`&quot; should be called &quot;`in`&quot; instead; see the `java.util.Locale` documentation">
+        <location
+            file="src/main/res/values-id"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;2001dp&quot;"
+        errorLine2="                   ~~~~~~">
+        <location
+            file="src/main/res/drawable/app_icon.xml"
+            line="2"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_community.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_paint_brush.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_party_popper.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_password_colored.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_phone.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_photo_colored.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="    android:width=&quot;512dp&quot;"
+        errorLine2="                   ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_vault_colored.xml"
+            line="18"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 8.13 is available: 8.14.4"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/code/Photok/gradle/wrapper/gradle-wrapper.properties"
+            line="4"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.compose than 2.2.21 is available: 2.3.10"
+        errorLine1="    id(&quot;org.jetbrains.kotlin.plugin.compose&quot;) version &quot;2.2.21&quot;"
+        errorLine2="                                                      ~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="8"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:dagger than 2.57.2 is available: 2.59.1"
+        errorLine1="    implementation(&quot;com.google.dagger:dagger:2.57.2&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="150"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:dagger-compiler than 2.57.2 is available: 2.59.1"
+        errorLine1="    kapt(&quot;com.google.dagger:dagger-compiler:2.57.2&quot;)"
+        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="151"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android than 2.57.2 is available: 2.59.1"
+        errorLine1="    implementation(&quot;com.google.dagger:hilt-android:2.57.2&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="154"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of com.google.dagger:hilt-android-compiler than 2.57.2 is available: 2.59.1"
+        errorLine1="    kapt(&quot;com.google.dagger:hilt-android-compiler:2.57.2&quot;)"
+        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="155"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="                    context.getString(R.string.settings_advanced_reset_confirmation)"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="149"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="            val email = context.getString(R.string.settings_other_feedback_mail_emailaddress)"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="166"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="                &quot;${context.getString(R.string.settings_other_feedback_mail_subject)} (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})&quot;"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="168"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="            val text = context.getString(R.string.settings_other_feedback_mail_body)"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="169"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="                chooserTitle = context.getString(R.string.settings_other_feedback_title)"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="175"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="            fragment.openUrl(context.getString(R.string.settings_other_donate_url))"
+        errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="181"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="            fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))"
+        errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/compose/SettingsScreen.kt"
+            line="186"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/ui/components/AppName.kt"
+            line="36"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/gallery/components/ImportMenuBottomSheet.kt"
+            line="271"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UseCompatTextViewDrawableXml"
+        message="Use `app:drawableLeftCompat` instead of `android:drawableLeft`"
+        errorLine1="            android:drawableLeft=&quot;@drawable/ic_chevron_right&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_recovery_menu.xml"
+            line="60"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseCompatTextViewDrawableXml"
+        message="Use `app:drawableLeftCompat` instead of `android:drawableLeft`"
+        errorLine1="            android:drawableLeft=&quot;@drawable/ic_chevron_right&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_recovery_menu.xml"
+            line="74"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;view_photo_loop_video_disabled&quot; is not translated in &quot;ur&quot; (Urdu)"
+        errorLine1="    &lt;string name=&quot;view_photo_loop_video_disabled&quot;>Looping disabled&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="101"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;view_photo_loop_video_enabled&quot; is not translated in &quot;ur&quot; (Urdu)"
+        errorLine1="    &lt;string name=&quot;view_photo_loop_video_enabled&quot;>Looping enabled&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="102"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Leon&quot; is a common misspelling; did you mean &quot;León&quot;?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>Copyright \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                                                      ~~~~">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="21"
+            column="71"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Albums&quot; is a common misspelling; did you mean &quot;Álbuns&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_label&quot;>Albums&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                        ~~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="68"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;album&quot; is a common misspelling; did you mean &quot;álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_placeholder&quot;>Create your first album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                                ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="69"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Album&quot; is a common misspelling; did you mean &quot;Álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_create_title&quot;>Create Album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                      ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="70"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Album&quot; is a common misspelling; did you mean &quot;Álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_rename_title&quot;>Rename Album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                      ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="71"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Album&quot; is a common misspelling; did you mean &quot;Álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_select_title&quot;>Select an Album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                         ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="73"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Album&quot; is a common misspelling; did you mean &quot;Álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;gallery_albums_deleted&quot;>Album deleted&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                          ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="74"
+            column="43"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Album&quot; is a common misspelling; did you mean &quot;Álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;magic_fab_new_album_label&quot;>New Album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                 ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="76"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;album&quot; is a common misspelling; did you mean &quot;álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;menu_ms_add_to_album&quot;>Add to album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                               ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="114"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;album&quot; is a common misspelling; did you mean &quot;álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;menu_ms_remove_from_album&quot;>Remove from album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                         ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="115"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;Video&quot; is a common misspelling; did you mean &quot;Vídeo&quot;?"
+        errorLine1="    &lt;string name=&quot;news_title_1&quot;>Improved Video Player&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                         ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="268"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;video&quot; is a common misspelling; did you mean &quot;vídeo&quot;?"
+        errorLine1="    &lt;string name=&quot;news_summary_1&quot;>The video player was upgraded to newer Media3 API.&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                      ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="269"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;album&quot; is a common misspelling; did you mean &quot;álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;sorting_field_added_to_album_label&quot;>Added to album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                               ~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="339"
+            column="64"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="&quot;album&quot; is a common misspelling; did you mean &quot;álbum&quot;?"
+        errorLine1="    &lt;string name=&quot;sorting_field_added_to_album_label&quot;>Added to album&lt;/string> &lt;!-- TODO -->"
+        errorLine2="                                                               ~~~~~">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="340"
+            column="64"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;file&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;import_sharted_question&quot;>Do you want to import %1$d file(s)?&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="44"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;items&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;gallery_albums_photos_added&quot;>%1$d items added&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="74"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;item&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;menu_ms_info&quot;>%1$d item(s) selected&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="112"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;file&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;delete_are_you_sure&quot;>Are you sure, you want to &lt;b>delete&lt;/b> %1$d file(s)?&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="117"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;file&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;export_are_you_sure&quot;>Are you sure, you want to &lt;b>export&lt;/b> %1$d file(s), back to your gallery?&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="122"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;file&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;export_and_delete_are_you_sure&quot;>Are you sure, you want to &lt;b>export&lt;/b> %1$d file(s), back to your gallery and delete them?&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="123"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;files&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;migration_running_progress&quot;>%d of %d files processed&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="303"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnsafeProtectedBroadcastReceiver"
+        message="This broadcast receiver declares an intent-filter for a protected broadcast action string, which can only be sent by the system, not third-party applications. However, the receiver&apos;s onReceive method does not appear to call getAction to ensure that the received Intent&apos;s action string matches the expected value, potentially making it possible for another actor to send a spoofed intent with no action string or a different action string and cause undesired behavior. In this case, it is possible that the onReceive method passed the received Intent to another method that checked the action string. If so, this finding can safely be ignored."
+        errorLine1="    override fun onReceive(context: Context?, intent: Intent?) {"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/DialLauncher.kt"
+            line="39"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_change_password.xml"
+            line="52"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (4610 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="        android:pathData=&quot;m479.794,417.859c3.498,-6.697 5.488,-14.301 5.488,-22.366v-19.243c0,-20.93 -13.332,-38.802 -31.949,-45.578 -3.75,-20.643 -15.654,-38.699 -33.087,-50.353 3.495,-6.695 5.484,-14.297 5.484,-22.358v-19.243c0,-26.734 -21.75,-48.484 -48.484,-48.484s-48.484,21.75 -48.484,48.484v19.243c0,8.062 1.989,15.664 5.485,22.36 -6.288,4.205 -11.854,9.249 -16.583,14.944 -4.758,-5.746 -10.317,-10.762 -16.528,-14.928 3.501,-6.7 5.493,-14.307 5.493,-22.376v-19.243c0,-26.734 -21.75,-48.484 -48.484,-48.484s-48.484,21.75 -48.484,48.484v19.243c0,8.069 1.992,15.677 5.494,22.376 -6.246,4.189 -11.831,9.242 -16.608,15.03 -4.737,-5.736 -10.289,-10.82 -16.515,-15.024 3.503,-6.701 5.497,-14.311 5.497,-22.382v-19.243c0,-26.734 -21.75,-48.484 -48.485,-48.484 -26.734,0 -48.484,21.75 -48.484,48.484v19.243c0,8.062 1.989,15.664 5.485,22.36 -17.419,11.649 -29.335,29.709 -33.088,50.352 -18.617,6.775 -31.948,24.647 -31.948,45.577v19.243c0,8.064 1.99,15.669 5.488,22.366 -21.404,14.298 -34.352,38.104 -34.352,64.224v24.208c0,5.523 4.477,10 10,10h119.102,119.102 134.696,119.102c5.522,0 10,-4.477 10,-10v-24.208c-0.001,-26.12 -12.948,-49.927 -34.353,-64.224zM465.283,376.25v19.243c0,15.706 -12.778,28.484 -28.484,28.484s-28.484,-12.778 -28.484,-28.484v-19.243c0,-15.707 12.778,-28.484 28.484,-28.484s28.484,12.778 28.484,28.484zM432.118,327.996c-24.546,2.363 -43.804,23.099 -43.804,48.254v19.243c0,8.069 1.993,15.678 5.495,22.378 -6.199,4.16 -11.75,9.178 -16.508,14.918 -4.723,-5.683 -10.302,-10.716 -16.609,-14.93 3.498,-6.697 5.488,-14.302 5.488,-22.366v-19.243c0,-25.154 -19.257,-45.89 -43.802,-48.254 4.053,-13.175 12.873,-24.733 24.687,-32.131 8.289,6.613 18.777,10.58 30.181,10.58 11.403,0 21.891,-3.967 30.18,-10.58 11.823,7.401 20.639,18.954 24.692,32.131zM289.211,395.493v-19.243c0,-15.706 12.778,-28.484 28.484,-28.484s28.484,12.778 28.484,28.484v19.243c0,15.706 -12.778,28.484 -28.484,28.484s-28.484,-12.778 -28.484,-28.484zM348.762,238.718c0,-15.707 12.778,-28.484 28.484,-28.484s28.484,12.778 28.484,28.484v19.243c0,15.706 -12.778,28.484 -28.484,28.484s-28.484,-12.778 -28.484,-28.484zM229.66,238.718c0,-15.707 12.778,-28.484 28.484,-28.484s28.484,12.778 28.484,28.484v19.243c0,15.706 -12.778,28.484 -28.484,28.484 -15.707,0 -28.485,-12.778 -28.485,-28.484v-19.243zM227.965,295.865c8.289,6.613 18.777,10.58 30.18,10.58s21.891,-3.967 30.179,-10.579c7.251,4.513 13.384,10.548 18.028,17.751 -2.362,5.412 -4.115,11.127 -5.193,17.056 -18.617,6.775 -31.948,24.648 -31.948,45.577v19.243c0,8.064 1.99,15.668 5.488,22.365 -6.305,4.211 -11.882,9.241 -16.603,14.919 -4.755,-5.738 -10.307,-10.747 -16.511,-14.908 3.502,-6.7 5.494,-14.308 5.494,-22.377v-19.242c0,-20.935 -13.338,-38.81 -31.961,-45.582 -1.085,-5.858 -2.855,-11.546 -5.241,-16.954 4.651,-7.247 10.807,-13.317 18.088,-17.849zM170.109,395.493v-19.243c0,-15.707 12.778,-28.484 28.485,-28.484s28.485,12.778 28.485,28.484v19.243c0,15.706 -12.778,28.484 -28.485,28.484s-28.485,-12.778 -28.485,-28.484zM110.558,238.718c0,-15.707 12.778,-28.484 28.484,-28.484 15.707,0 28.485,12.778 28.485,28.484v19.243c0,15.706 -12.778,28.484 -28.484,28.484 -15.707,0 -28.485,-12.778 -28.485,-28.484zM108.862,295.865c8.289,6.613 18.777,10.58 30.181,10.58 11.403,0 21.892,-3.967 30.18,-10.58 11.825,7.401 20.638,18.953 24.69,32.131 -24.546,2.363 -43.804,23.099 -43.804,48.254v19.243c0,8.064 1.99,15.669 5.488,22.366 -6.303,4.21 -11.878,9.238 -16.599,14.914 -4.754,-5.738 -10.309,-10.743 -16.515,-14.904 3.501,-6.7 5.493,-14.307 5.493,-22.376v-19.243c0,-25.154 -19.257,-45.89 -43.802,-48.254 4.055,-13.175 12.874,-24.733 24.688,-32.131zM51.008,376.25c0,-15.707 12.778,-28.484 28.485,-28.484 15.706,0 28.484,12.778 28.484,28.484v19.243c0,15.706 -12.778,28.484 -28.484,28.484 -15.707,0 -28.485,-12.778 -28.485,-28.484zM22.144,482.083c0,-20.021 10.284,-38.219 27.163,-48.689 8.289,6.615 18.78,10.584 30.185,10.584 11.403,0 21.891,-3.967 30.18,-10.58 7.245,4.509 13.371,10.531 18.011,17.725 -4.179,9.571 -6.437,20.063 -6.437,30.96v14.208h-99.102zM141.246,482.083c0,-20.021 10.283,-38.219 27.162,-48.689 8.289,6.615 18.78,10.584 30.185,10.584 11.403,0 21.891,-3.967 30.18,-10.579 7.241,4.507 13.368,10.533 18.01,17.728 -4.178,9.57 -6.436,20.061 -6.436,30.957v14.208h-99.102v-14.209zM260.348,482.083c0,-20.021 10.283,-38.219 27.162,-48.689 8.289,6.615 18.78,10.584 30.185,10.584s21.896,-3.968 30.185,-10.584c16.878,10.471 27.164,28.675 27.164,48.689v14.208h-114.696zM494.146,496.29h-99.102v-14.208c0,-10.892 -2.258,-21.383 -6.437,-30.954 4.644,-7.194 10.778,-13.226 18.011,-17.731 8.288,6.613 18.776,10.579 30.179,10.579 11.405,0 21.896,-3.968 30.185,-10.584 16.88,10.47 27.163,28.668 27.163,48.689v14.209z&quot; />"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_community.xml"
+            line="84"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="KaptUsageInsteadOfKsp"
+        message="This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp"
+        errorLine1="    kapt(&quot;androidx.room:room-compiler:2.8.4&quot;)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="126"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_bottom_sheet` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/bg_bottom_sheet.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_bottom_sheet_dark` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/bg_bottom_sheet_dark.xml"
+            line="18"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_dark_toolbar` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/bg_dark_toolbar.xml"
+            line="18"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorComplementary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorComplementary&quot;>#c95056&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="21"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.transparent_black` appears to be unused"
+        errorLine1="    &lt;color name=&quot;transparent_black&quot;>#88000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="42"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.extra_wide_button_width` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;extra_wide_button_width&quot;>300dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="23"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.toolbar_menu_margin_end` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;toolbar_menu_margin_end&quot;>10dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="33"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_camera` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:height=&quot;24dp&quot; android:tint=&quot;#000000&quot; android:viewportHeight=&quot;24&quot; android:viewportWidth=&quot;24&quot; android:width=&quot;24dp&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_camera.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_fullscreen` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_fullscreen.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_lock` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_lock.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_logo_white` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_logo_white.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_play_circle` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_play_circle.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_video_library` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_video_library.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.menu_view_photo` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/menu_view_photo.xml"
+            line="17"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_pipe` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_pipe&quot;>|&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_loading` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_loading&quot;>Loading …&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_password` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_password&quot;>Password&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.import_permission_rationale` appears to be unused"
+        errorLine1="    &lt;string name=&quot;import_permission_rationale&quot;>Photok needs to access your storage, to import files.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="43"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.menu_main_lock` appears to be unused"
+        errorLine1="    &lt;string name=&quot;menu_main_lock&quot;>Lock&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="105"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.menu_ms_delete` appears to be unused"
+        errorLine1="    &lt;string name=&quot;menu_ms_delete&quot;>Delete&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="110"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.menu_ms_export` appears to be unused"
+        errorLine1="    &lt;string name=&quot;menu_ms_export&quot;>Export&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="111"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.export_permission_rationale` appears to be unused"
+        errorLine1="    &lt;string name=&quot;export_permission_rationale&quot;>Photok needs to access your storage, to export files.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="127"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.export_finished` appears to be unused"
+        errorLine1="    &lt;string name=&quot;export_finished&quot;>Exported&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="128"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.export_and_delete_finished` appears to be unused"
+        errorLine1="    &lt;string name=&quot;export_and_delete_finished&quot;>Exported and deleted&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="129"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.about_menu_news` appears to be unused"
+        errorLine1="    &lt;string name=&quot;about_menu_news&quot;>News&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="139"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.settings_gallery_auto_fullscreen_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;settings_gallery_auto_fullscreen_title&quot;>Auto Fullscreen&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="151"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.settings_gallery_auto_fullscreen_summary` appears to be unused"
+        errorLine1="    &lt;string name=&quot;settings_gallery_auto_fullscreen_summary&quot;>Enter fullscreen mode when opening a file&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="152"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.settings_security_change_password_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;settings_security_change_password_title&quot;>Change Password&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="158"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.settings_security_timeout_summary` appears to be unused"
+        errorLine1="    &lt;string name=&quot;settings_security_timeout_summary&quot;>Automatic lock after given time in background&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="164"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.backup_restore_details_compatible` appears to be unused"
+        errorLine1="    &lt;string name=&quot;backup_restore_details_compatible&quot;>Compatible:&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="257"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.LightDetailTextViewStyle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;LightDetailTextViewStyle&quot; parent=&quot;TextViewStyle&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="59"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.LightLabelTextViewStyle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;LightLabelTextViewStyle&quot; parent=&quot;LabelTextViewStyle&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="69"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.darkToolbarStyle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;darkToolbarStyle&quot; parent=&quot;toolbarStyle&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="119"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>Copyright \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-nl/strings.xml"
+            line="3"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>版权所有 \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-zh-rCN/strings.xml"
+            line="20"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>Copyright \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-de/strings.xml"
+            line="21"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>Copyright \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="21"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyDashes"
+        message="Replace &quot;-&quot; with an &quot;en dash&quot; character (–, &amp;#8211;) ?"
+        errorLine1="    &lt;string name=&quot;common_copyright_notice&quot;>Direitos autorais \u00A9 2020-2026 Leon Latsch&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-pt-rBR/strings.xml"
+            line="21"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;process_initialize&quot;>يُجهز...&lt;/string>"
+        errorLine2="                                      ~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="90"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;delete_deleting&quot;>جارٍ حذف الملف (الملفات) ... &lt;/string>"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="119"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;export_exporting&quot;>جارٍ تصدير الملف (الملفات) ... &lt;/string>"
+        errorLine2="                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="127"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;change_password_reencrypting&quot;>إعادة تشفير الملف (الملفات) ...&lt;/string>"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="222"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;backup_processing_title&quot;>جارٍ إنشاء نسخة احتياطية ...&lt;/string>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="252"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;backup_restore_validating&quot;>التحقق من صحة النسخ الاحتياطي ...&lt;/string>"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="254"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;backup_restore_processing&quot;>استعادة النسخة الاحتياطية ...&lt;/string>"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="261"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Int.toDrawable` instead?"
+        errorLine1="        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/uicomponnets/base/BaseDialogFragment.kt"
+            line="40"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            intent.data = Uri.parse(it)"
+        errorLine2="                          ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/credits/CreditsFragment.kt"
+            line="73"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            intent.data = Uri.parse(it)"
+        errorLine2="                          ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/settings/ui/credits/CreditsFragment.kt"
+            line="73"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Context.withStyledAttributes` instead?"
+        errorLine1="            val styledAttrs = context.obtainStyledAttributes(it, R.styleable.PasswordEditText, 0, 0)"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/uicomponnets/PasswordEditText.kt"
+            line="110"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    intent.data = Uri.parse(url)"
+        errorLine2="                  ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/other/Utils.kt"
+            line="115"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    intent.data = Uri.parse(url)"
+        errorLine2="                  ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/other/Utils.kt"
+            line="115"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    intent.data = Uri.parse(url)"
+        errorLine2="                  ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/other/Utils.kt"
+            line="123"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="    intent.data = Uri.parse(url)"
+        errorLine2="                  ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/dev/leonlatsch/photok/other/Utils.kt"
+            line="123"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="                &lt;ImageView"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_bottom_sheet_process.xml"
+            line="62"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="                &lt;ImageView"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_change_password.xml"
+            line="64"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_hide_app.xml"
+            line="31"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_hide_app.xml"
+            line="42"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_hide_app.xml"
+            line="55"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_show_app.xml"
+            line="31"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_show_app.xml"
+            line="42"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_fragment_show_app.xml"
+            line="55"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="            &lt;ImageView"
+        errorLine2="             ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_news.xml"
+            line="36"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="            &lt;ImageView"
+        errorLine2="             ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_news.xml"
+            line="70"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_restore_backup.xml"
+            line="46"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="                &lt;ImageView"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding.xml"
+            line="67"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="                &lt;ImageView"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding.xml"
+            line="73"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="                &lt;ImageView"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding.xml"
+            line="79"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding_slide_1.xml"
+            line="25"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding_slide_2.xml"
+            line="25"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding_slide_3.xml"
+            line="25"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_credits_header.xml"
+            line="35"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_icon_credits.xml"
+            line="32"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`TextView-1` can overlap `@id/onBoardingButton` if @string/onboarding_skip grows due to localized text expansion"
+        errorLine1="            &lt;TextView"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_onboarding.xml"
+            line="50"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:drawableLeft` with `android:drawableStart=&quot;@drawable/ic_chevron_right&quot;` to better support right-to-left layouts"
+        errorLine1="            android:drawableLeft=&quot;@drawable/ic_chevron_right&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_recovery_menu.xml"
+            line="60"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:drawableLeft` with `android:drawableStart=&quot;@drawable/ic_chevron_right&quot;` to better support right-to-left layouts"
+        errorLine1="            android:drawableLeft=&quot;@drawable/ic_chevron_right&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_recovery_menu.xml"
+            line="74"
+            column="13"/>
+    </issue>
+
+</issues>

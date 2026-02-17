@@ -90,6 +90,7 @@ android {
 
     lint {
         lintConfig = file("$rootDir/gradle/lint.xml")
+        baseline = file("$rootDir/gradle/lint-baseline.xml")
     }
     namespace = "dev.leonlatsch.photok"
 }
