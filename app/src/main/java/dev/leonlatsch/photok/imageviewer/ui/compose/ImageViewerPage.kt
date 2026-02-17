@@ -54,7 +54,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -71,7 +73,6 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
-import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
@@ -335,16 +336,27 @@ fun BoxScope.ImageViewerVideoPage(
                 }
             }
 
+            var wasPlayingWhenStartedScrubbing by remember { mutableStateOf(false) }
+
             Slider(
                 value = safePosition.toFloat(),
                 onValueChange = {
+                    if (!exoPlayerState.isScrubbing) {
+                        wasPlayingWhenStartedScrubbing = exoPlayerState.isPlaying
+                    }
+
                     player.pause()
                     exoPlayerState.isScrubbing = true
                     exoPlayerState.position = it.toLong()
                 },
                 onValueChangeFinished = {
                     player.seekTo(exoPlayerState.position)
-                    player.play()
+
+                    if (wasPlayingWhenStartedScrubbing) {
+                        player.play()
+                        wasPlayingWhenStartedScrubbing = false
+                    }
+
                     exoPlayerState.isScrubbing = false
                 },
                 valueRange = 0f..safeDuration.toFloat(),
