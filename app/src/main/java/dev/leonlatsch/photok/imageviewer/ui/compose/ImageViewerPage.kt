@@ -46,6 +46,7 @@ import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -143,11 +144,12 @@ fun BoxScope.ImageViewerVideoPage(
 ) {
     ContentFrame(
         player = if (isCurrentItem) player else null,
-        surfaceType = SURFACE_TYPE_TEXTURE_VIEW, // Somehow cures a weird issue with small amount of black screen on start
         shutter = {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .background(Color.Black) // Important! Otherwise last frame is background
+                    .fillMaxSize()
             ) {
                 val photo = item.photo
 
@@ -169,7 +171,9 @@ fun BoxScope.ImageViewerVideoPage(
                     modifier = modifier.fillMaxSize()
                 )
 
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    color = LocalContentColor.current,
+                )
             }
         },
         modifier = modifier
