@@ -338,4 +338,10 @@
     <string name="sorting_field_last_modified">آخری تبدیلی</string>
 
     <string name="sorting_restore_default">پہلے جیسا کریں</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>
