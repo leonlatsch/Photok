@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose
+package dev.leonlatsch.photok.transcoding.data
 
 import android.content.Context
-import android.content.res.Resources
-import android.view.WindowManager
 import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.imageloading.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import javax.inject.Inject
 
 class EncryptedImageFetcherFactory @Inject constructor(

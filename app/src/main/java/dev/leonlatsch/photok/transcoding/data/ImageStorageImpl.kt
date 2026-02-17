@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.data
+package dev.leonlatsch.photok.transcoding.data
 
 import android.graphics.Bitmap
 import androidx.core.graphics.drawable.toBitmap
@@ -22,7 +22,7 @@ import coil.ImageLoader
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import dev.leonlatsch.photok.imageloading.domain.ImageStorage
+import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.OutputStream

@@ -93,12 +93,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">细节</string>
-    <string name="view_photo_detail_file_name_label">文件名:</string>
-    <string name="view_photo_detail_import_at_label">导入于:</string>
-    <string name="view_photo_detail_file_type_label">文件类型:</string>
-    <string name="view_photo_detail_size_label">文件大小:</string>
-    <string name="view_photo_detail_last_modified">上次修改：</string>
-    <string name="view_photo_play_button_description">播放视频</string>
+    <string name="view_photo_detail_file_name_label">文件名</string>
+    <string name="view_photo_detail_import_at_label">导入于</string>
+    <string name="view_photo_detail_file_type_label">文件类型</string>
+    <string name="view_photo_detail_size_label">文件大小</string>
+    <string name="view_photo_detail_last_modified">上次修改</string>
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">锁定</string>
@@ -338,4 +339,10 @@
     <string name="sorting_field_last_modified">上次修改</string>
 
     <string name="sorting_restore_default">恢复默认</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

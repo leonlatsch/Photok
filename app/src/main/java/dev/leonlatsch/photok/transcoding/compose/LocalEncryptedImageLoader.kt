@@ -14,10 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.di
+package dev.leonlatsch.photok.transcoding.compose
 
-import javax.inject.Qualifier
+import androidx.compose.runtime.compositionLocalOf
+import coil.ImageLoader
 
-@Retention
-@Qualifier
-annotation class EncryptedImageLoader
+/**
+ * Provides the current EncryptedImageLoader. Null of not provided by viewModel
+ */
+val LocalEncryptedImageLoader = compositionLocalOf<ImageLoader?> { null }

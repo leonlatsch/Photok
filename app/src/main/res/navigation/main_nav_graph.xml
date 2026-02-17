@@ -152,20 +152,6 @@
             android:name="album_uuid"
             android:defaultValue=""
             app:argType="string" />
-        <action
-            android:id="@+id/action_imageViewerFragment_to_videoPlayerFragment"
-            app:destination="@id/videoPlayerFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/slide_to_bottom" />
-    </fragment>
-    <fragment
-        android:id="@+id/videoPlayerFragment"
-        android:name="dev.leonlatsch.photok.videoplayer.ui.VideoPlayerFragment"
-        android:label="VideoPlayerFragment">
-        <argument
-            android:name="video"
-            android:defaultValue="-1"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"

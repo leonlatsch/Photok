@@ -22,8 +22,8 @@ import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.imageloading.domain.ImageStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

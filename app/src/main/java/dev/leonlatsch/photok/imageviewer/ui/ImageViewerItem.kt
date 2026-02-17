@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,12 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose
+package dev.leonlatsch.photok.imageviewer.ui
 
-import androidx.compose.runtime.compositionLocalOf
-import coil.ImageLoader
+import androidx.media3.common.MediaItem
+import dev.leonlatsch.photok.model.database.entity.Photo
 
-/**
- * Provides the current EncryptedImageLoader. Null of not provided by viewModel
- */
-val LocalEncryptedImageLoader = compositionLocalOf<ImageLoader?> { null }
+sealed interface ImageViewerItem {
+    val photo: Photo
+    data class Image(override val photo: Photo) : ImageViewerItem
+    data class Video(override val photo: Photo, val mediaItem: MediaItem) : ImageViewerItem
+}

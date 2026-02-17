@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
-import java.security.GeneralSecurityException
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
@@ -36,13 +35,17 @@ import javax.inject.Singleton
 import kotlin.io.encoding.Base64
 
 
-private const val ENC_VERSION_BYTE: Byte = 0x01
-private const val IV_SIZE = 16
+const val ENC_VERSION_BYTE: Byte = 0x01
+const val IV_SIZE = 16
 const val SALT_SIZE = 16
-private const val KEY_SIZE = 256
-private const val ITERATION_COUNT = 100_000
-private const val FULL_ALGORITHM = "PBKDF2WithHmacSHA256"
+const val KEY_SIZE = 256
+const val ITERATION_COUNT = 100_000
+const val KEY_ALGORITHM = "PBKDF2WithHmacSHA256"
 const val AES = "AES"
+const val AES_ALGORITHM = "AES/CBC/PKCS7Padding"
+
+const val HEADER_SIZE = 1 + SALT_SIZE + IV_SIZE
+const val BLOCK_SIZE = 16
 
 
 /**
@@ -131,7 +134,7 @@ class EncryptionManagerImpl @Inject constructor(
                 )
             }
 
-            return Result.success(Unit )
+            return Result.success(Unit)
         } catch (e: Exception) {
             Timber.d("Error initializing EncryptionManager: $e")
             state.update { State.Error }
@@ -207,7 +210,7 @@ class EncryptionManagerImpl @Inject constructor(
         }
     }
 
-    private fun requireKey(): SecretKey {
+    override fun requireKey(): SecretKey {
         return (state.value as? State.Ready)?.key ?: error("EncryptionManager not initialized")
     }
 
@@ -217,7 +220,7 @@ class EncryptionManagerImpl @Inject constructor(
             keyCache[hash]?.let { return it }
         }
 
-        val factory = SecretKeyFactory.getInstance(FULL_ALGORITHM)
+        val factory = SecretKeyFactory.getInstance(KEY_ALGORITHM)
         val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
         val keyBytes = factory.generateSecret(spec).encoded
 

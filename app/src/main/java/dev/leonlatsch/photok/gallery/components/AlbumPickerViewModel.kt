@@ -21,14 +21,25 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.toUi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+sealed interface AlbumPickerUiEvent {
+    data class OnAlbumSelected(
+        val photoUuids: List<String>,
+        val albumUuid: String,
+    ) : AlbumPickerUiEvent
+}
 
 @HiltViewModel
 class AlbumPickerViewModel @Inject constructor(
-    private val albumRepository: AlbumRepository
+    private val albumRepository: AlbumRepository,
+    private val appScope: CoroutineScope,
 ) : ViewModel() {
 
     val uiState = albumRepository.observeAllAlbumsWithPhotos().map { albums ->
@@ -36,4 +47,12 @@ class AlbumPickerViewModel @Inject constructor(
             albums = albums.map { it.toUi() }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
+
+    fun handleUiEvent(event: AlbumPickerUiEvent) {
+        when (event) {
+            is AlbumPickerUiEvent.OnAlbumSelected -> appScope.launch(IO) {
+                albumRepository.link(event.photoUuids, event.albumUuid)
+            }
+        }
+    }
 }

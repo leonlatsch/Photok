@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.di
+package dev.leonlatsch.photok.transcoding.di
 
 import android.content.Context
 import coil.ImageLoader
@@ -29,9 +29,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.imageloading.compose.EncryptedImageFetcherFactory
-import dev.leonlatsch.photok.imageloading.data.ImageStorageImpl
-import dev.leonlatsch.photok.imageloading.domain.ImageStorage
+import dev.leonlatsch.photok.transcoding.data.EncryptedImageFetcherFactory
+import dev.leonlatsch.photok.transcoding.data.ImageStorageImpl
+import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 
 @Module
 @InstallIn(SingletonComponent::class)

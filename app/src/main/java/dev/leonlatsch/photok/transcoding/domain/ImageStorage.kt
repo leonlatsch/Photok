@@ -14,27 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other.extensions
+package dev.leonlatsch.photok.transcoding.domain
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.InputStream
+import coil.request.ImageRequest
 import java.io.OutputStream
-import javax.crypto.CipherInputStream
 
-/**
- * Schedule a InputStream to be closed by the [Dispatchers.IO]
- * For use in suspend fun.
- */
-fun InputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
-    close()
-}
-
-/**
- * Schedule a OutputStream to be closed by the [Dispatchers.IO].
- * For use in suspend fun.
- */
-fun OutputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
-    close()
+interface ImageStorage {
+    suspend fun execAndWrite(
+        imageRequest: ImageRequest,
+        outputStream: OutputStream?,
+        compressionPercent: Int = 100,
+    ): Result<Unit>
 }

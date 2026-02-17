@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.imageloading.compose.model
+package dev.leonlatsch.photok.transcoding.di
 
-data class EncryptedImageRequestData(
-    val internalFileName: String,
-    val mimeType: String,
-    val playAnimation: Boolean = false,
-)
+import javax.inject.Qualifier
+
+@Retention
+@Qualifier
+annotation class EncryptedImageLoader

@@ -93,12 +93,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Detail</string>
-    <string name="view_photo_detail_file_name_label">Nama file:</string>
-    <string name="view_photo_detail_import_at_label">Diimpor pada:</string>
-    <string name="view_photo_detail_file_type_label">Jenis file:</string>
-    <string name="view_photo_detail_size_label">Ukuran file:</string>
-    <string name="view_photo_detail_last_modified">Terakhir diubah:</string>
-    <string name="view_photo_play_button_description">Putar Video</string>
+    <string name="view_photo_detail_file_name_label">Nama file</string>
+    <string name="view_photo_detail_import_at_label">Diimpor pada</string>
+    <string name="view_photo_detail_file_type_label">Jenis file</string>
+    <string name="view_photo_detail_size_label">Ukuran file</string>
+    <string name="view_photo_detail_last_modified">Terakhir diubah</string>
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Kunci</string>
@@ -337,4 +338,10 @@
     <string name="sorting_field_last_modified">Terakhir diubah</string>
 
     <string name="sorting_restore_default">Pulihkan Bawaan</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

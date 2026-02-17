@@ -184,8 +184,10 @@ dependencies {
     implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.8.0")
-    implementation("androidx.media3:media3-ui:1.8.0")
+    implementation("androidx.media3:media3-exoplayer:1.9.0")
+    implementation("androidx.media3:media3-ui:1.9.0")
+    implementation("androidx.media3:media3-ui-compose:1.9.0")
+    implementation("androidx.media3:media3-ui-compose-material3:1.9.0")
 
     implementation(fileTree("libs").matching {
         include("*.jar")

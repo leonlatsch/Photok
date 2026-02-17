@@ -93,12 +93,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Детали</string>
-    <string name="view_photo_detail_file_name_label">Наименование файла:</string>
-    <string name="view_photo_detail_import_at_label">Импортировано:</string>
-    <string name="view_photo_detail_file_type_label">Тип файла:</string>
-    <string name="view_photo_detail_size_label">Размер файла:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
-    <string name="view_photo_play_button_description">Воспроизвести видео</string>
+    <string name="view_photo_detail_file_name_label">Наименование файла</string>
+    <string name="view_photo_detail_import_at_label">Импортировано</string>
+    <string name="view_photo_detail_file_type_label">Тип файла</string>
+    <string name="view_photo_detail_size_label">Размер файла</string>
+    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>
@@ -338,4 +339,10 @@
     <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
 
     <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

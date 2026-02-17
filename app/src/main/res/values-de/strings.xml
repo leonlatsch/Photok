@@ -94,12 +94,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>
-    <string name="view_photo_detail_file_name_label">Dateiname:</string>
-    <string name="view_photo_detail_import_at_label">Importiert am:</string>
-    <string name="view_photo_detail_file_type_label">Datei Typ:</string>
-    <string name="view_photo_detail_size_label">Dateigröße:</string>
-    <string name="view_photo_detail_last_modified">Zuletzt geändert:</string>
-    <string name="view_photo_play_button_description">Video Abspielen</string>
+    <string name="view_photo_detail_file_name_label">Dateiname</string>
+    <string name="view_photo_detail_import_at_label">Importiert am</string>
+    <string name="view_photo_detail_file_type_label">Datei Typ</string>
+    <string name="view_photo_detail_size_label">Dateigröße</string>
+    <string name="view_photo_detail_last_modified">Zuletzt geändert</string>
+    <string name="view_photo_loop_video_disabled">Wiederholung deaktiviert</string>
+    <string name="view_photo_loop_video_enabled">Wiederholdung aktiviert</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Sperren</string>
@@ -342,4 +343,10 @@
     <string name="sorting_field_last_modified">Zuletzt geändert</string>
 
     <string name="sorting_restore_default">Standard wiederherstellen</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pause</string>
+    <string name="video_player_mute">Stummschalten</string>
+    <string name="video_player_unmute">Stummschaltung aufheben</string>
 </resources>

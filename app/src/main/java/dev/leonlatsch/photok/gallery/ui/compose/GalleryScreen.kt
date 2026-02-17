@@ -24,16 +24,13 @@ import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
@@ -45,14 +42,12 @@ import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.components.AppName
-import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(
     viewModel: GalleryViewModel,
-    albumPickerViewModel: AlbumPickerViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -113,21 +108,12 @@ fun GalleryScreen(
                         modifier = modifier,
                     )
 
-                    if (contentUiState.showAlbumSelectionDialog) {
-                        AlbumPickerDialog(
-                            viewModel = albumPickerViewModel,
-                            onAlbumSelected = { selectedAlbum ->
-                                viewModel.handleUiEvent(
-                                    GalleryUiEvent.OnAlbumSelected(
-                                        multiSelectionState.selectedItems.value.toList(),
-                                        selectedAlbum,
-                                    )
-                                )
-                                multiSelectionState.cancelSelection()
-                            },
-                            onDismiss = { viewModel.handleUiEvent(GalleryUiEvent.CancelAlbumSelection) }
-                        )
-                    }
+                    AlbumPickerDialog(
+                        visible = contentUiState.showAlbumSelectionDialog,
+                        selectedItemIds = multiSelectionState.selectedItems.value.toList(),
+                        onAlbumSelected = { multiSelectionState.cancelSelection() },
+                        onDismissRequest = { viewModel.handleUiEvent(GalleryUiEvent.CancelAlbumSelection) }
+                    )
                 }
             }
 

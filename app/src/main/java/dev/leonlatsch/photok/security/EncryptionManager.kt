@@ -29,6 +29,7 @@ interface EncryptionManager {
     fun initialize(key: SecretKey): Result<Unit>
     fun reset()
     fun getKeyOrNull(): SecretKey?
+    fun requireKey(): SecretKey
 
     fun createCipherInputStream(
         input: InputStream,
