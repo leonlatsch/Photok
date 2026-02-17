@@ -43,17 +43,17 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-66%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-66%25-orange)
-![French](https://img.shields.io/badge/French-76%25-yellow)
+![Arabic](https://img.shields.io/badge/Arabic-64%25-orange)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-97%25-yellow)
+![Dutch](https://img.shields.io/badge/Dutch-64%25-orange)
+![French](https://img.shields.io/badge/French-74%25-orange)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
-![Italian](https://img.shields.io/badge/Italian-92%25-yellow)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-64%25-orange)
-![Russian](https://img.shields.io/badge/Russian-75%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-78%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
+![Indonesian](https://img.shields.io/badge/Indonesian-97%25-yellow)
+![Italian](https://img.shields.io/badge/Italian-89%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-62%25-orange)
+![Russian](https://img.shields.io/badge/Russian-73%25-orange)
+![Spanish](https://img.shields.io/badge/Spanish-76%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
