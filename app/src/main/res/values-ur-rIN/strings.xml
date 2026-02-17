@@ -18,7 +18,7 @@
 <resources>
 
     <!-- COMMON -->
-    <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020-2026 Leon Latsch</string>
+    <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
     <string name="common_pipe">|</string>
@@ -53,14 +53,14 @@
     <string name="setup_password_strength_weak">کمزور</string>
     <string name="setup_password_strength_moderate">درمیانہ</string>
     <string name="setup_password_strength_strong">بہت مضبوط</string>
-    <string name="setup_password_match_warning">\u2۶A۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
+    <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
     <string name="setupSetup">تیاری</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">اپنا سیف کھولیں</string>
     <string name="unlock_enter_password">پاس ورڈ ڈالیں</string>
     <string name="unlock_button">کھولیں</string>
-    <string name="unlock_wrong_password">\u2۶A۰ غلط پاس ورڈ</string>
+    <string name="unlock_wrong_password">\u26A0۰ غلط پاس ورڈ</string>
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">آپ کے سیف میں کچھ نہیں ہے</string>
@@ -90,7 +90,7 @@
     <string name="process_finished">مکمل ہو گیا</string>
     <string name="process_initialize">تیاری ہو رہی ہے…</string>
     <string name="process_aborted">روک دیا گیا</string>
-    <string name="process_failures_occurred">\u2۶A۰ کچھ فائلوں پر کام نہیں ہو سکا</string>
+    <string name="process_failures_occurred">\u26A0۰ کچھ فائلوں پر کام نہیں ہو سکا</string>
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">تفصیلات</string>
@@ -99,7 +99,6 @@
     <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
     <string name="view_photo_detail_size_label">سائز:</string>
     <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
-    <string name="view_photo_play_button_description">ویڈیو چلائیں</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">لاک کریں</string>
@@ -257,7 +256,7 @@
     <string name="backup_restore_details_compatible">صحیح ہے:</string>
     <string name="backup_restore_details_size">سائز:</string>
     <string name="backup_restore_button">کھولیں اور واپس لائیں</string>
-    <string name="backup_restore_invalid_file">\u2۶A۰ یہ فائل صحیح نہیں ہے</string>
+    <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
     <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
     <string name="backup_unlock_title">بیک اپ کھولیں</string>
 
