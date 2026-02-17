@@ -52,7 +52,7 @@ fun ImageViewerSystemBarsController(
 }
 
 
-private fun Window.forceLightSystemBarIcons() {
+fun Window.forceLightSystemBarIcons() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         insetsController?.setSystemBarsAppearance(
             0,

@@ -34,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +46,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.imageviewer.ui.forceLightSystemBarIcons
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -58,6 +61,7 @@ fun ImageDetailsSheet(
     onDismissRequest: () -> Unit,
     photo: Photo,
 ) {
+
     val dateFormat = remember {
         SimpleDateFormat("E, dd. MMM. yyyy • HH:mm", Locale.getDefault())
     }
@@ -83,6 +87,12 @@ fun ImageDetailsSheet(
             sheetState = state,
             onDismissRequest = onDismissRequest,
         ) {
+            val window = findWindow()
+
+            SideEffect {
+                window?.forceLightSystemBarIcons()
+            }
+
             Column(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
