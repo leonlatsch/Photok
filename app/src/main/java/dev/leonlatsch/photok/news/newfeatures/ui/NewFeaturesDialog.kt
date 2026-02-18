@@ -47,6 +47,25 @@ class ShowNewsDialogUseCase @Inject constructor(
  */
 const val FEATURE_VERSION_CODE = 11
 
+private val NewFeaturesViewData = listOf(
+    NewFeatureViewData(
+        title = "",
+        summary = "",
+    ),
+    NewFeatureViewData(
+        title = "",
+        summary = "",
+    ),
+    NewFeatureViewData(
+        title = "",
+        summary = "",
+    ),
+    NewFeatureViewData(
+        title = "",
+        summary = "",
+    ),
+)
+
 /**
  * Dialog for displaying new features.
  *
@@ -59,7 +78,7 @@ class NewFeaturesDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dia
         super.onViewCreated(view, savedInstanceState)
 
         binding.newsRecycler.layoutManager = FixLinearLayoutManager(requireContext())
-        binding.newsRecycler.adapter = NewFeaturesAdapter(getNewFeaturesViewData())
+        binding.newsRecycler.adapter = NewFeaturesAdapter(NewFeaturesViewData)
 
         binding.newsVersion.text = BuildConfig.VERSION_NAME
     }
@@ -70,21 +89,6 @@ class NewFeaturesDialog : BindableDialogFragment<DialogNewsBinding>(R.layout.dia
     fun openChangelog() {
         val url = getString(R.string.news_changelog_url)
         openUrl(url)
-    }
-
-    private fun getNewFeaturesViewData(): List<NewFeatureViewData> {
-        val titles = resources.getStringArray(R.array.newsTitles)
-        val summaries = resources.getStringArray(R.array.newsSummaries)
-
-        return if (titles.size == summaries.size) {
-            val viewDataList = mutableListOf<NewFeatureViewData>()
-            for (i in 0..titles.lastIndex) {
-                viewDataList.add(NewFeatureViewData(titles[i], summaries[i]))
-            }
-            viewDataList
-        } else {
-            listOf()
-        }
     }
 
     override fun bind(binding: DialogNewsBinding) {

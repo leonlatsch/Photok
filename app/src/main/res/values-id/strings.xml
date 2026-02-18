@@ -266,18 +266,6 @@
     <string name="news_view_changelog">Lihat Catatan Perubahan</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Pemutar Video yang Ditingkatkan</string>
-    <string name="news_summary_1">Pemutar video ditingkatkan ke API Media3 yang lebih baru.</string>
-
-    <string name="news_title_2">Penjelajahan dan Pengurutan Foto yang Lebih Baik</string>
-    <string name="news_summary_2">Performa tampilan gambar ditingkatkan dan foto sekarang dapat diurutkan berdasarkan tanggal modifikasi terakhir.</string>
-
-    <string name="news_title_3">UI Pengaturan yang Disempurnakan</string>
-    <string name="news_summary_3">Layar pengaturan didesain ulang agar sesuai dengan pembaruan desain yang sedang berlangsung.</string>
-
-    <string name="news_title_4">Perbaikan Terjemahan dan Stabilitas</string>
-    <string name="news_summary_4">Terjemahan yang diperbarui dan berbagai perbaikan meningkatkan keandalan secara keseluruhan.</string>
-
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu Pemulihan</string>
     <string name="recovery_menu_item_open_photok">Buka Photok</string>

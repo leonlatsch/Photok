@@ -249,18 +249,6 @@
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Geliştirilmiş Video Oynatıcı</string>
-    <string name="news_summary_1">Video Oynatıcı güncel olan Media3 API\'ına güncellendi.</string>
-
-    <string name="news_title_2">Daha İyi Resimler İçinde Gözatma ve Sıralama</string>
-    <string name="news_summary_2">Görsel gözatma performansı geliştirildi ve resimler artık son düzenleme tariğine göre sıralanabilir.</string>
-
-    <string name="news_title_3">Geliştirilmiş Ayarlar Sayfası</string>
-    <string name="news_summary_3">Ayarlar sayfası devam etmekte olan tasarım değişimiyle yeniden tasarlandı.</string>
-
-    <string name="news_title_4">Çeviriler ve Stabilite Düzeltildi</string>
-    <string name="news_summary_4">Çeviriler güncellendi ve birçok güvenlik sorunu düzeltildi.</string>
-
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>
     <string name="recovery_menu_item_open_photok">Photok\'u Aç</string>
