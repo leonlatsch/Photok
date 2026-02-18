@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.news.newfeatures.ui.model
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,11 +27,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,32 +61,31 @@ data class NewFeature(
     val title: String,
     val summary: String
 )
-
 private val NewFeatures = listOf(
     NewFeature(
         emoji = "\uD83D\uDDBC\uFE0F",
         title = "Brand New Image Viewer",
-        summary = "Enjoy a smoother browsing experience. We've completely rebuilt the image viewer and the details sheet from the ground up for better performance.",
+        summary = "A rebuilt image viewer and details sheet for a much smoother browsing experience.",
     ),
     NewFeature(
         emoji = "\uD83C\uDFAC",
-        title = "Upgraded Video Player",
-        summary = "Watch videos seamlessly with our completely redesigned player. We've added highly requested features, including the ability to mute, loop, and zoom in on videos.",
+        title = "Whole New Video Player",
+        summary = "A redesigned player offering seamless playback with new mute, loop, and zoom features.",
     ),
     NewFeature(
         emoji = "⚡",
         title = "Lightning-Fast Video Loading",
-        summary = "Say goodbye to waiting. Video buffering and skipping are now incredibly fast, giving you a vastly improved and uninterrupted viewing experience.",
+        summary = "Incredibly fast video buffering and skipping for an uninterrupted viewing experience.",
     ),
     NewFeature(
         emoji = "✨",
         title = "Crisper, Clearer Thumbnails",
-        summary = "Thumbnails now look significantly sharper. We've upgraded the resolution while keeping file sizes perfectly optimized, so you get amazing visual quality without taking up extra space.",
+        summary = "Sharper, higher-resolution thumbnails perfectly optimized to keep file sizes small.",
     ),
     NewFeature(
         emoji = "\uD83D\uDCC1",
         title = "Quick Add to Albums",
-        summary = "Organizing your media just got easier. You can now add photos directly to your albums right from the image viewer.",
+        summary = "Easily add photos directly to your albums right from the image viewer.",
     ),
 )
 
@@ -101,6 +108,7 @@ fun NewFeaturesSheet(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
+                    .verticalScroll(rememberScrollState())
                     .padding(20.dp)
                     .fillMaxWidth()
             ) {
@@ -142,14 +150,33 @@ fun NewFeaturesSheet(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                for (feature in NewFeatures) {
-                    NewFeatureRow(
-                        feature = feature,
-                    )
+                Card(
+                    shape = RoundedCornerShape(24.dp),
+                    border = BorderStroke(width = DividerDefaults.Thickness, color = MaterialTheme.colorScheme.outlineVariant),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp)
+                    ) {
+                        for (feature in NewFeatures) {
+                            NewFeatureRow(
+                                feature = feature,
+                            )
 
-                    if (feature != NewFeatures.last()) {
-                        Spacer(modifier = Modifier.height(10.dp))
+                            if (feature != NewFeatures.last()) {
+                                Spacer(modifier = Modifier.height(5.dp))
+                                HorizontalDivider()
+                                Spacer(modifier = Modifier.height(5.dp))
+                            }
+                        }
                     }
+                }
+
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = stringResource(R.string.news_view_changelog)
+                    )
                 }
             }
         }
