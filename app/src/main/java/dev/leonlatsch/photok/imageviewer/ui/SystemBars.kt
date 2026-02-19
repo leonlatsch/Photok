@@ -33,6 +33,15 @@ fun ImageViewerSystemBarsController(
     val window = activity.window
 
     DisposableEffect(visible) {
+        val previousStatusColor = window.statusBarColor
+        val previousNavColor = window.navigationBarColor
+        val previousVisibility = window.decorView.systemUiVisibility
+        val previousAppearance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.systemBarsAppearance ?: 0
+        } else {
+            0
+        }
+
         window.forceLightSystemBarIcons()
 
         // OEM / edge-to-edge safety net
@@ -47,6 +56,22 @@ fun ImageViewerSystemBarsController(
 
         onDispose {
             window.showSystemBars()
+
+            // restore colors
+            window.statusBarColor = previousStatusColor
+            window.navigationBarColor = previousNavColor
+
+            // restore appearance
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.setSystemBarsAppearance(
+                    previousAppearance,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = previousVisibility
+            }
         }
     }
 }
