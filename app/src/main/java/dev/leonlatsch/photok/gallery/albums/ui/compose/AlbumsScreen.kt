@@ -32,6 +32,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,5 +76,7 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
 
             ImportSharedDialog()
         }
+
+        NewFeaturesSheet()
     }
 }

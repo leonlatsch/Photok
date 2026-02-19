@@ -31,13 +31,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
+import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
-import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
-import dev.leonlatsch.photok.gallery.components.AlbumPickerViewModel
-import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
-import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
@@ -119,5 +119,7 @@ fun GalleryScreen(
 
             ImportSharedDialog()
         }
+
+        NewFeaturesSheet()
     }
 }

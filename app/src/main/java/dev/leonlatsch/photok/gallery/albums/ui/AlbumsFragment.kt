@@ -29,11 +29,11 @@ import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
-import dev.leonlatsch.photok.news.newfeatures.ui.ShowNewsDialogUseCase
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import dev.leonlatsch.photok.ui.LocalFragment
@@ -54,9 +54,6 @@ class AlbumsFragment : Fragment() {
     @Inject
     lateinit var config: Config
 
-    @Inject
-    lateinit var showNewsDialog: ShowNewsDialogUseCase
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +63,7 @@ class AlbumsFragment : Fragment() {
             CompositionLocalProvider(
                 LocalEncryptedImageLoader provides encryptedImageLoader,
                 LocalFragment provides this@AlbumsFragment,
+                LocalConfig provides config,
             ) {
                 AlbumsScreen(viewModel)
             }
@@ -84,7 +82,5 @@ class AlbumsFragment : Fragment() {
                 albumsNavigator.navigate(event, findNavController())
             }
         }
-
-        showNewsDialog(parentFragmentManager)
     }
 }

@@ -47,8 +47,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.AppName
@@ -90,7 +88,7 @@ fun AboutScreen(
                         IconButton(
                             onClick = {
                                 fragment?.let {
-                                    NewFeaturesDialog().show(it.childFragmentManager)
+//                                    NewFeaturesDialog().show(it.childFragmentManager) TODO
                                 }
                             }
                         ) {

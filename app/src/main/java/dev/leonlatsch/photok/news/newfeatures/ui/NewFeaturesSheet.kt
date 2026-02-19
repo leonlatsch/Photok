@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.news.newfeatures.ui.model
+package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
@@ -41,9 +41,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +58,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -89,12 +97,28 @@ private val NewFeatures = listOf(
     ),
 )
 
+/**
+ * Increase for this Dialog to show on the next update.
+ * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
+ */
+const val FEATURE_VERSION_CODE = 12
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewFeaturesSheet(
-    visible: Boolean,
-    onDismissRequest: () -> Unit,
-) {
+fun NewFeaturesSheet() {
+    val config = LocalConfig.current
+
+    var visible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        config ?: return@LaunchedEffect
+
+        if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
+            visible = true
+            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
+        }
+    }
+
     if (visible) {
         val state = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
@@ -102,7 +126,7 @@ fun NewFeaturesSheet(
 
         ModalBottomSheet(
             sheetState = state,
-            onDismissRequest = onDismissRequest,
+            onDismissRequest = { visible = false },
             dragHandle = null,
         ) {
             Column(
@@ -152,7 +176,7 @@ fun NewFeaturesSheet(
 
                 Card(
                     shape = RoundedCornerShape(24.dp),
-                    border = BorderStroke(width = DividerDefaults.Thickness, color = MaterialTheme.colorScheme.outlineVariant),
+                    border = BorderStroke(width = DividerDefaults.Thickness, color = DividerDefaults.color),
                 ) {
                     Column(
                         modifier = Modifier.padding(12.dp)
@@ -171,8 +195,11 @@ fun NewFeaturesSheet(
                     }
                 }
 
+                val context = LocalContext.current
+                val changelogUrl = stringResource(R.string.news_changelog_url)
+
                 TextButton(
-                    onClick = {}
+                    onClick = { context.openUrl(changelogUrl) }
                 ) {
                     Text(
                         text = stringResource(R.string.news_view_changelog)
@@ -218,10 +245,7 @@ private fun NewFeatureRow(
 private fun Preview() {
     AppTheme() {
         Scaffold() {
-            NewFeaturesSheet(
-                visible = true,
-                onDismissRequest = {},
-            )
+            NewFeaturesSheet()
         }
     }
 }
