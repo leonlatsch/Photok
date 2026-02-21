@@ -77,6 +77,7 @@ data class ImageViewerUiState(
         ConfirmExport,
         MoreMenu,
         AlbumPicker,
+        DetailsSheet
     }
 }
 
