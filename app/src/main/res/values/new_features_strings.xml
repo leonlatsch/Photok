@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2020-2026 Leon Latsch
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+    <string name="release_title_1">A Completely New Gallery Experience</string>
+    <string name="release_summary_1">We’ve rebuilt full-screen browsing from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
+
+    <string name="release_title_2">Major Video Performance Boost</string>
+    <string name="release_summary_2">Videos now start faster, buffer smarter, and skip instantly. Playback feels noticeably smoother — especially on longer clips.</string>
+
+    <string name="release_title_3">Sharper Thumbnails</string>
+    <string name="release_summary_3">Crisper previews with better clarity — without increasing file size. Your gallery just looks better.</string>
+
+    <string name="release_title_4">Quick Add to Albums</string>
+    <string name="release_summary_4">Add photos to albums directly while viewing them full screen. No more jumping back and forth.</string>
+
+</resources>

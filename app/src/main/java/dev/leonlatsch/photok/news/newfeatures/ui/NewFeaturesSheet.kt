@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -60,7 +62,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
@@ -73,35 +74,30 @@ import kotlinx.coroutines.launch
 
 
 data class NewFeature(
-    val emoji: String,
-    val title: String,
-    val summary: String
+    val image: Int,
+    val title: Int,
+    val summary: Int
 )
 private val NewFeatures = listOf(
     NewFeature(
-        emoji = "\uD83D\uDDBC\uFE0F",
-        title = "Brand New Image Viewer",
-        summary = "A rebuilt image viewer and details sheet for a much smoother browsing experience.",
+        image = R.drawable.ic_image,
+        title = R.string.release_title_1,
+        summary = R.string.release_summary_1,
     ),
     NewFeature(
-        emoji = "\uD83C\uDFAC",
-        title = "Whole New Video Player",
-        summary = "A redesigned player offering seamless playback with new mute, loop, and zoom features.",
+        image = R.drawable.ic_video_library,
+        title = R.string.release_title_2,
+        summary = R.string.release_summary_2,
     ),
     NewFeature(
-        emoji = "⚡",
-        title = "Lightning-Fast Video Loading",
-        summary = "Incredibly fast video buffering and skipping for an uninterrupted viewing experience.",
+        image = R.drawable.ic_gallery_thumbnail,
+        title = R.string.release_title_3,
+        summary = R.string.release_summary_3,
     ),
     NewFeature(
-        emoji = "✨",
-        title = "Crisper, Clearer Thumbnails",
-        summary = "Sharper, higher-resolution thumbnails perfectly optimized to keep file sizes small.",
-    ),
-    NewFeature(
-        emoji = "\uD83D\uDCC1",
-        title = "Quick Add to Albums",
-        summary = "Easily add photos directly to your albums right from the image viewer.",
+        image = R.drawable.ic_folder,
+        title = R.string.release_title_4,
+        summary = R.string.release_summary_4,
     ),
 )
 
@@ -231,19 +227,20 @@ private fun NewFeatureRow(
     Row(
         modifier = modifier.fillMaxWidth()
     ) {
-        Text(
-            text = feature.emoji,
+        Icon(
+            painter = painterResource(feature.image),
+            contentDescription = null,
         )
 
         Spacer(modifier = Modifier.width(10.dp))
 
         Column() {
             Text(
-                text = feature.title,
+                text = stringResource(feature.title),
                 fontWeight = FontWeight.Bold,
             )
             Text(
-                text = feature.summary,
+                text = stringResource(feature.summary),
                 color = MaterialTheme.colorScheme.outline,
                 fontSize = 15.sp,
             )
@@ -253,9 +250,8 @@ private fun NewFeatureRow(
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(showSystemUi = true)
-@Preview(showSystemUi = true, device = Devices.NEXUS_5)
-@PreviewScreenSizes
+@Preview(showSystemUi = true, locale = "de")
+@Preview(showSystemUi = true, device = Devices.NEXUS_5, locale = "en", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview() {
     AppTheme() {
