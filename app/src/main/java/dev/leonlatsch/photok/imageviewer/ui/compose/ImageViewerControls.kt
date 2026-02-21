@@ -290,8 +290,6 @@ private fun MoreMenu(
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var showDetailsSheet by remember { mutableStateOf(false) }
-
     RoundedDropdownMenu(
         expanded = visible,
         onDismissRequest = onDismissRequest,
@@ -310,8 +308,7 @@ private fun MoreMenu(
                 )
             },
             onClick = {
-                onDismissRequest()
-                showDetailsSheet = true
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
             }
         )
         if (currentItem is ImageViewerItem.Video) {
@@ -354,8 +351,10 @@ private fun MoreMenu(
 
     currentItem?.let {
         ImageDetailsSheet(
-            visible = showDetailsSheet,
-            onDismissRequest = { showDetailsSheet = false },
+            visible = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.DetailsSheet,
+            onDismissRequest = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+            },
             photo = it.photo
         )
     }
