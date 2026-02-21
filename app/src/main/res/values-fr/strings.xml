@@ -38,6 +38,7 @@
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
     <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_continue">Continue</string><!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importation en cours</string>
@@ -267,18 +268,6 @@
     <string name="news_new_in_title">Nouveautés dans</string>
     <string name="news_view_changelog">Voir le journal des modifications</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <string name="news_title_1">Improved Video Player</string> <!-- TODO -->
-    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string> <!-- TODO -->
-
-    <string name="news_title_2">Better Photo Browsing and Sorting</string> <!-- TODO -->
-    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string> <!-- TODO -->
-
-    <string name="news_title_3">Refined Settings UI</string> <!-- TODO -->
-    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string> <!-- TODO -->
-
-    <string name="news_title_4">Translations and Stability Fixes</string> <!-- TODO -->
-    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string> <!-- TODO -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>

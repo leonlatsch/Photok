@@ -37,6 +37,7 @@
     <string name="common_empty">空</string>
     <string name="common_rename">重命名</string>
     <string name="common_try_again">重试</string>
+    <string name="common_continue">Continue</string><!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
@@ -265,18 +266,6 @@
     <string name="news_new_in_title">新功能</string>
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <string name="news_title_1">完善视频播放器</string>
-    <string name="news_summary_1">升级视频播放器到新的 Media3 API。</string>
-
-    <string name="news_title_2">更好的照片浏览和排序</string>
-    <string name="news_summary_2">改进了图片浏览性能，现在可以按最后修改日期对照片排序。</string>
-
-    <string name="news_title_3">改善设置用户界面</string>
-    <string name="news_summary_3">重新设计了设置屏幕匹配进行中的设计重构。</string>
-
-    <string name="news_title_4">翻译和稳定性修复</string>
-    <string name="news_summary_4">更新了翻译， 多处修复改善整体可靠性。</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>

@@ -38,6 +38,7 @@
     <string name="common_empty">خالی</string>
     <string name="common_rename">نام بدلیں</string>
     <string name="common_try_again">دوبارہ کوشش کریں</string>
+    <string name="common_continue">Continue</string><!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>
@@ -264,18 +265,6 @@
     <string name="news_new_in_title">نیا کیا ہے</string>
     <string name="news_view_changelog">تبدیلیوں کی لسٹ دیکھیں</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <string name="news_title_1">بہتر ویڈیو پلیئر</string>
-    <string name="news_summary_1">ویڈیو پلیئر کو پہلے سے بہتر بنا دیا گیا ہے۔</string>
-
-    <string name="news_title_2">فوٹو دیکھنا اور ترتیب دینا آسان</string>
-    <string name="news_summary_2">اب تصاویر تیزی سے کھلیں گی اور آپ انہیں تاریخ کے حساب سے لگا سکتے ہیں۔</string>
-
-    <string name="news_title_3">نئی سیٹنگز</string>
-    <string name="news_summary_3">سیٹنگز کے پیج کو نیا اور خوبصورت ڈیزائن دیا گیا ہے۔</string>
-
-    <string name="news_title_4">ترجمہ اور بہتری</string>
-    <string name="news_summary_4">نئے تراجم شامل کیے گئے ہیں اور ایپ کو پہلے سے زیادہ پکا بنایا گیا ہے۔</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">واپسی کا مینو</string>

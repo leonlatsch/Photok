@@ -35,6 +35,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -47,8 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesDialog
-import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.AppName
@@ -66,6 +69,8 @@ fun AboutScreen(
 ) {
     val context = LocalContext.current
     val fragment = LocalFragment.current
+
+    var showNewsDialog by remember { mutableStateOf(false) }
 
     AppTheme {
         Scaffold(
@@ -90,7 +95,7 @@ fun AboutScreen(
                         IconButton(
                             onClick = {
                                 fragment?.let {
-                                    NewFeaturesDialog().show(it.childFragmentManager)
+                                    showNewsDialog = true
                                 }
                             }
                         ) {
@@ -181,6 +186,12 @@ fun AboutScreen(
                 }
             }
         }
+
+
+        NewFeaturesSheet(
+            overrideShow = showNewsDialog,
+            onDismissOverride = { showNewsDialog = false},
+        )
     }
 }
 
