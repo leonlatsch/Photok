@@ -37,7 +37,7 @@
     <string name="common_empty">Kosong</string>
     <string name="common_rename">Ubah Nama</string>
     <string name="common_try_again">Coba Lagi</string>
-    <string name="common_continue">Continue</string><!-- TODO -->
+    <string name="common_continue">Lanjutkan</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>

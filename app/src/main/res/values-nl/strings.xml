@@ -20,7 +20,7 @@
     <string name="common_empty">Empty</string> <!-- TODO -->
     <string name="common_rename">Rename</string> <!-- TODO -->
     <string name="common_try_again">Try again</string> <!-- TODO -->
-    <string name="common_continue">Continue</string><!-- TODO -->
+    <string name="common_continue">Doorgaan</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Bestand(en) importeren</string>

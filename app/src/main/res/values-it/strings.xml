@@ -37,7 +37,7 @@
     <string name="common_empty">Vuoto</string>
     <string name="common_rename">Rinomina</string>
     <string name="common_try_again">Riprova</string>
-    <string name="common_continue">Continue</string><!-- TODO -->
+    <string name="common_continue">Continua</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importazione file in corso</string>
