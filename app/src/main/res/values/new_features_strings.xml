@@ -14,18 +14,18 @@
   ~   limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="release_title_1">A Completely New Gallery Experience</string>
-    <string name="release_summary_1">The full-screen browsing was rebuild from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
+    <string name="release_title_1" tools:ignore="MissingTranslation">A Completely New Gallery Experience</string>
+    <string name="release_summary_1" tools:ignore="MissingTranslation">The full-screen browsing was rebuild from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
 
-    <string name="release_title_2">Major Video Performance Boost</string>
-    <string name="release_summary_2">Videos now start faster, buffer smarter, and skip instantly. Playback feels noticeably smoother — especially on longer clips.</string>
+    <string name="release_title_2" tools:ignore="MissingTranslation">Major Video Performance Boost</string>
+    <string name="release_summary_2" tools:ignore="MissingTranslation">Videos now start faster, buffer smarter, and skip instantly. Playback feels noticeably smoother — especially on longer clips.</string>
 
-    <string name="release_title_3">Sharper Thumbnails</string>
-    <string name="release_summary_3">Crisper previews with better clarity — without increasing file size. Your gallery just looks better.</string>
+    <string name="release_title_3" tools:ignore="MissingTranslation">Sharper Thumbnails</string>
+    <string name="release_summary_3" tools:ignore="MissingTranslation">Crisper previews with better clarity — without increasing file size. Your gallery just looks better.</string>
 
-    <string name="release_title_4">Quick Add to Albums</string>
-    <string name="release_summary_4">Add photos to albums directly while viewing them full screen. No more jumping back and forth.</string>
+    <string name="release_title_4" tools:ignore="MissingTranslation">Quick Add to Albums</string>
+    <string name="release_summary_4" tools:ignore="MissingTranslation">Add photos to albums directly while viewing them full screen. No more jumping back and forth.</string>
 
 </resources>
