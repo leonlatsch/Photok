@@ -24,6 +24,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
+import dev.leonlatsch.photok.other.DeviceMotionDetector
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
@@ -54,6 +55,9 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     @Inject
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
 
+    @Inject
+    lateinit var deviceMotionDetector: DeviceMotionDetector
+
     val state = MutableStateFlow(ApplicationState.LOCKED)
 
 
@@ -63,6 +67,21 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     override fun onCreate() {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(deviceMotionDetector)
+
+        deviceMotionDetector.setListener(object : DeviceMotionDetector.Listener {
+            override fun onShake() {
+                if (state.value == ApplicationState.LOCKED) return
+                lockApp()
+            }
+
+            override fun onFlip(isFaceUp: Boolean) {
+                if (state.value == ApplicationState.LOCKED) return
+                if (!isFaceUp) {
+                    lockApp()
+                }
+            }
+        })
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
