@@ -37,6 +37,7 @@
     <string name="common_empty">Vuoto</string>
     <string name="common_rename">Rinomina</string>
     <string name="common_try_again">Riprova</string>
+    <string name="common_continue">Continua</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importazione file in corso</string>
@@ -93,12 +94,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Dettagli</string>
-    <string name="view_photo_detail_file_name_label">Nome file:</string>
-    <string name="view_photo_detail_import_at_label">Importato il:</string>
-    <string name="view_photo_detail_file_type_label">Tipo di file:</string>
-    <string name="view_photo_detail_size_label">Dimensione file:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string> <!-- TODO -->
-    <string name="view_photo_play_button_description">Riproduci video</string>
+    <string name="view_photo_detail_file_name_label">Nome file</string>
+    <string name="view_photo_detail_import_at_label">Importato il</string>
+    <string name="view_photo_detail_file_type_label">Tipo di file</string>
+    <string name="view_photo_detail_size_label">Dimensione file</string>
+    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Blocca</string>
@@ -265,18 +267,6 @@
     <string name="news_view_changelog">Visualizza Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Improved Video Player</string> <!-- TODO -->
-    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string> <!-- TODO -->
-
-    <string name="news_title_2">Better Photo Browsing and Sorting</string> <!-- TODO -->
-    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string> <!-- TODO -->
-
-    <string name="news_title_3">Refined Settings UI</string> <!-- TODO -->
-    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string> <!-- TODO -->
-
-    <string name="news_title_4">Translations and Stability Fixes</string> <!-- TODO -->
-    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string> <!-- TODO -->
-
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu di ripristino</string>
     <string name="recovery_menu_item_open_photok">Apri Photok</string>
@@ -338,4 +328,10 @@
     <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
 
     <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

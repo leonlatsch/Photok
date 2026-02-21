@@ -48,12 +48,13 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 ![Dutch](https://img.shields.io/badge/Dutch-66%25-orange)
 ![French](https://img.shields.io/badge/French-76%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
+![Indonesian](https://img.shields.io/badge/Indonesian-97%25-yellow)
 ![Italian](https://img.shields.io/badge/Italian-92%25-yellow)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-64%25-orange)
-![Russian](https://img.shields.io/badge/Russian-75%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-78%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
+![Russian](https://img.shields.io/badge/Russian-76%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-79%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-97%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)

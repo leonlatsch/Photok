@@ -81,13 +81,6 @@ class Config(context: Context) {
         set(value) = putString(SYSTEM_DESIGN, value.value)
 
     /**
-     * Determines if the full screen photo view, should hide the system ui at start.
-     */
-    var galleryAutoFullscreen: Boolean
-        get() = getBoolean(GALLERY_AUTO_FULLSCREEN, GALLERY_AUTO_FULLSCREEN_DEFAULT)
-        set(value) = putBoolean(GALLERY_AUTO_FULLSCREEN, value)
-
-    /**
      * Determines the start page of the gallery.
      */
     var galleryStartPage: StartPage
@@ -152,6 +145,14 @@ class Config(context: Context) {
         get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT)
         set(value) = putBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, value)
 
+    var imageViewerLoopVideos: Boolean
+        get() = getBoolean(IMAGE_VIEWER_LOOP_VIDEO, IMAGE_VIEWER_LOOP_VIDEO_DEFAULT)
+        set(value) = putBoolean(IMAGE_VIEWER_LOOP_VIDEO, value)
+
+    var imageViewerMuteVideoPlayer: Boolean
+        get() = getBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, IMAGE_VIEWER_MUTE_VIDEO_PLAYER_DEFAULT)
+        set(value) = putBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, value)
+
     // region put/get methods
 
     fun getString(key: String, default: String?) = preferences.getString(key, default)
@@ -215,9 +216,6 @@ class Config(context: Context) {
         const val SYSTEM_DESIGN = "system^design"
         val SYSTEM_DESIGN_DEFAULT = SystemDesignEnum.System
 
-        const val GALLERY_AUTO_FULLSCREEN = "gallery^fullscreen.auto"
-        const val GALLERY_AUTO_FULLSCREEN_DEFAULT = true
-
         const val GALLERY_START_PAGE = "gallery^startPage"
         val GALLERY_START_PAGE_DEFAULT = StartPage.AllFiles
 
@@ -244,5 +242,11 @@ class Config(context: Context) {
 
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED = "security^biometricAuthenticationEnabled"
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT = false
+
+        const val IMAGE_VIEWER_LOOP_VIDEO = "imageViewer^loopVideo"
+        const val IMAGE_VIEWER_LOOP_VIDEO_DEFAULT = false
+
+        const val IMAGE_VIEWER_MUTE_VIDEO_PLAYER = "imageViewer^muteVideoPlayer"
+        const val IMAGE_VIEWER_MUTE_VIDEO_PLAYER_DEFAULT = false
     }
 }

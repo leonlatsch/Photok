@@ -37,6 +37,7 @@
     <string name="common_empty">Empty</string>
     <string name="common_rename">Rename</string>
     <string name="common_try_again">Try again</string>
+    <string name="common_continue">Continue</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>
@@ -93,12 +94,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Details</string>
-    <string name="view_photo_detail_file_name_label">Filename:</string>
-    <string name="view_photo_detail_import_at_label">Imported at:</string>
-    <string name="view_photo_detail_file_type_label">File Type:</string>
-    <string name="view_photo_detail_size_label">File size:</string>
-    <string name="view_photo_detail_last_modified">Last modified:</string>
-    <string name="view_photo_play_button_description">Play Video</string>
+    <string name="view_photo_detail_file_name_label">Filename</string>
+    <string name="view_photo_detail_import_at_label">Imported at</string>
+    <string name="view_photo_detail_file_type_label">File Type</string>
+    <string name="view_photo_detail_size_label">File size</string>
+    <string name="view_photo_detail_last_modified">Last modified</string>
+    <string name="view_photo_loop_video_disabled">Looping disabled</string>
+    <string name="view_photo_loop_video_enabled">Looping enabled</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Lock</string>
@@ -265,18 +267,6 @@
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Improved Video Player</string>
-    <string name="news_summary_1">The video player was upgraded to newer Media3 API.</string>
-
-    <string name="news_title_2">Better Photo Browsing and Sorting</string>
-    <string name="news_summary_2">Image viewing performance was improved and photos can now be sorted by last modified date.</string>
-
-    <string name="news_title_3">Refined Settings UI</string>
-    <string name="news_summary_3">The settings screen was redesigned to match the ongoing design overhaul.</string>
-
-    <string name="news_title_4">Translations and Stability Fixes</string>
-    <string name="news_summary_4">Updated translations and multiple fixes improve overall reliability.</string>
-
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string>
     <string name="recovery_menu_item_open_photok">Open Photok</string>
@@ -338,4 +328,10 @@
     <string name="sorting_field_last_modified">Last modified</string>
 
     <string name="sorting_restore_default">Restore Default</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pause</string>
+    <string name="video_player_mute">Mute</string>
+    <string name="video_player_unmute">Unmute</string>
 </resources>

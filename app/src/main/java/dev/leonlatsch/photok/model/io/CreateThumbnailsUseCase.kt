@@ -22,15 +22,21 @@ import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.imageloading.domain.ImageStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-/** Maximum size of the thumbnail in pixels */
-private const val THUMBNAIL_SIZE = 256
+/**
+ * Maximum size of the thumbnail in pixels
+ *
+ * Don't increase this any further. High impact on gallery scroll performance.
+ * This should be more than fine. We have 3 thumbnails each row.
+ * On a 1080p screen, this means each thumbnail will be around 360px. So 512px is more than enough.
+ */
+private const val THUMBNAIL_SIZE = 512
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -62,6 +68,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
                 outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName),
+                compressionPercent = 40,
             )
 
             // Video Preview
@@ -74,6 +81,7 @@ class CreateThumbnailsUseCase @Inject constructor(
                 imageStorage.execAndWrite(
                     imageRequest = videoPreviewRequest,
                     outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName),
+                    compressionPercent = 90,
                 )
             } else {
                 // Success if not a video

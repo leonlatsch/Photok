@@ -37,6 +37,7 @@
     <string name="common_empty">Kosong</string>
     <string name="common_rename">Ubah Nama</string>
     <string name="common_try_again">Coba Lagi</string>
+    <string name="common_continue">Lanjutkan</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>
@@ -93,12 +94,13 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Detail</string>
-    <string name="view_photo_detail_file_name_label">Nama file:</string>
-    <string name="view_photo_detail_import_at_label">Diimpor pada:</string>
-    <string name="view_photo_detail_file_type_label">Jenis file:</string>
-    <string name="view_photo_detail_size_label">Ukuran file:</string>
-    <string name="view_photo_detail_last_modified">Terakhir diubah:</string>
-    <string name="view_photo_play_button_description">Putar Video</string>
+    <string name="view_photo_detail_file_name_label">Nama file</string>
+    <string name="view_photo_detail_import_at_label">Diimpor pada</string>
+    <string name="view_photo_detail_file_type_label">Jenis file</string>
+    <string name="view_photo_detail_size_label">Ukuran file</string>
+    <string name="view_photo_detail_last_modified">Terakhir diubah</string>
+    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
+    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Kunci</string>
@@ -265,18 +267,6 @@
     <string name="news_view_changelog">Lihat Catatan Perubahan</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
-    <string name="news_title_1">Pemutar Video yang Ditingkatkan</string>
-    <string name="news_summary_1">Pemutar video ditingkatkan ke API Media3 yang lebih baru.</string>
-
-    <string name="news_title_2">Penjelajahan dan Pengurutan Foto yang Lebih Baik</string>
-    <string name="news_summary_2">Performa tampilan gambar ditingkatkan dan foto sekarang dapat diurutkan berdasarkan tanggal modifikasi terakhir.</string>
-
-    <string name="news_title_3">UI Pengaturan yang Disempurnakan</string>
-    <string name="news_summary_3">Layar pengaturan didesain ulang agar sesuai dengan pembaruan desain yang sedang berlangsung.</string>
-
-    <string name="news_title_4">Perbaikan Terjemahan dan Stabilitas</string>
-    <string name="news_summary_4">Terjemahan yang diperbarui dan berbagai perbaikan meningkatkan keandalan secara keseluruhan.</string>
-
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu Pemulihan</string>
     <string name="recovery_menu_item_open_photok">Buka Photok</string>
@@ -337,4 +327,10 @@
     <string name="sorting_field_last_modified">Terakhir diubah</string>
 
     <string name="sorting_restore_default">Pulihkan Bawaan</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Play</string> <!-- TODO -->
+    <string name="video_player_pause">Pause</string> <!-- TODO -->
+    <string name="video_player_mute">Mute</string> <!-- TODO -->
+    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
 </resources>

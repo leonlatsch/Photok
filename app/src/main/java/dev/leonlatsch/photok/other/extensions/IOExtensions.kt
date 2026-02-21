@@ -38,17 +38,3 @@ fun InputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
 fun OutputStream.lazyClose() = GlobalScope.launch(Dispatchers.IO) {
     close()
 }
-
-/**
- * Skip bytes by reading them to a specific point.
- * This is needed in GCM because the Authorisation Tag wont match when bytes are really skipped.
- */
-fun CipherInputStream.forceSkip(bytesToSkip: Long): Long {
-    var processedBytes = 0L
-    while (processedBytes < bytesToSkip) {
-        read()
-        processedBytes++
-    }
-
-    return processedBytes
-}

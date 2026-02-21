@@ -27,5 +27,15 @@ enum class SortConfig(
     Album(
         fields = listOf(Sort.Field.LinkedAt, Sort.Field.LastModified, Sort.Field.FileName, Sort.Field.Size),
         default = Sort(field = Sort.Field.LinkedAt, Sort.Order.Desc),
-    ),
+    );
+
+    companion object {
+        fun defaultFor(albumUuid: String?): Sort {
+            return if (albumUuid != null) {
+                Album.default
+            } else {
+                Gallery.default
+            }
+        }
+    }
 }

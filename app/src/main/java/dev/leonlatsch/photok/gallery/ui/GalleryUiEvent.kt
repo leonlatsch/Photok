@@ -26,7 +26,6 @@ sealed interface GalleryUiEvent {
     data class OnDelete(val items: List<String>) : GalleryUiEvent
     data class OnExport(val items: List<String>, val target: Uri?) : GalleryUiEvent
     data object OnAddToAlbum : GalleryUiEvent
-    data class OnAlbumSelected(val photoIds: List<String>, val albumId: String) : GalleryUiEvent
     data object CancelAlbumSelection : GalleryUiEvent
     data class OnImportChoice(val choice: ImportChoice) : GalleryUiEvent
     data class SortChanged(val sort: Sort) : GalleryUiEvent
