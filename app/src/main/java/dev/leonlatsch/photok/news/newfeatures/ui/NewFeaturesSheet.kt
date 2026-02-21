@@ -120,7 +120,7 @@ fun NewFeaturesSheet() {
 
         if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
             visible = true
-//            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
+            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
         }
     }
 
