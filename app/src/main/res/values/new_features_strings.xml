@@ -17,7 +17,7 @@
 <resources>
 
     <string name="release_title_1">A Completely New Gallery Experience</string>
-    <string name="release_summary_1">We’ve rebuilt full-screen browsing from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
+    <string name="release_summary_1">The full-screen browsing was rebuild from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
 
     <string name="release_title_2">Major Video Performance Boost</string>
     <string name="release_summary_2">Videos now start faster, buffer smarter, and skip instantly. Playback feels noticeably smoother — especially on longer clips.</string>
