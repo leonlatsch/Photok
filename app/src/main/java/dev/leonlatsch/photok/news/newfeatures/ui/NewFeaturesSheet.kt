@@ -54,7 +54,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -107,11 +106,10 @@ const val FEATURE_VERSION_CODE = 12
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewFeaturesSheet() {
+fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Unit = {}) {
     val config = LocalConfig.current
 
-    val isPreview = LocalInspectionMode.current
-    var visible by remember { mutableStateOf(isPreview) }
+    var visible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         config ?: return@LaunchedEffect
@@ -122,7 +120,7 @@ fun NewFeaturesSheet() {
         }
     }
 
-    if (visible) {
+    if (visible || overrideShow) {
         val state = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
         )
@@ -202,6 +200,7 @@ fun NewFeaturesSheet() {
                                     state.hide()
                                 }.invokeOnCompletion {
                                     visible = false
+                                    onDismissOverride()
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -252,6 +251,6 @@ private fun NewFeatureRow(
 @Composable
 private fun Preview() {
     AppTheme() {
-        NewFeaturesSheet()
+        NewFeaturesSheet(overrideShow = true)
     }
 }
