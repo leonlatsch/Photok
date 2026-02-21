@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_A
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN_DEFAULT
 import dev.leonlatsch.photok.settings.domain.models.LockTimeout
+import dev.leonlatsch.photok.settings.domain.models.PanicLockMotion
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
@@ -144,6 +145,13 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 title = R.string.settings_security_hide_app_title,
                 summary = R.string.settings_security_hide_app_summary,
             ),
+            Preference.Enum(
+                key = Config.SECURITY_PANIC_LOCK,
+                icon = R.drawable.ic_mobile_alert,
+                title = R.string.settings_pro_panic_lock_title,
+                default = PanicLockMotion.None,
+                possibleValues = PanicLockMotion.entries,
+            )
         ),
     ),
     PreferenceSection(
