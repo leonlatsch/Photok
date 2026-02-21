@@ -20,6 +20,7 @@
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
     <string name="common_try_again">Tekrar deneyin</string>
+    <string name="common_continue">Continue</string><!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>

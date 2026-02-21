@@ -38,6 +38,7 @@
     <string name="common_empty">Leer</string>
     <string name="common_rename">Umbenennen</string>
     <string name="common_try_again">Erneut versuchen</string>
+    <string name="common_continue">Weiter</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>

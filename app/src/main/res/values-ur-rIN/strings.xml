@@ -38,6 +38,7 @@
     <string name="common_empty">خالی</string>
     <string name="common_rename">نام بدلیں</string>
     <string name="common_try_again">دوبارہ کوشش کریں</string>
+    <string name="common_continue">Continue</string><!-- TODO -->
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>

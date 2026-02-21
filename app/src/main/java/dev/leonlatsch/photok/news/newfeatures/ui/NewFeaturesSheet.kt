@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.news.newfeatures.ui
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -60,8 +59,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
@@ -209,7 +207,7 @@ fun NewFeaturesSheet() {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
-                                text = stringResource(R.string.common_ok)
+                                text = stringResource(R.string.common_continue)
                             )
                         }
                     }
@@ -250,8 +248,7 @@ private fun NewFeatureRow(
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(showSystemUi = true, locale = "de")
-@Preview(showSystemUi = true, device = Devices.NEXUS_5, locale = "en", uiMode = UI_MODE_NIGHT_YES)
+@PreviewScreenSizes
 @Composable
 private fun Preview() {
     AppTheme() {
