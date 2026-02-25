@@ -101,6 +101,7 @@
     <string name="view_photo_detail_last_modified">Last modified</string>
     <string name="view_photo_loop_video_disabled">Looping disabled</string>
     <string name="view_photo_loop_video_enabled">Looping enabled</string>
+    <string name="view_photo_video_playback_speed">Playback speed</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Lock</string>

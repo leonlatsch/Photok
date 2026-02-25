@@ -102,6 +102,7 @@
     <string name="view_photo_detail_last_modified">Dernière modification</string>
     <string name="view_photo_loop_video_disabled">Affichage en boucle désactivé</string>
     <string name="view_photo_loop_video_enabled">Affichage en boucle activé</string>
+    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>
