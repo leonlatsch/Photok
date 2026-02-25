@@ -157,6 +157,9 @@ class Config(context: Context) {
     var imageViewerMuteVideoPlayer: Boolean
         get() = getBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, IMAGE_VIEWER_MUTE_VIDEO_PLAYER_DEFAULT)
         set(value) = putBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, value)
+    var imageViewerPlaybackSpeed: Float
+        get() = getFloat(IMAGE_VIEWER_PLAYBACK_SPEED, IMAGE_VIEWER_PLAYBACK_SPEED_DEFAULT)
+        set(value) = putFloat(IMAGE_VIEWER_PLAYBACK_SPEED, value)
 
     // region put/get methods
 
@@ -172,6 +175,8 @@ class Config(context: Context) {
     fun getLong(key: String, default: Long): Long = preferences.getLong(key, default)
 
     fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
+
+    fun getFloat(key: String, default: Float) = preferences.getFloat(key, default)
 
     fun putString(key: String, value: String?) {
         preferences.edit {
@@ -194,6 +199,12 @@ class Config(context: Context) {
     fun putLong(key: String, value: Long) {
         preferences.edit {
             putLong(key, value)
+        }
+    }
+
+    fun putFloat(key: String, value: Float) {
+        preferences.edit {
+            putFloat(key, value)
         }
     }
 
@@ -256,5 +267,8 @@ class Config(context: Context) {
 
         const val IMAGE_VIEWER_MUTE_VIDEO_PLAYER = "imageViewer^muteVideoPlayer"
         const val IMAGE_VIEWER_MUTE_VIDEO_PLAYER_DEFAULT = false
+
+        const val IMAGE_VIEWER_PLAYBACK_SPEED = "imageViewer^playbackSpeed"
+        const val IMAGE_VIEWER_PLAYBACK_SPEED_DEFAULT = 1f
     }
 }
