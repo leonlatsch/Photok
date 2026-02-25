@@ -30,66 +30,66 @@
     <string name="common_yes">Oui</string>
     <string name="common_no">Non</string>
     <string name="common_ok">OK</string>
-    <string name="common_are_you_sure">Êtes-vous sûr ?</string>
+    <string name="common_are_you_sure">Êtes-vous sûr?</string>
     <string name="common_bullet">•</string>
     <string name="common_more">Plus</string>
     <string name="common_cancel">Annuler</string>
     <string name="common_create">Créer</string>
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">Réessayer</string>
     <string name="common_continue">Continuer</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importation en cours</string>
-    <string name="import_permission_rationale">Photok a besoin d\'accéder à votre espace de stockage pour importer des fichiers.</string>
-    <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s) ?</string>
+    <string name="import_importing">Importation de fichier(s)</string>
+    <string name="import_permission_rationale">Photok a besoin d\'accéder à votre stockage pour importer des fichiers.</string>
+    <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Créez votre mot de passe</string>
-    <string name="setup_enter_password">Entrer le mot de passe</string>
+    <string name="setup_enter_password">Entrez votre mot de passe</string>
     <string name="setup_confirm_password">Confirmer votre mot de passe</string>
     <string name="setup_password_strength_label">Force du mot de passe :</string>
     <string name="setup_button">Créer</string>
     <string name="setup_password_strength_weak">Faible</string>
-    <string name="setup_password_strength_moderate">Modérée</string>
-    <string name="setup_password_strength_strong">Forte</string>
+    <string name="setup_password_strength_moderate">Modéré</string>
+    <string name="setup_password_strength_strong">Fort</string>
     <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
     <string name="setupSetup">Installation</string>
 
     <!-- UNLOCK -->
-    <string name="unlock_title">Déverrouiller votre coffre-fort</string>
+    <string name="unlock_title">Déverrouillez votre coffre-fort</string>
     <string name="unlock_enter_password">Entrer le mot de passe</string>
     <string name="unlock_button">Déverrouiller</string>
-    <string name="unlock_wrong_password">\u26A0 Mauvais mot de passe</string>
+    <string name="unlock_wrong_password">\u26A0 Mot de passe incorrect</string>
 
     <!-- GALLERY -->
     <string name="gallery_placeholder">Il n\'y a aucun fichier dans votre coffre-fort</string>
     <string name="gallery_all_photos_label">Tous les fichiers</string>
     <string name="gallery_albums_label">Albums</string>
-    <string name="gallery_albums_placeholder">Créer votre premier album</string>
-    <string name="gallery_albums_create_title">Créer un nouvel album</string>
+    <string name="gallery_albums_placeholder">Créez votre premier album</string>
+    <string name="gallery_albums_create_title">Créer un album</string>
     <string name="gallery_albums_rename_title">Renommer l\'album</string>
     <string name="gallery_albums_create_placeholder">Travail scolaire ;)</string>
     <string name="gallery_albums_select_title">Selectionner un album</string>
     <string name="gallery_albums_deleted">Album supprimé</string>
     <string name="gallery_albums_photos_added">%1$d élément(s) ajouté(s)</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Nouvel album</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importer</string>
+    <string name="import_menu_new_files_title">Importer de nouveaux fichiers</string>
+    <string name="import_menu_new_files_description">Importer des photos et vidéos depuis votre galerie.</string>
+    <string name="import_menu_restore_title">Restaurer une sauvegarde</string>
+    <string name="import_menu_restore_description">Restaurer une savegarde Photok. Les fichiers seront ajoutés à vos fichiers actuels.</string>
+    <string name="import_menu_delete_warning">Les fichiers importés seront supprimés</string>
+    <string name="import_menu_album_tooltip">Les fichiers seront ajoutés à \"%s\" après l\'importation</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fermer</string>
     <string name="process_abort">Annuler</string>
     <string name="process_finished">Terminé</string>
-    <string name="process_initialize">Préparation…</string>
+    <string name="process_initialize">Préparation en cours…</string>
     <string name="process_aborted">Annulé</string>
     <string name="process_failures_occurred">\u26A0 Certains éléments n\'ont pas pu être traités</string>
 
@@ -97,11 +97,11 @@
     <string name="view_photo_detail_title">Détails</string>
     <string name="view_photo_detail_file_name_label">Nom du fichier</string>
     <string name="view_photo_detail_import_at_label">Importé le</string>
-    <string name="view_photo_detail_file_type_label">Type de fichier</string>
+    <string name="view_photo_detail_file_type_label">Type du fichier</string>
     <string name="view_photo_detail_size_label">Taille du fichier</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Dernière modification</string>
+    <string name="view_photo_loop_video_disabled">Affichage en boucle désactivé</string>
+    <string name="view_photo_loop_video_enabled">Affichage en boucle activé</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>
@@ -113,20 +113,20 @@
     <string name="menu_ms_export">Exporter</string>
     <string name="menu_ms_info">%1$d élément(s) sélectionné(s)</string>
     <string name="menu_ms_add_to_album">Ajouter à un album</string>
-    <string name="menu_ms_remove_from_album">Enlever de l\'album</string>
+    <string name="menu_ms_remove_from_album">Retirer de l\'album</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Voulez-vous vraiment <b>supprimer</b> %1$d fichier(s) ?</string>
-    <string name="delete_are_you_sure_this">Voulez-vous vraiment <b>supprimer</b> ce fichier ?</string>
-    <string name="delete_deleting">Suppression en cours…</string>
+    <string name="delete_are_you_sure">Voulez-vous vraiment <b>supprimer</b> %1$d fichier(s)?</string>
+    <string name="delete_are_you_sure_this">Voulez-vous vraiment <b>supprimer</b> ce fichier?</string>
+    <string name="delete_deleting">Suppression des fichier(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Voulez-vous vraiment <b>exporter</b> %1$d fichier(s) vers votre galerie ?</string>
-    <string name="export_are_you_sure_this">Voulez-vous vraiment <b>exporter</b> ce fichier vers votre galerie ?</string>
-    <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer ?</string>
-    <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer ?</string>
+    <string name="export_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie?</string>
+    <string name="export_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie?</string>
+    <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer?</string>
+    <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer?</string>
     <string name="export_and_delete_finished">Exporté et supprimé</string>
-    <string name="export_exporting">Exportation en cours…</string>
+    <string name="export_exporting">Exportation des fichier(s)…</string>
     <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour exporter des fichiers.</string>
     <string name="export_finished">Exporté</string>
 
@@ -135,10 +135,10 @@
     <string name="about_developed_by">Développé par :</string>
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
-    <string name="about_third_party">Logiciel tiers</string>
+    <string name="about_third_party">Logiciels tiers</string>
     <string name="about_privacy_policy">Politique de confidentialité</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
-    <string name="about_menu_news">Nouvelles</string>
+    <string name="about_menu_news">Actualités</string>
 
 
     <!-- SETTINGS -->
@@ -152,28 +152,28 @@
 
     <string name="settings_category_gallery">Galerie</string>
     <string name="settings_gallery_auto_fullscreen_title">Plein écran automatique</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran lors de l\'ouverture d\'un fichier</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran à l\'ouverture d\'un fichier</string>
+    <string name="settings_gallery_start_page_title">Page de démarrage</string>
 
     <string name="settings_category_security">Sécurité</string>
     <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
-    <string name="settings_security_allow_screenshots_summary">Autorise la capture d\'écran. Nécessite un redémarrage.</string>
+    <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran. Nécessite un redémarrage.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
-    <string name="settings_security_change_password_summary">Définir un nouveau mot de passe</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_change_password_summary">Changer votre mot de passe</string>
+    <string name="settings_security_biometric_title">Déverouillage biométrique</string>
+    <string name="settings_security_biometric_summary">Déverrouiller Photok grâce à l\'authentification biométrique.</string>
+    <string name="settings_security_biometric_not_available">Déverrouillage biométrique non disponible</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
-    <string name="settings_security_timeout_summary">Se verrouille en arrière-plan après un certain temps</string>
+    <string name="settings_security_timeout_summary">Verrouillage automatique après un certain délai en arrière-plan</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>
-    <string name="settings_security_timeout_one_minute">1 Minute</string>
-    <string name="settings_security_timeout_two_minute">2 Minutes</string>
-    <string name="settings_security_timeout_five_minute">5 Minutes</string>
-    <string name="settings_security_timeout_ten_minute">10 Minutes</string>
+    <string name="settings_security_timeout_one_minute">1 minute</string>
+    <string name="settings_security_timeout_two_minute">2 minutes</string>
+    <string name="settings_security_timeout_five_minute">5 minutes</string>
+    <string name="settings_security_timeout_ten_minute">10 minutes</string>
     <string name="settings_security_timeout_never">Jamais</string>
     <string name="settings_security_launch_code_title">Code de démarrage secret</string>
-    <string name="settings_security_launch_code_summary">Code secret pour démarrer Photok à partir de l\'application téléphone</string>
-    <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok</string>
+    <string name="settings_security_launch_code_summary">Code secret pour lancer Photok à partir du clavier téléphonique.</string>
+    <string name="settings_security_launch_code_message">Entrez *#*#[votre code]#*#* dans le clavier téléphonique pour lancer Photok.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Masquer l\'application</string>
@@ -183,7 +183,7 @@
     <string name="settings_category_advanced_summary">Utiliser avec précaution</string>
     <string name="settings_advanced_reset_title">Réinitialiser le coffre-fort</string>
     <string name="settings_advanced_reset_summary">Effacer les données et réinitialiser le mot de passe</string>
-    <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort ? Toutes les données seront perdues !</string>
+    <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort? Toutes les données seront perdues!</string>
     <string name="settings_advanced_backup_title">Sauvegarde</string>
     <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
     <string name="settings_advanced_delete_imported_title">Supprimer les fichiers importés</string>
@@ -192,12 +192,12 @@
     <string name="settings_advanced_delete_exported_summary">Supprimer les fichiers après les avoir exportés</string>
 
     <string name="settings_other_title">Autre</string>
-    <string name="settings_other_feedback_title">Retours</string>
+    <string name="settings_other_feedback_title">Rétroaction</string>
     <string name="settings_other_feedback_summary">Envoyez-moi un e-mail avec des commentaires</string>
-    <string name="settings_other_feedback_mail_subject">Photok Feedback</string>
+    <string name="settings_other_feedback_mail_subject">Commentaires à Photok</string>
     <string name="settings_other_feedback_mail_body">Donnez votre avis sur Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donner</string>
+    <string name="settings_other_donate_title">Faire un don</string>
     <string name="settings_other_donate_summary">Soutenir le développement de Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Code source</string>
@@ -215,17 +215,17 @@
 
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Changer votre mot de passe</string>
-    <string name="change_password_old_password">Mot de passe actuel</string>
+    <string name="change_password_old_password">Ancien mot de passe</string>
     <string name="change_password_new_password">Nouveau mot de passe</string>
     <string name="change_password_check">Vérifier</string>
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
     <string name="change_password_button">Changer le mot de passe</string>
-    <string name="change_password_confirm_message">Sauvegarde recommandée !<br /> Changer votre mot de passe nécessite de rechiffrer tous vos fichiers ! Voulez-vous continuer ?</string>
+    <string name="change_password_confirm_message">Sauvegarde recommandée!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers! Voulez-vous continuer?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Vérifier votre Mot de passe</string>
+    <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Cacher Photok</string>
@@ -234,8 +234,8 @@
     <string name="hide_app_status_visible">VISIBLE</string>
     <string name="hide_app_status_hidden">CACHÉ</string>
     <string name="hide_app_app_name_stealth">Téléphone</string>
-    <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok ?</string>
-    <string name="hide_app_confirm_show">Voulez-vous afficher à nouveau Photok ?</string>
+    <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok?</string>
+    <string name="hide_app_confirm_show">Voulez-vous afficher à nouveau Photok?</string>
     <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
@@ -244,12 +244,12 @@
     <string name="onboarding_finish">Terminer</string>
     <string name="onboarding_skip"><u>Passer</u></string>
 
-    <string name="onboarding_slide1_title">Bienvenue sur</string>
+    <string name="onboarding_slide1_title">Bienvenue dans</string>
     <string name="onboarding_slide1_description">Un endroit sûr pour vos photos.</string>
     <string name="onboarding_slide2_title">Créez un mot de passe</string>
-    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe sert à chiffrer vos photos directement sur votre téléphone.</string>
-    <string name="onboarding_slide3_title">Importez des photos</string>
-    <string name="onboarding_slide3_description">Commencez à importer vos photos et gardez-les à l\'abri des regards indiscrets. Vous pourrez ensuite les supprimer de votre galerie.</string>
+    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe est utilisé pour chiffrer vos photos directement sur votre téléphone.</string>
+    <string name="onboarding_slide3_title">Commencez l\'importation</string>
+    <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des regards indiscrets.\nVous pourrez ensuite les supprimer de votre galerie.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Création d\'une sauvegarde…</string>
@@ -260,7 +260,7 @@
     <string name="backup_restore_details_compatible">Compatible :</string>
     <string name="backup_restore_details_size">Taille :</string>
     <string name="backup_restore_button">Déverrouiller et restaurer</string>
-    <string name="backup_restore_invalid_file">\u26A0 Fichier non valide</string>
+    <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
     <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
     <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
 
@@ -272,68 +272,68 @@
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu de récupération</string>
     <string name="recovery_menu_item_open_photok">Ouvrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Réinitialiser la visibilité de l\'application</string>
+    <string name="recovery_subtitle_reset_hide_app">Réinitialiser le paramètre de visibilité de l\'application</string>
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bienvenue dans</string>
+    <string name="migration_initial_explaination">Cette version de Photok introduit une nouvelle méthode de chiffrement. Afin de pouvoir continuer à accéder à votre galerie, une migration est nécessaire.</string>
+    <string name="migration_initial_button">Commencer</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Sauvegarder vos données</string>
+    <string name="migration_initial_stage_backup_explanation">Créez une sauvegarde de vos données avant de continuer.</string>
+    <string name="migration_initial_stage_backup_button">Créer une sauvagarde</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Accorder la permission</string>
+    <string name="migration_initial_stage_permission_explanation">Veuillez accorder les permissions de notification afin d\'exécuter la migration de manière fiable en arrière-plan.</string>
+    <string name="migration_initial_stage_permission_button">Accorder la permission</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Tout est prêt</string>
+    <string name="migration_initial_stage_ready_button">Lancer la migration</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Migration de votre galerie</string>
+    <string name="migration_running_progress">%d fichiers sur %d traités</string>
+    <string name="migration_running_advice">Si cet écran reste ouvert, la migration s\'effectuera plus rapidement.</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migration de la galerie terminée</string>
+    <string name="migration_done_progress">Tous les fichiers ont été migrés</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Erreur lors de la migration de votre galerie</string>
+    <string name="migration_error_button">Envoyer un rapport d\'erreur</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tâches en arrière-plan</string>
+    <string name="migration_error_extract_data">Extraire les données</string>
+    <string name="migration_error_extract_confirmation_text">Êtes-vous sûr de vouloir extraire tous vos fichiers NON CHIFFRÉS dans un fichier ZIP?</string>
+    <string name="migration_error_extracting_title">Déchiffrement vers ZIP…</string>
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Déverouiller Photok</string>
+    <string name="biometric_unlock_subtitle">Vérifiez votre identité pour déverouiller</string>
+    <string name="biometric_unlock_cancel">Utiliser le mot de passe Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Activer le verrouillage biométrique</string>
+    <string name="biometric_unlock_setup_subtitle">Pour activer le verrouillage biométrique, confirmez votre identité</string>
+    <string name="biometric_unlock_error">Échec du déverouillage biométrique. Utilisez votre mot de passe Photok.</string>
+    <string name="biometric_unlock_hint_button">Déverrouillage par biométrie</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Trier</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Croissant</string>
+    <string name="sorting_order_desc_label">Décroissant</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Date d\'importation</string>
+    <string name="sorting_field_filename_label">Nom de fichier</string>
+    <string name="sorting_field_size_label">Taille de fichier</string>
+    <string name="sorting_field_added_to_album_label">Ajouté à l\'album</string>
+    <string name="sorting_field_last_modified">Dernière modification</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Restaurer les paramètres par défaut</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Jouer</string>
+    <string name="video_player_pause">Pause</string>
+    <string name="video_player_mute">Désactiver le son</string>
+    <string name="video_player_unmute">Activer le son</string>
 </resources>
