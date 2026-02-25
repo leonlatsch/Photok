@@ -281,6 +281,14 @@ fun ImageViewerControls(
     }
 }
 
+private enum class PlaybackSpeedOption(val value: Float) {
+    Quarter(0.25f),
+    Half(0.5f),
+    Normal(1f),
+    OnePointFive(1.5f),
+    Double(2f),
+}
+
 @Composable
 private fun MoreMenu(
     visible: Boolean,
@@ -346,6 +354,44 @@ private fun MoreMenu(
                     onDismissRequest()
                 }
             )
+
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = "Playback speed"
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(androidx.media3.ui.R.drawable.exo_ic_speed), // TODO
+                        contentDescription = null,
+                    )
+                },
+                onClick = {
+
+                }
+            )
+        }
+
+        var showPlaybackSpeed by remember { mutableStateOf(false) }
+
+        RoundedDropdownMenu(
+            expanded = showPlaybackSpeed,
+            onDismissRequest = { showPlaybackSpeed = false },
+        ) {
+            for (option in PlaybackSpeedOption.entries) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = option.value.toString(),
+                        )
+                    },
+                    onClick = {
+                        handleUiEvent(ImageViewerUiEvent.UpdateVideoPlaybackSpeed(option.value))
+                        showPlaybackSpeed = false
+                    }
+                )
+            }
         }
     }
 
