@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.Player
+import androidx.media3.common.Player.COMMAND_SET_SPEED_AND_PITCH
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
@@ -190,9 +191,13 @@ fun ImageViewerScreen(
             }
         }
 
-        LaunchedEffect(player, uiState.playbackSpeed) {
-            if (uiState.playbackSpeed > 0f) {
-                player.setPlaybackSpeed(uiState.playbackSpeed)
+        LaunchedEffect(player, uiState.videoPlaybackSpeed, exoPlayerState.availableCommands) {
+            if (!exoPlayerState.availableCommands.contains(COMMAND_SET_SPEED_AND_PITCH)) {
+                return@LaunchedEffect
+            }
+
+            if (uiState.videoPlaybackSpeed > 0f) {
+                player.setPlaybackSpeed(uiState.videoPlaybackSpeed)
             }
         }
 
@@ -233,6 +238,7 @@ fun ImageViewerScreen(
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
                     )
+
                     is ImageViewerItem.Video -> ImageViewerVideoPage(
                         item = item,
                         isCurrentItem = item.photo.uuid == currentItem?.photo?.uuid,

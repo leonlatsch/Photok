@@ -284,7 +284,7 @@ fun ImageViewerControls(
     }
 }
 
-val PlaybackSpeedOptions = setOf(
+private val PlaybackSpeedOptions = setOf(
     0.25f,
     0.5f,
     1f,
@@ -406,7 +406,7 @@ private fun MoreMenu(
                         },
                         trailingIcon = {
                             AnimatedVisibility(
-                                visible = option == uiState.playbackSpeed,
+                                visible = option == uiState.videoPlaybackSpeed,
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                             ) {

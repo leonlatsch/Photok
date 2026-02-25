@@ -66,7 +66,7 @@ data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
     val loopVideos: Boolean = false,
     val muteVideoPlayer: Boolean = false,
-    val playbackSpeed: Float = 1f,
+    val videoPlaybackSpeed: Float = 1f,
     val inputs: Inputs = Inputs(),
 ) {
     data class Inputs(
@@ -119,7 +119,7 @@ class ImageViewerViewModel @AssistedInject constructor(
             },
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
             muteVideoPlayer = configValues.getOrDefault(Config.IMAGE_VIEWER_MUTE_VIDEO_PLAYER, false) as Boolean,
-            playbackSpeed = configValues.getOrDefault(Config.IMAGE_VIEWER_PLAYBACK_SPEED, 1f) as Float,
+            videoPlaybackSpeed = configValues.getOrDefault(Config.IMAGE_VIEWER_PLAYBACK_SPEED, 1f) as Float,
             inputs = inputs,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
