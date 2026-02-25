@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DropdownMenuItem
@@ -55,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -72,6 +74,7 @@ import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -281,6 +284,14 @@ fun ImageViewerControls(
     }
 }
 
+private val PlaybackSpeedOptions = setOf(
+    0.25f,
+    0.5f,
+    1f,
+    1.5f,
+    2f,
+)
+
 @Composable
 private fun MoreMenu(
     visible: Boolean,
@@ -290,6 +301,8 @@ private fun MoreMenu(
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     RoundedDropdownMenu(
         expanded = visible,
         onDismissRequest = onDismissRequest,
@@ -311,20 +324,25 @@ private fun MoreMenu(
                 handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
             }
         )
+
+
         if (currentItem is ImageViewerItem.Video) {
+
+            val loopingEnabledText = stringResource(R.string.view_photo_loop_video_enabled)
+            val loopingDisabledText = stringResource(R.string.view_photo_loop_video_disabled)
 
             DropdownMenuItem(
                 text = {
                     val text = remember(uiState.loopVideos) {
                         if (uiState.loopVideos) {
-                            R.string.view_photo_loop_video_enabled
+                            loopingEnabledText
                         } else {
-                            R.string.view_photo_loop_video_disabled
+                            loopingDisabledText
                         }
                     }
 
                     Text(
-                        text = stringResource(text)
+                        text = text,
                     )
                 },
                 leadingIcon = {
@@ -342,11 +360,75 @@ private fun MoreMenu(
                     )
                 },
                 onClick = {
-                    handleUiEvent(ImageViewerUiEvent.UpdateLoopVideos(!uiState.loopVideos))
+                    val newValue = !uiState.loopVideos
+
+                    val message = if (newValue) {
+                        loopingEnabledText
+                    } else {
+                        loopingDisabledText
+                    }
+
+                    Dialogs.showShortToast(context, message)
+                    handleUiEvent(ImageViewerUiEvent.UpdateLoopVideos(newValue))
                     onDismissRequest()
                 }
             )
+
+            var showPlaybackSpeed by remember { mutableStateOf(false) }
+
+            val playbackSpeedText = stringResource(R.string.view_photo_video_playback_speed)
+
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = playbackSpeedText,
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_slow_motion),
+                        contentDescription = null,
+                    )
+                },
+                onClick = { showPlaybackSpeed = true }
+            )
+
+            RoundedDropdownMenu(
+                expanded = showPlaybackSpeed,
+                onDismissRequest = { showPlaybackSpeed = false },
+            ) {
+                for (option in PlaybackSpeedOptions) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = "${option}x",
+                            )
+                        },
+                        trailingIcon = {
+                            AnimatedVisibility(
+                                visible = option == uiState.videoPlaybackSpeed,
+                                enter = fadeIn(),
+                                exit = fadeOut(),
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(18.dp),
+                                    painter = painterResource(R.drawable.ic_check),
+                                    contentDescription = null,
+                                )
+                            }
+                        },
+                        onClick = {
+                            handleUiEvent(ImageViewerUiEvent.UpdateVideoPlaybackSpeed(option))
+                            Dialogs.showShortToast(context, "$playbackSpeedText ${option}x")
+                            showPlaybackSpeed = false
+                        }
+                    )
+                }
+            }
+
         }
+
+
     }
 
     currentItem?.let {
