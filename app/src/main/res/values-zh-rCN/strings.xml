@@ -101,6 +101,7 @@
     <string name="view_photo_detail_last_modified">上次修改</string>
     <string name="view_photo_loop_video_disabled">禁用了循环播放</string>
     <string name="view_photo_loop_video_enabled">启用了循环播放</string>
+    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">锁定</string>

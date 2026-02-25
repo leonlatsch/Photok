@@ -102,6 +102,7 @@
     <string name="view_photo_detail_last_modified">Zuletzt geändert</string>
     <string name="view_photo_loop_video_disabled">Wiederholung deaktiviert</string>
     <string name="view_photo_loop_video_enabled">Wiederholdung aktiviert</string>
+    <string name="view_photo_video_playback_speed">Wiedergabegeschwindigkeit</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Sperren</string>
