@@ -30,7 +30,7 @@
     <string name="common_yes">Oui</string>
     <string name="common_no">Non</string>
     <string name="common_ok">OK</string>
-    <string name="common_are_you_sure">Êtes-vous sûr?</string>
+    <string name="common_are_you_sure">Êtes-vous sûr\u00A0?</string>
     <string name="common_bullet">•</string>
     <string name="common_more">Plus</string>
     <string name="common_cancel">Annuler</string>
@@ -43,7 +43,7 @@
     <!-- IMPORT -->
     <string name="import_importing">Importation de fichier(s)</string>
     <string name="import_permission_rationale">Photok a besoin d\'accéder à votre stockage pour importer des fichiers.</string>
-    <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s)?</string>
+    <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s)\u00A0?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Créez votre mot de passe</string>
@@ -71,7 +71,7 @@
     <string name="gallery_albums_create_title">Créer un album</string>
     <string name="gallery_albums_rename_title">Renommer l\'album</string>
     <string name="gallery_albums_create_placeholder">Travail scolaire ;)</string>
-    <string name="gallery_albums_select_title">Selectionner un album</string>
+    <string name="gallery_albums_select_title">Sélectionner un album</string>
     <string name="gallery_albums_deleted">Album supprimé</string>
     <string name="gallery_albums_photos_added">%1$d élément(s) ajouté(s)</string>
     <string name="magic_fab_new_album_label">Nouvel album</string>
@@ -81,7 +81,7 @@
     <string name="import_menu_new_files_title">Importer de nouveaux fichiers</string>
     <string name="import_menu_new_files_description">Importer des photos et vidéos depuis votre galerie.</string>
     <string name="import_menu_restore_title">Restaurer une sauvegarde</string>
-    <string name="import_menu_restore_description">Restaurer une savegarde Photok. Les fichiers seront ajoutés à vos fichiers actuels.</string>
+    <string name="import_menu_restore_description">Restaurer une sauvegarde Photok. Les fichiers seront ajoutés à vos fichiers actuels.</string>
     <string name="import_menu_delete_warning">Les fichiers importés seront supprimés</string>
     <string name="import_menu_album_tooltip">Les fichiers seront ajoutés à \"%s\" après l\'importation</string>
 
@@ -116,15 +116,15 @@
     <string name="menu_ms_remove_from_album">Retirer de l\'album</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Voulez-vous vraiment <b>supprimer</b> %1$d fichier(s)?</string>
-    <string name="delete_are_you_sure_this">Voulez-vous vraiment <b>supprimer</b> ce fichier?</string>
+    <string name="delete_are_you_sure">Êtes-vous sûr de vouloir <b>supprimer</b> %1$d fichier(s)\u00A0?</string>
+    <string name="delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>supprimer</b> ce fichier\u00A0?</string>
     <string name="delete_deleting">Suppression des fichier(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie?</string>
-    <string name="export_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie?</string>
-    <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer?</string>
-    <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer?</string>
+    <string name="export_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie\u00A0?</string>
+    <string name="export_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie\u00A0?</string>
+    <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer\u00A0?</string>
+    <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer\u00A0?</string>
     <string name="export_and_delete_finished">Exporté et supprimé</string>
     <string name="export_exporting">Exportation des fichier(s)…</string>
     <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour exporter des fichiers.</string>
@@ -160,7 +160,7 @@
     <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran. Nécessite un redémarrage.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
     <string name="settings_security_change_password_summary">Changer votre mot de passe</string>
-    <string name="settings_security_biometric_title">Déverouillage biométrique</string>
+    <string name="settings_security_biometric_title">Déverrouillage biométrique</string>
     <string name="settings_security_biometric_summary">Déverrouiller Photok grâce à l\'authentification biométrique.</string>
     <string name="settings_security_biometric_not_available">Déverrouillage biométrique non disponible</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
@@ -177,13 +177,13 @@
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Masquer l\'application</string>
-    <string name="settings_security_hide_app_summary">Masque l\'icône de l\'application du tiroir d\'applications.</string>
+    <string name="settings_security_hide_app_summary">Masquer l\'icône de l\'application du tiroir d\'applications.</string>
 
     <string name="settings_category_advanced">Avancé</string>
     <string name="settings_category_advanced_summary">Utiliser avec précaution</string>
     <string name="settings_advanced_reset_title">Réinitialiser le coffre-fort</string>
     <string name="settings_advanced_reset_summary">Effacer les données et réinitialiser le mot de passe</string>
-    <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort? Toutes les données seront perdues!</string>
+    <string name="settings_advanced_reset_confirmation">Voulez-vous VRAIMENT réinitialiser votre coffre-fort\u00A0? Toutes les données seront perdues\u00A0!</string>
     <string name="settings_advanced_backup_title">Sauvegarde</string>
     <string name="settings_advanced_backup_summary">Créer une sauvegarde de votre coffre-fort</string>
     <string name="settings_advanced_delete_imported_title">Supprimer les fichiers importés</string>
@@ -221,7 +221,7 @@
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
     <string name="change_password_button">Changer le mot de passe</string>
-    <string name="change_password_confirm_message">Sauvegarde recommandée!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers! Voulez-vous continuer?</string>
+    <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
 
     <!-- CHECK PASSWORD -->
@@ -234,8 +234,8 @@
     <string name="hide_app_status_visible">VISIBLE</string>
     <string name="hide_app_status_hidden">CACHÉ</string>
     <string name="hide_app_app_name_stealth">Téléphone</string>
-    <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok?</string>
-    <string name="hide_app_confirm_show">Voulez-vous afficher à nouveau Photok?</string>
+    <string name="hide_app_confirm_hide">Voulez-vous vraiment cacher Photok\u00A0?</string>
+    <string name="hide_app_confirm_show">Voulez-vous afficher à nouveau Photok\u00A0?</string>
     <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
@@ -282,7 +282,7 @@
 
     <string name="migration_initial_stage_backup_checklist">Sauvegarder vos données</string>
     <string name="migration_initial_stage_backup_explanation">Créez une sauvegarde de vos données avant de continuer.</string>
-    <string name="migration_initial_stage_backup_button">Créer une sauvagarde</string>
+    <string name="migration_initial_stage_backup_button">Créer une sauvegarde</string>
 
     <string name="migration_initial_stage_permission_checklist">Accorder la permission</string>
     <string name="migration_initial_stage_permission_explanation">Veuillez accorder les permissions de notification afin d\'exécuter la migration de manière fiable en arrière-plan.</string>
@@ -303,18 +303,18 @@
 
     <string name="notification_channel_background_tasks">Tâches en arrière-plan</string>
     <string name="migration_error_extract_data">Extraire les données</string>
-    <string name="migration_error_extract_confirmation_text">Êtes-vous sûr de vouloir extraire tous vos fichiers NON CHIFFRÉS dans un fichier ZIP?</string>
+    <string name="migration_error_extract_confirmation_text">Êtes-vous sûr de vouloir extraire tous vos fichiers NON CHIFFRÉS dans un fichier ZIP\u00A0?</string>
     <string name="migration_error_extracting_title">Déchiffrement vers ZIP…</string>
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Déverouiller Photok</string>
-    <string name="biometric_unlock_subtitle">Vérifiez votre identité pour déverouiller</string>
+    <string name="biometric_unlock_title">Déverrouiller Photok</string>
+    <string name="biometric_unlock_subtitle">Vérifiez votre identité pour déverrouiller</string>
     <string name="biometric_unlock_cancel">Utiliser le mot de passe Photok</string>
 
     <string name="biometric_unlock_setup_title">Activer le verrouillage biométrique</string>
     <string name="biometric_unlock_setup_subtitle">Pour activer le verrouillage biométrique, confirmez votre identité</string>
-    <string name="biometric_unlock_error">Échec du déverouillage biométrique. Utilisez votre mot de passe Photok.</string>
+    <string name="biometric_unlock_error">Échec du déverrouillage biométrique. Utilisez votre mot de passe Photok.</string>
     <string name="biometric_unlock_hint_button">Déverrouillage par biométrie</string>
 
     <!-- Sorting -->
@@ -332,7 +332,7 @@
     <string name="sorting_restore_default">Restaurer les paramètres par défaut</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Jouer</string>
+    <string name="video_player_play">Lire</string>
     <string name="video_player_pause">Pause</string>
     <string name="video_player_mute">Désactiver le son</string>
     <string name="video_player_unmute">Activer le son</string>
