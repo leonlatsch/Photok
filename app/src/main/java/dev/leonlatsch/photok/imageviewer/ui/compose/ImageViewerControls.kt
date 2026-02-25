@@ -363,7 +363,7 @@ private fun MoreMenu(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(androidx.media3.ui.R.drawable.exo_ic_speed), // TODO
+                        painter = painterResource(R.drawable.ic_slow_motion),
                         contentDescription = null,
                     )
                 },
