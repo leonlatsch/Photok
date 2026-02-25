@@ -100,6 +100,7 @@
     <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
     <string name="view_photo_detail_size_label">سائز:</string>
     <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
+    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">لاک کریں</string>

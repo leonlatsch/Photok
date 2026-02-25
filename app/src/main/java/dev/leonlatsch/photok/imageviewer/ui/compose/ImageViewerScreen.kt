@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.Paragraph
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -192,7 +191,7 @@ fun ImageViewerScreen(
         }
 
         LaunchedEffect(player, uiState.playbackSpeed) {
-            if (uiState.playbackSpeed < 0f) {
+            if (uiState.playbackSpeed > 0f) {
                 player.setPlaybackSpeed(uiState.playbackSpeed)
             }
         }
