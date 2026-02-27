@@ -161,11 +161,6 @@
         android:id="@+id/albumsFragment"
         android:name="dev.leonlatsch.photok.gallery.albums.ui.AlbumsFragment"
         android:label="GalleryFragment">
-        <action
-            android:id="@+id/action_albumsFragment_to_albumDetailFragment"
-            app:destination="@id/albumDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/albumDetailFragment"
@@ -178,12 +173,20 @@
     </fragment>
     <action
         android:id="@+id/action_global_imageViewerFragment"
-        app:destination="@id/imageViewerFragment" />
+        app:destination="@id/imageViewerFragment"
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        />
     <action
         android:id="@+id/action_global_albumDetailFragment"
         app:destination="@id/albumDetailFragment"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim" />
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        />
     <fragment
         android:id="@+id/encryptionMigrationFragment"
         android:name="dev.leonlatsch.photok.security.migration.ui.EncryptionMigrationFragment"
