@@ -83,6 +83,10 @@
         <action
             android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
             app:destination="@id/encryptionMigrationFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"
             app:popUpTo="@id/unlockFragment"
             app:popUpToInclusive="true" />
         <action
@@ -101,8 +105,10 @@
         <action
             android:id="@+id/action_onBoardingFragment_to_setupFragment"
             app:destination="@id/setupFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/nav_default_exit_anim"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"
             app:popUpTo="@id/onBoardingFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -113,22 +119,16 @@
         <action
             android:id="@+id/action_initialFragment_to_unlockFragment"
             app:destination="@id/unlockFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_initialFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_initialFragment_to_setupFragment"
             app:destination="@id/setupFragment"
-            app:enterAnim="@anim/slide_to_top"
-            app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
     </fragment>
