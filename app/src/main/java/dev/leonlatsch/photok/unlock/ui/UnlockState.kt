@@ -23,8 +23,8 @@ package dev.leonlatsch.photok.unlock.ui
  * @author Leon Latsch
  */
 enum class UnlockState {
-    UNDEFINED,
-    LOCKED,
+    INITIAL,
+    UNLOCK_FAILED,
     CHECKING,
     UNLOCKED
 }
