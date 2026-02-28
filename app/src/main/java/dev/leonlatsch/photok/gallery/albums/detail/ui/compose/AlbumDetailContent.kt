@@ -21,6 +21,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
+import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
@@ -42,6 +47,10 @@ fun AlbumDetailContent(
 ) {
     val multiSelectionState =
         rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
+
+    var showAlbumSelection by rememberSaveable(multiSelectionState.selectedItems.value) {
+        mutableStateOf(false)
+    }
 
     PhotoGallery(
         photos = uiState.photos,
@@ -82,8 +91,28 @@ fun AlbumDetailContent(
                     )
                 }
             )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_folder),
+                        contentDescription = null
+                    )
+                },
+                text = { Text(stringResource(R.string.menu_ms_add_to_album)) },
+                onClick = {
+                    showAlbumSelection = true
+                    multiSelectionState.dismissMore()
+                },
+            )
         },
         modifier = modifier,
+    )
+
+    AlbumPickerDialog(
+        visible = showAlbumSelection,
+        selectedItemIds = multiSelectionState.selectedItems.value.toList(),
+        onAlbumSelected = { multiSelectionState.cancelSelection() },
+        onDismissRequest = { showAlbumSelection = false }
     )
 }
 
