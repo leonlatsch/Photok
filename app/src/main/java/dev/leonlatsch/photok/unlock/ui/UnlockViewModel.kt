@@ -54,7 +54,7 @@ class UnlockViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.UNDEFINED)
+    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.INITIAL)
 
     /**
      * Tries to unlock the save.
@@ -62,17 +62,20 @@ class UnlockViewModel @Inject constructor(
      * Updates UnlockState.
      * Called by ui.
      */
-    fun unlock() = viewModelScope.launch {
+    fun unlock() {
         unlockState.update { UnlockState.CHECKING }
 
-        unlockState.update {
-            if (passwordManager.checkPassword(password)) {
-                encryptionManager.initialize(password)
-                legacyEncryptionManager.initialize(password)
+        viewModelScope.launch {
 
-                UnlockState.UNLOCKED
-            } else {
-                UnlockState.LOCKED
+            unlockState.update {
+                if (passwordManager.checkPassword(password)) {
+                    encryptionManager.initialize(password)
+                    legacyEncryptionManager.initialize(password)
+
+                    UnlockState.UNLOCKED
+                } else {
+                    UnlockState.UNLOCK_FAILED
+                }
             }
         }
     }

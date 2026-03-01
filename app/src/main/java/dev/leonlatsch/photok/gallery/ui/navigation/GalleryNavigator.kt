@@ -40,7 +40,7 @@ class GalleryNavigator @Inject constructor() {
     }
 
     private fun startRestoreBackup(backupUri: Uri, fragmentManager: FragmentManager) {
-        RestoreBackupDialogFragment(
+        RestoreBackupDialogFragment.newInstance(
             uri = backupUri
         ).show(fragmentManager)
     }
