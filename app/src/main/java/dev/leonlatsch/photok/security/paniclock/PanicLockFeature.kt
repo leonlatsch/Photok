@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other
+package dev.leonlatsch.photok.security.paniclock
 
 import android.app.Application
 import android.content.Context
@@ -26,9 +26,12 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BaseApplication
+import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.models.PanicLockMotion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -36,14 +39,10 @@ import javax.inject.Singleton
 import kotlin.math.sqrt
 
 @Singleton
-class DeviceMotionDetector @Inject constructor(
+class PanicLockFeature @Inject constructor(
     private val app: Application,
+    private val config: Config,
 ) : DefaultLifecycleObserver, SensorEventListener {
-
-    interface Listener {
-        fun onShake()
-        fun onFlip(isFaceUp: Boolean)
-    }
 
     private val sensorManager =
         app.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -55,8 +54,6 @@ class DeviceMotionDetector @Inject constructor(
         sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
 
     private val scope = CoroutineScope(Dispatchers.Default)
-
-    private var listener: Listener? = null
 
     // Shake detection
     private var lastShakeTime = 0L
@@ -70,10 +67,6 @@ class DeviceMotionDetector @Inject constructor(
     private var isRegistered = false
     private var shouldRegister = false
 
-    fun setListener(listener: Listener?) {
-        this.listener = listener
-    }
-
     // ---------------- Lifecycle ----------------
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -82,12 +75,20 @@ class DeviceMotionDetector @Inject constructor(
         if (app !is BaseApplication) return
 
         scope.launch {
-            app.state.collectLatest {
-                shouldRegister = it == ApplicationState.UNLOCKED
+            combine(
+                app.state,
+                config.valuesFlow
+            ) { state, configValues ->
+                state to configValues
+            }.collectLatest { (state, _) ->
+                val panicOption = config.securityPanicLock
 
-                when (it) {
-                    ApplicationState.LOCKED -> unregister()
-                    ApplicationState.UNLOCKED -> register()
+                shouldRegister = state == ApplicationState.UNLOCKED && panicOption != PanicLockMotion.None
+
+                if (shouldRegister) {
+                    register()
+                } else {
+                    unregister()
                 }
             }
         }
@@ -111,7 +112,7 @@ class DeviceMotionDetector @Inject constructor(
             sensorManager.registerListener(
                 this,
                 it,
-                SensorManager.SENSOR_DELAY_UI
+                SensorManager.SENSOR_DELAY_UI, // Needed for shake detection to work properly
             )
         }
 
@@ -119,7 +120,7 @@ class DeviceMotionDetector @Inject constructor(
             sensorManager.registerListener(
                 this,
                 it,
-                SensorManager.SENSOR_DELAY_UI
+                SensorManager.SENSOR_DELAY_NORMAL,
             )
         }
 
@@ -158,6 +159,8 @@ class DeviceMotionDetector @Inject constructor(
     // ---------------- Detection Logic ----------------
 
     private fun detectShake(x: Float, y: Float, z: Float) {
+        if (config.securityPanicLock != PanicLockMotion.Shake) return
+
         val gX = x / SensorManager.GRAVITY_EARTH
         val gY = y / SensorManager.GRAVITY_EARTH
         val gZ = z / SensorManager.GRAVITY_EARTH
@@ -170,17 +173,30 @@ class DeviceMotionDetector @Inject constructor(
             if (lastShakeTime + shakeSlopTimeMs > now) return
 
             lastShakeTime = now
-            listener?.onShake()
+
+            onShakeDetected()
         }
     }
 
     private fun detectFlip(z: Float) {
+        if (config.securityPanicLock != PanicLockMotion.Flip) return
+
         if (z > flipThreshold && !isFaceUp) {
             isFaceUp = true
-            listener?.onFlip(true)
         } else if (z < -flipThreshold && isFaceUp) {
             isFaceUp = false
-            listener?.onFlip(false)
+
+            onFaceDownDetected()
         }
+    }
+
+    private fun onShakeDetected() {
+        if (app !is BaseApplication || app.state.value == ApplicationState.LOCKED) return
+        app.lockApp()
+    }
+
+    private fun onFaceDownDetected() {
+        if (app !is BaseApplication || app.state.value == ApplicationState.LOCKED) return
+        app.lockApp()
     }
 }
