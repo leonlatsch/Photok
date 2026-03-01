@@ -16,13 +16,17 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,12 +34,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
@@ -53,22 +60,21 @@ fun GalleryPlaceholder(
         var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
 
         Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(40.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.align(BiasAlignment(horizontalBias = 0f, verticalBias = -0.1f))
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_vault_colored),
-                contentDescription = stringResource(R.string.gallery_placeholder),
-                modifier = Modifier.alpha(0.3f)
+            Icon(
+                painter = painterResource(R.drawable.ic_image_prints),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(92.dp).alpha(0.5f)
             )
 
             Text(
                 stringResource(R.string.gallery_placeholder),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
             )
         }
 
@@ -92,12 +98,14 @@ fun GalleryPlaceholder(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@PreviewLightDark
 @Composable
 private fun GalleryPlaceholderPreview() {
     AppTheme {
-        GalleryPlaceholder(
-            handleUiEvent = {}
-        )
+        Surface() {
+            GalleryPlaceholder(
+                handleUiEvent = {}
+            )
+        }
     }
 }

@@ -39,7 +39,7 @@ class AlbumDetailNavigator @Inject constructor() {
     }
 
     private fun startRestoreBackup(backupUri: Uri, fragmentManager: FragmentManager) {
-        RestoreBackupDialogFragment(backupUri).show(fragmentManager)
+        RestoreBackupDialogFragment.newInstance(backupUri).show(fragmentManager)
     }
 
     private fun startImport(
