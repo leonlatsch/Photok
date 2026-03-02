@@ -35,11 +35,13 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class RestoreBackupDialogFragment(
-    private val uri: Uri
-) : BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
+class RestoreBackupDialogFragment() : BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
     private val viewModel: RestoreBackupViewModel by viewModels()
+
+    private val uri: Uri by lazy(LazyThreadSafetyMode.NONE) {
+        requireArguments().getParcelable(ARG_URI)!!
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,23 +54,27 @@ class RestoreBackupDialogFragment(
                     binding.restoreButton.hide()
                     binding.restoreProgressIndicator.show()
                 }
+
                 RestoreState.FILE_VALID -> {
                     binding.restoreDetails.show()
                     binding.validateBackupFilename.show()
                     binding.restoreButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
+
                 RestoreState.FILE_INVALID -> {
                     binding.restoreInvalidWarning.show()
                     binding.restoreCloseButton.show()
                     binding.restoreProgressIndicator.hide()
                 }
+
                 RestoreState.RESTORING -> {
                     viewModel.zipFileName = getString(R.string.backup_restore_processing)
                     binding.restoreProgressIndicator.show()
                     binding.restoreDetails.hide()
                     binding.restoreButton.hide()
                 }
+
                 RestoreState.FINISHED -> {
                     viewModel.zipFileName = getString(R.string.process_finished)
                     binding.restoreProgressIndicator.hide()
@@ -105,4 +111,17 @@ class RestoreBackupDialogFragment(
         binding.context = this
         binding.viewModel = viewModel
     }
+
+    companion object {
+        fun newInstance(uri: Uri): RestoreBackupDialogFragment {
+            return RestoreBackupDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_URI, uri)
+                }
+            }
+        }
+    }
+
 }
+
+private const val ARG_URI = "uri"

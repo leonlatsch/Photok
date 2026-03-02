@@ -16,16 +16,25 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.ui.components.MagicFab
@@ -38,12 +47,24 @@ fun AlbumsPlaceholder(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        Text(
-            text = stringResource(R.string.gallery_albums_placeholder),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Center)
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.align(BiasAlignment(horizontalBias = 0f, verticalBias = -0.1f))
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_folder),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(92.dp).alpha(0.5f)
+            )
+
+            Text(
+                text = stringResource(R.string.gallery_albums_placeholder),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
+            )
+        }
 
         MagicFab(
             label = stringResource(R.string.magic_fab_new_album_label),

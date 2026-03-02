@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -109,7 +110,14 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                 MainMenu(uiState) {
                     val navController = findNavController(R.id.mainNavHostFragment)
                     if (navController.currentDestination?.id != it) {
-                        navController.navigate(it)
+                        navController.navigate(
+                            resId = it,
+                            args = null,
+                            navOptions = NavOptions.Builder()
+                                .setEnterAnim(android.R.anim.fade_in)
+                                .setExitAnim(android.R.anim.fade_out)
+                                .build()
+                        )
                     }
                 }
             }
