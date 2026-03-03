@@ -127,7 +127,10 @@ fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Uni
 
         ModalBottomSheet(
             sheetState = state,
-            onDismissRequest = { visible = false },
+            onDismissRequest = {
+                visible = false
+                onDismissOverride()
+            },
             dragHandle = null,
             sheetGesturesEnabled = false,
             containerColor = Color.Transparent,
