@@ -20,6 +20,7 @@
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
     <string name="common_try_again">Tekrar deneyin</string>
+    <string name="common_continue">Devam Et</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
@@ -76,13 +77,14 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Detaylar</string>
-    <string name="view_photo_detail_file_name_label">Dosya Adı:</string>
-    <string name="view_photo_detail_import_at_label">İçe Aktarma Tarihi:</string>
-    <string name="view_photo_detail_file_type_label">Dosya Türü:</string>
-    <string name="view_photo_detail_size_label">Dosya Boyutu:</string>
-    <string name="view_photo_detail_last_modified">Son düzenleme:</string>
-    <string name="view_photo_play_button_description">Videoyu Oynat</string>
-
+    <string name="view_photo_detail_file_name_label">Dosya Adı</string>
+    <string name="view_photo_detail_import_at_label">İçe Aktarma Tarihi</string>
+    <string name="view_photo_detail_file_type_label">Dosya Türü</string>
+    <string name="view_photo_detail_size_label">Dosya Boyutu</string>
+    <string name="view_photo_detail_last_modified">Son düzenleme</string>
+    <string name="view_photo_loop_video_disabled">Döngü kapalı</string>
+    <string name="view_photo_loop_video_enabled">Döngü açık</string>
+    <string name="view_photo_video_playback_speed">Oynatma hızı</string>
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Kilitle</string>
     <string name="menu_main_settings">Ayarlar</string>
@@ -311,4 +313,10 @@
     <string name="sorting_field_last_modified">Son düzenleme</string>
 
     <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Oynat</string>
+    <string name="video_player_pause">Durdur</string>
+    <string name="video_player_mute">Sesi kapat</string>
+    <string name="video_player_unmute">Sesi aç</string>
 </resources>
