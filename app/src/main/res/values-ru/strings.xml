@@ -324,7 +324,7 @@
 
     <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
     <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
+    <string name="sorting_field_size_label">Размер файла</string> <!-- TODO -->
     <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
     <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
 
