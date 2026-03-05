@@ -98,7 +98,7 @@
     <string name="view_photo_detail_import_at_label">Импортировано</string>
     <string name="view_photo_detail_file_type_label">Тип файла</string>
     <string name="view_photo_detail_size_label">Размер файла</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Изменено</string> <!-- TODO -->
     <string name="view_photo_loop_video_disabled">Повтор выключен</string> <!-- TODO -->
     <string name="view_photo_loop_video_enabled">Повтор включен</string> <!-- TODO -->
     <string name="view_photo_video_playback_speed">Скорость воспроизведения</string> <!-- TODO -->
