@@ -73,16 +73,16 @@
     <string name="gallery_albums_select_title">Выберите альбом</string>
     <string name="gallery_albums_deleted">Альбом удален</string>
     <string name="gallery_albums_photos_added">%1$d элементов добавлено</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Новый альбом</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Импортировать</string>
+    <string name="import_menu_new_files_title">Импорт новых файлов</string>
+    <string name="import_menu_new_files_description">Импортировать фото и видео из галереи.</string>
+    <string name="import_menu_restore_title">Восстановить резервную копию</string>
+    <string name="import_menu_restore_description">Восстановить резервную копию Photok. Файлы будут добавлены к текущим.</string>
+    <string name="import_menu_delete_warning">Импортированные файлы будут удалены</string>
+    <string name="import_menu_album_tooltip">После импорта файлы будут добавлены в \"%s\"</string>
 
     <!-- PROCESS -->
     <string name="process_close">Закрыть</string>
@@ -94,14 +94,14 @@
 
     <!-- VIEW PHOTO -->
     <string name="view_photo_detail_title">Детали</string>
-    <string name="view_photo_detail_file_name_label">Наименование файла</string>
+    <string name="view_photo_detail_file_name_label">Имя файла</string>
     <string name="view_photo_detail_import_at_label">Импортировано</string>
     <string name="view_photo_detail_file_type_label">Тип файла</string>
     <string name="view_photo_detail_size_label">Размер файла</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Изменено</string>
+    <string name="view_photo_loop_video_disabled">Повтор выключен</string>
+    <string name="view_photo_loop_video_enabled">Повтор включен</string>
+    <string name="view_photo_video_playback_speed">Скорость воспроизведения</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>
@@ -152,16 +152,16 @@
     <string name="settings_category_gallery">Галерея</string>
     <string name="settings_gallery_auto_fullscreen_title">Автоматический полный экран</string>
     <string name="settings_gallery_auto_fullscreen_summary">Входить в полноэкранный режим при открытии файла</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Стартовая страница</string>
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>
     <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
     <string name="settings_security_change_password_title">Изменить пароль</string>
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Биометрическая разблокировка</string>
+    <string name="settings_security_biometric_summary">Разблокировать Photok с помощью биометрических данных.</string>
+    <string name="settings_security_biometric_not_available">Биометрическая разблокировка недоступна</string>
     <string name="settings_security_timeout_title">Автоматическая блокировка</string>
     <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
     <string name="settings_security_timeout_immediately">Немедленно</string>
@@ -224,7 +224,7 @@
     <string name="change_password_reencrypting">Повторное шифрование файла(ов)…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Проверка пароля</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Спрятать Photok</string>
@@ -258,7 +258,7 @@
     <string name="backup_restore_details_photos_contained">Содержающихся файлов:</string>
     <string name="backup_restore_details_compatible">Совместим:</string>
     <string name="backup_restore_details_size">Размер:</string>
-    <string name="backup_restore_button">Разблокировать and восстановить</string>
+    <string name="backup_restore_button">Разблокировать и восстановить</string>
     <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
     <string name="backup_restore_processing">Восстановление резервной копии…</string>
     <string name="backup_unlock_title">Разблокировать резервную копию</string>
@@ -307,15 +307,14 @@
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Разблокировать Photok</string>
+    <string name="biometric_unlock_subtitle">Подтвердите личность для разблокировки</string>
+    <string name="biometric_unlock_cancel">Использовать пароль Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
-
+    <string name="biometric_unlock_setup_title">Включить биометрическую разблокировку</string>
+    <string name="biometric_unlock_setup_subtitle">Чтобы включить биометрическую разблокировку, подтвердите свою личность</string>
+    <string name="biometric_unlock_error">Ошибка биометрии. Используйте пароль Photok.</string>
+    <string name="biometric_unlock_hint_button">Разблокировать по биометрии</string>
     <!-- Sorting -->
     <string name="sorting_sort">Sort</string> <!-- TODO -->
 
@@ -324,7 +323,7 @@
 
     <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
     <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
+    <string name="sorting_field_size_label">Размер файла</string>
     <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
     <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
 

@@ -51,7 +51,7 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 ![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
 ![Italian](https://img.shields.io/badge/Italian-92%25-yellow)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-64%25-orange)
-![Russian](https://img.shields.io/badge/Russian-75%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-85%25-yellow)
 ![Spanish](https://img.shields.io/badge/Spanish-79%25-yellow)
 ![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
 ![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-97%25-yellow)
