@@ -22,7 +22,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +34,6 @@ fun MainMenu(
     onNavigationItemClicked: (Int) -> Unit
 ) {
     NavigationBar(
-        containerColor = colorResource(R.color.background)
     ) {
         MainNavItem(
             fragmentsId = R.id.galleryFragment,
@@ -51,6 +49,14 @@ fun MainMenu(
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_folder,
             label = stringResource(R.string.gallery_albums_label),
+            onNavigationItemClicked = onNavigationItemClicked
+        )
+
+        MainNavItem(
+            fragmentsId = 0,
+            currentSelectedFragmentId = uiState.currentFragmentId,
+            iconRes = R.drawable.ic_token,
+            label = "Vaults",
             onNavigationItemClicked = onNavigationItemClicked
         )
 
