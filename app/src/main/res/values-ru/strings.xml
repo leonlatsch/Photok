@@ -307,15 +307,14 @@
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Разблокировать Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Подтвердите личность для разблокировки</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Использовать пароль Photok</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Разблокировать Photok</string>
+    <string name="biometric_unlock_subtitle">Подтвердите личность для разблокировки</string>
+    <string name="biometric_unlock_cancel">Использовать пароль Photok</string>
 
-    <string name="biometric_unlock_setup_title">Включить биометрическую разблокировку</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">Чтобы включить биометрическую разблокировку, подтвердите свою личность</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Ошибка биометрии. Используйте пароль Photok.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Разблокировать по биометрии</string> <!-- TODO -->
-
+    <string name="biometric_unlock_setup_title">Включить биометрическую разблокировку</string>
+    <string name="biometric_unlock_setup_subtitle">Чтобы включить биометрическую разблокировку, подтвердите свою личность</string>
+    <string name="biometric_unlock_error">Ошибка биометрии. Используйте пароль Photok.</string>
+    <string name="biometric_unlock_hint_button">Разблокировать по биометрии</string>
     <!-- Sorting -->
     <string name="sorting_sort">Sort</string> <!-- TODO -->
 
