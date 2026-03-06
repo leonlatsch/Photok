@@ -258,7 +258,7 @@
     <string name="backup_restore_details_photos_contained">Содержающихся файлов:</string>
     <string name="backup_restore_details_compatible">Совместим:</string>
     <string name="backup_restore_details_size">Размер:</string>
-    <string name="backup_restore_button">Разблокировать and восстановить</string>
+    <string name="backup_restore_button">Восстановить и разблокировать</string>
     <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
     <string name="backup_restore_processing">Восстановление резервной копии…</string>
     <string name="backup_unlock_title">Разблокировать резервную копию</string>
