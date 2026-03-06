@@ -76,13 +76,13 @@
     <string name="magic_fab_new_album_label">Новый альбом</string> <!-- TODO -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Импортировать</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Импорт новых файлов</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Импортировать фото и видео из галереи.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Восстановить резервную копию</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Восстановить резервную копию Photok. Файлы будут добавлены к текущим.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Импортированные файлы будут удалены</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">После импорта файлы будут добавлены в \"%s\"</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Импортировать</string>
+    <string name="import_menu_new_files_title">Импорт новых файлов</string>
+    <string name="import_menu_new_files_description">Импортировать фото и видео из галереи.</string>
+    <string name="import_menu_restore_title">Восстановить резервную копию</string>
+    <string name="import_menu_restore_description">Восстановить резервную копию Photok. Файлы будут добавлены к текущим.</string>
+    <string name="import_menu_delete_warning">Импортированные файлы будут удалены</string>
+    <string name="import_menu_album_tooltip">После импорта файлы будут добавлены в \"%s\"</string>
 
     <!-- PROCESS -->
     <string name="process_close">Закрыть</string>
@@ -98,10 +98,10 @@
     <string name="view_photo_detail_import_at_label">Импортировано</string>
     <string name="view_photo_detail_file_type_label">Тип файла</string>
     <string name="view_photo_detail_size_label">Размер файла</string>
-    <string name="view_photo_detail_last_modified">Изменено</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Повтор выключен</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Повтор включен</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Скорость воспроизведения</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Изменено</string>
+    <string name="view_photo_loop_video_disabled">Повтор выключен</string>
+    <string name="view_photo_loop_video_enabled">Повтор включен</string>
+    <string name="view_photo_video_playback_speed">Скорость воспроизведения</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>
@@ -152,16 +152,16 @@
     <string name="settings_category_gallery">Галерея</string>
     <string name="settings_gallery_auto_fullscreen_title">Автоматический полный экран</string>
     <string name="settings_gallery_auto_fullscreen_summary">Входить в полноэкранный режим при открытии файла</string>
-    <string name="settings_gallery_start_page_title">Стартовая страница</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Стартовая страница</string>
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>
     <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
     <string name="settings_security_change_password_title">Изменить пароль</string>
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
-    <string name="settings_security_biometric_title">Биометрическая разблокировка</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Разблокировать Photok с помощью биометрических данных.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Биометрическая разблокировка недоступна</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Биометрическая разблокировка</string>
+    <string name="settings_security_biometric_summary">Разблокировать Photok с помощью биометрических данных.</string>
+    <string name="settings_security_biometric_not_available">Биометрическая разблокировка недоступна</string>
     <string name="settings_security_timeout_title">Автоматическая блокировка</string>
     <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
     <string name="settings_security_timeout_immediately">Немедленно</string>
