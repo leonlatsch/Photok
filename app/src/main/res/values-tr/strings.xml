@@ -316,7 +316,7 @@
 
     <!-- Video Player -->
     <string name="video_player_play">Oynat</string>
-    <string name="video_player_pause">Durdur</string>
+    <string name="video_player_pause">Duraklat</string>
     <string name="video_player_mute">Sesi kapat</string>
     <string name="video_player_unmute">Sesi aç</string>
 </resources>
