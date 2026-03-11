@@ -37,30 +37,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
-import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
-
-@HiltViewModel
-class TelemetryExplanationViewModel @Inject constructor(
-    private val config: Config,
-    private val telemetryService: TelemetryService,
-) : ViewModel() {
-    val enabled = MutableStateFlow(config.telemetryEnabled) // TODO: Make this reactive
-
-    fun updateTelemetryEnabled(enabled: Boolean) {
-        config.telemetryEnabled = enabled
-        this.enabled.value = enabled
-        telemetryService.setup()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
