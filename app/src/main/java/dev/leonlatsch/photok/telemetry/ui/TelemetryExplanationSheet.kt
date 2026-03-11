@@ -81,16 +81,16 @@ private fun SheetContent(
                 .padding(20.dp)
         ) {
             Text(
-                text = "Usage Data Collection", // TODO
+                text = stringResource(R.string.telemetry_sheet_title),
                 style = MaterialTheme.typography.titleLarge,
             )
 
             Text(
-                text = "Photok uses a privacy friendly analytics service called TelemetryDeck.", // TODO
+                text = stringResource(R.string.telemetry_sheet_paragraph_1),
             )
 
             Text(
-                text = "The data processed by TelemetryDeck is completely anonymized and does not allow any conclusions to be drawn about personal information." // TODO
+                text = stringResource(R.string.telemetry_sheet_paragraph_2),
             )
 
             val context = LocalContext.current
@@ -101,14 +101,14 @@ private fun SheetContent(
                     context.openUrl(ppUrl)
                 }
             ) {
-                Text("Learn more") // TODO
+                Text(stringResource(R.string.telemetry_learn_more))
             }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Allow collection of usage data", // TODO
+                    text = stringResource(R.string.telemetry_toggle),
                     modifier = Modifier.weight(1f)
                 )
                 Switch(

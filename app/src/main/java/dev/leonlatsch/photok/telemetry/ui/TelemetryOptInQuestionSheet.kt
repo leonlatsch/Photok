@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices.NEXUS_5
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -104,24 +105,20 @@ private fun SheetContent(
                 .padding(20.dp)
         ) {
             Text(
-            text = "Help improve Photok",
+            text = stringResource(R.string.telemetry_sheet_title),
             style = MaterialTheme.typography.titleLarge,
         )
 
             Text(
-                text = "Photok can optionally send anonymous usage statistics to help improve the app."
+                text = stringResource(R.string.telemetry_sheet_paragraph_1)
             )
 
             Text(
-                text = "This information helps the developer understand how many people use Photok and which app versions are still active"
+                text = stringResource(R.string.telemetry_sheet_paragraph_2)
             )
 
             Text(
-                text = "No personal data, account information, or content you create in the app is collected."
-            )
-
-            Text(
-                text = "Sending anonymous usage data is optional and can be turned off at any time in Settings."
+                text = stringResource(R.string.telemetry_sheet_paragraph_3)
             )
 
             val context = LocalContext.current
@@ -132,7 +129,7 @@ private fun SheetContent(
                     context.openUrl(ppUrl)
                 }
             ) {
-                Text("Learn more") // TODO
+                Text(stringResource(R.string.telemetry_learn_more))
             }
 
             Column(
@@ -147,7 +144,7 @@ private fun SheetContent(
                         }.invokeOnCompletion { onDismissRequest() }
                     },
                 ) {
-                    Text("No thanks") // TODO
+                    Text(stringResource(R.string.telemetry_choice_no))
                 }
 
                 Button(
@@ -158,14 +155,14 @@ private fun SheetContent(
                         }.invokeOnCompletion { onDismissRequest() }
                     }
                 ) {
-                    Text("Enable anonymous usage statistics") // TODO
+                    Text(stringResource(R.string.telemetry_choice_yes))
                 }
             }
         }
     }
 }
 
-@Preview
+@Preview(device = NEXUS_5)
 @Composable
 private fun Preview() {
     AppTheme {
