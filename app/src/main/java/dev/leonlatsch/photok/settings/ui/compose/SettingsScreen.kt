@@ -52,6 +52,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,6 +91,7 @@ import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
+import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -113,6 +115,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
+    var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -192,6 +195,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_TELEMETRY) {
+            showUsageDataSheet = true
+            false
+        }
+
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_ABOUT) {
             fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
@@ -201,6 +209,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     SecretLaunchCodeDialog(
         show = showSecretLaunchCodeDialog,
         onDismissRequest = { showSecretLaunchCodeDialog = false },
+    )
+
+    TelemetryExplanationSheet(
+        visible = showUsageDataSheet,
+        onDismissRequest = { showUsageDataSheet = false },
     )
 }
 

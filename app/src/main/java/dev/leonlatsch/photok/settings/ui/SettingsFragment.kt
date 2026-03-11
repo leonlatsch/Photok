@@ -63,6 +63,7 @@ class SettingsFragment : Fragment() {
         const val KEY_ACTION_DONATE = "action_donate"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"
         const val KEY_ACTION_CREDITS = "action_credits"
+        const val KEY_ACTION_TELEMETRY = "action_telemetry"
         const val KEY_ACTION_ABOUT = "action_about"
     }
 }

@@ -22,6 +22,7 @@ import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
+import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -152,9 +153,14 @@ class Config(context: Context) {
     var imageViewerMuteVideoPlayer: Boolean
         get() = getBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, IMAGE_VIEWER_MUTE_VIDEO_PLAYER_DEFAULT)
         set(value) = putBoolean(IMAGE_VIEWER_MUTE_VIDEO_PLAYER, value)
+
     var imageViewerPlaybackSpeed: Float
         get() = getFloat(IMAGE_VIEWER_PLAYBACK_SPEED, IMAGE_VIEWER_PLAYBACK_SPEED_DEFAULT)
         set(value) = putFloat(IMAGE_VIEWER_PLAYBACK_SPEED, value)
+
+    var telemetryEnabled: Boolean
+        get() = getBoolean(TELEMETRY_ENABLED, TelemetryEnabledByDefault)
+        set(value) = putBoolean(TELEMETRY_ENABLED, value)
 
     // region put/get methods
 
@@ -262,5 +268,7 @@ class Config(context: Context) {
 
         const val IMAGE_VIEWER_PLAYBACK_SPEED = "imageViewer^playbackSpeed"
         const val IMAGE_VIEWER_PLAYBACK_SPEED_DEFAULT = 1f
+
+        const val TELEMETRY_ENABLED = "telemetry^enabled"
     }
 }

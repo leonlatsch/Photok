@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,8 +52,12 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var encryptionManager: EncryptionManager
+
     @Inject
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
+
+    @Inject
+    lateinit var telemetryService: TelemetryService
 
     val state = MutableStateFlow(ApplicationState.LOCKED)
 
@@ -63,6 +68,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     override fun onCreate() {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        telemetryService.setup()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
