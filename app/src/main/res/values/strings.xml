@@ -204,7 +204,7 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string>
     <string name="settings_other_credits_summary">Contributors and credits</string>
-    <string name="settings_other_telemetry_title">Usage Data</string>
+    <string name="settings_other_telemetry_title">Data collection</string>
     <string name="settings_other_telemetry_summary">Manage collection of usage data</string>
     <string name="settings_other_about_title">About</string>
     <string name="settings_other_about_summary">Information about Photok</string>
