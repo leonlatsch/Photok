@@ -18,19 +18,24 @@ package dev.leonlatsch.photok.telemetry.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,30 +43,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelemetryExplanationSheet(visible: Boolean, onDismissRequest: () -> Unit) {
-    if (visible) {
-        val viewModel: TelemetryViewModel = hiltViewModel()
-        val enabledState by viewModel.enabled.collectAsStateWithLifecycle()
+fun TelemetryOptInQuestionSheet() {
+    val config = LocalConfig.current
+    val viewModel: TelemetryViewModel = hiltViewModel()
 
+    var visible by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        config ?: return@LaunchedEffect
+
+        if (!TelemetryEnabledByDefault && !config.telemetryAskedForOptIn && !config.justFinishedSetup) {
+            delay(300)
+            visible = true
+            config.telemetryAskedForOptIn = true
+        }
+    }
+
+    if (visible) {
         SheetContent(
-            enabled = enabledState,
-            updateEnabled = viewModel::updateTelemetryEnabled,
-            onDismissRequest = onDismissRequest,
+            updateEnabled = {
+                viewModel.updateTelemetryEnabled(it)
+            },
+            onDismissRequest = { visible = false },
         )
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SheetContent(
-    enabled: Boolean,
     updateEnabled: (Boolean) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
@@ -69,11 +89,14 @@ private fun SheetContent(
         skipPartiallyExpanded = true
     )
 
+    val scope = rememberCoroutineScope()
+
     ModalBottomSheet(
         sheetState = state,
         onDismissRequest = onDismissRequest,
         dragHandle = null,
     ) {
+
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
@@ -81,16 +104,24 @@ private fun SheetContent(
                 .padding(20.dp)
         ) {
             Text(
-                text = "Usage Data Collection", // TODO
-                style = MaterialTheme.typography.titleLarge,
+            text = "Help improve Photok",
+            style = MaterialTheme.typography.titleLarge,
+        )
+
+            Text(
+                text = "Photok can optionally send anonymous usage statistics to help improve the app."
             )
 
             Text(
-                text = "Photok uses a privacy friendly analytics service called TelemetryDeck.", // TODO
+                text = "This information helps the developer understand how many people use Photok and which app versions are still active"
             )
 
             Text(
-                text = "The data processed by TelemetryDeck is completely anonymized and does not allow any conclusions to be drawn about personal information." // TODO
+                text = "No personal data, account information, or content you create in the app is collected."
+            )
+
+            Text(
+                text = "Sending anonymous usage data is optional and can be turned off at any time in Settings."
             )
 
             val context = LocalContext.current
@@ -104,17 +135,31 @@ private fun SheetContent(
                 Text("Learn more") // TODO
             }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    text = "Allow collection of usage data", // TODO
-                    modifier = Modifier.weight(1f)
-                )
-                Switch(
-                    checked = enabled,
-                    onCheckedChange = { updateEnabled(it) }
-                )
+                TextButton(
+                    onClick = {
+                        updateEnabled(false)
+                        scope.launch {
+                            state.hide()
+                        }.invokeOnCompletion { onDismissRequest() }
+                    },
+                ) {
+                    Text("No thanks") // TODO
+                }
+
+                Button(
+                    onClick = {
+                        updateEnabled(true)
+                        scope.launch {
+                            state.hide()
+                        }.invokeOnCompletion { onDismissRequest() }
+                    }
+                ) {
+                    Text("Enable anonymous usage statistics") // TODO
+                }
             }
         }
     }
@@ -125,7 +170,6 @@ private fun SheetContent(
 private fun Preview() {
     AppTheme {
         SheetContent(
-            enabled = true,
             updateEnabled = {},
             onDismissRequest = {},
         )

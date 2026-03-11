@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,7 +41,8 @@ import javax.inject.Inject
 class SetupViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager
+    private val passwordManager: PasswordManager,
+    private val config: Config,
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -81,6 +83,7 @@ class SetupViewModel @Inject constructor(
         setupState = if (validateBothPasswords()) {
             passwordManager.storePassword(password)
             encryptionManager.initialize(this@SetupViewModel.password)
+            config.justFinishedSetup = true
             SetupState.FINISHED
         } else {
             SetupState.SETUP

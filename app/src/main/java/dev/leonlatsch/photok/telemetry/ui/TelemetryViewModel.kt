@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class TelemetryExplanationViewModel @Inject constructor(
+class TelemetryViewModel @Inject constructor(
     private val config: Config,
     private val telemetryService: TelemetryService,
 ) : ViewModel() {

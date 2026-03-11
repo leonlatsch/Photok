@@ -162,6 +162,13 @@ class Config(context: Context) {
         get() = getBoolean(TELEMETRY_ENABLED, TelemetryEnabledByDefault)
         set(value) = putBoolean(TELEMETRY_ENABLED, value)
 
+    var telemetryAskedForOptIn: Boolean
+        get() = getBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT)
+        set(value) = putBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, value)
+
+    // In memory flags
+    var justFinishedSetup: Boolean = false
+
     // region put/get methods
 
     fun getString(key: String, default: String?) = preferences.getString(key, default)
@@ -270,5 +277,8 @@ class Config(context: Context) {
         const val IMAGE_VIEWER_PLAYBACK_SPEED_DEFAULT = 1f
 
         const val TELEMETRY_ENABLED = "telemetry^enabled"
+
+        const val TELEMETRY_ASSSKED_FOR_OPT_IN = "telemetry^askedForOptIn"
+        const val TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT = false
     }
 }
