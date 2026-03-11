@@ -187,6 +187,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string>
     <string name="settings_other_credits_summary">Bijdragers en credits</string>
+    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
+    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
     <string name="settings_other_about_title">Over</string>
     <string name="settings_other_about_summary">Informatie over Photok</string>
 
@@ -318,4 +320,14 @@
     <string name="video_player_pause">Pause</string> <!-- TODO -->
     <string name="video_player_mute">Mute</string> <!-- TODO -->
     <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+
+    <!-- Telemetry -->
+    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
+    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
+    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
+    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
+    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
+    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
+    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
+    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
 </resources>
