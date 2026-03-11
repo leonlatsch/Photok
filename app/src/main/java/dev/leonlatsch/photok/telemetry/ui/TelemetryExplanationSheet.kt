@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,63 +50,84 @@ fun TelemetryExplanationSheet(visible: Boolean, onDismissRequest: () -> Unit) {
         val viewModel: TelemetryExplanationViewModel = hiltViewModel()
         val enabledState by viewModel.enabled.collectAsStateWithLifecycle()
 
-        val state = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
+        SheetContent(
+            enabled = enabledState,
+            updateEnabled = viewModel::updateTelemetryEnabled,
+            onDismissRequest = onDismissRequest,
         )
+    }
+}
 
-        AppTheme {
-            ModalBottomSheet(
-                sheetState = state,
-                onDismissRequest = onDismissRequest,
-                dragHandle = null,
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = "Usage Data Collection", // TODO
-                        style = MaterialTheme.typography.titleLarge,
-                    )
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SheetContent(
+    enabled: Boolean,
+    updateEnabled: (Boolean) -> Unit,
+    onDismissRequest: () -> Unit,
+) {
+    val state = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
 
-                    Text(
-                        text = "Photok uses a privacy friendly analytics service called TelemetryDeck.", // TODO
-                    )
+    ModalBottomSheet(
+        sheetState = state,
+        onDismissRequest = onDismissRequest,
+        dragHandle = null,
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp)
+        ) {
+            Text(
+                text = "Usage Data Collection", // TODO
+                style = MaterialTheme.typography.titleLarge,
+            )
 
-                    Text(
-                        text = "The data processed by TelemetryDeck is completely anonymized and does not allow any conclusions to be drawn about personal information." // TODO
-                    )
+            Text(
+                text = "Photok uses a privacy friendly analytics service called TelemetryDeck.", // TODO
+            )
 
-                    val context = LocalContext.current
-                    val ppUrl = stringResource(R.string.about_privacy_policy_url)
+            Text(
+                text = "The data processed by TelemetryDeck is completely anonymized and does not allow any conclusions to be drawn about personal information." // TODO
+            )
 
-                    TextButton(
-                        onClick = {
-                            context.openUrl(ppUrl)
-                        }
-                    ) {
-                        Text("Learn more") // TODO
-                    }
+            val context = LocalContext.current
+            val ppUrl = stringResource(R.string.about_privacy_policy_url)
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Allow collection of usage data", // TODO
-                            modifier = Modifier.weight(1f)
-                        )
-                        Switch(
-                            checked = enabledState,
-                            onCheckedChange = {
-                                viewModel.updateTelemetryEnabled(it)
-                            }
-                        )
-                    }
-
+            TextButton(
+                onClick = {
+                    context.openUrl(ppUrl)
                 }
+            ) {
+                Text("Learn more") // TODO
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Allow collection of usage data", // TODO
+                    modifier = Modifier.weight(1f)
+                )
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = { updateEnabled(it) }
+                )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    AppTheme {
+        SheetContent(
+            enabled = true,
+            updateEnabled = {},
+            onDismissRequest = {},
+        )
     }
 }

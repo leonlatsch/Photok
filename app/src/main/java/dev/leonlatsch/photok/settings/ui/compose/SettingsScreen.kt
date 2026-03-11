@@ -96,7 +96,8 @@ import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
-val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
+val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
+    compositionLocalOf { emptyMap<String, String>() }
 
 fun createBackupFilename(): String {
     return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
@@ -108,11 +109,15 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val context = LocalContext.current
     val activity = LocalActivity.current
 
-    val backupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
-        uri ?: return@rememberLauncherForActivityResult
-        fragment ?: return@rememberLauncherForActivityResult
-        BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(fragment.parentFragmentManager)
-    }
+    val backupLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+            uri ?: return@rememberLauncherForActivityResult
+            fragment ?: return@rememberLauncherForActivityResult
+            BackupBottomSheetDialogFragment(
+                uri,
+                BackupStrategy.Name.Default
+            ).show(fragment.parentFragmentManager)
+        }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
     var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
@@ -244,71 +249,86 @@ fun SettingsContent(
 ) {
     val fragment = LocalFragment.current
 
-    AppTheme {
-        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.settings_title)
-                        )
-                    },
-                    scrollBehavior = scrollBehavior,
-                )
-            }
-        ) { contentPadding ->
-            Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .verticalScroll(rememberScrollState())
-                    .padding(contentPadding)
-            ) {
-                for (section in screenConfig.sections) {
-                    val isLast = section == screenConfig.sections.last()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        topBar = {
+            LargeTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.settings_title)
+                    )
+                },
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { contentPadding ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .verticalScroll(rememberScrollState())
+                .padding(contentPadding)
+        ) {
+            for (section in screenConfig.sections) {
+                val isLast = section == screenConfig.sections.last()
 
-                    PreferenceSectionView(
-                        section = section,
-                    ) {
-                        for (preference in section.preferences) {
-                            when (preference) {
-                                is Preference.Simple -> {
-                                    PreferenceView(
-                                        icon = painterResource(preference.icon),
-                                        title = stringResource(preference.title),
-                                        summary = stringResource(preference.summary),
-                                        onClick = {
-                                            fragment ?: return@PreferenceView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
-                                        }
-                                    )
-                                }
-                                is Preference.Switch -> {
-                                    PreferenceSwitchView(
-                                        preference = preference,
-                                        onSwitchChange = { value ->
-                                            fragment ?: return@PreferenceSwitchView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
-                                        },
-                                    )
-                                }
-                                is Preference.Enum<*> -> {
-                                    PreferenceEnumView(
-                                        preference = preference,
-                                        onItemSelected = { value ->
-                                            fragment ?: return@PreferenceEnumView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
-                                        },
-                                    )
-                                }
+                PreferenceSectionView(
+                    section = section,
+                ) {
+                    for (preference in section.preferences) {
+                        when (preference) {
+                            is Preference.Simple -> {
+                                PreferenceView(
+                                    icon = painterResource(preference.icon),
+                                    title = stringResource(preference.title),
+                                    summary = stringResource(preference.summary),
+                                    onClick = {
+                                        fragment ?: return@PreferenceView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                null
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+
+                            is Preference.Switch -> {
+                                PreferenceSwitchView(
+                                    preference = preference,
+                                    onSwitchChange = { value ->
+                                        fragment ?: return@PreferenceSwitchView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                value
+                                            )
+                                        )
+                                    },
+                                )
+                            }
+
+                            is Preference.Enum<*> -> {
+                                PreferenceEnumView(
+                                    preference = preference,
+                                    onItemSelected = { value ->
+                                        fragment ?: return@PreferenceEnumView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                value
+                                            )
+                                        )
+                                    },
+                                )
                             }
                         }
                     }
+                }
 
-                    if (!isLast) {
-                        HorizontalDivider()
-                    }
+                if (!isLast) {
+                    HorizontalDivider()
                 }
             }
         }
@@ -431,7 +451,7 @@ fun PreferenceSwitchView(
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
-    
+
     val summary = stringResource(preference.summary)
     val value = preferencesValues[preference.key] as? Boolean ?: preference.default
 
