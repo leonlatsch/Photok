@@ -82,10 +82,9 @@
     <string name="view_photo_detail_file_type_label">Dosya Türü</string>
     <string name="view_photo_detail_size_label">Dosya Boyutu</string>
     <string name="view_photo_detail_last_modified">Son düzenleme</string>
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
-
+    <string name="view_photo_loop_video_disabled">Döngü kapalı</string>
+    <string name="view_photo_loop_video_enabled">Döngü açık</string>
+    <string name="view_photo_video_playback_speed">Oynatma hızı</string>
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Kilitle</string>
     <string name="menu_main_settings">Ayarlar</string>
@@ -316,8 +315,8 @@
     <string name="sorting_restore_default">Varsayılanı Geri Yükle</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Oynat</string>
+    <string name="video_player_pause">Duraklat</string>
+    <string name="video_player_mute">Sesi kapat</string>
+    <string name="video_player_unmute">Sesi aç</string>
 </resources>
