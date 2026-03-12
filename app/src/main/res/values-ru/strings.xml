@@ -318,16 +318,16 @@
     <!-- Sorting -->
     <string name="sorting_sort">Sort</string> <!-- TODO -->
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">По возрастанию</string>
+    <string name="sorting_order_desc_label">По убыванию</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Дата импорта</string>
+    <string name="sorting_field_filename_label">Имя файла</string>
     <string name="sorting_field_size_label">Размер файла</string>
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_added_to_album_label">Дата добавления</string>
+    <string name="sorting_field_last_modified">Изменено</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Сбросить</string>
 
     <!-- Video Player -->
     <string name="video_player_play">Play</string> <!-- TODO -->
