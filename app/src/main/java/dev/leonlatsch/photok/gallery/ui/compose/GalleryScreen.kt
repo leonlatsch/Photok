@@ -41,6 +41,7 @@ import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
+import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
@@ -121,5 +122,6 @@ fun GalleryScreen(
         }
 
         NewFeaturesSheet()
+        TelemetryOptInQuestionSheet()
     }
 }

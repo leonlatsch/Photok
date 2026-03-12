@@ -52,6 +52,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,11 +91,13 @@ import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
 import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
+import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
-val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> = compositionLocalOf { emptyMap<String, String>() }
+val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
+    compositionLocalOf { emptyMap<String, String>() }
 
 fun createBackupFilename(): String {
     return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
@@ -106,13 +109,18 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val context = LocalContext.current
     val activity = LocalActivity.current
 
-    val backupLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
-        uri ?: return@rememberLauncherForActivityResult
-        fragment ?: return@rememberLauncherForActivityResult
-        BackupBottomSheetDialogFragment(uri, BackupStrategy.Name.Default).show(fragment.parentFragmentManager)
-    }
+    val backupLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+            uri ?: return@rememberLauncherForActivityResult
+            fragment ?: return@rememberLauncherForActivityResult
+            BackupBottomSheetDialogFragment(
+                uri,
+                BackupStrategy.Name.Default
+            ).show(fragment.parentFragmentManager)
+        }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
+    var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -192,6 +200,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_TELEMETRY) {
+            showUsageDataSheet = true
+            false
+        }
+
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_ABOUT) {
             fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
@@ -201,6 +214,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     SecretLaunchCodeDialog(
         show = showSecretLaunchCodeDialog,
         onDismissRequest = { showSecretLaunchCodeDialog = false },
+    )
+
+    TelemetryExplanationSheet(
+        visible = showUsageDataSheet,
+        onDismissRequest = { showUsageDataSheet = false },
     )
 }
 
@@ -231,71 +249,86 @@ fun SettingsContent(
 ) {
     val fragment = LocalFragment.current
 
-    AppTheme {
-        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.settings_title)
-                        )
-                    },
-                    scrollBehavior = scrollBehavior,
-                )
-            }
-        ) { contentPadding ->
-            Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .verticalScroll(rememberScrollState())
-                    .padding(contentPadding)
-            ) {
-                for (section in screenConfig.sections) {
-                    val isLast = section == screenConfig.sections.last()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        topBar = {
+            LargeTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.settings_title)
+                    )
+                },
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { contentPadding ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .verticalScroll(rememberScrollState())
+                .padding(contentPadding)
+        ) {
+            for (section in screenConfig.sections) {
+                val isLast = section == screenConfig.sections.last()
 
-                    PreferenceSectionView(
-                        section = section,
-                    ) {
-                        for (preference in section.preferences) {
-                            when (preference) {
-                                is Preference.Simple -> {
-                                    PreferenceView(
-                                        icon = painterResource(preference.icon),
-                                        title = stringResource(preference.title),
-                                        summary = stringResource(preference.summary),
-                                        onClick = {
-                                            fragment ?: return@PreferenceView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
-                                        }
-                                    )
-                                }
-                                is Preference.Switch -> {
-                                    PreferenceSwitchView(
-                                        preference = preference,
-                                        onSwitchChange = { value ->
-                                            fragment ?: return@PreferenceSwitchView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
-                                        },
-                                    )
-                                }
-                                is Preference.Enum<*> -> {
-                                    PreferenceEnumView(
-                                        preference = preference,
-                                        onItemSelected = { value ->
-                                            fragment ?: return@PreferenceEnumView
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
-                                        },
-                                    )
-                                }
+                PreferenceSectionView(
+                    section = section,
+                ) {
+                    for (preference in section.preferences) {
+                        when (preference) {
+                            is Preference.Simple -> {
+                                PreferenceView(
+                                    icon = painterResource(preference.icon),
+                                    title = stringResource(preference.title),
+                                    summary = stringResource(preference.summary),
+                                    onClick = {
+                                        fragment ?: return@PreferenceView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                null
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+
+                            is Preference.Switch -> {
+                                PreferenceSwitchView(
+                                    preference = preference,
+                                    onSwitchChange = { value ->
+                                        fragment ?: return@PreferenceSwitchView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                value
+                                            )
+                                        )
+                                    },
+                                )
+                            }
+
+                            is Preference.Enum<*> -> {
+                                PreferenceEnumView(
+                                    preference = preference,
+                                    onItemSelected = { value ->
+                                        fragment ?: return@PreferenceEnumView
+                                        handleUiEvent(
+                                            SettingsUiEvent.OnPreferenceClick(
+                                                preference,
+                                                value
+                                            )
+                                        )
+                                    },
+                                )
                             }
                         }
                     }
+                }
 
-                    if (!isLast) {
-                        HorizontalDivider()
-                    }
+                if (!isLast) {
+                    HorizontalDivider()
                 }
             }
         }
@@ -418,7 +451,7 @@ fun PreferenceSwitchView(
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
-    
+
     val summary = stringResource(preference.summary)
     val value = preferencesValues[preference.key] as? Boolean ?: preference.default
 
