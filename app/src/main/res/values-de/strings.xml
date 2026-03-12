@@ -206,6 +206,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string>
     <string name="settings_other_credits_summary">Mitwirkende und Credits</string>
+    <string name="settings_other_telemetry_title">Nutzungsstatistiken</string>
+    <string name="settings_other_telemetry_summary">Verwaltung der Erfassung von Nutzungsstatistiken</string>
     <string name="settings_other_about_title">Über</string>
     <string name="settings_other_about_summary">Informationen über Photok</string>
 
@@ -339,4 +341,14 @@
     <string name="video_player_pause">Pause</string>
     <string name="video_player_mute">Stummschalten</string>
     <string name="video_player_unmute">Stummschaltung aufheben</string>
+
+    <!-- Telemetry -->
+    <string name="telemetry_sheet_title">Hilf mit, Photok zu verbessern</string>
+    <string name="telemetry_sheet_paragraph_1">Photok kann optional anonyme Nutzungsstatistiken senden, um die App zu verbessern.</string>
+    <string name="telemetry_sheet_paragraph_2">Die verarbeiteten Daten sind vollständig anonymisiert und lassen keine Rückschlüsse auf personenbezogene Daten zu.</string>
+    <string name="telemetry_sheet_paragraph_3">Das Senden anonymer Nutzungsdaten ist optional und kann jederzeit in den Einstellungen deaktiviert werden.</string>
+    <string name="telemetry_learn_more">Mehr erfahren</string>
+    <string name="telemetry_choice_no">Nein danke</string>
+    <string name="telemetry_choice_yes">Anonyme Nutzungsdaten teilen</string>
+    <string name="telemetry_toggle">Teilen von Nutzungsdaten erlauben</string>
 </resources>

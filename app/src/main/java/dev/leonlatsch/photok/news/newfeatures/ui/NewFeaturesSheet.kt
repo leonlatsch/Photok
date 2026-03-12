@@ -67,6 +67,7 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -115,6 +116,7 @@ fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Uni
         config ?: return@LaunchedEffect
 
         if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
+            delay(300)
             visible = true
             config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
         }
