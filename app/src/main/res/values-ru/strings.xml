@@ -192,12 +192,12 @@
 
     <string name="settings_other_title">Прочее</string>
     <string name="settings_other_feedback_title">Обратная связь</string>
-    <string name="settings_other_feedback_summary">Отправить письмо мне с отзывом</string>
-    <string name="settings_other_feedback_mail_subject">Отзыв о Photok</string>
-    <string name="settings_other_feedback_mail_body">Напишите отзыв о Photok :)</string>
+    <string name="settings_other_feedback_summary">Написать разработчику</string>
+    <string name="settings_other_feedback_mail_subject">Отзыв о приложении</string>
+    <string name="settings_other_feedback_mail_body">Оставить отзыв о Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Поддержать разработку</string>
-    <string name="settings_other_donate_summary">Поддержите разработку Photok</string>
+    <string name="settings_other_donate_title">Поддержать проект</string>
+    <string name="settings_other_donate_summary">Пожертвование разработчику</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Исходный код</string>
     <string name="settings_other_sourcecode_summary">Внести вклад в Photok</string>
@@ -205,7 +205,7 @@
     <string name="settings_other_credits_title">Титры</string>
     <string name="settings_other_credits_summary">Вкладчики и титры</string>
     <string name="settings_other_about_title">О приложении</string>
-    <string name="settings_other_about_summary">Информация о Photok</string>
+    <string name="settings_other_about_summary">Информация</string>
 
     <!-- CREDITS -->
     <string name="credits_contributors_title">Вкладчики</string>
@@ -276,7 +276,7 @@
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
+    <string name="migration_initial_explaination">В этой версии Photok представлен новый метод шифрования. Для доступа к галерее необходимо выполнить миграцию данных.</string>
     <string name="migration_initial_button">Get started</string> <!-- TODO -->
 
     <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
