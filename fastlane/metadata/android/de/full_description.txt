@@ -1,24 +1,31 @@
-Photok ist eine freie Open-Source-Galerie-App für Android.
-Importierte Dateien werden lokal auf dem Gerät mit AES-256 verschlüsselt und nur beim Nutzen der App im Arbeitsspeicher entschlüsselt.
-Dies hebt Photok von anderen verschlüsselten Galerie-Apps ab.
+<b>Photok – Privater Foto-Tresor, Fotos & Videos verstecken (Open Source)</b>
 
-Photok ist komplett kostenlos, Open Source und werbefrei. Es wird von mir (Leon) und freiwilligen Helfern als ein Hobby entwickelt.
+Photok ist ein sicherer Foto-Tresor, mit dem du Fotos und Videos zuverlässig verstecken kannst. Schütze deine privaten Medien mit starker AES-256-Verschlüsselung, erstelle eine verschlüsselte Galerie und bewahre sensible Erinnerungen sicher auf deinem eigenen Gerät auf.
 
-<b>Features</b>
+Alle Dateien werden lokal auf deinem Gerät verschlüsselt und nur im Arbeitsspeicher entschlüsselt, während du die App verwendest. Ein Cloud-Upload ist nicht erforderlich.
 
-- Importiere Fotos und Videos aus deiner Galerie
-- Sortieren von Dateien in Alben
-- Exportiere Fotos zurück in deine Galerie
-- Erstelle und stelle Backups wieder her
-- Senden an Photok
-- App verstecken
-- Automatisches Löschen beim Importieren & Exportieren
+Photok ist Open Source, werbefrei und verfolgt einen konsequenten Privacy-First-Ansatz. Die App verwendet minimale, datenschutzfreundliche Nutzungsanalysen, um Stabilität und Benutzererlebnis zu verbessern.
 
-<b>Vorteile</b>
+<b>Warum Photok?</b>
+• Fotos und Videos sicher verstecken
+• Privater, verschlüsselter Galerie-Tresor mit AES-256
+• Offline-Speicherung – deine Dateien bleiben auf deinem Gerät
+• Open Source und transparente Sicherheit
+• Werbefreie Nutzung
+• Entwickelt von einem unabhängigen Entwickler
 
-- Verstecke deine sensiblen Fotos vor Anderen
-- Schütze deine Fotos vor Datendiebstahl
+<b>Funktionen des Foto-Tresors</b>
+• Fotos & Videos aus deiner Galerie importieren
+• Private Medien in Alben organisieren
+• Dateien jederzeit wieder exportieren
+• Verschlüsselte Backups erstellen und wiederherstellen
+• Tresor per Fingerabdruck entsperren
+• Medien direkt an Photok teilen
+• App-Icon optional ausblenden
+• Originaldateien nach dem Import automatisch löschen
 
-Photok on GitHub: https://github.com/leonlatsch/Photok
+<b>Datenschutz im Fokus</b>
+Photok wurde für Menschen entwickelt, die echte Kontrolle über ihre privaten Fotos und Videos möchten.
+Die Verschlüsselung erfolgt vollständig auf deinem Gerät. Datenschutzfreundliche Nutzungsanalysen dienen ausschließlich der Verbesserung der App und werden niemals für Werbung oder app-übergreifendes Tracking verwendet.
 
-Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+<a href="https://github.com/leonlatsch/Photok">Zum Open-Source-Projekt auf GitHub.</a>

@@ -1,24 +1,31 @@
-Photok is a free and open-source gallery app for Android.
-Imported media files are encrypted on the device using AES-256 and only decrypted in memory when using the app.
-This makes Photok different from other encrypted gallery apps.
+<b>Photok – Private Photo Vault, Hide Photos & Videos (Open Source)</b>
 
-Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
+Photok is a secure private photo vault that helps you hide photos and videos using strong AES-256 encryption. Protect your sensitive media, create an encrypted gallery, and keep your private memories safe on your own device.
 
-<b>Features</b>
+All files are encrypted locally and only decrypted in memory while you use the app. No cloud upload is required.
 
-- Import photos and videos from your gallery
-- Organize files in albums
-- Export photos back to your gallery
-- Create and restore backups
-- Share to Photok
-- Hide app
-- Auto-delete when importing & exporting
+Photok is open source, ad-free, and built with a privacy-first philosophy. The app uses minimal privacy-friendly analytics to improve stability and user experience.
 
-<b>Benefits</b>
+<b>Why Choose Photok?</b>
+• Hide photos and videos securely
+• Private encrypted gallery with AES-256 protection
+• Offline vault — your files stay on your device
+• Open source and transparent security
+• Ad-free user experience
+• Built by an independent developer
 
-- Hide your sensitive photos from others
-- Protect your photos from data theft
+<b>Vault Features</b>
+• Import photos & videos from your gallery
+• Organize private media into albums
+• Export files anytime
+• Create and restore encrypted backups
+• Unlock your vault with fingerprint authentication
+• Share media directly to the vault
+• Option to hide the app icon
+• Automatically delete original files after import
 
-Photok on GitHub: https://github.com/leonlatsch/Photok
+<b>Privacy-Focused Design</b>
+Photok is designed for people who want real control over their private photos and videos.
+Encryption happens on your device. Privacy-friendly usage analytics are limited to improving the app and are never used for advertising or cross-app tracking.
 
-Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a>, <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+<a href="https://github.com/leonlatsch/Photok">View the open-source project on GitHub.</a>
