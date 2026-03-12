@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.settings.ui.compose.SettingsScreen
 import dev.leonlatsch.photok.ui.LocalFragment
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,11 +44,13 @@ class SettingsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                CompositionLocalProvider(
-                    LocalFragment provides this@SettingsFragment,
-                    LocalConfig provides config,
-                ) {
-                    SettingsScreen()
+                AppTheme {
+                    CompositionLocalProvider(
+                        LocalFragment provides this@SettingsFragment,
+                        LocalConfig provides config,
+                    ) {
+                        SettingsScreen()
+                    }
                 }
             }
         }
@@ -63,6 +66,7 @@ class SettingsFragment : Fragment() {
         const val KEY_ACTION_DONATE = "action_donate"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"
         const val KEY_ACTION_CREDITS = "action_credits"
+        const val KEY_ACTION_TELEMETRY = "action_telemetry"
         const val KEY_ACTION_ABOUT = "action_about"
     }
 }

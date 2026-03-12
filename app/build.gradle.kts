@@ -45,6 +45,8 @@ android {
     productFlavors {
         create("play") {
             dimension = "distribution"
+            buildConfigField("Boolean", "PLAY", "true")
+
             if (!isReleaseBuildInvocation) {
                 applicationIdSuffix = ".play"
                 versionNameSuffix = "-play-debug"
@@ -53,6 +55,8 @@ android {
 
         create("foss") {
             dimension = "distribution"
+            buildConfigField("Boolean", "PLAY", "false")
+
             if (!isReleaseBuildInvocation) {
                 applicationIdSuffix = ".foss"
                 versionNameSuffix = "-foss-debug"
@@ -107,7 +111,7 @@ licenseReport {
 }
 
 fun DependencyHandler.playImplementation(dependencyNotation: Any) {
-    add("fossImplementation", dependencyNotation)
+    add("playImplementation", dependencyNotation)
 }
 
 fun DependencyHandler.fossImplementation(dependencyNotation: Any) {
@@ -204,4 +208,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+
+    // Telemetry
+    implementation("com.telemetrydeck:kotlin-sdk:6.3.0")
 }
