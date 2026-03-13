@@ -59,6 +59,17 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
+## Telemetry
+
+### Google Play
+Telemetry is *enabled* by default. Users can disable it at any time in the settings.
+
+### FOSS (F-Droid, GitHub, etc.)
+Telemetry is *disabled* by default. Users can enable it at any time in the settings.  
+In addition, Photok will prompt the user to enable telemetry after the first unlock (not during initial setup).
+
+No data is transmitted unless the user has explicitly opted in. This behavior is required to avoid the *Tracking* anti-feature flag in F-Droid and aligns with user expectations for apps installed from F-Droid.
+
 ## Related Tools
 
 [![RecWare-Photok](https://github-readme-stats.vercel.app/api/pin/?username=Blk-S-Bellamy&repo=RecWare-Photok&show_owner=true&theme=transparent)](https://github.com/Blk-S-Bellamy/RecWare-Photok)
