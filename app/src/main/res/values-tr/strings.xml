@@ -187,7 +187,7 @@
     <string name="settings_other_credits_title">Katkıda Bulunanlar</string>
     <string name="settings_other_credits_summary">Katkıda bulunanlar ve teşekkürler</string>
     <string name="settings_other_telemetry_title">Veri toplama</string>
-    <string name="settings_other_telemetry_summary"> Kullanım verilerinin toplanmasını yönet</string>
+    <string name="settings_other_telemetry_summary">Kullanım verilerinin toplanmasını yönet</string>
     <string name="settings_other_about_title">Hakkında</string>
     <string name="settings_other_about_summary">Photok hakkında bilgi</string>
 
