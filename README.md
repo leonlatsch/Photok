@@ -61,6 +61,8 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 
 ## Telemetry
 
+Photok can optionally send anonymous usage statistics to help improve the app.
+
 ### Google Play
 Telemetry is *enabled* by default. Users can disable it at any time in the settings.
 
