@@ -202,8 +202,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">致谢</string>
     <string name="settings_other_credits_summary">贡献者和致谢</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">数据收集</string>
+    <string name="settings_other_telemetry_summary">管理使用情况数据收集</string>
     <string name="settings_other_about_title">关于</string>
     <string name="settings_other_about_summary">有关 Photok 的信息</string>
 
@@ -339,12 +339,12 @@
     <string name="video_player_unmute">取消静音</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">帮助改进 Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok 可以可选地发送匿名的使用统计数据帮助改进应用。</string>
+    <string name="telemetry_sheet_paragraph_2">所处理的数据完全匿名不允许得出任何有关个人数据的结论。</string>
+    <string name="telemetry_sheet_paragraph_3">发送匿名的使用情况数据是可选的，可随时在设置中关闭。</string>
+    <string name="telemetry_learn_more">了解更多</string>
+    <string name="telemetry_choice_no">不，谢谢</string>
+    <string name="telemetry_choice_yes">分享匿名使用情况数据</string>
+    <string name="telemetry_toggle">允许收集使用情况数据</string>
 </resources>
