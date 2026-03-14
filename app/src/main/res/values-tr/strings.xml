@@ -323,7 +323,7 @@
     <string name="video_player_unmute">Sesi aç</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Photok'un gelişmesine destek ol</string>
+    <string name="telemetry_sheet_title">Photok\'un gelişmesine destek ol</string>
     <string name="telemetry_sheet_paragraph_1">Photok, isteğe bağlı olarak anonim şekilde kullanım istatisliklerini uygulamayı geliştirmek için toplar.</string>
     <string name="telemetry_sheet_paragraph_2">İşlenen veriler tamamen anonimleştirilmiştir ve kişisel bilgiler hakkında herhangi bir sonuca varılmasına izin vermez.</string>
     <string name="telemetry_sheet_paragraph_3">Anonim kullanım verilerinin gönderilmesi isteğe bağlıdır ve ayarlardan istediğiniz zaman kapatılabilir.</string>
