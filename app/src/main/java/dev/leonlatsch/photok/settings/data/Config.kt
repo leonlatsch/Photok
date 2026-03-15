@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.settings.domain.models.PanicLockMotion
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import kotlinx.coroutines.CoroutineScope
@@ -114,6 +115,10 @@ class Config(context: Context) {
     var securityDialLaunchCode: String?
         get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
         set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
+
+    var securityPanicLock: PanicLockMotion
+        get() = PanicLockMotion.fromValue(getString(SECURITY_PANIC_LOCK, SECURITY_PANIC_LOCK_DEFAULT.value))
+        set(value) = putString(SECURITY_PANIC_LOCK, value.value)
 
     /**
      * Determines if files should be deleted after importing them.
@@ -241,6 +246,9 @@ class Config(context: Context) {
 
         const val SECURITY_DIAL_LAUNCH_CODE = "security^dialLaunchCode"
         const val SECURITY_DIAL_LAUNCH_CODE_DEFAULT = "1337"
+
+        const val SECURITY_PANIC_LOCK = "security^panicLock"
+        val SECURITY_PANIC_LOCK_DEFAULT = PanicLockMotion.None
 
         const val ADVANCED_DELETE_IMPORTED_FILES = "advanced^deleteImportedFiles"
         const val ADVANCED_DELETE_IMPORTED_FILES_DEFAULT = false

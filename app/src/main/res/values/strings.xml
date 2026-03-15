@@ -207,6 +207,11 @@
     <string name="settings_other_about_title">About</string>
     <string name="settings_other_about_summary">Information about Photok</string>
 
+    <string name="settings_pro_panic_lock_title">Panic Lock</string>
+    <string name="settings_pro_panic_lock_none">None</string>
+    <string name="settings_pro_panic_lock_shake">Shake to lock</string>
+    <string name="settings_pro_panic_lock_flip">Flip over to lock</string>
+
     <!-- CREDITS -->
     <string name="credits_contributors_title">Contributors</string>
     <string name="credits_contributors_hint">Visit Photok at GitHub to see all contributors</string>
