@@ -74,70 +74,75 @@ sealed interface Preference {
     ) : Preference
 }
 
-val PreferenceScreenConfigContent = listOf<PreferenceSection>(
-    PreferenceSection(
-        title = R.string.settings_category_app,
-        summary = null,
-        preferences = listOf(
-            Preference.Enum(
-                key = SYSTEM_DESIGN,
-                icon = R.drawable.ic_brush,
-                title = R.string.settings_app_design_title,
-                default = SYSTEM_DESIGN_DEFAULT,
-                possibleValues = SystemDesignEnum.entries,
+val PreferenceScreenConfigContent = buildList {
+    add(
+        PreferenceSection(
+            title = R.string.settings_category_app,
+            summary = null,
+            preferences = listOf(
+                Preference.Enum(
+                    key = SYSTEM_DESIGN,
+                    icon = R.drawable.ic_brush,
+                    title = R.string.settings_app_design_title,
+                    default = SYSTEM_DESIGN_DEFAULT,
+                    possibleValues = SystemDesignEnum.entries,
+                )
             )
         )
-    ),
-    PreferenceSection(
-        title = R.string.settings_category_gallery,
-        summary = null,
-        preferences = listOf(
-            Preference.Enum(
-                key = GALLERY_START_PAGE,
-                icon = R.drawable.ic_gallery_thumbnail,
-                title = R.string.settings_gallery_start_page_title,
-                default = GALLERY_START_PAGE_DEFAULT,
-                possibleValues = StartPage.entries,
+    )
+    add(
+        PreferenceSection(
+            title = R.string.settings_category_gallery,
+            summary = null,
+            preferences = listOf(
+                Preference.Enum(
+                    key = GALLERY_START_PAGE,
+                    icon = R.drawable.ic_gallery_thumbnail,
+                    title = R.string.settings_gallery_start_page_title,
+                    default = GALLERY_START_PAGE_DEFAULT,
+                    possibleValues = StartPage.entries,
+                )
             )
         )
-    ),
-    PreferenceSection(
-        title = R.string.settings_category_security,
-        summary = null,
-        preferences = listOf(
-            Preference.Switch(
-                key = SECURITY_ALLOW_SCREENSHOTS,
-                icon = R.drawable.ic_screen_lock,
-                title = R.string.settings_security_allow_screenshots_title,
-                summary = R.string.settings_security_allow_screenshots_summary,
-                default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
-            ),
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
-                icon = R.drawable.ic_key,
-                title = R.string.change_password_title,
-                summary = R.string.settings_security_change_password_summary,
-            ),
-            Preference.Switch(
-                key = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED,
-                icon = R.drawable.ic_fingerprint,
-                title = R.string.settings_security_biometric_title,
-                summary = R.string.settings_security_biometric_summary,
-                default = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT,
-            ),
-            Preference.Enum(
-                key = Config.SECURITY_LOCK_TIMEOUT,
-                icon = R.drawable.ic_schedule,
-                title = R.string.settings_security_timeout_title,
-                default = LockTimeout.FiveMinute,
-                possibleValues = LockTimeout.entries,
-            ),
-            Preference.Simple(
-                key = Config.SECURITY_DIAL_LAUNCH_CODE,
-                icon = R.drawable.ic_dialpad,
-                title = R.string.settings_security_launch_code_title,
-                summary = R.string.settings_security_launch_code_summary,
-            ),
+    )
+    add(
+        PreferenceSection(
+            title = R.string.settings_category_security,
+            summary = null,
+            preferences = listOf(
+                Preference.Switch(
+                    key = SECURITY_ALLOW_SCREENSHOTS,
+                    icon = R.drawable.ic_screen_lock,
+                    title = R.string.settings_security_allow_screenshots_title,
+                    summary = R.string.settings_security_allow_screenshots_summary,
+                    default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
+                    icon = R.drawable.ic_key,
+                    title = R.string.change_password_title,
+                    summary = R.string.settings_security_change_password_summary,
+                ),
+                Preference.Switch(
+                    key = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED,
+                    icon = R.drawable.ic_fingerprint,
+                    title = R.string.settings_security_biometric_title,
+                    summary = R.string.settings_security_biometric_summary,
+                    default = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT,
+                ),
+                Preference.Enum(
+                    key = Config.SECURITY_LOCK_TIMEOUT,
+                    icon = R.drawable.ic_schedule,
+                    title = R.string.settings_security_timeout_title,
+                    default = LockTimeout.FiveMinute,
+                    possibleValues = LockTimeout.entries,
+                ),
+                Preference.Simple(
+                    key = Config.SECURITY_DIAL_LAUNCH_CODE,
+                    icon = R.drawable.ic_dialpad,
+                    title = R.string.settings_security_launch_code_title,
+                    summary = R.string.settings_security_launch_code_summary,
+                ),
 
             Preference.Simple(
                 key = SettingsFragment.KEY_ACTION_HIDE_APP,
@@ -153,74 +158,84 @@ val PreferenceScreenConfigContent = listOf<PreferenceSection>(
                 possibleValues = PanicLockMotion.entries,
             )
         ),
-    ),
-    PreferenceSection(
-        title = R.string.settings_category_advanced,
-        summary = R.string.settings_category_advanced_summary,
-        preferences = listOf(
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_RESET,
-                icon = R.drawable.ic_warning,
-                title = R.string.settings_advanced_reset_title,
-                summary = R.string.settings_advanced_reset_summary,
-            ),
-            Preference.Simple(
-                SettingsFragment.KEY_ACTION_BACKUP,
-                icon = R.drawable.ic_save_as,
-                title = R.string.settings_advanced_backup_title,
-                summary = R.string.settings_advanced_backup_summary,
-            ),
-            Preference.Switch(
-                Config.ADVANCED_DELETE_IMPORTED_FILES,
-                icon = R.drawable.ic_delete,
-                title = R.string.settings_advanced_delete_imported_title,
-                summary = R.string.settings_advanced_delete_imported_summary,
-                default = Config.ADVANCED_DELETE_IMPORTED_FILES_DEFAULT,
-            ),
-            Preference.Switch(
-                Config.ADVANCED_DELETE_EXPORTED_FILES,
-                icon = R.drawable.ic_delete,
-                title = R.string.settings_advanced_delete_exported_title,
-                summary = R.string.settings_advanced_delete_exported_summary,
-                default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
-            ),
-        ),
-    ),
-    PreferenceSection(
-        title = R.string.settings_other_title,
-        summary = null,
-        preferences = listOf(
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_FEEDBACK,
-                icon = R.drawable.ic_feedback,
-                title = R.string.settings_other_feedback_title,
-                summary = R.string.settings_other_feedback_summary,
-            ),
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_DONATE,
-                icon = R.drawable.ic_money,
-                title = R.string.settings_other_donate_title,
-                summary = R.string.settings_other_donate_summary,
-            ),
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_SOURCECODE,
-                icon = R.drawable.ic_code,
-                title = R.string.settings_other_sourcecode_title,
-                summary = R.string.settings_other_sourcecode_summary,
-            ),
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_CREDITS,
-                icon = R.drawable.ic_book,
-                title = R.string.settings_other_credits_title,
-                summary = R.string.settings_other_credits_summary,
-            ),
-            Preference.Simple(
-                key = SettingsFragment.KEY_ACTION_ABOUT,
-                icon = R.drawable.ic_info,
-                title = R.string.settings_other_about_title,
-                summary = R.string.settings_other_about_summary,
-            ),
-        ),
     )
-)
-
+    )
+    add(
+        PreferenceSection(
+            title = R.string.settings_category_advanced,
+            summary = R.string.settings_category_advanced_summary,
+            preferences = listOf(
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_RESET,
+                    icon = R.drawable.ic_warning,
+                    title = R.string.settings_advanced_reset_title,
+                    summary = R.string.settings_advanced_reset_summary,
+                ),
+                Preference.Simple(
+                    SettingsFragment.KEY_ACTION_BACKUP,
+                    icon = R.drawable.ic_save_as,
+                    title = R.string.settings_advanced_backup_title,
+                    summary = R.string.settings_advanced_backup_summary,
+                ),
+                Preference.Switch(
+                    Config.ADVANCED_DELETE_IMPORTED_FILES,
+                    icon = R.drawable.ic_delete,
+                    title = R.string.settings_advanced_delete_imported_title,
+                    summary = R.string.settings_advanced_delete_imported_summary,
+                    default = Config.ADVANCED_DELETE_IMPORTED_FILES_DEFAULT,
+                ),
+                Preference.Switch(
+                    Config.ADVANCED_DELETE_EXPORTED_FILES,
+                    icon = R.drawable.ic_delete,
+                    title = R.string.settings_advanced_delete_exported_title,
+                    summary = R.string.settings_advanced_delete_exported_summary,
+                    default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
+                ),
+            ),
+        )
+    )
+    add(
+        PreferenceSection(
+            title = R.string.settings_other_title,
+            summary = null,
+            preferences = listOf(
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_FEEDBACK,
+                    icon = R.drawable.ic_feedback,
+                    title = R.string.settings_other_feedback_title,
+                    summary = R.string.settings_other_feedback_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_DONATE,
+                    icon = R.drawable.ic_money,
+                    title = R.string.settings_other_donate_title,
+                    summary = R.string.settings_other_donate_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_SOURCECODE,
+                    icon = R.drawable.ic_code,
+                    title = R.string.settings_other_sourcecode_title,
+                    summary = R.string.settings_other_sourcecode_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_CREDITS,
+                    icon = R.drawable.ic_book,
+                    title = R.string.settings_other_credits_title,
+                    summary = R.string.settings_other_credits_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_TELEMETRY,
+                    icon = R.drawable.ic_data_object,
+                    title = R.string.settings_other_telemetry_title,
+                    summary = R.string.settings_other_telemetry_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_ABOUT,
+                    icon = R.drawable.ic_info,
+                    title = R.string.settings_other_about_title,
+                    summary = R.string.settings_other_about_summary,
+                ),
+            ),
+        )
+    )
+}

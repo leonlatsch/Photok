@@ -17,12 +17,26 @@
 package dev.leonlatsch.photok.settings.ui.thirdparty
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebView
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentOssLicensesBinding
-import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
+import dev.leonlatsch.photok.ui.theme.AppTheme
 
 private const val LICENSE_REPORT_FILE = "open_source_licenses.html"
 
@@ -32,17 +46,51 @@ private const val LICENSE_REPORT_FILE = "open_source_licenses.html"
  * @since 1.2.1
  * @author Leon Latsch
  */
-class OssLicensesFragment :
-    BindableFragment<FragmentOssLicensesBinding>(R.layout.fragment_oss_licenses) {
+class OssLicensesFragment : Fragment() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.root.systemBarsPadding()
-
-        binding.ossToolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+    @OptIn(ExperimentalMaterial3Api::class)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AppTheme {
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    Text(
+                                        text = stringResource(R.string.about_third_party)
+                                    )
+                                },
+                                navigationIcon = {
+                                    IconButton(
+                                        onClick = {
+                                            findNavController().navigateUp()
+                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.ic_back),
+                                            contentDescription = stringResource(R.string.process_close),
+                                        )
+                                    }
+                                }
+                            )
+                        }
+                    ) { contentPadding ->
+                        AndroidView(
+                            factory = { context ->
+                                WebView(context).apply {
+                                    loadUrl("file:///android_asset/$LICENSE_REPORT_FILE")
+                                }
+                            },
+                            modifier = Modifier.padding(contentPadding)
+                        )
+                    }
+                }
+            }
         }
-
-        binding.licenseWebView.loadUrl("file:///android_asset/$LICENSE_REPORT_FILE")
     }
 }

@@ -43,21 +43,34 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-66%25-orange)
+![Arabic](https://img.shields.io/badge/Arabic-64%25-orange)
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-66%25-orange)
-![French](https://img.shields.io/badge/French-99%25-brightgreen)
+![Dutch](https://img.shields.io/badge/Dutch-64%25-orange)
+![French](https://img.shields.io/badge/French-95%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
-![Italian](https://img.shields.io/badge/Italian-92%25-yellow)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-64%25-orange)
-![Russian](https://img.shields.io/badge/Russian-75%25-yellow)
-![Spanish](https://img.shields.io/badge/Spanish-79%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
-![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-97%25-yellow)
+![Indonesian](https://img.shields.io/badge/Indonesian-96%25-yellow)
+![Italian](https://img.shields.io/badge/Italian-88%25-yellow)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-62%25-orange)
+![Russian](https://img.shields.io/badge/Russian-72%25-orange)
+![Spanish](https://img.shields.io/badge/Spanish-76%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-93%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
+
+## Telemetry
+
+Photok can optionally send anonymous usage statistics to help improve the app.
+
+### Google Play
+Telemetry is *enabled* by default. Users can disable it at any time in the settings.
+
+### FOSS (F-Droid, GitHub, etc.)
+Telemetry is *disabled* by default. Users can enable it at any time in the settings.  
+In addition, Photok will prompt the user to enable telemetry after the first unlock (not during initial setup).
+
+No data is transmitted unless the user has explicitly opted in. This behavior is required to avoid the *Tracking* anti-feature flag in F-Droid and aligns with user expectations for apps installed from F-Droid.
 
 ## Related Tools
 
