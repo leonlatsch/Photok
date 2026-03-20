@@ -82,7 +82,7 @@ class ChangePasswordViewModel @Inject constructor(
     fun checkIfReEncryptNeeded() = viewModelScope.launch(Dispatchers.IO) {
         val isSafeEmpty = photoRepository.countAll() == 0
         changePasswordState = if (isSafeEmpty) {
-            passwordManager.storePassword(newPassword)
+//            passwordManager.storePassword(newPassword) TODO
             ChangePasswordState.RE_ENCRYPT_NOT_NEEDED
         } else {
             ChangePasswordState.RE_ENCRYPT_NEEDED

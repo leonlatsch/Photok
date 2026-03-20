@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,6 +44,7 @@ class SetupViewModel @Inject constructor(
     val encryptionManager: EncryptionManager,
     private val passwordManager: PasswordManager,
     private val config: Config,
+    private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -80,13 +82,22 @@ class SetupViewModel @Inject constructor(
     fun savePassword() = viewModelScope.launch {
         setupState = SetupState.LOADING
 
-        setupState = if (validateBothPasswords()) {
-            passwordManager.storePassword(password)
-            encryptionManager.initialize(this@SetupViewModel.password)
-            config.justFinishedSetup = true
-            SetupState.FINISHED
+        val password = this@SetupViewModel.password
+
+        if (validateBothPasswords()) {
+            vaultService.createVault(password)
+                .onSuccess {
+                    encryptionManager.initialize(it)
+                    config.justFinishedSetup = true
+
+                    setupState = SetupState.FINISHED
+                }
+                .onFailure {
+                    setupState = SetupState.FINISHED
+                }
+
         } else {
-            SetupState.SETUP
+            setupState = SetupState.SETUP
         }
     }
 

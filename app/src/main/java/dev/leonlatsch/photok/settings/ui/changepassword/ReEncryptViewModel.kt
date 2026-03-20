@@ -49,7 +49,7 @@ class ReEncryptViewModel @Inject constructor(
         items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
 
-        passwordManager.storePassword(newPassword)
+//        passwordManager.storePassword(newPassword) TODO
         encryptionManager.initialize(newPassword)
 
         encryptionManager.keyCacheEnabled = true

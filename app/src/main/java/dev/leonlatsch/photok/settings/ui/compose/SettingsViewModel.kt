@@ -140,7 +140,6 @@ class SettingsViewModel @Inject constructor(
         albumRepository.deleteAll()
         albumRepository.unlinkAll()
 
-        passwordManager.resetPassword()
         (app as BaseApplication).lockApp()
     }
 }

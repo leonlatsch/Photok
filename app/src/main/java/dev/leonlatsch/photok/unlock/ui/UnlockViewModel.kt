@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class UnlockViewModel @Inject constructor(
     val encryptionManager: EncryptionManager,
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val passwordManager: PasswordManager,
+    private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -67,16 +69,16 @@ class UnlockViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            unlockState.update {
-                if (passwordManager.checkPassword(password)) {
-                    encryptionManager.initialize(password)
-                    legacyEncryptionManager.initialize(password)
-
-                    UnlockState.UNLOCKED
-                } else {
-                    UnlockState.UNLOCK_FAILED
+            // TODO: Migrate if has no vaults and a stored config.password
+            vaultService.tryUnlock(password)
+                .onSuccess { contentKey ->
+                    encryptionManager.initialize(contentKey)
+                    legacyEncryptionManager.initialize(this@UnlockViewModel.password)
+                    unlockState.update { UnlockState.UNLOCKED }
                 }
-            }
+                .onFailure {
+                    unlockState.update { UnlockState.UNLOCK_FAILED }
+                }
         }
     }
 

@@ -35,18 +35,6 @@ import javax.inject.Singleton
 import kotlin.io.encoding.Base64
 
 
-const val ENC_VERSION_BYTE: Byte = 0x01
-const val IV_SIZE = 16
-const val SALT_SIZE = 16
-const val KEY_SIZE = 256
-const val ITERATION_COUNT = 100_000
-const val KEY_ALGORITHM = "PBKDF2WithHmacSHA256"
-const val AES = "AES"
-const val AES_ALGORITHM = "AES/CBC/PKCS7Padding"
-
-const val HEADER_SIZE = 1 + SALT_SIZE + IV_SIZE
-const val BLOCK_SIZE = 16
-
 
 /**
  * Encryption Format V1
@@ -171,7 +159,7 @@ class EncryptionManagerImpl @Inject constructor(
                 requireKey()
             }
 
-            val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
             cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
 
             return CipherInputStream(input, cipher)
@@ -196,7 +184,7 @@ class EncryptionManagerImpl @Inject constructor(
                 requireKey()
             }
 
-            val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
+            val cipher = Cipher.getInstance(AES_ALGORITHM)
             cipher.init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
 
             output.write(byteArrayOf(ENC_VERSION_BYTE))

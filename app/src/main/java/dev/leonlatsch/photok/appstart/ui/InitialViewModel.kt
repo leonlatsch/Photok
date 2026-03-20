@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.vaults.domain.VaultRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +34,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class InitialViewModel @Inject constructor(
-    private val config: Config
+    private val config: Config,
+    private val vaultRepository: VaultRepository,
 ) : ViewModel() {
 
     /**
@@ -48,8 +50,7 @@ class InitialViewModel @Inject constructor(
         }
 
         // Unlock or Setup
-        val password = config.securityPassword
-        val appStartState = if (password == null || password.isEmpty()) {
+        val appStartState = if (!vaultRepository.hasVaults()) {
             AppStartState.SETUP
         } else {
             AppStartState.LOCKED
