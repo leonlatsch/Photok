@@ -8,6 +8,7 @@
 [![GitHub](https://img.shields.io/github/license/leonlatsch/Photok)](./LICENSE)
 ![Maintenance](https://img.shields.io/maintenance/yes/2026)
 ![Twitch Status](https://img.shields.io/twitch/status/leonlatsch?style=flat&logo=twitch)
+![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/photok?style=flat)
 
 Encrypt images and videos on your device and keep them safe from others.
 
