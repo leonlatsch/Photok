@@ -204,7 +204,7 @@
     <string name="change_password_enter_new_password">Yeni şifrenizi girin</string>
     <string name="change_password_confirm_new_password">Yeni şifrenizi onaylayın</string>
     <string name="change_password_button">Şifreyi Değiştir</string>
-    <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
+    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
 
     <!-- CHECK PASSWORD -->

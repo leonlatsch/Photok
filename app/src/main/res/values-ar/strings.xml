@@ -222,7 +222,7 @@
     <string name="change_password_enter_new_password">أدخل كلمة المرور الجديدة </string>
     <string name="change_password_confirm_new_password">قم بتأكيد كلمة المرور الجديدة الخاصة بك</string>
     <string name="change_password_button">تغيير كلمة المرور</string>
-    <string name="change_password_confirm_message">موصي بالنسخ الاحتياطي! <br /> يتطلب تغيير كلمة المرور إعادة تشفير جميع ملفاتك! هل تريد الاستمرار؟ </string>
+    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
     <string name="change_password_reencrypting">إعادة تشفير الملف (الملفات) ...</string>
 
     <!-- CHECK PASSWORD -->

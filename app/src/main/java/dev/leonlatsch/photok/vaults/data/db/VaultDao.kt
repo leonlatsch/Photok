@@ -18,16 +18,24 @@ package dev.leonlatsch.photok.vaults.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface VaultDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vault: VaultTable)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(vaultTable: VaultTable)
 
     @Query("SELECT * FROM vault")
     suspend fun findAll(): List<VaultTable>
+
+    @Query("SELECT * FROM vault WHERE vault_uuid = :uuid")
+    suspend fun find(uuid: String): VaultTable?
 
     @Query("SELECT COUNT(*) FROM vault")
     suspend fun countVaults(): Int

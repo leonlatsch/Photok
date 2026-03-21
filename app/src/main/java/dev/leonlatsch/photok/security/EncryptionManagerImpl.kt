@@ -96,22 +96,25 @@ class EncryptionManagerImpl @Inject constructor(
         }
 
     override fun initialize(password: String): Result<Unit> {
-        if (password.length < 6) {
-            state.update { State.Error }
-            return Result.failure(IllegalArgumentException("Password too short"))
-        }
-        try {
-            state.update {
-                State.Ready(
-                    key = deriveAesKey(password, getOrCreateUserSalt())
-                )
-            }
-            return Result.success(Unit)
-        } catch (e: Exception) {
-            Timber.d("Error initializing EncryptionManager: $e")
-            state.update { State.Error }
-            return Result.failure(e)
-        }
+        return Result.failure(
+            UnsupportedOperationException("Encryption manager does not support password. Use key.")
+        )
+//        if (password.length < 6) {
+//            state.update { State.Error }
+//            return Result.failure(IllegalArgumentException("Password too short"))
+//        }
+//        try {
+//            state.update {
+//                State.Ready(
+//                    key = deriveAesKey(password, getOrCreateUserSalt())
+//                )
+//            }
+//            return Result.success(Unit)
+//        } catch (e: Exception) {
+//            Timber.d("Error initializing EncryptionManager: $e")
+//            state.update { State.Error }
+//            return Result.failure(e)
+//        }
     }
 
     override fun initialize(key: SecretKey): Result<Unit> {

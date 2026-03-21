@@ -34,8 +34,17 @@ class VaultRepositoryImpl @Inject constructor(
         vaultDao.findAll().map { it.toDomain() }
     }
 
+    override suspend fun get(uuid: String): Vault? = withContext(IO) {
+        vaultDao.find(uuid)?.toDomain()
+    }
+
     override suspend fun create(vault: Vault) = withContext(IO) {
         vaultDao.insert(vault.toData())
+    }
+
+    override suspend fun update(vault: Vault) = withContext(IO) {
+        val vaultTable = vault.toData()
+        vaultDao.update(vaultTable)
     }
 
     override suspend fun removeAll() = withContext(IO) {

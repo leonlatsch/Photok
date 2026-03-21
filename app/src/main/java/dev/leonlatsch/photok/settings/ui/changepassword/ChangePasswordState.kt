@@ -29,6 +29,6 @@ enum class ChangePasswordState {
     OLD_INVALID,
     NEW_VALID,
     NEW_INVALID,
-    RE_ENCRYPT_NEEDED,
-    RE_ENCRYPT_NOT_NEEDED
+    DONE,
+    ERROR,
 }

@@ -25,6 +25,8 @@ import dev.leonlatsch.photok.security.KEY_SIZE
 import dev.leonlatsch.photok.security.SALT_SIZE
 import dev.leonlatsch.photok.security.VERIFIER_PLAINTEXT
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
@@ -43,27 +45,59 @@ class VaultService @Inject constructor(
     private val vaultRepository: VaultRepository,
     private val config: Config,
 ) {
+    val currentVault = MutableStateFlow<String?>(null)
+
+    suspend fun verifyCurrent(password: String): Result<Unit> {
+        val currentUuid = currentVault.value ?: return Result.failure(NoSuchElementException())
+
+        val vault = vaultRepository.get(currentUuid)
+        vault ?: return Result.failure(NoSuchElementException())
+
+        val userKey = deriveUserKey(password, vault.salt)
+        val iv = vault.iv
+
+        val verifier = try {
+            Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+                cipher.init(Cipher.DECRYPT_MODE, userKey, IvParameterSpec(iv))
+                cipher.doFinal(vault.verifier)
+            }
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+
+        if (!verifier.contentEquals(VERIFIER_PLAINTEXT)) {
+            return Result.failure(SecurityException())
+        }
+
+        return Result.success(Unit)
+    }
+
     suspend fun tryUnlock(password: String): Result<SecretKey> {
         val vaults = vaultRepository.getAll()
 
         for (vault in vaults) {
-            val userKey = deriveUserKey(password, vault.salt)
-            val iv = vault.iv
-            val cipher = Cipher.getInstance(AES_ALGORITHM)
-            cipher.init(Cipher.DECRYPT_MODE, userKey, IvParameterSpec(iv))
-
             runCatching {
-                val plaintext = cipher.doFinal(vault.verifier)
+                val userKey = deriveUserKey(password, vault.salt)
+                val iv = vault.iv
+
+                val plaintext = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+                    cipher.init(Cipher.DECRYPT_MODE, userKey, IvParameterSpec(iv))
+                    cipher.doFinal(vault.verifier)
+                }
+
                 if (plaintext.contentEquals(VERIFIER_PLAINTEXT)) {
                     val cipher = Cipher.getInstance(AES_ALGORITHM)
                     cipher.init(Cipher.DECRYPT_MODE, userKey, IvParameterSpec(iv))
 
                     val plainContentKey = cipher.doFinal(vault.contentKey)
-                    return Result.success(SecretKeySpec(plainContentKey, AES))
+                    return Result.success(SecretKeySpec(plainContentKey, AES)).also {
+                        currentVault.update { vault.uuid }
+                    }
                 }
             }
         }
 
+        currentVault.update { null }
         return Result.failure(NoSuchElementException())
     }
 
@@ -107,7 +141,8 @@ class VaultService @Inject constructor(
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
         val userKey = deriveUserKey(password, salt)
-        val plainContentKey = userKey // use old user key as content key, so we don't need to re encrypt
+        val plainContentKey =
+            userKey // use old user key as content key, so we don't need to re encrypt
 
         val verifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
             cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(iv))
@@ -138,6 +173,46 @@ class VaultService @Inject constructor(
         return !vaultRepository.hasVaults() && config.legacyPassword != null
     }
 
+    suspend fun changeKey(oldPassword: String, newPassword: String): Result<Unit> = runCatching {
+        val currentUuid = currentVault.value ?: throw NoSuchElementException()
+
+        val vault = vaultRepository.get(currentUuid)
+        vault ?: throw NoSuchElementException()
+
+        val oldUserKey = deriveUserKey(oldPassword, vault.salt)
+        val iv = vault.iv
+
+        val plainContentKey = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.DECRYPT_MODE, oldUserKey, IvParameterSpec(iv))
+            cipher.doFinal(vault.contentKey)
+        }
+
+        val newSalt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+        val newUserKey = deriveUserKey(newPassword, newSalt)
+
+
+        val verifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.ENCRYPT_MODE, newUserKey, IvParameterSpec(iv))
+            cipher.doFinal(VERIFIER_PLAINTEXT)
+        }
+
+        val encryptedContentKey = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.ENCRYPT_MODE, newUserKey, IvParameterSpec(iv))
+            cipher.doFinal(plainContentKey)
+        }
+
+        val newVault = Vault(
+            uuid = vault.uuid,
+            salt = newSalt,
+            contentKey = encryptedContentKey,
+            verifier = verifier,
+            iv = iv,
+        )
+
+        vaultRepository.update(newVault)
+        currentVault.update { newVault.uuid }
+    }
+
     private fun deriveUserKey(password: String, salt: ByteArray): SecretKey {
         val factory = SecretKeyFactory.getInstance(KEY_ALGORITHM)
         val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
@@ -152,5 +227,6 @@ class VaultService @Inject constructor(
         keyGenerator.init(KEY_SIZE, secureRandom)
         return keyGenerator.generateKey()
     }
+
 }
 

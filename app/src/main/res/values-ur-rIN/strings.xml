@@ -221,7 +221,7 @@
     <string name="change_password_enter_new_password">نیا پاس ورڈ لکھیں</string>
     <string name="change_password_confirm_new_password">نئے پاس ورڈ کی تصدیق کریں</string>
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
-    <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
+    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
     <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
 
     <!-- CHECK PASSWORD -->

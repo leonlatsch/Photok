@@ -222,7 +222,7 @@
     <string name="change_password_enter_new_password">Inserisci la nuova password</string>
     <string name="change_password_confirm_new_password">Conferma la nuova password</string>
     <string name="change_password_button">Modifica Password</string>
-    <string name="change_password_confirm_message">Backup consigliato!<br /> La modifica della password richiede la ricrittografia di tutti i file! Vuoi continuare?</string>
+    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
     <string name="change_password_reencrypting">Ricrittografia file…</string>
 
     <!-- CHECk PASSWORD -->

@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.vaults.domain
 interface VaultRepository {
     suspend fun hasVaults(): Boolean
     suspend fun getAll(): List<Vault>
+    suspend fun get(uuid: String): Vault?
     suspend fun create(vault: Vault)
+    suspend fun update(vault: Vault)
     suspend fun removeAll()
 }
