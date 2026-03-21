@@ -48,7 +48,7 @@ class VaultService @Inject constructor(
 
         for (vault in vaults) {
             val userKey = deriveUserKey(password, vault.salt)
-            val iv = vault.verifierIv
+            val iv = vault.iv
             val cipher = Cipher.getInstance(AES_ALGORITHM)
             cipher.init(Cipher.DECRYPT_MODE, userKey, IvParameterSpec(iv))
 
@@ -89,7 +89,7 @@ class VaultService @Inject constructor(
             salt = salt,
             contentKey = encryptedContentKey,
             verifier = verifier,
-            verifierIv = iv,
+            iv = iv,
         )
 
         vaultRepository.create(vault)
@@ -98,24 +98,16 @@ class VaultService @Inject constructor(
     }
 
     @Suppress("DEPRECATION")
-    suspend fun migrateVaultIfNeeded(password: String) = runCatching {
-        if (vaultRepository.hasVaults()) {
-            return@runCatching
-        }
+    suspend fun migrateFromPassword(password: String) = runCatching {
+        vaultRepository.removeAll()
 
-        if (config.securityPassword == null) {
-            return@runCatching
-        }
-
-        val encodedOldSalt = config.userSalt ?: throw IllegalStateException("User salt is null")
-
-        val oldSalt = Base64.decode(encodedOldSalt)
+        val encodedSalt = config.legacyUserSalt ?: throw IllegalStateException("User salt is null")
+        val salt = Base64.decode(encodedSalt)
 
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
 
-        val userKey = deriveUserKey(password, oldSalt)
-        val contentKey = userKey // use old user key as content key, so we don't need to re encrypt
+        val userKey = deriveUserKey(password, salt)
+        val plainContentKey = userKey // use old user key as content key, so we don't need to re encrypt
 
         val verifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
             cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(iv))
@@ -124,7 +116,7 @@ class VaultService @Inject constructor(
 
         val encryptedContentKey = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
             cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(iv))
-            cipher.doFinal(contentKey.encoded)
+            cipher.doFinal(plainContentKey.encoded)
         }
 
         val vault = Vault(
@@ -132,13 +124,18 @@ class VaultService @Inject constructor(
             salt = salt,
             contentKey = encryptedContentKey,
             verifier = verifier,
-            verifierIv = iv,
+            iv = iv,
         )
 
         vaultRepository.create(vault)
 
-        config.securityPassword = null
-        config.userSalt = null
+        config.legacyPassword = null
+        config.legacyUserSalt = null
+    }
+
+    @Suppress("DEPRECATION")
+    suspend fun needsMigration(): Boolean {
+        return !vaultRepository.hasVaults() && config.legacyPassword != null
     }
 
     private fun deriveUserKey(password: String, salt: ByteArray): SecretKey {

@@ -25,6 +25,7 @@ package dev.leonlatsch.photok.unlock.ui
 enum class UnlockState {
     INITIAL,
     UNLOCK_FAILED,
+    GENERIC_ERROR,
     CHECKING,
     UNLOCKED
 }

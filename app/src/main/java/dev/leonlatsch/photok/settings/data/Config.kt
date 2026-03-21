@@ -100,9 +100,9 @@ class Config(context: Context) {
      * Password hash to check when unlocking.
      */
     @Deprecated("Use VaultService instead")
-    var securityPassword: String?
+    var legacyPassword: String?
         get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
-        set(value) = putString(SECURITY_PASSWORD, value!!)
+        set(value) = putString(SECURITY_PASSWORD, value)
 
     /**
      * Timeout to auto lock when in background.
@@ -145,9 +145,9 @@ class Config(context: Context) {
         set(value) = putBoolean("legacy^currentlyMigrating", value)
 
     @Deprecated("Use salt in vault")
-    var userSalt: String?
-        get() = getString("user^salt", null)
-        set(value) = putString("user^salt", value)
+    var legacyUserSalt: String?
+        get() = getString(USER_SALT, null)
+        set(value) = putString(USER_SALT, value)
 
     var biometricAuthenticationEnabled: Boolean
         get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT)
@@ -223,6 +223,12 @@ class Config(context: Context) {
         }
     }
 
+    fun removeOldPasswordAndSalt() {
+        preferences.edit {
+            remove(SECURITY_PASSWORD)
+            remove(USER_SALT)
+        }
+    }
 
     // endregion
 
@@ -255,6 +261,8 @@ class Config(context: Context) {
 
         const val SECURITY_PASSWORD = "security^password"
         const val SECURITY_PASSWORD_DEFAULT = ""
+
+        const val USER_SALT = "user^salt"
 
         const val SECURITY_LOCK_TIMEOUT = "security^lockTimeout"
         const val SECURITY_LOCK_TIMEOUT_DEFAULT = 300000

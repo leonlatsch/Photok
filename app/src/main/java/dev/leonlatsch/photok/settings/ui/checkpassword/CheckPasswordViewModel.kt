@@ -55,7 +55,7 @@ class CheckPasswordViewModel @Inject constructor(
     fun checkOld() = viewModelScope.launch {
         checkPasswordState = CheckPasswordState.CHECKING_OLD
 
-        val storedPassword = config.securityPassword
+        val storedPassword = config.legacyPassword
         storedPassword ?: return@launch
 
         checkPasswordState = if (BCrypt.checkpw(oldPassword, storedPassword)) {

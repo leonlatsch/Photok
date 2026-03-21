@@ -37,4 +37,8 @@ class VaultRepositoryImpl @Inject constructor(
     override suspend fun create(vault: Vault) = withContext(IO) {
         vaultDao.insert(vault.toData())
     }
+
+    override suspend fun removeAll() = withContext(IO) {
+        vaultDao.deleteAll()
+    }
 }

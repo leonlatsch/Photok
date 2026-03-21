@@ -61,7 +61,7 @@ class BackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.securityPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
+        val backupMetaData = dumpDatabaseUseCase(config.legacyPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
 
         val metaBytes = gson.toJson(backupMetaData).toByteArray()
 

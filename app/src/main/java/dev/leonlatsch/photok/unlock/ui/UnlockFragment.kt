@@ -45,7 +45,6 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -80,10 +79,19 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
-                    UnlockState.CHECKING -> binding.loadingOverlay.show()
+                    UnlockState.CHECKING -> {
+                        binding.loadingOverlay.show()
+                        binding.unlockWrongPasswordWarningTextView.vanish()
+                    }
                     UnlockState.UNLOCKED -> goToGallery()
                     UnlockState.UNLOCK_FAILED -> {
                         binding.loadingOverlay.hide()
+                        binding.unlockWrongPasswordWarningTextView.text = getString(R.string.unlock_wrong_password)
+                        binding.unlockWrongPasswordWarningTextView.show()
+                    }
+                    UnlockState.GENERIC_ERROR -> {
+                        binding.loadingOverlay.hide()
+                        binding.unlockWrongPasswordWarningTextView.text = getString(R.string.common_error)
                         binding.unlockWrongPasswordWarningTextView.show()
                     }
 

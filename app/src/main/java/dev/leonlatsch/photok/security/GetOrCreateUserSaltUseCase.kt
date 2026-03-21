@@ -25,13 +25,13 @@ class GetOrCreateUserSaltUseCase @Inject constructor(
     private val config: Config
 ) {
     operator fun invoke(): ByteArray {
-        val storedSalt = config.userSalt
+        val storedSalt = config.legacyUserSalt
 
         return if (storedSalt != null) {
             Base64.Default.decode(storedSalt)
         } else {
             val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-            config.userSalt = Base64.Default.encode(salt)
+            config.legacyUserSalt = Base64.Default.encode(salt)
             salt
         }
     }

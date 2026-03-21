@@ -20,4 +20,5 @@ interface VaultRepository {
     suspend fun hasVaults(): Boolean
     suspend fun getAll(): List<Vault>
     suspend fun create(vault: Vault)
+    suspend fun removeAll()
 }

@@ -29,7 +29,7 @@ data class VaultTable(
     val salt: ByteArray,
     val contentKey: ByteArray,
     val verifier: ByteArray,
-    val verifierIv: ByteArray,
+    val iv: ByteArray,
 ) {
     companion object {
         const val TABLE_NAME = "vault"
@@ -48,7 +48,7 @@ data class VaultTable(
         if (!salt.contentEquals(other.salt)) return false
         if (!contentKey.contentEquals(other.contentKey)) return false
         if (!verifier.contentEquals(other.verifier)) return false
-        if (!verifierIv.contentEquals(other.verifierIv)) return false
+        if (!iv.contentEquals(other.iv)) return false
 
         return true
     }
@@ -58,7 +58,7 @@ data class VaultTable(
         result = 31 * result + salt.contentHashCode()
         result = 31 * result + contentKey.contentHashCode()
         result = 31 * result + verifier.contentHashCode()
-        result = 31 * result + verifierIv.contentHashCode()
+        result = 31 * result + iv.contentHashCode()
         return result
     }
 }

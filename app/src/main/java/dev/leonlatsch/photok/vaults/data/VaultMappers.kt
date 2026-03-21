@@ -25,7 +25,7 @@ fun VaultTable.toDomain(): Vault {
         salt = salt,
         contentKey = contentKey,
         verifier = verifier,
-        verifierIv = verifierIv,
+        iv = iv,
     )
 }
 
@@ -35,6 +35,6 @@ fun Vault.toData(): VaultTable {
         salt = salt,
         contentKey = contentKey,
         verifier = verifier,
-        verifierIv = verifierIv,
+        iv = iv,
     )
 }

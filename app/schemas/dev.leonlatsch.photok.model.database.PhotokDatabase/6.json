@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "572e7fe66dee812ffd6b7e7a11e8e7b5",
+    "identityHash": "3752f2aa4996b0c83de886f65d3ba454",
     "entities": [
       {
         "tableName": "photo",
@@ -186,7 +186,7 @@
       },
       {
         "tableName": "vault",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vault_uuid` TEXT NOT NULL, `salt` BLOB NOT NULL, `contentKey` BLOB NOT NULL, `verifier` BLOB NOT NULL, `verifierIv` BLOB NOT NULL, PRIMARY KEY(`vault_uuid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vault_uuid` TEXT NOT NULL, `salt` BLOB NOT NULL, `contentKey` BLOB NOT NULL, `verifier` BLOB NOT NULL, `iv` BLOB NOT NULL, PRIMARY KEY(`vault_uuid`))",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -213,8 +213,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "verifierIv",
-            "columnName": "verifierIv",
+            "fieldPath": "iv",
+            "columnName": "iv",
             "affinity": "BLOB",
             "notNull": true
           }
@@ -229,7 +229,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '572e7fe66dee812ffd6b7e7a11e8e7b5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3752f2aa4996b0c83de886f65d3ba454')"
     ]
   }
 }

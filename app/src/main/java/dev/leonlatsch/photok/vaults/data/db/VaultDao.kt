@@ -30,5 +30,8 @@ interface VaultDao {
     suspend fun findAll(): List<VaultTable>
 
     @Query("SELECT COUNT(*) FROM vault")
-    fun countVaults(): Int
+    suspend fun countVaults(): Int
+
+    @Query("DELETE FROM vault")
+    suspend fun deleteAll()
 }

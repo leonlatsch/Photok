@@ -68,8 +68,13 @@ class UnlockViewModel @Inject constructor(
         unlockState.update { UnlockState.CHECKING }
 
         viewModelScope.launch {
-
-            vaultService.migrateVaultIfNeeded(password)
+            if (vaultService.needsMigration()) {
+                vaultService.migrateFromPassword(password)
+                    .onFailure {
+                        unlockState.update { UnlockState.GENERIC_ERROR }
+                        return@launch
+                    }
+            }
 
             vaultService.tryUnlock(password)
                 .onSuccess { contentKey ->

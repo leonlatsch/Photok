@@ -21,6 +21,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.vaults.domain.VaultRepository
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +36,8 @@ import javax.inject.Inject
 @HiltViewModel
 class InitialViewModel @Inject constructor(
     private val config: Config,
-    private val vaultRepository: VaultRepository,
+    private val vaultService: VaultService,
+    private val vaultRepository: VaultRepository
 ) : ViewModel() {
 
     /**
@@ -49,13 +51,15 @@ class InitialViewModel @Inject constructor(
             return@launch
         }
 
-        // Unlock or Setup
-        val appStartState = if (!vaultRepository.hasVaults()) {
-            AppStartState.SETUP
-        } else {
-            AppStartState.LOCKED
+        if (vaultService.needsMigration()) {
+            continueStart(AppStartState.LOCKED)
+            return@launch
         }
 
-        continueStart(appStartState)
+        if (vaultRepository.hasVaults()) {
+            continueStart(AppStartState.LOCKED)
+        } else {
+            continueStart(AppStartState.SETUP)
+        }
     }
 }
