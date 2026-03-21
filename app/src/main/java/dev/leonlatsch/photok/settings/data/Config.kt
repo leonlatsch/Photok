@@ -99,6 +99,7 @@ class Config(context: Context) {
     /**
      * Password hash to check when unlocking.
      */
+    @Deprecated("Use VaultService instead")
     var securityPassword: String?
         get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
         set(value) = putString(SECURITY_PASSWORD, value!!)
@@ -143,6 +144,7 @@ class Config(context: Context) {
         get() = getBoolean("legacy^currentlyMigrating", false)
         set(value) = putBoolean("legacy^currentlyMigrating", value)
 
+    @Deprecated("Use salt in vault")
     var userSalt: String?
         get() = getString("user^salt", null)
         set(value) = putString("user^salt", value)

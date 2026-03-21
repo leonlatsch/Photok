@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.security.KEY_ALGORITHM
 import dev.leonlatsch.photok.security.KEY_SIZE
 import dev.leonlatsch.photok.security.SALT_SIZE
 import dev.leonlatsch.photok.security.VERIFIER_PLAINTEXT
+import dev.leonlatsch.photok.settings.data.Config
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
@@ -35,10 +36,12 @@ import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.io.encoding.Base64
 
 @Singleton
 class VaultService @Inject constructor(
     private val vaultRepository: VaultRepository,
+    private val config: Config,
 ) {
     suspend fun tryUnlock(password: String): Result<SecretKey> {
         val vaults = vaultRepository.getAll()
@@ -92,6 +95,50 @@ class VaultService @Inject constructor(
         vaultRepository.create(vault)
 
         return Result.success(contentKey)
+    }
+
+    @Suppress("DEPRECATION")
+    suspend fun migrateVaultIfNeeded(password: String) = runCatching {
+        if (vaultRepository.hasVaults()) {
+            return@runCatching
+        }
+
+        if (config.securityPassword == null) {
+            return@runCatching
+        }
+
+        val encodedOldSalt = config.userSalt ?: throw IllegalStateException("User salt is null")
+
+        val oldSalt = Base64.decode(encodedOldSalt)
+
+        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
+        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+
+        val userKey = deriveUserKey(password, oldSalt)
+        val contentKey = userKey // use old user key as content key, so we don't need to re encrypt
+
+        val verifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(iv))
+            cipher.doFinal(VERIFIER_PLAINTEXT)
+        }
+
+        val encryptedContentKey = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(iv))
+            cipher.doFinal(contentKey.encoded)
+        }
+
+        val vault = Vault(
+            uuid = UUID.randomUUID().toString(),
+            salt = salt,
+            contentKey = encryptedContentKey,
+            verifier = verifier,
+            verifierIv = iv,
+        )
+
+        vaultRepository.create(vault)
+
+        config.securityPassword = null
+        config.userSalt = null
     }
 
     private fun deriveUserKey(password: String, salt: ByteArray): SecretKey {

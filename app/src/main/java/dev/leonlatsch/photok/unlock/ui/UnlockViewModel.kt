@@ -69,7 +69,8 @@ class UnlockViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            // TODO: Migrate if has no vaults and a stored config.password
+            vaultService.migrateVaultIfNeeded(password)
+
             vaultService.tryUnlock(password)
                 .onSuccess { contentKey ->
                     encryptionManager.initialize(contentKey)
