@@ -18,14 +18,17 @@ package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.AES_ALGORITHM
+import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.vaults.domain.VaultService
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
+import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
 /**
@@ -65,6 +68,7 @@ class RestoreBackupV5 @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val io: IO,
     private val vaultService: VaultService,
+    private val encryptedStorageManager: EncryptedStorageManager,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
@@ -82,7 +86,7 @@ class RestoreBackupV5 @Inject constructor(
 
         val vault = metaData.vault.toDomain()
 
-        val contentKey = vaultService.unlock(vault, originalPassword) .getOrNull()
+        val contentKey = vaultService.unlock(vault, originalPassword).getOrNull()
         contentKey ?: return RestoreResult(errors)
 
         while (ze != null) {
@@ -100,12 +104,17 @@ class RestoreBackupV5 @Inject constructor(
             }
 
             val cipher = Cipher.getInstance(AES_ALGORITHM).apply {
-                init(Cipher.DECRYPT_MODE, contentKey)
+                init(Cipher.DECRYPT_MODE, contentKey, IvParameterSpec(vault.iv))
             }
-            CipherInputStream(stream, cipher).use { encryptedInput ->
-                val encryptedOutput = io.openFileOutput(ze.name)
-                io.copy(encryptedInput, encryptedOutput)
+            val encryptedInputStream = CipherInputStream(stream, cipher) // Do not close
+
+            val encryptedOutput = encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
+            if (encryptedOutput == null) {
+                errors++
+                continue
             }
+
+            io.copy(encryptedInputStream, encryptedOutput)
 
             // Could directly copy if vault is also imported
 //            io.openFileOutput(ze.name).use { out ->

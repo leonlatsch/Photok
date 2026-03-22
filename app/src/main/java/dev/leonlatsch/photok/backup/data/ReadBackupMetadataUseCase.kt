@@ -16,12 +16,17 @@
 
 package dev.leonlatsch.photok.backup.data
 
+import androidx.compose.ui.text.Paragraph
 import com.google.gson.Gson
 import dev.leonlatsch.photok.backup.domain.BackupMetaData
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+private data class BackupVersionInfo(
+    val backupVersion: Int,
+)
 
 class ReadBackupMetadataUseCase @Inject constructor(
     private val gson: Gson
@@ -32,10 +37,9 @@ class ReadBackupMetadataUseCase @Inject constructor(
             val string = String(bytes)
 
             // Get version via Map<string, any>
-            val map = gson.fromJson(string, Map::class.java)
-            val backupVersion = map["backupVersion"] as? Int
+            val info = gson.fromJson(string, BackupVersionInfo::class.java)
 
-            val metaData = when (backupVersion) {
+            val metaData = when (info.backupVersion) {
                 1 -> gson.fromJson(string, BackupMetaData.V1::class.java)
                 2 -> gson.fromJson(string, BackupMetaData.V2::class.java)
                 3 -> gson.fromJson(string, BackupMetaData.V3::class.java)

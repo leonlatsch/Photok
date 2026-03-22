@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.security
 
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -78,7 +79,7 @@ import kotlin.io.encoding.Base64
  */
 @Singleton
 class EncryptionManagerImpl @Inject constructor(
-    private val getOrCreateUserSalt: GetOrCreateUserSaltUseCase
+    private val vaultService: VaultService,
 ) : EncryptionManager {
 
     private val keyCache = mutableMapOf<String, SecretKey>()
@@ -178,7 +179,9 @@ class EncryptionManagerImpl @Inject constructor(
     ): CipherOutputStream? {
 
         try {
-            val salt = getOrCreateUserSalt()
+            val vault = vaultService.getCurrentVault() ?: return null
+
+            val salt = vault.userSalt
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
             val key = if (password != null) {

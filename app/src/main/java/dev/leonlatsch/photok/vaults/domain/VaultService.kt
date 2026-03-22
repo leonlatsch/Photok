@@ -25,7 +25,11 @@ import dev.leonlatsch.photok.security.KEY_SIZE
 import dev.leonlatsch.photok.security.SALT_SIZE
 import dev.leonlatsch.photok.security.VERIFIER_PLAINTEXT
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import java.security.SecureRandom
 import java.util.UUID
@@ -46,17 +50,20 @@ const val DefaultVaultName = "Default Vault"
 class VaultService @Inject constructor(
     private val vaultRepository: VaultRepository,
     private val config: Config,
+    private val scope: CoroutineScope,
 ) {
-    val currentVault = MutableStateFlow<String?>(null)
+    private val currentVaultId = MutableStateFlow<String?>(null)
+    private val vault = currentVaultId.map {
+        it ?: return@map null
+        vaultRepository.get(it)
+    }.stateIn(scope, SharingStarted.Eagerly, null)
 
-    suspend fun getCurrentVault(): Vault? {
-        val currentUuid = currentVault.value ?: return null
-
-        return vaultRepository.get(currentUuid)
+    fun getCurrentVault(): Vault? {
+        return vault.value
     }
 
     suspend fun verifyCurrent(password: String): Result<Unit> {
-        val currentUuid = currentVault.value ?: return Result.failure(NoSuchElementException())
+        val currentUuid = currentVaultId.value ?: return Result.failure(NoSuchElementException())
 
         val vault = vaultRepository.get(currentUuid)
         vault ?: return Result.failure(NoSuchElementException())
@@ -112,13 +119,13 @@ class VaultService @Inject constructor(
 
                     val plainContentKey = cipher.doFinal(vault.contentKey)
                     return Result.success(SecretKeySpec(plainContentKey, AES)).also {
-                        currentVault.update { vault.uuid }
+                        currentVaultId.update { vault.uuid }
                     }
                 }
             }
         }
 
-        currentVault.update { null }
+        currentVaultId.update { null }
         return Result.failure(NoSuchElementException())
     }
 
@@ -197,7 +204,7 @@ class VaultService @Inject constructor(
     }
 
     suspend fun changeKey(oldPassword: String, newPassword: String): Result<Unit> = runCatching {
-        val currentUuid = currentVault.value ?: throw NoSuchElementException()
+        val currentUuid = currentVaultId.value ?: throw NoSuchElementException()
 
         val vault = vaultRepository.get(currentUuid)
         vault ?: throw NoSuchElementException()
@@ -234,11 +241,11 @@ class VaultService @Inject constructor(
         )
 
         vaultRepository.update(newVault)
-        currentVault.update { newVault.uuid }
+        currentVaultId.update { newVault.uuid }
     }
 
     fun reset() {
-        currentVault.update { null }
+        currentVaultId.update { null }
     }
 
 
