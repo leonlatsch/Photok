@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.backup.domain
 import android.content.Context
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
@@ -61,12 +60,12 @@ class BackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.legacyPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
+        val backupMetaData = dumpDatabaseUseCase(CURRENT_BACKUP_VERSION)
 
         val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
         return io.zip.writeZipEntry(
-            BackupMetaData.Companion.FILE_NAME,
+            META_JSON_FILENAME,
             ByteArrayInputStream(metaBytes),
             zipOutputStream,
         )

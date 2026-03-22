@@ -19,21 +19,18 @@ package dev.leonlatsch.photok.backup.domain
 import android.content.Context
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.io.IO
-import dev.leonlatsch.photok.settings.data.Config
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
 class LegacyBackupStrategyImpl @Inject constructor(
-    private val dumpDatabaseUseCase: DumpDatabaseUseCase,
+    private val legacyDumpPassword: V3DumpDatabaseUseCase,
     private val encryptedStorageManager: EncryptedStorageManager,
     private val io: IO,
-    private val config: Config,
     private val gson: Gson,
     @ApplicationContext private val context: Context,
 ) : BackupStrategy {
@@ -62,12 +59,12 @@ class LegacyBackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.legacyPassword!!, BackupMetaData.Companion.LEGACY_BACKUP_VERSION)
+        val backupMetaData = legacyDumpPassword(LEGACY_BACKUP_VERSION)
 
         val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
         return io.zip.writeZipEntry(
-            BackupMetaData.Companion.FILE_NAME,
+            META_JSON_FILENAME,
             ByteArrayInputStream(metaBytes),
             zipOutputStream,
         )

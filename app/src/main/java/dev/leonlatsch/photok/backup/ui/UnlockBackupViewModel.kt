@@ -18,13 +18,14 @@ package dev.leonlatsch.photok.backup.ui
 
 import android.app.Application
 import androidx.databinding.Bindable
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.backup.domain.BackupMetaData
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import kotlinx.coroutines.launch
+import dev.leonlatsch.photok.vaults.domain.VaultService
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -36,7 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockBackupViewModel @Inject constructor(
     app: Application,
-    private val passwordManager: PasswordManager
+    private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -46,12 +47,15 @@ class UnlockBackupViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    /**
-     * Verifies the password and calls [result] with true/false.
-     */
-    fun verifyPassword(backupPassword: String, result: (valid: Boolean) -> Unit) =
-        viewModelScope.launch {
-            val valid = passwordManager.checkPassword(password, backupPassword)
-            result(valid)
+    // Ugly but fuck it. This will be redone anyway
+    suspend fun verifyPassword(backupMetaData: BackupMetaData): Boolean =
+        when (backupMetaData) {
+            is BackupMetaData.V1 -> BCrypt.checkpw(password, backupMetaData.password)
+            is BackupMetaData.V2 -> BCrypt.checkpw(password, backupMetaData.password)
+            is BackupMetaData.V3 -> BCrypt.checkpw(password, backupMetaData.password)
+            is BackupMetaData.V4 -> BCrypt.checkpw(password, backupMetaData.password)
+            is BackupMetaData.V5 -> {
+                vaultService.unlock(backupMetaData.vault.toDomain(), password).isSuccess
+            }
         }
 }

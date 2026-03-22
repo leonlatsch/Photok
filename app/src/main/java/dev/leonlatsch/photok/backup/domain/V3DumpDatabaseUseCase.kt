@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,27 +19,29 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.toBackup
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.vaults.domain.VaultService
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
- * Creates a [BackupMetaData] from the current database
+ * Dump the photok database into a [BackupMetaData.V3].
+ * Needed for the backup created before the migration from .photok to .crypt
  */
-class DumpDatabaseUseCase @Inject constructor(
-    private val vaultService: VaultService,
+class V3DumpDatabaseUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
+    private val config: Config,
 ) {
     suspend operator fun invoke(version: Int): BackupMetaData = withContext(Dispatchers.IO) {
-        val vault = vaultService.getCurrentVault()?.toBackup() ?: error("No current vault")
         val photos = photoRepository.findAllPhotosByImportDateDesc().map { it.toBackup() }
         val albums = albumRepository.getAlbums().map { it.toBackup() }
         val albumPhotoLinks = albumRepository.getAllAlbumPhotoLinks().map { it.toBackup() }
 
-        BackupMetaData.V5(
-            vault = vault,
+        val password = config.passwordForMigration ?: error("Error while creating legacy backup. Password was not set")
+
+        BackupMetaData.V3(
+            password = password,
             photos = photos,
             albums = albums,
             albumPhotoRefs = albumPhotoLinks,

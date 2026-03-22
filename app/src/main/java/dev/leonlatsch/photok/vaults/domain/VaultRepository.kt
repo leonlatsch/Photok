@@ -22,5 +22,5 @@ interface VaultRepository {
     suspend fun get(uuid: String): Vault?
     suspend fun create(vault: Vault)
     suspend fun update(vault: Vault)
-    suspend fun removeAll()
+    suspend fun deleteAll()
 }

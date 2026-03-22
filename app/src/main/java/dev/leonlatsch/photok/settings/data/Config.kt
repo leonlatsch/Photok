@@ -173,8 +173,15 @@ class Config(context: Context) {
         get() = getBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT)
         set(value) = putBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, value)
 
+    // Needed to create a V3 backup before starting the migration from .photok to .crypt.
+    // Since V5 the password hash in not included in the backup anymore
+    var passwordForMigration: String?
+        get() = getString("passwordForMigration", null)
+        set(value) = putString("passwordForMigration", value)
+
     // In memory flags
     var justFinishedSetup: Boolean = false
+
 
     // region put/get methods
 

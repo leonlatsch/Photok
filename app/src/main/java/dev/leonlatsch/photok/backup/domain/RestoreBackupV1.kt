@@ -16,9 +16,6 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.data.PhotoBackup
-import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -67,6 +64,8 @@ class RestoreBackupV1 @Inject constructor(
         stream: ZipInputStream,
         originalPassword: String,
     ): RestoreResult {
+        require(metaData is BackupMetaData.V1)
+
         var errors = 0
 
         var ze = stream.nextEntry

@@ -19,13 +19,16 @@ package dev.leonlatsch.photok.backup.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.BackupMetaData
 import dev.leonlatsch.photok.databinding.DialogBackupUnlockBinding
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import kotlinx.coroutines.launch
 
 /**
  * Dialog for unlocking a backup.
@@ -35,7 +38,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  */
 @AndroidEntryPoint
 class UnlockBackupDialogFragment(
-    private val backupPassword: String,
+    private val backupMetaData: BackupMetaData,
     val onUnlockSuccess: (origPassword: String) -> Unit
 ) : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
 
@@ -55,8 +58,9 @@ class UnlockBackupDialogFragment(
      */
     fun onUnlock() {
         binding.unlockBackupWrongPasswordWarning.hide()
-        viewModel.verifyPassword(backupPassword) {
-            if (it) {
+        lifecycleScope.launch {
+            val valid = viewModel.verifyPassword(backupMetaData)
+            if (valid) {
                 dismiss()
                 onUnlockSuccess(viewModel.password)
             } else {

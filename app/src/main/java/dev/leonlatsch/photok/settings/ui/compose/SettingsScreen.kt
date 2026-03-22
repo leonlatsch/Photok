@@ -88,7 +88,6 @@ import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
-import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
@@ -151,14 +150,13 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RESET) {
-            CheckPasswordDialog {
-                Dialogs.showConfirmDialog(
-                    context,
-                    context.getString(R.string.settings_advanced_reset_confirmation)
-                ) { _, _ ->
-                    viewModel.resetComponents()
-                }
-            }.show(fragment.childFragmentManager)
+            Dialogs.showConfirmDialog(
+                context,
+                context.getString(R.string.settings_advanced_reset_confirmation)
+            ) { _, _ ->
+                viewModel.deleteAllData()
+            }
+
             false
         }
 

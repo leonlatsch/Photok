@@ -147,6 +147,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
 
         config.legacyCurrentlyMigrating = false
+        config.passwordForMigration = null
     }
 
     private suspend fun migrateSingleFile(legacyName: String): Result<Unit> = runCatching {

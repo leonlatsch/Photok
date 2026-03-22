@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.backup.domain
 
 import android.net.Uri
-import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.ReadBackupMetadataUseCase
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
@@ -42,7 +41,7 @@ class ValidateBackupUseCase @Inject constructor(
 
             var ze = zipInputStream.nextEntry
             while (ze != null) {
-                if (ze.name == BackupMetaData.FILE_NAME) {
+                if (ze.name == META_JSON_FILENAME) {
                     metaData = readBackupMetadata(zipInputStream)
                     backupVersion = metaData.getBackupVersion()
                 } else if (ze.name.endsWith(PHOTOK_FILE_EXTENSION)) {

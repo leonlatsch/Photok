@@ -45,6 +45,7 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -149,6 +150,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
 
         if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
+            config.passwordForMigration = BCrypt.hashpw(viewModel.password, BCrypt.gensalt())
+
             lifecycleScope.launch {
                 findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
             }

@@ -23,7 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import dev.leonlatsch.photok.vaults.domain.VaultService
@@ -45,7 +44,6 @@ class UnlockViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager,
     private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
@@ -76,7 +74,7 @@ class UnlockViewModel @Inject constructor(
                     }
             }
 
-            vaultService.tryUnlock(password)
+            vaultService.findAndUnlock(password)
                 .onSuccess { contentKey ->
                     encryptionManager.initialize(contentKey)
                     legacyEncryptionManager.initialize(this@UnlockViewModel.password)

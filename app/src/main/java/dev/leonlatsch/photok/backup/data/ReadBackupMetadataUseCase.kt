@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.backup.data
 
 import com.google.gson.Gson
+import dev.leonlatsch.photok.backup.domain.BackupMetaData
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -30,7 +31,19 @@ class ReadBackupMetadataUseCase @Inject constructor(
             val bytes = zipInputStream.readBytes()
             val string = String(bytes)
 
-            val metaData = gson.fromJson(string, BackupMetaData::class.java)
+            // Get version via Map<string, any>
+            val map = gson.fromJson(string, Map::class.java)
+            val backupVersion = map["backupVersion"] as? Int
+
+            val metaData = when (backupVersion) {
+                1 -> gson.fromJson(string, BackupMetaData.V1::class.java)
+                2 -> gson.fromJson(string, BackupMetaData.V2::class.java)
+                3 -> gson.fromJson(string, BackupMetaData.V3::class.java)
+                4 -> gson.fromJson(string, BackupMetaData.V4::class.java)
+                5 -> gson.fromJson(string, BackupMetaData.V5::class.java)
+                else -> null
+            }
+
             metaData ?: error("Error reading meta json from $zipInputStream")
 
             continuation.resume(metaData)

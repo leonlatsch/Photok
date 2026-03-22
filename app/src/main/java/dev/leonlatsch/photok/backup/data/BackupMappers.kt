@@ -16,9 +16,36 @@
 
 package dev.leonlatsch.photok.backup.data
 
+import dev.leonlatsch.photok.backup.domain.AlbumBackup
+import dev.leonlatsch.photok.backup.domain.AlbumPhotoRefBackup
+import dev.leonlatsch.photok.backup.domain.PhotoBackup
+import dev.leonlatsch.photok.backup.domain.VaultBackup
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.domain.model.AlbumPhotoRef
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.vaults.domain.Vault
+import kotlin.io.encoding.Base64
+
+fun Vault.toBackup(): VaultBackup =
+    VaultBackup(
+        uuid = uuid,
+        name = name,
+        userSalt = Base64.encode(userSalt),
+        contentKey = Base64.encode(contentKey),
+        verifier = Base64.encode(verifier),
+        iv = Base64.encode(iv),
+    )
+
+fun VaultBackup.toDomain(): Vault {
+    return Vault(
+        uuid = uuid,
+        name = name,
+        userSalt = Base64.decode(userSalt),
+        contentKey = Base64.decode(contentKey),
+        verifier = Base64.decode(verifier),
+        iv = Base64.decode(iv),
+    )
+}
 
 fun Photo.toBackup(): PhotoBackup =
     PhotoBackup(

@@ -100,7 +100,7 @@ class RestoreBackupDialogFragment() : BindableDialogFragment<DialogRestoreBackup
      */
     fun onRestoreAndUnlock() {
         val unlockDialog =
-            UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
+            UnlockBackupDialogFragment(viewModel.metaData!!) { origPassword ->
                 viewModel.restoreBackup(origPassword)
             }
         unlockDialog.show(requireActivity().supportFragmentManager)

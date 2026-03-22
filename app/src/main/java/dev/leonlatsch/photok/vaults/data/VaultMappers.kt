@@ -22,7 +22,8 @@ import dev.leonlatsch.photok.vaults.domain.Vault
 fun VaultTable.toDomain(): Vault {
     return Vault(
         uuid = uuid,
-        salt = salt,
+        name = name,
+        userSalt = salt,
         contentKey = contentKey,
         verifier = verifier,
         iv = iv,
@@ -32,7 +33,8 @@ fun VaultTable.toDomain(): Vault {
 fun Vault.toData(): VaultTable {
     return VaultTable(
         uuid = uuid,
-        salt = salt,
+        name = name,
+        salt = userSalt,
         contentKey = contentKey,
         verifier = verifier,
         iv = iv,

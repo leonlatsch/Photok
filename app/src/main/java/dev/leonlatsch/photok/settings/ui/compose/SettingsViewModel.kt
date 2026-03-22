@@ -25,7 +25,6 @@ import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
@@ -34,6 +33,7 @@ import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import dev.leonlatsch.photok.vaults.domain.VaultRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -56,7 +56,7 @@ class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val passwordManager: PasswordManager,
+    private val vaultRepository: VaultRepository,
 ) : ViewModel() {
 
 
@@ -131,7 +131,8 @@ class SettingsViewModel @Inject constructor(
         return false
     }
 
-    fun resetComponents() = viewModelScope.launch {
+    fun deleteAllData() = viewModelScope.launch {
+        // TODO: Only delete current vault and not all
         val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
         for (photo in allPhotos) {
             photoRepository.deleteInternalPhotoData(photo)
@@ -139,6 +140,7 @@ class SettingsViewModel @Inject constructor(
         photoRepository.deleteAll()
         albumRepository.deleteAll()
         albumRepository.unlinkAll()
+        vaultRepository.deleteAll()
 
         (app as BaseApplication).lockApp()
     }

@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
@@ -75,12 +73,14 @@ class RestoreBackupV3 @Inject constructor(
         stream: ZipInputStream,
         originalPassword: String
     ): RestoreResult {
+        require(metaData is BackupMetaData.V3)
+
         var errors = 0
 
         var ze = stream.nextEntry
 
         while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
+            if (ze.name == META_JSON_FILENAME) {
                 ze = stream.nextEntry
                 continue
             }

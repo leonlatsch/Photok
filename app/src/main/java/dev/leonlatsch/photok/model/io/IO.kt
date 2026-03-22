@@ -106,6 +106,10 @@ class IO @Inject constructor(
         return -1L
     }
 
+    fun openFileOutput(filename: String): OutputStream {
+        return context.openFileOutput(filename, Context.MODE_PRIVATE)
+    }
+
     suspend fun copy(
         input: InputStream,
         output: OutputStream

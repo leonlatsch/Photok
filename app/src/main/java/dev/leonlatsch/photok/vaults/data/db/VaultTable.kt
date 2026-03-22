@@ -26,6 +26,7 @@ data class VaultTable(
     @PrimaryKey
     @ColumnInfo(name = VAULT_UUID)
     val uuid: String = UUID.randomUUID().toString(),
+    val name: String,
     val salt: ByteArray,
     val contentKey: ByteArray,
     val verifier: ByteArray,

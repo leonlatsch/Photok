@@ -47,7 +47,7 @@ class VaultRepositoryImpl @Inject constructor(
         vaultDao.update(vaultTable)
     }
 
-    override suspend fun removeAll() = withContext(IO) {
+    override suspend fun deleteAll() = withContext(IO) {
         vaultDao.deleteAll()
     }
 }

@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.paniclock.PanicLockFeature
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,6 +63,9 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var panicLockFeature: PanicLockFeature
+
+    @Inject
+    lateinit var vaultService: VaultService
 
     val state = MutableStateFlow(ApplicationState.LOCKED)
 
@@ -123,6 +127,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
      */
     fun lockApp() {
         encryptionManager.reset()
+        vaultService.reset()
         state.update { ApplicationState.LOCKED }
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

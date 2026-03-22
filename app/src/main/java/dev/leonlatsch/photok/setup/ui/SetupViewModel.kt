@@ -23,7 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -42,7 +41,6 @@ import javax.inject.Inject
 class SetupViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager,
     private val config: Config,
     private val vaultService: VaultService,
 ) : ObservableViewModel(app) {

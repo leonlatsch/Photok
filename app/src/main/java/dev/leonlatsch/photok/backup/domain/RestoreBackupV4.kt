@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
@@ -27,7 +25,6 @@ import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.io.encoding.Base64
 
 /**
  * Backup Format V4
@@ -74,6 +71,8 @@ class RestoreBackupV4 @Inject constructor(
         stream: ZipInputStream,
         originalPassword: String
     ): RestoreResult {
+        require(metaData is BackupMetaData.V4)
+
         val start = System.currentTimeMillis()
 
         var errors = 0
@@ -83,7 +82,7 @@ class RestoreBackupV4 @Inject constructor(
         encryptionManager.keyCacheEnabled = true
 
         while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
+            if (ze.name == META_JSON_FILENAME) {
                 ze = stream.nextEntry
                 continue
             }

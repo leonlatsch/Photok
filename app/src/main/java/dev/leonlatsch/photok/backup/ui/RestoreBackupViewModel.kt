@@ -22,7 +22,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.model.io.IO

@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
 import java.util.zip.ZipInputStream
 
 interface RestoreBackupStrategy {
