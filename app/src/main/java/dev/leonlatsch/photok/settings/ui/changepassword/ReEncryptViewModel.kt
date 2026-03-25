@@ -22,7 +22,6 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
 import javax.inject.Inject
 
@@ -39,7 +38,6 @@ class ReEncryptViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
-    private val passwordManager: PasswordManager,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var oldPassword: String

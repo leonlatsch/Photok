@@ -23,7 +23,6 @@ data class VaultBackup(
     val uuid: String,
     val name: String,
     val userSalt: String,
-    val contentKey: String,
     val verifier: String,
     val iv: String,
 )
