@@ -22,7 +22,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 data class VaultBackup(
     val uuid: String,
     val name: String,
-    val userSalt: String,
+    val salt: String,
     val verifier: String,
     val iv: String,
 )

@@ -75,8 +75,8 @@ class UnlockViewModel @Inject constructor(
             }
 
             vaultService.findAndUnlock(password)
-                .onSuccess { contentKey ->
-                    encryptionManager.initialize(contentKey)
+                .onSuccess { key ->
+                    encryptionManager.initialize(key)
                     legacyEncryptionManager.initialize(this@UnlockViewModel.password)
                     unlockState.update { UnlockState.UNLOCKED }
                 }

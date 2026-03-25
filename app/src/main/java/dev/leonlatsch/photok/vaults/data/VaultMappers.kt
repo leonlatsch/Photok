@@ -23,7 +23,7 @@ fun VaultTable.toDomain(): Vault {
     return Vault(
         uuid = uuid,
         name = name,
-        userSalt = salt,
+        salt = salt,
         verifier = verifier,
         iv = iv,
     )
@@ -33,7 +33,7 @@ fun Vault.toData(): VaultTable {
     return VaultTable(
         uuid = uuid,
         name = name,
-        salt = userSalt,
+        salt = salt,
         verifier = verifier,
         iv = iv,
     )

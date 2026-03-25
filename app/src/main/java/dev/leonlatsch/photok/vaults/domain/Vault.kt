@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.vaults.domain
 data class Vault(
     val uuid: String,
     val name: String,
-    val userSalt: ByteArray,
+    val salt: ByteArray,
     val verifier: ByteArray,
     val iv: ByteArray, // For verifier
 ) {
@@ -32,7 +32,7 @@ data class Vault(
 
         if (uuid != other.uuid) return false
         if (name != other.name) return false
-        if (!userSalt.contentEquals(other.userSalt)) return false
+        if (!salt.contentEquals(other.salt)) return false
         if (!verifier.contentEquals(other.verifier)) return false
         if (!iv.contentEquals(other.iv)) return false
 
@@ -42,7 +42,7 @@ data class Vault(
     override fun hashCode(): Int {
         var result = uuid.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + userSalt.contentHashCode()
+        result = 31 * result + salt.contentHashCode()
         result = 31 * result + verifier.contentHashCode()
         result = 31 * result + iv.contentHashCode()
         return result

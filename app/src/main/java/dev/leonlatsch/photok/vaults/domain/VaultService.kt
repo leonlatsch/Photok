@@ -57,14 +57,13 @@ class VaultService @Inject constructor(
         return vault.value
     }
 
-    // TODO: Needed?
     suspend fun verifyCurrent(password: String): Result<Unit> {
         val currentUuid = currentVaultId.value ?: return Result.failure(NoSuchElementException())
 
         val vault = vaultRepository.get(currentUuid)
         vault ?: return Result.failure(NoSuchElementException())
 
-        val userKey = deriveAesKey(password, vault.userSalt)
+        val userKey = deriveAesKey(password, vault.salt)
         val iv = vault.iv
 
         val verifier = try {
@@ -84,7 +83,7 @@ class VaultService @Inject constructor(
     }
 
     suspend fun unlock(vault: Vault, password: String): Result<SecretKey> = runCatching {
-        val userKey = deriveAesKey(password, vault.userSalt)
+        val userKey = deriveAesKey(password, vault.salt)
         val iv = vault.iv
 
         val plainVerifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
@@ -104,7 +103,7 @@ class VaultService @Inject constructor(
 
         for (vault in vaults) {
             try {
-                val userKey = deriveAesKey(password, vault.userSalt)
+                val userKey = deriveAesKey(password, vault.salt)
                 val iv = vault.iv
 
                 val plainVerifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
@@ -141,12 +140,13 @@ class VaultService @Inject constructor(
         val vault = Vault(
             uuid = UUID.randomUUID().toString(),
             name = DefaultVaultName,
-            userSalt = salt,
+            salt = salt,
             verifier = verifier,
             iv = iv,
         )
 
         vaultRepository.create(vault)
+        currentVaultId.update { vault.uuid }
 
         return Result.success(userKey)
     }
@@ -170,7 +170,7 @@ class VaultService @Inject constructor(
         val vault = Vault(
             uuid = UUID.randomUUID().toString(),
             name = DefaultVaultName,
-            userSalt = salt,
+            salt = salt,
             verifier = verifier,
             iv = iv,
         )
@@ -184,6 +184,25 @@ class VaultService @Inject constructor(
     @Suppress("DEPRECATION")
     suspend fun needsMigration(): Boolean {
         return !vaultRepository.hasVaults() && config.legacyPassword != null
+    }
+
+    suspend fun changePasswordForCurrent(newPassword: String): Result<SecretKey> {
+        val vault = getCurrentVault() ?: return Result.failure(NoSuchElementException())
+
+        val userKey = deriveAesKey(newPassword, vault.salt)
+
+        val verifier = Cipher.getInstance(AES_ALGORITHM).let { cipher ->
+            cipher.init(Cipher.ENCRYPT_MODE, userKey, IvParameterSpec(vault.iv))
+            cipher.doFinal(VERIFIER_PLAINTEXT)
+        }
+
+        val updatedVault = vault.copy(
+            verifier = verifier,
+        )
+
+        vaultRepository.update(updatedVault)
+
+        return Result.success(userKey)
     }
 
     fun reset() {

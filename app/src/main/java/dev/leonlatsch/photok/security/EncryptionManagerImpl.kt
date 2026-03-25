@@ -97,22 +97,6 @@ class EncryptionManagerImpl @Inject constructor(
         return Result.failure(
             UnsupportedOperationException("EncryptionManager does not support password without salt")
         )
-//        if (password.length < 6) {
-//            state.update { State.Error }
-//            return Result.failure(IllegalArgumentException("Password too short"))
-//        }
-//        try {
-//            state.update {
-//                State.Ready(
-//                    key = deriveAesKey(password, getOrCreateUserSalt())
-//                )
-//            }
-//            return Result.success(Unit)
-//        } catch (e: Exception) {
-//            Timber.d("Error initializing EncryptionManager: $e")
-//            state.update { State.Error }
-//            return Result.failure(e)
-//        }
     }
 
     override fun initialize(key: SecretKey): Result<Unit> {
@@ -155,7 +139,7 @@ class EncryptionManagerImpl @Inject constructor(
             input.read(iv, 0, iv.size)
 
             val key = if (password != null) {
-                deriveAesKey(password, salt)
+                deriveAesKeyWithCache(password, salt)
             } else {
                 requireKey()
             }
@@ -176,13 +160,14 @@ class EncryptionManagerImpl @Inject constructor(
     ): CipherOutputStream? {
 
         try {
+            // Weird. TODO: Maybe remove interface for encryption Manager and do this with a passed key insteam
             val vault = vaultService.getCurrentVault() ?: return null
 
-            val salt = vault.userSalt
+            val salt = vault.salt
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
             val key = if (password != null) {
-                deriveAesKey(password, salt)
+                deriveAesKeyWithCache(password, salt)
             } else {
                 requireKey()
             }

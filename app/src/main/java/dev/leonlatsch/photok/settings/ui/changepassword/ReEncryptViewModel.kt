@@ -22,7 +22,9 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
+import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
+import dev.leonlatsch.photok.vaults.domain.VaultService
 import javax.inject.Inject
 
 /**
@@ -38,6 +40,8 @@ class ReEncryptViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val encryptionManager: EncryptionManager,
     private val encryptedStorageManager: EncryptedStorageManager,
+    private val biometricUnlock: BiometricUnlock,
+    private val vaultService: VaultService,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var oldPassword: String
@@ -47,12 +51,15 @@ class ReEncryptViewModel @Inject constructor(
         items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
 
-//        passwordManager.storePassword(newPassword) TODO
-        encryptionManager.initialize(newPassword)
-
-        encryptionManager.keyCacheEnabled = true
-
         super.preProcess()
+
+        vaultService.changePasswordForCurrent(newPassword)
+            .onFailure { cancel() }
+            .onSuccess { newKey ->
+                biometricUnlock.reset()
+                encryptionManager.initialize(newKey)
+                encryptionManager.keyCacheEnabled = true
+            }
     }
 
     override suspend fun processItem(item: Photo) {

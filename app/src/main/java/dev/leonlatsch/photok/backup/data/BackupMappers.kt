@@ -30,7 +30,7 @@ fun Vault.toBackup(): VaultBackup =
     VaultBackup(
         uuid = uuid,
         name = name,
-        userSalt = Base64.encode(userSalt),
+        salt = Base64.encode(salt),
         verifier = Base64.encode(verifier),
         iv = Base64.encode(iv),
     )
@@ -39,7 +39,7 @@ fun VaultBackup.toDomain(): Vault {
     return Vault(
         uuid = uuid,
         name = name,
-        userSalt = Base64.decode(userSalt),
+        salt = Base64.decode(salt),
         verifier = Base64.decode(verifier),
         iv = Base64.decode(iv),
     )
