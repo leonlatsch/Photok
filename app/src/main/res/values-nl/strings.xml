@@ -205,7 +205,7 @@
     <string name="change_password_enter_new_password">Voer je nieuwe wachtwoord in</string>
     <string name="change_password_confirm_new_password">Bevestig je nieuwe wachtwoord</string>
     <string name="change_password_button">Wijzig wachtwoord</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
 
     <!-- CHECK PASSWORD -->

@@ -127,6 +127,37 @@ class EncryptedStorageManager @Inject constructor(
         return currentFile.renameTo(newFile)
     }
 
+    /**
+     * Re-encrypt a file with a new password.
+     */
+    fun reEncryptFile(fileName: String, oldPassword: String): Boolean {
+        var success = false
+
+        try {
+            val tmpFileName = ".tmp~$fileName"
+
+            val origInput = internalOpenEncryptedFileInput(fileName, oldPassword)
+            val tmpOutput = internalOpenEncryptedFileOutput(tmpFileName)
+
+            origInput ?: return false
+            tmpOutput ?: return false
+
+            val bytesCopied = origInput.copyTo(tmpOutput)
+            origInput.close()
+            tmpOutput.close()
+
+            success = bytesCopied > 0
+
+            success = success && internalDeleteFile(fileName)
+            success = success && internalRenameFile(tmpFileName, fileName)
+        } catch (e: Exception) {
+            Timber.e(e)
+            success = false
+        }
+
+        return success
+    }
+
     // endregion
 
     // region external

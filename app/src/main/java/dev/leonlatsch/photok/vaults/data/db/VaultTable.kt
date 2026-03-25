@@ -28,7 +28,6 @@ data class VaultTable(
     val uuid: String = UUID.randomUUID().toString(),
     val name: String,
     val salt: ByteArray,
-    val contentKey: ByteArray,
     val verifier: ByteArray,
     val iv: ByteArray,
 ) {
@@ -47,7 +46,6 @@ data class VaultTable(
 
         if (uuid != other.uuid) return false
         if (!salt.contentEquals(other.salt)) return false
-        if (!contentKey.contentEquals(other.contentKey)) return false
         if (!verifier.contentEquals(other.verifier)) return false
         if (!iv.contentEquals(other.iv)) return false
 
@@ -57,7 +55,6 @@ data class VaultTable(
     override fun hashCode(): Int {
         var result = uuid.hashCode()
         result = 31 * result + salt.contentHashCode()
-        result = 31 * result + contentKey.contentHashCode()
         result = 31 * result + verifier.contentHashCode()
         result = 31 * result + iv.contentHashCode()
         return result

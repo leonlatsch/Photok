@@ -222,7 +222,7 @@
     <string name="change_password_enter_new_password">Masukkan kata sandi barumu</string>
     <string name="change_password_confirm_new_password">Konfirmasi kata sandi barumu</string>
     <string name="change_password_button">Ganti Kata Sandi</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">Cadangan direkomendasikan!<br /> Mengganti kata sandi mengharuskan enkripsi ulang semua filemu! Lanjutkan?</string>
     <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
 
     <!-- CHECk PASSWORD -->

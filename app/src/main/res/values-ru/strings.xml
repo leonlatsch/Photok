@@ -222,7 +222,7 @@
     <string name="change_password_enter_new_password">Введите ваш новый пароль</string>
     <string name="change_password_confirm_new_password">Подтвердите ваш новый пароль</string>
     <string name="change_password_button">Изменить пароль</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">Советуем сделать резервную копию!<br /> Смена пароля требует повторного шифрования всех файлов! Хотите продолжить?</string>
     <string name="change_password_reencrypting">Повторное шифрование файла(ов)…</string>
 
     <!-- CHECK PASSWORD -->

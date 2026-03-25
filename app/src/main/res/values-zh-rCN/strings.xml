@@ -220,7 +220,7 @@
     <string name="change_password_enter_new_password">输入你的新密码</string>
     <string name="change_password_confirm_new_password">确认你的新密码</string>
     <string name="change_password_button">更改密码</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有文件！你想继续吗？</string>
     <string name="change_password_reencrypting">重新加密文件中……</string>
 
     <!-- CHECK PASSWORD -->

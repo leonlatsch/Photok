@@ -224,7 +224,7 @@
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
     <string name="change_password_button">Changer le mot de passe</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
 
     <!-- CHECK PASSWORD -->

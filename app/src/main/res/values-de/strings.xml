@@ -224,7 +224,7 @@
     <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
     <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
     <string name="change_password_button">Passwort ändern</string>
-    <string name="change_password_confirm_message">Willst du dein Passwort wirklich ändern?</string>
+    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
 
     <!-- CHECK PASSWORD -->

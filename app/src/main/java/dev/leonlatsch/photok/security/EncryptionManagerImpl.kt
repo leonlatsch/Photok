@@ -27,14 +27,10 @@ import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.crypto.SecretKey
-import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.PBEKeySpec
-import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.io.encoding.Base64
-
 
 
 /**
@@ -80,6 +76,7 @@ import kotlin.io.encoding.Base64
 @Singleton
 class EncryptionManagerImpl @Inject constructor(
     private val vaultService: VaultService,
+    private val deriveAesKey: DeriveAesKeyUseCase,
 ) : EncryptionManager {
 
     private val keyCache = mutableMapOf<String, SecretKey>()
@@ -97,25 +94,22 @@ class EncryptionManagerImpl @Inject constructor(
         }
 
     override fun initialize(password: String): Result<Unit> {
-        return Result.failure(
-            UnsupportedOperationException("Encryption manager does not support password. Use key.")
-        )
-//        if (password.length < 6) {
-//            state.update { State.Error }
-//            return Result.failure(IllegalArgumentException("Password too short"))
-//        }
-//        try {
-//            state.update {
-//                State.Ready(
-//                    key = deriveAesKey(password, getOrCreateUserSalt())
-//                )
-//            }
-//            return Result.success(Unit)
-//        } catch (e: Exception) {
-//            Timber.d("Error initializing EncryptionManager: $e")
-//            state.update { State.Error }
-//            return Result.failure(e)
-//        }
+        if (password.length < 6) {
+            state.update { State.Error }
+            return Result.failure(IllegalArgumentException("Password too short"))
+        }
+        try {
+            state.update {
+                State.Ready(
+                    key = deriveAesKey(password, getOrCreateUserSalt())
+                )
+            }
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            Timber.d("Error initializing EncryptionManager: $e")
+            state.update { State.Error }
+            return Result.failure(e)
+        }
     }
 
     override fun initialize(key: SecretKey): Result<Unit> {
@@ -208,17 +202,13 @@ class EncryptionManagerImpl @Inject constructor(
         return (state.value as? State.Ready)?.key ?: error("EncryptionManager not initialized")
     }
 
-    private fun deriveAesKey(password: String, salt: ByteArray): SecretKey {
+    private fun deriveAesKeyWithCache(password: String, salt: ByteArray): SecretKey {
         if (keyCacheEnabled) {
             val hash = "${password}_${Base64.encode(salt)}"
             keyCache[hash]?.let { return it }
         }
 
-        val factory = SecretKeyFactory.getInstance(KEY_ALGORITHM)
-        val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
-        val keyBytes = factory.generateSecret(spec).encoded
-
-        return SecretKeySpec(keyBytes, AES).also {
+        return deriveAesKey(password, salt).also {
             if (keyCacheEnabled) {
                 val hash = "${password}_${Base64.encode(salt)}"
                 keyCache[hash] = it

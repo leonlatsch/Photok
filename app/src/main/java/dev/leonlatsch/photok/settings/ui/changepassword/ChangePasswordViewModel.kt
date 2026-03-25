@@ -21,11 +21,15 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import dev.leonlatsch.photok.vaults.domain.VaultService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
 /**
@@ -38,7 +42,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
     app: Application,
-    private val vaultService: VaultService,
+    private val config: Config,
+    private val photoRepository: PhotoRepository,
+    private val passwordManager: PasswordManager
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -70,19 +76,34 @@ class ChangePasswordViewModel @Inject constructor(
         }
 
     /**
+     * Checks if there are photos in the db.
+     * Sets [changePasswordState] to [ChangePasswordState.RE_ENCRYPT_NEEDED] or [ChangePasswordState.RE_ENCRYPT_NEEDED]
+     */
+    fun checkIfReEncryptNeeded() = viewModelScope.launch(Dispatchers.IO) {
+        val isSafeEmpty = photoRepository.countAll() == 0
+        changePasswordState = if (isSafeEmpty) {
+//            passwordManager.storePassword(newPassword) TODO
+            ChangePasswordState.RE_ENCRYPT_NOT_NEEDED
+        } else {
+            ChangePasswordState.RE_ENCRYPT_NEEDED
+        }
+    }
+
+    /**
      * Checks if the old password is valid and updates state. For security concerns.
      * Called by ui.
      */
     fun checkOld() = viewModelScope.launch {
         changePasswordState = ChangePasswordState.CHECKING_OLD
 
-        vaultService.verifyCurrent(oldPassword)
-            .onSuccess {
-                changePasswordState = ChangePasswordState.OLD_VALID
-            }
-            .onFailure {
-                changePasswordState = ChangePasswordState.OLD_INVALID
-            }
+        val storedPassword = config.legacyPassword
+        storedPassword ?: return@launch
+
+        changePasswordState = if (BCrypt.checkpw(oldPassword, storedPassword)) {
+            ChangePasswordState.OLD_VALID
+        } else {
+            ChangePasswordState.OLD_INVALID
+        }
     }
 
     /**
@@ -99,11 +120,5 @@ class ChangePasswordViewModel @Inject constructor(
         } else {
             ChangePasswordState.NEW_INVALID
         }
-    }
-
-    fun performChangePassword() = viewModelScope.launch {
-        vaultService.changeKey(oldPassword, newPassword)
-            .onSuccess { changePasswordState = ChangePasswordState.DONE }
-            .onFailure { changePasswordState = ChangePasswordState.ERROR }
     }
 }

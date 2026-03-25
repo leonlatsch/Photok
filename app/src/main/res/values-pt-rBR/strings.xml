@@ -219,7 +219,7 @@
     <string name="change_password_enter_new_password">Digitar sua nova senha</string>
     <string name="change_password_confirm_new_password">Confirmar sua nova senha</string>
     <string name="change_password_button">Alterar a senha</string>
-    <string name="change_password_confirm_message">Do you really want to change your password?</string> <!-- TODO -->
+    <string name="change_password_confirm_message">Um Backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todos seus arquivos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Arquivo(s) sendo criptografado(s) de novo…</string>
 
     <!-- CHECK PASSWORD -->

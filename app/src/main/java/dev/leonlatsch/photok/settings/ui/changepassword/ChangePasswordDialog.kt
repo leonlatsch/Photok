@@ -66,21 +66,10 @@ class ChangePasswordDialog :
                 }
                 ChangePasswordState.NEW_VALID -> {
                     binding.loadingOverlay.hide()
-
-                    Dialogs.showConfirmDialog(
-                        requireContext(),
-                        getString(R.string.change_password_confirm_message)
-                    ) { _, _ ->
-                        binding.loadingOverlay.show()
-                        viewModel.performChangePassword()
-                    }
+                    viewModel.checkIfReEncryptNeeded()
                 }
-                ChangePasswordState.ERROR -> {
-                    binding.loadingOverlay.hide()
-                    Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-                }
-
-                ChangePasswordState.DONE -> dismiss()
+                ChangePasswordState.RE_ENCRYPT_NEEDED -> handleReEncryptNeeded()
+                ChangePasswordState.RE_ENCRYPT_NOT_NEEDED -> dismiss()
             }
         }
 
@@ -105,6 +94,19 @@ class ChangePasswordDialog :
         binding.changePasswordOldStatusIcon.show()
         binding.changePasswordNewPasswordLayout.show()
         binding.changePasswordNewPasswordLayout.requestFocus()
+    }
+
+    private fun handleReEncryptNeeded() {
+        Dialogs.showConfirmDialog(
+            requireContext(),
+            getString(R.string.change_password_confirm_message)
+        ) { _, _ ->
+            ReEncryptBottomSheetDialogFragment(
+                viewModel.oldPassword,
+                viewModel.newPassword
+            ).show(requireActivity().supportFragmentManager)
+            dismiss()
+        }
     }
 
     private fun enableOrDisableSetup() {
