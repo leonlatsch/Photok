@@ -10,36 +10,61 @@
 ![Twitch Status](https://img.shields.io/twitch/status/leonlatsch?style=flat&logo=twitch)
 ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/photok?style=flat)
 
-Encrypt images and videos on your device and keep them safe from others.
+Private photo vault to hide photos and videos with strong on-device encryption.
 
 ## About
-Photok is a free and open-source gallery app for Android.
-Imported media files are encrypted on the device using AES-256 encryption and are only decrypted in memory when the app is in use. 
-This distinguishes Photok from other encrypted gallery apps.
 
-Photok is completely free, open source, and ad-free. It is developed as a hobby by me (Leon) and public volunteers.
+Photok is a secure private photo vault for Android that helps you hide photos and videos using strong AES-256 encryption.
+It protects sensitive media in an encrypted gallery and keeps your private memories safe on your own device.
 
-<a href="https://www.producthunt.com/posts/photok?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-photok" target="_blank">
-    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275764&theme=light" alt="Photok - Free and open source photo safe. | Product Hunt" width="250" height="54" />
-</a>
+All files are encrypted locally and only decrypted in memory while you use the app. No cloud upload is required.
+
+Photok is open source, ad-free, and built with a privacy-first philosophy. It is developed by me (Leon) and public volunteers.
+
+<p align="center">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="24%" />
+</p>
 
 ## Download
+
 Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
-      alt="Download from Google Play" 
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+      alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=dev.leonlatsch.photok)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/dev.leonlatsch.photok/)
-[<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" 
-      alt="Get it on GitHub" 
+[<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png"
+      alt="Get it on GitHub"
       height="80">](https://github.com/leonlatsch/Photok/releases/latest)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" 
-      alt="Get it on IzzyOnDroid" 
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+      alt="Get it on IzzyOnDroid"
       height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1UPJIV)
+
+## Features
+
+- Import photos and videos from your gallery
+- Organize private media into albums
+- Export files anytime
+- Create and restore encrypted backups
+- Unlock your vault with fingerprint authentication
+- Share media directly to the vault
+- Option to hide the app icon
+- Automatically delete original files after import
+
+## Privacy-Focused Design
+
+Photok is designed for people who want real control over their private photos and videos.
+Encryption happens on your device, and imported files are only decrypted in memory while the app is in use.
+
+Photok can use minimal privacy-friendly analytics to improve stability and user experience.
+These analytics are never used for advertising or cross-app tracking.
 
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
@@ -65,13 +90,23 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
 Photok can optionally send anonymous usage statistics to help improve the app.
 
 ### Google Play
+
 Telemetry is *enabled* by default. Users can disable it at any time in the settings.
 
 ### FOSS (F-Droid, GitHub, etc.)
+
 Telemetry is *disabled* by default. Users can enable it at any time in the settings.  
 In addition, Photok will prompt the user to enable telemetry after the first unlock (not during initial setup).
 
 No data is transmitted unless the user has explicitly opted in. This behavior is required to avoid the *Tracking* anti-feature flag in F-Droid and aligns with user expectations for apps installed from F-Droid.
+
+## Community
+
+### Contributors
+
+<a href="https://github.com/leonlatsch/Photok/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=leonlatsch/Photok"  alt="Photok Contributors"/>
+</a>
 
 ## Related Tools
 
@@ -79,6 +114,7 @@ No data is transmitted unless the user has explicitly opted in. This behavior is
 
 LICENSE
 =======
+
     Copyright 2020-2026 Leon Latsch
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -92,7 +128,6 @@ LICENSE
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
 
 **Legal Notice**
 
