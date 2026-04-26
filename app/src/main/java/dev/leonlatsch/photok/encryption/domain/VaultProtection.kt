@@ -14,33 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.data
+package dev.leonlatsch.photok.encryption.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import dev.leonlatsch.photok.encryption.domain.VaultProtectionType
+import dev.leonlatsch.photok.encryption.data.WrappedVMKJson
 
-enum class Kdf {
-    PBKDF2WithHmacSHA256
-}
-
-enum class Algorithm(val value: String) {
-    AesCbcPkcs7Padding("AES/CBC/PKCS7Padding")
-}
-
-data class KdfParams(
-    val salt: String,
-    val kdf: Kdf,
-    val kdfIterations: Int,
-    val algorithm: Algorithm,
-    val version: Int = 1,
-)
-
-@Entity(tableName = "vault_protection")
-data class VaultProtectionTable(
-    @PrimaryKey
+data class VaultProtection(
     val id: String,
     val type: VaultProtectionType,
-    val wrappedVMK: ByteArray,
-    val kdfParams: KdfParams,
+    val wrappedVMK: WrappedVMKJson,
 )

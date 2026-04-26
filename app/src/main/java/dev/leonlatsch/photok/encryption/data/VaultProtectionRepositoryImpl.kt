@@ -16,31 +16,12 @@
 
 package dev.leonlatsch.photok.encryption.data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import dev.leonlatsch.photok.encryption.domain.VaultProtection
+import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionType
 
-enum class Kdf {
-    PBKDF2WithHmacSHA256
+class VaultProtectionRepositoryImpl : VaultProtectionRepository {
+    override suspend fun getProtection(type: VaultProtectionType): VaultProtection? {
+        TODO("Not yet implemented")
+    }
 }
-
-enum class Algorithm(val value: String) {
-    AesCbcPkcs7Padding("AES/CBC/PKCS7Padding")
-}
-
-data class KdfParams(
-    val salt: String,
-    val kdf: Kdf,
-    val kdfIterations: Int,
-    val algorithm: Algorithm,
-    val version: Int = 1,
-)
-
-@Entity(tableName = "vault_protection")
-data class VaultProtectionTable(
-    @PrimaryKey
-    val id: String,
-    val type: VaultProtectionType,
-    val wrappedVMK: ByteArray,
-    val kdfParams: KdfParams,
-)

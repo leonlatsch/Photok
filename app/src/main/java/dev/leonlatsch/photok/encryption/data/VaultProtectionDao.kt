@@ -14,10 +14,15 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.encryption.data
 
+import androidx.room.Dao
+import androidx.room.Query
+import dev.leonlatsch.photok.encryption.domain.VaultProtectionType
 
-data class Session(
-    val name: String,
-    val vmk: ByteArray,
-)
+@Dao
+interface VaultProtectionDao {
+
+    @Query("SELECT * FROM vault_protection WHERE type = :type")
+    suspend fun getVaultProtection(type: VaultProtectionType): VaultProtectionTable?
+}
