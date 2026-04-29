@@ -39,7 +39,8 @@ import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
-class PasswordVaultProtectionHandler @Inject constructor() : VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password> {
+class PasswordVaultProtectionHandler @Inject constructor() :
+    VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password> {
 
     override suspend fun unlock(
         request: UnlockRequest.Password,
@@ -57,7 +58,6 @@ class PasswordVaultProtectionHandler @Inject constructor() : VaultProtectionHand
     }
 
     override suspend fun create(request: CreateRequest.Password): VaultProtection {
-        val vmk = generateVaultMasterKey()
 
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
@@ -70,6 +70,8 @@ class PasswordVaultProtectionHandler @Inject constructor() : VaultProtectionHand
             algorithm = Algorithm.AesCbcPkcs7Padding,
             keySize = KEY_SIZE,
         )
+
+        val vmk = generateVaultMasterKey(params)
 
         val kek = deriveKeyEncryptionKey(request.password, params)
 
@@ -101,8 +103,11 @@ class PasswordVaultProtectionHandler @Inject constructor() : VaultProtectionHand
         return SecretKeySpec(keyBytes, AES)
     }
 
-    // TODO: make sure this matches the current user key
-    private fun generateVaultMasterKey(): SecretKey {
-        return KeyGenerator.getInstance(Algorithm.AesCbcPkcs7Padding.value).generateKey()
+    private fun generateVaultMasterKey(params: VaultProtectionParams): SecretKey {
+        val keyGenerator = KeyGenerator.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
+            init(params.keySize)
+        }
+
+        return keyGenerator.generateKey()
     }
 }
