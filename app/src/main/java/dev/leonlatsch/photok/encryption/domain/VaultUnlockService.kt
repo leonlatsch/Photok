@@ -16,15 +16,16 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
+import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import dev.leonlatsch.photok.encryption.domain.unlockers.ProtectionUnlocker
 import javax.inject.Inject
 
+// TODO: Until now this is kind of only a proxy that does the when block ... meh
 class VaultUnlockService @Inject constructor(
     private val vaultProtectionRepository: VaultProtectionRepository,
-    private val passwordUnlocker: ProtectionUnlocker<UnlockRequest.Password>,
-    private val biometricUnlocker: ProtectionUnlocker<UnlockRequest.Biometric>,
+    private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password>,
+    private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric>,
 ) {
     suspend fun unlock(request: UnlockRequest): Result<VaultSession> {
         val type = request.protectionType
@@ -33,14 +34,23 @@ class VaultUnlockService @Inject constructor(
 
         return runCatching {
             val vmk = when (request) {
-                is UnlockRequest.Password -> passwordUnlocker.unlock(request, protection)
-                is UnlockRequest.Biometric -> biometricUnlocker.unlock(request, protection)
+                is UnlockRequest.Password -> passwordProtectionHandler.unlock(request, protection)
+                is UnlockRequest.Biometric -> biometricProtectionHandler.unlock(request, protection)
             }
 
             VaultSession(
                 vmk = vmk,
             )
         }
+    }
+
+    suspend fun create(request: UnlockRequest) {
+        val protection = when (request) {
+            is UnlockRequest.Password -> passwordProtectionHandler.create(request)
+            is UnlockRequest.Biometric -> biometricProtectionHandler.create(request)
+        }
+
+        vaultProtectionRepository.createProtection(protection)
     }
 }
 

@@ -16,6 +16,12 @@
 
 package dev.leonlatsch.photok.encryption.domain.models
 
-enum class Algorithm(val value: String) {
-    AesCbcPkcs7Padding("AES/CBC/PKCS7Padding")
+import android.security.keystore.KeyProperties
+
+enum class Algorithm(val value: String, val padding: String, val blockMode: String) {
+    AesCbcPkcs7Padding(
+        value = "AES/CBC/PKCS7Padding",
+        padding = KeyProperties.ENCRYPTION_PADDING_PKCS7,
+        blockMode = KeyProperties.BLOCK_MODE_CBC
+    )
 }

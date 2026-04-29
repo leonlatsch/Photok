@@ -21,12 +21,26 @@ import androidx.fragment.app.Fragment
 sealed interface UnlockRequest {
     val protectionType: VaultProtectionType
 
-    data class Password(
-        val password: String,
-    ) : UnlockRequest {
+    data class Password(val password: String) : UnlockRequest {
         override val protectionType = VaultProtectionType.Password
     }
+
     data class Biometric(val fragment: Fragment) : UnlockRequest {
+        override val protectionType = VaultProtectionType.Biometric
+    }
+}
+
+sealed interface CreateRequest {
+    val protectionType: VaultProtectionType
+
+    data class Password(val password: String) : CreateRequest {
+        override val protectionType = VaultProtectionType.Password
+    }
+
+    data class Biometric(
+        val session: VaultSession,
+        val fragment: Fragment,
+    ) : CreateRequest {
         override val protectionType = VaultProtectionType.Biometric
     }
 }

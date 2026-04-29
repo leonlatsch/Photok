@@ -14,12 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain.unlockers
+package dev.leonlatsch.photok.encryption.domain.handlers
 
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import javax.crypto.SecretKey
 
-interface ProtectionUnlocker<T : UnlockRequest> {
-    suspend fun unlock(request: T, protection: VaultProtection): SecretKey
+interface VaultProtectionHandler<URT : UnlockRequest, CRT: CreateRequest> {
+    suspend fun unlock(request: URT, protection: VaultProtection): SecretKey
+    suspend fun create(request: CRT): VaultProtection
 }

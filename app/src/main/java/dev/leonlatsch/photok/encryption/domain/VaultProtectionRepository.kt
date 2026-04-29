@@ -21,4 +21,5 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 
 interface VaultProtectionRepository {
     suspend fun getProtection(type: VaultProtectionType): VaultProtection?
+    suspend fun createProtection(protection: VaultProtection)
 }
