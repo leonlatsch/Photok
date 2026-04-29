@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.encryption.data
 
 import androidx.room.Dao
 import androidx.room.Query
-import dev.leonlatsch.photok.encryption.domain.VaultProtectionType
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 
 @Dao
 interface VaultProtectionDao {

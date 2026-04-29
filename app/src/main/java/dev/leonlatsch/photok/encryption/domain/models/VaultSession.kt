@@ -14,19 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.encryption.domain.models
 
-import javax.crypto.Cipher
+import javax.crypto.SecretKey
 
-sealed interface UnlockRequest {
-    val protectionType: VaultProtectionType
-
-    data class Password(
-        val password: String,
-    ) : UnlockRequest {
-        override val protectionType = VaultProtectionType.Password
-    }
-    data class Biometric(val unlockedCipher: Cipher) : UnlockRequest {
-        override val protectionType = VaultProtectionType.Biometric
-    }
-}
+data class VaultSession(
+    val vmk: SecretKey,
+)

@@ -16,8 +16,8 @@
 
 package dev.leonlatsch.photok.encryption.domain.unlockers
 
-import dev.leonlatsch.photok.encryption.domain.UnlockRequest
-import dev.leonlatsch.photok.encryption.domain.VaultProtection
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import javax.crypto.SecretKey
 
 interface ProtectionUnlocker<T : UnlockRequest> {

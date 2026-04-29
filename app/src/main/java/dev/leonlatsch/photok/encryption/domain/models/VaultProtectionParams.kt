@@ -14,18 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.data
+package dev.leonlatsch.photok.encryption.domain.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
-
-@Entity(tableName = "vault_protection")
-data class VaultProtectionTable(
-    @PrimaryKey
-    val id: String,
-    val type: VaultProtectionType,
-    val wrappedVMK: ByteArray,
-    val params: VaultProtectionParams,
+data class VaultProtectionParams(
+    val salt: String,
+    val iv: String,
+    val kdf: Kdf,
+    val kdfIterations: Int,
+    val algorithm: Algorithm,
+    val keySize: Int,
+    val version: Int = 1,
 )

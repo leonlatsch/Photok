@@ -14,10 +14,8 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.encryption.domain.models
 
-enum class VaultProtectionType {
-    Password,
-    Biometric,
-    // Recovery Key
+enum class Algorithm(val value: String) {
+    AesCbcPkcs7Padding("AES/CBC/PKCS7Padding")
 }

@@ -16,6 +16,9 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+
 interface VaultProtectionRepository {
     suspend fun getProtection(type: VaultProtectionType): VaultProtection?
 }

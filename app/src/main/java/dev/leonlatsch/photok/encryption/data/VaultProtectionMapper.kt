@@ -16,18 +16,13 @@
 
 package dev.leonlatsch.photok.encryption.data
 
-import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class VaultProtectionRepositoryImpl @Inject constructor(
-    private val dao: VaultProtectionDao,
-) : VaultProtectionRepository {
-
-    override suspend fun getProtection(type: VaultProtectionType): VaultProtection? = withContext(IO) {
-        dao.getVaultProtection(type)?.toDomain()
-    }
+fun VaultProtectionTable.toDomain(): VaultProtection {
+    return VaultProtection(
+        id = id,
+        type = type,
+        wrappedVMK = wrappedVMK,
+        params = params,
+    )
 }

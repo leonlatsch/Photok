@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.encryption.domain.unlockers.ProtectionUnlocker
 import javax.inject.Inject
 

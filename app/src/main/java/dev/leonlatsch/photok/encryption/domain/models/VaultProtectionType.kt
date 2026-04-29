@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.encryption.domain.models
 
-import javax.crypto.SecretKey
-
-data class VaultSession(
-    val vmk: SecretKey,
-)
+enum class VaultProtectionType {
+    Password,
+    Biometric,
+    // Recovery Key
+}

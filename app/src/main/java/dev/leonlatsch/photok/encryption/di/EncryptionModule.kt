@@ -20,7 +20,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.leonlatsch.photok.encryption.domain.UnlockRequest
+import dev.leonlatsch.photok.encryption.data.VaultProtectionRepositoryImpl
+import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.unlockers.BiometricProtectionUnlocker
 import dev.leonlatsch.photok.encryption.domain.unlockers.PasswordProtectionUnlocker
 import dev.leonlatsch.photok.encryption.domain.unlockers.ProtectionUnlocker
@@ -28,6 +30,9 @@ import dev.leonlatsch.photok.encryption.domain.unlockers.ProtectionUnlocker
 @Module
 @InstallIn(SingletonComponent::class)
 interface EncryptionModule {
+
+    @Binds
+    fun bindVaultProtectionRepository(impl: VaultProtectionRepositoryImpl): VaultProtectionRepository
 
     @Binds
     fun bindPasswordUnlocker(impl: PasswordProtectionUnlocker): ProtectionUnlocker<UnlockRequest.Password>

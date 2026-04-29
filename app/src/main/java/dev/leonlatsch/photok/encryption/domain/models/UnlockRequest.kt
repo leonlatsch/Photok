@@ -14,12 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.encryption.domain.models
 
-import dev.leonlatsch.photok.encryption.data.WrappedVMKJson
+import androidx.fragment.app.Fragment
 
-data class VaultProtection(
-    val id: String,
-    val type: VaultProtectionType,
-    val wrappedVMK: WrappedVMKJson,
-)
+sealed interface UnlockRequest {
+    val protectionType: VaultProtectionType
+
+    data class Password(
+        val password: String,
+    ) : UnlockRequest {
+        override val protectionType = VaultProtectionType.Password
+    }
+    data class Biometric(val fragment: Fragment) : UnlockRequest {
+        override val protectionType = VaultProtectionType.Biometric
+    }
+}
