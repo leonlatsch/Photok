@@ -88,9 +88,9 @@ class PasswordVaultProtectionHandler @Inject constructor() : VaultProtectionHand
     }
 
     private fun deriveKeyEncryptionKey(password: String, params: VaultProtectionParams): SecretKey {
-        require(params.salt != null)
-        require(params.kdf != null)
-        require(params.kdfIterations != null)
+        requireNotNull(params.salt)
+        requireNotNull(params.kdf)
+        requireNotNull(params.kdfIterations)
 
         val salt = Base64.decode(params.salt)
 
