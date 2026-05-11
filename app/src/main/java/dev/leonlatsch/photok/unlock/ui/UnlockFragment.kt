@@ -41,6 +41,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
+import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
@@ -103,54 +104,41 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         // Check for migration should not be needed. But double check because in this case we don't have the legacy key
         if (biometricUnlock.isSetupAndValid() && !legacyEncryptionMigrator.migrationNeeded()) {
             binding.unlockUseBiometricUnlockButton.show()
-            launchBiometricUnlock()
+
+            lifecycleScope.launch {
+                delay(500L)
+                viewModel.unlockWithBiometric(fragment = this@UnlockFragment)
+            }
         } else {
             binding.unlockUseBiometricUnlockButton.hide()
         }
     }
 
-    fun launchBiometricUnlock(delay: Long = 500L) {
-        lifecycleScope.launch {
-            delay(delay)
-
-            biometricUnlock.unlock(this@UnlockFragment)
-                .onSuccess { goToGallery() }
-                .onFailure {
-                    if (it !is UserCanceledBiometricsException) {
-                        Dialogs.showLongToast(
-                            context = requireContext(),
-                            message = getString(R.string.biometric_unlock_error),
-                        )
-                    }
-                }
-        }
-    }
-
-
     private fun goToGallery() {
         val activity = activity
 
-        (activity as? BaseActivity)?.hideKeyboard()
-        binding.loadingOverlay.hide()
+        try {
+            requireNotNull(activity)
+            activity.hideKeyboard()
+            binding.loadingOverlay.hide()
 
-        if (activity == null || !viewModel.encryptionManager.isReady) {
+            activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
+
+            if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
+                lifecycleScope.launch {
+                    findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+                }
+            } else {
+                val startPageDest = when (config.galleryStartPage) {
+                    StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
+                    StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
+                }
+
+                findNavController().navigate(startPageDest)
+            }
+        } catch (e: Exception) {
             Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            return
-        }
-
-        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-
-        if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
-            lifecycleScope.launch {
-                findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
-            }
-        } else {
-            val startPageDest = when (config.galleryStartPage) {
-                StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
-                StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
-            }
-
-            findNavController().navigate(startPageDest)
+            Timber.e(e)
         }
     }
 

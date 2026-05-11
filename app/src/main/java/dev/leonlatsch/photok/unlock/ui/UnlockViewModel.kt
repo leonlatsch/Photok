@@ -17,15 +17,22 @@
 package dev.leonlatsch.photok.unlock.ui
 
 import android.app.Application
+import android.content.res.Resources
 import androidx.databinding.Bindable
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
+import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -42,9 +49,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
     app: Application,
-    val encryptionManager: EncryptionManager,
+    private val resources: Resources,
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager,
+    private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -62,21 +69,36 @@ class UnlockViewModel @Inject constructor(
      * Updates UnlockState.
      * Called by ui.
      */
-    fun unlock() {
+    fun onUnlockWithPassword() {
         unlockState.update { UnlockState.CHECKING }
 
         viewModelScope.launch {
 
-            unlockState.update {
-                if (passwordManager.checkPassword(password)) {
-                    encryptionManager.initialize(password)
+            vaultService.unlock(UnlockRequest.Password(password))
+                .onSuccess { session -> // TODO
                     legacyEncryptionManager.initialize(password)
-
-                    UnlockState.UNLOCKED
-                } else {
-                    UnlockState.UNLOCK_FAILED
+                    unlockState.update { UnlockState.UNLOCKED }
                 }
-            }
+                .onFailure {
+                    unlockState.update { UnlockState.UNLOCK_FAILED }
+                }
+        }
+    }
+
+    fun unlockWithBiometric(fragment: Fragment) {
+        viewModelScope.launch {
+            vaultService.unlock(UnlockRequest.Biometric(fragment))
+                .onSuccess { session -> // TODO
+                    unlockState.update { UnlockState.UNLOCKED }
+                }
+                .onFailure {
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(
+                            context = fragment.requireContext(),
+                            message = resources.getString(R.string.biometric_unlock_error),
+                        )
+                    }
+                }
         }
     }
 

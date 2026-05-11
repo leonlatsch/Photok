@@ -21,6 +21,9 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordManager
@@ -41,8 +44,8 @@ import javax.inject.Inject
 class SetupViewModel @Inject constructor(
     app: Application,
     val encryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager,
     private val config: Config,
+    private val vaultService: VaultService,
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -77,16 +80,21 @@ class SetupViewModel @Inject constructor(
      * Initializes [EncryptionManager].
      * Called by ui.
      */
-    fun savePassword() = viewModelScope.launch {
-        setupState = SetupState.LOADING
+    fun onSetupClicked() = viewModelScope.launch {
 
-        setupState = if (validateBothPasswords()) {
-            passwordManager.storePassword(password)
-            encryptionManager.initialize(this@SetupViewModel.password)
-            config.justFinishedSetup = true
-            SetupState.FINISHED
-        } else {
-            SetupState.SETUP
+        if (validateBothPasswords()) {
+            setupState = SetupState.LOADING
+
+            vaultService.create(CreateRequest.Password(password))
+            vaultService.unlock(UnlockRequest.Password(password))
+                .onSuccess {
+                    config.justFinishedSetup = true
+                    setupState = SetupState.FINISHED
+                }
+                .onFailure {
+                    setupState = SetupState.SETUP
+                }
+
         }
     }
 

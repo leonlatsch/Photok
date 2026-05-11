@@ -35,6 +35,7 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
+import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
@@ -107,17 +108,10 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
     private fun finishSetup() {
         try {
             val activity = activity
-            (activity as? BaseActivity)?.hideKeyboard()
+            requireNotNull(activity)
+
+            activity.hideKeyboard()
             binding.loadingOverlay.hide()
-
-            if (activity == null || !viewModel.encryptionManager.isReady) {
-                Dialogs.showLongToast(
-                    requireContext(),
-                    getString(R.string.common_error)
-                )
-
-                return
-            }
 
             activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
             findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToGalleryFragment())
