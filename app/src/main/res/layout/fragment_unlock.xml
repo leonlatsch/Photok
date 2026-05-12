@@ -95,7 +95,7 @@
 
         <Button
             android:id="@+id/unlockUseBiometricUnlockButton"
-            android:onClick="@{() -> context.launchBiometricUnlock(0L)}"
+            android:onClick="@{() -> viewModel.unlockWithBiometric(context)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -17,11 +17,16 @@
 package dev.leonlatsch.photok.encryption.data
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 
 @Dao
 interface VaultProtectionDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(protection: VaultProtectionTable)
 
     @Query("SELECT * FROM vault_protection WHERE type = :type")
     suspend fun getVaultProtection(type: VaultProtectionType): VaultProtectionTable?

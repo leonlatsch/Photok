@@ -30,4 +30,8 @@ class VaultProtectionRepositoryImpl @Inject constructor(
     override suspend fun getProtection(type: VaultProtectionType): VaultProtection? = withContext(IO) {
         dao.getVaultProtection(type)?.toDomain()
     }
+
+    override suspend fun createProtection(protection: VaultProtection) = withContext(IO) {
+        dao.insert(protection.toData())
+    }
 }

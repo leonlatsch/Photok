@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.encryption.di
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.encryption.data.VaultProtectionRepositoryImpl
@@ -25,18 +26,28 @@ import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.handlers.BiometricVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.model.database.PhotokDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface EncryptionModule {
+interface EncryptionBindingModule {
 
     @Binds
     fun bindVaultProtectionRepository(impl: VaultProtectionRepositoryImpl): VaultProtectionRepository
 
     @Binds
-    fun bindPasswordUnlocker(impl: PasswordVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Password>
+    fun bindPasswordUnlocker(impl: PasswordVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>
 
     @Binds
-    fun bindBiometricUnlocker(impl: BiometricVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Biometric>
+    fun bindBiometricUnlocker(impl: BiometricVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class EncryptionModule {
+
+    @Provides
+    fun provideVaultProtectionDao(database: PhotokDatabase) = database.getVaultProtectionDao()
 }

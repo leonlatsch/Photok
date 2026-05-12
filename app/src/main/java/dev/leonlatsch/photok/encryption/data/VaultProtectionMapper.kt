@@ -26,3 +26,12 @@ fun VaultProtectionTable.toDomain(): VaultProtection {
         params = params,
     )
 }
+
+fun VaultProtection.toData(): VaultProtectionTable {
+    return VaultProtectionTable(
+        id = id,
+        type = type,
+        wrappedVMK = wrappedVMK,
+        params = params,
+    )
+}
