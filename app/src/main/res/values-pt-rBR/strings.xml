@@ -66,7 +66,7 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">Não há arquivos em seu cofre</string>
     <string name="gallery_all_photos_label">Todos os arquivos</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
+    <string name="gallery_albums_label">Albuns</string>
     <string name="gallery_albums_placeholder">Criar primeiro album</string>
     <string name="gallery_albums_create_title">Criar Album</string>
     <string name="gallery_albums_rename_title">Renomear Album</string>
@@ -160,9 +160,9 @@
     <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
     <string name="settings_security_change_password_title">Alterar a senha</string>
     <string name="settings_security_change_password_summary">Alterar sua senha</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Desbloqueio por biometria</string>
     <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_not_available">Desbloquio por biometria não disponível</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -184,8 +184,8 @@
     <string name="settings_advanced_reset_confirmation">Você REALMENTE quer resetar seu cofre? Todos os dados serão perdidos!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Criar um Backup do seu cofre</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_title">Exclua os arquivos importados</string>
+    <string name="settings_advanced_delete_imported_summary">Exclua os arquivos depois importá-los</string>
 
     <string name="settings_other_title">Outros</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -193,16 +193,16 @@
     <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
     <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">Doe</string>
+    <string name="settings_other_donate_summary">Apoie o desenvolvimento do Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Créditos</string>
     <string name="settings_other_credits_summary">Colaboradores e créditos</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Coleta de dados</string>
+    <string name="settings_other_telemetry_summary">Gerencie a coleta de dados de uso</string>
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Informações sobre o Photok</string>
 
@@ -223,7 +223,7 @@
     <string name="change_password_reencrypting">Arquivo(s) sendo criptografado(s) de novo…</string>
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Verifique a senha</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar o Photok</string>
@@ -282,42 +282,42 @@
     <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
     <string name="migration_initial_button">Começar</string>
   
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Faça backup de seus dados</string>
+    <string name="migration_initial_stage_backup_explanation">Criar um backup de seus dados antes de continuar</string>
+    <string name="migration_initial_stage_backup_button">Criar backup</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Conceder permissão</string>
     <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_button">Conceder permissão</string> 
 
     <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_button">Começar migração</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Migrando sua galeriay</string>
+    <string name="migration_running_progress">%d de %d arquivos migrados</string>
+    <string name="migration_running_advice">Se essa tela continuar aberta, a migração será realizada mais rápido</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migração da galeria finalizada</string>
+    <string name="migration_done_progress">Todos os arquivos foram migrados</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Erro durante migração de sua galeria</string> 
+    <string name="migration_error_button">Enviar relatório de erro</string>
 
     <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
+    <string name="migration_error_extract_data">Extrair dados</string>
     <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
     <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Desbloquear Photok</string>
+    <string name="biometric_unlock_subtitle">Verifique sua identidade antes de desbloquear</string>
+    <string name="biometric_unlock_cancel">Use sua senha Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Ative o desbloquio por biometria</string>
     <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
     <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_hint_button">Desbloqueie por biometria</string>
 
     <!-- Sorting -->
     <string name="sorting_sort">Organizar</string>
