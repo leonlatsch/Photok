@@ -22,22 +22,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
-import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
-import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 /**
@@ -113,7 +109,6 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             activity.hideKeyboard()
             binding.loadingOverlay.hide()
 
-            activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
             findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToGalleryFragment())
         } catch (e: Exception) {
             Timber.e(e)

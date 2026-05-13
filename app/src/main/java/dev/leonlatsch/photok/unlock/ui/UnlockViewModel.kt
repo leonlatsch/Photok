@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
@@ -32,7 +33,6 @@ import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -52,6 +52,7 @@ class UnlockViewModel @Inject constructor(
     private val resources: Resources,
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -75,7 +76,8 @@ class UnlockViewModel @Inject constructor(
         viewModelScope.launch {
 
             vaultService.unlock(UnlockRequest.Password(password))
-                .onSuccess { session -> // TODO
+                .onSuccess { session ->
+                    sessionRepository.set(session)
                     legacyEncryptionManager.initialize(password)
                     unlockState.update { UnlockState.UNLOCKED }
                 }
@@ -88,7 +90,8 @@ class UnlockViewModel @Inject constructor(
     fun unlockWithBiometric(fragment: Fragment) {
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Biometric(fragment))
-                .onSuccess { session -> // TODO
+                .onSuccess { session ->
+                    sessionRepository.set(session)
                     unlockState.update { UnlockState.UNLOCKED }
                 }
                 .onFailure {

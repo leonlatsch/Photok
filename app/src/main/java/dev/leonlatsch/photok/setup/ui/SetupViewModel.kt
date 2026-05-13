@@ -21,12 +21,12 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -46,6 +46,7 @@ class SetupViewModel @Inject constructor(
     val encryptionManager: EncryptionManager,
     private val config: Config,
     private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -87,7 +88,9 @@ class SetupViewModel @Inject constructor(
 
             vaultService.create(CreateRequest.Password(password))
             vaultService.unlock(UnlockRequest.Password(password))
-                .onSuccess {
+                .onSuccess { session ->
+                    sessionRepository.set(session)
+
                     config.justFinishedSetup = true
                     setupState = SetupState.FINISHED
                 }
