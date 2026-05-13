@@ -32,12 +32,12 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Tem certeza?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_more">Mais</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_create">Criar</string>
+    <string name="common_empty">Esvaziar</string>
+    <string name="common_rename">Renomear</string>
+    <string name="common_try_again">Tentar novamente</string>
     <string name="common_continue">Continuar</string>
 
     <!-- IMPORT -->
@@ -67,23 +67,23 @@
     <string name="gallery_placeholder">Não há arquivos em seu cofre</string>
     <string name="gallery_all_photos_label">Todos os arquivos</string>
     <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
+    <string name="gallery_albums_placeholder">Criar primeiro album</string>
+    <string name="gallery_albums_create_title">Criar Album</string>
+    <string name="gallery_albums_rename_title">Renomear Album</string>
     <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="gallery_albums_select_title">Selecionar um Album</string>
+    <string name="gallery_albums_deleted">Album excluído</string> 
+    <string name="gallery_albums_photos_added">%1$d itens adicionados</string>
+    <string name="magic_fab_new_album_label">Novo Album</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importar</string>
+    <string name="import_menu_new_files_title">Importar novos arquivos</string>
+    <string name="import_menu_new_files_description">Importar fotos e vídeos da sua galeria.</string>
+    <string name="import_menu_restore_title">Restaurar backup</string>
+    <string name="import_menu_restore_description">Restaurar um backup Photok. Arquivos serão adicionados aos seus arquivos atuais.</string>
+    <string name="import_menu_delete_warning">Arquivos imoortados serão excluídos</string>
+    <string name="import_menu_album_tooltip">Os arquivos serão adicionados à \"%s\" depois da importação</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>
@@ -99,9 +99,9 @@
     <string name="view_photo_detail_import_at_label">Importado em</string>
     <string name="view_photo_detail_file_type_label">Tipo do arquivo</string>
     <string name="view_photo_detail_size_label">Tamanho do arquivo</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Última modificação</string>
+    <string name="view_photo_loop_video_disabled">Looping desativado</string>
+    <string name="view_photo_loop_video_enabled">Looping ativado</string>
     <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
 
     <!-- MAIN MENU -->
@@ -112,9 +112,9 @@
     <string name="menu_ms_select_all">Selecionar tudo</string>
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d item(s) selecinado(s)</string>
+    <string name="menu_ms_add_to_album">Adicionar ao album</string>
+    <string name="menu_ms_remove_from_album">Remover do album</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>
@@ -129,7 +129,7 @@
     <string name="export_exporting">Exportando o(s) arquivo(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar os arquivos.</string>
     <string name="export_finished">Exportado</string>
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exportado e deletado</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versão:</string>
@@ -271,17 +271,17 @@
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
-    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
+    <string name="recovery_menu_item_open_photok">Abrir Photok</string>
     <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Ecluir arquivos exportados</string>
+    <string name="settings_advanced_delete_exported_summary">Excluir arquivos depois de exportá-los</string>
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bem-vindo(a) ao</string>
     <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
-
+    <string name="migration_initial_button">Começar</string>
+  
     <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
     <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
     <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
@@ -320,27 +320,27 @@
     <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Organizar</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Crescente</string>
+    <string name="sorting_order_desc_label">Decrescente</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Data de importação</string>
+    <string name="sorting_field_filename_label">Nome</string>
+    <string name="sorting_field_size_label">Tamanho</string>
+    <string name="sorting_field_added_to_album_label">Adicionado no album</string>
+    <string name="sorting_field_last_modified">Última modificação</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Voltar ao padrão</string> <!-- TODO -->
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pausar</string>
+    <string name="video_player_mute">Mutar</string>
+    <string name="video_player_unmute">Desmutar</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string> <!-- TODO -->
     <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
     <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
     <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
