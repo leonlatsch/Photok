@@ -76,16 +76,6 @@ fun EncryptionMigrationScreenError(
     val context = LocalContext.current
     val activity = LocalActivity.current
 
-    val extractDataLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) {
-            it ?: return@rememberLauncherForActivityResult
-            if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
-
-            BackupBottomSheetDialogFragment(
-                uri = it,
-                strategy = BackupStrategy.Name.UnEncrypted,
-            ).show(activity.supportFragmentManager)
-        }
-
     var showExtractConfirmationDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -196,40 +186,8 @@ fun EncryptionMigrationScreenError(
                         Text(stringResource(R.string.migration_error_button))
                     }
                 }
-
-                VerticalDivider(
-                    modifier = Modifier.height(30.dp),
-                    color = MaterialTheme.colorScheme.error,
-                )
-
-
-                TextButton(
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.error,
-                    ),
-                    onClick = { showExtractConfirmationDialog = true },
-                ) {
-                    Text(stringResource(R.string.migration_error_extract_data))
-                }
-
             }
         }
-
-
-        ConfirmationDialog(
-            show = showExtractConfirmationDialog,
-            onDismissRequest = {
-                showExtractConfirmationDialog = false
-            },
-            text = stringResource(R.string.migration_error_extract_confirmation_text),
-            onConfirm = {
-                extractDataLauncher.launchAndIgnoreTimer(
-                    input = "photok_data_unencrypted.zip",
-                    activity = activity,
-                )
-                showExtractConfirmationDialog = false
-            },
-        )
     }
 }
 

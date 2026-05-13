@@ -25,7 +25,6 @@ interface BackupStrategy {
     enum class Name(val title: Int) {
         Default(R.string.backup_processing_title),
         Legacy(R.string.backup_processing_title),
-        UnEncrypted(R.string.migration_error_extracting_title);
     }
 
     suspend fun preBackup() {}
