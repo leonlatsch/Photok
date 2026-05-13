@@ -342,10 +342,10 @@
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string>
     <string name="telemetry_sheet_paragraph_1">Photok pode, de forma opcional, enviar estatísticas de uso para melhorar o app.</string>
-    <string name="telemetry_sheet_paragraph_2">Os dados processados são anônomizados e não permitem a realização de nenhuma análise sobre informações pessoais.</string>
+    <string name="telemetry_sheet_paragraph_2">Os dados processados são anônomizados e não permitem a realização de nenhuma conclusão sobre o perfil do usuário.</string>
     <string name="telemetry_sheet_paragraph_3">Enviar dados anônimos de uso é opcional e pode ser desligado a qualquer momento nas configurações.</string>
     <string name="telemetry_learn_more">Saiba mais</string>
-    <string name="telemetry_choice_no">Não obrigado</string>
+    <string name="telemetry_choice_no">Não, obrigado</string>
     <string name="telemetry_choice_yes">Compartilhar anônimamente dados de uso</string>
     <string name="telemetry_toggle">Permitir coleta de dados de uso</string>
 </resources>
