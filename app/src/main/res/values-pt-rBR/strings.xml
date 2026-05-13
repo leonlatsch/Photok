@@ -331,7 +331,7 @@
     <string name="sorting_field_added_to_album_label">Adicionado no album</string>
     <string name="sorting_field_last_modified">Última modificação</string>
 
-    <string name="sorting_restore_default">Voltar ao padrão</string> <!-- TODO -->
+    <string name="sorting_restore_default">Voltar ao padrão</string>
 
     <!-- Video Player -->
     <string name="video_player_play">Play</string>
@@ -340,12 +340,12 @@
     <string name="video_player_unmute">Desmutar</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string>
     <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
     <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
     <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_learn_more">Saiba mais</string>
+    <string name="telemetry_choice_no">Não obrigado</string>
+    <string name="telemetry_choice_yes">Compartilhar anônimamente dados de uso</string>
+    <string name="telemetry_toggle">Permitir coleta de dados de uso</string>
 </resources>
