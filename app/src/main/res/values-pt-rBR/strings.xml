@@ -70,7 +70,7 @@
     <string name="gallery_albums_placeholder">Criar primeiro album</string>
     <string name="gallery_albums_create_title">Criar Album</string>
     <string name="gallery_albums_rename_title">Renomear Album</string>
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
+    <string name="gallery_albums_create_placeholder">Dever de casa ;)</string>
     <string name="gallery_albums_select_title">Selecionar um Album</string>
     <string name="gallery_albums_deleted">Album excluído</string> 
     <string name="gallery_albums_photos_added">%1$d itens adicionados</string>
@@ -102,7 +102,7 @@
     <string name="view_photo_detail_last_modified">Última modificação</string>
     <string name="view_photo_loop_video_disabled">Looping desativado</string>
     <string name="view_photo_loop_video_enabled">Looping ativado</string>
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_video_playback_speed">Velocidade de reprodução</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>
@@ -124,8 +124,8 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d o(s) arquivo(s), de volta à sua galeria?</string>
     <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este arquivo, de volta à sua galeria?</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">Tem certeza de quer <b>exportar</b> %1$d arquivo(s) de volta à galeria e excluí-los?</string>
+    <string name="export_and_delete_are_you_sure_this">Tem certeza de quer <b>exportar</b> esse arquivo de volta à galeria e excluí-lo?</string>
     <string name="export_exporting">Exportando o(s) arquivo(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar os arquivos.</string>
     <string name="export_finished">Exportado</string>
@@ -153,7 +153,7 @@
     <string name="settings_category_gallery">Galeria</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto tela completa</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir um arquivo</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Página inicial</string>
 
     <string name="settings_category_security">Segurança</string>
     <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
@@ -161,7 +161,7 @@
     <string name="settings_security_change_password_title">Alterar a senha</string>
     <string name="settings_security_change_password_summary">Alterar sua senha</string>
     <string name="settings_security_biometric_title">Desbloqueio por biometria</string>
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
+    <string name="settings_security_biometric_summary">Desbloqueie Photok com autentificação biométrica.</string>
     <string name="settings_security_biometric_not_available">Desbloquio por biometria não disponível</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
@@ -270,16 +270,16 @@
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
+    <string name="recovery_subtitle">Menu de recuperação</string>
     <string name="recovery_menu_item_open_photok">Abrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
+    <string name="recovery_subtitle_reset_hide_app">Resetar configurações de ocultação de app</string>
     <string name="settings_advanced_delete_exported_title">Ecluir arquivos exportados</string>
     <string name="settings_advanced_delete_exported_summary">Excluir arquivos depois de exportá-los</string>
 
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Bem-vindo(a) ao</string>
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
+    <string name="migration_initial_explaination">Essa versão do Photok traz um novo método de encriptação. Para seguir à sua galeria, é preciso realizar uma migração de dados.</string>
     <string name="migration_initial_button">Começar</string>
   
     <string name="migration_initial_stage_backup_checklist">Faça backup de seus dados</string>
@@ -287,10 +287,10 @@
     <string name="migration_initial_stage_backup_button">Criar backup</string>
 
     <string name="migration_initial_stage_permission_checklist">Conceder permissão</string>
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_explanation">Conceda permissão às notificações para realizar a migração segura em segundo plano.</string>
     <string name="migration_initial_stage_permission_button">Conceder permissão</string> 
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Tudo pronto</string>
     <string name="migration_initial_stage_ready_button">Começar migração</string>
 
     <string name="migration_running_title">Migrando sua galeriay</string>
@@ -303,10 +303,10 @@
     <string name="migration_error_title">Erro durante migração de sua galeria</string> 
     <string name="migration_error_button">Enviar relatório de erro</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tarefas em segundo plano</string>
     <string name="migration_error_extract_data">Extrair dados</string>
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="migration_error_extract_confirmation_text">Você tem certeza de querer extrair todos os seus arquivos DECRIPTADOS em um arquivo ZIP?</string>
+    <string name="migration_error_extracting_title">Decriptando para ZIP…</string>
 
 
     <!-- Biometric -->
@@ -315,8 +315,8 @@
     <string name="biometric_unlock_cancel">Use sua senha Photok</string>
 
     <string name="biometric_unlock_setup_title">Ative o desbloquio por biometria</string>
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_subtitle">Para ativar o desbloqueio por biometria, confirme sua identidade</string>
+    <string name="biometric_unlock_error">O desbloqueio por biometria falhou. Use sua senha Photok.</string>
     <string name="biometric_unlock_hint_button">Desbloqueie por biometria</string>
 
     <!-- Sorting -->
@@ -341,9 +341,9 @@
 
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string>
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
+    <string name="telemetry_sheet_paragraph_1">Photok pode, de forma opcional, enviar estatísticas de uso para melhorar o app.</string>
+    <string name="telemetry_sheet_paragraph_2">Os dados processados são anônomizados e não permitem a realização de nenhuma análise sobre informações pessoais.</string>
+    <string name="telemetry_sheet_paragraph_3">Enviar dados anônimos de uso é opcional e pode ser desligado a qualquer momento nas configurações.</string>
     <string name="telemetry_learn_more">Saiba mais</string>
     <string name="telemetry_choice_no">Não obrigado</string>
     <string name="telemetry_choice_yes">Compartilhar anônimamente dados de uso</string>
