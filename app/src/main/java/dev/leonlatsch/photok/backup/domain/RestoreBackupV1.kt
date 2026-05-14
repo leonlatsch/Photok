@@ -20,10 +20,10 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.PhotoBackup
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
+import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -58,16 +58,19 @@ import kotlin.coroutines.suspendCoroutine
  *  - `backupVersion` must equal 1 for this format.
  */
 class RestoreBackupV1 @Inject constructor(
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
+    private val legacyEncryption: LegacyEncryption,
+    private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
 ) : RestoreBackupStrategy {
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
-        originalPassword: String,
+        originalPassword: String, // TODO: Most likely its best to pass down a session
     ): RestoreResult {
         var errors = 0
+
+        val session = legacyEncryption.obtainSession(originalPassword)
 
         var ze = stream.nextEntry
 
@@ -85,7 +88,7 @@ class RestoreBackupV1 @Inject constructor(
             val dummyPhoto = photoBackup.toDomain()
 
             val encryptedZipInput =
-                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
+                legacyGcmCryptoEngine.createDecryptStream(stream, session)
             if (encryptedZipInput == null) {
                 ze = stream.nextEntry
                 continue

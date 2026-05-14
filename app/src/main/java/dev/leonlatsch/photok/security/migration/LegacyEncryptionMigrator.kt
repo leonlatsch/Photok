@@ -18,13 +18,13 @@ package dev.leonlatsch.photok.security.migration
 
 import android.app.Application
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.LegacySession
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -50,7 +50,7 @@ sealed interface LegacyEncryptionState {
 
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
+    private val legacyCryptoEngine: LegacyGcmCryptoEngine,
     private val vaultFileStorage: VaultFileStorage,
     private val app: Application,
     private val config: Config,
@@ -60,10 +60,12 @@ class LegacyEncryptionMigrator @Inject constructor(
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
 
+    private lateinit var session: LegacySession
+
     private val mutex = Mutex()
 
     fun initialize(session: LegacySession) {
-        // TODO
+        this.session = session
     }
 
     fun migrationNeeded(): Boolean {
@@ -71,7 +73,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     }
 
     suspend fun migrate() = mutex.withLock {
-        if (!legacyEncryptionManager.isReady) {
+        if (::session.isInitialized.not()) {
             state.update {
                 LegacyEncryptionState.Error(IllegalStateException("Encryption not initialized"))
             }
@@ -173,7 +175,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
 
         val originalInput = app.openFileInput(legacyName)
-        val encryptedLegacyInput = legacyEncryptionManager.createCipherInputStream(originalInput)
+        val encryptedLegacyInput = legacyCryptoEngine.createDecryptStream(originalInput, session)
         val encryptedOutput = vaultFileStorage.openEncryptedOutput(tmpName)
 
         requireNotNull(encryptedLegacyInput) { "Legacy input was null" }

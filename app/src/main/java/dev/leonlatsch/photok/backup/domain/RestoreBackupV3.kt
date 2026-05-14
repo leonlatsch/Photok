@@ -19,14 +19,14 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
+import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -64,7 +64,8 @@ import javax.inject.Inject
  *  - `backupVersion` must equal 3 for this format.
  */
 class RestoreBackupV3 @Inject constructor(
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
+    private val legacyEncryption: LegacyEncryption,
+    private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val io: IO,
@@ -76,6 +77,8 @@ class RestoreBackupV3 @Inject constructor(
         originalPassword: String
     ): RestoreResult {
         var errors = 0
+
+        val session = legacyEncryption.obtainSession(originalPassword)
 
         var ze = stream.nextEntry
 
@@ -94,7 +97,7 @@ class RestoreBackupV3 @Inject constructor(
             }
 
             val encryptedZipInput =
-                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
+                legacyGcmCryptoEngine.createDecryptStream(stream, session)
             val internalOutputStream = vaultFileStorage.openEncryptedOutput(
                 ze.name.replace(
                     oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
