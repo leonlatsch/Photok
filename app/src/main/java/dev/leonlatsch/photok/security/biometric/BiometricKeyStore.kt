@@ -6,7 +6,6 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.security.AES
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -117,7 +116,7 @@ class BiometricKeyStore @Inject constructor(
         val cipherText = wrapped.copyOfRange(IV_SIZE, wrapped.size)
 
         val keyBytes = unlockedCipher.doFinal(cipherText)
-        SecretKeySpec(keyBytes, AES)
+        SecretKeySpec(keyBytes, "AES")
     }
 
 

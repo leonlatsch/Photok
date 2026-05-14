@@ -21,13 +21,12 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.TransferListener
-import dev.leonlatsch.photok.security.AES_ALGORITHM
-import dev.leonlatsch.photok.security.BLOCK_SIZE
-import dev.leonlatsch.photok.security.ENC_VERSION_BYTE
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.HEADER_SIZE
-import dev.leonlatsch.photok.security.IV_SIZE
-import dev.leonlatsch.photok.security.SALT_SIZE
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.encryption.domain.crypto.BLOCK_SIZE
+import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
+import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
+import dev.leonlatsch.photok.encryption.domain.models.Algorithm
+import dev.leonlatsch.photok.encryption.domain.models.EncryptionVersionByte
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -82,7 +81,7 @@ import javax.crypto.spec.IvParameterSpec
  */
 @UnstableApi
 class AesCbcRandomAccessDataSource(
-    private val encryptionManager: EncryptionManager,
+    private val sessionRepository: SessionRepository,
 ) : DataSource {
 
     private var inputStream: CipherInputStream? = null
@@ -99,24 +98,34 @@ class AesCbcRandomAccessDataSource(
         val channel = fis.channel
 
         // --- Read header ---
+        val versionBuf = ByteBuffer.allocate(1)
         channel.position(0)
-        val headerBuf = ByteBuffer.allocate(HEADER_SIZE)
+        channel.read(versionBuf)
+        versionBuf.flip()
+
+        val version = EncryptionVersionByte.fromValue(versionBuf.get())
+
+        channel.position(0)
+        val headerBuf = ByteBuffer.allocate(version.headerSize)
         channel.read(headerBuf)
         headerBuf.flip()
 
-        val version = headerBuf.get()
-        if (version != ENC_VERSION_BYTE) {
-            throw IllegalArgumentException("Unsupported version")
+        val fileIv = ByteArray(IV_SIZE)
+
+        when (version) {
+            EncryptionVersionByte.One -> {
+                val salt = ByteArray(SALT_SIZE)
+                headerBuf.get(salt)
+
+                headerBuf.get(fileIv)
+            }
+            EncryptionVersionByte.Two -> {
+                headerBuf.get(fileIv)
+            }
         }
 
-        val salt = ByteArray(SALT_SIZE)
-        headerBuf.get(salt)
-
-        val fileIv = ByteArray(IV_SIZE)
-        headerBuf.get(fileIv)
-
         // --- Resolve key  ---
-        val key = encryptionManager.requireKey()
+        val key = sessionRepository.require().vmk
 
         // --- Compute target block ---
         val plainOffset = dataSpec.position
@@ -127,7 +136,7 @@ class AesCbcRandomAccessDataSource(
         val ivForTarget = if (blockIndex == 0) {
             fileIv
         } else {
-            val prevCipherOffset = HEADER_SIZE + (blockIndex - 1L) * BLOCK_SIZE
+            val prevCipherOffset = version.headerSize + (blockIndex - 1L) * BLOCK_SIZE
             channel.position(prevCipherOffset)
             val prevCipher = ByteArray(BLOCK_SIZE)
             channel.read(ByteBuffer.wrap(prevCipher))
@@ -135,11 +144,11 @@ class AesCbcRandomAccessDataSource(
         }
 
         // --- Position channel at the target ciphertext block ---
-        val targetCipherOffset = HEADER_SIZE + blockIndex.toLong() * BLOCK_SIZE
+        val targetCipherOffset = version.headerSize + blockIndex.toLong() * BLOCK_SIZE
         channel.position(targetCipherOffset)
 
         // --- Create cipher stream from this point ---
-        val cipher = Cipher.getInstance(AES_ALGORITHM)
+        val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value)
         cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(ivForTarget))
 
         inputStream = CipherInputStream(Channels.newInputStream(channel), cipher)

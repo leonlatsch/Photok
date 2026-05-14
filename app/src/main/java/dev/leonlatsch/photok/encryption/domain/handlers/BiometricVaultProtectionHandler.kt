@@ -20,14 +20,12 @@ import android.content.res.Resources
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
-import dev.leonlatsch.photok.security.AES
-import dev.leonlatsch.photok.security.IV_SIZE
-import dev.leonlatsch.photok.security.KEY_SIZE
 import dev.leonlatsch.photok.security.biometric.UnlockCipherUseCase
 import java.security.KeyStore
 import java.security.SecureRandom
@@ -69,7 +67,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         ).getOrThrow()
 
         val vmkBytes = unlockedCipher.doFinal(protection.wrappedVMK)
-        return SecretKeySpec(vmkBytes, AES)
+        return SecretKeySpec(vmkBytes, "AES")
     }
 
     override suspend fun create(request: CreateRequest.Biometric): VaultProtection {
@@ -82,7 +80,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
             kdf = null,
             kdfIterations = null,
             algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEY_SIZE,
+            keySize = 256,
         )
 
         val kek = getOrCreateSecretKey(params)

@@ -20,8 +20,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.EncryptionManagerImpl
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.BiometricUnlockImpl
 import javax.inject.Singleton
@@ -29,10 +27,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface EncryptionModule {
-
-    @Binds
-    @Singleton
-    fun bindEncryptionManager(impl: EncryptionManagerImpl): EncryptionManager
 
     @Binds
     @Singleton

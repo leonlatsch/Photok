@@ -23,6 +23,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.PasswordManager
@@ -57,6 +60,8 @@ class SettingsViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val passwordManager: PasswordManager,
+    private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
 ) : ViewModel() {
 
 
@@ -114,7 +119,10 @@ class SettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val result = biometricUnlock.setup(fragment)
+            val result = runCatching {
+                val session = sessionRepository.require()
+                vaultService.create(CreateRequest.Biometric(session, fragment))
+            }
 
             result.onFailure {
                 if (it !is UserCanceledBiometricsException) {

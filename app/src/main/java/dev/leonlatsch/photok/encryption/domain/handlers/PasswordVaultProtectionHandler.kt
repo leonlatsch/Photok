@@ -16,17 +16,14 @@
 
 package dev.leonlatsch.photok.encryption.domain.handlers
 
+import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
+import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
-import dev.leonlatsch.photok.security.AES
-import dev.leonlatsch.photok.security.ITERATION_COUNT
-import dev.leonlatsch.photok.security.IV_SIZE
-import dev.leonlatsch.photok.security.KEY_SIZE
-import dev.leonlatsch.photok.security.SALT_SIZE
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
@@ -54,7 +51,7 @@ class PasswordVaultProtectionHandler @Inject constructor() :
         }
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
-        return SecretKeySpec(vmkBytes, AES)
+        return SecretKeySpec(vmkBytes, "AES")
     }
 
     override suspend fun create(request: CreateRequest.Password): VaultProtection {
@@ -66,9 +63,9 @@ class PasswordVaultProtectionHandler @Inject constructor() :
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
             kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = ITERATION_COUNT,
+            kdfIterations = 100_000,
             algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEY_SIZE,
+            keySize = 256,
         )
 
         val vmk = generateVaultMasterKey(params)
@@ -100,7 +97,7 @@ class PasswordVaultProtectionHandler @Inject constructor() :
         val spec = PBEKeySpec(password.toCharArray(), salt, params.kdfIterations, params.keySize)
         val keyBytes = factory.generateSecret(spec).encoded
 
-        return SecretKeySpec(keyBytes, AES)
+        return SecretKeySpec(keyBytes, "AES")
     }
 
     private fun generateVaultMasterKey(params: VaultProtectionParams): SecretKey {

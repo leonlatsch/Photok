@@ -26,7 +26,6 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -43,7 +42,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SetupViewModel @Inject constructor(
     app: Application,
-    val encryptionManager: EncryptionManager,
     private val config: Config,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,

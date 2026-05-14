@@ -20,7 +20,6 @@ import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.EncryptionVersionByte
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import dev.leonlatsch.photok.security.SALT_SIZE
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream

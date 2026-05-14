@@ -26,7 +26,6 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
@@ -48,9 +47,6 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var config: Config
-
-    @Inject
-    lateinit var encryptionManager: EncryptionManager
 
     @Inject
     lateinit var sessionRepository: SessionRepository
@@ -117,7 +113,6 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
      * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
      */
     fun lockApp() {
-        encryptionManager.reset()
         sessionRepository.reset()
 
         val intent = Intent(this, MainActivity::class.java)

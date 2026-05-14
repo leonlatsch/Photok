@@ -29,7 +29,6 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
@@ -43,7 +42,7 @@ import javax.inject.Inject
 
 /**
  * ViewModel for unlocking the safe.
- * Handles state, password validation and initializing the [EncryptionManager].
+ * Handles state, password validation and initializing the encryption.
  * Just like the setup.
  *
  * @since 1.0.0

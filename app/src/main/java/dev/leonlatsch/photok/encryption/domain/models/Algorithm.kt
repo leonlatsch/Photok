@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.encryption.domain.models
 
 import android.security.keystore.KeyProperties
+import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
+import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 
 enum class Algorithm(val value: String, val padding: String, val blockMode: String) {
     AesCbcPkcs7Padding(
@@ -34,6 +36,12 @@ enum class Algorithm(val value: String, val padding: String, val blockMode: Stri
 enum class EncryptionVersionByte(val value: Byte) {
     One(0x01),
     Two(0x02);
+
+    val headerSize: Int
+        get() = when (this) {
+            EncryptionVersionByte.One -> 1 + SALT_SIZE + IV_SIZE
+            EncryptionVersionByte.Two -> 1 + IV_SIZE
+        }
 
     companion object {
         fun fromValue(value: Byte): EncryptionVersionByte {
