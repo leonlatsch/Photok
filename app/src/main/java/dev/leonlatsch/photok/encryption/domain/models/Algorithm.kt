@@ -25,3 +25,14 @@ enum class Algorithm(val value: String, val padding: String, val blockMode: Stri
         blockMode = KeyProperties.BLOCK_MODE_CBC
     )
 }
+
+enum class EncryptionVersionByte(val value: Byte) {
+    One(0x01),
+    Two(0x02);
+
+    companion object {
+        fun fromValue(value: Byte): EncryptionVersionByte {
+            return entries.find { it.value == value } ?: error("Unknown version byte: $value")
+        }
+    }
+}
