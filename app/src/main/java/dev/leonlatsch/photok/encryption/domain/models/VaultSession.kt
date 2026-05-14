@@ -19,11 +19,13 @@ package dev.leonlatsch.photok.encryption.domain.models
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
+sealed interface Session
+
 data class LegacySession(
     val key: SecretKey,
     val iv: IvParameterSpec,
-)
+) : Session
 
 data class VaultSession(
     val vmk: SecretKey,
-)
+) : Session

@@ -16,21 +16,21 @@
 
 package dev.leonlatsch.photok.encryption.domain.crypto
 
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import java.io.InputStream
 import java.io.OutputStream
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
-import javax.crypto.SecretKey
 
 interface CryptoEngine {
     fun createEncryptStream(
         output: OutputStream,
-        key: SecretKey,
+        session: Session,
     ): CipherOutputStream?
 
     fun createDecryptStream(
         input: InputStream,
-        key: SecretKey,
+        session: Session,
     ): CipherInputStream?
 }
 

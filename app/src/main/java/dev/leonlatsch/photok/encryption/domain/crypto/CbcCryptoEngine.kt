@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.encryption.domain.crypto
 
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.EncryptionVersionByte
+import dev.leonlatsch.photok.encryption.domain.models.Session
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.security.SALT_SIZE
 import timber.log.Timber
 import java.io.InputStream
@@ -26,7 +28,6 @@ import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
-import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
@@ -38,12 +39,14 @@ import javax.inject.Inject
  */
 class CbcCryptoEngine @Inject constructor(): CryptoEngine {
 
-    override fun createEncryptStream(output: OutputStream, key: SecretKey): CipherOutputStream? {
+    override fun createEncryptStream(output: OutputStream, session: Session): CipherOutputStream? {
+        require(session is VaultSession)
+
         try {
             val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
             val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
-                init(Cipher.ENCRYPT_MODE, key, IvParameterSpec(iv))
+                init(Cipher.ENCRYPT_MODE, session.vmk, IvParameterSpec(iv))
             }
 
             output.write(byteArrayOf(EncryptionVersionByte.Two.value))
@@ -56,7 +59,9 @@ class CbcCryptoEngine @Inject constructor(): CryptoEngine {
         }
     }
 
-    override fun createDecryptStream(input: InputStream, key: SecretKey): CipherInputStream? {
+    override fun createDecryptStream(input: InputStream, session: Session): CipherInputStream? {
+        require(session is VaultSession)
+
         try  {
             val versionByte = input.read().toByte()
             val version = EncryptionVersionByte.fromValue(versionByte)
@@ -75,7 +80,7 @@ class CbcCryptoEngine @Inject constructor(): CryptoEngine {
             }
 
             val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
-                init(Cipher.DECRYPT_MODE, key, IvParameterSpec(iv))
+                init(Cipher.DECRYPT_MODE, session.vmk, IvParameterSpec(iv))
             }
 
             return CipherInputStream(input, cipher)

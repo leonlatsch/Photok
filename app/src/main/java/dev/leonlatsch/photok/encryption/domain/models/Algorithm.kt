@@ -23,6 +23,11 @@ enum class Algorithm(val value: String, val padding: String, val blockMode: Stri
         value = "AES/CBC/PKCS7Padding",
         padding = KeyProperties.ENCRYPTION_PADDING_PKCS7,
         blockMode = KeyProperties.BLOCK_MODE_CBC
+    ),
+    AesGcmNoPadding(
+        value = "AES/GCM/NoPadding",
+        padding = KeyProperties.ENCRYPTION_PADDING_NONE,
+        blockMode = KeyProperties.BLOCK_MODE_GCM
     )
 }
 
