@@ -76,14 +76,31 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
-                    UnlockState.CHECKING -> binding.loadingOverlay.show()
-                    UnlockState.UNLOCKED -> goToGallery()
-                    UnlockState.UNLOCK_FAILED -> {
+                    UnlockState.Initial -> Unit
+                    UnlockState.PasswordError -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
                     }
+                    UnlockState.Loading -> binding.loadingOverlay.show()
+                    UnlockState.Unlocked -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
 
-                    UnlockState.INITIAL -> Unit
+                        val startPageDest = when (config.galleryStartPage) {
+                            StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
+                            StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
+                        }
+
+                        findNavController().navigate(startPageDest)
+                    }
+                    UnlockState.StartLegacyMigration -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+
+                        findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+                    }
+
+                    UnlockState.Error -> showErrorToast()
                 }
             }
         }
@@ -96,8 +113,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         super.onViewCreated(view, savedInstanceState)
 
-        // Check for migration should not be needed. But double check because in this case we don't have the legacy key
-        if (biometricUnlock.isSetupAndValid() && !legacyEncryptionMigrator.migrationNeeded()) {
+        if (biometricUnlock.isSetupAndValid()) {
             binding.unlockUseBiometricUnlockButton.show()
 
             lifecycleScope.launch {
@@ -109,30 +125,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         }
     }
 
-    private fun goToGallery() {
-        val activity = activity
-
-        try {
-            requireNotNull(activity)
-            activity.hideKeyboard()
-            binding.loadingOverlay.hide()
-
-            if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
-                lifecycleScope.launch {
-                    findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
-                }
-            } else {
-                val startPageDest = when (config.galleryStartPage) {
-                    StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
-                    StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
-                }
-
-                findNavController().navigate(startPageDest)
-            }
-        } catch (e: Exception) {
-            Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            Timber.e(e)
-        }
+    private fun showErrorToast() {
+        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

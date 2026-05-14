@@ -32,11 +32,13 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -50,6 +52,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
     app: Application,
+    private val config: Config,
     private val resources: Resources,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
@@ -64,7 +67,7 @@ class UnlockViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.INITIAL)
+    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
 
     /**
      * Tries to unlock the save.
@@ -72,24 +75,33 @@ class UnlockViewModel @Inject constructor(
      * Updates UnlockState.
      * Called by ui.
      */
-    fun onUnlockWithPassword() {
-        unlockState.update { UnlockState.CHECKING }
+    fun unlockWithPassword() {
+        unlockState.update { UnlockState.Loading }
 
         viewModelScope.launch {
+            // TODO: migrate to VMK at this point
 
-            vaultService.unlock(UnlockRequest.Password(password))
-                .onSuccess { session ->
-                    sessionRepository.set(session)
+            try {
+                vaultService.unlock(UnlockRequest.Password(password))
+                    .onSuccess { session ->
+                        sessionRepository.set(session)
 
-                    // TODO: Move check if migration is needed here. Also change UnlockState to control the flow eg. sealed class with cases like: GcmToCbcMigrationNeeded, VMKMigrationNeeded, Unlocked, etc.
-                    val legacySession = legacyEncryption.obtainSession(password)
-                    legacyEncryptionMigrator.initialize(legacySession)
+                        if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) {
+                            val legacySession = legacyEncryption.obtainSession(password)
+                            legacyEncryptionMigrator.initialize(legacySession)
 
-                    unlockState.update { UnlockState.UNLOCKED }
-                }
-                .onFailure {
-                    unlockState.update { UnlockState.UNLOCK_FAILED }
-                }
+                            unlockState.update { UnlockState.StartLegacyMigration }
+                        } else {
+                            unlockState.update { UnlockState.Unlocked }
+                        }
+                    }
+                    .onFailure {
+                        unlockState.update { UnlockState.PasswordError }
+                    }
+            } catch (e: Exception) {
+                Timber.e(e)
+                unlockState.update { UnlockState.Error }
+            }
         }
     }
 
@@ -98,7 +110,7 @@ class UnlockViewModel @Inject constructor(
             vaultService.unlock(UnlockRequest.Biometric(fragment))
                 .onSuccess { session ->
                     sessionRepository.set(session)
-                    unlockState.update { UnlockState.UNLOCKED }
+                    unlockState.update { UnlockState.Unlocked }
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
