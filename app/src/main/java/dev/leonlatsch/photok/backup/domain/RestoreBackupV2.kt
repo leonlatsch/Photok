@@ -19,10 +19,10 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
@@ -61,9 +61,9 @@ import javax.inject.Inject
  */
 class RestoreBackupV2 @Inject constructor(
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val io: IO,
+    private val vaultFileStorage: VaultFileStorage,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
@@ -91,13 +91,12 @@ class RestoreBackupV2 @Inject constructor(
 
             val encryptedZipInput =
                 legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
-            val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(
-                    ze.name.replace(
-                        oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
-                        newValue = PHOTOK_FILE_EXTENSION,
-                    )
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(
+                ze.name.replace(
+                    oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+                    newValue = PHOTOK_FILE_EXTENSION,
                 )
+            )
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry

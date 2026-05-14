@@ -20,14 +20,13 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.io.encoding.Base64
 
 /**
  * Backup Format V4
@@ -63,10 +62,10 @@ import kotlin.io.encoding.Base64
  */
 class RestoreBackupV4 @Inject constructor(
     private val encryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val io: IO,
+    private val vaultFileStorage: VaultFileStorage,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
@@ -101,8 +100,7 @@ class RestoreBackupV4 @Inject constructor(
                     input = stream,
                     password = originalPassword,
                 )
-            val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry

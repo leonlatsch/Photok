@@ -22,6 +22,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
@@ -47,7 +48,7 @@ private const val THUMBNAIL_SIZE = 512
 class CreateThumbnailsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageStorage: ImageStorage,
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val vaultFileStorage: VaultFileStorage,
 ) {
 
     /**
@@ -67,7 +68,7 @@ class CreateThumbnailsUseCase @Inject constructor(
 
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
-                outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalThumbnailFileName),
+                outputStream = vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName),
                 compressionPercent = 40,
             )
 
@@ -80,7 +81,7 @@ class CreateThumbnailsUseCase @Inject constructor(
 
                 imageStorage.execAndWrite(
                     imageRequest = videoPreviewRequest,
-                    outputStream = encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalVideoPreviewFileName),
+                    outputStream = vaultFileStorage.openEncryptedOutput(photo.internalVideoPreviewFileName),
                     compressionPercent = 90,
                 )
             } else {

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,11 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.model.io
+package dev.leonlatsch.photok.io
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.documentfile.provider.DocumentFile
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import java.io.BufferedInputStream
@@ -44,7 +46,7 @@ class IO @Inject constructor(
             val inputStream = try {
                 context.contentResolver.openInputStream(uri)
             } catch (e: IOException) {
-                Timber.d("Error opening zip at: $uri $e")
+                Timber.Forest.d("Error opening zip at: $uri $e")
                 null
             }
 
@@ -79,7 +81,7 @@ class IO @Inject constructor(
 
                 continuation.resume(Result.success(Unit))
             } catch (e: IOException) {
-                Timber.e(e, "Error writing zip entry for $filename")
+                Timber.Forest.e(e, "Error writing zip entry for $filename")
                 continuation.resume(Result.failure(e))
             }
         }
@@ -120,4 +122,38 @@ class IO @Inject constructor(
             continuation.resume(Result.failure(e))
         }
     }
+
+    fun openFileInput(fileUri: Uri): InputStream? =
+        try {
+            context.contentResolver.openInputStream(fileUri)
+        } catch (e: Exception) {
+            Timber.Forest.e("Error opening external file at $fileUri: $e")
+            null
+        }
+
+    fun openFileOutput(
+        contentResolver: ContentResolver,
+        filename: String,
+        mimeType: String,
+        destinationUri: Uri
+    ): OutputStream? {
+        return try {
+            DocumentFile.fromTreeUri(context, destinationUri)?.let { dir ->
+                val newFile = dir.createFile(mimeType, filename)
+                newFile?.uri?.let { contentResolver.openOutputStream(it) }
+            }
+        } catch (e: IOException) {
+            Timber.Forest.e("Error opening external file at $destinationUri: $e")
+            null
+        }
+    }
+
+    fun deleteFile(fileUri: Uri): Boolean? =
+        try {
+            val srcDoc = DocumentFile.fromSingleUri(context, fileUri)
+            srcDoc?.delete()
+        } catch (e: IOException) {
+            Timber.Forest.e("Error deleting external file at $fileUri: $e")
+            null
+        }
 }

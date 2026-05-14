@@ -28,7 +28,6 @@ import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.security.PasswordUtils
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
 
 /**
@@ -97,16 +96,17 @@ class ChangePasswordDialog :
     }
 
     private fun handleReEncryptNeeded() {
-        Dialogs.showConfirmDialog(
-            requireContext(),
-            getString(R.string.change_password_confirm_message)
-        ) { _, _ ->
-            ReEncryptBottomSheetDialogFragment(
-                viewModel.oldPassword,
-                viewModel.newPassword
-            ).show(requireActivity().supportFragmentManager)
-            dismiss()
-        }
+        // TODO: Change this whole dialog to handle password changes with new VML architecture
+//        Dialogs.showConfirmDialog(
+//            requireContext(),
+//            getString(R.string.change_password_confirm_message)
+//        ) { _, _ ->
+//            ReEncryptBottomSheetDialogFragment(
+//                viewModel.oldPassword,
+//                viewModel.newPassword
+//            ).show(requireActivity().supportFragmentManager)
+//            dismiss()
+//        }
     }
 
     private fun enableOrDisableSetup() {

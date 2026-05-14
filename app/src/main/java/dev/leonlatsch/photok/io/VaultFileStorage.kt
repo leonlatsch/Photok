@@ -14,10 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.io
 
 import android.app.Application
 import android.content.Context
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import okio.IOException
 import timber.log.Timber

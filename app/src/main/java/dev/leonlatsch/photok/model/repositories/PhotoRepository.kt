@@ -18,14 +18,13 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
 import android.net.Uri
-import android.provider.DocumentsContract
-import android.provider.MediaStore
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getMetadataFor
@@ -35,7 +34,6 @@ import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.lang.Exception
 import java.util.UUID
 import javax.inject.Inject
 
@@ -50,10 +48,11 @@ import javax.inject.Inject
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val albumDao: AlbumDao,
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val vaultFileStorage: VaultFileStorage,
     private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
     private val config: Config,
+    private val io: IO,
 ) {
 
     // region DATABASE
@@ -106,8 +105,7 @@ class PhotoRepository @Inject constructor(
         if (type == PhotoType.UNDEFINED) return String.empty
 
 
-        val inputStream =
-            encryptedStorageManager.externalOpenFileInput(sourceUri)
+        val inputStream = io.openFileInput(sourceUri)
         val photo = Photo(
             fileName = metaData.fileName ?: UUID.randomUUID().toString(),
             importedAt = System.currentTimeMillis(),
@@ -127,7 +125,7 @@ class PhotoRepository @Inject constructor(
             return photo.uuid
         }
 
-        val deleted = encryptedStorageManager.externalDeleteFile(sourceUri)
+        val deleted = io.deleteFile(sourceUri)
         return if (deleted == true) photo.uuid else String.empty
     }
 
@@ -170,8 +168,7 @@ class PhotoRepository @Inject constructor(
      */
     fun createPhotoFile(photo: Photo, source: InputStream?): Long {
         try {
-            val encryptedDestination =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(photo.internalFileName)
+            val encryptedDestination = vaultFileStorage.openEncryptedOutput(photo.internalFileName)
 
             source ?: return -1L
             encryptedDestination ?: return -1L
@@ -184,22 +181,6 @@ class PhotoRepository @Inject constructor(
             Timber.e("Error while writing file: $e")
             return -1L
         }
-    }
-
-    // endregion
-
-    // region READ
-
-    /**
-     * Loads the full size file stored for this photo as a [ByteArray].
-     * Use with caution!
-     */
-    fun loadPhoto(photo: Photo): ByteArray? {
-        encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)?.use {
-            return it.readBytes()
-        }
-
-        return null
     }
 
     // endregion
@@ -231,9 +212,9 @@ class PhotoRepository @Inject constructor(
      * @return true, if photo and thumbnail could be deleted
      */
     fun deleteInternalPhotoData(photo: Photo): Boolean =
-        encryptedStorageManager.internalDeleteFile(photo.internalFileName)
-                && encryptedStorageManager.internalDeleteFile(photo.internalThumbnailFileName)
-                && (!photo.type.isVideo || encryptedStorageManager.internalDeleteFile(photo.internalVideoPreviewFileName))
+        vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
+                && vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
+                && (!photo.type.isVideo || vaultFileStorage.deleteEncryptedFile(photo.internalVideoPreviewFileName))
 
 
     // endregion
@@ -248,7 +229,7 @@ class PhotoRepository @Inject constructor(
     suspend fun exportPhoto(photo: Photo, target: Uri): Boolean {
         return try {
             val inputStream =
-                encryptedStorageManager.internalOpenEncryptedFileInput(photo.internalFileName)
+                vaultFileStorage.openEncryptedInput(photo.internalFileName)
             inputStream ?: return false
 
             val outputStream = createExternalOutputStream(photo, target)
@@ -273,7 +254,7 @@ class PhotoRepository @Inject constructor(
         val fileName = photo.fileName
         val mimeType = photo.type.mimeType
 
-        return encryptedStorageManager.externalOpenFileOutput(
+        return io.openFileOutput(
             app.contentResolver,
             fileName,
             mimeType,

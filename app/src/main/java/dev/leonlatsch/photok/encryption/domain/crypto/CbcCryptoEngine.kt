@@ -28,6 +28,7 @@ import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
+import javax.inject.Inject
 
 /**
  * Formats:
@@ -35,7 +36,7 @@ import javax.crypto.spec.IvParameterSpec
  * 1: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
  * 2: [ENC_VERSION_BYTE]      [IV][ENCRYPTED_DATA]
  */
-class CbcCryptoEngine : CryptoEngine {
+class CbcCryptoEngine @Inject constructor(): CryptoEngine {
 
     override fun createEncryptStream(output: OutputStream, key: SecretKey): CipherOutputStream? {
         try {
@@ -50,7 +51,7 @@ class CbcCryptoEngine : CryptoEngine {
 
             return CipherOutputStream(output, cipher)
         } catch (e: Exception) {
-            Timber.Forest.e("Error creating CipherOutputStream: $e")
+            Timber.e("Error creating CipherOutputStream: $e")
             return null
         }
     }
@@ -58,7 +59,7 @@ class CbcCryptoEngine : CryptoEngine {
     override fun createDecryptStream(input: InputStream, key: SecretKey): CipherInputStream? {
         try  {
             val versionByte = input.read().toByte()
-            val version = EncryptionVersionByte.Companion.fromValue(versionByte)
+            val version = EncryptionVersionByte.fromValue(versionByte)
 
             val iv = ByteArray(IV_SIZE)
 
@@ -79,7 +80,7 @@ class CbcCryptoEngine : CryptoEngine {
 
             return CipherInputStream(input, cipher)
         } catch (e: Exception) {
-            Timber.Forest.e("Error creating CipherInputStream: $e")
+            Timber.e("Error creating CipherInputStream: $e")
             return null
         }
     }

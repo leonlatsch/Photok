@@ -25,6 +25,8 @@ import dev.leonlatsch.photok.encryption.data.SessionRepositoryImpl
 import dev.leonlatsch.photok.encryption.data.VaultProtectionRepositoryImpl
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
+import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
+import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import dev.leonlatsch.photok.encryption.domain.handlers.BiometricVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
@@ -47,6 +49,9 @@ interface EncryptionBindingModule {
 
     @Binds
     fun bindSessionRepository(impl: SessionRepositoryImpl): SessionRepository
+
+    @Binds
+    fun bindCryptoEngine(impl: CbcCryptoEngine): CryptoEngine
 }
 
 @Module

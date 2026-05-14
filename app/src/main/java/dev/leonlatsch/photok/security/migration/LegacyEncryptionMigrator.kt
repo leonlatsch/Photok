@@ -19,10 +19,10 @@ package dev.leonlatsch.photok.security.migration
 import android.app.Application
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.domain.models.LegacySession
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
@@ -51,7 +51,7 @@ sealed interface LegacyEncryptionState {
 @Singleton
 class LegacyEncryptionMigrator @Inject constructor(
     @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val vaultFileStorage: VaultFileStorage,
     private val app: Application,
     private val config: Config,
     private val io: IO,
@@ -148,7 +148,7 @@ class LegacyEncryptionMigrator @Inject constructor(
                 .removePrefix(MIGRATIED_FILE_PREFIX)
                 .replace(LEGACY_PHOTOK_FILE_EXTENSION, PHOTOK_FILE_EXTENSION)
 
-            encryptedStorageManager.internalRenameFile(file, targetFileName)
+            vaultFileStorage.renameEncryptedFile(file, targetFileName)
         }
 
         config.legacyCurrentlyMigrating = false
@@ -164,17 +164,17 @@ class LegacyEncryptionMigrator @Inject constructor(
         )
 
         // Clean any stale temp from prior crashes
-        encryptedStorageManager.internalDeleteFile(tmpName)
+        vaultFileStorage.deleteEncryptedFile(tmpName)
 
         if (app.getFileStreamPath(legacyName).length() == 0L) {
-            encryptedStorageManager.internalDeleteFile(legacyName)
+            vaultFileStorage.deleteEncryptedFile(legacyName)
             Timber.d("Empty legacy file: $legacyName - Deleting and continuing")
             return@runCatching
         }
 
         val originalInput = app.openFileInput(legacyName)
         val encryptedLegacyInput = legacyEncryptionManager.createCipherInputStream(originalInput)
-        val encryptedOutput = encryptedStorageManager.internalOpenEncryptedFileOutput(tmpName)
+        val encryptedOutput = vaultFileStorage.openEncryptedOutput(tmpName)
 
         requireNotNull(encryptedLegacyInput) { "Legacy input was null" }
         requireNotNull(encryptedOutput) { "New output was null" }
@@ -192,11 +192,11 @@ class LegacyEncryptionMigrator @Inject constructor(
         encryptedOutput.close()
 
         // Finalize atomically: temp -> final (non-overwriting)
-        encryptedStorageManager.internalDeleteFile(finalName)
-        encryptedStorageManager.internalRenameFile(tmpName, finalName)
+        vaultFileStorage.deleteEncryptedFile(finalName)
+        vaultFileStorage.renameEncryptedFile(tmpName, finalName)
 
         // Only now delete original
-        encryptedStorageManager.internalDeleteFile(legacyName)
+        vaultFileStorage.deleteEncryptedFile(legacyName)
     }
 
     private fun buildError(error: Throwable, legacyFileName: String, tmpName: String): String {

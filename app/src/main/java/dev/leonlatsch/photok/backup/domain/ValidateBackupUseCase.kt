@@ -19,9 +19,9 @@ package dev.leonlatsch.photok.backup.domain
 import android.net.Uri
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.ReadBackupMetadataUseCase
+import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.io.IO
 import timber.log.Timber
 import javax.inject.Inject
 
