@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.encryption.domain.handlers
 
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
+import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
@@ -27,26 +28,43 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
-class PasswordVaultProtectionHandler @Inject constructor() :
+private const val KEK_SIZE = 256
+private const val KEK_ITERATIONS = 100_000
+
+class PasswordVaultProtectionHandler @Inject constructor(
+    private val keyGen: KeyGen,
+) :
     VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password> {
 
     override suspend fun unlock(
         request: UnlockRequest.Password,
         protection: VaultProtection
     ): SecretKey {
-        val kek = deriveKeyEncryptionKey(request.password, protection.params)
+        val params = protection.params
 
-        val cipher = Cipher.getInstance(protection.params.algorithm.value).apply {
-            val iv = Base64.decode(protection.params.iv)
+        requireNotNull(params.salt)
+        requireNotNull(params.iv)
+        requireNotNull(params.kdf)
+        requireNotNull(params.kdfIterations)
+        requireNotNull(params.keySize)
+        requireNotNull(params.algorithm)
+
+        val kek = keyGen.derivePasswordKeyEncryptionKey(
+            password = request.password,
+            salt = Base64.decode(params.salt),
+            kdf = params.kdf,
+            kdfIterations = params.kdfIterations,
+            keySize = params.keySize,
+        )
+
+        val cipher = Cipher.getInstance(params.algorithm.value).apply {
+            val iv = Base64.decode(params.iv)
             init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv))
         }
 
@@ -59,18 +77,26 @@ class PasswordVaultProtectionHandler @Inject constructor() :
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
+        val kdf = Kdf.PBKDF2WithHmacSHA256
+
         val params = VaultProtectionParams(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
-            kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = 100_000,
+            kdf = kdf,
+            kdfIterations = KEK_ITERATIONS,
             algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = 256,
+            keySize = KEK_SIZE,
         )
 
-        val vmk = generateVaultMasterKey(params)
+        val vmk = keyGen.generateVaultMasterKey()
 
-        val kek = deriveKeyEncryptionKey(request.password, params)
+        val kek = keyGen.derivePasswordKeyEncryptionKey(
+            password = request.password,
+            salt = salt,
+            kdf = kdf,
+            kdfIterations = KEK_ITERATIONS,
+            keySize = params.keySize,
+        )
 
         val cipher = Cipher.getInstance(params.algorithm.value).apply {
             init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
@@ -86,25 +112,4 @@ class PasswordVaultProtectionHandler @Inject constructor() :
         )
     }
 
-    private fun deriveKeyEncryptionKey(password: String, params: VaultProtectionParams): SecretKey {
-        requireNotNull(params.salt)
-        requireNotNull(params.kdf)
-        requireNotNull(params.kdfIterations)
-
-        val salt = Base64.decode(params.salt)
-
-        val factory = SecretKeyFactory.getInstance(params.kdf.value)
-        val spec = PBEKeySpec(password.toCharArray(), salt, params.kdfIterations, params.keySize)
-        val keyBytes = factory.generateSecret(spec).encoded
-
-        return SecretKeySpec(keyBytes, "AES")
-    }
-
-    private fun generateVaultMasterKey(params: VaultProtectionParams): SecretKey {
-        val keyGenerator = KeyGenerator.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
-            init(params.keySize)
-        }
-
-        return keyGenerator.generateKey()
-    }
 }

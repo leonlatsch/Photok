@@ -29,7 +29,7 @@ private const val AES_ALGORITHM = "AES/GCM/NoPadding"
 
 class LegacyEncryption @Inject constructor() {
 
-    suspend fun obtainSession(password: String): LegacySession {
+    fun obtainSession(password: String): LegacySession {
         val key = genSecKey(password)
         val iv = genLegacyIv(password)
 

@@ -19,8 +19,8 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
-import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
@@ -60,7 +60,6 @@ import javax.inject.Inject
  *  - `backupVersion` must equal 2 for this format.
  */
 class RestoreBackupV2 @Inject constructor(
-    private val legacyEncryption: LegacyEncryption,
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val io: IO,
@@ -70,11 +69,9 @@ class RestoreBackupV2 @Inject constructor(
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
-        originalPassword: String
+        session: Session,
     ): RestoreResult {
         var errors = 0
-
-        val session = legacyEncryption.obtainSession(originalPassword)
 
         var ze = stream.nextEntry
 

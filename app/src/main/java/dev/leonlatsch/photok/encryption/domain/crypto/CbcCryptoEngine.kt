@@ -30,12 +30,6 @@ import javax.crypto.CipherOutputStream
 import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
-/**
- * Formats:
- *
- * 1: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
- * 2: [ENC_VERSION_BYTE]      [IV][ENCRYPTED_DATA]
- */
 class CbcCryptoEngine @Inject constructor(): CryptoEngine {
 
     override fun createEncryptStream(output: OutputStream, session: Session): CipherOutputStream? {

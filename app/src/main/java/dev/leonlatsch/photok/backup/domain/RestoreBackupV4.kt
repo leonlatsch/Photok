@@ -17,10 +17,15 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
+import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -61,76 +66,72 @@ class RestoreBackupV4 @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val io: IO,
     private val vaultFileStorage: VaultFileStorage,
+    private val cryptoEngine: CryptoEngine,
 ) : RestoreBackupStrategy {
 
     override suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
-        originalPassword: String
+        session: Session,
     ): RestoreResult {
-        // TODO: V4 has .crypt files but does not contain wrapped VMK. We need to obtain a session from the password with the help of a salt that is stored in a files header.
         val start = System.currentTimeMillis()
 
         var errors = 0
-//
-//        var ze = stream.nextEntry
-//
-//        while (ze != null) {
-//            if (ze.name == BackupMetaData.FILE_NAME) {
-//                ze = stream.nextEntry
-//                continue
-//            }
-//
-//            // Skip files that are not mentioned in the metadata
-//            // These might be dead files from old versions of photok
-//            if (metaData.photos.none { ze.name.contains(it.uuid) }) {
-//                ze = stream.nextEntry
-//                Timber.i("Skipping dead file in backup: ${ze.name}")
-//                continue
-//            }
-//
-//            val encryptedZipInput =
-//                encryptionManager.createCipherInputStream(
-//                    input = stream,
-//                    password = originalPassword,
-//                )
-//            val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
-//
-//            if (encryptedZipInput == null || internalOutputStream == null) {
-//                ze = stream.nextEntry
-//                continue
-//            }
-//
-//
-//            io.copy(encryptedZipInput, internalOutputStream)
-//                .onFailure {
-//                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
-//                    errors++
-//                }
-//
-//            ze = stream.nextEntry
-//        }
-//
-//        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
-//            val newPhoto = photoBackup
-//                .toDomain()
-//                .copy(importedAt = System.currentTimeMillis())
-//
-//            photoRepository.insert(newPhoto)
-//        }
-//
-//        metaData.albums.forEach { albumBackup ->
-//            val album = albumBackup.toDomain()
-//            albumRepository.createAlbum(album)
-//        }
-//
-//        metaData.albumPhotoRefs.forEach { albumPhotoRefBackup ->
-//            val albumPhotoRef = albumPhotoRefBackup.toDomain()
-//            albumRepository.link(albumPhotoRef)
-//        }
-//
-//        Timber.d("PERFORMANCE: Restore backup took ${System.currentTimeMillis() - start}ms")
-//
+
+        var ze = stream.nextEntry
+
+        while (ze != null) {
+            if (ze.name == BackupMetaData.FILE_NAME) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            // Skip files that are not mentioned in the metadata
+            // These might be dead files from old versions of photok
+            if (metaData.photos.none { ze.name.contains(it.uuid) }) {
+                ze = stream.nextEntry
+                Timber.i("Skipping dead file in backup: ${ze.name}")
+                continue
+            }
+
+            val encryptedZipInput = cryptoEngine.createDecryptStream(stream, session)
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
+
+            if (encryptedZipInput == null || internalOutputStream == null) {
+                ze = stream.nextEntry
+                continue
+            }
+
+
+            io.copy(encryptedZipInput, internalOutputStream)
+                .onFailure {
+                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
+                    errors++
+                }
+
+            ze = stream.nextEntry
+        }
+
+        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
+            val newPhoto = photoBackup
+                .toDomain()
+                .copy(importedAt = System.currentTimeMillis())
+
+            photoRepository.insert(newPhoto)
+        }
+
+        metaData.albums.forEach { albumBackup ->
+            val album = albumBackup.toDomain()
+            albumRepository.createAlbum(album)
+        }
+
+        metaData.albumPhotoRefs.forEach { albumPhotoRefBackup ->
+            val albumPhotoRef = albumPhotoRefBackup.toDomain()
+            albumRepository.link(albumPhotoRef)
+        }
+
+        Timber.d("PERFORMANCE: Restore backup took ${System.currentTimeMillis() - start}ms")
+
         return RestoreResult(errors)
     }
 

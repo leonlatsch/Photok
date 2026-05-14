@@ -33,6 +33,10 @@ enum class Algorithm(val value: String, val padding: String, val blockMode: Stri
     )
 }
 
+/**
+ * 1: [ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]
+ * 2: [ENC_VERSION_BYTE][IV][ENCRYPTED_DATA]
+ */
 enum class EncryptionVersionByte(val value: Byte) {
     One(0x01),
     Two(0x02);

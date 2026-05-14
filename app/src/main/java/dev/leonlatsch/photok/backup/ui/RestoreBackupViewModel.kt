@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
+import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.other.extensions.empty
@@ -42,6 +43,7 @@ import javax.inject.Inject
 class RestoreBackupViewModel @Inject constructor(
     app: Application,
     private val getRestoreStrategy: GetBackupRestoreStrategyUseCase,
+    private val unlockBackup: UnlockBackupUseCase,
     private val validateBackup: ValidateBackupUseCase,
     private val io: IO,
 ) : ObservableViewModel(app) {
@@ -106,18 +108,26 @@ class RestoreBackupViewModel @Inject constructor(
     fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
-        val zipInputStream = io.zip.openZipInput(fileUri)
         val metaData = metaData ?: error("meta.json was loaded without success")
 
         val restoreStrategy = getRestoreStrategy(metaData.backupVersion) ?: error("Unknown backup version")
-        val result = restoreStrategy.restore(metaData, zipInputStream, origPassword)
-        zipInputStream.close()
 
-        restoreState = if (result.errors > 0) {
-            RestoreState.FINISHED_WITH_ERRORS
-        } else {
-            RestoreState.FINISHED
-        }
+        unlockBackup(fileUri, metaData.backupVersion, origPassword)
+            .onSuccess { session ->
+                val zipInputStream = io.zip.openZipInput(fileUri)
+
+                val result = restoreStrategy.restore(metaData, zipInputStream, session)
+                zipInputStream.close()
+
+                restoreState = if (result.errors > 0) {
+                    RestoreState.FINISHED_WITH_ERRORS
+                } else {
+                    RestoreState.FINISHED
+                }
+            }
+            .onFailure {
+                restoreState = RestoreState.FILE_INVALID
+            }
 
     }
 }

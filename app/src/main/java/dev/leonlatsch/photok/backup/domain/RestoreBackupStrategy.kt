@@ -17,12 +17,13 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import java.util.zip.ZipInputStream
 
 interface RestoreBackupStrategy {
     suspend fun restore(
         metaData: BackupMetaData,
         stream: ZipInputStream,
-        originalPassword: String,
+        session: Session,
     ): RestoreResult
 }
