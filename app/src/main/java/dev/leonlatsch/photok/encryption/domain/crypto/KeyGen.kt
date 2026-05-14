@@ -16,25 +16,29 @@
 
 package dev.leonlatsch.photok.encryption.domain.crypto
 
-import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
-import javax.crypto.KeyGenerator
+import java.security.SecureRandom
 import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
+import kotlin.io.encoding.Base64
 
 private const val VMK_SIZE = 256
 
 class KeyGen @Inject constructor() {
 
     fun generateVaultMasterKey(): SecretKey {
-        val keyGenerator = KeyGenerator.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
-            init(VMK_SIZE)
-        }
+        val password = ByteArray(100).also { SecureRandom().nextBytes(it) }.let { Base64.encode(it) }
+        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
 
-        return keyGenerator.generateKey()
+        val factory = SecretKeyFactory.getInstance(Kdf.PBKDF2WithHmacSHA256.value)
+        val spec = PBEKeySpec(password.toCharArray(), salt, 100_000, VMK_SIZE)
+        val keyBytes = factory.generateSecret(spec).encoded
+
+        return SecretKeySpec(keyBytes, "AES")
+
     }
 
     fun derivePasswordKeyEncryptionKey(
