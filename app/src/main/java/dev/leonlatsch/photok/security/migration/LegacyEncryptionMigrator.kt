@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.security.migration
 
 import android.app.Application
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.encryption.domain.models.LegacySession
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.io.EncryptedStorageManager
@@ -60,6 +61,10 @@ class LegacyEncryptionMigrator @Inject constructor(
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
 
     private val mutex = Mutex()
+
+    fun initialize(session: LegacySession) {
+        // TODO
+    }
 
     fun migrationNeeded(): Boolean {
         return app.fileList().any { it.contains(LEGACY_PHOTOK_FILE_EXTENSION) }

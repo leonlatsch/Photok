@@ -24,13 +24,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
+import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,9 +51,10 @@ import javax.inject.Inject
 class UnlockViewModel @Inject constructor(
     app: Application,
     private val resources: Resources,
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
+    private val legacyEncryption: LegacyEncryption,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -78,7 +80,11 @@ class UnlockViewModel @Inject constructor(
             vaultService.unlock(UnlockRequest.Password(password))
                 .onSuccess { session ->
                     sessionRepository.set(session)
-                    legacyEncryptionManager.initialize(password)
+
+                    // TODO: Move check if migration is needed here. Also change UnlockState to control the flow eg. sealed class with cases like: GcmToCbcMigrationNeeded, VMKMigrationNeeded, Unlocked, etc.
+                    val legacySession = legacyEncryption.obtainSession(password)
+                    legacyEncryptionMigrator.initialize(legacySession)
+
                     unlockState.update { UnlockState.UNLOCKED }
                 }
                 .onFailure {

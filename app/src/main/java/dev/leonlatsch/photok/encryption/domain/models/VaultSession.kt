@@ -17,6 +17,12 @@
 package dev.leonlatsch.photok.encryption.domain.models
 
 import javax.crypto.SecretKey
+import javax.crypto.spec.IvParameterSpec
+
+data class LegacySession(
+    val key: SecretKey,
+    val iv: IvParameterSpec,
+)
 
 data class VaultSession(
     val vmk: SecretKey,
