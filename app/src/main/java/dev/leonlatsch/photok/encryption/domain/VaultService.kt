@@ -19,10 +19,10 @@ package dev.leonlatsch.photok.encryption.domain
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import javax.inject.Inject
 
-// TODO: Until now this is kind of only a proxy that does the when block ... meh
 class VaultService @Inject constructor(
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
@@ -52,6 +52,10 @@ class VaultService @Inject constructor(
         }
 
         vaultProtectionRepository.createProtection(protection)
+    }
+
+    suspend fun isSetup(type: VaultProtectionType): Boolean {
+        return vaultProtectionRepository.getProtection(type) != null
     }
 }
 

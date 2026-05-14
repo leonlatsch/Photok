@@ -26,14 +26,14 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.security.biometric.BiometricUnlock
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
@@ -41,7 +41,6 @@ import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -57,13 +56,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private val viewModel: UnlockViewModel by viewModels()
 
     @Inject
-    lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
-
-    @Inject
     lateinit var config: Config
 
     @Inject
-    lateinit var biometricUnlock: BiometricUnlock
+    lateinit var vaultService: VaultService
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
@@ -81,6 +77,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
                     }
+
                     UnlockState.Loading -> binding.loadingOverlay.show()
                     UnlockState.Unlocked -> {
                         binding.loadingOverlay.hide()
@@ -93,6 +90,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
                         findNavController().navigate(startPageDest)
                     }
+
                     UnlockState.StartLegacyMigration -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
@@ -113,15 +111,15 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         super.onViewCreated(view, savedInstanceState)
 
-        if (biometricUnlock.isSetupAndValid()) {
-            binding.unlockUseBiometricUnlockButton.show()
+        lifecycleScope.launch {
+            if (vaultService.isSetup(VaultProtectionType.Biometric)) {
+                binding.unlockUseBiometricUnlockButton.show()
 
-            lifecycleScope.launch {
                 delay(500L)
                 viewModel.unlockWithBiometric(fragment = this@UnlockFragment)
+            } else {
+                binding.unlockUseBiometricUnlockButton.hide()
             }
-        } else {
-            binding.unlockUseBiometricUnlockButton.hide()
         }
     }
 

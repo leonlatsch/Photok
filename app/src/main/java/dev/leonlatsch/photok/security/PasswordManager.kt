@@ -44,12 +44,6 @@ class PasswordManager @Inject constructor(
     }
 
     /**
-     * Checks a plain text password against the stored one
-     */
-    fun checkPassword(password: String): Boolean =
-        checkPassword(password, config.securityPassword)
-
-    /**
      * Checks a plain test against a bcrypt hash
      */
     fun checkPassword(password: String, hash: String?): Boolean =
