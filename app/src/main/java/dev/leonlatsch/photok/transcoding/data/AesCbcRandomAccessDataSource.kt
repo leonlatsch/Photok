@@ -110,6 +110,9 @@ class AesCbcRandomAccessDataSource(
         channel.read(headerBuf)
         headerBuf.flip()
 
+        // Read/skip version byte since we have the whole header
+        headerBuf.get()
+
         val fileIv = ByteArray(IV_SIZE)
 
         when (version) {
