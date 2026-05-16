@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.settings.data.Config
+import org.mindrot.jbcrypt.BCrypt
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
@@ -118,6 +119,8 @@ class PasswordVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
+        require(BCrypt.checkpw(request.password, config.securityPassword))
+
         val oldSalt = config.userSalt.orEmpty()
         if (oldSalt.isEmpty()) {
             error("Old salt is needed for migration")
