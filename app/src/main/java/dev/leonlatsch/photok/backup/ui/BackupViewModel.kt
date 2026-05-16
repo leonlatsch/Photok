@@ -22,6 +22,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.domain.BackupStrategyImpl
 import dev.leonlatsch.photok.backup.domain.LegacyBackupStrategyImpl
+import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -45,6 +47,7 @@ class BackupViewModel @Inject constructor(
     private val io: IO,
     private val defaultBackupStrategy: BackupStrategyImpl,
     private val legacyBackupStrategy: LegacyBackupStrategyImpl,
+    private val vaultProtectionRepository: VaultProtectionRepository,
 ) : BaseProcessViewModel<Photo>(app) {
 
     lateinit var uri: Uri
@@ -64,6 +67,14 @@ class BackupViewModel @Inject constructor(
         items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
         zipOutputStream = io.zip.openZipOutput(uri)
+
+        val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
+        if (protection == null) {
+            failuresOccurred = true
+            cancel()
+            return
+        }
+
         strategy.preBackup()
         super.preProcess()
     }

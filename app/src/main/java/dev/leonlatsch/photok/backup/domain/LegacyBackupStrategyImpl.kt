@@ -56,14 +56,17 @@ class LegacyBackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.securityPassword!!, BackupMetaData.Companion.LEGACY_BACKUP_VERSION)
+        try {
+            val backupMetaData = dumpDatabaseUseCase(BackupMetaData.Companion.LEGACY_BACKUP_VERSION)
+            val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-        val metaBytes = gson.toJson(backupMetaData).toByteArray()
-
-        return io.zip.writeZipEntry(
-            BackupMetaData.Companion.FILE_NAME,
-            ByteArrayInputStream(metaBytes),
-            zipOutputStream,
-        )
+            return io.zip.writeZipEntry(
+                BackupMetaData.Companion.FILE_NAME,
+                ByteArrayInputStream(metaBytes),
+                zipOutputStream,
+            )
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
     }
 }

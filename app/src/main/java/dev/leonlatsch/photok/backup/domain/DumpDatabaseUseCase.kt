@@ -35,7 +35,7 @@ class DumpDatabaseUseCase @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val vaultProtectionRepository: VaultProtectionRepository,
 ) {
-    suspend operator fun invoke(password: String, version: Int): BackupMetaData = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(version: Int): BackupMetaData = withContext(Dispatchers.IO) {
         val photos = photoRepository.findAllPhotosByImportDateDesc().map { it.toBackup() }
         val albums = albumRepository.getAlbums().map { it.toBackup() }
         val albumPhotoLinks = albumRepository.getAllAlbumPhotoLinks().map { it.toBackup() }

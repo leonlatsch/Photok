@@ -22,7 +22,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.settings.data.Config
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -30,7 +29,6 @@ import javax.inject.Inject
 class BackupStrategyImpl @Inject constructor(
     private val dumpDatabaseUseCase: DumpDatabaseUseCase,
     private val io: IO,
-    private val config: Config,
     private val gson: Gson,
     @ApplicationContext private val context: Context,
 ) : BackupStrategy {
@@ -55,14 +53,20 @@ class BackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.securityPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
 
-        val metaBytes = gson.toJson(backupMetaData).toByteArray()
+        try {
+            val backupMetaData = dumpDatabaseUseCase(BackupMetaData.CURRENT_BACKUP_VERSION)
+            val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-        return io.zip.writeZipEntry(
-            BackupMetaData.Companion.FILE_NAME,
-            ByteArrayInputStream(metaBytes),
-            zipOutputStream,
-        )
+            return io.zip.writeZipEntry(
+                BackupMetaData.FILE_NAME,
+                ByteArrayInputStream(metaBytes),
+                zipOutputStream,
+            )
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+
+
     }
 }
