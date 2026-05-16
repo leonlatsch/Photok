@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.EncryptionVersionByte
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.LegacySession
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
@@ -32,6 +33,7 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
@@ -41,19 +43,29 @@ class UnlockBackupUseCase @Inject constructor(
     private val keyGen: KeyGen,
     private val passwordVaultProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
 ) {
-    suspend operator fun invoke(uri: Uri, metaData: BackupMetaData, password: String): Result<Session> {
-        return runCatching {
-            when (metaData) {
-                is BackupMetaData.V1 -> legacyEncryption.obtainSession(password)
-                is BackupMetaData.V2 -> legacyEncryption.obtainSession(password)
-                is BackupMetaData.V3 -> legacyEncryption.obtainSession(password)
-                is BackupMetaData.V4 -> createSessionFromV4(uri, password)
-                is BackupMetaData.V5 -> createSessionFromV5(password, metaData)
-            }
+    suspend operator fun invoke(
+        uri: Uri,
+        metaData: BackupMetaData,
+        password: String,
+    ): Result<Session> = runCatching {
+        when (metaData) {
+            is BackupMetaData.V1 -> createSessionFromV1toV3(metaData.password, password)
+            is BackupMetaData.V2 -> createSessionFromV1toV3(metaData.password, password)
+            is BackupMetaData.V3 -> createSessionFromV1toV3(metaData.password, password)
+            is BackupMetaData.V4 -> createSessionFromV4(uri, metaData.password, password)
+            is BackupMetaData.V5 -> createSessionFromV5(password, metaData)
         }
     }
 
-    private fun createSessionFromV4(uri: Uri, password: String): Session {
+    private fun createSessionFromV1toV3(pwHash: String, password: String): LegacySession {
+        require(BCrypt.checkpw(password, pwHash))
+
+        return legacyEncryption.obtainSession(password)
+    }
+
+    private fun createSessionFromV4(uri: Uri, pwHash: String, password: String): Session {
+        require(BCrypt.checkpw(password, pwHash))
+
         val zipInputStream = io.zip.openZipInput(uri)
 
         var ze = zipInputStream.nextEntry
