@@ -50,7 +50,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         request: UnlockRequest.Biometric,
         protection: VaultProtection
     ): SecretKey {
-        val kek = getOrCreateSecretKey(protection.params)
+        val kek = getOrCreateBiometricKek(protection.params)
 
         val cipher = Cipher.getInstance(protection.params.algorithm.value).apply {
             val iv = Base64.decode(protection.params.iv)
@@ -83,7 +83,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
             keySize = 256,
         )
 
-        val kek = getOrCreateSecretKey(params)
+        val kek = getOrCreateBiometricKek(params)
 
         val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
             init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
@@ -114,7 +114,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
 
 }
 
-private fun getOrCreateSecretKey(params: VaultProtectionParams): SecretKey {
+private fun getOrCreateBiometricKek(params: VaultProtectionParams): SecretKey {
     val keyStore = getKeyStore()
     keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let { return it as SecretKey }
 
