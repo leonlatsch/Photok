@@ -71,8 +71,8 @@ class VaultService @Inject constructor(
 
     suspend fun needsMigration(): Boolean {
         return !isSetup(VaultProtectionType.Password)
-                && config.securityPassword.orEmpty().isEmpty()
-                && config.userSalt.orEmpty().isEmpty()
+                && config.securityPassword.orEmpty().isNotEmpty()
+                && config.userSalt.orEmpty().isNotEmpty()
     }
 }
 

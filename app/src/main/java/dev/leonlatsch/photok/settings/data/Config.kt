@@ -101,7 +101,7 @@ class Config(context: Context) {
     @Deprecated("Only needed for migration")
     var securityPassword: String?
         get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
-        set(value) = putString(SECURITY_PASSWORD, value!!)
+        set(value) = putString(SECURITY_PASSWORD, value)
 
     /**
      * Timeout to auto lock when in background.

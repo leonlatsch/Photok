@@ -124,6 +124,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     }
 
     private fun showErrorToast() {
+        binding.loadingOverlay.hide()
         Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
     }
 
