@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
@@ -101,14 +102,16 @@ class SettingsViewModel @Inject constructor(
         value as Boolean
 
         if (!value) {
-            viewModelScope.launch { biometricUnlock.reset() }
+            viewModelScope.launch {
+                vaultService.reset(VaultProtectionType.Biometric)
+            }
             config.biometricAuthenticationEnabled = false
             return false
         }
 
         val context = fragment.context ?: return false
 
-        if (!biometricUnlock.areBiometricsAvailable()) {
+        if (!context.areBiometricsAvailable()) {
             Dialogs.showLongToast(
                 context,
                 context.getString(R.string.settings_security_biometric_not_available),
