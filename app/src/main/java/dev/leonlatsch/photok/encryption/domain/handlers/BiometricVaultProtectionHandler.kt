@@ -31,7 +31,6 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.security.biometric.UnlockCipherUseCase
 import java.security.KeyStore
-import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -54,11 +53,14 @@ class BiometricVaultProtectionHandler @Inject constructor(
         request: UnlockRequest.Biometric,
         protection: VaultProtection
     ): SecretKey {
-        val kek = getOrCreateBiometricKek(protection.params)
+        val kek = getOrCreateBiometricKek(
+            algorithm = protection.params.algorithm,
+            keySize = protection.params.keySize,
+        )
+
+        val iv = Base64.decode(protection.params.iv)
 
         val cipher = Cipher.getInstance(protection.params.algorithm.value).apply {
-            val iv = Base64.decode(protection.params.iv)
-
             init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv))
         }
 
@@ -76,23 +78,18 @@ class BiometricVaultProtectionHandler @Inject constructor(
 
     override suspend fun create(request: CreateRequest.Biometric): VaultProtection {
         val vmk = request.session.vmk
-        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
 
-        val params = VaultProtectionParams(
-            salt = null,
-            iv = Base64.encode(iv),
-            kdf = null,
-            kdfIterations = null,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = 256,
+        val algorithm = Algorithm.AesCbcPkcs7Padding
+        val keySize = 256
+
+        val kek = getOrCreateBiometricKek(
+            algorithm = algorithm,
+            keySize = keySize,
         )
 
-        val kek = getOrCreateBiometricKek(params)
-
         val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
-            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
+            init(Cipher.ENCRYPT_MODE, kek)
         }
-
 
         val unlockedCipher = unlockCipher(
             fragment = request.fragment,
@@ -101,6 +98,15 @@ class BiometricVaultProtectionHandler @Inject constructor(
             subtitle = resources.getString(R.string.biometric_unlock_setup_subtitle),
             negativeButtonText = resources.getString(R.string.common_cancel),
         ).getOrThrow()
+
+        val params = VaultProtectionParams(
+            salt = null,
+            iv = Base64.encode(unlockedCipher.iv),
+            kdf = null,
+            kdfIterations = null,
+            algorithm = Algorithm.AesCbcPkcs7Padding,
+            keySize = 256,
+        )
 
         val wrappedVmk = unlockedCipher.doFinal(vmk.encoded)
 
@@ -152,7 +158,10 @@ class BiometricVaultProtectionHandler @Inject constructor(
     }
 }
 
-private fun getOrCreateBiometricKek(params: VaultProtectionParams): SecretKey {
+private fun getOrCreateBiometricKek(
+    algorithm: Algorithm,
+    keySize: Int,
+): SecretKey {
     val keyStore = getKeyStore()
     keyStore.getKey(WRAPPING_KEY_ALIAS, null)?.let { return it as SecretKey }
 
@@ -160,10 +169,10 @@ private fun getOrCreateBiometricKek(params: VaultProtectionParams): SecretKey {
         WRAPPING_KEY_ALIAS,
         KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
     )
-        .setBlockModes(params.algorithm.blockMode)
-        .setEncryptionPaddings(params.algorithm.padding)
+        .setBlockModes(algorithm.blockMode)
+        .setEncryptionPaddings(algorithm.padding)
         .setUserAuthenticationRequired(true)
-        .setKeySize(params.keySize)
+        .setKeySize(keySize)
         .setInvalidatedByBiometricEnrollment(true)
         .build()
 
