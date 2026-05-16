@@ -27,7 +27,6 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
-import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
@@ -80,10 +79,6 @@ class UnlockViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                if (vaultService.needsMigration()) {
-                    vaultService.migrate(CreateRequest.Password(password))
-                }
-
                 vaultService.unlock(UnlockRequest.Password(password))
                     .onSuccess { session ->
                         sessionRepository.set(session)

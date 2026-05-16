@@ -16,9 +16,12 @@
 
 package dev.leonlatsch.photok.encryption.domain.handlers
 
+import android.app.Application
+import android.content.Context
 import android.content.res.Resources
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import androidx.core.content.edit
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
@@ -42,6 +45,7 @@ private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 private const val WRAPPING_KEY_ALIAS = "user_key_wrapper"
 
 class BiometricVaultProtectionHandler @Inject constructor(
+    private val app: Application,
     private val resources: Resources,
     private val unlockCipher: UnlockCipherUseCase,
 ) : VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric> {
@@ -108,10 +112,44 @@ class BiometricVaultProtectionHandler @Inject constructor(
         )
     }
 
-    override suspend fun migrate(request: CreateRequest.Biometric): VaultProtection {
-        TODO("Not yet implemented")
+    override suspend fun canMigrate(): Boolean {
+        val prefs = app.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
+        return prefs.contains("wrapped_user_key")
     }
 
+    override suspend fun migrate(request: UnlockRequest.Biometric): VaultProtection {
+        val prefs = app.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
+
+        val base64 = prefs.getString("wrapped_user_key", null)!!
+        val bytes = Base64.decode(base64)
+
+        val iv = bytes.copyOfRange(0, IV_SIZE)
+        val wrappedVmk = bytes.copyOfRange(IV_SIZE, bytes.size)
+
+        val params = VaultProtectionParams(
+            salt = null,
+            iv = Base64.encode(iv),
+            kdf = null,
+            kdfIterations = null,
+            algorithm = Algorithm.AesCbcPkcs7Padding,
+            keySize = 256,
+        )
+
+        prefs.edit {
+            remove("wrapped_user_key")
+        }
+
+        return VaultProtection(
+            id = UUID.randomUUID().toString(),
+            type = request.protectionType,
+            wrappedVMK = wrappedVmk,
+            params = params,
+        )
+    }
+
+    override suspend fun reset() {
+        getKeyStore().deleteEntry(WRAPPING_KEY_ALIAS)
+    }
 }
 
 private fun getOrCreateBiometricKek(params: VaultProtectionParams): SecretKey {

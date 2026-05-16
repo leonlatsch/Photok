@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.security
 
-import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.settings.data.Config
 import org.mindrot.jbcrypt.BCrypt
@@ -48,12 +47,4 @@ class PasswordManager @Inject constructor(
      */
     fun checkPassword(password: String, hash: String?): Boolean =
         BCrypt.checkpw(password, hash)
-
-    /**
-     * Set stored password to empty string
-     */
-    suspend fun resetPassword() {
-        config.securityPassword = String.empty
-        biometricUnlock.reset()
-    }
 }

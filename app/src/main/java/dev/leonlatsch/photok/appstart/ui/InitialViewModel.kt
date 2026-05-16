@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.encryption.domain.VaultService
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,7 +52,7 @@ class InitialViewModel @Inject constructor(
         // Unlock or Setup
         val appStartState: AppStartState
 
-        if (vaultService.isSetup(VaultProtectionType.Password) || vaultService.needsMigration()) {
+        if (vaultService.canUnlock()) {
             appStartState = AppStartState.LOCKED
         } else {
             appStartState = AppStartState.SETUP

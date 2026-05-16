@@ -25,20 +25,33 @@ import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
 class VaultService @Inject constructor(
-    private val config: Config,
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
     private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>,
+    private val config: Config,
 ) {
     suspend fun unlock(request: UnlockRequest): Result<VaultSession> {
         val type = request.protectionType
-        val protection = vaultProtectionRepository.getProtection(type)
-        protection ?: return Result.failure(IllegalArgumentException())
+        var protection = vaultProtectionRepository.getProtection(type)
 
         return runCatching {
             val vmk = when (request) {
-                is UnlockRequest.Password -> passwordProtectionHandler.unlock(request, protection)
-                is UnlockRequest.Biometric -> biometricProtectionHandler.unlock(request, protection)
+                is UnlockRequest.Password -> {
+                    if (protection == null) {
+                        protection = passwordProtectionHandler.migrate(request)
+                        vaultProtectionRepository.createProtection(protection)
+                    }
+
+                    passwordProtectionHandler.unlock(request, protection)
+                }
+                is UnlockRequest.Biometric -> {
+                    if (protection == null) {
+                        protection = biometricProtectionHandler.migrate(request)
+                        vaultProtectionRepository.createProtection(protection)
+                    }
+
+                    biometricProtectionHandler.unlock(request, protection)
+                }
             }
 
             VaultSession(
@@ -56,23 +69,32 @@ class VaultService @Inject constructor(
         vaultProtectionRepository.createProtection(protection)
     }
 
+    suspend fun reset(type: VaultProtectionType) {
+        vaultProtectionRepository.removeProtection(type)
+
+        when (type) {
+            VaultProtectionType.Password -> passwordProtectionHandler.reset()
+            VaultProtectionType.Biometric -> {
+                config.biometricAuthenticationEnabled = false
+                biometricProtectionHandler.reset()
+            }
+        }
+    }
+
     suspend fun isSetup(type: VaultProtectionType): Boolean {
         return vaultProtectionRepository.getProtection(type) != null
     }
 
-    suspend fun migrate(request: CreateRequest) {
-        val protection = when (request) {
-            is CreateRequest.Password -> passwordProtectionHandler.migrate(request)
-            is CreateRequest.Biometric -> biometricProtectionHandler.migrate(request)
-        }
-
-        vaultProtectionRepository.createProtection(protection)
+    suspend fun canMigrate(type: VaultProtectionType): Boolean = when (type) {
+        VaultProtectionType.Password -> passwordProtectionHandler.canMigrate()
+        VaultProtectionType.Biometric -> biometricProtectionHandler.canMigrate()
     }
 
-    suspend fun needsMigration(): Boolean {
-        return !isSetup(VaultProtectionType.Password)
-                && config.securityPassword.orEmpty().isNotEmpty()
-                && config.userSalt.orEmpty().isNotEmpty()
+    suspend fun canUnlock(): Boolean {
+        val protectionsAreSetup = isSetup(VaultProtectionType.Password) || isSetup(VaultProtectionType.Biometric)
+        val canMigrate = passwordProtectionHandler.canMigrate() || biometricProtectionHandler.canMigrate()
+
+        return protectionsAreSetup || canMigrate
     }
 }
 

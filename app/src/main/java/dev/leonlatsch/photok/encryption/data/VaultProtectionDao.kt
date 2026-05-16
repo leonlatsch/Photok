@@ -28,6 +28,9 @@ interface VaultProtectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(protection: VaultProtectionTable)
 
+    @Query("DELETE FROM vault_protection WHERE type = :type")
+    suspend fun delete(type: VaultProtectionType)
+
     @Query("SELECT * FROM vault_protection WHERE type = :type")
     suspend fun getVaultProtection(type: VaultProtectionType): VaultProtectionTable?
 }

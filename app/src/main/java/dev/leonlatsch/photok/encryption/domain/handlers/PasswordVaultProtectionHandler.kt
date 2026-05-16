@@ -113,7 +113,11 @@ class PasswordVaultProtectionHandler @Inject constructor(
         )
     }
 
-    override suspend fun migrate(request: CreateRequest.Password): VaultProtection {
+    override suspend fun canMigrate(): Boolean {
+        return config.userSalt.orEmpty().isNotEmpty() && config.securityPassword.orEmpty().isNotEmpty()
+    }
+
+    override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
         val oldSalt = config.userSalt.orEmpty()
         if (oldSalt.isEmpty()) {
             error("Old salt is needed for migration")
@@ -163,4 +167,6 @@ class PasswordVaultProtectionHandler @Inject constructor(
             params = params,
         )
     }
+
+    override suspend fun reset() {}
 }

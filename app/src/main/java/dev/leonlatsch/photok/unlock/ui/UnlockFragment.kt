@@ -112,7 +112,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            if (vaultService.isSetup(VaultProtectionType.Biometric)) {
+            if (vaultService.isSetup(VaultProtectionType.Biometric) || vaultService.canMigrate(VaultProtectionType.Biometric)) {
                 binding.unlockUseBiometricUnlockButton.show()
 
                 delay(500L)

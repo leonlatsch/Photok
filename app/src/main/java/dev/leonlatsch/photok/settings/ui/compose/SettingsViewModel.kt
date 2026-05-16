@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.security.PasswordManager
@@ -148,7 +149,8 @@ class SettingsViewModel @Inject constructor(
         albumRepository.deleteAll()
         albumRepository.unlinkAll()
 
-        passwordManager.resetPassword()
+        vaultService.reset(VaultProtectionType.Password)
+        vaultService.reset(VaultProtectionType.Biometric)
         (app as BaseApplication).lockApp()
     }
 }

@@ -20,7 +20,8 @@ import android.content.Context
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,8 +33,7 @@ import javax.inject.Singleton
 @Singleton
 class BiometricUnlockImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val config: Config,
-    private val biometricKeyStore: BiometricKeyStore,
+    private val vaultProtectionRepository: VaultProtectionRepository,
 ) : BiometricUnlock {
 
     override fun areBiometricsAvailable(): Boolean {
@@ -42,8 +42,7 @@ class BiometricUnlockImpl @Inject constructor(
     }
 
     override suspend fun reset(): Result<Unit> = runCatching {
-        config.biometricAuthenticationEnabled = false
-        biometricKeyStore.reset()
+        vaultProtectionRepository.removeProtection(VaultProtectionType.Biometric)
     }
 }
 
