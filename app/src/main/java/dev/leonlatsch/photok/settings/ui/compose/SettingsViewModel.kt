@@ -29,7 +29,6 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.PasswordManager
 import dev.leonlatsch.photok.security.biometric.BiometricUnlock
 import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
@@ -60,7 +59,6 @@ class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val passwordManager: PasswordManager,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
 ) : ViewModel() {

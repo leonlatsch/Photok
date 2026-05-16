@@ -38,4 +38,8 @@ class VaultProtectionRepositoryImpl @Inject constructor(
     override suspend fun removeProtection(type: VaultProtectionType) = withContext(IO) {
         dao.delete(type)
     }
+
+    override suspend fun updateProtection(protection: VaultProtection) = withContext(IO) {
+        dao.update(protection.toData())
+    }
 }

@@ -65,10 +65,9 @@ class ChangePasswordDialog :
                 }
                 ChangePasswordState.NEW_VALID -> {
                     binding.loadingOverlay.hide()
-                    viewModel.checkIfReEncryptNeeded()
+                    viewModel.performChangePassword()
                 }
-                ChangePasswordState.RE_ENCRYPT_NEEDED -> handleReEncryptNeeded()
-                ChangePasswordState.RE_ENCRYPT_NOT_NEEDED -> dismiss()
+                ChangePasswordState.DONE -> dismiss()
             }
         }
 
@@ -93,20 +92,6 @@ class ChangePasswordDialog :
         binding.changePasswordOldStatusIcon.show()
         binding.changePasswordNewPasswordLayout.show()
         binding.changePasswordNewPasswordLayout.requestFocus()
-    }
-
-    private fun handleReEncryptNeeded() {
-        // TODO: Change this whole dialog to handle password changes with new VML architecture
-//        Dialogs.showConfirmDialog(
-//            requireContext(),
-//            getString(R.string.change_password_confirm_message)
-//        ) { _, _ ->
-//            ReEncryptBottomSheetDialogFragment(
-//                viewModel.oldPassword,
-//                viewModel.newPassword
-//            ).show(requireActivity().supportFragmentManager)
-//            dismiss()
-//        }
     }
 
     private fun enableOrDisableSetup() {

@@ -20,6 +20,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 
 @Dao
@@ -30,6 +31,9 @@ interface VaultProtectionDao {
 
     @Query("DELETE FROM vault_protection WHERE type = :type")
     suspend fun delete(type: VaultProtectionType)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(protection: VaultProtectionTable)
 
     @Query("SELECT * FROM vault_protection WHERE type = :type")
     suspend fun getVaultProtection(type: VaultProtectionType): VaultProtectionTable?
