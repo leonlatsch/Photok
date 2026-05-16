@@ -21,9 +21,11 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
 class VaultService @Inject constructor(
+    private val config: Config,
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
     private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>,
@@ -56,6 +58,21 @@ class VaultService @Inject constructor(
 
     suspend fun isSetup(type: VaultProtectionType): Boolean {
         return vaultProtectionRepository.getProtection(type) != null
+    }
+
+    suspend fun migrate(request: CreateRequest) {
+        val protection = when (request) {
+            is CreateRequest.Password -> passwordProtectionHandler.migrate(request)
+            is CreateRequest.Biometric -> biometricProtectionHandler.migrate(request)
+        }
+
+        vaultProtectionRepository.createProtection(protection)
+    }
+
+    suspend fun needsMigration(): Boolean {
+        return !isSetup(VaultProtectionType.Password)
+                && config.securityPassword.orEmpty().isEmpty()
+                && config.userSalt.orEmpty().isEmpty()
     }
 }
 

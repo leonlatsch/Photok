@@ -108,6 +108,10 @@ class BiometricVaultProtectionHandler @Inject constructor(
         )
     }
 
+    override suspend fun migrate(request: CreateRequest.Biometric): VaultProtection {
+        TODO("Not yet implemented")
+    }
+
 }
 
 private fun getOrCreateSecretKey(params: VaultProtectionParams): SecretKey {

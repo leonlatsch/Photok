@@ -51,10 +51,12 @@ class InitialViewModel @Inject constructor(
         }
 
         // Unlock or Setup
-        val appStartState = if (vaultService.isSetup(VaultProtectionType.Password)) {
-            AppStartState.LOCKED
+        val appStartState: AppStartState
+
+        if (vaultService.isSetup(VaultProtectionType.Password) || vaultService.needsMigration()) {
+            appStartState = AppStartState.LOCKED
         } else {
-            AppStartState.SETUP
+            appStartState = AppStartState.SETUP
         }
 
         continueStart(appStartState)
