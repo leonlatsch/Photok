@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
@@ -54,6 +55,7 @@ class RestoreBackupViewModel @Inject constructor(
     private val v2Strategy: RestoreBackupV2,
     private val v3Strategy: RestoreBackupV3,
     private val v4Strategy: RestoreBackupV4,
+    private val v5Strategy: RestoreBackupV5,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -125,7 +127,7 @@ class RestoreBackupViewModel @Inject constructor(
             is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
             is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
             is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V5 -> TODO()
+            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
         }
 
         zipInputStream.close()
