@@ -21,20 +21,27 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
+import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.EncryptionVersionByte
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.Session
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import javax.inject.Inject
+import kotlin.io.encoding.Base64
 
 class UnlockBackupUseCase @Inject constructor(
     private val legacyEncryption: LegacyEncryption,
     private val io: IO,
     private val keyGen: KeyGen,
+    private val passwordVaultProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
 ) {
-    operator fun invoke(uri: Uri, metaData: BackupMetaData, password: String): Result<Session> {
+    suspend operator fun invoke(uri: Uri, metaData: BackupMetaData, password: String): Result<Session> {
         return runCatching {
             when (metaData) {
                 is BackupMetaData.V1 -> legacyEncryption.obtainSession(password)
@@ -78,10 +85,24 @@ class UnlockBackupUseCase @Inject constructor(
         error("No file found in backup. Cannot derive salt.")
     }
 
-    private fun createSessionFromV5(
+    private suspend fun createSessionFromV5(
         password: String,
         metaData: BackupMetaData.V5
     ): Session {
-        TODO("Not yet implemented")
+        val wrappedVmk = Base64.decode(metaData.wrappedVMK)
+
+        val vmk = passwordVaultProtectionHandler.unlock(
+            UnlockRequest.Password(password),
+            VaultProtection(
+                id = "",
+                type = VaultProtectionType.Password,
+                wrappedVMK = wrappedVmk,
+                params = metaData.params,
+            )
+        )
+
+        return VaultSession(
+            vmk = vmk,
+        )
     }
 }

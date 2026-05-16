@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.backup.data
 
 import com.google.gson.annotations.Expose
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 /**
@@ -68,11 +69,12 @@ sealed interface BackupMetaData {
 
     data class V5(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val wrappedVMK: String,
         @Expose val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,
+        @Expose val wrappedVMK: String,
+        @Expose val params: VaultProtectionParams,
     ) : BackupMetaData
 
     companion object {

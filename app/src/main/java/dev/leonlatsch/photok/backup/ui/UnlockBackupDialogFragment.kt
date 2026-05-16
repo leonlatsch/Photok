@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -30,6 +31,7 @@ import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -61,14 +63,16 @@ class UnlockBackupDialogFragment(
     fun onUnlock() {
         binding.unlockBackupWrongPasswordWarning.hide()
 
-        unlockBackupUseCase(uri, metaData, viewModel.password)
-            .onSuccess { session ->
-                dismiss()
-                onUnlockSuccess(session)
-            }
-            .onFailure {
-                binding.unlockBackupWrongPasswordWarning.show()
-            }
+        lifecycleScope.launch {
+            unlockBackupUseCase(uri, metaData, viewModel.password)
+                .onSuccess { session ->
+                    dismiss()
+                    onUnlockSuccess(session)
+                }
+                .onFailure {
+                    binding.unlockBackupWrongPasswordWarning.show()
+                }
+        }
     }
 
     override fun bind(binding: DialogBackupUnlockBinding) {
