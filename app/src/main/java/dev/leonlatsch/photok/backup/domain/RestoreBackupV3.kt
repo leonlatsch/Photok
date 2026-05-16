@@ -69,9 +69,9 @@ class RestoreBackupV3 @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val io: IO,
     private val vaultFileStorage: VaultFileStorage,
-) : RestoreBackupStrategy {
+) : RestoreBackupStrategy<BackupMetaData.V3> {
     override suspend fun restore(
-        metaData: BackupMetaData,
+        metaData: BackupMetaData.V3,
         stream: ZipInputStream,
         session: Session,
     ): RestoreResult {

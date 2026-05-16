@@ -61,9 +61,9 @@ class RestoreBackupV1 @Inject constructor(
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
-) : RestoreBackupStrategy {
+) : RestoreBackupStrategy<BackupMetaData.V1> {
     override suspend fun restore(
-        metaData: BackupMetaData,
+        metaData: BackupMetaData.V1,
         stream: ZipInputStream,
         session: Session,
     ): RestoreResult {

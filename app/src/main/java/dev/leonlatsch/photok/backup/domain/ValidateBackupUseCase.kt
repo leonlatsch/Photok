@@ -43,7 +43,7 @@ class ValidateBackupUseCase @Inject constructor(
             var ze = zipInputStream.nextEntry
             while (ze != null) {
                 if (ze.name == BackupMetaData.FILE_NAME) {
-                    metaData = readBackupMetadata(zipInputStream)
+                    metaData = readBackupMetadata(backupVersion, zipInputStream)
                     backupVersion = metaData.getBackupVersion()
                 } else if (ze.name.endsWith(PHOTOK_FILE_EXTENSION)) {
                     cryptFiles++

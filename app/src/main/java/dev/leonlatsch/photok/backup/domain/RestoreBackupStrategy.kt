@@ -20,9 +20,9 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import java.util.zip.ZipInputStream
 
-interface RestoreBackupStrategy {
+interface RestoreBackupStrategy<T : BackupMetaData> {
     suspend fun restore(
-        metaData: BackupMetaData,
+        metaData: T,
         stream: ZipInputStream,
         session: Session,
     ): RestoreResult

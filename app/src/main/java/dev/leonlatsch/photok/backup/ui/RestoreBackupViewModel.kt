@@ -23,7 +23,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.domain.GetBackupRestoreStrategyUseCase
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.io.IO
@@ -42,10 +45,14 @@ import javax.inject.Inject
 @HiltViewModel
 class RestoreBackupViewModel @Inject constructor(
     app: Application,
-    private val getRestoreStrategy: GetBackupRestoreStrategyUseCase,
     private val unlockBackup: UnlockBackupUseCase,
     private val validateBackup: ValidateBackupUseCase,
     private val io: IO,
+
+    private val v1Strategy: RestoreBackupV1,
+    private val v2Strategy: RestoreBackupV2,
+    private val v3Strategy: RestoreBackupV3,
+    private val v4Strategy: RestoreBackupV4,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -110,13 +117,18 @@ class RestoreBackupViewModel @Inject constructor(
 
         val metaData = metaData ?: error("meta.json was loaded without success")
 
-        val restoreStrategy = getRestoreStrategy(metaData.backupVersion) ?: error("Unknown backup version")
-
         unlockBackup(fileUri, metaData.backupVersion, origPassword)
             .onSuccess { session ->
                 val zipInputStream = io.zip.openZipInput(fileUri)
 
-                val result = restoreStrategy.restore(metaData, zipInputStream, session)
+                val result = when (metaData) {
+                    is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
+                    is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
+                    is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
+                    is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
+                    is BackupMetaData.V5 -> TODO()
+                }
+
                 zipInputStream.close()
 
                 restoreState = if (result.errors > 0) {

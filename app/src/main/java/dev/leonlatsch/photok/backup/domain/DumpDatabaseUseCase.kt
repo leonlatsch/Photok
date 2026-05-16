@@ -36,7 +36,7 @@ class DumpDatabaseUseCase @Inject constructor(
         val albums = albumRepository.getAlbums().map { it.toBackup() }
         val albumPhotoLinks = albumRepository.getAllAlbumPhotoLinks().map { it.toBackup() }
 
-        BackupMetaData(
+        BackupMetaData.V4(
             password = password,
             photos = photos,
             albums = albums,
