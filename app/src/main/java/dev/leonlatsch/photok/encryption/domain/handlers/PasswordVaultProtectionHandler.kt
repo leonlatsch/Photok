@@ -121,14 +121,17 @@ class PasswordVaultProtectionHandler @Inject constructor(
     override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
         require(BCrypt.checkpw(request.password, config.securityPassword))
 
-        val oldSalt = config.userSalt.orEmpty()
-        if (oldSalt.isEmpty()) {
-            error("Old salt is needed for migration")
+        val vmkSalt = if (config.userSalt.isNullOrEmpty()) {
+            // Pre 2.x.x had no salt, so generate one
+            ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+        } else {
+            // use existing salt to result in same key to use as vmk
+            Base64.decode(config.userSalt!!)
         }
 
         val vmk = keyGen.derivePasswordKeyEncryptionKey(
             password = request.password,
-            salt = Base64.decode(oldSalt),
+            salt = vmkSalt,
             kdf = Kdf.PBKDF2WithHmacSHA256,
             kdfIterations = KEK_ITERATIONS,
             keySize = KEK_SIZE,
@@ -159,9 +162,6 @@ class PasswordVaultProtectionHandler @Inject constructor(
         }
 
         val wrappedVmk = cipher.doFinal(vmk.encoded)
-
-        config.securityPassword = null
-        config.userSalt = null
 
         return VaultProtection(
             id = UUID.randomUUID().toString(),
