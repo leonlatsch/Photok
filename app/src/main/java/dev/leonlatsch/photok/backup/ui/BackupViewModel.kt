@@ -68,6 +68,7 @@ class BackupViewModel @Inject constructor(
         elementsToProcess = items.size
         zipOutputStream = io.zip.openZipOutput(uri)
 
+        // Should not happen because of unlock before create backup
         val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
         if (protection == null) {
             failuresOccurred = true

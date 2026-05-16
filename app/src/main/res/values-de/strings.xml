@@ -266,6 +266,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>
     <string name="backup_unlock_title">Backup Entsperren</string>
+    <string name="backup_confirm_password">Bestätige dein Passwort um ein Backup zu erstellen.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Neu bei</string>

@@ -266,6 +266,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
     <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
     <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>

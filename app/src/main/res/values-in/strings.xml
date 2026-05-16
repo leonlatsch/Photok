@@ -264,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
     <string name="backup_restore_processing">Memulihkan Cadangan…</string>
     <string name="backup_unlock_title">Buka Kunci Cadangan</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Baru di</string>

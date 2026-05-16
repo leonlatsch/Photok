@@ -264,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>
     <string name="backup_unlock_title">Unlock Backup</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

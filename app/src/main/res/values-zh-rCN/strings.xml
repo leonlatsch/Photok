@@ -264,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
     <string name="backup_restore_processing">还原备份中……</string>
     <string name="backup_unlock_title">解锁备份</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">新功能</string>

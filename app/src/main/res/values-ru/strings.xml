@@ -264,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
     <string name="backup_restore_processing">Восстановление резервной копии…</string>
     <string name="backup_unlock_title">Разблокировать резервную копию</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Нововведения в</string>

@@ -73,6 +73,7 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.backup.ui.ConfirmPasswordDialog
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
@@ -121,6 +122,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
     var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
+    var showConfirmPasswordDialog by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -163,10 +165,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BACKUP) {
-            backupLauncher.launchAndIgnoreTimer(
-                createBackupFilename(),
-                activity = activity,
-            )
+            showConfirmPasswordDialog = true
+
             false
         }
 
@@ -219,6 +219,22 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     TelemetryExplanationSheet(
         visible = showUsageDataSheet,
         onDismissRequest = { showUsageDataSheet = false },
+    )
+
+    ConfirmPasswordDialog(
+        visible = showConfirmPasswordDialog,
+        subtitle = stringResource(R.string.backup_confirm_password),
+        onSuccess = {
+            backupLauncher.launchAndIgnoreTimer(
+                createBackupFilename(),
+                activity = activity,
+            )
+
+            showConfirmPasswordDialog = false
+        },
+        onDismissRequest = {
+            showConfirmPasswordDialog = false
+        }
     )
 }
 
