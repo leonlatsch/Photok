@@ -16,16 +16,21 @@
 
 package dev.leonlatsch.photok.backup.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.databinding.DialogBackupUnlockBinding
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import javax.inject.Inject
 
 /**
  * Dialog for unlocking a backup.
@@ -35,11 +40,15 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  */
 @AndroidEntryPoint
 class UnlockBackupDialogFragment(
-    private val backupPassword: String,
-    val onUnlockSuccess: (origPassword: String) -> Unit
+    private val uri: Uri,
+    private val metaData: BackupMetaData,
+    val onUnlockSuccess: (session: Session) -> Unit
 ) : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
 
     private val viewModel: UnlockBackupViewModel by viewModels()
+
+    @Inject
+    lateinit var unlockBackupUseCase: UnlockBackupUseCase
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,20 +58,17 @@ class UnlockBackupDialogFragment(
         }
     }
 
-    /**
-     * Unlocks the safe and calls [onUnlockSuccess] if it matches.
-     * Called by ui.
-     */
     fun onUnlock() {
         binding.unlockBackupWrongPasswordWarning.hide()
-        viewModel.verifyPassword(backupPassword) {
-            if (it) {
+
+        unlockBackupUseCase(uri, metaData, viewModel.password)
+            .onSuccess { session ->
                 dismiss()
-                onUnlockSuccess(viewModel.password)
-            } else {
+                onUnlockSuccess(session)
+            }
+            .onFailure {
                 binding.unlockBackupWrongPasswordWarning.show()
             }
-        }
     }
 
     override fun bind(binding: DialogBackupUnlockBinding) {

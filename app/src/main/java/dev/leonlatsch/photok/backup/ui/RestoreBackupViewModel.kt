@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -112,34 +113,28 @@ class RestoreBackupViewModel @Inject constructor(
     /**
      * Restore the validated backup with the original password.
      */
-    fun restoreBackup(origPassword: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun restoreBackup(session: Session) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
         val metaData = metaData ?: error("meta.json was loaded without success")
 
-        unlockBackup(fileUri, metaData.backupVersion, origPassword)
-            .onSuccess { session ->
-                val zipInputStream = io.zip.openZipInput(fileUri)
+        val zipInputStream = io.zip.openZipInput(fileUri)
 
-                val result = when (metaData) {
-                    is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
-                    is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
-                    is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
-                    is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
-                    is BackupMetaData.V5 -> TODO()
-                }
+        val result = when (metaData) {
+            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V5 -> TODO()
+        }
 
-                zipInputStream.close()
+        zipInputStream.close()
 
-                restoreState = if (result.errors > 0) {
-                    RestoreState.FINISHED_WITH_ERRORS
-                } else {
-                    RestoreState.FINISHED
-                }
-            }
-            .onFailure {
-                restoreState = RestoreState.FILE_INVALID
-            }
+        restoreState = if (result.errors > 0) {
+            RestoreState.FINISHED_WITH_ERRORS
+        } else {
+            RestoreState.FINISHED
+        }
 
     }
 }

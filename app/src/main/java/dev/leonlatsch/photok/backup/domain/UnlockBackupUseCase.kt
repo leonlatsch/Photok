@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.backup.domain
 
 import android.net.Uri
+import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
@@ -33,13 +34,16 @@ class UnlockBackupUseCase @Inject constructor(
     private val io: IO,
     private val keyGen: KeyGen,
 ) {
-    operator fun invoke(uri: Uri, version: Int, password: String): Result<Session> = when (version) {
-        1, 2, 3 -> runCatching {
-            legacyEncryption.obtainSession(password)
+    operator fun invoke(uri: Uri, metaData: BackupMetaData, password: String): Result<Session> {
+        return runCatching {
+            when (metaData) {
+                is BackupMetaData.V1 -> legacyEncryption.obtainSession(password)
+                is BackupMetaData.V2 -> legacyEncryption.obtainSession(password)
+                is BackupMetaData.V3 -> legacyEncryption.obtainSession(password)
+                is BackupMetaData.V4 -> createSessionFromV4(uri, password)
+                is BackupMetaData.V5 -> createSessionFromV5(password, metaData)
+            }
         }
-
-        4 -> runCatching { createSessionFromV4(uri, password) }
-        else -> Result.failure(IllegalStateException())
     }
 
     private fun createSessionFromV4(uri: Uri, password: String): Session {
@@ -72,5 +76,12 @@ class UnlockBackupUseCase @Inject constructor(
         }
 
         error("No file found in backup. Cannot derive salt.")
+    }
+
+    private fun createSessionFromV5(
+        password: String,
+        metaData: BackupMetaData.V5
+    ): Session {
+        TODO("Not yet implemented")
     }
 }
