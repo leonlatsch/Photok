@@ -23,22 +23,13 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
-import kotlin.io.encoding.Base64
-
-private const val VMK_SIZE = 256
 
 class KeyGen @Inject constructor() {
 
     fun generateVaultMasterKey(): SecretKey {
-        val password = ByteArray(100).also { SecureRandom().nextBytes(it) }.let { Base64.encode(it) }
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val factory = SecretKeyFactory.getInstance(Kdf.PBKDF2WithHmacSHA256.value)
-        val spec = PBEKeySpec(password.toCharArray(), salt, 100_000, VMK_SIZE)
-        val keyBytes = factory.generateSecret(spec).encoded
-
+        val keyBytes = ByteArray(32) // 256-bit
+        SecureRandom().nextBytes(keyBytes)
         return SecretKeySpec(keyBytes, "AES")
-
     }
 
     fun derivePasswordKeyEncryptionKey(
