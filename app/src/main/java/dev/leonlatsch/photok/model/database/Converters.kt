@@ -17,8 +17,10 @@
 package dev.leonlatsch.photok.model.database
 
 import androidx.room.TypeConverter
-import dev.leonlatsch.photok.sort.domain.Sort
+import com.google.gson.Gson
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.sort.domain.Sort
 
 /**
  * TypeConverters for Room
@@ -52,4 +54,16 @@ class Converters {
 
     @TypeConverter
     fun fromSortField(field: Sort.Field): Int = field.value
+
+    @TypeConverter
+    fun fromKdfParams(params: VaultProtectionParams): String {
+        val gson = Gson()
+        return gson.toJson(params)
+    }
+
+    @TypeConverter
+    fun toKdfParams(string: String): VaultProtectionParams {
+        val gson = Gson()
+        return gson.fromJson(string, VaultProtectionParams::class.java)
+    }
 }

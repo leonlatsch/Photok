@@ -206,6 +206,7 @@
     <string name="change_password_button">Şifreyi Değiştir</string>
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
@@ -246,6 +247,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
     <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
     <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>

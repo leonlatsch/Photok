@@ -29,10 +29,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
@@ -90,11 +90,11 @@ const val ALBUM_UUID = "albumUuid"
 class ImageViewerViewModel @AssistedInject constructor(
     @Assisted(ALBUM_UUID) private val albumUuid: String?,
     private val app: Application,
-    private val encryptionManager: EncryptionManager,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val sortRepository: SortRepository,
     private val config: Config,
+    private val sessionRepository: SessionRepository,
 ) : ObservableViewModel(app) {
 
     private val inputs = MutableStateFlow(ImageViewerUiState.Inputs())
@@ -172,7 +172,7 @@ class ImageViewerViewModel @AssistedInject constructor(
     val mediaSourceFactory: MediaSource.Factory by lazy {
         val factory = DataSource.Factory {
             AesCbcRandomAccessDataSource(
-                encryptionManager = encryptionManager,
+                sessionRepository = sessionRepository,
             )
         }
 

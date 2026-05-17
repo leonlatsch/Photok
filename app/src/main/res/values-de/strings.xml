@@ -226,6 +226,7 @@
     <string name="change_password_button">Passwort ändern</string>
     <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
+    <string name="change_password_done">Passwort wurde geändert</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Passwort prüfen</string>
@@ -266,6 +267,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
     <string name="backup_restore_processing">Backup wiederherstellen…</string>
     <string name="backup_unlock_title">Backup Entsperren</string>
+    <string name="backup_confirm_password">Bestätige dein Passwort um ein Backup zu erstellen.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Neu bei</string>

@@ -224,6 +224,7 @@
     <string name="change_password_button">Ganti Kata Sandi</string>
     <string name="change_password_confirm_message">Cadangan direkomendasikan!<br /> Mengganti kata sandi mengharuskan enkripsi ulang semua filemu! Lanjutkan?</string>
     <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECk PASSWORD -->
     <string name="settings_security_check_password_title">Verifikasi Kata Sandi</string>
@@ -264,6 +265,7 @@
     <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
     <string name="backup_restore_processing">Memulihkan Cadangan…</string>
     <string name="backup_unlock_title">Buka Kunci Cadangan</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Baru di</string>
