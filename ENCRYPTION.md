@@ -25,8 +25,20 @@ Files created by this version use the extensions:
 * **Security Issue:** Reusing a static IV with AES-GCM breaks the security guarantees of the cipher, leading to potential plaintext and key recovery. Fixed in issue **#204**.
 
 ## File Format
-Version 1.x.x files contain **no header or metadata**. The file contents are exactly the raw output of the encryption operation:
-`[ ciphertext || authentication_tag ]`
+
+Version 1.x.x files contain **no header or metadata**. The file layout is exactly the raw binary stream output of the encryption operation:
+
+```
+┌──────────────────────────────────────┐
+│          Raw Output File             │
+├──────────────────────────────────────┤
+│  Ciphertext                          │
+│  ... (Variable Size)                 │
+├──────────────────────────────────────┤
+│  Authentication Tag                  │
+│  (16 Bytes)                          │
+└──────────────────────────────────────┘
+```
 
 ## Password Verification (Shared Preferences)
 To verify the user's password locally before attempting decryption, the password was hashed with **bcrypt** and stored in the app's Shared Preferences.
@@ -39,11 +51,6 @@ The architecture shift from 1.x.x to 2.x.x was driven by two major requirements:
 
 * **Cryptographic Security:** 1.x.x suffered from critical structural vulnerabilities, notably the lack of a proper Key Derivation Function (KDF) and a deterministic IV structure that caused unsafe IV reuse under AES-GCM. Switching to PBKDF2 and randomized IVs resolved these security issues.
 * **Video Player Random Access (Seeking):** The introduction of video files highlighted a severe architectural limitation in AES-GCM. Because AES-GCM is a stream-oriented mode requiring strict authentication tags, **true random access seeking is not natively supported**. Seeking to a specific time in a video required allocating an `AesDataSource` that had to read, decrypt, and entirely throw away (`forceSkip`) all preceding bytes up to the target offset. For large video streams, this caused severe performance degradation and high memory/CPU overhead.
-
-### Resolving Random Access with AES-CBC
-By switching to `AES/CBC/PKCS7Padding`, the application gained the ability to perform mathematical block-aligned random access via `AesCbcRandomAccessDataSource`.
-
-Because Cipher Block Chaining (CBC) encrypts data in distinct 16-byte blocks where each block depends mathematically only on the ciphertext block immediately preceding it, the application can seek to any block in a file directly without reading from byte zero:
 
 # Version 2.x.x Encryption
 
@@ -75,7 +82,7 @@ Key = PBKDF2WithHmacSHA256(password, salt)
 
 The `salt` used during this derivation is generated uniquely for the key and stored directly within the app's Shared Preferences.
 
-> ⚠️ **Note:** Although a `SALT` block is written into each individual file header (see below) for compatibility with external decryption tools, the app itself reads the derivation salt exclusively from Shared Preferences.
+> ⚠️ **Note:** Although a `SALT` block is written into each individual file header (see below) for compatibility with external decryption tools, the app itself reads the derivation salt exclusively from Shared Preferences. Except for backups.
 
 ---
 
@@ -89,15 +96,17 @@ The IV is completely randomized for every single file encryption operation, succ
 
 Version 2.x.x introduces a structured binary header containing metadata required for external decryption tools.
 
-The file layout is structured as follows:
-`[ENC_VERSION_BYTE][SALT][IV][ENCRYPTED_DATA]`
+```
+┌───────────────────────────────────────────────────────────────────────┐
+│                           File Layout v2.x.x                          │
+├───────────┬───────────────────────┬────────────┬──────────────────────┤
+│ VERSION   │ SALT                  │ IV         │ ENCRYPTED_DATA       │
+│ (1 Byte)  │ (Variable Size)       │ (16 Bytes) │ (Variable Size)      │
+├───────────┼───────────────────────┼────────────┼──────────────────────┤
+│ 0x01      │ PBKDF2 Salt Payload   │ Random IV  │ Raw CBC Ciphertext   │
+└───────────┴───────────────────────┴────────────┴──────────────────────┘
+```
 
-| Field | Size | Description |
-| :--- | :--- | :--- |
-| `ENC_VERSION_BYTE` | 1 Byte | Version marker. Fixed to **`0x01`** |
-| `SALT` | Variable | The salt used for PBKDF2 key derivation |
-| `IV` | 16 Bytes | The random initialization vector used for the file |
-| `ENCRYPTED_DATA` | Variable | The raw AES-CBC encrypted ciphertext |
 
 ---
 
@@ -105,10 +114,21 @@ The file layout is structured as follows:
 
 Biometric authentication was first introduced during the 2.x.x lifecycle.
 
+```
+┌────────────────────────────────────────────────────────┐
+│        "wrapped_user_key" Shared Preferences           │
+├───────────────────────────┬────────────────────────────┤
+│ IV                        │ Ciphertext                 │
+│ (16 Bytes)                │ (Variable Size)            │
+├───────────────────────────┴────────────────────────────┤
+│  Base64 Encoded Pipeline Payload                      │
+└────────────────────────────────────────────────────────┘
+```
+
+
 1. A biometric-protected cipher was requested from the Android Keystore system.
 2. This biometric cipher was used to wrap the core password-derived key.
 3. The resulting structure was saved inside a dedicated Shared Preferences file (`biometric_keys`) as a Base64 string under the key `"wrapped_user_key"`.
-4. The stored payload layout was: `[ IV + Ciphertext ]`.
 
 ---
 
@@ -118,12 +138,16 @@ Carried over from the 1.x.x security model, the user's password is encrypted/has
 
 ---
 
-## Migration
+## Migration from 1.x.x
 
 The app includes a built-in migration flow that:
 1. Detects legacy `.photok` files
 2. Decrypts them using the 1.x.x parameters
-3. Re-encrypts them into the modern format (3.x.x)
+3. Re-encrypts them into the modern format (3.x.x)o
+
+This comes with a comprehensive ui and a background process.
+
+Backup is forced before starting the migration. The backup is created in the format V3 (see beblow).
 
 ---
 
@@ -137,6 +161,7 @@ Version 3.x.x reinvents the underlying architecture by decoupling file encryptio
 
 Instead of encrypting local media via a key compiled directly from the user's password, files are now encrypted via a static **Vault Master Key (VMK)**.
 
+
 * **File Ciphering:** The VMK utilizes the identical primitive as 2.x.x: `AES/CBC/PKCS7Padding` (256-bit).
 * **Key Separation:** The file headers no longer store dynamic individual salt packets, as individual payloads are governed strictly by the static VMK context.
 * **Key Wrapping:** The VMK itself is kept secure at rest by wrapping it inside a **Key Encryption Key (KEK)** derived dynamically from the password or a hardware-backed biometric instance.
@@ -149,14 +174,17 @@ The wrapped VMK blob is persisted cleanly inside the app's SQLite database along
 
 Because the core key context is offloaded to the database architecture, the written files are vastly simplified. The salt placeholder is removed entirely.
 
-The file layout is structured as follows:
-`[ENC_VERSION_BYTE][IV][ENCRYPTED_DATA]`
+```
+┌───────────────────────────────────────────────────┐
+│                File Layout v3.x.x                 │
+├───────────┬────────────┬──────────────────────────┤
+│ VERSION   │ IV         │ ENCRYPTED_DATA           │
+│ (1 Byte)  │ (16 Bytes) │ (Variable Size)          │
+├───────────┼────────────┼──────────────────────────┤
+│ 0x02      │ Random IV  │ Raw CBC Ciphertext       │
+└───────────┴────────────┴──────────────────────────┘
+```
 
-| Field | Size | Description                                        |
-| :--- | :--- |:---------------------------------------------------|
-| `ENC_VERSION_BYTE` | 1 Byte | Version marker. Fixed to **`0x02`**                |
-| `IV` | 16 Bytes | The random initialization vector used for the file |
-| `ENCRYPTED_DATA` | Variable | The raw AES-CBC encrypted ciphertext               |
 
 ---
 
@@ -170,12 +198,15 @@ The VMK/KEK split in 3.x.x provides several distinct architectural advantages:
 * **Simplified Biometric Management:** Biometric authentication no longer requires awkward out-of-band hacks in standalone Shared Preferences files. Biometrics simply act as an alternative Key Encryption Key (KEK) pipeline that exposes the same underlying database VMK.
 * **Foundation for Recovery Schemes:** Separating the data key (VMK) from the authentication mechanism (KEK) establishes the vital technical groundwork required to implement a deterministic recovery phrase feature (BIP-39 mnemonic phrases) down the line.
 
+---
+
 ## Migration Architecture
 
 When transitioning from 1.x.x or 2.x.x databases into 3.x.x, the system hooks into the native authentication loops to safely construct and capture the persistent VMK layer.
+This also happens before starting a potential migration from 1.x.x to 3.x.x.
 
 ### 1. Password-Based Migration
-When a user authenticates with their master password, the system validates the string against the historic **bcrypt** hash.
+When a user authenticates with their password, the system validates the string against the historic **bcrypt** hash.
 * **If migrating from Pre-2.x.x:** A completely new salt array is freshly initialized via `SecureRandom` since 1.x.x variants lacked a native KDF salt.
 * **If migrating from 2.x.x:** The legacy password-derived key is rebuilt using the existing historical user salt stored in Shared Preferences. This key is designated directly as the static **VMK** to ensure back-compatibility with older ciphered targets.
 
@@ -193,10 +224,9 @@ If the user authenticates via biometrics first, the legacy structure can be secu
 4. The historic base64 key entry is purged from the `biometric_keys` shared preference file once migration successfully resolves.
 
 ### Defensive Migration Fail-Safes
-It is entirely expected that a user might trigger a biometric migration path without executing a password migration run concurrently. The database safely maintains partial states; the password migration context triggers organically during subsequent structural lifecycle changes such as a manual login challenge, password change, or when triggering an application backup pipeline.
+It is entirely expected that a user might trigger a biometric migration path without executing a password migration run concurrently. The database safely maintains partial states; the password migration context triggers organically during subsequent structural lifecycle changes such as a manual unlock with password, password change, or when triggering an backup.
 
 > 🔒 **Critical Recovery Policy:** To protect user nodes against unforeseen migration errors or environment crashes, the historical configuration items (`legacyPasswordHash` and `legacyUserSalt`) are **never deleted** from Shared Preferences. This ensures the app can re-attempt data correction procedures safely if a legacy migration routine fails to write successfully.
-
 
 # Backup Specification
 
