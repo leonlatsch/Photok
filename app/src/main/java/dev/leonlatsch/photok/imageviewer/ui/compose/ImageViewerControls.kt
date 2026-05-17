@@ -265,11 +265,16 @@ fun ImageViewerControls(
             text = stringResource(R.string.delete_are_you_sure_this),
             onConfirm = {
                 if (currentItem != null) {
+                    val itemCount = uiState.items.size
                     handleUiEvent(
                         ImageViewerUiEvent.ConfirmDelete(
                             item = currentItem,
                         )
                     )
+
+                    if (itemCount <= 1) {
+                        navController.navigateUp()
+                    }
                 }
             }
         )
