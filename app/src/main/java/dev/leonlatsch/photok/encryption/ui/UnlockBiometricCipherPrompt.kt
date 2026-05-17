@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security.biometric
+package dev.leonlatsch.photok.encryption.ui
 
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -36,7 +36,7 @@ class UserCanceledBiometricsException : Exception()
  * - Display biometric prompt with title, subtitle, and cancel option
  * - Return unlocked cipher or error result
  */
-class UnlockCipherUseCase @Inject constructor() {
+class UnlockBiometricCipherPrompt @Inject constructor() {
     suspend operator fun invoke(
         fragment: Fragment,
         cipher: Cipher,

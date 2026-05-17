@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security.migration.ui
+package dev.leonlatsch.photok.encryption.migration.ui
 
 import android.content.Context
 import android.content.Intent
@@ -26,10 +26,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionState
+import dev.leonlatsch.photok.encryption.migration.MigrationService
 import dev.leonlatsch.photok.other.sendEmail
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionState
-import dev.leonlatsch.photok.security.migration.MigrationService
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

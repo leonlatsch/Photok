@@ -27,11 +27,10 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
-import dev.leonlatsch.photok.security.biometric.BiometricUnlock
-import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
@@ -56,7 +55,6 @@ sealed interface SettingsUiEvent {
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val config: Config,
-    private val biometricUnlock: BiometricUnlock,
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,

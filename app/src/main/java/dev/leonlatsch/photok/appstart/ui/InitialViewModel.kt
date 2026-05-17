@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.encryption.domain.VaultService
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.launch
 import javax.inject.Inject

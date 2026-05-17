@@ -28,9 +28,9 @@ import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel

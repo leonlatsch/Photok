@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,12 +14,9 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security.migration.ui
+package dev.leonlatsch.photok.encryption.migration.ui
 
 import androidx.activity.compose.LocalActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +35,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,17 +52,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.backup.domain.BackupStrategy
-import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
-import dev.leonlatsch.photok.other.areNotificationsEnabled
-import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
 import dev.leonlatsch.photok.ui.components.AppName
-import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import okio.IOException
-import java.lang.Exception
 
 @Composable
 fun EncryptionMigrationScreenError(

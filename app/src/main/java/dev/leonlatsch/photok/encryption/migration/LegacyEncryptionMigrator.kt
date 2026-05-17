@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security.migration
+package dev.leonlatsch.photok.encryption.migration
 
 import android.app.Application
 import dev.leonlatsch.photok.databinding.BindingConverters

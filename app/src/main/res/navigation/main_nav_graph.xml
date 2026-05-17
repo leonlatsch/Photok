@@ -189,7 +189,7 @@
         />
     <fragment
         android:id="@+id/encryptionMigrationFragment"
-        android:name="dev.leonlatsch.photok.security.migration.ui.EncryptionMigrationFragment"
+        android:name="dev.leonlatsch.photok.encryption.migration.ui.EncryptionMigrationFragment"
         android:label="EncryptionMigrationFragment" >
         <action
             android:id="@+id/action_encryptionMigrationFragment_to_galleryFragment"

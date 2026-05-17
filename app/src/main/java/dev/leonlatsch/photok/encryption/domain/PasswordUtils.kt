@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security
+package dev.leonlatsch.photok.encryption.domain
 
 import androidx.lifecycle.LiveData
-import dev.leonlatsch.photok.security.PasswordUtils.PASSWORD_MIN_LENGTH
+import dev.leonlatsch.photok.encryption.domain.PasswordUtils.PASSWORD_MIN_LENGTH
 
 /**
  * Utils to validate passwords.
@@ -32,8 +32,6 @@ object PasswordUtils {
      */
     fun validatePassword(password: String) = password.isNotEmpty()
             && password.length >= PASSWORD_MIN_LENGTH
-
-    fun validatePassword(password: LiveData<String>) = validatePassword(password.value!!)
 
     /**
      * Indicates if two password equal.

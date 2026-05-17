@@ -29,7 +29,7 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
-import dev.leonlatsch.photok.security.biometric.UnlockCipherUseCase
+import dev.leonlatsch.photok.encryption.ui.UnlockBiometricCipherPrompt
 import java.security.KeyStore
 import java.util.UUID
 import javax.crypto.Cipher
@@ -46,7 +46,7 @@ private const val WRAPPING_KEY_ALIAS = "user_key_wrapper"
 class BiometricVaultProtectionHandler @Inject constructor(
     private val app: Application,
     private val resources: Resources,
-    private val unlockCipher: UnlockCipherUseCase,
+    private val unlockCipher: UnlockBiometricCipherPrompt,
 ) : VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric> {
 
     override suspend fun unlock(

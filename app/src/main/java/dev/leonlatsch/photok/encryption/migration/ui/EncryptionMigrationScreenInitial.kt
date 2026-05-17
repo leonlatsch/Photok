@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.security.migration.ui
+package dev.leonlatsch.photok.encryption.migration.ui
 
 import android.Manifest
 import android.os.Build
@@ -62,13 +62,13 @@ import androidx.lifecycle.compose.currentStateAsState
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
+import dev.leonlatsch.photok.encryption.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
+import dev.leonlatsch.photok.encryption.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
 import dev.leonlatsch.photok.other.areNotificationsEnabled
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openNotificationSettings
 import dev.leonlatsch.photok.other.requestInSettings
-import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.StartMigration
-import dev.leonlatsch.photok.security.migration.ui.LegacyEncryptionMigrationUiEvent.SwitchStage
 import dev.leonlatsch.photok.settings.ui.compose.createBackupFilename
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
