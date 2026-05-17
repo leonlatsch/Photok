@@ -47,20 +47,18 @@ android {
             dimension = "distribution"
             buildConfigField("Boolean", "PLAY", "true")
 
-//            if (!isReleaseBuildInvocation) {
-//                applicationIdSuffix = ".play"
-//                versionNameSuffix = "-play-debug"
-//            }
+            if (!isReleaseBuildInvocation) {
+                versionNameSuffix = "-play-debug"
+            }
         }
 
         create("foss") {
             dimension = "distribution"
             buildConfigField("Boolean", "PLAY", "false")
 
-//            if (!isReleaseBuildInvocation) {
-//                applicationIdSuffix = ".foss"
-//                versionNameSuffix = "-foss-debug"
-//            }
+            if (!isReleaseBuildInvocation) {
+                versionNameSuffix = "-foss-debug"
+            }
         }
     }
 
