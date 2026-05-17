@@ -360,7 +360,7 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 │     "backupVersion": Int                │
 │   }                                     │
 │                                         │
-│ .<uuid>crypt                            │  ← Encrypted original file
+│ <uuid>.crypt                            │  ← Encrypted original file
 │ <uuid>.crypt.tn                         │  ← Encrypted thumbnail
 │ <uuid>.crypt.vp                         │  ← Encrypted video preview
 │ ...                                     │
