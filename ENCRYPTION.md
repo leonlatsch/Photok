@@ -216,26 +216,16 @@ Used during the early lifecycle of the application.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │
-│     "photos": [PhotoBackup],  │
-│     "createdAt": Long,        │
-│     "backupVersion": Int      │
+│     "password": String,       │ ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
+│     "createdAt": Long,        │ ← timestamp of backup creation
+│     "backupVersion": Int      │ ← backup version (1)
 │   }                           │
-│                               │
+│                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
 │ ...                           │
 └───────────────────────────────┘
 ```
-
-
-### Architectural Notes
-* **Authentication:** The `password` string is a bcrypt hash stored in `meta.json` to perform a quick sanity check before kicking off file processing routines.
-* **Database Tracking:** Only primary `photos` data blocks are stored. Relational structures (such as custom user albums or cross-reference maps) are completely absent.
-* **Media Footprint:** Contains raw original files only. Secondary generated visual media like thumbnails (`.tn`) or video previews (`.vp`) are omitted from V1 archives.
-* **Media Files Extension:** `.photok`
-* **Version Flag:** `backupVersion` must equal `1`.
-
----
 
 ## Backup Format V2
 Introduced basic video preview logic and thumbnail persistence into the archive.
@@ -247,27 +237,18 @@ Introduced basic video preview logic and thumbnail persistence into the archive.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │
-│     "photos": [PhotoBackup],  │
-│     "createdAt": Long,        │
-│     "backupVersion": Int      │
+│     "password": String,       │ ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
+│     "createdAt": Long,        │ ← timestamp of backup creation
+│     "backupVersion": Int      │ ← backup version (2)
 │   }                           │
-│                               │
+│                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
 │ <uuid>.photok.tn              │  ← Encrypted thumbnail
 │ <uuid>.photok.vp              │  ← Encrypted video preview
 │ ...                           │
 └───────────────────────────────┘
 ```
-
-### Architectural Notes
-* **Authentication:** Relies on the inline `password` entry inside `meta.json` for validation.
-* **Database Tracking:** Constrained strictly to `photos` metadata; no relational custom album schemas are retained.
-* **Media Footprint:** Adds explicit persistence layers for corresponding thumbnails (`.photok.tn`) and video preview targets (`.photok.vp`) to minimize app parsing workloads immediately following a restoration process.
-* **Media Files Extension:** `.photok.*`
-* **Version Flag:** `backupVersion` must equal `2`.
-
----
 
 ## Backup Format V3
 Introduces albums to the backups.
@@ -279,30 +260,21 @@ Introduces albums to the backups.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │
-│     "photos": [PhotoBackup],  │
-│     "albums": [AlbumBackup],  │
-│     "albumPhotoRefs":         │
+│     "password": String,       │ ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],  │ ← list of albums with title, etc.
+│     "albumPhotoRefs":         │ ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup], │
-│     "createdAt": Long,        │
-│     "backupVersion": Int      │
+│     "createdAt": Long,        │ ← timestamp of backup creation
+│     "backupVersion": Int      │ ← backup version (3)
 │   }                           │
-│                               │
+│                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
 │ <uuid>.photok.tn              │  ← Encrypted thumbnail
 │ <uuid>.photok.vp              │  ← Encrypted video preview
 │ ...                           │
 └───────────────────────────────┘
 ```
-
-### Architectural Notes
-* **Authentication:** Validated via the metadata `password` element before asset decompression routines hook.
-* **Database Tracking:** Establishes comprehensive system snapshots. The JSON records retain user-defined collections (`albums`) and the associated entity mapping structures (`albumPhotoRefs`) alongside asset descriptors.
-* **Media Footprint:** Tracks original elements along with their `.tn` and `.vp` sub-assets.
-* **Media Files Extension:** Uses the older `.photok.*` naming convention.
-* **Version Flag:** `backupVersion` must equal `3`.
-
----
 
 ## Backup Format V4
 Aligns file extensions with the updated Version 2.x.x block cipher specifications.
@@ -314,31 +286,21 @@ Aligns file extensions with the updated Version 2.x.x block cipher specification
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │
-│     "photos": [PhotoBackup],  │
-│     "albums": [AlbumBackup],  │
-│     "albumPhotoRefs":         │
+│     "password": String,       │ ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],  │ ← list of albums with title, etc.
+│     "albumPhotoRefs":         │ ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup], │
-│     "createdAt": Long,        │
-│     "backupVersion": Int      │
+│     "createdAt": Long,        │ ← timestamp of backup creation
+│     "backupVersion": Int      │ ← backup version (4)
 │   }                           │
-│                               │
+│                               │    2.x.x format. CBC - PKCS7 Padding. Header (v1) + ciphertext
 │ <uuid>.crypt                  │  ← Encrypted original file
 │ <uuid>.crypt.tn               │  ← Encrypted thumbnail
 │ <uuid>.crypt.vp               │  ← Encrypted video preview
 │ ...                           │
 └───────────────────────────────┘
 ```
-
-
-### Architectural Notes
-* **Authentication:** Handled through the explicit `password` in `meta.json`.
-* **Database Tracking:** Full retention of relational objects (`photos`, `albums`, and structural link arrays).
-* **Media Footprint:** Includes thumbnails and video previews.
-* **Media Files Extension:** Shifted to `.crypt.*` to mirror the under-the-hood move toward `AES/CBC/PKCS7Padding` block-aligned encryption. Files are stored with header and version `2`.
-* **Version Flag:** `backupVersion` must equal `4`.
-
----
 
 ## Backup Format V5
 Modern backup implementation built around the Version 3.x.x decoupled Vault Master Key (VMK) security architecture.
@@ -350,27 +312,19 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 ├─────────────────────────────────────────1
 │ meta.json                               │
 │   {                                     │
-│     "wrappedVmk": String,               │
-│     "params": [VaultProtectionParams],  │
-│     "photos": [PhotoBackup],            │
-│     "albums": [AlbumBackup],            │
-│     "albumPhotoRefs":                   │
+│     "wrappedVmk": String,               │ ← the wrapped vault master key
+│     "params": [VaultProtectionParams],  │ ← the vault protection parameters needed to decrypt the vmk
+│     "photos": [PhotoBackup],            │ ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],            │ ← list of albums with title, etc.
+│     "albumPhotoRefs":                   │ ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup],           │
-│     "createdAt": Long,                  │
-│     "backupVersion": Int                │
+│     "createdAt": Long,                  │ ← timestamp of backup creation
+│     "backupVersion": Int                │ ← backup version (5)
 │   }                                     │
-│                                         │
+│                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
 │ <uuid>.crypt                            │  ← Encrypted original file
 │ <uuid>.crypt.tn                         │  ← Encrypted thumbnail
 │ <uuid>.crypt.vp                         │  ← Encrypted video preview
 │ ...                                     │
 └─────────────────────────────────────────┘
 ```
-
-
-### Architectural Notes
-* **Authentication & Key Decoupling:** The user password bcrypt hash is **no longer recorded** anywhere inside the backup metadata file. Instead, authentication relies on the application's native key wrapping logic.
-* **Cryptographic Payload:** The manifest embeds the application's actual `wrappedVmk` alongside the detailed `VaultProtectionParams` object block (containing KDF specs, salt configurations, and iteration metrics). To restore a V5 backup file, the host system parses the `params` block, derives the appropriate Key Encryption Key (KEK) using the user's password string, and unwraps the localized `wrappedVmk`.
-* **Database Tracking:** Full structural schema retention (`photos`, `albums`, and relational reference tables).
-* **Media Files Extension:** `.crypt.*` Now being version `2`.
-* **Version Flag:** `backupVersion` must equal `5`.
