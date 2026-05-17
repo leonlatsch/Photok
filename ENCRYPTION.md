@@ -216,10 +216,10 @@ Used during the early lifecycle of the application.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │ ← bcrypt hash of password
-│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
-│     "createdAt": Long,        │ ← timestamp of backup creation
-│     "backupVersion": Int      │ ← backup version (1)
+│     "password": String,       │  ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │  ← list of photo uuids with file metadata
+│     "createdAt": Long,        │  ← timestamp of backup creation
+│     "backupVersion": Int      │  ← backup version (1)
 │   }                           │
 │                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
@@ -237,10 +237,10 @@ Introduced basic video preview logic and thumbnail persistence into the archive.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │ ← bcrypt hash of password
-│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
-│     "createdAt": Long,        │ ← timestamp of backup creation
-│     "backupVersion": Int      │ ← backup version (2)
+│     "password": String,       │  ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │  ← list of photo uuids with file metadata
+│     "createdAt": Long,        │  ← timestamp of backup creation
+│     "backupVersion": Int      │  ← backup version (2)
 │   }                           │
 │                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
@@ -260,13 +260,13 @@ Introduces albums to the backups.
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │ ← bcrypt hash of password
-│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
-│     "albums": [AlbumBackup],  │ ← list of albums with title, etc.
-│     "albumPhotoRefs":         │ ← list of album-photo references. uuid to uuid.
+│     "password": String,       │  ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │  ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],  │  ← list of albums with title, etc.
+│     "albumPhotoRefs":         │  ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup], │
-│     "createdAt": Long,        │ ← timestamp of backup creation
-│     "backupVersion": Int      │ ← backup version (3)
+│     "createdAt": Long,        │  ← timestamp of backup creation
+│     "backupVersion": Int      │  ← backup version (3)
 │   }                           │
 │                               │    1.x.x format. GCM - no headers
 │ <uuid>.photok                 │  ← Encrypted original file
@@ -286,13 +286,13 @@ Aligns file extensions with the updated Version 2.x.x block cipher specification
 ├───────────────────────────────1
 │ meta.json                     │
 │   {                           │
-│     "password": String,       │ ← bcrypt hash of password
-│     "photos": [PhotoBackup],  │ ← list of photo uuids with file metadata
-│     "albums": [AlbumBackup],  │ ← list of albums with title, etc.
-│     "albumPhotoRefs":         │ ← list of album-photo references. uuid to uuid.
+│     "password": String,       │  ← bcrypt hash of password
+│     "photos": [PhotoBackup],  │  ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],  │  ← list of albums with title, etc.
+│     "albumPhotoRefs":         │  ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup], │
-│     "createdAt": Long,        │ ← timestamp of backup creation
-│     "backupVersion": Int      │ ← backup version (4)
+│     "createdAt": Long,        │  ← timestamp of backup creation
+│     "backupVersion": Int      │  ← backup version (4)
 │   }                           │
 │                               │    2.x.x format. CBC - PKCS7 Padding. Header (v1) + ciphertext
 │ <uuid>.crypt                  │  ← Encrypted original file
@@ -312,14 +312,14 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 ├─────────────────────────────────────────1
 │ meta.json                               │
 │   {                                     │
-│     "wrappedVmk": String,               │ ← the wrapped vault master key
-│     "params": [VaultProtectionParams],  │ ← the vault protection parameters needed to decrypt the vmk
-│     "photos": [PhotoBackup],            │ ← list of photo uuids with file metadata
-│     "albums": [AlbumBackup],            │ ← list of albums with title, etc.
-│     "albumPhotoRefs":                   │ ← list of album-photo references. uuid to uuid.
+│     "wrappedVmk": String,               │  ← the wrapped vault master key
+│     "params": [VaultProtectionParams],  │  ← the vault protection parameters needed to decrypt the vmk
+│     "photos": [PhotoBackup],            │  ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],            │  ← list of albums with title, etc.
+│     "albumPhotoRefs":                   │  ← list of album-photo references. uuid to uuid.
 │        [AlbumPhotoRefBackup],           │
-│     "createdAt": Long,                  │ ← timestamp of backup creation
-│     "backupVersion": Int                │ ← backup version (5)
+│     "createdAt": Long,                  │  ← timestamp of backup creation
+│     "backupVersion": Int                │  ← backup version (5)
 │   }                                     │
 │                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
 │ <uuid>.crypt                            │  ← Encrypted original file
