@@ -20,6 +20,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.core.app.ActivityOptionsCompat
 
 fun <I> ActivityResultLauncher<I>.launchAndIgnoreTimer(
@@ -35,4 +37,9 @@ fun Context.startActivityAndIgnoreTimer(intent: Intent, activity: Activity?) {
     startActivity(intent)
     activity?.getBaseApplication()?.ignoreNextTimeout()
 
+}
+
+fun Context.areBiometricsAvailable(): Boolean {
+    val biometricManager = BiometricManager.from(this)
+    return biometricManager.canAuthenticate(BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
 }

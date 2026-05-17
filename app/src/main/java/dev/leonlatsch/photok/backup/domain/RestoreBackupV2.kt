@@ -19,13 +19,13 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
+import dev.leonlatsch.photok.encryption.domain.models.Session
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -60,16 +60,16 @@ import javax.inject.Inject
  *  - `backupVersion` must equal 2 for this format.
  */
 class RestoreBackupV2 @Inject constructor(
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val io: IO,
-) : RestoreBackupStrategy {
+    private val vaultFileStorage: VaultFileStorage,
+) : RestoreBackupStrategy<BackupMetaData.V2> {
 
     override suspend fun restore(
-        metaData: BackupMetaData,
+        metaData: BackupMetaData.V2,
         stream: ZipInputStream,
-        originalPassword: String
+        session: Session,
     ): RestoreResult {
         var errors = 0
 
@@ -90,14 +90,13 @@ class RestoreBackupV2 @Inject constructor(
             }
 
             val encryptedZipInput =
-                legacyEncryptionManager.createCipherInputStream(stream, originalPassword)
-            val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(
-                    ze.name.replace(
-                        oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
-                        newValue = PHOTOK_FILE_EXTENSION,
-                    )
+                legacyGcmCryptoEngine.createDecryptStream(stream, session)
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(
+                ze.name.replace(
+                    oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+                    newValue = PHOTOK_FILE_EXTENSION,
                 )
+            )
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry

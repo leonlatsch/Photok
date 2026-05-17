@@ -22,17 +22,15 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
-import dev.leonlatsch.photok.security.EncryptionManager
 import dev.leonlatsch.photok.security.paniclock.PanicLockFeature
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,7 +50,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     lateinit var config: Config
 
     @Inject
-    lateinit var encryptionManager: EncryptionManager
+    lateinit var sessionRepository: SessionRepository
 
     @Inject
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
@@ -62,8 +60,6 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var panicLockFeature: PanicLockFeature
-
-    val state = MutableStateFlow(ApplicationState.LOCKED)
 
 
     private var wentToBackgroundAt = 0L
@@ -122,8 +118,8 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
      * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
      */
     fun lockApp() {
-        encryptionManager.reset()
-        state.update { ApplicationState.LOCKED }
+        sessionRepository.reset()
+
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

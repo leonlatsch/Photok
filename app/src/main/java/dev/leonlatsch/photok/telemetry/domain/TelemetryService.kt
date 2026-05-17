@@ -38,7 +38,10 @@ class TelemetryService @Inject constructor(
                 .appID(TelemetryDeckAppId)
                 .addProvider(
                     DefaultParameterProvider(
-                        mapOf("flavor" to BuildConfig.FLAVOR)
+                        mapOf(
+                            "flavor" to BuildConfig.FLAVOR,
+                            "usesBiometricAuthentication" to config.biometricAuthenticationEnabled.toString(),
+                        )
                     )
                 )
                 .showDebugLogs(BuildConfig.DEBUG)

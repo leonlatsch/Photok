@@ -224,6 +224,7 @@
     <string name="change_password_button">Изменить пароль</string>
     <string name="change_password_confirm_message">Советуем сделать резервную копию!<br /> Смена пароля требует повторного шифрования всех файлов! Хотите продолжить?</string>
     <string name="change_password_reencrypting">Повторное шифрование файла(ов)…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
@@ -264,6 +265,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
     <string name="backup_restore_processing">Восстановление резервной копии…</string>
     <string name="backup_unlock_title">Разблокировать резервную копию</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Нововведения в</string>

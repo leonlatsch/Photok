@@ -48,7 +48,6 @@ android {
             buildConfigField("Boolean", "PLAY", "true")
 
             if (!isReleaseBuildInvocation) {
-                applicationIdSuffix = ".play"
                 versionNameSuffix = "-play-debug"
             }
         }
@@ -58,7 +57,6 @@ android {
             buildConfigField("Boolean", "PLAY", "false")
 
             if (!isReleaseBuildInvocation) {
-                applicationIdSuffix = ".foss"
                 versionNameSuffix = "-foss-debug"
             }
         }
@@ -70,7 +68,8 @@ android {
         }
 
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

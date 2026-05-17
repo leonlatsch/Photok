@@ -226,6 +226,7 @@
     <string name="change_password_button">Changer le mot de passe</string>
     <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
@@ -266,6 +267,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
     <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
     <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>

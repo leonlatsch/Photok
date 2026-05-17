@@ -229,6 +229,7 @@
     <string name="change_password_button">Change Password</string>
     <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
+    <string name="change_password_done">Password has been changed</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string>
@@ -269,6 +270,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>
     <string name="backup_unlock_title">Unlock Backup</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

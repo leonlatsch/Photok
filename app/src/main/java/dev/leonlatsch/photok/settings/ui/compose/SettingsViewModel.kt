@@ -23,11 +23,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.PasswordManager
-import dev.leonlatsch.photok.security.biometric.BiometricUnlock
-import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
+import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
@@ -52,11 +55,11 @@ sealed interface SettingsUiEvent {
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val config: Config,
-    private val biometricUnlock: BiometricUnlock,
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val passwordManager: PasswordManager,
+    private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
 ) : ViewModel() {
 
 
@@ -97,14 +100,16 @@ class SettingsViewModel @Inject constructor(
         value as Boolean
 
         if (!value) {
-            viewModelScope.launch { biometricUnlock.reset() }
+            viewModelScope.launch {
+                vaultService.reset(VaultProtectionType.Biometric)
+            }
             config.biometricAuthenticationEnabled = false
             return false
         }
 
         val context = fragment.context ?: return false
 
-        if (!biometricUnlock.areBiometricsAvailable()) {
+        if (!context.areBiometricsAvailable()) {
             Dialogs.showLongToast(
                 context,
                 context.getString(R.string.settings_security_biometric_not_available),
@@ -114,7 +119,10 @@ class SettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val result = biometricUnlock.setup(fragment)
+            val result = runCatching {
+                val session = sessionRepository.require()
+                vaultService.create(CreateRequest.Biometric(session, fragment))
+            }
 
             result.onFailure {
                 if (it !is UserCanceledBiometricsException) {
@@ -131,7 +139,7 @@ class SettingsViewModel @Inject constructor(
         return false
     }
 
-    fun resetComponents() = viewModelScope.launch {
+    fun resetApp() = viewModelScope.launch {
         val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
         for (photo in allPhotos) {
             photoRepository.deleteInternalPhotoData(photo)
@@ -140,7 +148,12 @@ class SettingsViewModel @Inject constructor(
         albumRepository.deleteAll()
         albumRepository.unlinkAll()
 
-        passwordManager.resetPassword()
+        vaultService.reset(VaultProtectionType.Password)
+        vaultService.reset(VaultProtectionType.Biometric)
+
+        config.legacyPasswordHash = null
+        config.legacyUserSalt = null
+
         (app as BaseApplication).lockApp()
     }
 }

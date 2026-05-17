@@ -28,8 +28,8 @@ import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
 import coil.fetch.SourceResult
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -48,14 +48,14 @@ import kotlin.coroutines.suspendCoroutine
  * Used for displaying encrypted images.
  */
 class EncryptedImageFetcher(
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val vaultFileStorage: VaultFileStorage,
     private val requestData: EncryptedImageRequestData,
     private val context: Context,
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
         val inputStream =
-            encryptedStorageManager.internalOpenEncryptedFileInput(requestData.internalFileName)
+            vaultFileStorage.openEncryptedInput(requestData.internalFileName)
         inputStream ?: return@withContext null
 
         val mayBeAnimatedImage = when (requestData.mimeType) {

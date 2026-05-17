@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.appstart.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +35,9 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class InitialViewModel @Inject constructor(
-    private val config: Config
+    private val config: Config,
+    private val vaultService: VaultService,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
 ) : ViewModel() {
 
     /**
@@ -48,11 +52,12 @@ class InitialViewModel @Inject constructor(
         }
 
         // Unlock or Setup
-        val password = config.securityPassword
-        val appStartState = if (password == null || password.isEmpty()) {
-            AppStartState.SETUP
+        val appStartState: AppStartState
+
+        if (vaultService.canUnlock() || legacyEncryptionMigrator.migrationNeeded()) {
+            appStartState = AppStartState.LOCKED
         } else {
-            AppStartState.LOCKED
+            appStartState = AppStartState.SETUP
         }
 
         continueStart(appStartState)

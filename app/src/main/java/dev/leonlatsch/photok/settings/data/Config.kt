@@ -97,13 +97,6 @@ class Config(context: Context) {
         set(value) = putBoolean(SECURITY_ALLOW_SCREENSHOTS, value)
 
     /**
-     * Password hash to check when unlocking.
-     */
-    var securityPassword: String?
-        get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
-        set(value) = putString(SECURITY_PASSWORD, value!!)
-
-    /**
      * Timeout to auto lock when in background.
      */
     var securityLockTimeout: Int
@@ -139,14 +132,6 @@ class Config(context: Context) {
         get() = getLong(TIMESTAMP_LAST_RECOVERY_START, TIMESTAMP_LAST_RECOVERY_START_DEFAULT)
         set(value) = putLong(TIMESTAMP_LAST_RECOVERY_START, value)
 
-    var legacyCurrentlyMigrating: Boolean
-        get() = getBoolean("legacy^currentlyMigrating", false)
-        set(value) = putBoolean("legacy^currentlyMigrating", value)
-
-    var userSalt: String?
-        get() = getString("user^salt", null)
-        set(value) = putString("user^salt", value)
-
     var biometricAuthenticationEnabled: Boolean
         get() = getBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT)
         set(value) = putBoolean(SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED, value)
@@ -174,7 +159,28 @@ class Config(context: Context) {
     // In memory flags
     var justFinishedSetup: Boolean = false
 
-    // region put/get methods
+
+    // --- Legacy
+
+    var legacyCurrentlyMigrating: Boolean
+        get() = getBoolean("legacy^currentlyMigrating", false)
+        set(value) = putBoolean("legacy^currentlyMigrating", value)
+
+    /**
+     * Password hash to check when unlocking.
+     */
+    @Deprecated("Only needed for migration")
+    var legacyPasswordHash: String?
+        get() = getString(SECURITY_PASSWORD, SECURITY_PASSWORD_DEFAULT)
+        set(value) = putString(SECURITY_PASSWORD, value)
+
+
+    @Deprecated("Only needed for migration")
+    var legacyUserSalt: String?
+        get() = getString("user^salt", null)
+        set(value) = putString("user^salt", value)
+
+    // --- helpers
 
     fun getString(key: String, default: String?) = preferences.getString(key, default)
 
@@ -220,9 +226,6 @@ class Config(context: Context) {
             putFloat(key, value)
         }
     }
-
-
-    // endregion
 
     // Single source of truth for config keys and defaults. Always use these constants
     companion object {

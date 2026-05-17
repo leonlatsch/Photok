@@ -35,7 +35,8 @@ import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class RestoreBackupDialogFragment() : BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
+class RestoreBackupDialogFragment() :
+    BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
     private val viewModel: RestoreBackupViewModel by viewModels()
 
@@ -94,14 +95,9 @@ class RestoreBackupDialogFragment() : BindableDialogFragment<DialogRestoreBackup
         viewModel.loadAndValidateBackup(uri)
     }
 
-    /**
-     * Starts the [UnlockBackupDialogFragment].
-     * Called by ui.
-     */
     fun onRestoreAndUnlock() {
-        val unlockDialog =
-            UnlockBackupDialogFragment(viewModel.metaData!!.password) { origPassword ->
-                viewModel.restoreBackup(origPassword)
+        val unlockDialog = UnlockBackupDialogFragment(uri = uri, metaData = viewModel.metaData!!) { session ->
+                viewModel.restoreBackup(session)
             }
         unlockDialog.show(requireActivity().supportFragmentManager)
     }
