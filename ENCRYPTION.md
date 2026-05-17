@@ -101,10 +101,10 @@ This also happens before starting a potential migration from 1.x.x to 3.x.x.
 
 **1. Password-Based Migration**
 When a user authenticates with their password, the system validates the string against the historic **bcrypt** hash.
-* **If migrating from Pre-2.x.x:** A completely new salt array is freshly initialized via `SecureRandom` since 1.x.x variants lacked a native KDF salt.
+* **If migrating from Pre-2.x.x:** A completely new VMK is randomly generated as if the user installed 3.x.x freshly, since 1.x.x variants lacked a native KDF salt and re-encryption is needed anyway.
 * **If migrating from 2.x.x:** The legacy password-derived key is rebuilt using the existing historical user salt stored in Shared Preferences. This key is designated directly as the static **VMK** to ensure back-compatibility with older ciphered targets.
 
-Once the VMK context is established, a clean 3.x.x KEK is derived:
+Once the VMK is established, a clean 3.x.x KEK is derived:
 1. A fresh cryptographic salt and random IV pair are explicitly minted.
 2. A new KEK is built using the user's password string combined with this newly generated salt.
 3. The core VMK is encrypted using this KEK via `AES/CBC/PKCS7Padding`.
