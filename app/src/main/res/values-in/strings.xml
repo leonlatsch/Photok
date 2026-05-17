@@ -224,6 +224,7 @@
     <string name="change_password_button">Ganti Kata Sandi</string>
     <string name="change_password_confirm_message">Cadangan direkomendasikan!<br /> Mengganti kata sandi mengharuskan enkripsi ulang semua filemu! Lanjutkan?</string>
     <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECk PASSWORD -->
     <string name="settings_security_check_password_title">Verifikasi Kata Sandi</string>

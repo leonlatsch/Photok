@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
 
 /**
@@ -67,7 +68,13 @@ class ChangePasswordDialog :
                     binding.loadingOverlay.hide()
                     viewModel.performChangePassword()
                 }
-                ChangePasswordState.DONE -> dismiss()
+                ChangePasswordState.DONE -> {
+                    Dialogs.showLongToast(
+                        requireActivity(),
+                        getString(R.string.change_password_done),
+                    )
+                    dismiss()
+                }
             }
         }
 

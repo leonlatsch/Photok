@@ -222,6 +222,7 @@
     <string name="change_password_button">更改密码</string>
     <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有文件！你想继续吗？</string>
     <string name="change_password_reencrypting">重新加密文件中……</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">验证密码</string>

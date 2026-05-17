@@ -223,6 +223,7 @@
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
     <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
     <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
