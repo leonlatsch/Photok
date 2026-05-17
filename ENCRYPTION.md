@@ -33,6 +33,18 @@ To verify the user's password locally before attempting decryption, the password
 
 ---
 
+## Design Rationale: Why we changed from 1.x.x to 2.x.x
+
+The architecture shift from 1.x.x to 2.x.x was driven by two major requirements:
+
+* **Cryptographic Security:** 1.x.x suffered from critical structural vulnerabilities, notably the lack of a proper Key Derivation Function (KDF) and a deterministic IV structure that caused unsafe IV reuse under AES-GCM. Switching to PBKDF2 and randomized IVs resolved these security issues.
+* **Video Player Random Access (Seeking):** The introduction of video files highlighted a severe architectural limitation in AES-GCM. Because AES-GCM is a stream-oriented mode requiring strict authentication tags, **true random access seeking is not natively supported**. Seeking to a specific time in a video required allocating an `AesDataSource` that had to read, decrypt, and entirely throw away (`forceSkip`) all preceding bytes up to the target offset. For large video streams, this caused severe performance degradation and high memory/CPU overhead.
+
+### Resolving Random Access with AES-CBC
+By switching to `AES/CBC/PKCS7Padding`, the application gained the ability to perform mathematical block-aligned random access via `AesCbcRandomAccessDataSource`.
+
+Because Cipher Block Chaining (CBC) encrypts data in distinct 16-byte blocks where each block depends mathematically only on the ciphertext block immediately preceding it, the application can seek to any block in a file directly without reading from byte zero:
+
 # Version 2.x.x Encryption
 
 ⚠️ **Status: Deprecated — supported for decryption & migration only**
@@ -147,6 +159,16 @@ The file layout is structured as follows:
 | `ENCRYPTED_DATA` | Variable | The raw AES-CBC encrypted ciphertext               |
 
 ---
+
+## Design Rationale: Why we changed from 2.x.x to 3.x.x
+
+The 3.x.x version marks the modernization of Photok's data management layers. While 2.x.x addressed basic primitive file security and video stream performance, its tightly-coupled key architecture became a limiting bottleneck.
+
+The VMK/KEK split in 3.x.x provides several distinct architectural advantages:
+
+* **Instant Password Modifications:** In older versions, because the file encryption key was derived directly from the user's password, changing a password required completely reading, decrypting, and re-writing every single data file on disk. In 3.x.x, changing a password requires only re-encrypting the small **VMK** blob stored inside the SQLite database with a new KEK. The underlying media files remain untouched.
+* **Simplified Biometric Management:** Biometric authentication no longer requires awkward out-of-band hacks in standalone Shared Preferences files. Biometrics simply act as an alternative Key Encryption Key (KEK) pipeline that exposes the same underlying database VMK.
+* **Foundation for Recovery Schemes:** Separating the data key (VMK) from the authentication mechanism (KEK) establishes the vital technical groundwork required to implement a deterministic recovery phrase feature (BIP-39 mnemonic phrases) down the line.
 
 ## Migration Architecture
 
