@@ -4,6 +4,21 @@ This document describes the encryption formats used across different major versi
 The format evolved significantly over time. Older formats are kept documented for **backwards compatibility and data migration only**.
 
 ---
+# Encryption Versions Overview
+
+The table below provides a high-level comparison of the architectural and cryptographic differences across the app's version history.
+
+| Feature             | Version 1.x.x (Legacy)                    | Version 2.x.x (Deprecated)                          | Version 3.x.x (Current)                                                                    |
+|:--------------------|:------------------------------------------|:----------------------------------------------------|:-------------------------------------------------------------------------------------------|
+| **Status**          | ⚠️ Insecure (Decryption/Migration only)   | ⚠️ Deprecated (Can still be read by 3.x.x)          | 🟩 Active / Current                                                                        |
+| **File Extensions** | `.photok`, `.photok.tn`, `.photok.vp`     | `.crypt`, `.crypt.tn`, `.crypt.vp`                  | `.crypt`, `.crypt.tn`, `.crypt.vp`                                                         |
+| **Cipher & Mode**   | AES / GCM / NoPadding (256-bit)           | AES / CBC / PKCS7Padding (256-bit)                  | AES / CBC / PKCS7Padding (256-bit)                                                         |
+| **Header Format**   | **None** (Raw ciphertext stream)          | **Header Version 1** (`0x01`)                       | **Header Version 2** (`0x02`)                                                              |
+| **Header Layout**   | *No metadata packet*                      | Version (1B) + Salt (16B) + IV (16B)                | Version (1B) + IV (16B)                                                                    |
+| **Key Derivation**  | Insecure: `SHA-256(UTF8(password))`       | `PBKDF2WithHmacSHA256(password, salt)`              | **Vault Master Key (VMK)** pattern wrapped by KEK                                          |
+| **IV**              | Static / Deterministic (`first 16 bytes`) | Completely Randomized                               | Completely Randomized                                                                      |
+| **Design Focus**    | Legacy encryption implementation          | Fixed GCM IV reuse, random access for video seeking | Password decoupling, instant password changes, native biometrics, base for recovery phrase |
+---
 
 # Version 1.x.x Encryption (Legacy)
 
@@ -54,7 +69,7 @@ The architecture shift from 1.x.x to 2.x.x was driven by two major requirements:
 
 # Version 2.x.x Encryption
 
-⚠️ **Status: Deprecated — supported for decryption & migration only**
+✅ **Status: Deprecated but supported. Can still be read by 3.x.x.**
 
 Version 2.x.x addressed the critical IV reuse vulnerability of 1.x.x by introducing a proper key derivation function, randomized nonces, and a dedicated file header structure.
 
