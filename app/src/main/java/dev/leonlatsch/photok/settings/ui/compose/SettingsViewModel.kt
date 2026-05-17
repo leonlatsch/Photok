@@ -139,7 +139,7 @@ class SettingsViewModel @Inject constructor(
         return false
     }
 
-    fun resetComponents() = viewModelScope.launch {
+    fun resetApp() = viewModelScope.launch {
         val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
         for (photo in allPhotos) {
             photoRepository.deleteInternalPhotoData(photo)
@@ -150,6 +150,10 @@ class SettingsViewModel @Inject constructor(
 
         vaultService.reset(VaultProtectionType.Password)
         vaultService.reset(VaultProtectionType.Biometric)
+
+        config.legacyPasswordHash = null
+        config.legacyUserSalt = null
+
         (app as BaseApplication).lockApp()
     }
 }

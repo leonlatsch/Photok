@@ -89,13 +89,11 @@ import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
-import dev.leonlatsch.photok.settings.ui.checkpassword.CheckPasswordDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
     compositionLocalOf { emptyMap<String, String>() }
@@ -122,7 +120,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
     var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
-    var showConfirmPasswordDialog by rememberSaveable { mutableStateOf(false) }
+    var showConfirmPasswordDialogForBackup by rememberSaveable { mutableStateOf(false) }
+    var showConfirmPasswordDialogForReset by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -153,20 +152,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RESET) {
-            CheckPasswordDialog {
-                Dialogs.showConfirmDialog(
-                    context,
-                    context.getString(R.string.settings_advanced_reset_confirmation)
-                ) { _, _ ->
-                    viewModel.resetComponents()
-                }
-            }.show(fragment.childFragmentManager)
+            showConfirmPasswordDialogForReset = true
             false
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BACKUP) {
-            showConfirmPasswordDialog = true
-
+            showConfirmPasswordDialogForBackup = true
             false
         }
 
@@ -222,7 +213,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     )
 
     ConfirmPasswordDialog(
-        visible = showConfirmPasswordDialog,
+        visible = showConfirmPasswordDialogForBackup,
         subtitle = stringResource(R.string.backup_confirm_password),
         onSuccess = {
             backupLauncher.launchAndIgnoreTimer(
@@ -230,10 +221,23 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
                 activity = activity,
             )
 
-            showConfirmPasswordDialog = false
+            showConfirmPasswordDialogForBackup = false
         },
         onDismissRequest = {
-            showConfirmPasswordDialog = false
+            showConfirmPasswordDialogForBackup = false
+        }
+    )
+
+    ConfirmPasswordDialog(
+        visible = showConfirmPasswordDialogForReset,
+        subtitle = stringResource(R.string.settings_advanced_reset_confirmation),
+        onSuccess = {
+            viewModel.resetApp()
+
+            showConfirmPasswordDialogForReset = false
+        },
+        onDismissRequest = {
+            showConfirmPasswordDialogForReset = false
         }
     )
 }

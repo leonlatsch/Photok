@@ -47,7 +47,7 @@ class DumpDatabaseUseCase @Inject constructor(
         when (version) {
             LEGACY_BACKUP_VERSION -> {
                 BackupMetaData.V3(
-                    password = config.securityPassword!!,
+                    password = config.legacyPasswordHash!!,
                     photos = photos,
                     albums = albums,
                     albumPhotoRefs = albumPhotoLinks,

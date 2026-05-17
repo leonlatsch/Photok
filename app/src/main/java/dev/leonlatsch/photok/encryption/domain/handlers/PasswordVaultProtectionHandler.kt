@@ -115,18 +115,18 @@ class PasswordVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun canMigrate(): Boolean {
-        return config.userSalt.orEmpty().isNotEmpty() && config.securityPassword.orEmpty().isNotEmpty()
+        return config.legacyUserSalt.orEmpty().isNotEmpty() && config.legacyPasswordHash.orEmpty().isNotEmpty()
     }
 
     override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
-        require(BCrypt.checkpw(request.password, config.securityPassword))
+        require(BCrypt.checkpw(request.password, config.legacyPasswordHash))
 
-        val vmkSalt = if (config.userSalt.isNullOrEmpty()) {
+        val vmkSalt = if (config.legacyUserSalt.isNullOrEmpty()) {
             // Pre 2.x.x had no salt, so generate one
             ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         } else {
             // use existing salt to result in same key to use as vmk
-            Base64.decode(config.userSalt!!)
+            Base64.decode(config.legacyUserSalt!!)
         }
 
         val vmk = keyGen.derivePasswordKeyEncryptionKey(
