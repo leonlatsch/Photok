@@ -17,11 +17,12 @@
 package dev.leonlatsch.photok.encryption.data
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 
-@Entity(tableName = "vault_protection")
+@Entity(tableName = "vault_protection", indices = [Index("type", unique = true)])
 data class VaultProtectionTable(
     @PrimaryKey
     val id: String,

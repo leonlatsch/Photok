@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "e6547ac375d216e3cb0720e1596da9e5",
+    "identityHash": "2f811739bc82a18d75f0ce9612fdd68b",
     "entities": [
       {
         "tableName": "photo",
@@ -218,12 +218,23 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_vault_protection_type",
+            "unique": true,
+            "columnNames": [
+              "type"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_vault_protection_type` ON `${TABLE_NAME}` (`type`)"
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e6547ac375d216e3cb0720e1596da9e5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f811739bc82a18d75f0ce9612fdd68b')"
     ]
   }
 }
