@@ -196,3 +196,181 @@ If the user authenticates via biometrics first, the legacy structure can be secu
 It is entirely expected that a user might trigger a biometric migration path without executing a password migration run concurrently. The database safely maintains partial states; the password migration context triggers organically during subsequent structural lifecycle changes such as a manual login challenge, password change, or when triggering an application backup pipeline.
 
 > 🔒 **Critical Recovery Policy:** To protect user nodes against unforeseen migration errors or environment crashes, the historical configuration items (`legacyPasswordHash` and `legacyUserSalt`) are **never deleted** from Shared Preferences. This ensures the app can re-attempt data correction procedures safely if a legacy migration routine fails to write successfully.
+
+
+# Backup Specification
+
+This section describes the backup archive formats used across different generations of the app.
+
+All backups are compiled as standard unencrypted **ZIP archives** containing an unencrypted structural metadata manifest (`meta.json`) alongside the respective encrypted media artifacts. The underlying encryption format of the media files inside the ZIP reflects the app's encryption version active at the time the backup was created.
+
+---
+
+## Backup Format V1
+Used during the early lifecycle of the application.
+
+### Archive Structure
+```
+┌───────────────────────────────┐
+│          backup.zip           │
+├───────────────────────────────1
+│ meta.json                     │
+│   {                           │
+│     "password": String,       │
+│     "photos": [PhotoBackup],  │
+│     "createdAt": Long,        │
+│     "backupVersion": Int      │
+│   }                           │
+│                               │
+│ <uuid>.photok                 │  ← Encrypted original file
+│ ...                           │
+└───────────────────────────────┘
+```
+
+
+### Architectural Notes
+* **Authentication:** The `password` string is a bcrypt hash stored in `meta.json` to perform a quick sanity check before kicking off file processing routines.
+* **Database Tracking:** Only primary `photos` data blocks are stored. Relational structures (such as custom user albums or cross-reference maps) are completely absent.
+* **Media Footprint:** Contains raw original files only. Secondary generated visual media like thumbnails (`.tn`) or video previews (`.vp`) are omitted from V1 archives.
+* **Media Files Extension:** `.photok`
+* **Version Flag:** `backupVersion` must equal `1`.
+
+---
+
+## Backup Format V2
+Introduced basic video preview logic and thumbnail persistence into the archive.
+
+### Archive Structure
+```
+┌───────────────────────────────┐
+│          backup.zip           │
+├───────────────────────────────1
+│ meta.json                     │
+│   {                           │
+│     "password": String,       │
+│     "photos": [PhotoBackup],  │
+│     "createdAt": Long,        │
+│     "backupVersion": Int      │
+│   }                           │
+│                               │
+│ <uuid>.photok                 │  ← Encrypted original file
+│ <uuid>.photok.tn              │  ← Encrypted thumbnail
+│ <uuid>.photok.vp              │  ← Encrypted video preview
+│ ...                           │
+└───────────────────────────────┘
+```
+
+### Architectural Notes
+* **Authentication:** Relies on the inline `password` entry inside `meta.json` for validation.
+* **Database Tracking:** Constrained strictly to `photos` metadata; no relational custom album schemas are retained.
+* **Media Footprint:** Adds explicit persistence layers for corresponding thumbnails (`.photok.tn`) and video preview targets (`.photok.vp`) to minimize app parsing workloads immediately following a restoration process.
+* **Media Files Extension:** `.photok.*`
+* **Version Flag:** `backupVersion` must equal `2`.
+
+---
+
+## Backup Format V3
+Introduces albums to the backups.
+
+### Archive Structure
+```
+┌───────────────────────────────┐
+│          backup.zip           │
+├───────────────────────────────1
+│ meta.json                     │
+│   {                           │
+│     "password": String,       │
+│     "photos": [PhotoBackup],  │
+│     "albums": [AlbumBackup],  │
+│     "albumPhotoRefs":         │
+│        [AlbumPhotoRefBackup], │
+│     "createdAt": Long,        │
+│     "backupVersion": Int      │
+│   }                           │
+│                               │
+│ <uuid>.photok                 │  ← Encrypted original file
+│ <uuid>.photok.tn              │  ← Encrypted thumbnail
+│ <uuid>.photok.vp              │  ← Encrypted video preview
+│ ...                           │
+└───────────────────────────────┘
+```
+
+### Architectural Notes
+* **Authentication:** Validated via the metadata `password` element before asset decompression routines hook.
+* **Database Tracking:** Establishes comprehensive system snapshots. The JSON records retain user-defined collections (`albums`) and the associated entity mapping structures (`albumPhotoRefs`) alongside asset descriptors.
+* **Media Footprint:** Tracks original elements along with their `.tn` and `.vp` sub-assets.
+* **Media Files Extension:** Uses the older `.photok.*` naming convention.
+* **Version Flag:** `backupVersion` must equal `3`.
+
+---
+
+## Backup Format V4
+Aligns file extensions with the updated Version 2.x.x block cipher specifications.
+
+### Archive Structure
+```
+┌───────────────────────────────┐
+│          backup.zip           │
+├───────────────────────────────1
+│ meta.json                     │
+│   {                           │
+│     "password": String,       │
+│     "photos": [PhotoBackup],  │
+│     "albums": [AlbumBackup],  │
+│     "albumPhotoRefs":         │
+│        [AlbumPhotoRefBackup], │
+│     "createdAt": Long,        │
+│     "backupVersion": Int      │
+│   }                           │
+│                               │
+│ <uuid>.crypt                  │  ← Encrypted original file
+│ <uuid>.crypt.tn               │  ← Encrypted thumbnail
+│ <uuid>.crypt.vp               │  ← Encrypted video preview
+│ ...                           │
+└───────────────────────────────┘
+```
+
+
+### Architectural Notes
+* **Authentication:** Handled through the explicit `password` in `meta.json`.
+* **Database Tracking:** Full retention of relational objects (`photos`, `albums`, and structural link arrays).
+* **Media Footprint:** Includes thumbnails and video previews.
+* **Media Files Extension:** Shifted to `.crypt.*` to mirror the under-the-hood move toward `AES/CBC/PKCS7Padding` block-aligned encryption. Files are stored with header and version `2`.
+* **Version Flag:** `backupVersion` must equal `4`.
+
+---
+
+## Backup Format V5
+Modern backup implementation built around the Version 3.x.x decoupled Vault Master Key (VMK) security architecture.
+
+### Archive Structure
+```
+┌─────────────────────────────────────────┐
+│               backup.zip                │
+├─────────────────────────────────────────1
+│ meta.json                               │
+│   {                                     │
+│     "wrappedVmk": String,               │
+│     "params": [VaultProtectionParams],  │
+│     "photos": [PhotoBackup],            │
+│     "albums": [AlbumBackup],            │
+│     "albumPhotoRefs":                   │
+│        [AlbumPhotoRefBackup],           │
+│     "createdAt": Long,                  │
+│     "backupVersion": Int                │
+│   }                                     │
+│                                         │
+│ .<uuid>crypt                            │  ← Encrypted original file
+│ <uuid>.crypt.tn                         │  ← Encrypted thumbnail
+│ <uuid>.crypt.vp                         │  ← Encrypted video preview
+│ ...                                     │
+└─────────────────────────────────────────┘
+```
+
+
+### Architectural Notes
+* **Authentication & Key Decoupling:** The user password bcrypt hash is **no longer recorded** anywhere inside the backup metadata file. Instead, authentication relies on the application's native key wrapping logic.
+* **Cryptographic Payload:** The manifest embeds the application's actual `wrappedVmk` alongside the detailed `VaultProtectionParams` object block (containing KDF specs, salt configurations, and iteration metrics). To restore a V5 backup file, the host system parses the `params` block, derives the appropriate Key Encryption Key (KEK) using the user's password string, and unwraps the localized `wrappedVmk`.
+* **Database Tracking:** Full structural schema retention (`photos`, `albums`, and relational reference tables).
+* **Media Files Extension:** `.crypt.*` Now being version `2`.
+* **Version Flag:** `backupVersion` must equal `5`.

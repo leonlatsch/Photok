@@ -56,11 +56,12 @@ import javax.inject.Inject
  *  └─────────────────────────────────────────┘
  *
  * Notes:
- *  - `wrappedVmk` is the .
+ *  - `wrappedVmk` is the wrapped vault master key.
+ *  - `params` is the vault protection parameters needed to decrypt the vmk.
  *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
  *  - Each media file is identified by a UUID and encrypted.
  *  - `createdAt` is the timestamp of backup creation.
- *  - `backupVersion` must equal 4 for this format.
+ *  - `backupVersion` must equal 5 for this format.
  */
 class RestoreBackupV5 @Inject constructor(
     private val photoRepository: PhotoRepository,
