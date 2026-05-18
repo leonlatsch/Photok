@@ -27,6 +27,8 @@ import dev.leonlatsch.photok.databinding.FragmentOnboardingBinding
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import dev.leonlatsch.photok.uicomponnets.ViewPagerAdapter
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import javax.inject.Inject
@@ -46,6 +48,9 @@ class OnBoardingFragment :
     lateinit var config: Config
 
     private var isLastPage = false
+
+    @Inject
+    lateinit var telemetryService: TelemetryService
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -106,6 +111,8 @@ class OnBoardingFragment :
      */
     fun buttonClicked() {
         if (isLastPage) {
+            telemetryService.signal(Signal.OnboardingFinished)
+
             finish()
         } else {
             binding.onBoardingViewPager.setCurrentItem(
