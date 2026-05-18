@@ -350,5 +350,5 @@
     <string name="telemetry_learn_more">En savoir plus</string>
     <string name="telemetry_choice_no">Non, merci</string>
     <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
-    <string name="telemetry_toggle">Autoriser la collecte des données d'utilisation</string>
+    <string name="telemetry_toggle">Autoriser la collecte des données d\'utilisation</string>
 </resources>
