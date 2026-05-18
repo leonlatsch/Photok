@@ -102,7 +102,7 @@
     <string name="view_photo_detail_last_modified">Dernière modification</string>
     <string name="view_photo_loop_video_disabled">Affichage en boucle désactivé</string>
     <string name="view_photo_loop_video_enabled">Affichage en boucle activé</string>
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_video_playback_speed">Vitesse de lecture</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>
@@ -206,8 +206,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Crédits</string>
     <string name="settings_other_credits_summary">Contributeurs et crédits</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Collecte de données</string>
+    <string name="settings_other_telemetry_summary">Gérer la collecte des données d\'utilisation</string>
     <string name="settings_other_about_title">À propos</string>
     <string name="settings_other_about_summary">Informations sur Photok</string>
 
@@ -343,12 +343,12 @@
     <string name="video_player_unmute">Activer le son</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Aidez à améliorer Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok peut, facultativement, envoyer des statistiques d\'utilisation anonymes afin d\'améliorer l\'application.</string>
+    <string name="telemetry_sheet_paragraph_2">Les données traitées sont totalement anonymisées et ne permettent pas de tirer de conclusions concernant les informations personnelles.</string>
+    <string name="telemetry_sheet_paragraph_3">L\'envoi de données d\'utilisation anonymes est facultatif et peut être désactivé à tout moment dans les paramètres.</string>
+    <string name="telemetry_learn_more">En savoir plus</string>
+    <string name="telemetry_choice_no">Non, merci</string>
+    <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
+    <string name="telemetry_toggle">Autoriser la collecte des données d'utilisation</string>
 </resources>
