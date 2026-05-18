@@ -82,7 +82,7 @@
     <string name="import_menu_new_files_description">Importar fotos e vídeos da sua galeria.</string>
     <string name="import_menu_restore_title">Restaurar backup</string>
     <string name="import_menu_restore_description">Restaurar um backup Photok. Arquivos serão adicionados aos seus arquivos atuais.</string>
-    <string name="import_menu_delete_warning">Arquivos importados serão excluídos</string>
+    <string name="import_menu_delete_warning">Arquivos imoortados serão excluídos</string>
     <string name="import_menu_album_tooltip">Os arquivos serão adicionados à \"%s\" depois da importação</string>
 
     <!-- PROCESS -->
