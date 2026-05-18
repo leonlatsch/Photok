@@ -24,10 +24,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogChangePasswordBinding
+import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.security.PasswordUtils
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
 
@@ -66,10 +66,15 @@ class ChangePasswordDialog :
                 }
                 ChangePasswordState.NEW_VALID -> {
                     binding.loadingOverlay.hide()
-                    viewModel.checkIfReEncryptNeeded()
+                    viewModel.performChangePassword()
                 }
-                ChangePasswordState.RE_ENCRYPT_NEEDED -> handleReEncryptNeeded()
-                ChangePasswordState.RE_ENCRYPT_NOT_NEEDED -> dismiss()
+                ChangePasswordState.DONE -> {
+                    Dialogs.showLongToast(
+                        requireActivity(),
+                        getString(R.string.change_password_done),
+                    )
+                    dismiss()
+                }
             }
         }
 
@@ -94,19 +99,6 @@ class ChangePasswordDialog :
         binding.changePasswordOldStatusIcon.show()
         binding.changePasswordNewPasswordLayout.show()
         binding.changePasswordNewPasswordLayout.requestFocus()
-    }
-
-    private fun handleReEncryptNeeded() {
-        Dialogs.showConfirmDialog(
-            requireContext(),
-            getString(R.string.change_password_confirm_message)
-        ) { _, _ ->
-            ReEncryptBottomSheetDialogFragment(
-                viewModel.oldPassword,
-                viewModel.newPassword
-            ).show(requireActivity().supportFragmentManager)
-            dismiss()
-        }
     }
 
     private fun enableOrDisableSetup() {

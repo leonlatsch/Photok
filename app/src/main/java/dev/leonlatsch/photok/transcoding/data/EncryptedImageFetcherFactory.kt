@@ -21,17 +21,17 @@ import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import javax.inject.Inject
 
 class EncryptedImageFetcherFactory @Inject constructor(
-    private val encryptedStorageManager: EncryptedStorageManager,
+    private val vaultFileStorage: VaultFileStorage,
     @ApplicationContext private val context: Context,
 ) : Fetcher.Factory<EncryptedImageRequestData> {
     override fun create(data: EncryptedImageRequestData, options: Options, imageLoader: ImageLoader): Fetcher =
         EncryptedImageFetcher(
-            encryptedStorageManager = encryptedStorageManager,
+            vaultFileStorage = vaultFileStorage,
             requestData = data,
             context = context,
         )

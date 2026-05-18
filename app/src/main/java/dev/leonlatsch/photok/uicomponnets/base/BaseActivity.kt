@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.uicomponnets.base
 
+import android.app.Activity
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -43,12 +45,9 @@ abstract class BaseActivity : AppCompatActivity() {
      * Abstract [Config], must be injected in implementations.
      */
     abstract var config: Config
+}
 
-    /**
-     * Hide the soft-keyboard of displayed.
-     */
-    fun hideKeyboard() {
-        val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-    }
+fun Activity.hideKeyboard() {
+    val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 }

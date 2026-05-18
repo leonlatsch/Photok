@@ -17,23 +17,32 @@
 package dev.leonlatsch.photok.unlock.ui
 
 import android.app.Application
+import android.content.res.Resources
 import androidx.databinding.Bindable
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
-import dev.leonlatsch.photok.security.EncryptionManager
-import dev.leonlatsch.photok.security.PasswordManager
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionManager
+import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * ViewModel for unlocking the safe.
- * Handles state, password validation and initializing the [EncryptionManager].
+ * Handles state, password validation and initializing the encryption.
  * Just like the setup.
  *
  * @since 1.0.0
@@ -42,9 +51,12 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
     app: Application,
-    val encryptionManager: EncryptionManager,
-    @LegacyEncryptionManager private val legacyEncryptionManager: EncryptionManager,
-    private val passwordManager: PasswordManager,
+    private val config: Config,
+    private val resources: Resources,
+    private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
+    private val legacyEncryption: LegacyEncryption,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -54,7 +66,7 @@ class UnlockViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.INITIAL)
+    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
 
     /**
      * Tries to unlock the save.
@@ -62,21 +74,49 @@ class UnlockViewModel @Inject constructor(
      * Updates UnlockState.
      * Called by ui.
      */
-    fun unlock() {
-        unlockState.update { UnlockState.CHECKING }
+    fun unlockWithPassword() {
+        unlockState.update { UnlockState.Loading }
 
         viewModelScope.launch {
+            try {
+                vaultService.unlock(UnlockRequest.Password(password))
+                    .onSuccess { session ->
+                        sessionRepository.set(session)
 
-            unlockState.update {
-                if (passwordManager.checkPassword(password)) {
-                    encryptionManager.initialize(password)
-                    legacyEncryptionManager.initialize(password)
+                        if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) {
+                            val legacySession = legacyEncryption.obtainSession(password)
+                            legacyEncryptionMigrator.initialize(legacySession)
 
-                    UnlockState.UNLOCKED
-                } else {
-                    UnlockState.UNLOCK_FAILED
-                }
+                            unlockState.update { UnlockState.StartLegacyMigration }
+                        } else {
+                            unlockState.update { UnlockState.Unlocked }
+                        }
+                    }
+                    .onFailure {
+                        unlockState.update { UnlockState.PasswordError }
+                    }
+            } catch (e: Exception) {
+                Timber.e(e)
+                unlockState.update { UnlockState.Error }
             }
+        }
+    }
+
+    fun unlockWithBiometric(fragment: Fragment) {
+        viewModelScope.launch {
+            vaultService.unlock(UnlockRequest.Biometric(fragment))
+                .onSuccess { session ->
+                    sessionRepository.set(session)
+                    unlockState.update { UnlockState.Unlocked }
+                }
+                .onFailure {
+                    if (it !is UserCanceledBiometricsException) {
+                        Dialogs.showLongToast(
+                            context = fragment.requireContext(),
+                            message = resources.getString(R.string.biometric_unlock_error),
+                        )
+                    }
+                }
         }
     }
 

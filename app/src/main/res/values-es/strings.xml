@@ -226,6 +226,7 @@
     <string name="change_password_button">Cambiar contraseña</string>
     <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verificar contraseña</string>
@@ -266,6 +267,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
     <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novedades en</string>

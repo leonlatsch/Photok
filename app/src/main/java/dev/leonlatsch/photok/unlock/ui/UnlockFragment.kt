@@ -22,30 +22,25 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.ApplicationState
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
-import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.security.biometric.BiometricUnlock
-import dev.leonlatsch.photok.security.biometric.UserCanceledBiometricsException
-import dev.leonlatsch.photok.security.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
+import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -61,13 +56,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private val viewModel: UnlockViewModel by viewModels()
 
     @Inject
-    lateinit var legacyEncryptionMigrator: LegacyEncryptionMigrator
-
-    @Inject
     lateinit var config: Config
 
     @Inject
-    lateinit var biometricUnlock: BiometricUnlock
+    lateinit var vaultService: VaultService
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
@@ -80,14 +72,33 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
-                    UnlockState.CHECKING -> binding.loadingOverlay.show()
-                    UnlockState.UNLOCKED -> goToGallery()
-                    UnlockState.UNLOCK_FAILED -> {
+                    UnlockState.Initial -> Unit
+                    UnlockState.PasswordError -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
                     }
 
-                    UnlockState.INITIAL -> Unit
+                    UnlockState.Loading -> binding.loadingOverlay.show()
+                    UnlockState.Unlocked -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+
+                        val startPageDest = when (config.galleryStartPage) {
+                            StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
+                            StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
+                        }
+
+                        findNavController().navigate(startPageDest)
+                    }
+
+                    UnlockState.StartLegacyMigration -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+
+                        findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+                    }
+
+                    UnlockState.Error -> showErrorToast()
                 }
             }
         }
@@ -100,58 +111,21 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
         super.onViewCreated(view, savedInstanceState)
 
-        // Check for migration should not be needed. But double check because in this case we don't have the legacy key
-        if (biometricUnlock.isSetupAndValid() && !legacyEncryptionMigrator.migrationNeeded()) {
-            binding.unlockUseBiometricUnlockButton.show()
-            launchBiometricUnlock()
-        } else {
-            binding.unlockUseBiometricUnlockButton.hide()
-        }
-    }
-
-    fun launchBiometricUnlock(delay: Long = 500L) {
         lifecycleScope.launch {
-            delay(delay)
+            if (vaultService.isSetup(VaultProtectionType.Biometric) || vaultService.canMigrate(VaultProtectionType.Biometric)) {
+                binding.unlockUseBiometricUnlockButton.show()
 
-            biometricUnlock.unlock(this@UnlockFragment)
-                .onSuccess { goToGallery() }
-                .onFailure {
-                    if (it !is UserCanceledBiometricsException) {
-                        Dialogs.showLongToast(
-                            context = requireContext(),
-                            message = getString(R.string.biometric_unlock_error),
-                        )
-                    }
-                }
+                delay(500L)
+                viewModel.unlockWithBiometric(fragment = this@UnlockFragment)
+            } else {
+                binding.unlockUseBiometricUnlockButton.hide()
+            }
         }
     }
 
-
-    private fun goToGallery() {
-        val activity = activity
-
-        (activity as? BaseActivity)?.hideKeyboard()
+    private fun showErrorToast() {
         binding.loadingOverlay.hide()
-
-        if (activity == null || !viewModel.encryptionManager.isReady) {
-            Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-            return
-        }
-
-        activity.getBaseApplication().state.update { ApplicationState.UNLOCKED }
-
-        if (config.legacyCurrentlyMigrating || legacyEncryptionMigrator.migrationNeeded()) {
-            lifecycleScope.launch {
-                findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
-            }
-        } else {
-            val startPageDest = when (config.galleryStartPage) {
-                StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
-                StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
-            }
-
-            findNavController().navigate(startPageDest)
-        }
+        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

@@ -88,14 +88,14 @@
                 android:layout_width="@dimen/wide_button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
-                android:onClick="@{() -> viewModel.unlock()}"
+                android:onClick="@{() -> viewModel.unlockWithPassword()}"
                 android:text="@string/unlock_button" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/unlockUseBiometricUnlockButton"
-            android:onClick="@{() -> context.launchBiometricUnlock(0L)}"
+            android:onClick="@{() -> viewModel.unlockWithBiometric(context)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -207,6 +207,7 @@
     <string name="change_password_button">Wijzig wachtwoord</string>
     <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
@@ -247,6 +248,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Ongeldig bestand</string>
     <string name="backup_restore_processing">Back-up herstellen…</string>
     <string name="backup_unlock_title">Ontgrendel back-up</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nieuw in</string>

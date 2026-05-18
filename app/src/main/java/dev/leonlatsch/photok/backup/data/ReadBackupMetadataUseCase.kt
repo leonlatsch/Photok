@@ -22,6 +22,10 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+data class BackupHeader(
+    val backupVersion: Int
+)
+
 class ReadBackupMetadataUseCase @Inject constructor(
     private val gson: Gson
 ) {
@@ -30,7 +34,16 @@ class ReadBackupMetadataUseCase @Inject constructor(
             val bytes = zipInputStream.readBytes()
             val string = String(bytes)
 
-            val metaData = gson.fromJson(string, BackupMetaData::class.java)
+            val header = gson.fromJson(string, BackupHeader::class.java)
+
+            val metaData = when (header.backupVersion) {
+                1 -> gson.fromJson(string, BackupMetaData.V1::class.java)
+                2 -> gson.fromJson(string, BackupMetaData.V2::class.java)
+                3 -> gson.fromJson(string, BackupMetaData.V3::class.java)
+                4 -> gson.fromJson(string, BackupMetaData.V4::class.java)
+                5 -> gson.fromJson(string, BackupMetaData.V5::class.java)
+                else -> error("Unknown backup version: ${header.backupVersion}")
+            }
             metaData ?: error("Error reading meta json from $zipInputStream")
 
             continuation.resume(metaData)

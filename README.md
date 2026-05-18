@@ -69,18 +69,18 @@ These analytics are never used for advertising or cross-app tracking.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-64%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-64%25-orange)
+![Arabic](https://img.shields.io/badge/Arabic-63%25-orange)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-99%25-brightgreen)
+![Dutch](https://img.shields.io/badge/Dutch-63%25-orange)
 ![French](https://img.shields.io/badge/French-95%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-96%25-yellow)
+![Indonesian](https://img.shields.io/badge/Indonesian-95%25-yellow)
 ![Italian](https://img.shields.io/badge/Italian-88%25-yellow)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-62%25-orange)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-61%25-orange)
 ![Russian](https://img.shields.io/badge/Russian-72%25-orange)
-![Spanish](https://img.shields.io/badge/Spanish-76%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
-![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-93%25-yellow)
+![Spanish](https://img.shields.io/badge/Spanish-75%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-99%25-brightgreen)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-92%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)

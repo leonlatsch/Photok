@@ -223,6 +223,7 @@
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
     <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
     <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
@@ -263,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
     <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
     <string name="backup_unlock_title">بیک اپ کھولیں</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>
