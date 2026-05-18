@@ -207,7 +207,7 @@
     <string name="settings_other_credits_title">Crédits</string>
     <string name="settings_other_credits_summary">Contributeurs et crédits</string>
     <string name="settings_other_telemetry_title">Collecte de données</string>
-    <string name="settings_other_telemetry_summary">Gérer la collecte des données d'utilisation</string>
+    <string name="settings_other_telemetry_summary">Gérer la collecte des données d\'utilisation</string>
     <string name="settings_other_about_title">À propos</string>
     <string name="settings_other_about_summary">Informations sur Photok</string>
 
@@ -342,11 +342,11 @@
 
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Aidez à améliorer Photok</string>
-    <string name="telemetry_sheet_paragraph_1">Photok peut, facultativement, envoyer des statistiques d'utilisation anonymes afin d'améliorer l'application.</string>
+    <string name="telemetry_sheet_paragraph_1">Photok peut, facultativement, envoyer des statistiques d\'utilisation anonymes afin d\'améliorer l\'application.</string>
     <string name="telemetry_sheet_paragraph_2">Les données traitées sont totalement anonymisées et ne permettent pas de tirer de conclusions concernant les informations personnelles.</string>
-    <string name="telemetry_sheet_paragraph_3">L'envoi de données d'utilisation anonymes est facultatif et peut être désactivé à tout moment dans les paramètres.</string>
+    <string name="telemetry_sheet_paragraph_3">L\'envoi de données d\'utilisation anonymes est facultatif et peut être désactivé à tout moment dans les paramètres.</string>
     <string name="telemetry_learn_more">En savoir plus</string>
     <string name="telemetry_choice_no">Non, merci</string>
-    <string name="telemetry_choice_yes">Partager des données d'utilisation anonymes</string>
+    <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
     <string name="telemetry_toggle">Autoriser la collecte des données d'utilisation</string>
 </resources>
