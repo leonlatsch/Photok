@@ -32,12 +32,12 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Tem certeza?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_more">Mais</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_create">Criar</string>
+    <string name="common_empty">Esvaziar</string>
+    <string name="common_rename">Renomear</string>
+    <string name="common_try_again">Tentar novamente</string>
     <string name="common_continue">Continuar</string>
 
     <!-- IMPORT -->
@@ -66,24 +66,24 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">Não há arquivos em seu cofre</string>
     <string name="gallery_all_photos_label">Todos os arquivos</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="gallery_albums_label">Álbuns</string>
+    <string name="gallery_albums_placeholder">Criar seu primeiro álbum</string>
+    <string name="gallery_albums_create_title">Criar Álbum</string>
+    <string name="gallery_albums_rename_title">Renomear Álbum</string>
+    <string name="gallery_albums_create_placeholder">Tarefa de casa ;)</string>
+    <string name="gallery_albums_select_title">Selecionar um Álbum</string>
+    <string name="gallery_albums_deleted">Álbum excluído</string> 
+    <string name="gallery_albums_photos_added">%1$d itens adicionados</string>
+    <string name="magic_fab_new_album_label">Novo Álbum</string>
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importar</string>
+    <string name="import_menu_new_files_title">Importar novos arquivos</string>
+    <string name="import_menu_new_files_description">Importar fotos e vídeos da sua galeria.</string>
+    <string name="import_menu_restore_title">Restaurar backup</string>
+    <string name="import_menu_restore_description">Restaurar um backup Photok. Arquivos serão adicionados aos seus arquivos atuais.</string>
+    <string name="import_menu_delete_warning">Arquivos importados serão excluídos</string>
+    <string name="import_menu_album_tooltip">Os arquivos serão adicionados à \"%s\" depois da importação</string>
 
     <!-- PROCESS -->
     <string name="process_close">Fechar</string>
@@ -99,10 +99,10 @@
     <string name="view_photo_detail_import_at_label">Importado em</string>
     <string name="view_photo_detail_file_type_label">Tipo do arquivo</string>
     <string name="view_photo_detail_size_label">Tamanho do arquivo</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Última modificação</string>
+    <string name="view_photo_loop_video_disabled">Looping desativado</string>
+    <string name="view_photo_loop_video_enabled">Looping ativado</string>
+    <string name="view_photo_video_playback_speed">Velocidade de reprodução</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>
@@ -112,9 +112,9 @@
     <string name="menu_ms_select_all">Selecionar tudo</string>
     <string name="menu_ms_delete">Excluir</string>
     <string name="menu_ms_export">Exportar</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d item(s) selecionado(s)</string>
+    <string name="menu_ms_add_to_album">Adicionar ao álbum</string>
+    <string name="menu_ms_remove_from_album">Remover do álbum</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>
@@ -124,12 +124,12 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d o(s) arquivo(s), de volta à sua galeria?</string>
     <string name="export_are_you_sure_this">Tem certeza que quer <b>exportar</b> este arquivo, de volta à sua galeria?</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">Tem certeza que quer <b>exportar</b> %1$d arquivo(s) de volta à galeria e excluí-los?</string>
+    <string name="export_and_delete_are_you_sure_this">Tem certeza que quer <b>exportar</b> esse arquivo de volta à galeria e excluí-lo?</string>
     <string name="export_exporting">Exportando o(s) arquivo(s)…</string>
     <string name="export_permission_rationale">Photok precisa acessar seu armazenamento, para poder exportar os arquivos.</string>
     <string name="export_finished">Exportado</string>
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_finished">Exportado e deletado</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versão:</string>
@@ -153,16 +153,16 @@
     <string name="settings_category_gallery">Galeria</string>
     <string name="settings_gallery_auto_fullscreen_title">Auto tela completa</string>
     <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir um arquivo</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Página inicial</string>
 
     <string name="settings_category_security">Segurança</string>
     <string name="settings_security_allow_screenshots_title">Permitir as capturas da tela</string>
     <string name="settings_security_allow_screenshots_summary">Permitir a captura da tela. Requer reinício.</string>
     <string name="settings_security_change_password_title">Alterar a senha</string>
     <string name="settings_security_change_password_summary">Alterar sua senha</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Desbloqueio por biometria</string>
+    <string name="settings_security_biometric_summary">Desbloqueie Photok com autentificação biométrica.</string>
+    <string name="settings_security_biometric_not_available">Desbloqueio por biometria não disponível</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -184,8 +184,8 @@
     <string name="settings_advanced_reset_confirmation">Você REALMENTE quer resetar seu cofre? Todos os dados serão perdidos!</string>
     <string name="settings_advanced_backup_title">Backup</string>
     <string name="settings_advanced_backup_summary">Criar um Backup do seu cofre</string>
-    <string name="settings_advanced_delete_imported_title">Delete imported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_imported_summary">Delete files after importing them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_imported_title">Exclua os arquivos importados</string>
+    <string name="settings_advanced_delete_imported_summary">Exclua os arquivos depois de importá-los</string>
 
     <string name="settings_other_title">Outros</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -193,16 +193,16 @@
     <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
     <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donate</string> <!-- TODO -->
-    <string name="settings_other_donate_summary">Support the development of Photok</string> <!-- TODO -->
+    <string name="settings_other_donate_title">Doe</string>
+    <string name="settings_other_donate_summary">Apoie o desenvolvimento do Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Código fonte</string>
     <string name="settings_other_sourcecode_summary">Contribuir para o Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Créditos</string>
     <string name="settings_other_credits_summary">Colaboradores e créditos</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Coleta de dados</string>
+    <string name="settings_other_telemetry_summary">Gerencie a coleta de dados de uso</string>
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Informações sobre o Photok</string>
 
@@ -224,7 +224,7 @@
     <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Verifique a senha</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar o Photok</string>
@@ -257,7 +257,7 @@
     <string name="backup_restore_title">Restaurando o Backup</string>
     <string name="backup_restore_validating">Validando o Backup…</string>
     <string name="backup_restore_details_created_at">Criado em:</string>
-    <string name="backup_restore_details_photos_contained">Arquivos incluindos:</string>
+    <string name="backup_restore_details_photos_contained">Arquivos incluídos:</string>
     <string name="backup_restore_details_compatible">Compatível:</string>
     <string name="backup_restore_details_size">Tamanho:</string>
     <string name="backup_restore_button">Desbloquear e restaurar</string>
@@ -272,82 +272,82 @@
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
 
     <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Recovery Menu</string> <!-- TODO -->
-    <string name="recovery_menu_item_open_photok">Open Photok</string> <!-- TODO -->
-    <string name="recovery_subtitle_reset_hide_app">Reset Hide App Setting</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="recovery_subtitle">Menu de recuperação</string>
+    <string name="recovery_menu_item_open_photok">Abrir Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Resetar configurações de ocultação de app</string>
+    <string name="settings_advanced_delete_exported_title">Excluir arquivos exportados</string>
+    <string name="settings_advanced_delete_exported_summary">Excluir arquivos depois de exportá-los</string>
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bem-vindo(a) ao</string>
+    <string name="migration_initial_explaination">Essa versão do Photok traz um novo método de encriptação. Para seguir à sua galeria, é preciso realizar uma migração de dados.</string>
+    <string name="migration_initial_button">Começar</string>
+  
+    <string name="migration_initial_stage_backup_checklist">Faça backup de seus dados</string>
+    <string name="migration_initial_stage_backup_explanation">Criar um backup de seus dados antes de continuar</string>
+    <string name="migration_initial_stage_backup_button">Criar backup</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Conceder permissão</string>
+    <string name="migration_initial_stage_permission_explanation">Conceda permissão às notificações para realizar a migração segura em segundo plano.</string>
+    <string name="migration_initial_stage_permission_button">Conceder permissão</string> 
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Tudo pronto</string>
+    <string name="migration_initial_stage_ready_button">Começar migração</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_running_title">Migrando sua galeria</string>
+    <string name="migration_running_progress">%d de %d arquivos migrados</string>
+    <string name="migration_running_advice">Se essa tela continuar aberta, a migração será realizada mais rápido</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_done_title">Migração da galeria finalizada</string>
+    <string name="migration_done_progress">Todos os arquivos foram migrados</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_error_title">Erro durante migração de sua galeria</string> 
+    <string name="migration_error_button">Enviar relatório de erro</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
-
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tarefas em segundo plano</string>
+    <string name="migration_error_extract_data">Extrair dados</string>
+    <string name="migration_error_extract_confirmation_text">Você tem certeza de querer extrair todos os seus arquivos DECRIPTADOS em um arquivo ZIP?</string>
+    <string name="migration_error_extracting_title">Decriptando para ZIP…</string>
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Desbloquear Photok</string>
+    <string name="biometric_unlock_subtitle">Verifique sua identidade antes de desbloquear</string>
+    <string name="biometric_unlock_cancel">Use sua senha Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Ative o desbloqueio por biometria</string>
+    <string name="biometric_unlock_setup_subtitle">Para ativar o desbloqueio por biometria, confirme sua identidade</string>
+    <string name="biometric_unlock_error">O desbloqueio por biometria falhou. Use sua senha Photok.</string>
+    <string name="biometric_unlock_hint_button">Desbloqueie por biometria</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Organizar</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Crescente</string>
+    <string name="sorting_order_desc_label">Decrescente</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Data de importação</string>
+    <string name="sorting_field_filename_label">Nome</string>
+    <string name="sorting_field_size_label">Tamanho</string>
+    <string name="sorting_field_added_to_album_label">Adicionado no álbum</string>
+    <string name="sorting_field_last_modified">Última modificação</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Voltar ao padrão</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pausar</string>
+    <string name="video_player_mute">Mutar</string>
+    <string name="video_player_unmute">Desmutar</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Ajude a melhorar o Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok pode, de forma opcional, enviar estatísticas de uso para melhorar o app.</string>
+    <string name="telemetry_sheet_paragraph_2">Os dados processados são anonimizados e não permitem a realização de nenhuma conclusão sobre o perfil do usuário.</string>
+    <string name="telemetry_sheet_paragraph_3">Enviar dados anônimos de uso é opcional e pode ser desligado a qualquer momento nas configurações.</string>
+    <string name="telemetry_learn_more">Saiba mais</string>
+    <string name="telemetry_choice_no">Não, obrigado</string>
+    <string name="telemetry_choice_yes">Compartilhar anônimamente dados de uso</string>
+    <string name="telemetry_toggle">Permitir coleta de dados de uso</string>
 </resources>
