@@ -381,6 +381,30 @@ private fun GalleryPhotoTile(
         }
 
         AnimatedVisibility(
+            visible = photoTile.pinned && !selected,
+            enter = scaleIn(),
+            exit = scaleOut(),
+            modifier = Modifier
+                .padding(2.dp)
+                .size(VideoIconSize)
+                .align(Alignment.TopEnd)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_push_pin),
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier
+                    .dropShadow(
+                        shape = RoundedCornerShape(12.dp),
+                        shadow = Shadow(
+                            radius = 6.dp,
+                            alpha = 0.3f
+                        )
+                    )
+            )
+        }
+
+        AnimatedVisibility(
             visible = multiSelectionActive && selected,
             enter = scaleIn(),
             exit = scaleOut(),

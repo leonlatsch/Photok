@@ -62,13 +62,17 @@ class AlbumDetailViewModel @AssistedInject constructor(
         albumsRepository.observeAlbumWithPhotos(albumUUID, sort)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Album.Placeholder)
 
+    private val pinnedPhotoIdsFlow = albumsRepository.observePinnedPhotoUUIDs(albumUUID)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+
     private val photoActionsChannel = Channel<PhotoAction>()
     val photoActions = photoActionsChannel.receiveAsFlow()
 
     val uiState = combine(
         albumFlow,
         sortFlow,
-    ) { album, sort ->
+        pinnedPhotoIdsFlow,
+    ) { album, sort, pinnedIds ->
         AlbumDetailUiState(
             albumId = album.uuid,
             albumName = album.name,
@@ -76,10 +80,12 @@ class AlbumDetailViewModel @AssistedInject constructor(
                 PhotoTile(
                     it.internalThumbnailFileName,
                     it.type,
-                    it.uuid
+                    it.uuid,
+                    pinned = it.uuid in pinnedIds,
                 )
             },
             sort = sort,
+            pinnedPhotoIds = pinnedIds,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumDetailUiState())
 
@@ -146,6 +152,9 @@ class AlbumDetailViewModel @AssistedInject constructor(
             is AlbumDetailUiEvent.OnImportChoice -> onImportChoice(event.choice)
             is AlbumDetailUiEvent.SortChanged -> viewModelScope.launch {
                 sortRepository.updateSortFor(albumUuid = albumUUID, sort = event.sort)
+            }
+            is AlbumDetailUiEvent.SetPinned -> viewModelScope.launch {
+                albumsRepository.setPinned(event.items, albumFlow.value.uuid, event.pinned)
             }
         }
     }
