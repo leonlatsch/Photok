@@ -96,6 +96,8 @@
     <string name="menu_ms_info">%1$d öğe seçildi</string>
     <string name="menu_ms_add_to_album">Albüme Ekle</string>
     <string name="menu_ms_remove_from_album">Albümden Kaldır</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> silmek istiyor musunuz?</string>

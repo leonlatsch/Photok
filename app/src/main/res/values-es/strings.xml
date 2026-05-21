@@ -115,6 +115,8 @@
     <string name="menu_ms_info">%1$d elemento(s) seleccionado(s)</string>
     <string name="menu_ms_add_to_album">Añadir al álbum</string>
     <string name="menu_ms_remove_from_album">Eliminar del álbum</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
