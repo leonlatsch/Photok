@@ -113,4 +113,5 @@ data class AlbumPhotoRefBackup(
     val albumUUID: String,
     val photoUUID: String,
     val linkedAt: Long,
+    val pinned: Boolean = false,
 )
