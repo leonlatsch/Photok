@@ -40,6 +40,7 @@ class VaultService @Inject constructor(
                     if (protection == null) {
                         protection = passwordProtectionHandler.migrate(request)
                         vaultProtectionRepository.createProtection(protection)
+                        passwordProtectionHandler.onMigrationPersisted()
                     }
 
                     passwordProtectionHandler.unlock(request, protection)
@@ -48,6 +49,7 @@ class VaultService @Inject constructor(
                     if (protection == null) {
                         protection = biometricProtectionHandler.migrate(request)
                         vaultProtectionRepository.createProtection(protection)
+                        biometricProtectionHandler.onMigrationPersisted()
                     }
 
                     biometricProtectionHandler.unlock(request, protection)

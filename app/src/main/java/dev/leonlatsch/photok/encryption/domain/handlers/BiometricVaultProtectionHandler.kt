@@ -49,6 +49,8 @@ class BiometricVaultProtectionHandler @Inject constructor(
     private val unlockCipher: UnlockBiometricCipherPrompt,
 ) : VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric> {
 
+    private val prefs = app.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
+
     override suspend fun unlock(
         request: UnlockRequest.Biometric,
         protection: VaultProtection
@@ -119,13 +121,10 @@ class BiometricVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun canMigrate(): Boolean {
-        val prefs = app.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
         return prefs.contains("wrapped_user_key")
     }
 
     override suspend fun migrate(request: UnlockRequest.Biometric): VaultProtection {
-        val prefs = app.getSharedPreferences("biometric_keys", Context.MODE_PRIVATE)
-
         val base64 = prefs.getString("wrapped_user_key", null)!!
         val bytes = Base64.decode(base64)
 
@@ -141,16 +140,16 @@ class BiometricVaultProtectionHandler @Inject constructor(
             keySize = 256,
         )
 
-        prefs.edit {
-            remove("wrapped_user_key")
-        }
-
         return VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
             wrappedVMK = wrappedVmk,
             params = params,
         )
+    }
+
+    override suspend fun onMigrationPersisted() {
+        prefs.edit { remove("wrapped_user_key") }
     }
 
     override suspend fun reset() {

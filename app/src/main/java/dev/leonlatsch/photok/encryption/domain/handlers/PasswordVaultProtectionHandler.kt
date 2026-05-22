@@ -114,12 +114,10 @@ class PasswordVaultProtectionHandler @Inject constructor(
         )
     }
 
-    // TODO @leonlatsch: This returns false for 1.x.x users who have no legacyUserSalt, even though
-    //  migrate() explicitly handles the no-salt case by generating a fresh VMK. A 1.x.x user with
-    //  only legacyPasswordHash (no legacyUserSalt) would get canMigrate() = false and potentially
-    //  be unable to unlock their vault. Verify if this is intentional or a bug.
     override suspend fun canMigrate(): Boolean {
-        return config.legacyUserSalt.orEmpty().isNotEmpty() && config.legacyPasswordHash.orEmpty().isNotEmpty()
+        // 1.x.x users have no legacyUserSalt — migrate() handles that case by generating a fresh
+        // VMK. Returning true when only legacyPasswordHash is present covers both 1.x.x and 2.x.x.
+        return config.legacyPasswordHash.orEmpty().isNotEmpty()
     }
 
     override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
