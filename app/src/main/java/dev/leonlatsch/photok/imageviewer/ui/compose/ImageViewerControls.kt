@@ -316,6 +316,8 @@ private fun MoreMenu(
     ) {
         val isAlbumScoped = uiState.albumUuid != null
         val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
+        val pinSuccessMessage = stringResource(R.string.viewer_pin_confirmation)
+        val unpinSuccessMessage = stringResource(R.string.viewer_unpin_confirmation)
 
         if (isAlbumScoped && currentItem != null) {
             DropdownMenuItem(
@@ -348,6 +350,10 @@ private fun MoreMenu(
                             photoUuid = currentItem.photo.uuid,
                             pinned = !isPinned,
                         )
+                    )
+                    Dialogs.showShortToast(
+                        context,
+                        if (isPinned) unpinSuccessMessage else pinSuccessMessage
                     )
 
                     onDismissRequest()

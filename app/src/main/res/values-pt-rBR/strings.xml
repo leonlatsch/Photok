@@ -117,6 +117,8 @@
     <string name="menu_ms_remove_from_album">Remover do álbum</string>
     <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
     <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>

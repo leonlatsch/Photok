@@ -117,6 +117,8 @@
     <string name="menu_ms_remove_from_album">Aus Album entfernen</string>
     <string name="menu_ms_pin">Oben anheften</string>
     <string name="menu_ms_unpin">Lösen</string>
+    <string name="viewer_pin_confirmation">Oben angeheftet</string>
+    <string name="viewer_unpin_confirmation">Anheftung entfernt</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>
