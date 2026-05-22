@@ -21,6 +21,7 @@ import android.net.Uri
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -88,6 +89,8 @@ fun ImageViewerControls(
     modifier: Modifier = Modifier,
 ) {
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
+    val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
+    val showPinnedIndicator = uiState.albumUuid != null && isPinned
 
     val pickExportTargetLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { exportTarget ->
@@ -119,11 +122,29 @@ fun ImageViewerControls(
                         subtitleContentColor = LocalContentColor.current,
                     ),
                     title = {
-                        Text(
-                            text = currentItem?.photo?.fileName.orEmpty(),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            AnimatedVisibility(showPinnedIndicator) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_pin),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .size(18.dp),
+                                )
+                            }
+
+                            AnimatedContent(currentItem?.photo?.fileName.orEmpty()) {
+                                Text(
+                                    text = it,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+                        }
                     },
                     navigationIcon = {
                         IconButton(
