@@ -390,7 +390,7 @@ private fun GalleryPhotoTile(
                 .align(Alignment.TopEnd)
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_push_pin),
+                painter = painterResource(R.drawable.ic_pin),
                 contentDescription = null,
                 tint = Color.White,
                 modifier = Modifier

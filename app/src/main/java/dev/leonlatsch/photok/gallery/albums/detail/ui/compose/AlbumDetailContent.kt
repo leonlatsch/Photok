@@ -112,7 +112,7 @@ fun AlbumDetailContent(
                 DropdownMenuItem(
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(R.drawable.ic_push_pin),
+                            painter = painterResource(R.drawable.ic_pin),
                             contentDescription = null,
                         )
                     },
@@ -128,7 +128,7 @@ fun AlbumDetailContent(
                 DropdownMenuItem(
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(R.drawable.ic_push_pin_off),
+                            painter = painterResource(R.drawable.ic_pin_off),
                             contentDescription = null,
                         )
                     },
