@@ -38,6 +38,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -313,25 +314,51 @@ private fun MoreMenu(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
     ) {
-        DropdownMenuItem(
-            text = {
-                Text(
-                    text = stringResource(R.string.view_photo_detail_title),
-                )
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_info),
-                    contentDescription = null,
-                )
-            },
-            onClick = {
-                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
-            }
-        )
+        val isAlbumScoped = uiState.albumUuid != null
+        val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
 
+        if (isAlbumScoped && currentItem != null) {
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(
+                            if (isPinned) {
+                                R.string.menu_ms_unpin
+                            } else {
+                                R.string.menu_ms_pin
+                            }
+                        ),
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(
+                            if (isPinned) {
+                                R.drawable.ic_pin_off
+                            } else {
+                                R.drawable.ic_pin
+                            }
+                        ),
+                        contentDescription = null,
+                    )
+                },
+                onClick = {
+                    handleUiEvent(
+                        ImageViewerUiEvent.SetPinned(
+                            photoUuid = currentItem.photo.uuid,
+                            pinned = !isPinned,
+                        )
+                    )
+
+                    onDismissRequest()
+                }
+            )
+
+            HorizontalDivider()
+        }
 
         if (currentItem is ImageViewerItem.Video) {
+
 
             val loopingEnabledText = stringResource(R.string.view_photo_loop_video_enabled)
             val loopingDisabledText = stringResource(R.string.view_photo_loop_video_disabled)
@@ -431,9 +458,26 @@ private fun MoreMenu(
                 }
             }
 
+            HorizontalDivider()
+
         }
 
-
+        DropdownMenuItem(
+            text = {
+                Text(
+                    text = stringResource(R.string.view_photo_detail_title),
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_info),
+                    contentDescription = null,
+                )
+            },
+            onClick = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
+            }
+        )
     }
 
     currentItem?.let {
