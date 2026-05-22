@@ -115,10 +115,10 @@
     <string name="menu_ms_info">%1$d item(s) selecionado(s)</string>
     <string name="menu_ms_add_to_album">Adicionar ao álbum</string>
     <string name="menu_ms_remove_from_album">Remover do álbum</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Fixar no topo</string>
+    <string name="menu_ms_unpin">Desfixar</string>
+    <string name="viewer_pin_confirmation">Fixado no topo</string>
+    <string name="viewer_unpin_confirmation">Removido dos fixados</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Tem certeza que quer <b>excluir</b> %1$d o(s) arquivo(s)?</string>
@@ -225,7 +225,7 @@
     <string name="change_password_button">Alterar a senha</string>
     <string name="change_password_confirm_message">Um Backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todos seus arquivos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Arquivo(s) sendo criptografado(s) de novo…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
+    <string name="change_password_done">A senha foi alterada</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verifique a senha</string>
@@ -268,7 +268,7 @@
     <string name="backup_restore_invalid_file">\u26A0 O arquivo é inválido</string>
     <string name="backup_restore_processing">Restaurando o Backup…</string>
     <string name="backup_unlock_title">Desbloquear o Backup</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Confirme sua senha para criar um backup.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novo em</string>
