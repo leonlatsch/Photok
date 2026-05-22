@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d элемент(ов) выбрано</string>
     <string name="menu_ms_add_to_album">Добавить в альбом</string>
     <string name="menu_ms_remove_from_album">Удалить из альбома</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "2f811739bc82a18d75f0ce9612fdd68b",
+    "identityHash": "63b85a7cbb37a5141c930af20ee52c5e",
     "entities": [
       {
         "tableName": "photo",
@@ -85,7 +85,7 @@
       },
       {
         "tableName": "album_photos_cross_ref",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `linked_at` INTEGER NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `linked_at` INTEGER NOT NULL, `pinned` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
         "fields": [
           {
             "fieldPath": "albumUUID",
@@ -104,6 +104,13 @@
             "columnName": "linked_at",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "pinned",
+            "columnName": "pinned",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -234,7 +241,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f811739bc82a18d75f0ce9612fdd68b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '63b85a7cbb37a5141c930af20ee52c5e')"
     ]
   }
 }

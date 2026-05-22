@@ -117,6 +117,12 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album_photos_cross_ref")
     abstract suspend fun getAllAlbumPhotoRefs(): List<AlbumPhotoCrossRefTable>
 
+    @Query("SELECT photo_uuid FROM album_photos_cross_ref WHERE album_uuid = :albumUUID AND pinned = 1")
+    abstract fun observePinnedPhotoUUIDs(albumUUID: String): Flow<List<String>>
+
+    @Query("UPDATE album_photos_cross_ref SET pinned = :pinned WHERE album_uuid = :albumUUID AND photo_uuid IN (:photoUUIDs)")
+    abstract suspend fun updatePinned(photoUUIDs: List<String>, albumUUID: String, pinned: Boolean)
+
     // Sorting
 
     open fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<AlbumWithPhotos?> {
@@ -149,7 +155,7 @@ abstract class AlbumDao {
             FROM ${Photo.TABLE_NAME} p
             INNER JOIN ${AlbumPhotoCrossRefTable.TABLE_NAME} ref ON p.photo_uuid = ref.photo_uuid
             WHERE ref.album_uuid = ?
-            ORDER BY ${sort.field.columnName} ${sort.order.sql}
+            ORDER BY ref.${AlbumPhotoCrossRefTable.COL_PINNED} DESC, ${sort.field.columnName} ${sort.order.sql}
         """.trimIndent()
 
         return SimpleSQLiteQuery(sql, arrayOf(album))

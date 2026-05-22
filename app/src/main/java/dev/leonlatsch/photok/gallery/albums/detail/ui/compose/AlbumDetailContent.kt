@@ -76,11 +76,15 @@ fun AlbumDetailContent(
             handleUiEvent(AlbumDetailUiEvent.OnImportChoice(it))
         },
         additionalMultiSelectionActions = {
+            val selectedIds = multiSelectionState.selectedItems.value.toList()
+            val anyPinned = selectedIds.any { it in uiState.pinnedPhotoIds }
+            val anyUnpinned = selectedIds.any { it !in uiState.pinnedPhotoIds }
+
             HorizontalDivider()
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.menu_ms_remove_from_album)) },
                 onClick = {
-                    handleUiEvent(AlbumDetailUiEvent.RemoveFromAlbum(multiSelectionState.selectedItems.value.toList()))
+                    handleUiEvent(AlbumDetailUiEvent.RemoveFromAlbum(selectedIds))
                     multiSelectionState.dismissMore()
                     multiSelectionState.cancelSelection()
                 },
@@ -104,6 +108,38 @@ fun AlbumDetailContent(
                     multiSelectionState.dismissMore()
                 },
             )
+            if (anyUnpinned) {
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_pin),
+                            contentDescription = null,
+                        )
+                    },
+                    text = { Text(stringResource(R.string.menu_ms_pin)) },
+                    onClick = {
+                        handleUiEvent(AlbumDetailUiEvent.SetPinned(selectedIds, pinned = true))
+                        multiSelectionState.dismissMore()
+                        multiSelectionState.cancelSelection()
+                    },
+                )
+            }
+            if (anyPinned) {
+                DropdownMenuItem(
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_pin_off),
+                            contentDescription = null,
+                        )
+                    },
+                    text = { Text(stringResource(R.string.menu_ms_unpin)) },
+                    onClick = {
+                        handleUiEvent(AlbumDetailUiEvent.SetPinned(selectedIds, pinned = false))
+                        multiSelectionState.dismissMore()
+                        multiSelectionState.cancelSelection()
+                    },
+                )
+            }
         },
         modifier = modifier,
     )
