@@ -70,7 +70,7 @@ These analytics are never used for advertising or cross-app tracking.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-63%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-99%25-brightgreen)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 ![Dutch](https://img.shields.io/badge/Dutch-63%25-orange)
 ![French](https://img.shields.io/badge/French-99%25-brightgreen)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
