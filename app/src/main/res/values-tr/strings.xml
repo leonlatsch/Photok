@@ -96,10 +96,10 @@
     <string name="menu_ms_info">%1$d öğe seçildi</string>
     <string name="menu_ms_add_to_album">Albüme Ekle</string>
     <string name="menu_ms_remove_from_album">Albümden Kaldır</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Başa sabitle</string>
+    <string name="menu_ms_unpin">Sabitlemeyi Kaldır</string>
+    <string name="viewer_pin_confirmation">Başa sabitlendi</string>
+    <string name="viewer_unpin_confirmation">Sabitlemelerden kaldırıldı</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> silmek istiyor musunuz?</string>
@@ -210,7 +210,7 @@
     <string name="change_password_button">Şifreyi Değiştir</string>
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
+    <string name="change_password_done">Şifre değiştirildi</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
@@ -251,7 +251,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
     <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
     <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>
