@@ -115,10 +115,10 @@
     <string name="menu_ms_info">%1$d élément(s) sélectionné(s)</string>
     <string name="menu_ms_add_to_album">Ajouter à un album</string>
     <string name="menu_ms_remove_from_album">Retirer de l\'album</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Épingler en haut</string>
+    <string name="menu_ms_unpin">Dépingler</string>
+    <string name="viewer_pin_confirmation">Épinglé en haut</string>
+    <string name="viewer_unpin_confirmation">Supprimé de l'épinglage</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Êtes-vous sûr de vouloir <b>supprimer</b> %1$d fichier(s)\u00A0?</string>
@@ -221,16 +221,16 @@
     <string name="credits_icons_title">Icônes</string>
 
     <!-- CHANGE PASSWORD -->
-    <string name="change_password_title">Changer votre mot de passe</string>
+    <string name="change_password_title">Modifier votre mot de passe</string>
     <string name="change_password_old_password">Ancien mot de passe</string>
     <string name="change_password_new_password">Nouveau mot de passe</string>
     <string name="change_password_check">Vérifier</string>
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
-    <string name="change_password_button">Changer le mot de passe</string>
+    <string name="change_password_button">Modifier le mot de passe</string>
     <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
+    <string name="change_password_done">Mot de passe modifié</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
@@ -271,7 +271,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
     <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
     <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Confirmez votre mot de passe pour créer une sauvegarde.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>
