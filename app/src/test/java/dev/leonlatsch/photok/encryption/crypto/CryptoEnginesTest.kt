@@ -20,6 +20,7 @@ import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
+import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.LegacySession
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import org.junit.Assert.assertArrayEquals
@@ -130,7 +131,7 @@ class CryptoEnginesTest {
         val plaintext = "Legacy 2.x.x encrypted photo file.".toByteArray()
 
         // Simulate what the 2.x.x app wrote to disk
-        val ciphertext = Cipher.getInstance("AES/CBC/PKCS7Padding").run {
+        val ciphertext = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).run {
             init(Cipher.ENCRYPT_MODE, vmk, IvParameterSpec(iv))
             doFinal(plaintext)
         }

@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.encryption.integration
 
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
+import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import org.junit.Assert.assertArrayEquals
@@ -64,7 +65,7 @@ class CryptoMigrationV2CompatibilityTest {
         )
 
         // Build a V1-header blob manually, just like 2.x.x wrote it
-        val ciphertext = Cipher.getInstance("AES/CBC/PKCS7Padding").run {
+        val ciphertext = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).run {
             init(Cipher.ENCRYPT_MODE, vmk, IvParameterSpec(iv))
             doFinal(plaintext)
         }
@@ -92,7 +93,7 @@ class CryptoMigrationV2CompatibilityTest {
 
         val vmk = keyGen.generateVaultMasterKey()
 
-        val ciphertext = Cipher.getInstance("AES/CBC/PKCS7Padding").run {
+        val ciphertext = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).run {
             init(Cipher.ENCRYPT_MODE, vmk, IvParameterSpec(iv))
             doFinal(plaintext)
         }
@@ -126,7 +127,7 @@ class CryptoMigrationV2CompatibilityTest {
 
         // Also create a V1 blob for the same VMK
         val iv = ByteArray(16) { it.toByte() }
-        val v1Ciphertext = Cipher.getInstance("AES/CBC/PKCS7Padding").run {
+        val v1Ciphertext = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).run {
             init(Cipher.ENCRYPT_MODE, vmk, IvParameterSpec(iv))
             doFinal(plaintext)
         }
