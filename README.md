@@ -72,14 +72,14 @@ These analytics are never used for advertising or cross-app tracking.
 ![Arabic](https://img.shields.io/badge/Arabic-62%25-orange)
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
 ![Dutch](https://img.shields.io/badge/Dutch-62%25-orange)
-![French](https://img.shields.io/badge/French-97%25-yellow)
+![French](https://img.shields.io/badge/French-100%25-brightgreen)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Indonesian](https://img.shields.io/badge/Indonesian-93%25-yellow)
 ![Italian](https://img.shields.io/badge/Italian-86%25-yellow)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-100%25-brightgreen)
 ![Russian](https://img.shields.io/badge/Russian-71%25-orange)
 ![Spanish](https://img.shields.io/badge/Spanish-74%25-orange)
-![Turkish](https://img.shields.io/badge/Turkish-97%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
 ![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-91%25-yellow)
 <!-- END-TRANSLATIONS -->
 
