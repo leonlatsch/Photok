@@ -26,7 +26,7 @@ There are several `strings.xml`  files in `app/src/main/res/values[your_language
 In these files un-translated texts are marked with `<!-- TODO -->`. Translate these and remove the marker.
 Open a Pull Request with your new text.
 
-[Exampe](https://github.com/leonlatsch/Photok/pull/411)
+[Example](https://github.com/leonlatsch/Photok/pull/411)
 
 **Add a new language**
 
