@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import dev.leonlatsch.photok.encryption.domain.handlers.BiometricVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.handlers.RecoveryPhraseVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
@@ -46,6 +47,9 @@ interface EncryptionBindingModule {
 
     @Binds
     fun bindBiometricUnlocker(impl: BiometricVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>
+
+    @Binds
+    fun bindRecoveryPhraseHandler(impl: RecoveryPhraseVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase>
 
     @Binds
     fun bindSessionRepository(impl: SessionRepositoryImpl): SessionRepository

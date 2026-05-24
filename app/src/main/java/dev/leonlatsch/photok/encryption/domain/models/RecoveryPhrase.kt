@@ -16,8 +16,7 @@
 
 package dev.leonlatsch.photok.encryption.domain.models
 
-enum class VaultProtectionType {
-    Password,
-    Biometric,
-    RecoveryPhrase,
+@JvmInline
+value class RecoveryPhrase(val words: List<String>) {
+    fun toMnemonicString(): String = words.joinToString(" ")
 }
