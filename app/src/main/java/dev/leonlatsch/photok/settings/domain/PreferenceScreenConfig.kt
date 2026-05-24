@@ -141,6 +141,12 @@ val PreferenceScreenConfigContent = buildList {
                     title = R.string.settings_security_hide_app_title,
                     summary = R.string.settings_security_hide_app_summary,
                 ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_RECOVERY_PHRASE,
+                    icon = R.drawable.ic_key,
+                    title = R.string.settings_security_recovery_phrase_title,
+                    summary = R.string.settings_security_recovery_phrase_summary,
+                ),
             ),
         )
     )

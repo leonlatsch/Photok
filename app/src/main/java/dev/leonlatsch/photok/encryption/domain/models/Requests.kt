@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.encryption.domain.models
 
 import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase as Phrase
 
 sealed interface UnlockRequest {
@@ -51,7 +52,7 @@ sealed interface CreateRequest {
 
     data class RecoveryPhrase(
         val session: VaultSession,
-        val phrase: Phrase,
+        val wordCount: Bip39WordCount,
     ) : CreateRequest {
         override val protectionType = VaultProtectionType.RecoveryPhrase
     }

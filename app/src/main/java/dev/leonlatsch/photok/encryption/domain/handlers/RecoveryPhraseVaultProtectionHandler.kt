@@ -16,12 +16,15 @@
 
 package dev.leonlatsch.photok.encryption.domain.handlers
 
+import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
@@ -38,6 +41,8 @@ private const val KEK_ITERATIONS = 100_000
 
 class RecoveryPhraseVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
+    private val mnemonicGenerator: Bip39MnemonicGenerator,
+    private val recoveryPhraseStore: RecoveryPhraseStore,
 ) : VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase> {
 
     override suspend fun unlock(
@@ -69,7 +74,7 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
 
     override suspend fun create(request: CreateRequest.RecoveryPhrase): VaultProtection {
         val vmk = request.session.vmk
-        val phrase = request.phrase
+        val phrase = RecoveryPhrase(mnemonicGenerator.generate(request.wordCount))
 
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
@@ -97,6 +102,8 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
         }
 
         val wrappedVmk = cipher.doFinal(vmk.encoded)
+
+        recoveryPhraseStore.store(phrase, request.session)
 
         return VaultProtection(
             id = UUID.randomUUID().toString(),

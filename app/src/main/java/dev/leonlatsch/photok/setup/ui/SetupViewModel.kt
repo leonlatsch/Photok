@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
@@ -88,9 +89,10 @@ class SetupViewModel @Inject constructor(
             vaultService.unlock(UnlockRequest.Password(password))
                 .onSuccess { session ->
                     sessionRepository.set(session)
+                    vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
 
                     config.justFinishedSetup = true
-                    setupState = SetupState.FINISHED
+                    setupState = SetupState.SHOW_RECOVERY_PHRASE
                 }
                 .onFailure {
                     setupState = SetupState.SETUP

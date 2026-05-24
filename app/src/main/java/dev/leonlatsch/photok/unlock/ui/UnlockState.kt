@@ -29,4 +29,5 @@ enum class UnlockState {
     Loading,
     Unlocked,
     StartLegacyMigration,
+    ShowRecoveryPhrase,
 }

@@ -97,6 +97,11 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
                 SetupState.LOADING -> binding.loadingOverlay.show()
                 SetupState.SETUP -> binding.loadingOverlay.hide()
                 SetupState.FINISHED -> finishSetup()
+                SetupState.SHOW_RECOVERY_PHRASE -> {
+                    binding.loadingOverlay.hide()
+                    activity?.hideKeyboard()
+                    findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToRecoveryPhraseSetupFragment())
+                }
             }
         }
     }

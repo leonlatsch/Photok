@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,17 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.encryption.domain
 
-/**
- * Enum to indicate state in setup.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class SetupState {
-    SETUP,
-    LOADING,
-    FINISHED,
-    SHOW_RECOVERY_PHRASE,
+import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+
+interface RecoveryPhraseStore {
+
+    fun store(phrase: RecoveryPhrase, session: VaultSession)
+    fun load(session: VaultSession): RecoveryPhrase?
+    fun clear()
 }

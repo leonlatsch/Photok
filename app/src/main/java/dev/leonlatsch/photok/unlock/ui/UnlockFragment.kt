@@ -18,6 +18,10 @@ package dev.leonlatsch.photok.unlock.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,6 +32,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
@@ -36,6 +41,7 @@ import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
@@ -54,6 +60,7 @@ import javax.inject.Inject
 class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {
 
     private val viewModel: UnlockViewModel by viewModels()
+    private var showRecoveryPhraseSheet by mutableStateOf(false)
 
     @Inject
     lateinit var config: Config
@@ -82,13 +89,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     UnlockState.Unlocked -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
-
-                        val startPageDest = when (config.galleryStartPage) {
-                            StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
-                            StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
-                        }
-
-                        findNavController().navigate(startPageDest)
+                        navigateToGallery()
                     }
 
                     UnlockState.StartLegacyMigration -> {
@@ -99,6 +100,12 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     }
 
                     UnlockState.Error -> showErrorToast()
+
+                    UnlockState.ShowRecoveryPhrase -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+                        showRecoveryPhraseSheet = true
+                    }
                 }
             }
         }
@@ -121,6 +128,32 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                 binding.unlockUseBiometricUnlockButton.hide()
             }
         }
+
+        // Overlay for the recovery phrase sheet (Compose embedded into the fragment's XML view)
+        (view as? android.view.ViewGroup)?.addView(
+            ComposeView(requireContext()).apply {
+                setContent {
+                    AppTheme {
+                        if (showRecoveryPhraseSheet) {
+                            RecoveryPhraseSheet(
+                                onDismiss = {
+                                    showRecoveryPhraseSheet = false
+                                    navigateToGallery()
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    private fun navigateToGallery() {
+        val startPageDest = when (config.galleryStartPage) {
+            StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
+            StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
+        }
+        findNavController().navigate(startPageDest)
     }
 
     private fun showErrorToast() {

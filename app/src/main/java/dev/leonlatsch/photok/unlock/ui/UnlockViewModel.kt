@@ -25,9 +25,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
+import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
@@ -57,6 +62,8 @@ class UnlockViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     private val legacyEncryption: LegacyEncryption,
+    private val mnemonicGenerator: Bip39MnemonicGenerator,
+    private val recoveryPhraseStore: RecoveryPhraseStore,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -88,6 +95,9 @@ class UnlockViewModel @Inject constructor(
                             legacyEncryptionMigrator.initialize(legacySession)
 
                             unlockState.update { UnlockState.StartLegacyMigration }
+                        } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                            vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                            unlockState.update { UnlockState.ShowRecoveryPhrase }
                         } else {
                             unlockState.update { UnlockState.Unlocked }
                         }

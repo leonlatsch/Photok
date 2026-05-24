@@ -21,8 +21,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.encryption.data.RecoveryPhraseStoreImpl
 import dev.leonlatsch.photok.encryption.data.SessionRepositoryImpl
 import dev.leonlatsch.photok.encryption.data.VaultProtectionRepositoryImpl
+import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
@@ -56,6 +58,9 @@ interface EncryptionBindingModule {
 
     @Binds
     fun bindCryptoEngine(impl: CbcCryptoEngine): CryptoEngine
+
+    @Binds
+    fun bindRecoveryPhraseStore(impl: RecoveryPhraseStoreImpl): RecoveryPhraseStore
 }
 
 @Module
