@@ -93,6 +93,9 @@ abstract class AlbumDao {
         }
     }
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insert(ref: AlbumPhotoCrossRefTable)
+
     @Query("DELETE FROM album_photos_cross_ref WHERE album_uuid = :albumUUID AND photo_uuid IN (:photoUUIDs)")
     abstract suspend fun unlink(photoUUIDs: List<String>, albumUUID: String)
 
