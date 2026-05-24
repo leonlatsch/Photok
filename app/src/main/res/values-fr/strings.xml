@@ -118,7 +118,7 @@
     <string name="menu_ms_pin">Épingler en haut</string>
     <string name="menu_ms_unpin">Dépingler</string>
     <string name="viewer_pin_confirmation">Épinglé en haut</string>
-    <string name="viewer_unpin_confirmation">Supprimé de l'épinglage</string>
+    <string name="viewer_unpin_confirmation">Supprimé de l\'épinglage</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Êtes-vous sûr de vouloir <b>supprimer</b> %1$d fichier(s)\u00A0?</string>
