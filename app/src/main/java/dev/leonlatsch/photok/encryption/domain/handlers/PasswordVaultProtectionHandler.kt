@@ -115,7 +115,9 @@ class PasswordVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun canMigrate(): Boolean {
-        return config.legacyUserSalt.orEmpty().isNotEmpty() && config.legacyPasswordHash.orEmpty().isNotEmpty()
+        // 1.x.x users have no legacyUserSalt — migrate() handles that case by generating a fresh
+        // VMK. Returning true when only legacyPasswordHash is present covers both 1.x.x and 2.x.x.
+        return config.legacyPasswordHash.orEmpty().isNotEmpty()
     }
 
     override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {

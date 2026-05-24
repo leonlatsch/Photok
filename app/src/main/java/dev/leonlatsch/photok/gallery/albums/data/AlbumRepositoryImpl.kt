@@ -52,8 +52,9 @@ class AlbumRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAlbums(): List<Album> = albumDao.getAllAlbums()
-        .map { album -> album.toDomain() }
+    override suspend fun getAlbums(): List<Album> = withContext(IO) {
+        albumDao.getAllAlbums().map { album -> album.toDomain() }
+    }
 
     override fun observeAlbumWithPhotos(uuid: String, sort: Sort): Flow<Album> =
         albumDao.observeAlbumWithPhotos(uuid, sort)
@@ -65,57 +66,55 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.getPhotosForAlbum(uuid, sort)
     }
 
-    override suspend fun createAlbum(album: Album): Result<Album> =
+    override suspend fun createAlbum(album: Album): Result<Album> = withContext(IO) {
         when (albumDao.insert(album.toData())) {
             -1L -> Result.failure(IOException())
             else -> Result.success(album.copy())
         }
-
-    override suspend fun deleteAlbum(album: Album): Result<Unit> =
+    }
+    override suspend fun deleteAlbum(album: Album): Result<Unit> = withContext(IO) {
         when (albumDao.unlinkAndDeleteAlbum(album.toData())) {
             -1 -> Result.failure(IOException())
             else -> Result.success(Unit)
         }
+    }
 
-    override suspend fun deleteAll() {
+
+    override suspend fun deleteAll() = withContext(IO) {
         albumDao.deleteAll()
     }
 
-    override suspend fun link(photoUUIDs: List<String>, albumUUID: String) {
+    override suspend fun link(photoUUIDs: List<String>, albumUUID: String) = withContext(IO) {
         albumDao.link(photoUUIDs, albumUUID)
     }
 
-    override suspend fun link(ref: AlbumPhotoRef) {
-        with(ref) {
-            albumDao.link(
-                photoId = photoUUID,
-                albumId = albumUUID,
-                linkedAt = linkedAt,
-            )
-        }
+    override suspend fun link(ref: AlbumPhotoRef) = withContext(IO) {
+        albumDao.insert(ref.toData())
     }
 
-    override suspend fun unlink(photoUUIDs: List<String>, uuid: String) {
+    override suspend fun unlink(photoUUIDs: List<String>, uuid: String) = withContext(IO) {
         albumDao.unlink(photoUUIDs, uuid)
     }
 
-    override suspend fun unlinkAll() {
+    override suspend fun unlinkAll() = withContext(IO) {
         albumDao.unlinkAll()
     }
 
-    override suspend fun rename(albumUUID: String, newName: String) {
+    override suspend fun rename(albumUUID: String, newName: String) = withContext(IO) {
         albumDao.renameAlbum(albumUUID = albumUUID, newName = newName)
     }
 
-    override suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef> =
+    override suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef> = withContext(IO) {
         albumDao.getAllAlbumPhotoRefs().map { ref ->
             ref.toDomain()
         }
+    }
+
 
     override fun observePinnedPhotoUUIDs(albumUUID: String): Flow<Set<String>> =
         albumDao.observePinnedPhotoUUIDs(albumUUID).map { it.toSet() }
 
-    override suspend fun setPinned(photoUUIDs: List<String>, albumUUID: String, pinned: Boolean) {
+    override suspend fun setPinned(photoUUIDs: List<String>, albumUUID: String, pinned: Boolean) = withContext(IO) {
         albumDao.updatePinned(photoUUIDs, albumUUID, pinned)
     }
 }
