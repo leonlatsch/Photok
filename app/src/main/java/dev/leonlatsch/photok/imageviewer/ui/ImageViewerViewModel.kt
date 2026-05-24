@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -54,6 +55,10 @@ sealed interface ImageViewerUiEvent {
         val item: ImageViewerItem,
         val target: Uri,
     ) : ImageViewerUiEvent
+    data class SetPinned(
+        val photoUuid: String,
+        val pinned: Boolean,
+    ) : ImageViewerUiEvent
     data class UpdateLoopVideos(val newValue: Boolean) : ImageViewerUiEvent
     data class UpdateVideoPlaybackSpeed(val newValue: Float) : ImageViewerUiEvent
     data class UpdateShowControls(val newValue: Boolean) : ImageViewerUiEvent
@@ -64,6 +69,8 @@ sealed interface ImageViewerUiEvent {
 
 data class ImageViewerUiState(
     val items: List<ImageViewerItem> = emptyList(),
+    val albumUuid: String? = null,
+    val pinnedPhotoIds: Set<String> = emptySet(),
     val loopVideos: Boolean = false,
     val muteVideoPlayer: Boolean = false,
     val videoPlaybackSpeed: Float = 1f,
@@ -101,9 +108,10 @@ class ImageViewerViewModel @AssistedInject constructor(
 
     val uiState = combine(
         createPhotosFlow(),
+        createPinnedPhotoIdsFlow(),
         config.valuesFlow,
         inputs,
-    ) { photos, configValues, inputs ->
+    ) { photos, pinnedPhotoIds, configValues, inputs ->
         ImageViewerUiState(
             items = photos.map { photo ->
                 if (photo.type.isVideo) {
@@ -117,6 +125,8 @@ class ImageViewerViewModel @AssistedInject constructor(
                     )
                 }
             },
+            albumUuid = albumUuid,
+            pinnedPhotoIds = pinnedPhotoIds,
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
             muteVideoPlayer = configValues.getOrDefault(Config.IMAGE_VIEWER_MUTE_VIDEO_PLAYER, false) as Boolean,
             videoPlaybackSpeed = configValues.getOrDefault(Config.IMAGE_VIEWER_PLAYBACK_SPEED, 1f) as Float,
@@ -132,6 +142,15 @@ class ImageViewerViewModel @AssistedInject constructor(
 
             is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {
                 photoRepository.exportPhoto(event.item.photo, event.target)
+            }
+
+            is ImageViewerUiEvent.SetPinned -> viewModelScope.launch {
+                albumUuid ?: return@launch
+                albumRepository.setPinned(
+                    photoUUIDs = listOf(event.photoUuid),
+                    albumUUID = albumUuid,
+                    pinned = event.pinned,
+                )
             }
 
             is ImageViewerUiEvent.UpdateLoopVideos -> viewModelScope.launch {
@@ -193,6 +212,9 @@ class ImageViewerViewModel @AssistedInject constructor(
             ).map { it.files }
         }
     }
+
+    private fun createPinnedPhotoIdsFlow(): Flow<Set<String>> =
+        albumUuid?.let(albumRepository::observePinnedPhotoUUIDs) ?: flowOf(emptySet())
 
     @AssistedFactory
     interface Factory {

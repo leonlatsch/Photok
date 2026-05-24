@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d item(s) selected</string>
     <string name="menu_ms_add_to_album">Add to album</string>
     <string name="menu_ms_remove_from_album">Remove from album</string>
+    <string name="menu_ms_pin">Pin at top</string>
+    <string name="menu_ms_unpin">Unpin</string>
+    <string name="viewer_pin_confirmation">Pinned at top</string>
+    <string name="viewer_unpin_confirmation">Removed from pinned</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>

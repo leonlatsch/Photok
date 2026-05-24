@@ -111,4 +111,11 @@ class AlbumRepositoryImpl @Inject constructor(
         albumDao.getAllAlbumPhotoRefs().map { ref ->
             ref.toDomain()
         }
+
+    override fun observePinnedPhotoUUIDs(albumUUID: String): Flow<Set<String>> =
+        albumDao.observePinnedPhotoUUIDs(albumUUID).map { it.toSet() }
+
+    override suspend fun setPinned(photoUUIDs: List<String>, albumUUID: String, pinned: Boolean) {
+        albumDao.updatePinned(photoUUIDs, albumUUID, pinned)
+    }
 }

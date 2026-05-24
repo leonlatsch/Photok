@@ -64,6 +64,7 @@ fun AlbumPhotoCrossRefTable.toDomain(): AlbumPhotoRef =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )
 
 fun AlbumPhotoRef.toData(): AlbumPhotoCrossRefTable =
@@ -71,4 +72,5 @@ fun AlbumPhotoRef.toData(): AlbumPhotoCrossRefTable =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )
