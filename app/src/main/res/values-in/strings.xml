@@ -152,10 +152,6 @@
     <string name="settings_app_design_system_default">Bawaan Sistem</string>
     <string name="settings_app_design_system_light">Terang</string>
     <string name="settings_app_design_system_dark">Gelap</string>
-
-    <string name="settings_category_gallery">Galeri</string>
-    <string name="settings_gallery_auto_fullscreen_title">Layar Penuh Otomatis</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Masuk mode layar penuh saat membuka file</string>
     <string name="settings_gallery_start_page_title">Halaman awal</string>
 
     <string name="settings_category_security">Keamanan</string>

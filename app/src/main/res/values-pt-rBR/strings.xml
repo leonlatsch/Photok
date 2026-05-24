@@ -153,10 +153,6 @@
     <string name="settings_app_design_system_default">Adaptado do sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
     <string name="settings_app_design_system_dark">Escuro</string>
-
-    <string name="settings_category_gallery">Galeria</string>
-    <string name="settings_gallery_auto_fullscreen_title">Auto tela completa</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entrar no modo de tela completa ao abrir um arquivo</string>
     <string name="settings_gallery_start_page_title">Página inicial</string>
 
     <string name="settings_category_security">Segurança</string>

@@ -151,10 +151,6 @@
     <string name="settings_app_design_system_default">فون جیسا</string>
     <string name="settings_app_design_system_light">لائٹ (روشن)</string>
     <string name="settings_app_design_system_dark">ڈارک (اندھیرا)</string>
-
-    <string name="settings_category_gallery">گیلری</string>
-    <string name="settings_gallery_auto_fullscreen_title">خود بخود پوری اسکرین</string>
-    <string name="settings_gallery_auto_fullscreen_summary">فائل کھولتے ہی پوری اسکرین پر دکھائیں</string>
     <string name="settings_gallery_start_page_title">پہلا صفحہ</string>
 
     <string name="settings_category_security">حفاظت</string>

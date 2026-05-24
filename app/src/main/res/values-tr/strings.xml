@@ -134,10 +134,6 @@
     <string name="settings_app_design_system_default">Sistem Varsayılanı</string>
     <string name="settings_app_design_system_light">Açık</string>
     <string name="settings_app_design_system_dark">Koyu</string>
-
-    <string name="settings_category_gallery">Galeri</string>
-    <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
     <string name="settings_gallery_start_page_title">Başlangıç Sayfası</string>
 
     <string name="settings_category_security">Güvenlik</string>
