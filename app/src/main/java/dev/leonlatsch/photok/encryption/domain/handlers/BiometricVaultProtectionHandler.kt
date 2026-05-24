@@ -69,9 +69,9 @@ class BiometricVaultProtectionHandler @Inject constructor(
         val unlockedCipher = unlockCipher(
             fragment = request.fragment,
             cipher = cipher,
-            title = resources.getString(R.string.biometric_unlock_setup_title),
-            subtitle = resources.getString(R.string.biometric_unlock_setup_subtitle),
-            negativeButtonText = resources.getString(R.string.common_cancel),
+            title = resources.getString(R.string.biometric_unlock_title),
+            subtitle = resources.getString(R.string.biometric_unlock_subtitle),
+            negativeButtonText = resources.getString(R.string.biometric_unlock_cancel),
         ).getOrThrow()
 
         val vmkBytes = unlockedCipher.doFinal(protection.wrappedVMK)
