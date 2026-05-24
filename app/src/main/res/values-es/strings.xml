@@ -154,10 +154,6 @@
     <string name="settings_app_design_system_default">Por defecto del sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
     <string name="settings_app_design_system_dark">Oscuro</string>
-
-    <string name="settings_category_gallery">Galería</string>
-    <string name="settings_gallery_auto_fullscreen_title">Pantalla completa automática</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Ingresar al modo de pantalla completa al abrir una foto</string>
     <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Seguridad</string>

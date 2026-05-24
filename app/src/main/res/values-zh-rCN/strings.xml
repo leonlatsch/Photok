@@ -152,10 +152,6 @@
     <string name="settings_app_design_system_default">系统默认</string>
     <string name="settings_app_design_system_light">浅色</string>
     <string name="settings_app_design_system_dark">深色</string>
-
-    <string name="settings_category_gallery">图库</string>
-    <string name="settings_gallery_auto_fullscreen_title">自动全屏</string>
-    <string name="settings_gallery_auto_fullscreen_summary">打开文件时进入全屏模式</string>
     <string name="settings_gallery_start_page_title">启动页</string>
 
     <string name="settings_category_security">安全</string>

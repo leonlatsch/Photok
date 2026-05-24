@@ -154,10 +154,6 @@
     <string name="settings_app_design_system_default">System Standard</string>
     <string name="settings_app_design_system_light">Hell</string>
     <string name="settings_app_design_system_dark">Dunkel</string>
-
-    <string name="settings_category_gallery">Galerie</string>
-    <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen einer Datei</string>
     <string name="settings_gallery_start_page_title">Startseite</string>
 
     <string name="settings_category_security">Sicherheit</string>
