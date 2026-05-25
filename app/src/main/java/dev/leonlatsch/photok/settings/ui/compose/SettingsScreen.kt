@@ -253,7 +253,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
     if (showRecoveryPhraseSheet) {
         RecoveryPhraseSheet(
-            onDismiss = { showRecoveryPhraseSheet = false },
+            onDismissRequest = { showRecoveryPhraseSheet = false },
         )
     }
 }

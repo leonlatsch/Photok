@@ -136,7 +136,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     AppTheme {
                         if (showRecoveryPhraseSheet) {
                             RecoveryPhraseSheet(
-                                onDismiss = {
+                                onDismissRequest = {
                                     showRecoveryPhraseSheet = false
                                     navigateToGallery()
                                 },

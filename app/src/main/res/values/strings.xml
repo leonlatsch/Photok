@@ -164,9 +164,6 @@
     <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string>
     <string name="settings_security_recovery_phrase_title">Recovery Phrase</string>
     <string name="settings_security_recovery_phrase_summary">View or regenerate your recovery phrase.</string>
-    <string name="recovery_phrase_title">Your Recovery Phrase</string>
-    <string name="recovery_phrase_description">Write down these words in order and keep them safe. You can use this phrase to recover access to your vault.</string>
-    <string name="recovery_phrase_confirm">I\'ve saved my recovery phrase</string>
     <string name="settings_security_timeout_title">Automatic Lock Timeout</string>
     <string name="settings_security_timeout_summary">Automatic lock after given time in background</string>
     <string name="settings_security_timeout_immediately">Immediately</string>
@@ -354,4 +351,9 @@
     <string name="telemetry_choice_no">No thanks</string>
     <string name="telemetry_choice_yes">Share anonymous usage data</string>
     <string name="telemetry_toggle">Allow collection of usage data</string>
+
+    <!-- Recovery Phrase -->
+    <string name="recovery_phrase_title">Your Recovery Phrase</string>
+    <string name="recovery_phrase_description">Write down these words in order and keep them safe. You can use this phrase to recover access to your vault.</string>
+    <string name="recovery_phrase_confirm">I\'ve saved my recovery phrase</string>
 </resources>

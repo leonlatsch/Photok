@@ -23,10 +23,12 @@ import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+data class RecoveryPhraseUiState(val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()))
 
 @HiltViewModel
 class RecoveryPhraseViewModel @Inject constructor(
@@ -34,18 +36,16 @@ class RecoveryPhraseViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
 ) : ViewModel() {
 
-    sealed interface UiState {
-        data object Loading : UiState
-        data class Loaded(val phrase: RecoveryPhrase) : UiState
-    }
+    private val _uiState = MutableStateFlow(RecoveryPhraseUiState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
-
-    fun load() = viewModelScope.launch {
-        _uiState.value = UiState.Loading
-        val session = runCatching { sessionRepository.require() }.getOrNull() ?: return@launch
-        val phrase = recoveryPhraseStore.load(session) ?: return@launch
-        _uiState.value = UiState.Loaded(phrase)
+    init {
+        viewModelScope.launch {
+            val session = runCatching { sessionRepository.require() }.getOrNull() ?: return@launch
+            val phrase = recoveryPhraseStore.load(session) ?: return@launch
+            _uiState.update {
+                it.copy(phrase = phrase)
+            }
+        }
     }
 }

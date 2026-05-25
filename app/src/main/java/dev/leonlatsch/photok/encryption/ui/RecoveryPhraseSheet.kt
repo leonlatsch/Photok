@@ -29,16 +29,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -46,54 +46,71 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseSheet(
-    onDismiss: () -> Unit,
-    viewModel: RecoveryPhraseViewModel = hiltViewModel(),
+    onDismissRequest: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.load()
-    }
-
-    val uiState by viewModel.uiState.collectAsState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
 
     ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        onDismissRequest = onDismissRequest,
+        sheetState = sheetState,
     ) {
-        when (val state = uiState) {
-            RecoveryPhraseViewModel.UiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    contentAlignment = Alignment.Center,
+        RecoveryPhraseScreen(
+            actions = {
+                Button(
+                    onClick = {
+                        scope.launch {
+                            sheetState.hide()
+                        }.invokeOnCompletion {
+                            onDismissRequest()
+                        }
+                    }
                 ) {
-                    CircularProgressIndicator()
+                    Text(text = stringResource(R.string.recovery_phrase_confirm))
                 }
             }
-
-            is RecoveryPhraseViewModel.UiState.Loaded -> {
-                PhraseContent(phrase = state.phrase, onDismiss = onDismiss)
-            }
-        }
+        )
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun PhraseContent(phrase: RecoveryPhrase, onDismiss: () -> Unit) {
+fun RecoveryPhraseScreen(
+    actions: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val viewModel: RecoveryPhraseViewModel = hiltViewModel()
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    Content(
+        phrase = uiState.phrase,
+        actions = actions,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun Content(
+    phrase: RecoveryPhrase,
+    actions: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(R.string.recovery_phrase_title),
@@ -125,12 +142,7 @@ private fun PhraseContent(phrase: RecoveryPhrase, onDismiss: () -> Unit) {
 
         Spacer(Modifier.height(32.dp))
 
-        Button(
-            onClick = onDismiss,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(stringResource(R.string.recovery_phrase_confirm))
-        }
+        actions()
     }
 }
 
@@ -164,33 +176,28 @@ private fun WordChip(number: Int, word: String) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun Preview() {
     AppTheme {
-        ModalBottomSheet(
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            onDismissRequest = {},
-        ) {
-            PhraseContent(
+        Scaffold {
+            Content(
                 phrase = RecoveryPhrase(
-                    listOf(
-                        "this",
-                        "may",
-                        "be",
-                        "any",
-                        "phrase",
-                        "you",
-                        "want",
-                        "to",
-                        "use",
-                        "in",
-                        "preview",
-                        "mode"
-                    ),
-                )
-            ) { }
+                    words = listOf(
+                        "word1",
+                        "word2",
+                        "word3",
+                        "word4",
+                        "word5",
+                        "word6",
+                        "word7",
+                        "word8",
+                        "word9",
+                    )
+                ),
+                actions = {},
+                modifier = Modifier.padding(it),
+            )
         }
     }
 }
