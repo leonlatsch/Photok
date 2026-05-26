@@ -20,19 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseScreen
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @AndroidEntryPoint
@@ -46,24 +38,11 @@ class RecoveryPhraseSetupFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    Scaffold { contentPadding ->
-                        RecoveryPhraseScreen(
-                            actions = {
-                                Button(
-                                    onClick = {
-                                        findNavController().navigate(
-                                            R.id.action_recoveryPhraseSetupFragment_to_galleryFragment
-                                        )
-                                    }
-                                ) {
-                                    Text(text = stringResource(R.string.recovery_phrase_confirm))
-                                }
-                            },
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(contentPadding)
-                        )
-                    }
+                    RecoveryPhraseSetupScreen(
+                        onContinue = {
+                            findNavController().navigate(R.id.action_recoveryPhraseSetupFragment_to_galleryFragment)
+                        }
+                    )
                 }
             }
         }

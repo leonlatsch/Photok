@@ -32,7 +32,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -44,12 +43,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -60,89 +57,74 @@ fun RecoveryPhraseSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
-    ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        sheetState = sheetState,
-    ) {
-        RecoveryPhraseScreen(
-            actions = {
-                Button(
-                    onClick = {
-                        scope.launch {
-                            sheetState.hide()
-                        }.invokeOnCompletion {
-                            onDismissRequest()
-                        }
-                    }
-                ) {
-                    Text(text = stringResource(R.string.recovery_phrase_confirm))
-                }
-            }
-        )
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun RecoveryPhraseScreen(
-    actions: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-) {
     val viewModel: RecoveryPhraseViewModel = hiltViewModel()
 
     val uiState by viewModel.uiState.collectAsState()
 
-    Content(
-        phrase = uiState.phrase,
-        actions = actions,
-        modifier = modifier,
-    )
+    ModalBottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = sheetState,
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = stringResource(R.string.recovery_phrase_title),
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.recovery_phrase_description),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(24.dp))
+
+            RecoveryPhraseFlowRow(
+                phrase = uiState.phrase,
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            Button(
+                onClick = {
+                    scope.launch {
+                        sheetState.hide()
+                    }.invokeOnCompletion {
+                        onDismissRequest()
+                    }
+                }
+            ) {
+                Text(text = stringResource(R.string.recovery_phrase_confirm))
+            }
+        }
+    }
 }
 
 @Composable
-fun Content(
+fun RecoveryPhraseFlowRow(
     phrase: RecoveryPhrase,
-    actions: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+    FlowRow(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        maxItemsInEachRow = 3,
     ) {
-        Text(
-            text = stringResource(R.string.recovery_phrase_title),
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center,
-        )
-
-        Spacer(Modifier.height(8.dp))
-
-        Text(
-            text = stringResource(R.string.recovery_phrase_description),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
-
-        Spacer(Modifier.height(24.dp))
-
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            maxItemsInEachRow = 3,
-        ) {
-            phrase.words.forEachIndexed { index, word ->
-                WordChip(number = index + 1, word = word)
-            }
+        phrase.words.forEachIndexed { index, word ->
+            WordChip(number = index + 1, word = word)
         }
-
-        Spacer(Modifier.height(32.dp))
-
-        actions()
     }
 }
 
@@ -171,32 +153,6 @@ private fun WordChip(number: Int, word: String) {
                 text = word,
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
                 color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    AppTheme {
-        Scaffold {
-            Content(
-                phrase = RecoveryPhrase(
-                    words = listOf(
-                        "word1",
-                        "word2",
-                        "word3",
-                        "word4",
-                        "word5",
-                        "word6",
-                        "word7",
-                        "word8",
-                        "word9",
-                    )
-                ),
-                actions = {},
-                modifier = Modifier.padding(it),
             )
         }
     }
