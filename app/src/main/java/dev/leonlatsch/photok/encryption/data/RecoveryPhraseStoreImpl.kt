@@ -25,6 +25,12 @@ import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -61,10 +67,27 @@ class RecoveryPhraseStoreImpl @Inject constructor(
         }
     }
 
-    override fun load(session: VaultSession): RecoveryPhrase? {
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    override fun observe(session: VaultSession): Flow<RecoveryPhrase?> = callbackFlow {
+        send(load(session))
+
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+            scope.launch { send(load(session)) }
+        }
+
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+
+        awaitClose {
+            prefs.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
+
+    private fun load(session: VaultSession): RecoveryPhrase? {
         val ivStr = prefs.getString(KEY_IV, null) ?: return null
         val ciphertextStr = prefs.getString(KEY_CIPHERTEXT, null) ?: return null
-        return runCatching {
+
+        return try {
             val iv = Base64.decode(ivStr)
             val ciphertext = Base64.decode(ciphertextStr)
             val cipher = Cipher.getInstance(Algorithm.AesCbcPkcs7Padding.value).apply {
@@ -72,8 +95,8 @@ class RecoveryPhraseStoreImpl @Inject constructor(
             }
             val plaintext = cipher.doFinal(ciphertext)
             RecoveryPhrase(String(plaintext, Charsets.UTF_8).split(" "))
-        }.getOrElse {
-            Timber.e(it, "Failed to load recovery phrase")
+        } catch(e: Exception) {
+            Timber.e(e, "Failed to load recovery phrase")
             null
         }
     }

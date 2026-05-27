@@ -18,10 +18,11 @@ package dev.leonlatsch.photok.encryption.domain
 
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import kotlinx.coroutines.flow.Flow
 
 interface RecoveryPhraseStore {
 
     fun store(phrase: RecoveryPhrase, session: VaultSession)
-    fun load(session: VaultSession): RecoveryPhrase?
+    fun observe(session: VaultSession): Flow<RecoveryPhrase?>
     fun clear()
 }

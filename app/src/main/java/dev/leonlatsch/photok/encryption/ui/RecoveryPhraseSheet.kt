@@ -57,7 +57,7 @@ fun RecoveryPhraseSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
-    val viewModel: RecoveryPhraseViewModel = hiltViewModel()
+    val viewModel: ViewRecoveryPhraseViewModel = hiltViewModel()
 
     val uiState by viewModel.uiState.collectAsState()
 

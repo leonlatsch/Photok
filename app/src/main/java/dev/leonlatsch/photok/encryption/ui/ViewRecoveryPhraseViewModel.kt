@@ -22,30 +22,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-data class RecoveryPhraseUiState(val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()))
+data class ViewRecoveryPhraseUiState(val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()))
 
 @HiltViewModel
-class RecoveryPhraseViewModel @Inject constructor(
-    private val recoveryPhraseStore: RecoveryPhraseStore,
-    private val sessionRepository: SessionRepository,
+class ViewRecoveryPhraseViewModel @Inject constructor(
+    recoveryPhraseStore: RecoveryPhraseStore,
+    sessionRepository: SessionRepository,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(RecoveryPhraseUiState())
-    val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            val session = runCatching { sessionRepository.require() }.getOrNull() ?: return@launch
-            val phrase = recoveryPhraseStore.load(session) ?: return@launch
-            _uiState.update {
-                it.copy(phrase = phrase)
-            }
-        }
-    }
+    val uiState = recoveryPhraseStore.observe(sessionRepository.require()).map {
+        ViewRecoveryPhraseUiState(
+            phrase = it ?: RecoveryPhrase(emptyList()),
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ViewRecoveryPhraseUiState())
 }
