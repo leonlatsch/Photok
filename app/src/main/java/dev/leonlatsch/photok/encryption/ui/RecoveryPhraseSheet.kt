@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -35,11 +37,16 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -47,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -92,6 +100,7 @@ fun RecoveryPhraseSheet(
 
             RecoveryPhraseFlowRow(
                 phrase = uiState.phrase,
+                animated = true,
             )
 
             Spacer(Modifier.height(32.dp))
@@ -114,8 +123,10 @@ fun RecoveryPhraseSheet(
 @Composable
 fun RecoveryPhraseFlowRow(
     phrase: RecoveryPhrase,
+    animated: Boolean,
     modifier: Modifier = Modifier,
 ) {
+
     FlowRow(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -123,15 +134,50 @@ fun RecoveryPhraseFlowRow(
         maxItemsInEachRow = 3,
     ) {
         phrase.words.forEachIndexed { index, word ->
-            WordChip(number = index + 1, word = word)
+            var show by remember(animated) {
+                mutableStateOf(!animated)
+            }
+
+            LaunchedEffect(Unit) {
+                if (animated) {
+                    delay(300L)
+
+                    delay((index.toLong() + 1) * 20)
+                    show = true
+                }
+            }
+
+            val scale by animateFloatAsState(
+                targetValue = if (show) 1f else 0f,
+                animationSpec = spring(
+                    dampingRatio = 0.6f,
+                    stiffness = 200f
+                ),
+                visibilityThreshold = 0.01f,
+            )
+
+
+            WordChip(
+                number = index + 1,
+                word = word,
+                modifier = Modifier.graphicsLayer {
+                    this.scaleX = scale
+                    this.scaleY = scale
+                    this.alpha = scale
+                }
+            )
         }
     }
 }
 
 @Composable
-private fun WordChip(number: Int, word: String) {
+private fun WordChip(
+    number: Int,
+    word: String,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(8.dp),

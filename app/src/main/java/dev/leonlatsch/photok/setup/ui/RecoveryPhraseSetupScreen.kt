@@ -25,10 +25,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,7 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -108,12 +113,45 @@ private fun Content(
 
             RecoveryPhraseFlowRow(
                 phrase = phrase,
+                animated = true,
             )
+
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                text = "Select Phrase Word Count"
+            )
+
+            SingleChoiceSegmentedButtonRow {
+                SegmentedButton(
+                    selected = true,
+                    onClick = {},
+                    shape = RoundedCornerShape(24.dp, 6.dp, 6.dp, 24.dp),
+                    colors = SegmentedButtonDefaults.colors(
+                        activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                    ),
+                ) {
+                    Text("12")
+                }
+                Spacer(Modifier.width(6.dp))
+                SegmentedButton(
+                    selected = false,
+                    onClick = {},
+                    shape = RoundedCornerShape(6.dp, 24.dp, 24.dp, 6.dp),
+                    colors = SegmentedButtonDefaults.colors(
+                        activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                    ),
+                ) {
+                    Text("24")
+                }
+            }
         }
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun Preview() {
     AppTheme {
