@@ -103,7 +103,8 @@ class RecoveryPhraseStoreImpl @Inject constructor(
 
     override fun clear() {
         prefs.edit {
-            remove(KEY_IV).remove(KEY_CIPHERTEXT)
+            remove(KEY_IV)
+            remove(KEY_CIPHERTEXT)
         }
     }
 }

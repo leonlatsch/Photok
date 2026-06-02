@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.setup.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -26,7 +28,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -46,9 +50,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseFlowRow
-import dev.leonlatsch.photok.encryption.ui.ViewRecoveryPhraseViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -56,20 +60,24 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RecoveryPhraseSetupScreen(
     onContinue: () -> Unit,
 ) {
-    // TODO: Make a new viewmodel for setting up the phrase. Can choose word count and download as txt, print, and copy to clipboard
+    // TODO: Can choose word count and download as txt, print, and copy to clipboard
     // TODO: Only allow continue if saved in any way
-    val viewModel: ViewRecoveryPhraseViewModel = hiltViewModel()
+    // TODO: Animate tap on word
+    // TODO: Handle small device (scroll?)
+    val viewModel: RecoveryPhraseSetupViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Content(
-        phrase = uiState.phrase,
+        uiState = uiState,
+        handleUiEvent = viewModel::handleUiEvent,
         onContinue = onContinue,
     )
 }
 
 @Composable
 private fun Content(
-    phrase: RecoveryPhrase,
+    uiState: RecoveryPhraseSetupUiState,
+    handleUiEvent: (RecoveryPhraseSetupUiEvent) -> Unit,
     onContinue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -109,14 +117,10 @@ private fun Content(
                 textAlign = TextAlign.Center,
             )
 
-            Spacer(Modifier.height(24.dp))
-
             RecoveryPhraseFlowRow(
-                phrase = phrase,
+                phrase = uiState.phrase,
                 animated = true,
             )
-
-            Spacer(Modifier.height(24.dp))
 
             Text(
                 text = "Select Phrase Word Count"
@@ -124,27 +128,31 @@ private fun Content(
 
             SingleChoiceSegmentedButtonRow {
                 SegmentedButton(
-                    selected = true,
-                    onClick = {},
+                    selected = uiState.inputs.wordCount == Bip39WordCount.Twelve,
+                    onClick = {
+                        handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
+                    },
                     shape = RoundedCornerShape(24.dp, 6.dp, 6.dp, 24.dp),
                     colors = SegmentedButtonDefaults.colors(
                         activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     ),
                 ) {
-                    Text("12")
+                    Text(Bip39WordCount.Twelve.words.toString())
                 }
                 Spacer(Modifier.width(6.dp))
                 SegmentedButton(
-                    selected = false,
-                    onClick = {},
+                    selected = uiState.inputs.wordCount == Bip39WordCount.TwentyFour,
+                    onClick = {
+                        handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
+                    },
                     shape = RoundedCornerShape(6.dp, 24.dp, 24.dp, 6.dp),
                     colors = SegmentedButtonDefaults.colors(
                         activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     ),
                 ) {
-                    Text("24")
+                    Text(Bip39WordCount.TwentyFour.words.toString())
                 }
             }
         }
@@ -156,22 +164,25 @@ private fun Content(
 private fun Preview() {
     AppTheme {
         Content(
-            phrase = RecoveryPhrase(
-                listOf(
-                    "this",
-                    "can",
-                    "be",
-                    "any",
-                    "words",
-                    "generated",
-                    "by",
-                    "photok",
-                    "and",
-                    "its",
-                    "always",
-                    "twelve"
+            uiState = RecoveryPhraseSetupUiState(
+                phrase = RecoveryPhrase(
+                    listOf(
+                        "this",
+                        "can",
+                        "be",
+                        "any",
+                        "words",
+                        "generated",
+                        "by",
+                        "photok",
+                        "and",
+                        "its",
+                        "always",
+                        "twelve"
+                    ),
                 ),
             ),
+            handleUiEvent = {},
             onContinue = {},
         )
     }
