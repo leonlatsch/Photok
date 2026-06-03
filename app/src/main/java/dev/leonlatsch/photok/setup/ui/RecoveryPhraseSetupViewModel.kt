@@ -29,7 +29,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -43,6 +42,7 @@ data class RecoveryPhraseSetupUiState(
     data class Inputs(
         val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
         val loading: Boolean = false,
+        val phraseWasSaved: Boolean = false,
     )
 }
 
