@@ -48,8 +48,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -132,7 +130,6 @@ fun RecoveryPhraseFlowRow(
     modifier: Modifier = Modifier,
 ) {
     val isPreview = LocalInspectionMode.current
-    val hapticFeedback = LocalHapticFeedback.current
 
     var words by remember {
         mutableStateOf(phrase?.words.orEmpty())
@@ -163,7 +160,6 @@ fun RecoveryPhraseFlowRow(
                     delay(300L)
 
                     delay((index.toLong() + 1) * 20)
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
                     show = true
                 }
             }

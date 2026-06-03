@@ -39,6 +39,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -91,6 +93,8 @@ private fun Content(
             }
         }
     ) { contentPadding ->
+        val hapticFeedback = LocalHapticFeedback.current
+
         Column(
             modifier = Modifier
                 .padding(contentPadding)
@@ -128,6 +132,7 @@ private fun Content(
                     selected = uiState.inputs.wordCount == Bip39WordCount.Twelve,
                     onClick = {
                         handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     },
                     shape = RoundedCornerShape(24.dp, 6.dp, 6.dp, 24.dp),
                     colors = SegmentedButtonDefaults.colors(
@@ -142,6 +147,7 @@ private fun Content(
                     selected = uiState.inputs.wordCount == Bip39WordCount.TwentyFour,
                     onClick = {
                         handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     },
                     shape = RoundedCornerShape(6.dp, 24.dp, 24.dp, 6.dp),
                     colors = SegmentedButtonDefaults.colors(
