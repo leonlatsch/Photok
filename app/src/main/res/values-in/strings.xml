@@ -117,7 +117,7 @@
     <string name="menu_ms_pin">Sematkan di atas</string>
     <string name="menu_ms_unpin">Lepas sematan</string>
     <string name="viewer_pin_confirmation">Disematkan di atas</string>
-    <string name="viewer_unpin_confirmation">Sematan dihapus</string>
+    <string name="viewer_unpin_confirmation">Sematan dilepas</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Kamu yakin ingin <b>menghapus</b> %1$d file?</string>
