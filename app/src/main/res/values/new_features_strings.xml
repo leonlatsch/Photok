@@ -16,16 +16,16 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="release_title_1" tools:ignore="MissingTranslation">A Completely New Gallery Experience</string>
-    <string name="release_summary_1" tools:ignore="MissingTranslation">The full-screen browsing was rebuild from the ground up. Smoother swiping, faster loading, and a much more fluid way to move through your photos.</string>
+    <string name="release_title_1" tools:ignore="MissingTranslation">Stronger Security, Smarter Password Changes</string>
+    <string name="release_summary_1" tools:ignore="MissingTranslation">Photok now uses a more secure way to protect your vault. Changing your password is now instant.</string>
 
-    <string name="release_title_2" tools:ignore="MissingTranslation">Major Video Performance Boost</string>
-    <string name="release_summary_2" tools:ignore="MissingTranslation">Videos now start faster, buffer smarter, and skip instantly. Playback feels noticeably smoother — especially on longer clips.</string>
+    <string name="release_title_2" tools:ignore="MissingTranslation">Pin Files to the Top of an Album</string>
+    <string name="release_summary_2" tools:ignore="MissingTranslation">Keep your most important photos and videos always within reach.</string>
 
-    <string name="release_title_3" tools:ignore="MissingTranslation">Sharper Thumbnails</string>
-    <string name="release_summary_3" tools:ignore="MissingTranslation">Crisper previews with better clarity — without increasing file size. Your gallery just looks better.</string>
+    <string name="release_title_3" tools:ignore="MissingTranslation">HEIC Image Support</string>
+    <string name="release_summary_3" tools:ignore="MissingTranslation">Photok now supports HEIC. A high-efficiency format used by many modern cameras and devices.</string>
 
-    <string name="release_title_4" tools:ignore="MissingTranslation">Quick Add to Albums</string>
-    <string name="release_summary_4" tools:ignore="MissingTranslation">Add photos to albums directly while viewing them full screen. No more jumping back and forth.</string>
+    <string name="release_title_4" tools:ignore="MissingTranslation">Redesigned Settings</string>
+    <string name="release_summary_4" tools:ignore="MissingTranslation">The settings screen has been redesigned with a clean, Pixel-inspired look.</string>
 
 </resources>

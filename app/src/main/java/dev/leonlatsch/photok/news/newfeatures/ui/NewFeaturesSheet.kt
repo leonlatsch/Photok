@@ -78,22 +78,22 @@ data class NewFeature(
 )
 private val NewFeatures = listOf(
     NewFeature(
-        image = R.drawable.ic_image,
+        image = R.drawable.ic_key,
         title = R.string.release_title_1,
         summary = R.string.release_summary_1,
     ),
     NewFeature(
-        image = R.drawable.ic_video_library,
+        image = R.drawable.ic_pin,
         title = R.string.release_title_2,
         summary = R.string.release_summary_2,
     ),
     NewFeature(
-        image = R.drawable.ic_gallery_thumbnail,
+        image = R.drawable.ic_png,
         title = R.string.release_title_3,
         summary = R.string.release_summary_3,
     ),
     NewFeature(
-        image = R.drawable.ic_folder,
+        image = R.drawable.ic_settings,
         title = R.string.release_title_4,
         summary = R.string.release_summary_4,
     ),
@@ -103,7 +103,7 @@ private val NewFeatures = listOf(
  * Increase for this Dialog to show on the next update.
  * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
  */
-const val FEATURE_VERSION_CODE = 12
+const val FEATURE_VERSION_CODE = 13
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
