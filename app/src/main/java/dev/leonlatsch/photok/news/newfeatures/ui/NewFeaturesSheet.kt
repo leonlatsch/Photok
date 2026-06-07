@@ -71,33 +71,32 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-data class NewFeature(
+enum class NewFeature(
     val image: Int,
     val title: Int,
     val summary: Int
-)
-private val NewFeatures = listOf(
-    NewFeature(
+) {
+    NewFeature1(
         image = R.drawable.ic_key,
         title = R.string.release_title_1,
         summary = R.string.release_summary_1,
     ),
-    NewFeature(
+    NewFeature2(
         image = R.drawable.ic_pin,
         title = R.string.release_title_2,
         summary = R.string.release_summary_2,
     ),
-    NewFeature(
+    NewFeature3(
         image = R.drawable.ic_png,
         title = R.string.release_title_3,
         summary = R.string.release_summary_3,
     ),
-    NewFeature(
+    NewFeature4(
         image = R.drawable.ic_settings,
         title = R.string.release_title_4,
         summary = R.string.release_summary_4,
     ),
-)
+}
 
 /**
  * Increase for this Dialog to show on the next update.
@@ -171,7 +170,7 @@ fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Uni
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        for (feature in NewFeatures) {
+                        for (feature in NewFeature.entries) {
                             NewFeatureRow(
                                 feature = feature,
                             )
