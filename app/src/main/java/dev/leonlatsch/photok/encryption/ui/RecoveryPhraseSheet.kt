@@ -187,7 +187,7 @@ fun RecoveryPhraseFlowRow(
 }
 
 @Composable
-private fun WordChip(
+internal fun WordChip(
     number: Int,
     word: String,
     modifier: Modifier = Modifier,
