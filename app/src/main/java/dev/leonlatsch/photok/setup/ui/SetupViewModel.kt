@@ -75,13 +75,6 @@ class SetupViewModel @Inject constructor(
 
     // endregion
 
-    /**
-     * Save the password to database.
-     * Validates both passwords.
-     * Hashes and saves the password.
-     * Initializes [EncryptionManager].
-     * Called by ui.
-     */
     fun onSetupClicked() = viewModelScope.launch {
 
         if (validateBothPasswords()) {
