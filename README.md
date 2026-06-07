@@ -70,11 +70,11 @@ These analytics are never used for advertising or cross-app tracking.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-62%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
 ![Dutch](https://img.shields.io/badge/Dutch-62%25-orange)
 ![French](https://img.shields.io/badge/French-100%25-brightgreen)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-93%25-yellow)
+![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
 ![Italian](https://img.shields.io/badge/Italian-86%25-yellow)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-100%25-brightgreen)
 ![Russian](https://img.shields.io/badge/Russian-70%25-orange)
