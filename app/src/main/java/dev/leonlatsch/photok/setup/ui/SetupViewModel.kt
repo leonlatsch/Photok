@@ -28,6 +28,8 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,6 +47,7 @@ class SetupViewModel @Inject constructor(
     private val config: Config,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val telemetryService: TelemetryService,
 ) : ObservableViewModel(app) {
 
     //region binding properties
@@ -90,6 +93,7 @@ class SetupViewModel @Inject constructor(
                     sessionRepository.set(session)
 
                     config.justFinishedSetup = true
+                    telemetryService.signal(Signal.SetupCompleted)
                     setupState = SetupState.FINISHED
                 }
                 .onFailure {
