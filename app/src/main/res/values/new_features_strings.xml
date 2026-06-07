@@ -16,7 +16,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="release_title_1" tools:ignore="MissingTranslation">Stronger Security, Smarter Password Changes</string>
+    <string name="release_title_1" tools:ignore="MissingTranslation">Stronger Security, Faster Password Changes</string>
     <string name="release_summary_1" tools:ignore="MissingTranslation">Photok now uses a more secure way to protect your vault. Changing your password is now instant.</string>
 
     <string name="release_title_2" tools:ignore="MissingTranslation">Pin Files to the Top of an Album</string>
