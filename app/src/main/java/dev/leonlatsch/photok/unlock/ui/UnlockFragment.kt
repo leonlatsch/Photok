@@ -129,6 +129,14 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             }
         }
 
+        lifecycleScope.launch {
+            if (vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                binding.unlockForgotPassword.show()
+            } else {
+                binding.unlockForgotPassword.hide()
+            }
+        }
+
         // Overlay for the recovery phrase sheet (Compose embedded into the fragment's XML view)
         (view as? android.view.ViewGroup)?.addView(
             ComposeView(requireContext()).apply {
@@ -159,6 +167,14 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     private fun showErrorToast() {
         binding.loadingOverlay.hide()
         Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+    }
+
+    fun forgotPassword() {
+        try {
+            findNavController().navigate(R.id.action_unlockFragment_to_recoveryPhraseRestoreFragment)
+        } catch (e: Exception) {
+            showErrorToast()
+        }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

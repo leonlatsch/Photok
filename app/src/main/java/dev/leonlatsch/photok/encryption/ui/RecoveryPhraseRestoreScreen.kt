@@ -82,50 +82,53 @@ private data class AnimatedWord(
 fun RecoveryPhraseRestoreScreen(
     onRestore: (words: List<String>) -> Unit = {},
 ) {
-    var words by remember { mutableStateOf(listOf<String>()) }
+    AppTheme {
 
-    Scaffold(
-        bottomBar = {
-            Button(
-                onClick = { onRestore(words) },
-                enabled = words.isNotEmpty(),
+        var words by remember { mutableStateOf(listOf<String>()) }
+
+        Scaffold(
+            bottomBar = {
+                Button(
+                    onClick = { onRestore(words) },
+                    enabled = words.isNotEmpty(),
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding()
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(text = stringResource(R.string.recovery_phrase_restore_button))
+                }
+            },
+            contentWindowInsets = WindowInsets.safeDrawing,
+        ) { contentPadding ->
+            Column(
                 modifier = Modifier
-                    .navigationBarsPadding()
-                    .imePadding()
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(contentPadding)
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                Text(text = stringResource(R.string.recovery_phrase_restore_button))
+                Text(
+                    text = stringResource(R.string.recovery_phrase_restore_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                Text(
+                    text = stringResource(R.string.recovery_phrase_restore_description),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+
+                Spacer(Modifier.height(24.dp))
+
+                RecoveryPhraseInputField(onWordsChanged = { words = it })
             }
-        },
-        contentWindowInsets = WindowInsets.safeDrawing,
-    ) { contentPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Text(
-                text = stringResource(R.string.recovery_phrase_restore_title),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
-            )
-
-            Spacer(Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(R.string.recovery_phrase_restore_description),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
-
-            Spacer(Modifier.height(24.dp))
-
-            RecoveryPhraseInputField(onWordsChanged = { words = it })
         }
     }
 }
@@ -173,7 +176,7 @@ private fun RecoveryPhraseInputField(
                 AnimatedVisibility(
                     visible = word.visible && !word.removing,
                     enter = slideInHorizontally { it } + fadeIn(animationSpec = tween(120)),
-                    exit = slideOutHorizontally { it  } + fadeOut(animationSpec = tween(150)),
+                    exit = slideOutHorizontally { it } + fadeOut(animationSpec = tween(150)),
                 ) {
                     WordChip(
                         number = index + 1,
@@ -287,9 +290,7 @@ private fun WordInputChip(
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    AppTheme {
-        RecoveryPhraseRestoreScreen()
-    }
+    RecoveryPhraseRestoreScreen()
 }
 
 @PreviewLightDark
