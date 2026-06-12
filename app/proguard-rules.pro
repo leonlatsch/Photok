@@ -14,6 +14,7 @@
 -keepclassmembers class dev.leonlatsch.photok.** {
     <fields>;
 }
+-keep class dev.leonlatsch.photok.**
 
 # Keep TypeToken
 -keep class com.google.gson.reflect.TypeToken { *; }

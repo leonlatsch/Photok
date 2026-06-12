@@ -28,7 +28,8 @@ import javax.inject.Singleton
 private const val TelemetryDeckAppId = "C2F73045-3C8D-4912-951B-FE9894262E86" // Not a secret. Fine to have in code
 
 enum class Signal {
-    OnboardingFinished
+    OnboardingFinished,
+    SetupCompleted,
 }
 
 @Singleton
