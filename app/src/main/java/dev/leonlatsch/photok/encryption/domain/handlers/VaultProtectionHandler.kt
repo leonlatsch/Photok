@@ -26,5 +26,8 @@ interface VaultProtectionHandler<URT : UnlockRequest, CRT: CreateRequest> {
     suspend fun create(request: CRT): VaultProtection
     suspend fun canMigrate(): Boolean
     suspend fun migrate(request: URT): VaultProtection
+
+    suspend fun onMigrationPersisted() {}
+
     suspend fun reset()
 }

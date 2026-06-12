@@ -86,15 +86,7 @@ val PreferenceScreenConfigContent = buildList {
                     title = R.string.settings_app_design_title,
                     default = SYSTEM_DESIGN_DEFAULT,
                     possibleValues = SystemDesignEnum.entries,
-                )
-            )
-        )
-    )
-    add(
-        PreferenceSection(
-            title = R.string.settings_category_gallery,
-            summary = null,
-            preferences = listOf(
+                ),
                 Preference.Enum(
                     key = GALLERY_START_PAGE,
                     icon = R.drawable.ic_gallery_thumbnail,
@@ -166,12 +158,6 @@ val PreferenceScreenConfigContent = buildList {
             summary = R.string.settings_category_advanced_summary,
             preferences = listOf(
                 Preference.Simple(
-                    key = SettingsFragment.KEY_ACTION_RESET,
-                    icon = R.drawable.ic_warning,
-                    title = R.string.settings_advanced_reset_title,
-                    summary = R.string.settings_advanced_reset_summary,
-                ),
-                Preference.Simple(
                     SettingsFragment.KEY_ACTION_BACKUP,
                     icon = R.drawable.ic_save_as,
                     title = R.string.settings_advanced_backup_title,
@@ -190,6 +176,12 @@ val PreferenceScreenConfigContent = buildList {
                     title = R.string.settings_advanced_delete_exported_title,
                     summary = R.string.settings_advanced_delete_exported_summary,
                     default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_RESET,
+                    icon = R.drawable.ic_warning,
+                    title = R.string.settings_advanced_reset_title,
+                    summary = R.string.settings_advanced_reset_summary,
                 ),
             ),
         )

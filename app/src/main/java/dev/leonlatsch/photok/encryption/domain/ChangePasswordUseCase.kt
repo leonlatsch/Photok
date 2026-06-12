@@ -43,8 +43,8 @@ class ChangePasswordUseCase @Inject constructor(
         val newKek = keyGen.derivePasswordKeyEncryptionKey(
             password = newPassword,
             salt = newSalt,
-            kdf = currentProtection.params.kdf!!,
-            kdfIterations = currentProtection.params.kdfIterations!!,
+            kdf = requireNotNull(currentProtection.params.kdf) { "Password protection is missing KDF" },
+            kdfIterations = requireNotNull(currentProtection.params.kdfIterations) { "Password protection is missing KDF iterations" },
             keySize = currentProtection.params.keySize,
         )
 

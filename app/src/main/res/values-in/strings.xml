@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d item dipilih</string>
     <string name="menu_ms_add_to_album">Tambahkan ke album</string>
     <string name="menu_ms_remove_from_album">Hapus dari album</string>
+    <string name="menu_ms_pin">Sematkan di atas</string>
+    <string name="menu_ms_unpin">Lepas sematan</string>
+    <string name="viewer_pin_confirmation">Disematkan di atas</string>
+    <string name="viewer_unpin_confirmation">Sematan dilepas</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Kamu yakin ingin <b>menghapus</b> %1$d file?</string>
@@ -148,15 +152,11 @@
     <string name="settings_app_design_system_default">Bawaan Sistem</string>
     <string name="settings_app_design_system_light">Terang</string>
     <string name="settings_app_design_system_dark">Gelap</string>
-
-    <string name="settings_category_gallery">Galeri</string>
-    <string name="settings_gallery_auto_fullscreen_title">Layar Penuh Otomatis</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Masuk mode layar penuh saat membuka file</string>
     <string name="settings_gallery_start_page_title">Halaman awal</string>
 
     <string name="settings_category_security">Keamanan</string>
     <string name="settings_security_allow_screenshots_title">Izinkan Tangkapan Layar</string>
-    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar. Perlu memulai ulang Photok.</string>
+    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar. Perlu memulai ulang.</string>
     <string name="settings_security_change_password_title">Ganti Kata Sandi</string>
     <string name="settings_security_change_password_summary">Ganti kata sandimu</string>
     <string name="settings_security_biometric_title">Buka Kunci Biometrik</string>
@@ -204,8 +204,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Kredit</string>
     <string name="settings_other_credits_summary">Kontributor dan kredit</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Pengumpulan data</string>
+    <string name="settings_other_telemetry_summary">Kelola pengumpulan data penggunaan</string>
     <string name="settings_other_about_title">Tentang</string>
     <string name="settings_other_about_summary">Informasi tentang Photok</string>
 
@@ -224,9 +224,9 @@
     <string name="change_password_button">Ganti Kata Sandi</string>
     <string name="change_password_confirm_message">Cadangan direkomendasikan!<br /> Mengganti kata sandi mengharuskan enkripsi ulang semua filemu! Lanjutkan?</string>
     <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
+    <string name="change_password_done">Kata sandi berhasil diganti</string>
 
-    <!-- CHECk PASSWORD -->
+    <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verifikasi Kata Sandi</string>
 
     <!-- HIDE APP -->
@@ -265,7 +265,7 @@
     <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
     <string name="backup_restore_processing">Memulihkan Cadangan…</string>
     <string name="backup_unlock_title">Buka Kunci Cadangan</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Konfirmasi kata sandimu untuk membuat cadangan.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Baru di</string>
@@ -341,12 +341,12 @@
     <string name="video_player_unmute">Aktifkan Suara</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Bantu tingkatkan Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok dapat mengirimkan statistik penggunaan anonim secara opsional untuk membantu meningkatkan aplikasi.</string>
+    <string name="telemetry_sheet_paragraph_2">Data yang diproses sepenuhnya dianonimkan dan tidak memungkinkan penarikan kesimpulan tentang informasi pribadi.</string>
+    <string name="telemetry_sheet_paragraph_3">Pengiriman data penggunaan anonim bersifat opsional dan dapat dimatikan kapan saja di pengaturan.</string>
+    <string name="telemetry_learn_more">Pelajari lebih lanjut</string>
+    <string name="telemetry_choice_no">Tidak, terima kasih</string>
+    <string name="telemetry_choice_yes">Bagikan data penggunaan anonim</string>
+    <string name="telemetry_toggle">Izinkan pengumpulan data penggunaan</string>
 </resources>

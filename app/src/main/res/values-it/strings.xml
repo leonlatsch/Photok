@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d elemento(i) selezionati</string>
     <string name="menu_ms_add_to_album">Aggiungi ad un album</string>
     <string name="menu_ms_remove_from_album">Rimuovi dall\'album</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Sei sicuro di voler <b>eliminare</b> %1$d file?</string>
@@ -148,10 +152,6 @@
     <string name="settings_app_design_system_default">Impostazione di sistema</string>
     <string name="settings_app_design_system_light">Chiaro</string>
     <string name="settings_app_design_system_dark">Scuro</string>
-
-    <string name="settings_category_gallery">Galleria</string>
-    <string name="settings_gallery_auto_fullscreen_title">Schermo intero automatico</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entra in modalità a schermo intero quando apri un file</string>
     <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Sicurezza</string>

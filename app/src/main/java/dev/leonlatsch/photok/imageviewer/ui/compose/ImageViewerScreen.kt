@@ -30,7 +30,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -102,10 +105,13 @@ fun ImageViewerScreen(
         }
 
         val pagerState = rememberPagerState { uiState.items.size }
+        var anchoredPhotoUuid by rememberSaveable(photoUuid) { mutableStateOf(photoUuid) }
+        var pagerInitialized by rememberSaveable(photoUuid) { mutableStateOf(false) }
 
         val currentItem by remember {
             derivedStateOf {
-                uiState.items.getOrNull(pagerState.settledPage)
+                uiState.items.find { it.photo.uuid == anchoredPhotoUuid }
+                    ?: uiState.items.getOrNull(pagerState.settledPage)
             }
         }
 
@@ -122,14 +128,26 @@ fun ImageViewerScreen(
             }
         }
 
-        LaunchedEffect(uiState.items.size) {
-            if (uiState.items.isNotEmpty()) {
-                val initial = uiState.items.find { it.photo.uuid == photoUuid }
-                initial ?: return@LaunchedEffect
+        LaunchedEffect(uiState.items, anchoredPhotoUuid) {
+            val targetIndex = uiState.items.indexOfFirst { it.photo.uuid == anchoredPhotoUuid }
+            if (targetIndex < 0) {
+                return@LaunchedEffect
+            }
 
-                pagerState.scrollToPage(
-                    uiState.items.indexOf(initial)
-                )
+            if (!pagerInitialized || pagerState.currentPage != targetIndex) {
+                pagerState.scrollToPage(targetIndex)
+            }
+
+            pagerInitialized = true
+        }
+
+        LaunchedEffect(pagerState.settledPage, pagerInitialized) {
+            if (!pagerInitialized) {
+                return@LaunchedEffect
+            }
+
+            uiState.items.getOrNull(pagerState.settledPage)?.photo?.uuid?.let {
+                anchoredPhotoUuid = it
             }
         }
 

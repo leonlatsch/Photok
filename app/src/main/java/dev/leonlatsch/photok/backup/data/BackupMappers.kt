@@ -60,6 +60,7 @@ fun AlbumPhotoRef.toBackup(): AlbumPhotoRefBackup =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )
 
 fun AlbumPhotoRefBackup.toDomain(): AlbumPhotoRef =
@@ -67,4 +68,5 @@ fun AlbumPhotoRefBackup.toDomain(): AlbumPhotoRef =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )

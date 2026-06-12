@@ -115,6 +115,10 @@
     <string name="menu_ms_info">%1$d Element(e) ausgewählt</string>
     <string name="menu_ms_add_to_album">Zu Album hinzufügen</string>
     <string name="menu_ms_remove_from_album">Aus Album entfernen</string>
+    <string name="menu_ms_pin">Oben anheften</string>
+    <string name="menu_ms_unpin">Lösen</string>
+    <string name="viewer_pin_confirmation">Oben angeheftet</string>
+    <string name="viewer_unpin_confirmation">Anheftung entfernt</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Bist du sicher, dass du %1$d Dateien <b>löschen</b> willst?</string>
@@ -150,10 +154,6 @@
     <string name="settings_app_design_system_default">System Standard</string>
     <string name="settings_app_design_system_light">Hell</string>
     <string name="settings_app_design_system_dark">Dunkel</string>
-
-    <string name="settings_category_gallery">Galerie</string>
-    <string name="settings_gallery_auto_fullscreen_title">Auto Vollbild</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Vollbild Modus beim öffnen einer Datei</string>
     <string name="settings_gallery_start_page_title">Startseite</string>
 
     <string name="settings_category_security">Sicherheit</string>

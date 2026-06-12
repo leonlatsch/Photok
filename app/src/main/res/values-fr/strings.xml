@@ -102,7 +102,7 @@
     <string name="view_photo_detail_last_modified">Dernière modification</string>
     <string name="view_photo_loop_video_disabled">Affichage en boucle désactivé</string>
     <string name="view_photo_loop_video_enabled">Affichage en boucle activé</string>
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_video_playback_speed">Vitesse de lecture</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Verrouiller</string>
@@ -115,6 +115,10 @@
     <string name="menu_ms_info">%1$d élément(s) sélectionné(s)</string>
     <string name="menu_ms_add_to_album">Ajouter à un album</string>
     <string name="menu_ms_remove_from_album">Retirer de l\'album</string>
+    <string name="menu_ms_pin">Épingler en haut</string>
+    <string name="menu_ms_unpin">Dépingler</string>
+    <string name="viewer_pin_confirmation">Épinglé en haut</string>
+    <string name="viewer_unpin_confirmation">Supprimé de l\'épinglage</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Êtes-vous sûr de vouloir <b>supprimer</b> %1$d fichier(s)\u00A0?</string>
@@ -150,10 +154,6 @@
     <string name="settings_app_design_system_default">Valeur par défaut du système</string>
     <string name="settings_app_design_system_light">Clair</string>
     <string name="settings_app_design_system_dark">Sombre</string>
-
-    <string name="settings_category_gallery">Galerie</string>
-    <string name="settings_gallery_auto_fullscreen_title">Plein écran automatique</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entrer en mode plein écran à l\'ouverture d\'un fichier</string>
     <string name="settings_gallery_start_page_title">Page de démarrage</string>
 
     <string name="settings_category_security">Sécurité</string>
@@ -206,8 +206,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Crédits</string>
     <string name="settings_other_credits_summary">Contributeurs et crédits</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Collecte de données</string>
+    <string name="settings_other_telemetry_summary">Gérer la collecte des données d\'utilisation</string>
     <string name="settings_other_about_title">À propos</string>
     <string name="settings_other_about_summary">Informations sur Photok</string>
 
@@ -217,16 +217,16 @@
     <string name="credits_icons_title">Icônes</string>
 
     <!-- CHANGE PASSWORD -->
-    <string name="change_password_title">Changer votre mot de passe</string>
+    <string name="change_password_title">Modifier votre mot de passe</string>
     <string name="change_password_old_password">Ancien mot de passe</string>
     <string name="change_password_new_password">Nouveau mot de passe</string>
     <string name="change_password_check">Vérifier</string>
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
-    <string name="change_password_button">Changer le mot de passe</string>
+    <string name="change_password_button">Modifier le mot de passe</string>
     <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
+    <string name="change_password_done">Mot de passe modifié</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
@@ -267,7 +267,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
     <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
     <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Confirmez votre mot de passe pour créer une sauvegarde.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>
@@ -343,12 +343,12 @@
     <string name="video_player_unmute">Activer le son</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Aidez à améliorer Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok peut, facultativement, envoyer des statistiques d\'utilisation anonymes afin d\'améliorer l\'application.</string>
+    <string name="telemetry_sheet_paragraph_2">Les données traitées sont totalement anonymisées et ne permettent pas de tirer de conclusions concernant les informations personnelles.</string>
+    <string name="telemetry_sheet_paragraph_3">L\'envoi de données d\'utilisation anonymes est facultatif et peut être désactivé à tout moment dans les paramètres.</string>
+    <string name="telemetry_learn_more">En savoir plus</string>
+    <string name="telemetry_choice_no">Non, merci</string>
+    <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
+    <string name="telemetry_toggle">Autoriser la collecte des données d\'utilisation</string>
 </resources>

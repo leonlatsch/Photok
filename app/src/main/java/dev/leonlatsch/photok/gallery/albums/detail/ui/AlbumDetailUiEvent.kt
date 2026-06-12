@@ -30,4 +30,5 @@ sealed interface AlbumDetailUiEvent {
     data class RenameAlbum(val newName: String) : AlbumDetailUiEvent
     data class OnImportChoice(val choice: ImportChoice) : AlbumDetailUiEvent
     data class SortChanged(val sort: Sort) : AlbumDetailUiEvent
+    data class SetPinned(val items: List<String>, val pinned: Boolean) : AlbumDetailUiEvent
 }

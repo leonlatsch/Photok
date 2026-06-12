@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
     <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
     <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>
@@ -149,9 +153,6 @@
     <string name="settings_app_design_system_light">ساطع</string>
     <string name="settings_app_design_system_dark">مظلم</string>
 
-    <string name="settings_category_gallery">المعرض</string>
-    <string name="settings_gallery_auto_fullscreen_title">ملء الشاشة تلقائيًا</string>
-    <string name="settings_gallery_auto_fullscreen_summary">أدخل وضع ملء الشاشة عند فتح ملف</string>
     <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">حماية</string>
