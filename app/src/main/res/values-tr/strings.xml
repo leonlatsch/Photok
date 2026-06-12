@@ -96,6 +96,10 @@
     <string name="menu_ms_info">%1$d öğe seçildi</string>
     <string name="menu_ms_add_to_album">Albüme Ekle</string>
     <string name="menu_ms_remove_from_album">Albümden Kaldır</string>
+    <string name="menu_ms_pin">Başa sabitle</string>
+    <string name="menu_ms_unpin">Sabitlemeyi Kaldır</string>
+    <string name="viewer_pin_confirmation">Başa sabitlendi</string>
+    <string name="viewer_unpin_confirmation">Sabitlemelerden kaldırıldı</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Emin misiniz, <b>%1$d dosya(ları)</b> silmek istiyor musunuz?</string>
@@ -130,10 +134,6 @@
     <string name="settings_app_design_system_default">Sistem Varsayılanı</string>
     <string name="settings_app_design_system_light">Açık</string>
     <string name="settings_app_design_system_dark">Koyu</string>
-
-    <string name="settings_category_gallery">Galeri</string>
-    <string name="settings_gallery_auto_fullscreen_title">Otomatik Tam Ekran</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Bir dosya açıldığında tam ekran moduna geç</string>
     <string name="settings_gallery_start_page_title">Başlangıç Sayfası</string>
 
     <string name="settings_category_security">Güvenlik</string>
@@ -186,8 +186,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Katkıda Bulunanlar</string>
     <string name="settings_other_credits_summary">Katkıda bulunanlar ve teşekkürler</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Veri toplama</string>
+    <string name="settings_other_telemetry_summary">Kullanım verilerinin toplanmasını yönet</string>
     <string name="settings_other_about_title">Hakkında</string>
     <string name="settings_other_about_summary">Photok hakkında bilgi</string>
 
@@ -206,6 +206,7 @@
     <string name="change_password_button">Şifreyi Değiştir</string>
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
+    <string name="change_password_done">Şifre değiştirildi</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
@@ -246,6 +247,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
     <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
     <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
+    <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>
@@ -323,12 +325,12 @@
     <string name="video_player_unmute">Sesi aç</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Photok\'un gelişmesine destek ol</string>
+    <string name="telemetry_sheet_paragraph_1">Photok, isteğe bağlı olarak anonim şekilde kullanım istatisliklerini uygulamayı geliştirmek için toplar.</string>
+    <string name="telemetry_sheet_paragraph_2">İşlenen veriler tamamen anonimleştirilmiştir ve kişisel bilgiler hakkında herhangi bir sonuca varılmasına izin vermez.</string>
+    <string name="telemetry_sheet_paragraph_3">Anonim kullanım verilerinin gönderilmesi isteğe bağlıdır ve ayarlardan istediğiniz zaman kapatılabilir.</string>
+    <string name="telemetry_learn_more">Daha fazla bilgi</string>
+    <string name="telemetry_choice_no">Hayır teşekkürler</string>
+    <string name="telemetry_choice_yes">Anonim kullanım verilerini paylaş</string>
+    <string name="telemetry_toggle">Kullanım verilerinin toplanmasına izin ver</string>
 </resources>

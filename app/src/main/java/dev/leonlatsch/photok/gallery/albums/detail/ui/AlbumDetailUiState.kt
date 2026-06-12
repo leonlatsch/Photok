@@ -25,4 +25,5 @@ data class AlbumDetailUiState(
     val albumName: String = "",
     val photos: List<PhotoTile> = emptyList(),
     val sort: Sort = SortConfig.Album.default,
+    val pinnedPhotoIds: Set<String> = emptySet(),
 )

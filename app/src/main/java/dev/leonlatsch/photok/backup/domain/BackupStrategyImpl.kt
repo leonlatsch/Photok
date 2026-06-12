@@ -20,19 +20,15 @@ import android.content.Context
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
-import dev.leonlatsch.photok.settings.data.Config
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
 class BackupStrategyImpl @Inject constructor(
     private val dumpDatabaseUseCase: DumpDatabaseUseCase,
-    private val encryptedStorageManager: EncryptedStorageManager,
     private val io: IO,
-    private val config: Config,
     private val gson: Gson,
     @ApplicationContext private val context: Context,
 ) : BackupStrategy {
@@ -43,13 +39,9 @@ class BackupStrategyImpl @Inject constructor(
     ): Result<Unit> {
         context.fileList()
             .filter { it.contains(photo.uuid) }
-            .map { it to encryptedStorageManager.internalOpenFileInput(it) }
-            .forEach { file ->
-                val filename = file.first
-                val inputStream = file.second
-
-                inputStream
-                    ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
+            .map { it to context.openFileInput(it) }
+            .forEach { (filename, inputStream) ->
+                inputStream ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
 
                 io.zip.writeZipEntry(filename, inputStream, zipOutputStream)
                     .onFailure {
@@ -61,14 +53,20 @@ class BackupStrategyImpl @Inject constructor(
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        val backupMetaData = dumpDatabaseUseCase(config.securityPassword!!, BackupMetaData.CURRENT_BACKUP_VERSION)
 
-        val metaBytes = gson.toJson(backupMetaData).toByteArray()
+        try {
+            val backupMetaData = dumpDatabaseUseCase(BackupMetaData.CURRENT_BACKUP_VERSION)
+            val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-        return io.zip.writeZipEntry(
-            BackupMetaData.Companion.FILE_NAME,
-            ByteArrayInputStream(metaBytes),
-            zipOutputStream,
-        )
+            return io.zip.writeZipEntry(
+                BackupMetaData.FILE_NAME,
+                ByteArrayInputStream(metaBytes),
+                zipOutputStream,
+            )
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+
+
     }
 }

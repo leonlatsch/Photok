@@ -52,13 +52,8 @@ fun Album.toUi(): AlbumItem = AlbumItem(
     name = name,
     itemCount = files.size,
     albumCover = files.firstOrNull()?.let { firstPhoto ->
-        val albumCoverFileName = if (firstPhoto.type.isVideo) {
-            firstPhoto.internalVideoPreviewFileName
-        } else {
-            firstPhoto.internalFileName
-        }
         AlbumCover(
-            filename = albumCoverFileName,
+            filename = firstPhoto.internalThumbnailFileName,
             mimeType = firstPhoto.type.mimeType
         )
     }
@@ -69,6 +64,7 @@ fun AlbumPhotoCrossRefTable.toDomain(): AlbumPhotoRef =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )
 
 fun AlbumPhotoRef.toData(): AlbumPhotoCrossRefTable =
@@ -76,4 +72,5 @@ fun AlbumPhotoRef.toData(): AlbumPhotoCrossRefTable =
         albumUUID = albumUUID,
         photoUUID = photoUUID,
         linkedAt = linkedAt,
+        pinned = pinned,
     )

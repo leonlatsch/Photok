@@ -19,15 +19,15 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
+import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.model.io.EncryptedStorageManager
-import dev.leonlatsch.photok.model.io.IO
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import dev.leonlatsch.photok.security.EncryptionManager
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.io.encoding.Base64
 
 /**
  * Backup Format V4
@@ -62,25 +62,23 @@ import kotlin.io.encoding.Base64
  *  - `backupVersion` must equal 4 for this format.
  */
 class RestoreBackupV4 @Inject constructor(
-    private val encryptionManager: EncryptionManager,
-    private val encryptedStorageManager: EncryptedStorageManager,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val io: IO,
-) : RestoreBackupStrategy {
+    private val vaultFileStorage: VaultFileStorage,
+    private val cryptoEngine: CryptoEngine,
+) : RestoreBackupStrategy<BackupMetaData.V4> {
 
     override suspend fun restore(
-        metaData: BackupMetaData,
+        metaData: BackupMetaData.V4,
         stream: ZipInputStream,
-        originalPassword: String
+        session: Session,
     ): RestoreResult {
         val start = System.currentTimeMillis()
 
         var errors = 0
 
         var ze = stream.nextEntry
-
-        encryptionManager.keyCacheEnabled = true
 
         while (ze != null) {
             if (ze.name == BackupMetaData.FILE_NAME) {
@@ -96,13 +94,8 @@ class RestoreBackupV4 @Inject constructor(
                 continue
             }
 
-            val encryptedZipInput =
-                encryptionManager.createCipherInputStream(
-                    input = stream,
-                    password = originalPassword,
-                )
-            val internalOutputStream =
-                encryptedStorageManager.internalOpenEncryptedFileOutput(ze.name)
+            val encryptedZipInput = cryptoEngine.createDecryptStream(stream, session)
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry
@@ -118,8 +111,6 @@ class RestoreBackupV4 @Inject constructor(
 
             ze = stream.nextEntry
         }
-
-        encryptionManager.keyCacheEnabled = false
 
         metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
             val newPhoto = photoBackup

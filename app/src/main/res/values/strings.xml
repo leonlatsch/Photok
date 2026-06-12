@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d item(s) selected</string>
     <string name="menu_ms_add_to_album">Add to album</string>
     <string name="menu_ms_remove_from_album">Remove from album</string>
+    <string name="menu_ms_pin">Pin at top</string>
+    <string name="menu_ms_unpin">Unpin</string>
+    <string name="viewer_pin_confirmation">Pinned at top</string>
+    <string name="viewer_unpin_confirmation">Removed from pinned</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Are you sure, you want to <b>delete</b> %1$d file(s)?</string>
@@ -148,10 +152,6 @@
     <string name="settings_app_design_system_default">System Default</string>
     <string name="settings_app_design_system_light">Light</string>
     <string name="settings_app_design_system_dark">Dark</string>
-
-    <string name="settings_category_gallery">Gallery</string>
-    <string name="settings_gallery_auto_fullscreen_title">Auto Fullscreen</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Enter fullscreen mode when opening a file</string>
     <string name="settings_gallery_start_page_title">Start page</string>
 
     <string name="settings_category_security">Security</string>
@@ -224,6 +224,7 @@
     <string name="change_password_button">Change Password</string>
     <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
+    <string name="change_password_done">Password has been changed</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string>
@@ -264,6 +265,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Invalid File</string>
     <string name="backup_restore_processing">Restoring Backup…</string>
     <string name="backup_unlock_title">Unlock Backup</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

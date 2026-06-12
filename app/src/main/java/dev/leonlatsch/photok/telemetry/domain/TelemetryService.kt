@@ -27,6 +27,11 @@ import javax.inject.Singleton
 
 private const val TelemetryDeckAppId = "C2F73045-3C8D-4912-951B-FE9894262E86" // Not a secret. Fine to have in code
 
+enum class Signal {
+    OnboardingFinished,
+    SetupCompleted,
+}
+
 @Singleton
 class TelemetryService @Inject constructor(
     private val config: Config,
@@ -38,7 +43,10 @@ class TelemetryService @Inject constructor(
                 .appID(TelemetryDeckAppId)
                 .addProvider(
                     DefaultParameterProvider(
-                        mapOf("flavor" to BuildConfig.FLAVOR)
+                        mapOf(
+                            "flavor" to BuildConfig.FLAVOR,
+                            "usesBiometricAuthentication" to config.biometricAuthenticationEnabled.toString(),
+                        )
                     )
                 )
                 .showDebugLogs(BuildConfig.DEBUG)
@@ -47,5 +55,12 @@ class TelemetryService @Inject constructor(
         } else {
             TelemetryDeck.stop()
         }
+    }
+
+    fun signal(signal: Signal, params: Map<String, String> = emptyMap()) {
+        TelemetryDeck.signal(
+            signalName = signal.name,
+            params = params,
+        )
     }
 }

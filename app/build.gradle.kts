@@ -48,7 +48,6 @@ android {
             buildConfigField("Boolean", "PLAY", "true")
 
             if (!isReleaseBuildInvocation) {
-                applicationIdSuffix = ".play"
                 versionNameSuffix = "-play-debug"
             }
         }
@@ -58,7 +57,6 @@ android {
             buildConfigField("Boolean", "PLAY", "false")
 
             if (!isReleaseBuildInvocation) {
-                applicationIdSuffix = ".foss"
                 versionNameSuffix = "-foss-debug"
             }
         }
@@ -70,7 +68,8 @@ android {
         }
 
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -206,6 +205,11 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.14.1")
+    testImplementation("io.mockk:mockk:1.14.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("com.google.dagger:hilt-android-testing:2.57.2")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.57.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 

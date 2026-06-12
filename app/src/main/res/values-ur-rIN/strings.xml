@@ -113,6 +113,10 @@
     <string name="menu_ms_info">%1$d چیزیں منتخب کر لیں</string>
     <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
     <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">کیا آپ واقعی %1$d فائلیں مٹانا چاہتے ہیں؟</string>
@@ -147,10 +151,6 @@
     <string name="settings_app_design_system_default">فون جیسا</string>
     <string name="settings_app_design_system_light">لائٹ (روشن)</string>
     <string name="settings_app_design_system_dark">ڈارک (اندھیرا)</string>
-
-    <string name="settings_category_gallery">گیلری</string>
-    <string name="settings_gallery_auto_fullscreen_title">خود بخود پوری اسکرین</string>
-    <string name="settings_gallery_auto_fullscreen_summary">فائل کھولتے ہی پوری اسکرین پر دکھائیں</string>
     <string name="settings_gallery_start_page_title">پہلا صفحہ</string>
 
     <string name="settings_category_security">حفاظت</string>
@@ -223,6 +223,7 @@
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
     <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
     <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
@@ -263,6 +264,7 @@
     <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
     <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
     <string name="backup_unlock_title">بیک اپ کھولیں</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>

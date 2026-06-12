@@ -97,6 +97,10 @@
     <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
     <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
     <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>verwijderen</b>?</string>
@@ -131,10 +135,6 @@
     <string name="settings_app_design_system_default">Systeem Standaard</string>
     <string name="settings_app_design_system_light">Licht</string>
     <string name="settings_app_design_system_dark">Donker</string>
-
-    <string name="settings_category_gallery">Galerij</string>
-    <string name="settings_gallery_auto_fullscreen_title">Automatisch volledig scherm</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Open volledig scherm modus bij het openen van een bestand</string>
     <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Veiligheid</string>
@@ -207,6 +207,7 @@
     <string name="change_password_button">Wijzig wachtwoord</string>
     <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
@@ -247,6 +248,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Ongeldig bestand</string>
     <string name="backup_restore_processing">Back-up herstellen…</string>
     <string name="backup_unlock_title">Ontgrendel back-up</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nieuw in</string>

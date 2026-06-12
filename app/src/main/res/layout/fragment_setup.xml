@@ -128,7 +128,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false"
-                android:onClick="@{() -> viewModel.savePassword()}"
+                android:onClick="@{() -> viewModel.onSetupClicked()}"
                 android:text="@string/setup_button" />
 
         </LinearLayout>

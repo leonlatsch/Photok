@@ -38,7 +38,8 @@ enum class PhotoType(
     WEBM(6, "video/webm"),
     MOV(7, "video/quicktime"),
     WEBP(8, "image/webp"),
-    MKV(9, "video/x-matroska");
+    MKV(9, "video/x-matroska"),
+    HEIC(10, "image/heic");
 
     val isVideo: Boolean
         get() = when (value) {
@@ -46,15 +47,12 @@ enum class PhotoType(
             else -> false
         }
 
-    val isGif: Boolean
-        get() = value == 3
-
     companion object {
         /**
          * Create a [PhotoType] from its Int value.
          * Used in converters.
          */
-        fun fromValue(value: Int) = values().first { it.value == value }
+        fun fromValue(value: Int) = entries.first { it.value == value }
 
         fun fromMimeType(mimeType: String?): PhotoType = when (mimeType) {
             PNG.mimeType -> PNG
@@ -66,6 +64,7 @@ enum class PhotoType(
             MOV.mimeType -> MOV
             WEBP.mimeType -> WEBP
             MKV.mimeType -> MKV
+            HEIC.mimeType -> HEIC
             else -> UNDEFINED
         }
     }

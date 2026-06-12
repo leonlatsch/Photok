@@ -114,6 +114,10 @@
     <string name="menu_ms_info">%1$d elemento(i) selezionati</string>
     <string name="menu_ms_add_to_album">Aggiungi ad un album</string>
     <string name="menu_ms_remove_from_album">Rimuovi dall\'album</string>
+    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
+    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
+    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
+    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Sei sicuro di voler <b>eliminare</b> %1$d file?</string>
@@ -148,10 +152,6 @@
     <string name="settings_app_design_system_default">Impostazione di sistema</string>
     <string name="settings_app_design_system_light">Chiaro</string>
     <string name="settings_app_design_system_dark">Scuro</string>
-
-    <string name="settings_category_gallery">Galleria</string>
-    <string name="settings_gallery_auto_fullscreen_title">Schermo intero automatico</string>
-    <string name="settings_gallery_auto_fullscreen_summary">Entra in modalità a schermo intero quando apri un file</string>
     <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
 
     <string name="settings_category_security">Sicurezza</string>
@@ -224,6 +224,7 @@
     <string name="change_password_button">Modifica Password</string>
     <string name="change_password_confirm_message">Backup consigliato!<br /> La modifica della password richiede la ricrittografia di tutti i file! Vuoi continuare?</string>
     <string name="change_password_reencrypting">Ricrittografia file…</string>
+    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
 
     <!-- CHECk PASSWORD -->
     <string name="settings_security_check_password_title">Verifica Password</string>
@@ -264,6 +265,7 @@
     <string name="backup_restore_invalid_file">\u26A0 File non valido</string>
     <string name="backup_restore_processing">Ripristino Backup…</string>
     <string name="backup_unlock_title">Sblocco Backup</string>
+    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novità in</string> 

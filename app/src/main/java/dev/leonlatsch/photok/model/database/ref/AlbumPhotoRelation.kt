@@ -36,11 +36,15 @@ data class AlbumPhotoCrossRefTable(
     @ColumnInfo(name = PHOTO_UUID, index = true) val photoUUID: String,
 
     @ColumnInfo(name = COL_LINKED_AT)
-    val linkedAt: Long
+    val linkedAt: Long,
+
+    @ColumnInfo(name = COL_PINNED, defaultValue = "0")
+    val pinned: Boolean = false,
 ) {
     companion object {
         const val TABLE_NAME = "album_photos_cross_ref"
         const val COL_LINKED_AT = "linked_at"
+        const val COL_PINNED = "pinned"
     }
 }
 

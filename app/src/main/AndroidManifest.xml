@@ -114,7 +114,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".security.migration.MigrationService"
+        <service android:name=".encryption.migration.MigrationService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
     </application>

@@ -21,6 +21,7 @@ import android.net.Uri
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -38,6 +39,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -87,6 +89,8 @@ fun ImageViewerControls(
     modifier: Modifier = Modifier,
 ) {
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
+    val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
+    val showPinnedIndicator = uiState.albumUuid != null && isPinned
 
     val pickExportTargetLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { exportTarget ->
@@ -118,11 +122,29 @@ fun ImageViewerControls(
                         subtitleContentColor = LocalContentColor.current,
                     ),
                     title = {
-                        Text(
-                            text = currentItem?.photo?.fileName.orEmpty(),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            AnimatedVisibility(showPinnedIndicator) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_pin),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .size(18.dp),
+                                )
+                            }
+
+                            AnimatedContent(currentItem?.photo?.fileName.orEmpty()) {
+                                Text(
+                                    text = it,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+                        }
                     },
                     navigationIcon = {
                         IconButton(
@@ -265,11 +287,16 @@ fun ImageViewerControls(
             text = stringResource(R.string.delete_are_you_sure_this),
             onConfirm = {
                 if (currentItem != null) {
+                    val itemCount = uiState.items.size
                     handleUiEvent(
                         ImageViewerUiEvent.ConfirmDelete(
                             item = currentItem,
                         )
                     )
+
+                    if (itemCount <= 1) {
+                        navController.navigateUp()
+                    }
                 }
             }
         )
@@ -308,25 +335,57 @@ private fun MoreMenu(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
     ) {
-        DropdownMenuItem(
-            text = {
-                Text(
-                    text = stringResource(R.string.view_photo_detail_title),
-                )
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_info),
-                    contentDescription = null,
-                )
-            },
-            onClick = {
-                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
-            }
-        )
+        val isAlbumScoped = uiState.albumUuid != null
+        val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
+        val pinSuccessMessage = stringResource(R.string.viewer_pin_confirmation)
+        val unpinSuccessMessage = stringResource(R.string.viewer_unpin_confirmation)
 
+        if (isAlbumScoped && currentItem != null) {
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(
+                            if (isPinned) {
+                                R.string.menu_ms_unpin
+                            } else {
+                                R.string.menu_ms_pin
+                            }
+                        ),
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(
+                            if (isPinned) {
+                                R.drawable.ic_pin_off
+                            } else {
+                                R.drawable.ic_pin
+                            }
+                        ),
+                        contentDescription = null,
+                    )
+                },
+                onClick = {
+                    handleUiEvent(
+                        ImageViewerUiEvent.SetPinned(
+                            photoUuid = currentItem.photo.uuid,
+                            pinned = !isPinned,
+                        )
+                    )
+                    Dialogs.showShortToast(
+                        context,
+                        if (isPinned) unpinSuccessMessage else pinSuccessMessage
+                    )
+
+                    onDismissRequest()
+                }
+            )
+
+            HorizontalDivider()
+        }
 
         if (currentItem is ImageViewerItem.Video) {
+
 
             val loopingEnabledText = stringResource(R.string.view_photo_loop_video_enabled)
             val loopingDisabledText = stringResource(R.string.view_photo_loop_video_disabled)
@@ -426,9 +485,26 @@ private fun MoreMenu(
                 }
             }
 
+            HorizontalDivider()
+
         }
 
-
+        DropdownMenuItem(
+            text = {
+                Text(
+                    text = stringResource(R.string.view_photo_detail_title),
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_info),
+                    contentDescription = null,
+                )
+            },
+            onClick = {
+                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(ImageViewerUiState.Dialog.DetailsSheet))
+            }
+        )
     }
 
     currentItem?.let {
