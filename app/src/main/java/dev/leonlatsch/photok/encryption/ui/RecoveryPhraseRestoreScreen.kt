@@ -65,6 +65,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
@@ -80,55 +82,72 @@ private data class AnimatedWord(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseRestoreScreen(
-    onRestore: (words: List<String>) -> Unit = {},
 ) {
+    val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     AppTheme {
+        RecoveryPhraseRestoreContent(
+            uiState = uiState,
+            handleUiEvent = viewModel::handleUiEvent,
+        )
+    }
+}
 
-        var words by remember { mutableStateOf(listOf<String>()) }
-
-        Scaffold(
-            bottomBar = {
-                Button(
-                    onClick = { onRestore(words) },
-                    enabled = words.isNotEmpty(),
-                    modifier = Modifier
-                        .navigationBarsPadding()
-                        .imePadding()
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(text = stringResource(R.string.recovery_phrase_restore_button))
-                }
-            },
-            contentWindowInsets = WindowInsets.safeDrawing,
-        ) { contentPadding ->
-            Column(
+@Composable
+private fun RecoveryPhraseRestoreContent(
+    uiState: RecoveryPhraseRestoreUiState,
+    handleUiEvent: (RecoveryPhraseRestoreUiEvent) -> Unit,
+) {
+    Scaffold(
+        bottomBar = {
+            Button(
+                onClick = {
+                    handleUiEvent(RecoveryPhraseRestoreUiEvent.Restore(uiState.words))
+                },
+                enabled = uiState.validInput,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding)
-                    .padding(horizontal = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
             ) {
-                Text(
-                    text = stringResource(R.string.recovery_phrase_restore_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                    textAlign = TextAlign.Center,
-                )
-
-                Spacer(Modifier.height(8.dp))
-
-                Text(
-                    text = stringResource(R.string.recovery_phrase_restore_description),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-
-                Spacer(Modifier.height(24.dp))
-
-                RecoveryPhraseInputField(onWordsChanged = { words = it })
+                Text(text = stringResource(R.string.recovery_phrase_restore_button))
             }
+        },
+        contentWindowInsets = WindowInsets.safeDrawing,
+    ) { contentPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = stringResource(R.string.recovery_phrase_restore_title),
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.recovery_phrase_restore_description),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(24.dp))
+
+            RecoveryPhraseInputField(
+                onWordsChanged = {
+                    handleUiEvent(RecoveryPhraseRestoreUiEvent.UpdateWords(it))
+                }
+            )
         }
     }
 }
@@ -271,7 +290,7 @@ private fun WordInputChip(
                     Box(contentAlignment = Alignment.Center) {
                         if (value.isEmpty()) {
                             Text(
-                                text = "…",
+                                text = "...",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontFamily = FontFamily.Monospace,
                                     textAlign = TextAlign.Center,
@@ -290,13 +309,12 @@ private fun WordInputChip(
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    RecoveryPhraseRestoreScreen()
-}
-
-@PreviewLightDark
-@Composable
-private fun PreviewWithWords() {
     AppTheme {
-        RecoveryPhraseInputField(onWordsChanged = {})
+        RecoveryPhraseRestoreContent(
+            uiState = RecoveryPhraseRestoreUiState(
+                words = listOf("this", "is")
+            ),
+            handleUiEvent = {},
+        )
     }
 }
