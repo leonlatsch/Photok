@@ -30,12 +30,17 @@ import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getMetadataFor
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.Sort
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 /**
@@ -226,16 +231,20 @@ class PhotoRepository @Inject constructor(
      *
      * @param photo The Photo to be saved
      */
-    suspend fun exportPhoto(photo: Photo, target: Uri): Boolean {
-        return try {
+    suspend fun exportPhoto(photo: Photo, target: Uri): Boolean = withContext(Dispatchers.IO) {
+        try {
             val inputStream =
                 vaultFileStorage.openEncryptedInput(photo.internalFileName)
-            inputStream ?: return false
+            inputStream ?: return@withContext false
 
             val outputStream = createExternalOutputStream(photo, target)
-            outputStream ?: return false
+            outputStream ?: return@withContext false
 
-            val wrote = inputStream.copyTo(outputStream)
+            val wrote = suspendCancellableCoroutine { continuation ->
+                val wrote = inputStream.copyTo(outputStream)
+                continuation.resume(wrote)
+            }
+
             outputStream.lazyClose()
 
             var deleted = true
