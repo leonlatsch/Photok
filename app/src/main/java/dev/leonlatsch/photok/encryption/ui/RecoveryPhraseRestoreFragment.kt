@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class RecoveryPhraseRestoreFragment : Fragment() {
     override fun onCreateView(
@@ -31,7 +32,13 @@ class RecoveryPhraseRestoreFragment : Fragment() {
     ): View? {
         return ComposeView(inflater.context).apply {
             setContent {
-                RecoveryPhraseRestoreScreen()
+                RecoveryPhraseRestoreScreen(
+                    onRestored = {
+                        runCatching {
+                            findNavController().navigate(RecoveryPhraseRestoreFragmentDirections.actionRecoveryPhraseRestoreFragmentToGalleryFragment())
+                        }
+                    }
+                )
             }
         }
     }

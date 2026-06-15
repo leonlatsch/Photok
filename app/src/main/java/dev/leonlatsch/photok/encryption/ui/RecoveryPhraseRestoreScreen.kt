@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.encryption.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -82,10 +83,18 @@ private data class AnimatedWord(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseRestoreScreen(
+    onRestored: () -> Unit,
 ) {
     val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState.unlocked) {
+        if (uiState.unlocked) {
+            delay(3000)
+            onRestored()
+        }
+    }
 
     AppTheme {
         RecoveryPhraseRestoreContent(
@@ -102,52 +111,68 @@ private fun RecoveryPhraseRestoreContent(
 ) {
     Scaffold(
         bottomBar = {
-            Button(
-                onClick = {
-                    handleUiEvent(RecoveryPhraseRestoreUiEvent.Restore(uiState.words))
-                },
-                enabled = uiState.validInput,
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .imePadding()
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(text = stringResource(R.string.recovery_phrase_restore_button))
+            Crossfade(uiState.unlocked) {
+                if (!it) {
+                    Button(
+                        onClick = {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.Restore(uiState.words))
+                        },
+                        enabled = uiState.validInput,
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .imePadding()
+                            .padding(horizontal = 20.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(R.string.recovery_phrase_restore_button))
+                    }
+                }
             }
         },
         contentWindowInsets = WindowInsets.safeDrawing,
     ) { contentPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+        AnimatedVisibility(
+            visible = !uiState.unlocked
         ) {
-            Text(
-                text = stringResource(R.string.recovery_phrase_restore_title),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+                    .padding(horizontal = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.recovery_phrase_restore_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                )
 
-            Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(8.dp))
 
-            Text(
-                text = stringResource(R.string.recovery_phrase_restore_description),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
+                Text(
+                    text = stringResource(R.string.recovery_phrase_restore_description),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
 
-            Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(24.dp))
 
-            RecoveryPhraseInputField(
-                onWordsChanged = {
-                    handleUiEvent(RecoveryPhraseRestoreUiEvent.UpdateWords(it))
+                RecoveryPhraseInputField(
+                    onWordsChanged = {
+                        handleUiEvent(RecoveryPhraseRestoreUiEvent.UpdateWords(it))
+                    }
+                )
+
+                AnimatedVisibility(uiState.error != null) {
+                    Text(
+                        text = "Could not restore vault from recovery phrase.",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
                 }
-            )
+            }
         }
     }
 }
@@ -312,7 +337,23 @@ private fun Preview() {
     AppTheme {
         RecoveryPhraseRestoreContent(
             uiState = RecoveryPhraseRestoreUiState(
-                words = listOf("this", "is")
+                words = listOf("this", "is"),
+                validInput = false,
+                loading = false,
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+@PreviewLightDark
+@Composable
+private fun PreviewLoading() {
+    AppTheme {
+        RecoveryPhraseRestoreContent(
+            uiState = RecoveryPhraseRestoreUiState(
+                words = listOf("this", "is"),
+                validInput = true,
+                loading = true,
             ),
             handleUiEvent = {},
         )
