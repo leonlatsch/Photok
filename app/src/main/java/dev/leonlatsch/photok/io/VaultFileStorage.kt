@@ -20,7 +20,6 @@ import android.app.Application
 import android.content.Context
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
-import okio.IOException
 import timber.log.Timber
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
@@ -35,7 +34,7 @@ class VaultFileStorage @Inject constructor(
         val session = sessionRepository.require()
         val input = app.openFileInput(filename)
         cryptoEngine.createDecryptStream(input, session)
-    } catch (e: IOException) {
+    } catch (e: Exception) {
         Timber.e(e)
         null
     }
@@ -44,7 +43,7 @@ class VaultFileStorage @Inject constructor(
         val session = sessionRepository.require()
         val output = app.openFileOutput(fileName, Context.MODE_PRIVATE)
         cryptoEngine.createEncryptStream(output, session)
-    } catch (e: IOException) {
+    } catch (e: Exception) {
         Timber.e(e)
         null
     }
