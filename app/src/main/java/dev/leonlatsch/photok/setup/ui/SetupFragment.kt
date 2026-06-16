@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
+import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.hide
@@ -35,6 +36,7 @@ import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Fragment for the setup.
@@ -46,6 +48,9 @@ import timber.log.Timber
 class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup) {
 
     private val viewModel: SetupViewModel by viewModels()
+
+    @Inject
+    lateinit var navigateToGallery: NavigateToGallery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
@@ -100,7 +105,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
                 SetupState.SHOW_RECOVERY_PHRASE -> {
                     binding.loadingOverlay.hide()
                     activity?.hideKeyboard()
-                    findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToRecoveryPhraseSetupFragment())
+                    findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                 }
             }
         }
@@ -114,7 +119,7 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
             activity.hideKeyboard()
             binding.loadingOverlay.hide()
 
-            findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToGalleryFragment())
+            navigateToGallery(findNavController())
         } catch (e: Exception) {
             Timber.e(e)
             Dialogs.showLongToast(

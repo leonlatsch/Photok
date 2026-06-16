@@ -42,7 +42,7 @@ data class RecoveryPhraseSetupUiState(
     data class Inputs(
         val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
         val loading: Boolean = false,
-        val phraseWasSaved: Boolean = false,
+        val phraseWasSaved: Boolean = true,
     )
 }
 

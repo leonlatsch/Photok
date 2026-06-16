@@ -56,36 +56,15 @@
         android:label="fragment_setup"
         tools:layout="@layout/fragment_setup">
         <action
-            android:id="@+id/action_setupFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/setupFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_setupFragment_to_encryptionMigrationFragment"
             app:destination="@id/encryptionMigrationFragment"
             app:popUpTo="@id/settingsFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_setupFragment_to_recoveryPhraseSetupFragment"
-            app:destination="@id/recoveryPhraseSetupFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popUpTo="@id/setupFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/recoveryPhraseSetupFragment"
         android:name="dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupFragment"
         android:label="RecoveryPhraseSetupFragment">
-        <action
-            android:id="@+id/action_recoveryPhraseSetupFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/recoveryPhraseSetupFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/unlockFragment"
@@ -93,26 +72,12 @@
         android:label="fragment_unlock"
         tools:layout="@layout/fragment_unlock">
         <action
-            android:id="@+id/action_unlockFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/unlockFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
             app:destination="@id/encryptionMigrationFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right"
-            app:popUpTo="@id/unlockFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_unlockFragment_to_albumsFragment"
-            app:destination="@id/albumsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/slide_to_bottom"
             app:popUpTo="@id/unlockFragment"
             app:popUpToInclusive="true" />
         <action
@@ -199,6 +164,30 @@
             app:argType="string" />
     </fragment>
     <action
+        android:id="@+id/action_global_galleryFragment"
+        app:destination="@id/galleryFragment"
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        />
+    <action
+        android:id="@+id/action_global_albumsFragment"
+        app:destination="@id/albumsFragment"
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        />
+    <action
+        android:id="@+id/action_global_recoveryPhraseSetupFragment"
+        app:destination="@id/recoveryPhraseSetupFragment"
+        app:enterAnim="@anim/slide_in_from_right"
+        app:exitAnim="@anim/slide_out_to_left"
+        app:popEnterAnim="@anim/slide_in_from_left"
+        app:popExitAnim="@anim/slide_out_to_right"
+        />
+    <action
         android:id="@+id/action_global_imageViewerFragment"
         app:destination="@id/imageViewerFragment"
         app:enterAnim="@anim/slide_in_from_right"
@@ -228,12 +217,5 @@
         android:id="@+id/recoveryPhraseRestoreFragment"
         android:name="dev.leonlatsch.photok.encryption.ui.RecoveryPhraseRestoreFragment"
         android:label="RecoveryPhraseRestoreFragment" >
-        <action
-            android:id="@+id/action_recoveryPhraseRestoreFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/slide_to_bottom"
-            app:popUpTo="@id/recoveryPhraseRestoreFragment"
-            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

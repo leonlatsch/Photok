@@ -23,8 +23,16 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RecoveryPhraseRestoreFragment : Fragment() {
+
+    @Inject
+    lateinit var navigateToGallery: NavigateToGallery
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,9 +42,7 @@ class RecoveryPhraseRestoreFragment : Fragment() {
             setContent {
                 RecoveryPhraseRestoreScreen(
                     onRestored = {
-                        runCatching {
-                            findNavController().navigate(RecoveryPhraseRestoreFragmentDirections.actionRecoveryPhraseRestoreFragmentToGalleryFragment())
-                        }
+                        navigateToGallery(findNavController())
                     }
                 )
             }
