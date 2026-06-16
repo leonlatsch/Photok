@@ -101,7 +101,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     UnlockState.ShowRecoveryPhrase -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
-                        findNavController().navigate(R.id.action_unlockFragment_to_recoveryPhraseRestoreFragment)
+                        findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
                 }
             }

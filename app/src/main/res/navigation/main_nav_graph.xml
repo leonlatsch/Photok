@@ -83,7 +83,6 @@
         <action
             android:id="@+id/action_unlockFragment_to_recoveryPhraseRestoreFragment"
             app:destination="@id/recoveryPhraseRestoreFragment"
-
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
