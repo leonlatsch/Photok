@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.setup.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -41,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -81,15 +85,42 @@ private fun Content(
 ) {
     Scaffold(
         bottomBar = {
-            Button(
-                onClick = onContinue,
-                enabled = uiState.inputs.phraseWasSaved,
-                modifier = modifier
-                    .navigationBarsPadding()
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(text = stringResource(R.string.recovery_phrase_confirm))
+            Column() {
+
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_download),
+                            contentDescription = null,
+                        )
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_qr_code),
+                            contentDescription = null,
+                        )
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_content_copy),
+                            contentDescription = null,
+                        )
+                    }
+                }
+
+                Button(
+                    onClick = onContinue,
+                    enabled = uiState.inputs.phraseWasSaved,
+                    modifier = modifier
+                        .navigationBarsPadding()
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(text = stringResource(R.string.recovery_phrase_confirm))
+                }
             }
         }
     ) { contentPadding ->
