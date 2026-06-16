@@ -356,8 +356,6 @@
     <string name="recovery_phrase_title">Your Recovery Phrase</string>
     <string name="recovery_phrase_description">Write down these words in order and keep them safe. You can use this phrase to recover access to your vault.</string>
     <string name="recovery_phrase_confirm">I\'ve saved my recovery phrase</string>
-    <string name="recovery_phrase_restore_title">Enter Recovery Phrase</string>
-    <string name="recovery_phrase_restore_description">Type your recovery phrase word by word. Press space after each word to confirm it.</string>
     <string name="recovery_phrase_restore_button">Restore</string>
     <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string>
     <string name="recovery_phrase_forgot_password">Forgot password</string>
