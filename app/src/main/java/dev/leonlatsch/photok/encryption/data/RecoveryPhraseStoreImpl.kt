@@ -94,7 +94,8 @@ class RecoveryPhraseStoreImpl @Inject constructor(
                 init(Cipher.DECRYPT_MODE, session.vmk, IvParameterSpec(iv))
             }
             val plaintext = cipher.doFinal(ciphertext)
-            RecoveryPhrase(String(plaintext, Charsets.UTF_8).split(" "))
+            val string = String(plaintext, Charsets.UTF_8)
+            RecoveryPhrase.from(string)
         } catch(e: Exception) {
             Timber.e(e, "Failed to load recovery phrase")
             null

@@ -18,5 +18,12 @@ package dev.leonlatsch.photok.encryption.domain.models
 
 @JvmInline
 value class RecoveryPhrase(val words: List<String>) {
-    fun toMnemonicString(): String = words.joinToString(" ")
+    fun toMnemonicString(): String = words.joinToString("-")
+
+    companion object {
+        fun from(string: String): RecoveryPhrase {
+            val words = string.split("-")
+            return RecoveryPhrase(words)
+        }
+    }
 }

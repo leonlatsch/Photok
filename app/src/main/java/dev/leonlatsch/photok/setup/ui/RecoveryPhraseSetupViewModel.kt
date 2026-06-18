@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.setup.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.FileProvider
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +28,8 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,8 +37,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
+import java.io.ByteArrayInputStream
 import javax.inject.Inject
 
 data class RecoveryPhraseSetupUiState(
@@ -52,11 +53,13 @@ data class RecoveryPhraseSetupUiState(
 
 sealed interface RecoveryPhraseSetupUiEvent {
     data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseSetupUiEvent
-    data class SaveAsFile(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
+    data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
+    data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
 }
 
 @HiltViewModel
 class RecoveryPhraseSetupViewModel @Inject constructor(
+    private val io: IO,
     private val sessionRepository: SessionRepository,
     private val recoveryPhraseStore: RecoveryPhraseStore,
     private val vaultService: VaultService,
@@ -104,23 +107,33 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
             }
 
-            is RecoveryPhraseSetupUiEvent.SaveAsFile -> viewModelScope.launch {
-                val file = File(event.context.cacheDir, "shared").also { it.mkdirs() }
-                    .resolve("photok_recovery_phrase.txt")
-                    .also { it.writeText(event.phrase.toMnemonicString()) }
-                val uri = FileProvider.getUriForFile(
-                    event.context,
-                    "${event.context.packageName}.fileprovider",
-                    file,
-                )
-                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            is RecoveryPhraseSetupUiEvent.Share -> {
+                val text = """
+                    Photok Recovery Phrase
+                    
+                    ${event.phrase.toMnemonicString()}
+                """.trimIndent()
+
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, text)
                     type = "text/plain"
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                withContext(Dispatchers.Main) {
-                    event.context.startActivity(Intent.createChooser(shareIntent, null))
-                }
+
+                event.context.startActivity(Intent.createChooser(sendIntent, null))
+            }
+
+            is RecoveryPhraseSetupUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
+                val phraseAsBytes = event.phrase.toMnemonicString().toByteArray()
+                val inputStream = ByteArrayInputStream(phraseAsBytes)
+
+                val outputStream = io.openFileOutput(event.uri)
+                outputStream ?: return@launch
+
+                io.copy(inputStream, outputStream)
+
+                val fileName = io.getFileName(event.uri)
+                Dialogs.showLongToast(event.context, "Saved to $fileName")
             }
         }
     }
