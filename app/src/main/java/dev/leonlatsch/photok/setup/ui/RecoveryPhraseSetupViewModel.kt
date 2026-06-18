@@ -16,6 +16,9 @@
 
 package dev.leonlatsch.photok.setup.ui
 
+import android.content.Context
+import android.content.Intent
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,8 +35,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
-
 
 data class RecoveryPhraseSetupUiState(
     val phrase: RecoveryPhrase? = null,
@@ -48,6 +52,7 @@ data class RecoveryPhraseSetupUiState(
 
 sealed interface RecoveryPhraseSetupUiEvent {
     data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseSetupUiEvent
+    data class SaveAsFile(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
 }
 
 @HiltViewModel
@@ -57,7 +62,6 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
     private val vaultService: VaultService,
 ) : ViewModel() {
 
-    //    private val phrase = MutableStateFlow<RecoveryPhrase?>(null)
     private val inputs = MutableStateFlow(RecoveryPhraseSetupUiState.Inputs())
 
     val uiState = combine(
@@ -97,6 +101,25 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                             loading = false,
                         )
                     }
+                }
+            }
+
+            is RecoveryPhraseSetupUiEvent.SaveAsFile -> viewModelScope.launch {
+                val file = File(event.context.cacheDir, "shared").also { it.mkdirs() }
+                    .resolve("photok_recovery_phrase.txt")
+                    .also { it.writeText(event.phrase.toMnemonicString()) }
+                val uri = FileProvider.getUriForFile(
+                    event.context,
+                    "${event.context.packageName}.fileprovider",
+                    file,
+                )
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                withContext(Dispatchers.Main) {
+                    event.context.startActivity(Intent.createChooser(shareIntent, null))
                 }
             }
         }
