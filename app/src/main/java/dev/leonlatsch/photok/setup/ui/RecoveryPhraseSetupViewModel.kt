@@ -16,9 +16,12 @@
 
 package dev.leonlatsch.photok.setup.ui
 
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.Clipboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +50,7 @@ data class RecoveryPhraseSetupUiState(
     data class Inputs(
         val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
         val loading: Boolean = false,
-        val phraseWasSaved: Boolean = true,
+        val phraseWasSaved: Boolean = false,
     )
 }
 
@@ -55,6 +58,7 @@ sealed interface RecoveryPhraseSetupUiEvent {
     data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseSetupUiEvent
     data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
     data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
+    data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
 }
 
 @HiltViewModel
@@ -121,6 +125,10 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
 
                 event.context.startActivity(Intent.createChooser(sendIntent, null))
+
+                inputs.update {
+                    it.copy(phraseWasSaved = true)
+                }
             }
 
             is RecoveryPhraseSetupUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
@@ -134,6 +142,21 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
 
                 val fileName = io.getFileName(event.uri)
                 Dialogs.showLongToast(event.context, "Saved to $fileName")
+
+                inputs.update {
+                    it.copy(phraseWasSaved = true)
+                }
+            }
+
+            is RecoveryPhraseSetupUiEvent.CopyToClipboard -> {
+                viewModelScope.launch {
+                    val clipData = ClipData.newPlainText("photok-recovery-phrase", event.phrase.toMnemonicString())
+                    event.clipboard.setClipEntry(ClipEntry(clipData))
+
+                    inputs.update {
+                        it.copy(phraseWasSaved = true)
+                    }
+                }
             }
         }
     }
