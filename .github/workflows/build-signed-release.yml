@@ -10,6 +10,9 @@ on:
 jobs:
   release-process:
     runs-on: ubuntu-latest
+
+    env:
+      TELEMETRY_DECK_APP_ID: ${{ secrets.TELEMETRY_DECK_APP_ID }}
     
     steps:
       # Checkout
@@ -23,15 +26,15 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-          
+
       # Build .aab file
       - name: Build GPlay AAB
-        run: ./gradlew bundlePlayRelease
-      
+        run: ./gradlew bundlePlayRelease -PtelemetryDeckAppId=${{ env.TELEMETRY_DECK_APP_ID }}
+
       # Build .apk file
       - name: Build FOSS APK
-        run: ./gradlew assembleFossRelease
-      
+        run: ./gradlew assembleFossRelease -PtelemetryDeckAppId=${{ env.TELEMETRY_DECK_APP_ID }}
+
       # Sign .aab file
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1

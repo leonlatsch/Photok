@@ -13,6 +13,8 @@ val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it
 val appVersionName: String by project
 val appVersionCode: String by project
 
+val telemetryDeckAppId: String? by project
+
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
@@ -39,6 +41,12 @@ android {
         base {
             archivesName = "photok-$versionName"
         }
+
+        buildConfigField(
+            "String",
+            "TELEMETRY_DECK_APP_ID",
+            "\"${telemetryDeckAppId.orEmpty()}\""
+        )
     }
 
     flavorDimensions += "distribution"
