@@ -25,8 +25,6 @@ import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TelemetryDeckAppId = "C2F73045-3C8D-4912-951B-FE9894262E86" // Not a secret. Fine to have in code
-
 enum class Signal {
     OnboardingFinished,
     SetupCompleted,
@@ -38,9 +36,11 @@ class TelemetryService @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
     fun setup() {
-        if (config.telemetryEnabled) {
+        val telemetryDeckAppId = BuildConfig.TELEMETRY_DECK_APP_ID
+
+        if (config.telemetryEnabled && telemetryDeckAppId.isNotBlank()) {
             val builder = TelemetryDeck.Builder()
-                .appID(TelemetryDeckAppId)
+                .appID(telemetryDeckAppId)
                 .addProvider(
                     DefaultParameterProvider(
                         mapOf(
