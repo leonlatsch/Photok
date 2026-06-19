@@ -27,10 +27,14 @@ jobs:
       # Build .aab file
       - name: Build GPlay AAB
         run: ./gradlew bundlePlayRelease
+        env:
+          ORG_GRADLE_PROJECT_telemetryDeckAppId: ${{ secrets.TELEMETRY_DECK_APP_ID }}
       
       # Build .apk file
       - name: Build FOSS APK
         run: ./gradlew assembleFossRelease
+        env:
+          ORG_GRADLE_PROJECT_telemetryDeckAppId: ${{ secrets.TELEMETRY_DECK_APP_ID }}
       
       # Sign .aab file
       - name: Sign AAB

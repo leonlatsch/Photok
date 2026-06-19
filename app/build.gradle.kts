@@ -39,6 +39,12 @@ android {
         base {
             archivesName = "photok-$versionName"
         }
+
+        buildConfigField(
+            "String",
+            "TELEMETRY_DECK_APP_ID",
+            "\"${project.findProperty("telemetryDeckAppId") ?: ""}\""
+        )
     }
 
     flavorDimensions += "distribution"
