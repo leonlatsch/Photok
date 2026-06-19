@@ -166,14 +166,6 @@ fun AboutScreen(
                     Text(BuildConfig.VERSION_NAME)
                 }
 
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Text("TelemetryDeckAppId:")
-                    Text(BuildConfig.TELEMETRY_DECK_APP_ID)
-                }
-
-
                 Text(
                     text = stringResource(R.string.about_developed_by),
                     modifier = Modifier
