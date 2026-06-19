@@ -44,7 +44,6 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -69,8 +68,6 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RecoveryPhraseSetupScreen(
     onContinue: () -> Unit,
 ) {
-    // TODO: Can choose word count and download as txt, print, and copy to clipboard
-    // TODO: Only allow continue if saved in any way
     // TODO: Animate tap on word
     // TODO: Handle small device (scroll?)
     val viewModel: RecoveryPhraseSetupViewModel = hiltViewModel()
@@ -92,7 +89,6 @@ private fun Content(
 ) {
     val context = LocalContext.current
     val activity = LocalActivity.current
-    val scope = rememberCoroutineScope()
 
     val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
         it ?: return@rememberLauncherForActivityResult
