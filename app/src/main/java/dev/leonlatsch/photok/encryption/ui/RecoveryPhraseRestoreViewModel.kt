@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import android.net.Uri
+import androidx.compose.ui.platform.Clipboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,24 +37,36 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class RecoveryPhraseRestoreUiState(
-    val words: List<String> = emptyList(),
+    val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
     val loading: Boolean = false,
     val error: String? = null,
     val unlocked: Boolean = false,
+    val selectedRestoreMethod: RestoreMethod? = null,
 
     val validInput: Boolean = false,
 ) {
+    enum class RestoreMethod {
+        TypeByHand,
+        PasteFromClipboard,
+        ScanQrCode,
+        LoadFromFile,
+    }
+
     data class Inputs(
-        val words: List<String> = emptyList(),
+        val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
         val loading: Boolean = false,
         val error: String? = null,
+        val selectedRestoreMethod: RestoreMethod? = null,
         val unlocked: Boolean = false,
     )
 }
 
 sealed interface RecoveryPhraseRestoreUiEvent {
-    data class UpdateWords(val words: List<String>) : RecoveryPhraseRestoreUiEvent
-    data class Restore(val words: List<String>) : RecoveryPhraseRestoreUiEvent
+    data class Restore(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
+
+    data object TypeByHand : RecoveryPhraseRestoreUiEvent
+    data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
+    data class LoadFromFile(val uri: Uri) : RecoveryPhraseRestoreUiEvent
 }
 
 @HiltViewModel
@@ -65,23 +79,18 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
 
     val uiState = inputs.map { inputs ->
         RecoveryPhraseRestoreUiState(
-            words = inputs.words,
+            phrase = inputs.phrase,
             loading = inputs.loading,
             error = inputs.error,
             unlocked = inputs.unlocked,
+            selectedRestoreMethod = inputs.selectedRestoreMethod,
 
-            validInput = validateWords(inputs.words),
+            validInput = validateWords(inputs.phrase.words),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseRestoreUiState())
 
     fun handleUiEvent(event: RecoveryPhraseRestoreUiEvent) {
         when (event) {
-            is RecoveryPhraseRestoreUiEvent.UpdateWords -> {
-                inputs.value = inputs.value.copy(
-                    words = event.words,
-                    error = null,
-                )
-            }
             is RecoveryPhraseRestoreUiEvent.Restore -> {
                 inputs.update {
                     it.copy(
@@ -91,9 +100,8 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 }
 
                 viewModelScope.launch {
-                    val phrase = RecoveryPhrase(event.words)
                     delay(500)
-                    vaultService.unlock(UnlockRequest.RecoveryPhrase(phrase))
+                    vaultService.unlock(UnlockRequest.RecoveryPhrase(event.phrase))
                         .onSuccess { session ->
                             sessionRepository.set(session)
 
@@ -112,6 +120,37 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                                 )
                             }
                         }
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.TypeByHand -> {
+                inputs.update {
+                    it.copy(
+                        selectedRestoreMethod = if (it.selectedRestoreMethod == null) {
+                            RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand
+                        } else {
+                            null
+                        },
+                        phrase = RecoveryPhrase(),
+                    )
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.LoadFromFile -> {
+                // TODO
+            }
+            is RecoveryPhraseRestoreUiEvent.PasteFromClipboard -> viewModelScope.launch {
+                val clipEntry = event.clipboard.getClipEntry()
+                clipEntry ?: return@launch
+                if (clipEntry.clipData.itemCount < 1) {
+                    return@launch
+                }
+
+                val item = clipEntry.clipData.getItemAt(0)
+                val phrase = RecoveryPhrase.from(item.text.toString())
+
+                inputs.update {
+                    it.copy(phrase = phrase)
                 }
             }
         }
