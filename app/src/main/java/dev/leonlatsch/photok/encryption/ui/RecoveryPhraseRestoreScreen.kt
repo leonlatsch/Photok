@@ -19,10 +19,13 @@ package dev.leonlatsch.photok.encryption.ui
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -33,6 +36,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -209,17 +213,24 @@ private fun RecoveryPhraseRestoreContent(
 
                 LaunchedEffect(uiState.selectedRestoreMethod) {
                     if (uiState.selectedRestoreMethod == RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand) {
-                        delay(500)
+                        delay(800)
                         focusRequester.requestFocus()
+                    }
+
+                    if (uiState.selectedRestoreMethod == null) {
+                        focusManager.clearFocus()
                     }
                 }
 
                 AnimatedContent(
                     uiState.selectedRestoreMethod,
                     transitionSpec = {
-                        expandVertically { it }.togetherWith(shrinkVertically { 0 })
+//                        expandVertically { it }.togetherWith(shrinkVertically { 0 })
+                        fadeIn() + scaleIn() togetherWith fadeOut() + scaleOut()
                     },
-                    modifier = Modifier.padding(top = 40.dp)
+                    modifier = Modifier
+                        .width(300.dp)
+                        .padding(top = 40.dp)
                 ) {
                     when (it) {
                         RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
@@ -250,7 +261,7 @@ private fun RecoveryPhraseRestoreContent(
                                     Text("Recovery Phrase")
                                 },
                                 placeholder = {
-                                    Text("Type your place word by word")
+                                    Text("Type your recovery phrase word by word")
                                 },
                                 modifier = Modifier
                                     .height(200.dp)
@@ -261,7 +272,9 @@ private fun RecoveryPhraseRestoreContent(
                         RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard -> Unit
                         RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> Unit
                         RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile -> Unit
-                        null -> Unit
+                        null -> Box(
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
                 }
 
@@ -310,19 +323,20 @@ private fun ColumnScope.OptionButton(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Icon(
                         painter = painterResource(icon),
                         contentDescription = null,
                     )
                     Text(
-                        text = text
+                        text = text,
+                        modifier = Modifier.padding(start = 8.dp)
                     )
                     AnimatedVisibility(selected) {
                         Icon(
                             painter = painterResource(R.drawable.ic_check),
                             contentDescription = null,
+                            modifier = Modifier.padding(start = 8.dp)
                         )
                     }
                 }
