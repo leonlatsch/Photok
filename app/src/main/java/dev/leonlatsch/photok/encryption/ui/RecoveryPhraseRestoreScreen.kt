@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -54,14 +56,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -108,6 +108,16 @@ private fun RecoveryPhraseRestoreContent(
     uiState: RecoveryPhraseRestoreUiState,
     handleUiEvent: (RecoveryPhraseRestoreUiEvent) -> Unit,
 ) {
+    val clipboard = LocalClipboard.current
+
+    val selectFileLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        handleUiEvent(RecoveryPhraseRestoreUiEvent.LoadFromFile(uri))
+    }
+
     Scaffold(
         bottomBar = {
             AnimatedVisibility(!uiState.unlocked) {
@@ -152,8 +162,7 @@ private fun RecoveryPhraseRestoreContent(
                 modifier = Modifier
                     .padding(contentPadding)
                     .padding(horizontal = 24.dp)
-                    .fillMaxSize()
-                ,
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -188,7 +197,13 @@ private fun RecoveryPhraseRestoreContent(
                     OptionButton(
                         text = "Open file",
                         icon = R.drawable.ic_upload,
-                        onClick = { },
+                        onClick = {
+                            if (uiState.selectedRestoreMethod == null) {
+                                selectFileLauncher.launch(arrayOf("text/plain"))
+                            } else {
+                                handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
+                            }
+                        },
                         restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
                         selectedRestoreMethod = uiState.selectedRestoreMethod,
                     )
@@ -202,11 +217,22 @@ private fun RecoveryPhraseRestoreContent(
                     OptionButton(
                         text = "Paste from Clipboard",
                         icon = R.drawable.ic_paste,
-                        onClick = { },
+                        onClick = {
+                            if (uiState.selectedRestoreMethod == null) {
+                                handleUiEvent(
+                                    RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
+                                        clipboard
+                                    )
+                                )
+                            } else {
+                                handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
+                            }
+                        },
                         restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
                         selectedRestoreMethod = uiState.selectedRestoreMethod,
                     )
                 }
+
 
                 val focusRequester = remember { FocusRequester() }
                 val focusManager = LocalFocusManager.current
@@ -225,7 +251,6 @@ private fun RecoveryPhraseRestoreContent(
                 AnimatedContent(
                     uiState.selectedRestoreMethod,
                     transitionSpec = {
-//                        expandVertically { it }.togetherWith(shrinkVertically { 0 })
                         fadeIn() + scaleIn() togetherWith fadeOut() + scaleOut()
                     },
                     modifier = Modifier
@@ -234,14 +259,19 @@ private fun RecoveryPhraseRestoreContent(
                 ) {
                     when (it) {
                         RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
-                            var text by rememberSaveable { mutableStateOf("") }
                             OutlinedTextField(
-                                value = text,
+                                value = uiState.phrase.toMnemonicString(),
                                 onValueChange = {
-                                    text = it
+                                    val new = it
                                         .replace(" ", "-")
                                         .replace("\n", "-")
                                         .replace("--", "-")
+
+                                    handleUiEvent(
+                                        RecoveryPhraseRestoreUiEvent.UpdatePhrase(
+                                            RecoveryPhrase.from(new)
+                                        )
+                                    )
                                 },
                                 keyboardOptions = KeyboardOptions(
                                     capitalization = KeyboardCapitalization.None,
@@ -269,9 +299,15 @@ private fun RecoveryPhraseRestoreContent(
                             )
                         }
 
-                        RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard -> Unit
-                        RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> Unit
-                        RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile -> Unit
+                        RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
+                        RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
+                        RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile -> {
+                            RecoveryPhraseFlowRow(
+                                phrase = uiState.phrase,
+                                animated = true,
+                            )
+                        }
+
                         null -> Box(
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -280,7 +316,7 @@ private fun RecoveryPhraseRestoreContent(
 
                 AnimatedVisibility(uiState.error != null) {
                     Text(
-                        text = "Could not restore vault from recovery phrase.",
+                        text = uiState.error.orEmpty(),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.error,
                     )

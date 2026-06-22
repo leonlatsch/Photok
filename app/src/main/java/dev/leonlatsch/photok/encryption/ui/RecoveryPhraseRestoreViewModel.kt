@@ -27,6 +27,8 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.io.IO
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -63,16 +65,20 @@ data class RecoveryPhraseRestoreUiState(
 
 sealed interface RecoveryPhraseRestoreUiEvent {
     data class Restore(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
+    data class UpdatePhrase(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
 
     data object TypeByHand : RecoveryPhraseRestoreUiEvent
     data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
     data class LoadFromFile(val uri: Uri) : RecoveryPhraseRestoreUiEvent
+
+    data object ClearRestoreMethod : RecoveryPhraseRestoreUiEvent
 }
 
 @HiltViewModel
 class RecoveryPhraseRestoreViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val vaultService: VaultService,
+    private val io: IO,
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(RecoveryPhraseRestoreUiState.Inputs())
@@ -116,7 +122,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                             inputs.update {
                                 it.copy(
                                     loading = false,
-                                    error = it.error ?: "Invalid recovery phrase"
+                                    error = "Could not restore vault from recovery phrase."
                                 )
                             }
                         }
@@ -132,13 +138,35 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                             null
                         },
                         phrase = RecoveryPhrase(),
+                        error = null,
                     )
                 }
             }
 
-            is RecoveryPhraseRestoreUiEvent.LoadFromFile -> {
-                // TODO
+            is RecoveryPhraseRestoreUiEvent.LoadFromFile -> viewModelScope.launch(IO) {
+                io.openFileInput(event.uri)?.use { inputStream ->
+                    val bytes = inputStream.readBytes()
+
+                    val phrase = RecoveryPhrase.from(String(bytes))
+
+                    if (validateWords(phrase.words)) {
+                        inputs.update {
+                            it.copy(
+                                phrase = phrase,
+                                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
+                                error = null,
+                            )
+                        }
+                    } else {
+                        inputs.update {
+                            it.copy(
+                                error = "Invalid recovery phrase"
+                            )
+                        }
+                    }
+                }
             }
+
             is RecoveryPhraseRestoreUiEvent.PasteFromClipboard -> viewModelScope.launch {
                 val clipEntry = event.clipboard.getClipEntry()
                 clipEntry ?: return@launch
@@ -149,17 +177,38 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 val item = clipEntry.clipData.getItemAt(0)
                 val phrase = RecoveryPhrase.from(item.text.toString())
 
-                inputs.update {
-                    it.copy(phrase = phrase)
+                if (validateWords(phrase.words)) {
+                    inputs.update {
+                        it.copy(
+                            phrase = phrase,
+                            selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
+                            error = null,
+                        )
+                    }
+                } else {
+                    inputs.update {
+                        it.copy(
+                            error = "Invalid recovery phrase"
+                        )
+                    }
                 }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.UpdatePhrase -> inputs.update {
+                it.copy(phrase = event.phrase)
+            }
+
+            RecoveryPhraseRestoreUiEvent.ClearRestoreMethod -> inputs.update {
+                it.copy(selectedRestoreMethod = null)
             }
         }
     }
 
     private fun validateWords(words: List<String>): Boolean {
-        if (words.any { it == "letmein"} && BuildConfig.DEBUG) return true
+        if (words.any { it == "letmein" } && BuildConfig.DEBUG) return true
 
-        val validCount = Bip39WordCount.Twelve.words == words.size || Bip39WordCount.TwentyFour.words == words.size
+        val validCount =
+            Bip39WordCount.Twelve.words == words.size || Bip39WordCount.TwentyFour.words == words.size
 
         return validCount // TODO: Add current input to viewmodel and use it here to check if 11 + current is twelve, etc.
     }
