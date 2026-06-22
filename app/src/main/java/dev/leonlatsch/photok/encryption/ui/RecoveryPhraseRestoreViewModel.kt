@@ -199,7 +199,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
             }
 
             RecoveryPhraseRestoreUiEvent.ClearRestoreMethod -> inputs.update {
-                it.copy(selectedRestoreMethod = null)
+                it.copy(selectedRestoreMethod = null, phrase = RecoveryPhrase())
             }
         }
     }
