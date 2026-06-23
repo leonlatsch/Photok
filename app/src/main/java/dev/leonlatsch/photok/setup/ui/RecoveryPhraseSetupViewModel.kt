@@ -51,6 +51,7 @@ data class RecoveryPhraseSetupUiState(
         val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
         val loading: Boolean = false,
         val phraseWasSaved: Boolean = false,
+        val qrSheetVisible: Boolean = false,
     )
 }
 
@@ -59,6 +60,9 @@ sealed interface RecoveryPhraseSetupUiEvent {
     data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
     data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
     data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
+    data object ShowQrCode : RecoveryPhraseSetupUiEvent
+    data object DismissQrSheet : RecoveryPhraseSetupUiEvent
+    data object MarkPhraseSaved : RecoveryPhraseSetupUiEvent
 }
 
 @HiltViewModel
@@ -114,7 +118,7 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
             is RecoveryPhraseSetupUiEvent.Share -> {
                 val text = """
                     Photok Recovery Phrase
-                    
+
                     ${event.phrase.toMnemonicString()}
                 """.trimIndent()
 
@@ -157,6 +161,18 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                         it.copy(phraseWasSaved = true)
                     }
                 }
+            }
+
+            RecoveryPhraseSetupUiEvent.ShowQrCode -> {
+                inputs.update { it.copy(qrSheetVisible = true) }
+            }
+
+            RecoveryPhraseSetupUiEvent.DismissQrSheet -> {
+                inputs.update { it.copy(qrSheetVisible = false) }
+            }
+
+            RecoveryPhraseSetupUiEvent.MarkPhraseSaved -> {
+                inputs.update { it.copy(phraseWasSaved = true) }
             }
         }
     }

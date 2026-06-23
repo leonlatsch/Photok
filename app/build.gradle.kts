@@ -177,6 +177,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.activity:activity-compose")
 
+    // ZXing - QR code generation
+    implementation("com.google.zxing:core:3.5.3")
+
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 

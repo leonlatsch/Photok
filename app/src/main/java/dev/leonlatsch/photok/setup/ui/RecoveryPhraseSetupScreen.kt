@@ -100,6 +100,14 @@ private fun Content(
 
     val clipboard = LocalClipboard.current
 
+    val phrase = uiState.phrase
+    if (uiState.inputs.qrSheetVisible && phrase != null) {
+        RecoveryPhraseQrSheet(
+            phrase = phrase,
+            onDismiss = { handleUiEvent(RecoveryPhraseSetupUiEvent.DismissQrSheet) },
+            onSaved = { handleUiEvent(RecoveryPhraseSetupUiEvent.MarkPhraseSaved) },
+        )
+    }
 
     Scaffold(
         bottomBar = {
@@ -130,7 +138,12 @@ private fun Content(
                             contentDescription = null,
                         )
                     }
-                    IconButton(onClick = {}) {
+                    IconButton(
+                        onClick = {
+                            uiState.phrase ?: return@IconButton
+                            handleUiEvent(RecoveryPhraseSetupUiEvent.ShowQrCode)
+                        },
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_qr_code),
                             contentDescription = null,
