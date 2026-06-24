@@ -352,33 +352,39 @@
     <string name="telemetry_choice_yes">Share anonymous usage data</string>
     <string name="telemetry_toggle">Allow collection of usage data</string>
 
-    <!-- Recovery Phrase -->
+    <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_title">Your Recovery Phrase</string>
-    <string name="recovery_phrase_description">Write down these words in order and keep them safe. You can use this phrase to recover access to your vault.</string>
+    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string>
     <string name="recovery_phrase_confirm">I\'ve saved my recovery phrase</string>
-    <string name="recovery_phrase_restore_button">Restore</string>
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string>
-    <string name="recovery_phrase_forgot_password">Forgot password</string>
     <string name="recovery_phrase_create_new">Create New Phrase</string>
-    <string name="recovery_phrase_select_word_count">Select Phrase Word Count</string>
+    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string>
+
+    <!-- Recovery Phrase — Setup -->
+    <string name="recovery_phrase_select_word_count">Word Count</string>
+
+    <!-- Recovery Phrase — QR Code -->
     <string name="recovery_phrase_qr_title">Recovery Phrase</string>
     <string name="recovery_phrase_qr_save_as_image">Save as Image</string>
     <string name="recovery_phrase_document_title">Recovery Phrase</string>
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string>
+
+    <!-- Recovery Phrase — Restore -->
+    <string name="recovery_phrase_forgot_password">Forgot password</string>
+    <string name="recovery_phrase_restore_button">Restore</string>
+    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string>
     <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string>
-    <string name="recovery_phrase_restore_choose_option">Choose one option for how to input your recovery phrase.</string>
+    <string name="recovery_phrase_restore_choose_option">Choose how to enter your recovery phrase.</string>
     <string name="recovery_phrase_restore_option_type">Type by hand</string>
-    <string name="recovery_phrase_restore_option_open_file">Open file</string>
+    <string name="recovery_phrase_restore_option_open_file">Load from file</string>
     <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string>
     <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string>
     <string name="recovery_phrase_restore_input_label">Recovery Phrase</string>
     <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string>
     <string name="recovery_phrase_restore_unlocked">Unlocked</string>
     <string name="recovery_phrase_restore_unlocking">Unlocking…</string>
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault from recovery phrase.</string>
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase</string>
-    <string name="recovery_phrase_restore_error_invalid_qr">Invalid recovery phrase QR code</string>
+    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string>
+    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string>
     <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string>
-    <string name="recovery_phrase_restore_source_file">From %1$s</string>
+    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string>
 </resources>
