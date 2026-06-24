@@ -68,6 +68,8 @@ sealed interface RecoveryPhraseRestoreUiEvent {
     data class UpdatePhrase(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
 
     data object TypeByHand : RecoveryPhraseRestoreUiEvent
+    data object ScanQrCode : RecoveryPhraseRestoreUiEvent
+    data class QrScanned(val raw: String) : RecoveryPhraseRestoreUiEvent
     data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
     data class LoadFromFile(val uri: Uri) : RecoveryPhraseRestoreUiEvent
 
@@ -143,6 +145,41 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                         error = null,
                         restoreSupportingText = null,
                     )
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.ScanQrCode -> {
+                inputs.update {
+                    it.copy(
+                        selectedRestoreMethod = if (it.selectedRestoreMethod == null) {
+                            RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode
+                        } else {
+                            null
+                        },
+                        phrase = RecoveryPhrase(),
+                        error = null,
+                        restoreSupportingText = null,
+                    )
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.QrScanned -> {
+                val phrase = RecoveryPhrase.from(event.raw)
+                if (phrase.validate()) {
+                    inputs.update {
+                        it.copy(
+                            phrase = phrase,
+                            error = null,
+                            restoreSupportingText = "Scanned from QR code",
+                        )
+                    }
+                } else {
+                    inputs.update {
+                        it.copy(
+                            error = "Invalid recovery phrase QR code",
+                            restoreSupportingText = null,
+                        )
+                    }
                 }
             }
 

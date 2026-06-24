@@ -79,6 +79,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -217,7 +218,7 @@ private fun RecoveryPhraseRestoreContent(
                         OptionButton(
                             text = "Scan QR Code",
                             icon = R.drawable.ic_qr_code,
-                            onClick = { },
+                            onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode) },
                             restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
                             selectedRestoreMethod = uiState.selectedRestoreMethod,
                         )
@@ -319,8 +320,26 @@ private fun RecoveryPhraseRestoreContent(
                                 )
                             }
 
+                            RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> {
+                                if (uiState.phrase.words.isEmpty()) {
+                                    QrScannerView(
+                                        onQrCodeDecoded = {
+                                            handleUiEvent(RecoveryPhraseRestoreUiEvent.QrScanned(it))
+                                        },
+                                        modifier = Modifier
+                                            .padding(top = 20.dp)
+                                            .height(200.dp)
+                                            .fillMaxWidth(),
+                                    )
+                                } else {
+                                    RecoveryPhraseFlowRow(
+                                        phrase = uiState.phrase,
+                                        animated = true,
+                                    )
+                                }
+                            }
+
                             RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                            RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
                             RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile -> {
                                 RecoveryPhraseFlowRow(
                                     phrase = uiState.phrase,
