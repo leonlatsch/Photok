@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.setup.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -45,16 +46,19 @@ class RecoveryPhraseQrViewModel @Inject constructor(
     fun handleUiEvent(event: RecoveryPhraseQrUiEvent) {
         when (event) {
             is RecoveryPhraseQrUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
-                val document = RecoveryPhraseQrBitmapGenerator.generateDocument(
-                    event.context,
-                    event.phrase.toMnemonicString()
-                )
+                val bitmap = QRCodeGenerator.generateQRCode(
+                    text = event.phrase.toMnemonicString(),
+                    size = 512,
+                    foregroundColor = Color.BLACK,
+                    backgroundColor = Color.WHITE,
+                ) ?: return@launch
+
                 val outputStream = io.openFileOutput(event.uri) ?: run {
-                    document.recycle()
+                    bitmap.recycle()
                     return@launch
                 }
-                outputStream.use { document.writeTo(it) }
-                document.recycle()
+                outputStream.use { bitmap.writeTo(it) }
+                bitmap.recycle()
                 val fileName = io.getFileName(event.uri)
                 Dialogs.showLongToast(event.context, "Saved to $fileName")
             }
