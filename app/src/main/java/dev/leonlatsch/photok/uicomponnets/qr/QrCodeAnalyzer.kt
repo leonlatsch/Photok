@@ -26,7 +26,6 @@ import com.google.zxing.NotFoundException
 import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import timber.log.Timber
-import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * CameraX [ImageAnalysis.Analyzer] that decodes QR codes from camera frames using ZXing.
@@ -34,8 +33,10 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Domain-agnostic: delivers a raw [String] to [onQrCodeDecoded] and knows nothing about
  * what that string represents. The caller decides what to do with it.
  *
- * Duplicate-scan prevention: [hasScanned] is set atomically after the first successful
- * decode so the callback is fired exactly once per scanner session.
+ * Duplicate-frame prevention: [onQrCodeDecoded] is only called when the decoded text
+ * differs from the last successfully decoded value. This avoids flooding the caller with
+ * repeated callbacks while the same code is held in frame, but still fires again when a
+ * different code is seen — allowing the user to retry after an invalid scan.
  */
 class QrCodeAnalyzer(
     private val onQrCodeDecoded: (String) -> Unit,
@@ -50,12 +51,10 @@ class QrCodeAnalyzer(
         )
     }
 
-    private val hasScanned = AtomicBoolean(false)
+    @Volatile private var lastDecodedText: String? = null
 
     override fun analyze(image: ImageProxy) {
         try {
-            if (hasScanned.get()) return
-
             val plane = image.planes[0]
             val bytes = ByteArray(plane.buffer.remaining())
             plane.buffer.get(bytes)
@@ -73,7 +72,8 @@ class QrCodeAnalyzer(
             val bitmap = BinaryBitmap(HybridBinarizer(source))
             val result = reader.decode(bitmap)
 
-            if (hasScanned.compareAndSet(false, true)) {
+            if (result.text != lastDecodedText) {
+                lastDecodedText = result.text
                 onQrCodeDecoded(result.text)
             }
         } catch (_: NotFoundException) {
