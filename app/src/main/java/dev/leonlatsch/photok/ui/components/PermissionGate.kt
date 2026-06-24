@@ -88,14 +88,11 @@ fun PermissionGate(
         if (isGranted) {
             granted = true
         } else {
-            shouldRequestInSettings = activity?.shouldShowRequestPermissionRationale(permission) == false
+            shouldRequestInSettings =
+                activity?.shouldShowRequestPermissionRationale(permission) == false
         }
     }
 
-    if (granted) {
-        content()
-        return
-    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val lifecycleState by lifecycleOwner.lifecycle.currentStateFlow.collectAsState()
@@ -107,6 +104,11 @@ fun PermissionGate(
                 permission,
             ) == PackageManager.PERMISSION_GRANTED
         }
+    }
+
+    if (granted) {
+        content()
+        return
     }
 
     Column(
@@ -121,13 +123,18 @@ fun PermissionGate(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+
             Spacer(Modifier.height(8.dp))
-            TextButton(onClick = {
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context.packageName, null)
-                }
-                context.startActivity(intent)
-            }) {
+
+            TextButton(
+                onClick = {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                    }
+
+                    context.startActivity(intent)
+                },
+            ) {
                 Text("Open Settings")
             }
         } else {
