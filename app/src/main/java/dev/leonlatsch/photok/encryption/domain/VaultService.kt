@@ -61,6 +61,8 @@ class VaultService @Inject constructor(
                 }
             }
 
+            config.lastUsedUnlockMethod = request.protectionType
+
             VaultSession(
                 vmk = vmk,
             )

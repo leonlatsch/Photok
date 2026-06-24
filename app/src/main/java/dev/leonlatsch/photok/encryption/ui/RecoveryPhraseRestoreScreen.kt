@@ -21,11 +21,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,7 +42,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -65,6 +66,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -77,15 +79,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseRestoreScreen(
-    onRestored: () -> Unit,
+    onUnlocked: () -> Unit,
 ) {
     val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
 
@@ -93,8 +98,8 @@ fun RecoveryPhraseRestoreScreen(
 
     LaunchedEffect(uiState.unlocked) {
         if (uiState.unlocked) {
-            delay(3000)
-            onRestored()
+            delay(3.seconds)
+            onUnlocked()
         }
     }
 
@@ -124,12 +129,16 @@ private fun RecoveryPhraseRestoreContent(
 
     Scaffold(
         bottomBar = {
-            AnimatedVisibility(!uiState.unlocked) {
+            AnimatedVisibility(
+                visible = !uiState.unlocked,
+                enter = EnterTransition.None,
+                exit = slideOutVertically { it },
+            ) {
                 Button(
                     onClick = {
-                        handleUiEvent(RecoveryPhraseRestoreUiEvent.Restore(uiState.phrase))
+                        handleUiEvent(RecoveryPhraseRestoreUiEvent.Unlock(uiState.phrase))
                     },
-                    enabled = uiState.phraseValid,
+                    enabled = uiState.phraseValid && !uiState.loading,
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .navigationBarsPadding()
@@ -159,222 +168,224 @@ private fun RecoveryPhraseRestoreContent(
             )
         },
     ) { contentPadding ->
-        Crossfade(uiState.unlocked) { unlocked ->
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .padding(horizontal = 24.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "Enter Recovery Phrase",
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(Modifier.height(20.dp))
+
+            AnimatedVisibility(uiState.selectedRestoreMethod == null) {
+                Text(
+                    text = "Choose one option for how to input your recovery phrase.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
+
             Column(
-                modifier = Modifier
-                    .padding(contentPadding)
-                    .padding(horizontal = 24.dp)
-                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
             ) {
-                if (unlocked) {
-                    Text(
-                        text = "Vault Unlocked",
-                        style = MaterialTheme.typography.headlineSmall,
-                        textAlign = TextAlign.Center,
-                    )
-                } else {
-                    Text(
-                        text = "Enter Recovery Phrase",
-                        style = MaterialTheme.typography.headlineSmall,
-                        textAlign = TextAlign.Center,
-                    )
-
-                    Spacer(Modifier.height(20.dp))
-
-                    AnimatedVisibility(uiState.selectedRestoreMethod == null) {
-                        Text(
-                            text = "Enter your recovery phrase to restore your vault. Choose one option for input.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        OptionButton(
-                            text = "Type by hand",
-                            icon = R.drawable.ic_keyboard,
-                            onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand) },
-                            restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
-                            selectedRestoreMethod = uiState.selectedRestoreMethod,
-                        )
-                        OptionButton(
-                            text = "Open file",
-                            icon = R.drawable.ic_upload,
-                            onClick = {
-                                if (uiState.selectedRestoreMethod == null) {
-                                    selectFileLauncher.launch(arrayOf("text/plain"))
-                                } else {
-                                    handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
-                                }
-                            },
-                            restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
-                            selectedRestoreMethod = uiState.selectedRestoreMethod,
-                        )
-                        OptionButton(
-                            text = "Scan QR Code",
-                            icon = R.drawable.ic_qr_code,
-                            onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode) },
-                            restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
-                            selectedRestoreMethod = uiState.selectedRestoreMethod,
-                        )
-                        OptionButton(
-                            text = "Paste from Clipboard",
-                            icon = R.drawable.ic_paste,
-                            onClick = {
-                                if (uiState.selectedRestoreMethod == null) {
-                                    handleUiEvent(
-                                        RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
-                                            clipboard
-                                        )
-                                    )
-                                } else {
-                                    handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
-                                }
-                            },
-                            restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                            selectedRestoreMethod = uiState.selectedRestoreMethod,
-                        )
-                    }
-
-
-                    val focusRequester = remember { FocusRequester() }
-                    val focusManager = LocalFocusManager.current
-
-                    LaunchedEffect(uiState.selectedRestoreMethod) {
-                        if (uiState.selectedRestoreMethod == RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand) {
-                            delay(800)
-                            focusRequester.requestFocus()
-                        }
-
+                OptionButton(
+                    text = "Type by hand",
+                    icon = R.drawable.ic_keyboard,
+                    onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand) },
+                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
+                    selectedRestoreMethod = uiState.selectedRestoreMethod,
+                )
+                OptionButton(
+                    text = "Open file",
+                    icon = R.drawable.ic_upload,
+                    onClick = {
                         if (uiState.selectedRestoreMethod == null) {
-                            focusManager.clearFocus()
+                            selectFileLauncher.launch(arrayOf("text/plain"))
+                        } else {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
                         }
-                    }
+                    },
+                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
+                    selectedRestoreMethod = uiState.selectedRestoreMethod,
+                )
+                OptionButton(
+                    text = "Scan QR Code",
+                    icon = R.drawable.ic_qr_code,
+                    onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode) },
+                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
+                    selectedRestoreMethod = uiState.selectedRestoreMethod,
+                )
+                OptionButton(
+                    text = "Paste from Clipboard",
+                    icon = R.drawable.ic_paste,
+                    onClick = {
+                        if (uiState.selectedRestoreMethod == null) {
+                            handleUiEvent(
+                                RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
+                                    clipboard
+                                )
+                            )
+                        } else {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
+                        }
+                    },
+                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
+                    selectedRestoreMethod = uiState.selectedRestoreMethod,
+                )
+            }
 
-                    AnimatedVisibility(
-                        visible = uiState.restoreSupportingText != null,
-                        modifier = Modifier.padding(vertical = 40.dp)
-                    ) {
-                        Text(
-                            text = uiState.restoreSupportingText.orEmpty(),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center,
+
+            val focusRequester = remember { FocusRequester() }
+            val focusManager = LocalFocusManager.current
+
+            LaunchedEffect(uiState.selectedRestoreMethod) {
+                if (uiState.selectedRestoreMethod == RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand) {
+                    delay(800.milliseconds)
+                    focusRequester.requestFocus()
+                }
+
+                if (uiState.selectedRestoreMethod == null) {
+                    focusManager.clearFocus()
+                }
+            }
+
+            AnimatedVisibility(
+                visible = uiState.restoreSupportingText != null,
+            ) {
+                Text(
+                    text = uiState.restoreSupportingText.orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+            }
+
+            AnimatedContent(
+                uiState.selectedRestoreMethod,
+                transitionSpec = {
+                    fadeIn() + scaleIn() togetherWith fadeOut() + scaleOut()
+                },
+            ) {
+                when (it) {
+                    RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
+                        OutlinedTextField(
+                            value = uiState.phrase.toMnemonicString(),
+                            onValueChange = {
+                                val new = it
+                                    .replace(" ", "-")
+                                    .replace("\n", "-")
+                                    .replace("--", "-")
+
+                                handleUiEvent(
+                                    RecoveryPhraseRestoreUiEvent.UpdatePhrase(
+                                        RecoveryPhrase.from(new)
+                                    )
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                capitalization = KeyboardCapitalization.None,
+                                autoCorrectEnabled = false,
+                                imeAction = ImeAction.Done,
+                                keyboardType = KeyboardType.Ascii,
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = { focusManager.clearFocus() }
+                            ),
+                            maxLines = 4,
+                            shape = RoundedCornerShape(24.dp),
+                            label = {
+                                Text("Recovery Phrase")
+                            },
+                            placeholder = {
+                                Text("Type your recovery phrase word by word")
+                            },
+                            modifier = Modifier
+                                .height(200.dp)
+                                .focusRequester(focusRequester)
+                                .padding(vertical = 20.dp)
                         )
                     }
 
-                    AnimatedContent(
-                        uiState.selectedRestoreMethod,
-                        transitionSpec = {
-                            fadeIn() + scaleIn() togetherWith fadeOut() + scaleOut()
-                        },
-                        modifier = Modifier
-                            .width(300.dp)
-                            .padding(bottom = 40.dp)
-                    ) {
-                        when (it) {
-                            RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
-                                OutlinedTextField(
-                                    value = uiState.phrase.toMnemonicString(),
-                                    onValueChange = {
-                                        val new = it
-                                            .replace(" ", "-")
-                                            .replace("\n", "-")
-                                            .replace("--", "-")
-
-                                        handleUiEvent(
-                                            RecoveryPhraseRestoreUiEvent.UpdatePhrase(
-                                                RecoveryPhrase.from(new)
-                                            )
+                    RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> {
+                        AnimatedVisibility(
+                            visible = uiState.phrase.words.isEmpty(),
+                        ) {
+                            QrScannerView(
+                                onQrCodeDecoded = { qrCodeContent ->
+                                    handleUiEvent(
+                                        RecoveryPhraseRestoreUiEvent.QrScanned(
+                                            qrCodeContent
                                         )
-                                    },
-                                    keyboardOptions = KeyboardOptions(
-                                        capitalization = KeyboardCapitalization.None,
-                                        autoCorrectEnabled = false,
-                                        imeAction = ImeAction.Done,
-                                        keyboardType = KeyboardType.Ascii,
-                                    ),
-                                    keyboardActions = KeyboardActions(
-                                        onDone = {
-                                            focusManager.clearFocus()
-                                            // TODO
-                                        }
-                                    ),
-                                    maxLines = 4,
-                                    shape = RoundedCornerShape(24.dp),
-                                    label = {
-                                        Text("Recovery Phrase")
-                                    },
-                                    placeholder = {
-                                        Text("Type your recovery phrase word by word")
-                                    },
-                                    modifier = Modifier
-                                        .padding(top = 20.dp)
-                                        .height(200.dp)
-                                        .focusRequester(focusRequester)
-                                )
-                            }
-
-                            RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> {
-                                if (uiState.phrase.words.isEmpty()) {
-                                    QrScannerView(
-                                        onQrCodeDecoded = {
-                                            handleUiEvent(RecoveryPhraseRestoreUiEvent.QrScanned(it))
-                                        },
-                                        modifier = Modifier
-                                            .padding(top = 20.dp)
-                                            .height(200.dp)
-                                            .fillMaxWidth(),
                                     )
-                                } else {
-                                    RecoveryPhraseFlowRow(
-                                        phrase = uiState.phrase,
-                                        animated = true,
-                                    )
-                                }
-                            }
-
-                            RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                            RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile -> {
-                                RecoveryPhraseFlowRow(
-                                    phrase = uiState.phrase,
-                                    animated = true,
-                                )
-                            }
-
-                            null -> Box(
-                                modifier = Modifier.fillMaxWidth()
+                                },
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 20.dp)
                             )
                         }
                     }
 
-                    AnimatedVisibility(uiState.error != null) {
-                        Text(
-                            text = uiState.error.orEmpty(),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    }
+                    RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
+                    RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
+                    null -> Box(
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
 
-                    AnimatedVisibility(
-                        visible = uiState.loading,
+            AnimatedVisibility(
+                uiState.phrase.words.isNotEmpty() && uiState.selectedRestoreMethod != RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
+            ) {
+                RecoveryPhraseFlowRow(
+                    phrase = uiState.phrase,
+                    animated = true,
+                )
+            }
+
+            AnimatedVisibility(uiState.error != null) {
+                Text(
+                    text = uiState.error.orEmpty(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+
+            AnimatedVisibility(uiState.loading) {
+                Crossfade(uiState.unlocked) { unlocked ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
+                        if (unlocked) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_check),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+
+                            Text(
+                                text = "Unlocked",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        } else {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(24.dp)
                             )
 
                             Text(
                                 text = "Unlocking...",
-                                style = MaterialTheme.typography.labelSmall,
+                                style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
@@ -475,19 +486,77 @@ private fun PreviewTypeByHand() {
 
 @Preview(showSystemUi = true)
 @Composable
-private fun PreviewTypePasted() {
+private fun PreviewQr() {
+    AppTheme {
+        RecoveryPhraseRestoreContent(
+            uiState = RecoveryPhraseRestoreUiState(
+                phrase = RecoveryPhrase(),
+                phraseValid = false,
+                loading = false,
+                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewFromFile() {
+    val context = LocalContext.current
+
     AppTheme {
         RecoveryPhraseRestoreContent(
             uiState = RecoveryPhraseRestoreUiState(
                 phrase = RecoveryPhrase(
-                    buildList {
-                        repeat(12) {
-                            add("asd")
-                        }
-                    }
+                    Bip39MnemonicGenerator(context).generate()
                 ),
-                phraseValid = false,
+                phraseValid = true,
                 loading = false,
+                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
+                restoreSupportingText = "Loaded from file"
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewTypePasted() {
+    val context = LocalContext.current
+
+    AppTheme {
+        RecoveryPhraseRestoreContent(
+            uiState = RecoveryPhraseRestoreUiState(
+                phrase = RecoveryPhrase(
+                    Bip39MnemonicGenerator(context).generate()
+                ),
+                phraseValid = true,
+                loading = false,
+                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
+                restoreSupportingText = "Pasted from clipboard"
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewUnlocked() {
+    val context = LocalContext.current
+
+    AppTheme {
+        RecoveryPhraseRestoreContent(
+
+            uiState = RecoveryPhraseRestoreUiState(
+                phrase = RecoveryPhrase(
+                    Bip39MnemonicGenerator(context).generate()
+                ),
+                phraseValid = true,
+                loading = true,
+                unlocked = true,
                 selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
                 restoreSupportingText = "Pasted from clipboard"
             ),

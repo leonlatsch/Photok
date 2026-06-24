@@ -41,7 +41,7 @@ class RecoveryPhraseRestoreFragment : Fragment() {
         return ComposeView(inflater.context).apply {
             setContent {
                 RecoveryPhraseRestoreScreen(
-                    onRestored = {
+                    onUnlocked = {
                         navigateToGallery(findNavController())
                     }
                 )

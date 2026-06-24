@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 data class RecoveryPhraseRestoreUiState(
     val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
@@ -64,7 +65,7 @@ data class RecoveryPhraseRestoreUiState(
 }
 
 sealed interface RecoveryPhraseRestoreUiEvent {
-    data class Restore(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
+    data class Unlock(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
     data class UpdatePhrase(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
 
     data object TypeByHand : RecoveryPhraseRestoreUiEvent
@@ -99,8 +100,10 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseRestoreUiState())
 
     fun handleUiEvent(event: RecoveryPhraseRestoreUiEvent) {
+        if (inputs.value.unlocked) return
+
         when (event) {
-            is RecoveryPhraseRestoreUiEvent.Restore -> {
+            is RecoveryPhraseRestoreUiEvent.Unlock -> {
                 inputs.update {
                     it.copy(
                         loading = true,
@@ -109,14 +112,13 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 }
 
                 viewModelScope.launch {
-                    delay(500)
+                    delay(5.seconds)
                     vaultService.unlock(UnlockRequest.RecoveryPhrase(event.phrase))
                         .onSuccess { session ->
                             sessionRepository.set(session)
 
                             inputs.update {
                                 it.copy(
-                                    loading = false,
                                     unlocked = true,
                                     restoreSupportingText = null,
                                 )
