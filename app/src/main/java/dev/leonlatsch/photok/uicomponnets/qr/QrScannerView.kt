@@ -28,8 +28,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -86,8 +86,8 @@ fun QrScannerView(
         }
 
         Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                Text("Allow Camera")
+            TextButton(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                Text("Request Camera Permission")
             }
         }
     } else {
