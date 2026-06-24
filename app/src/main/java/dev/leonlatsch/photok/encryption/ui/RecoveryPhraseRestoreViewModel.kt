@@ -115,7 +115,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 }
 
                 viewModelScope.launch {
-                    delay(5.seconds)
+                    delay(1.seconds)
                     vaultService.unlock(UnlockRequest.RecoveryPhrase(event.phrase))
                         .onSuccess { session ->
                             sessionRepository.set(session)
