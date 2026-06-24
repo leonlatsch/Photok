@@ -16,11 +16,13 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import android.content.res.Resources
 import android.net.Uri
 import androidx.compose.ui.platform.Clipboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
@@ -79,6 +81,7 @@ sealed interface RecoveryPhraseRestoreUiEvent {
 
 @HiltViewModel
 class RecoveryPhraseRestoreViewModel @Inject constructor(
+    private val resources: Resources,
     private val sessionRepository: SessionRepository,
     private val vaultService: VaultService,
     private val io: IO,
@@ -128,7 +131,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                             inputs.update {
                                 it.copy(
                                     loading = false,
-                                    error = "Could not restore vault from recovery phrase.",
+                                    error = resources.getString(R.string.recovery_phrase_restore_error_generic),
                                 )
                             }
                         }
@@ -172,13 +175,13 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                         it.copy(
                             phrase = phrase,
                             error = null,
-                            restoreSupportingText = "Scanned from QR code",
+                            restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_qr),
                         )
                     }
                 } else {
                     inputs.update {
                         it.copy(
-                            error = "Invalid recovery phrase QR code",
+                            error = resources.getString(R.string.recovery_phrase_restore_error_invalid_qr),
                             restoreSupportingText = null,
                         )
                     }
@@ -199,13 +202,13 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                                 phrase = phrase,
                                 selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
                                 error = null,
-                                restoreSupportingText = "From $filename",
+                                restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_file, filename),
                             )
                         }
                     } else {
                         inputs.update {
                             it.copy(
-                                error = "Invalid recovery phrase",
+                                error = resources.getString(R.string.recovery_phrase_restore_error_invalid),
                                 restoreSupportingText = null,
                             )
                         }
@@ -229,13 +232,13 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                             phrase = phrase,
                             selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
                             error = null,
-                            restoreSupportingText = "Pasted from clipboard",
+                            restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_clipboard),
                         )
                     }
                 } else {
                     inputs.update {
                         it.copy(
-                            error = "Invalid recovery phrase",
+                            error = resources.getString(R.string.recovery_phrase_restore_error_invalid),
                             restoreSupportingText = null,
                         )
                     }

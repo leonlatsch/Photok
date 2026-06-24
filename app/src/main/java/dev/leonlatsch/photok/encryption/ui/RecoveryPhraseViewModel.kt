@@ -19,12 +19,14 @@ package dev.leonlatsch.photok.encryption.ui
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.Clipboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
@@ -67,6 +69,7 @@ sealed interface RecoveryPhraseUiEvent {
 
 @HiltViewModel
 class RecoveryPhraseViewModel @Inject constructor(
+    private val resources: Resources,
     private val io: IO,
     private val sessionRepository: SessionRepository,
     private val recoveryPhraseStore: RecoveryPhraseStore,
@@ -145,7 +148,7 @@ class RecoveryPhraseViewModel @Inject constructor(
                 io.copy(inputStream, outputStream)
 
                 val fileName = io.getFileName(event.uri)
-                Dialogs.showLongToast(event.context, "Saved to $fileName")
+                Dialogs.showLongToast(event.context, resources.getString(R.string.recovery_phrase_saved_to_file, fileName))
 
                 inputs.update {
                     it.copy(phraseWasSaved = true)

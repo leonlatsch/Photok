@@ -209,7 +209,7 @@ private fun Content(
             )
 
             Text(
-                text = "Select Phrase Word Count"
+                text = stringResource(R.string.recovery_phrase_select_word_count)
             )
 
             SingleChoiceSegmentedButtonRow {

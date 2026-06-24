@@ -180,7 +180,7 @@ private fun RecoveryPhraseRestoreContent(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "Enter Recovery Phrase",
+                text = stringResource(R.string.recovery_phrase_restore_enter_title),
                 style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Center,
             )
@@ -189,7 +189,7 @@ private fun RecoveryPhraseRestoreContent(
 
             AnimatedVisibility(uiState.selectedRestoreMethod == null) {
                 Text(
-                    text = "Choose one option for how to input your recovery phrase.",
+                    text = stringResource(R.string.recovery_phrase_restore_choose_option),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
@@ -200,14 +200,14 @@ private fun RecoveryPhraseRestoreContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 OptionButton(
-                    text = "Type by hand",
+                    text = stringResource(R.string.recovery_phrase_restore_option_type),
                     icon = R.drawable.ic_keyboard,
                     onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand) },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
                     selectedRestoreMethod = uiState.selectedRestoreMethod,
                 )
                 OptionButton(
-                    text = "Open file",
+                    text = stringResource(R.string.recovery_phrase_restore_option_open_file),
                     icon = R.drawable.ic_upload,
                     onClick = {
                         if (uiState.selectedRestoreMethod == null) {
@@ -220,14 +220,14 @@ private fun RecoveryPhraseRestoreContent(
                     selectedRestoreMethod = uiState.selectedRestoreMethod,
                 )
                 OptionButton(
-                    text = "Scan QR Code",
+                    text = stringResource(R.string.recovery_phrase_restore_option_scan_qr),
                     icon = R.drawable.ic_qr_code,
                     onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode) },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
                     selectedRestoreMethod = uiState.selectedRestoreMethod,
                 )
                 OptionButton(
-                    text = "Paste from Clipboard",
+                    text = stringResource(R.string.recovery_phrase_restore_option_paste),
                     icon = R.drawable.ic_paste,
                     onClick = {
                         if (uiState.selectedRestoreMethod == null) {
@@ -306,10 +306,10 @@ private fun RecoveryPhraseRestoreContent(
                             maxLines = 4,
                             shape = RoundedCornerShape(24.dp),
                             label = {
-                                Text("Recovery Phrase")
+                                Text(stringResource(R.string.recovery_phrase_restore_input_label))
                             },
                             placeholder = {
-                                Text("Type your recovery phrase word by word")
+                                Text(stringResource(R.string.recovery_phrase_restore_input_placeholder))
                             },
                             modifier = Modifier
                                 .height(200.dp)
@@ -377,7 +377,7 @@ private fun RecoveryPhraseRestoreContent(
                             )
 
                             Text(
-                                text = "Unlocked",
+                                text = stringResource(R.string.recovery_phrase_restore_unlocked),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -387,7 +387,7 @@ private fun RecoveryPhraseRestoreContent(
                             )
 
                             Text(
-                                text = "Unlocking...",
+                                text = stringResource(R.string.recovery_phrase_restore_unlocking),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )

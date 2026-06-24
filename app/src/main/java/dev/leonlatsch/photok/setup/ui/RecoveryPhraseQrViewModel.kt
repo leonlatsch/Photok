@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok.setup.ui
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.other.extensions.writeTo
@@ -41,6 +43,7 @@ sealed interface RecoveryPhraseQrUiEvent {
 
 @HiltViewModel
 class RecoveryPhraseQrViewModel @Inject constructor(
+    private val resources: Resources,
     private val io: IO,
 ) : ViewModel() {
 
@@ -64,7 +67,7 @@ class RecoveryPhraseQrViewModel @Inject constructor(
                 outputStream.use { documentBitmap.writeTo(it) }
                 documentBitmap.recycle()
                 val fileName = io.getFileName(event.uri)
-                Dialogs.showLongToast(event.context, "Saved to $fileName")
+                Dialogs.showLongToast(event.context, resources.getString(R.string.recovery_phrase_saved_to_file, fileName))
             }
         }
     }

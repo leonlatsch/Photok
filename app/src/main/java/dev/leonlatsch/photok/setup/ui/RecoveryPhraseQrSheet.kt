@@ -36,11 +36,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -95,7 +97,7 @@ private fun Content(
             AppName()
 
             Text(
-                text = "Recovery Phrase"
+                text = stringResource(R.string.recovery_phrase_qr_title)
             )
 
             QRCodeImage(
@@ -119,7 +121,7 @@ private fun Content(
                 onClick = { saveQrLauncher.launch("photok-recovery-phrase.jpg") },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Save as Image")
+                Text(stringResource(R.string.recovery_phrase_qr_save_as_image))
             }
         }
     }
