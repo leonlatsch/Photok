@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.encryption.ui
 
 import android.content.ClipData
 import android.content.Context
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayInputStream
 import javax.inject.Inject
 
-data class RecoveryPhraseSetupUiState(
+data class RecoveryPhraseUiState(
     val phrase: RecoveryPhrase? = null,
     val inputs: Inputs = Inputs(),
 ) {
@@ -55,39 +55,39 @@ data class RecoveryPhraseSetupUiState(
     )
 }
 
-sealed interface RecoveryPhraseSetupUiEvent {
-    data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseSetupUiEvent
-    data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
-    data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
-    data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : RecoveryPhraseSetupUiEvent
-    data object ShowQrCode : RecoveryPhraseSetupUiEvent
-    data object DismissQrSheet : RecoveryPhraseSetupUiEvent
-    data object MarkPhraseSaved : RecoveryPhraseSetupUiEvent
+sealed interface RecoveryPhraseUiEvent {
+    data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseUiEvent
+    data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
+    data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
+    data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
+    data object ShowQrCode : RecoveryPhraseUiEvent
+    data object DismissQrSheet : RecoveryPhraseUiEvent
+    data object MarkPhraseSaved : RecoveryPhraseUiEvent
 }
 
 @HiltViewModel
-class RecoveryPhraseSetupViewModel @Inject constructor(
+class RecoveryPhraseViewModel @Inject constructor(
     private val io: IO,
     private val sessionRepository: SessionRepository,
     private val recoveryPhraseStore: RecoveryPhraseStore,
     private val vaultService: VaultService,
 ) : ViewModel() {
 
-    private val inputs = MutableStateFlow(RecoveryPhraseSetupUiState.Inputs())
+    private val inputs = MutableStateFlow(RecoveryPhraseUiState.Inputs())
 
     val uiState = combine(
         recoveryPhraseStore.observe(sessionRepository.require()),
         inputs,
     ) { phrase, inputs ->
-        RecoveryPhraseSetupUiState(
+        RecoveryPhraseUiState(
             phrase = phrase,
             inputs = inputs,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseSetupUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseUiState())
 
-    fun handleUiEvent(event: RecoveryPhraseSetupUiEvent) {
+    fun handleUiEvent(event: RecoveryPhraseUiEvent) {
         when (event) {
-            is RecoveryPhraseSetupUiEvent.UpdateWordCount -> {
+            is RecoveryPhraseUiEvent.UpdateWordCount -> {
                 if (inputs.value.wordCount == event.wordCount) return
 
                 recoveryPhraseStore.clear()
@@ -115,7 +115,7 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
             }
 
-            is RecoveryPhraseSetupUiEvent.Share -> {
+            is RecoveryPhraseUiEvent.Share -> {
                 val text = """
                     Photok Recovery Phrase
 
@@ -135,7 +135,7 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
             }
 
-            is RecoveryPhraseSetupUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
+            is RecoveryPhraseUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
                 val phraseAsBytes = event.phrase.toMnemonicString().toByteArray()
                 val inputStream = ByteArrayInputStream(phraseAsBytes)
 
@@ -152,7 +152,7 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
             }
 
-            is RecoveryPhraseSetupUiEvent.CopyToClipboard -> {
+            is RecoveryPhraseUiEvent.CopyToClipboard -> {
                 viewModelScope.launch {
                     val clipData = ClipData.newPlainText("photok-recovery-phrase", event.phrase.toMnemonicString())
                     event.clipboard.setClipEntry(ClipEntry(clipData))
@@ -163,15 +163,15 @@ class RecoveryPhraseSetupViewModel @Inject constructor(
                 }
             }
 
-            RecoveryPhraseSetupUiEvent.ShowQrCode -> {
+            RecoveryPhraseUiEvent.ShowQrCode -> {
                 inputs.update { it.copy(qrSheetVisible = true) }
             }
 
-            RecoveryPhraseSetupUiEvent.DismissQrSheet -> {
+            RecoveryPhraseUiEvent.DismissQrSheet -> {
                 inputs.update { it.copy(qrSheetVisible = false) }
             }
 
-            RecoveryPhraseSetupUiEvent.MarkPhraseSaved -> {
+            RecoveryPhraseUiEvent.MarkPhraseSaved -> {
                 inputs.update { it.copy(phraseWasSaved = true) }
             }
         }

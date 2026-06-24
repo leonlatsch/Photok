@@ -61,6 +61,9 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseFlowRow
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiEvent
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiState
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -70,7 +73,7 @@ fun RecoveryPhraseSetupScreen(
 ) {
     // TODO: Animate tap on word
     // TODO: Handle small device (scroll?)
-    val viewModel: RecoveryPhraseSetupViewModel = hiltViewModel()
+    val viewModel: RecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Content(
@@ -82,8 +85,8 @@ fun RecoveryPhraseSetupScreen(
 
 @Composable
 private fun Content(
-    uiState: RecoveryPhraseSetupUiState,
-    handleUiEvent: (RecoveryPhraseSetupUiEvent) -> Unit,
+    uiState: RecoveryPhraseUiState,
+    handleUiEvent: (RecoveryPhraseUiEvent) -> Unit,
     onContinue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -95,7 +98,7 @@ private fun Content(
         uiState.phrase ?: return@rememberLauncherForActivityResult
         if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
-        handleUiEvent(RecoveryPhraseSetupUiEvent.SaveToFile(context, it, uiState.phrase))
+        handleUiEvent(RecoveryPhraseUiEvent.SaveToFile(context, it, uiState.phrase))
     }
 
     val clipboard = LocalClipboard.current
@@ -104,8 +107,8 @@ private fun Content(
     if (uiState.inputs.qrSheetVisible && phrase != null) {
         RecoveryPhraseQrSheet(
             phrase = phrase,
-            onDismiss = { handleUiEvent(RecoveryPhraseSetupUiEvent.DismissQrSheet) },
-            onSaved = { handleUiEvent(RecoveryPhraseSetupUiEvent.MarkPhraseSaved) },
+            onDismiss = { handleUiEvent(RecoveryPhraseUiEvent.DismissQrSheet) },
+            onSaved = { handleUiEvent(RecoveryPhraseUiEvent.MarkPhraseSaved) },
         )
     }
 
@@ -130,7 +133,7 @@ private fun Content(
                     IconButton(
                         onClick = {
                             val phrase = uiState.phrase ?: return@IconButton
-                            handleUiEvent(RecoveryPhraseSetupUiEvent.Share(context, phrase))
+                            handleUiEvent(RecoveryPhraseUiEvent.Share(context, phrase))
                         },
                     ) {
                         Icon(
@@ -141,7 +144,7 @@ private fun Content(
                     IconButton(
                         onClick = {
                             uiState.phrase ?: return@IconButton
-                            handleUiEvent(RecoveryPhraseSetupUiEvent.ShowQrCode)
+                            handleUiEvent(RecoveryPhraseUiEvent.ShowQrCode)
                         },
                     ) {
                         Icon(
@@ -152,7 +155,7 @@ private fun Content(
                     IconButton(
                         onClick = {
                             val phrase = uiState.phrase ?: return@IconButton
-                            handleUiEvent(RecoveryPhraseSetupUiEvent.CopyToClipboard(clipboard, phrase))
+                            handleUiEvent(RecoveryPhraseUiEvent.CopyToClipboard(clipboard, phrase))
                         },
                         ) {
                         Icon(
@@ -213,7 +216,7 @@ private fun Content(
                 SegmentedButton(
                     selected = uiState.inputs.wordCount == Bip39WordCount.Twelve,
                     onClick = {
-                        handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
+                        handleUiEvent(RecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     },
                     shape = RoundedCornerShape(24.dp, 6.dp, 6.dp, 24.dp),
@@ -228,7 +231,7 @@ private fun Content(
                 SegmentedButton(
                     selected = uiState.inputs.wordCount == Bip39WordCount.TwentyFour,
                     onClick = {
-                        handleUiEvent(RecoveryPhraseSetupUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
+                        handleUiEvent(RecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     },
                     shape = RoundedCornerShape(6.dp, 24.dp, 24.dp, 6.dp),
@@ -249,7 +252,7 @@ private fun Content(
 private fun Preview() {
     AppTheme {
         Content(
-            uiState = RecoveryPhraseSetupUiState(
+            uiState = RecoveryPhraseUiState(
                 phrase = RecoveryPhrase(
                     listOf(
                         "this",

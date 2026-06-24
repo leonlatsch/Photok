@@ -16,6 +16,10 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -26,39 +30,45 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.setup.ui.RecoveryPhraseQrSheet
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -66,17 +76,34 @@ fun RecoveryPhraseSheet(
     onDismissRequest: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val scope = rememberCoroutineScope()
 
-    val viewModel: ViewRecoveryPhraseViewModel = hiltViewModel()
+    val viewModel: RecoveryPhraseViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val activity = LocalActivity.current
+    val clipboard = LocalClipboard.current
+
+    val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
+        it ?: return@rememberLauncherForActivityResult
+        val phrase = uiState.phrase ?: return@rememberLauncherForActivityResult
+        if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
+        viewModel.handleUiEvent(RecoveryPhraseUiEvent.SaveToFile(context, it, phrase))
+    }
+
+    val phrase = uiState.phrase
+    if (uiState.inputs.qrSheetVisible && phrase != null) {
+        RecoveryPhraseQrSheet(
+            phrase = phrase,
+            onDismiss = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.DismissQrSheet) },
+            onSaved = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.MarkPhraseSaved) },
+        )
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = sheetState,
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -104,19 +131,66 @@ fun RecoveryPhraseSheet(
                 animated = true,
             )
 
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                IconButton(
+                    onClick = { selectFileLauncher.launch("photok-recovery-phrase.txt") },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_download),
+                        contentDescription = null,
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        val p = uiState.phrase ?: return@IconButton
+                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.Share(context, p))
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_share),
+                        contentDescription = null,
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        uiState.phrase ?: return@IconButton
+                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowQrCode)
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_qr_code),
+                        contentDescription = null,
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        val p = uiState.phrase ?: return@IconButton
+                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.CopyToClipboard(clipboard, p))
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_content_copy),
+                        contentDescription = null,
+                    )
+                }
+            }
+
             Spacer(Modifier.height(8.dp))
 
             Button(
-                onClick = {
-                    scope.launch {
-                        sheetState.hide()
-                    }.invokeOnCompletion {
-                        onDismissRequest()
-                    }
-                }
+                onClick = { /* TODO: Create new phrase */ },
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(),
             ) {
-                Text(text = stringResource(R.string.recovery_phrase_confirm))
+                Text(text = stringResource(R.string.recovery_phrase_create_new))
             }
+
+            Spacer(Modifier.height(8.dp))
         }
     }
 }
