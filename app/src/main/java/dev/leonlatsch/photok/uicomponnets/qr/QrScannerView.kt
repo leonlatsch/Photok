@@ -17,27 +17,19 @@
 package dev.leonlatsch.photok.uicomponnets.qr
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.util.Range
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +37,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import dev.leonlatsch.photok.ui.components.PermissionGate
 import timber.log.Timber
 import java.util.concurrent.Executors
 
@@ -67,30 +60,12 @@ fun QrScannerView(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var hasCameraPermission by remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED
-        )
-    }
-
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        hasCameraPermission = granted
-    }
-
-    if (!hasCameraPermission) {
-        LaunchedEffect(Unit) {
-            permissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-
-        Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            TextButton(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                Text("Request Camera Permission")
-            }
-        }
-    } else {
+    PermissionGate(
+        permission = Manifest.permission.CAMERA,
+        rationaleText = "Camera permission is required to scan QR codes.",
+        label = "Request Camera Permission",
+        modifier = modifier,
+    ) {
         val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
         val analyzer = remember { QrCodeAnalyzer(onQrCodeDecoded) }
         var cameraProvider by remember { mutableStateOf<ProcessCameraProvider?>(null) }
@@ -139,5 +114,4 @@ fun QrScannerView(
             modifier = modifier.clip(RoundedCornerShape(24.dp)),
         )
     }
-
 }
