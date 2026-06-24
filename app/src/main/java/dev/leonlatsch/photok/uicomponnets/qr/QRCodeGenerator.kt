@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.uicomponnets.qr
 
 import android.graphics.Bitmap
 import androidx.core.graphics.createBitmap

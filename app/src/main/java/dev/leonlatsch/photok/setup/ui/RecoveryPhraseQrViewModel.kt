@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.other.extensions.writeTo
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import dev.leonlatsch.photok.uicomponnets.qr.QRCodeGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

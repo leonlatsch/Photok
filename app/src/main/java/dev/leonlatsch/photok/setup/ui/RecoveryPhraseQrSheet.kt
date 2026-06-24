@@ -16,50 +16,36 @@
 
 package dev.leonlatsch.photok.setup.ui
 
-import android.graphics.Bitmap
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.keepScreenOn
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
-import timber.log.Timber
+import dev.leonlatsch.photok.ui.components.AppName
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecoveryPhraseQrSheet(
     phrase: RecoveryPhrase,
@@ -67,32 +53,67 @@ fun RecoveryPhraseQrSheet(
     onSaved: () -> Unit,
 ) {
     val viewModel = hiltViewModel<RecoveryPhraseQrViewModel>()
+
+    Content(
+        phrase = phrase,
+        handleUiEvent = viewModel::handleUiEvent,
+        onDismiss = onDismiss,
+        onSaved = onSaved,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Content(
+    phrase: RecoveryPhrase,
+    handleUiEvent: (RecoveryPhraseQrUiEvent) -> Unit,
+    onDismiss: () -> Unit,
+    onSaved: () -> Unit,
+) {
     val context = LocalContext.current
 
-    val saveQrLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("image/jpeg")) {
-        it ?: return@rememberLauncherForActivityResult
-        viewModel.handleUiEvent(RecoveryPhraseQrUiEvent.SaveToFile(phrase, context, it))
-    }
+    val saveQrLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("image/jpeg")) {
+            it ?: return@rememberLauncherForActivityResult
+            handleUiEvent(RecoveryPhraseQrUiEvent.SaveToFile(phrase, context, it))
+            onSaved()
+        }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        dragHandle = null,
     ) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 20.dp)
+                .padding(top = 20.dp)
                 .navigationBarsPadding()
-                .padding(bottom = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            AppName()
+
+            Text(
+                text = "Recovery Phrase"
+            )
+
             QRCodeImage(
                 text = phrase.toMnemonicString(),
+                foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 backgroundColor = BottomSheetDefaults.ContainerColor,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 24.dp),
+                    .size(200.dp)
             )
+
+            Text(
+                text = phrase.toMnemonicString().breakableAtDashes(),
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 30.dp)
+            )
+
+            Spacer(Modifier.height(20.dp))
 
             Button(
                 onClick = { saveQrLauncher.launch("photok-recovery-phrase.jpg") },
@@ -104,66 +125,21 @@ fun RecoveryPhraseQrSheet(
     }
 }
 
+private fun String.breakableAtDashes() = replace("-", "-\u200B")
+
+@PreviewLightDark
 @Composable
-fun QRCodeImage(
-    text: String,
-    modifier: Modifier = Modifier,
-    foregroundColor: Color = LocalContentColor.current,
-    backgroundColor: Color = MaterialTheme.colorScheme.background,
-    size: Int = 512,
-) {
-    var retryCount by remember { mutableIntStateOf(0) }
-    var qrBitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var isLoading by remember { mutableStateOf(false) }
-
-    LaunchedEffect(text, size, retryCount) {
-        if (text.isNotBlank()) {
-            isLoading = true
-            try {
-                val bitmap = QRCodeGenerator.generateQRCode(
-                    text = text,
-                    size = size,
-                    foregroundColor = foregroundColor.toArgb(),
-                    backgroundColor = backgroundColor.toArgb(),
-                    errorCorrectionLevel = ErrorCorrectionLevel.M
-                )
-                qrBitmap = bitmap
-                if (bitmap == null) {
-                    Timber.d("Failed to generate QR code")
-                }
-            } catch (e: Exception) {
-                Timber.d("Error generating QR code: ${e.message}")
-            } finally {
-                isLoading = false
-            }
-        }
-    }
-
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        when {
-            isLoading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp).align(Alignment.Center),
-                )
-            }
-            qrBitmap != null -> {
-                Image(
-                    bitmap = qrBitmap!!.asImageBitmap(),
-                    contentDescription = "QR Code: $text",
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.keepScreenOn()
-                )
-            }
-            else -> {
-                TextButton(
-                    onClick = { retryCount++ },
-                ) {
-                    Text(stringResource(R.string.common_try_again))
-                }
-            }
-        }
+private fun Preview() {
+    AppTheme {
+        Content(
+            phrase = RecoveryPhrase(
+                buildList {
+                    repeat(12) { add("asd") }
+                },
+            ),
+            handleUiEvent = {},
+            onDismiss = {},
+            onSaved = {},
+        )
     }
 }
