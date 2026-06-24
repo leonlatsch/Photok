@@ -43,6 +43,9 @@ class RecoveryPhraseRestoreFragment : Fragment() {
                 RecoveryPhraseRestoreScreen(
                     onUnlocked = {
                         navigateToGallery(findNavController())
+                    },
+                    onBack = {
+                        findNavController().navigateUp()
                     }
                 )
             }

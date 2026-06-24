@@ -91,6 +91,7 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun RecoveryPhraseRestoreScreen(
     onUnlocked: () -> Unit,
+    onBack: () -> Unit,
 ) {
     val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
 
@@ -107,6 +108,7 @@ fun RecoveryPhraseRestoreScreen(
         RecoveryPhraseRestoreContent(
             uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
+            onBack = onBack,
         )
     }
 }
@@ -116,6 +118,7 @@ fun RecoveryPhraseRestoreScreen(
 private fun RecoveryPhraseRestoreContent(
     uiState: RecoveryPhraseRestoreUiState,
     handleUiEvent: (RecoveryPhraseRestoreUiEvent) -> Unit,
+    onBack: () -> Unit,
 ) {
     val clipboard = LocalClipboard.current
 
@@ -157,7 +160,7 @@ private fun RecoveryPhraseRestoreContent(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = onBack,
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
@@ -464,6 +467,7 @@ private fun Preview() {
                 loading = false,
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
@@ -480,6 +484,7 @@ private fun PreviewTypeByHand() {
                 selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
@@ -496,6 +501,7 @@ private fun PreviewQr() {
                 selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
@@ -517,6 +523,7 @@ private fun PreviewFromFile() {
                 restoreSupportingText = "Loaded from file"
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
@@ -538,6 +545,7 @@ private fun PreviewTypePasted() {
                 restoreSupportingText = "Pasted from clipboard"
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
@@ -561,6 +569,7 @@ private fun PreviewUnlocked() {
                 restoreSupportingText = "Pasted from clipboard"
             ),
             handleUiEvent = {},
+            onBack = {},
         )
     }
 }
