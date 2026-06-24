@@ -20,6 +20,7 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 
 interface SessionRepository {
     fun set(session: VaultSession)
+    fun get(): VaultSession?
     fun require(): VaultSession
     fun reset()
 }

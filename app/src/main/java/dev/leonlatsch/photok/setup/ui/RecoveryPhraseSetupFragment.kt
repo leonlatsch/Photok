@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
@@ -44,7 +45,12 @@ class RecoveryPhraseSetupFragment : Fragment() {
                 AppTheme {
                     RecoveryPhraseSetupScreen(
                         onContinue = {
-                            navigateToGallery(findNavController())
+                            val navController = findNavController()
+                            if (navController.previousBackStackEntry?.destination?.id == R.id.settingsFragment) {
+                                navController.popBackStack()
+                            } else {
+                                navigateToGallery(navController)
+                            }
                         }
                     )
                 }

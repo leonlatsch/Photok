@@ -254,6 +254,10 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     if (showRecoveryPhraseSheet) {
         RecoveryPhraseSheet(
             onDismissRequest = { showRecoveryPhraseSheet = false },
+            onNavigateToSetup = {
+                showRecoveryPhraseSheet = false
+                fragment?.findNavController()?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
+            },
         )
     }
 }

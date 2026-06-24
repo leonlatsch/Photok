@@ -50,6 +50,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,14 +69,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.setup.ui.RecoveryPhraseQrSheet
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseSheet(
     onDismissRequest: () -> Unit,
+    onNavigateToSetup: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
 
     val viewModel: RecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -83,6 +88,28 @@ fun RecoveryPhraseSheet(
     val context = LocalContext.current
     val activity = LocalActivity.current
     val clipboard = LocalClipboard.current
+
+    var showConfirmDialog by remember { mutableStateOf(false) }
+
+    ConfirmationDialog(
+        show = showConfirmDialog,
+        onDismissRequest = { showConfirmDialog = false },
+        text = stringResource(R.string.recovery_phrase_create_new_confirm),
+        onConfirm = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.CreateNewPhrase) },
+    )
+
+    LaunchedEffect(Unit) {
+        viewModel.navEvents.collect { event ->
+            when (event) {
+                RecoveryPhraseNavEvent.NavigateToSetup -> {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        onDismissRequest()
+                        onNavigateToSetup()
+                    }
+                }
+            }
+        }
+    }
 
     val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
         it ?: return@rememberLauncherForActivityResult
@@ -181,7 +208,8 @@ fun RecoveryPhraseSheet(
             Spacer(Modifier.height(8.dp))
 
             Button(
-                onClick = { /* TODO: Create new phrase */ },
+                onClick = { showConfirmDialog = true },
+                enabled = !uiState.inputs.loading,
                 modifier = Modifier
                     .navigationBarsPadding()
                     .padding(horizontal = 20.dp)

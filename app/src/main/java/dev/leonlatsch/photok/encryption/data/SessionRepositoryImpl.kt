@@ -29,6 +29,10 @@ class SessionRepositoryImpl @Inject constructor(): SessionRepository {
         this.session = session
     }
 
+    override fun get(): VaultSession? {
+        return session
+    }
+
     override fun require(): VaultSession {
         return session ?: error("Vault is locked")
     }

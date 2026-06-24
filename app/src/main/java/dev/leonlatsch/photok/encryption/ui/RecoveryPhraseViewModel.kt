@@ -36,9 +36,11 @@ import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -65,6 +67,11 @@ sealed interface RecoveryPhraseUiEvent {
     data object ShowQrCode : RecoveryPhraseUiEvent
     data object DismissQrSheet : RecoveryPhraseUiEvent
     data object MarkPhraseSaved : RecoveryPhraseUiEvent
+    data object CreateNewPhrase : RecoveryPhraseUiEvent
+}
+
+sealed interface RecoveryPhraseNavEvent {
+    data object NavigateToSetup : RecoveryPhraseNavEvent
 }
 
 @HiltViewModel
@@ -77,6 +84,9 @@ class RecoveryPhraseViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(RecoveryPhraseUiState.Inputs())
+
+    private val _navEvents = Channel<RecoveryPhraseNavEvent>(Channel.UNLIMITED)
+    val navEvents = _navEvents.receiveAsFlow()
 
     val uiState = combine(
         recoveryPhraseStore.observe(sessionRepository.require()),
@@ -176,6 +186,26 @@ class RecoveryPhraseViewModel @Inject constructor(
 
             RecoveryPhraseUiEvent.MarkPhraseSaved -> {
                 inputs.update { it.copy(phraseWasSaved = true) }
+            }
+
+            RecoveryPhraseUiEvent.CreateNewPhrase -> {
+                val session = sessionRepository.get()
+                session ?: return // This event cannot be used if not logged in
+
+                viewModelScope.launch(Dispatchers.IO) {
+                    inputs.update { it.copy(loading = true, phraseWasSaved = false) }
+
+                    recoveryPhraseStore.clear()
+                    vaultService.create(
+                        CreateRequest.RecoveryPhrase(
+                            session,
+                            Bip39WordCount.Twelve,
+                        )
+                    )
+
+                    inputs.update { it.copy(loading = false) }
+                    _navEvents.trySend(RecoveryPhraseNavEvent.NavigateToSetup)
+                }
             }
         }
     }
