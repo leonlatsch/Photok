@@ -47,19 +47,22 @@ class RecoveryPhraseQrViewModel @Inject constructor(
     fun handleUiEvent(event: RecoveryPhraseQrUiEvent) {
         when (event) {
             is RecoveryPhraseQrUiEvent.SaveToFile -> viewModelScope.launch(Dispatchers.IO) {
-                val bitmap = QRCodeGenerator.generateQRCode(
+                val qrBitmap = QRCodeGenerator.generateQRCode(
                     text = event.phrase.toMnemonicString(),
                     size = 512,
                     foregroundColor = Color.BLACK,
                     backgroundColor = Color.WHITE,
                 ) ?: return@launch
 
+                val documentBitmap = createRecoveryPhraseDocument(event.context, qrBitmap, event.phrase)
+                qrBitmap.recycle()
+
                 val outputStream = io.openFileOutput(event.uri) ?: run {
-                    bitmap.recycle()
+                    documentBitmap.recycle()
                     return@launch
                 }
-                outputStream.use { bitmap.writeTo(it) }
-                bitmap.recycle()
+                outputStream.use { documentBitmap.writeTo(it) }
+                documentBitmap.recycle()
                 val fileName = io.getFileName(event.uri)
                 Dialogs.showLongToast(event.context, "Saved to $fileName")
             }
