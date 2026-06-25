@@ -202,7 +202,13 @@ private fun RecoveryPhraseRestoreContent(
                 OptionButton(
                     text = stringResource(R.string.recovery_phrase_restore_option_type),
                     icon = R.drawable.ic_keyboard,
-                    onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand) },
+                    onClick = {
+                        if (uiState.selectedRestoreMethod == null) {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand)
+                        } else {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
+                        }
+                    },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
                     selectedRestoreMethod = uiState.selectedRestoreMethod,
                 )
@@ -213,7 +219,7 @@ private fun RecoveryPhraseRestoreContent(
                         if (uiState.selectedRestoreMethod == null) {
                             selectFileLauncher.launch(arrayOf("text/plain"))
                         } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
                         }
                     },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
@@ -222,7 +228,17 @@ private fun RecoveryPhraseRestoreContent(
                 OptionButton(
                     text = stringResource(R.string.recovery_phrase_restore_option_scan_qr),
                     icon = R.drawable.ic_qr_code,
-                    onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode) },
+                    onClick = {
+                        if (uiState.selectedRestoreMethod == null) {
+                            handleUiEvent(
+                                RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
+                                    clipboard
+                                )
+                            )
+                        } else {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode)
+                        }
+                    },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
                     selectedRestoreMethod = uiState.selectedRestoreMethod,
                 )
@@ -237,7 +253,7 @@ private fun RecoveryPhraseRestoreContent(
                                 )
                             )
                         } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ClearRestoreMethod)
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
                         }
                     },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
@@ -282,11 +298,8 @@ private fun RecoveryPhraseRestoreContent(
                     RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
                         OutlinedTextField(
                             value = uiState.phrase.toMnemonicString(),
-                            onValueChange = {
-                                val new = it
-                                    .replace(" ", "-")
-                                    .replace("\n", "-")
-                                    .replace("--", "-")
+                            onValueChange = { raw ->
+                                val new = raw.cleanupRawInput()
 
                                 handleUiEvent(
                                     RecoveryPhraseRestoreUiEvent.UpdatePhrase(

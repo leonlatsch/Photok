@@ -76,7 +76,7 @@ sealed interface RecoveryPhraseRestoreUiEvent {
     data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
     data class LoadFromFile(val uri: Uri) : RecoveryPhraseRestoreUiEvent
 
-    data object ClearRestoreMethod : RecoveryPhraseRestoreUiEvent
+    data object ResetInputs : RecoveryPhraseRestoreUiEvent
 }
 
 @HiltViewModel
@@ -141,11 +141,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
             is RecoveryPhraseRestoreUiEvent.TypeByHand -> {
                 inputs.update {
                     it.copy(
-                        selectedRestoreMethod = if (it.selectedRestoreMethod == null) {
-                            RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand
-                        } else {
-                            null
-                        },
+                        selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
                         phrase = RecoveryPhrase(),
                         error = null,
                         restoreSupportingText = null,
@@ -156,11 +152,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
             is RecoveryPhraseRestoreUiEvent.ScanQrCode -> {
                 inputs.update {
                     it.copy(
-                        selectedRestoreMethod = if (it.selectedRestoreMethod == null) {
-                            RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode
-                        } else {
-                            null
-                        },
+                        selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
                         phrase = RecoveryPhrase(),
                         error = null,
                         restoreSupportingText = null,
@@ -224,7 +216,8 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 }
 
                 val item = clipEntry.clipData.getItemAt(0)
-                val phrase = RecoveryPhrase.from(item.text.toString())
+                val pastedText = item.text.toString()
+                val phrase = RecoveryPhrase.from(pastedText.cleanupRawInput())
 
                 if (phrase.validate()) {
                     inputs.update {
@@ -249,8 +242,8 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 it.copy(phrase = event.phrase)
             }
 
-            RecoveryPhraseRestoreUiEvent.ClearRestoreMethod -> inputs.update {
-                it.copy(selectedRestoreMethod = null, phrase = RecoveryPhrase(), restoreSupportingText = null)
+            RecoveryPhraseRestoreUiEvent.ResetInputs -> inputs.update {
+                RecoveryPhraseRestoreUiState.Inputs()
             }
         }
     }
