@@ -25,7 +25,9 @@ import dev.leonlatsch.photok.encryption.domain.ChangePasswordUseCase
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,6 +46,7 @@ class ChangePasswordViewModel @Inject constructor(
     app: Application,
     private val changePasswordUseCase: ChangePasswordUseCase,
     private val vaultService: VaultService,
+    private val config: Config,
 ) : ObservableViewModel(app) {
 
     @get:Bindable
@@ -74,10 +77,12 @@ class ChangePasswordViewModel @Inject constructor(
             notifyChange(BR.newPasswordConfirm, value)
         }
 
-    /**
-     * Checks if there are photos in the db.
-     * Sets [changePasswordState] to [ChangePasswordState.RE_ENCRYPT_NEEDED] or [ChangePasswordState.RE_ENCRYPT_NEEDED]
-     */
+    fun checkRecoveryPhrase() {
+        if (config.lastUsedUnlockMethod == VaultProtectionType.RecoveryPhrase) {
+            changePasswordState = ChangePasswordState.OLD_VALID
+        }
+    }
+
     fun performChangePassword() = viewModelScope.launch(Dispatchers.IO) {
         changePasswordUseCase(newPassword)
             .onSuccess { changePasswordState = ChangePasswordState.DONE }

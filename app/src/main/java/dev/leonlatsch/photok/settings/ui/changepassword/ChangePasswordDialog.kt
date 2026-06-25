@@ -87,9 +87,12 @@ class ChangePasswordDialog :
             }
             enableOrDisableSetup()
         }
+
         viewModel.addOnPropertyChange<String>(BR.newPasswordConfirm) {
             enableOrDisableSetup()
         }
+
+        viewModel.checkRecoveryPhrase()
     }
 
     private fun handleOldValid() {
