@@ -223,4 +223,8 @@ dependencies {
 
     // Telemetry
     implementation("com.telemetrydeck:kotlin-sdk:6.3.0")
+
+    // Play Review
+    playImplementation("com.google.android.play:review:2.0.2")
+    playImplementation("com.google.android.play:review-ktx:2.0.2")
 }
