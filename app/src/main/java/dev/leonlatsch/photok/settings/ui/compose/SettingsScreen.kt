@@ -92,7 +92,7 @@ import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
-import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordDialog
+import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordSheet
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
@@ -125,6 +125,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
     var showUsageDataSheet by rememberSaveable { mutableStateOf(false) }
     var showRecoveryPhraseSheet by rememberSaveable { mutableStateOf(false) }
+    var showChangePasswordSheet by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForBackup by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForReset by rememberSaveable { mutableStateOf(false) }
 
@@ -138,7 +139,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CHANGE_PASSWORD) {
-            ChangePasswordDialog().show(fragment.childFragmentManager)
+            showChangePasswordSheet = true
             false
         }
 
@@ -258,6 +259,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
                 showRecoveryPhraseSheet = false
                 fragment?.findNavController()?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
             },
+        )
+    }
+
+    if (showChangePasswordSheet) {
+        ChangePasswordSheet(
+            onDismissRequest = { showChangePasswordSheet = false },
         )
     }
 }

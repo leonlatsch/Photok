@@ -16,106 +16,112 @@
 
 package dev.leonlatsch.photok.settings.ui.changepassword
 
-import android.app.Application
-import androidx.databinding.Bindable
+import android.content.res.Resources
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.ChangePasswordUseCase
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
-import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * ViewModel for changing the password.
- * Validates old and new passwords and starts ReEncryptBottomSheetDialogFragment.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
+data class ChangePasswordUiState(
+    val loading: Boolean = false,
+    val recoveryPhraseWasUsed: Boolean = false,
+    val step: ChangePasswordStep = ChangePasswordStep.CheckOld,
+    val oldPassword: String = "",
+    val oldPasswordError: String? = null,
+    val newPassword: String = "",
+    val newPasswordConfirm: String = "",
+    val done: Boolean = false,
+)
+
+enum class ChangePasswordStep {
+    CheckOld,
+    SetNew,
+}
+
+sealed interface ChangePasswordUiEvent {
+    data class OldPasswordChanged(val value: String) : ChangePasswordUiEvent
+    data object CheckOldPassword : ChangePasswordUiEvent
+    data class NewPasswordChanged(val value: String) : ChangePasswordUiEvent
+    data class NewPasswordConfirmChanged(val value: String) : ChangePasswordUiEvent
+    data object ChangePassword : ChangePasswordUiEvent
+}
+
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
-    app: Application,
     private val changePasswordUseCase: ChangePasswordUseCase,
     private val vaultService: VaultService,
     private val config: Config,
-) : ObservableViewModel(app) {
+    private val resources: Resources,
+) : ViewModel() {
 
-    @get:Bindable
-    var changePasswordState: ChangePasswordState = ChangePasswordState.START
-        set(value) {
-            field = value
-            notifyChange(BR.changePasswordState, value)
-        }
+    private val _uiState = MutableStateFlow(ChangePasswordUiState())
+    val uiState = _uiState.asStateFlow()
 
-    @Bindable
-    var oldPassword: String = String.empty
-        set(value) {
-            field = value
-            notifyChange(BR.oldPassword, value)
-        }
-
-    @Bindable
-    var newPassword: String = String.empty
-        set(value) {
-            field = value
-            notifyChange(BR.newPassword, value)
-        }
-
-    @Bindable
-    var newPasswordConfirm: String = String.empty
-        set(value) {
-            field = value
-            notifyChange(BR.newPasswordConfirm, value)
-        }
-
-    fun checkRecoveryPhrase() {
+    init {
         if (config.lastUsedUnlockMethod == VaultProtectionType.RecoveryPhrase) {
-            changePasswordState = ChangePasswordState.OLD_VALID
+            _uiState.update {
+                it.copy(
+                    recoveryPhraseWasUsed = true,
+                    step = ChangePasswordStep.SetNew,
+                )
+            }
         }
     }
 
-    fun performChangePassword() = viewModelScope.launch(Dispatchers.IO) {
-        changePasswordUseCase(newPassword)
-            .onSuccess { changePasswordState = ChangePasswordState.DONE }
-            .onFailure { Timber.e(it) }
-    }
-
-    /**
-     * Checks if the old password is valid and updates state. For security concerns.
-     * Called by ui.
-     */
-    fun checkOld() = viewModelScope.launch {
-        changePasswordState = ChangePasswordState.CHECKING_OLD
-
-        changePasswordState = if (vaultService.unlock(UnlockRequest.Password(oldPassword)).isSuccess) {
-            ChangePasswordState.OLD_VALID
-        } else {
-            ChangePasswordState.OLD_INVALID
+    fun handleUiEvent(event: ChangePasswordUiEvent) {
+        when (event) {
+            is ChangePasswordUiEvent.OldPasswordChanged ->
+                _uiState.update { it.copy(oldPassword = event.value, oldPasswordError = null) }
+            is ChangePasswordUiEvent.CheckOldPassword -> checkOld()
+            is ChangePasswordUiEvent.NewPasswordChanged ->
+                _uiState.update { it.copy(newPassword = event.value) }
+            is ChangePasswordUiEvent.NewPasswordConfirmChanged ->
+                _uiState.update { it.copy(newPasswordConfirm = event.value) }
+            is ChangePasswordUiEvent.ChangePassword -> changePassword()
         }
     }
 
-    /**
-     * Checks if the entered password is valid and updates state.
-     * Called by ui.
-     */
-    fun checkNew() = viewModelScope.launch {
-        changePasswordState = if (PasswordUtils.validatePasswords(
-                newPassword,
-                newPasswordConfirm
-            )
-        ) {
-            ChangePasswordState.NEW_VALID
-        } else {
-            ChangePasswordState.NEW_INVALID
+    private fun checkOld() {
+        val password = _uiState.value.oldPassword
+        _uiState.update { it.copy(loading = true, oldPasswordError = null) }
+        viewModelScope.launch {
+            vaultService.unlock(UnlockRequest.Password(password))
+                .onSuccess {
+                    _uiState.update { it.copy(loading = false, step = ChangePasswordStep.SetNew) }
+                }
+                .onFailure {
+                    _uiState.update {
+                        it.copy(
+                            loading = false,
+                            oldPasswordError = resources.getString(R.string.unlock_wrong_password),
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun changePassword() {
+        val state = _uiState.value
+        if (!PasswordUtils.validatePasswords(state.newPassword, state.newPasswordConfirm)) return
+
+        _uiState.update { it.copy(loading = true) }
+        viewModelScope.launch(Dispatchers.IO) {
+            changePasswordUseCase(state.newPassword)
+                .onSuccess { _uiState.update { it.copy(done = true, loading = false) } }
+                .onFailure { Timber.e(it) }
         }
     }
 }

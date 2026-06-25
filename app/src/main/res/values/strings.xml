@@ -227,6 +227,7 @@
     <string name="change_password_confirm_message">Backup recommended!<br /> Changing your password requires re-encrypting all your files! Do you want to continue?</string>
     <string name="change_password_reencrypting">Re-encrypting file(s)…</string>
     <string name="change_password_done">Password has been changed</string>
+    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verify Password</string>
