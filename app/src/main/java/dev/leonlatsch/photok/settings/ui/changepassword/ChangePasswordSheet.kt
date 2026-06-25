@@ -42,8 +42,11 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -57,6 +60,8 @@ import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.ui.components.DialogViewModelStoreOwner
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -182,13 +187,20 @@ private fun NewPasswordSection(
     val newPasswordValid = PasswordUtils.validatePassword(uiState.newPassword)
     val passwordsMatch = PasswordUtils.passwordsNotEmptyAndEqual(uiState.newPassword, uiState.newPasswordConfirm)
     val canSubmit = PasswordUtils.validatePasswords(uiState.newPassword, uiState.newPasswordConfirm)
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        delay(3.seconds)
+        focusRequester.requestFocus()
+    }
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         PasswordField(
             value = uiState.newPassword,
             onValueChange = { onEvent(ChangePasswordUiEvent.NewPasswordChanged(it)) },
             label = stringResource(R.string.change_password_enter_new_password),
-            imeAction = if (newPasswordValid) ImeAction.Next else ImeAction.Done,
+            imeAction = ImeAction.Next,
+            modifier = Modifier.focusRequester(focusRequester),
         )
 
         AnimatedVisibility(visible = newPasswordValid) {
