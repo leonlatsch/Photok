@@ -230,13 +230,9 @@ private fun RecoveryPhraseRestoreContent(
                     icon = R.drawable.ic_qr_code,
                     onClick = {
                         if (uiState.selectedRestoreMethod == null) {
-                            handleUiEvent(
-                                RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
-                                    clipboard
-                                )
-                            )
-                        } else {
                             handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode)
+                        } else {
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
                         }
                     },
                     restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
