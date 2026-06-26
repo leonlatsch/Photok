@@ -106,13 +106,11 @@ fun RecoveryPhraseRestoreScreen(
         }
     }
 
-    AppTheme {
-        RecoveryPhraseRestoreContent(
-            uiState = uiState,
-            handleUiEvent = viewModel::handleUiEvent,
-            onBack = onBack,
-        )
-    }
+    RecoveryPhraseRestoreContent(
+        uiState = uiState,
+        handleUiEvent = viewModel::handleUiEvent,
+        onBack = onBack,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

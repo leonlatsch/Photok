@@ -39,6 +39,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
+// 24 words × ~10 chars + separators — anything larger is not a phrase file.
+private const val MAX_PHRASE_FILE_BYTES = 512
+
 data class RecoveryPhraseRestoreUiState(
     val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
     val loading: Boolean = false,
@@ -184,9 +187,11 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 io.openFileInput(event.uri)?.use { inputStream ->
                     val filename = io.getFileName(event.uri)
 
-                    val bytes = inputStream.readBytes()
+                    // A recovery phrase file is always tiny; cap to prevent OOM from a malicious file.
+                    val buffer = ByteArray(MAX_PHRASE_FILE_BYTES)
+                    val bytesRead = inputStream.read(buffer).coerceAtLeast(0)
 
-                    val phrase = RecoveryPhrase.from(String(bytes))
+                    val phrase = RecoveryPhrase.from(String(buffer, 0, bytesRead))
 
                     if (phrase.validate()) {
                         inputs.update {

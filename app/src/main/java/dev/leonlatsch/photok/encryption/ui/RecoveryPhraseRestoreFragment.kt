@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
+import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,14 +41,16 @@ class RecoveryPhraseRestoreFragment : Fragment() {
     ): View? {
         return ComposeView(inflater.context).apply {
             setContent {
-                RecoveryPhraseRestoreScreen(
-                    onUnlocked = {
-                        navigateToGallery(findNavController())
-                    },
-                    onBack = {
-                        findNavController().navigateUp()
-                    }
-                )
+                AppTheme {
+                    RecoveryPhraseRestoreScreen(
+                        onUnlocked = {
+                            navigateToGallery(findNavController())
+                        },
+                        onBack = {
+                            findNavController().navigateUp()
+                        }
+                    )
+                }
             }
         }
     }

@@ -73,8 +73,6 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RecoveryPhraseSetupScreen(
     onContinue: () -> Unit,
 ) {
-    // TODO: Animate tap on word
-    // TODO: Handle small device (scroll?)
     val viewModel: RecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
