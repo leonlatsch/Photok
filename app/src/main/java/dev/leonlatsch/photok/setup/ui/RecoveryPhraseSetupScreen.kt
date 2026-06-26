@@ -173,7 +173,10 @@ private fun Content(
                         .padding(horizontal = 20.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = stringResource(R.string.recovery_phrase_confirm))
+                    Text(
+                        text = stringResource(R.string.recovery_phrase_confirm),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }

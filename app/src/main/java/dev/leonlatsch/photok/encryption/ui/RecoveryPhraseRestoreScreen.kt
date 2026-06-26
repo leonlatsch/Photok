@@ -16,18 +16,18 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,6 +63,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalClipboard
@@ -130,25 +131,28 @@ private fun RecoveryPhraseRestoreContent(
         handleUiEvent(RecoveryPhraseRestoreUiEvent.LoadFromFile(uri))
     }
 
+    BackHandler(uiState.selectedRestoreMethod != null) {
+        handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
+    }
+
     Scaffold(
         bottomBar = {
-            AnimatedVisibility(
-                visible = !uiState.unlocked,
-                enter = EnterTransition.None,
-                exit = slideOutVertically { it },
+            val animatedAlpha by animateFloatAsState(
+                targetValue = if (uiState.unlocked) 0f else 1f
+            )
+
+            Button(
+                onClick = {
+                    handleUiEvent(RecoveryPhraseRestoreUiEvent.Unlock(uiState.phrase))
+                },
+                enabled = uiState.phraseValid && !uiState.loading,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .navigationBarsPadding()
+                    .fillMaxWidth()
+                    .alpha(animatedAlpha)
             ) {
-                Button(
-                    onClick = {
-                        handleUiEvent(RecoveryPhraseRestoreUiEvent.Unlock(uiState.phrase))
-                    },
-                    enabled = uiState.phraseValid && !uiState.loading,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .navigationBarsPadding()
-                        .fillMaxWidth()
-                ) {
-                    Text(text = stringResource(R.string.recovery_phrase_restore_button))
-                }
+                Text(text = stringResource(R.string.recovery_phrase_restore_button))
             }
         },
         topBar = {

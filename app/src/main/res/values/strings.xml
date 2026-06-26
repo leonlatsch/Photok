@@ -357,7 +357,7 @@
     <string name="recovery_phrase_label">Recovery Phrase</string>
     <string name="recovery_phrase_title">Your Recovery Phrase</string>
     <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string>
-    <string name="recovery_phrase_confirm">I\'ve saved my recovery phrase</string>
+    <string name="recovery_phrase_confirm">Phrase saved</string>
     <string name="recovery_phrase_create_new">Create New Phrase</string>
     <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string>
     <string name="recovery_phrase_saved_to_file">Saved to %1$s</string>
@@ -373,7 +373,7 @@
     <string name="recovery_phrase_restore_button">Restore</string>
     <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string>
     <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string>
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your recovery phrase.</string>
+    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string>
     <string name="recovery_phrase_restore_option_type">Type by hand</string>
     <string name="recovery_phrase_restore_option_open_file">Load from file</string>
     <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string>
@@ -387,4 +387,7 @@
     <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string>
     <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string>
+    <string name="permission_gate_change_in_settings">Change in Settings</string>
 </resources>

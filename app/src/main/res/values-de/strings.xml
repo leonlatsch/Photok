@@ -361,7 +361,7 @@
     <string name="recovery_phrase_label">Wiederherstellungsphrase</string>
     <string name="recovery_phrase_title">Deine Wiederherstellungsphrase</string>
     <string name="recovery_phrase_description">Schreib diese Wörter der Reihe nach auf und bewahre sie sicher auf. Mit dieser Phrase kommst du wieder in deinen Safe.</string>
-    <string name="recovery_phrase_confirm">Ich habe meine Wiederherstellungsphrase gespeichert</string>
+    <string name="recovery_phrase_confirm">Phrase gespeichert</string>
     <string name="recovery_phrase_create_new">Neue Phrase erstellen</string>
     <string name="recovery_phrase_create_new_confirm">Eine neue Phrase ersetzt deine aktuelle dauerhaft. Die alte Phrase funktioniert danach nicht mehr.</string>
     <string name="recovery_phrase_saved_to_file">Gespeichert in %1$s</string>
@@ -377,7 +377,7 @@
     <string name="recovery_phrase_restore_button">Wiederherstellen</string>
     <string name="recovery_phrase_restore_word_placeholder">Wort %1$d</string>
     <string name="recovery_phrase_restore_enter_title">Wiederherstellungsphrase eingeben</string>
-    <string name="recovery_phrase_restore_choose_option">Wie willst du deine Wiederherstellungsphrase eingeben?</string>
+    <string name="recovery_phrase_restore_choose_option">Wie willst du deine Phrase eingeben?</string>
     <string name="recovery_phrase_restore_option_type">Manuell eingeben</string>
     <string name="recovery_phrase_restore_option_open_file">Aus Datei laden</string>
     <string name="recovery_phrase_restore_option_scan_qr">QR-Code scannen</string>
@@ -391,4 +391,7 @@
     <string name="recovery_phrase_restore_source_qr">Vom QR-Code gescannt</string>
     <string name="recovery_phrase_restore_source_file">Geladen von %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Aus Zwischenablage eingefügt</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Kamera Berechtigung anfragen</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Die Kamera Berechtigung wird benötigt, um QR Codes zu scannen.</string>
+    <string name="permission_gate_change_in_settings">In Einstellungen ändern</string>
 </resources>

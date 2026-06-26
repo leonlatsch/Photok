@@ -35,12 +35,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.PermissionGate
 import timber.log.Timber
 import java.util.concurrent.Executors
@@ -71,13 +72,12 @@ fun QrScannerView(
         return
     }
 
-    val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     PermissionGate(
         permission = Manifest.permission.CAMERA,
-        rationaleText = "Camera permission is required to scan QR codes.",
-        label = "Request Camera Permission",
+        rationaleText = stringResource(R.string.recovery_phrase_restore_camera_permission_rationale),
+        label = stringResource(R.string.recovery_phrase_restore_camera_permission_button),
         modifier = modifier,
     ) {
         val cameraExecutor = remember { Executors.newSingleThreadExecutor() }

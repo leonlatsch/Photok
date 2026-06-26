@@ -41,11 +41,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import dev.leonlatsch.photok.R
 
 /**
  * Requests [permission] on first composition and gates [content] behind it.
@@ -78,6 +80,7 @@ fun PermissionGate(
             ) == PackageManager.PERMISSION_GRANTED
         )
     }
+
     var shouldRequestInSettings by remember {
         mutableStateOf(activity?.shouldRequestInSettings(permission) == true)
     }
@@ -135,7 +138,7 @@ fun PermissionGate(
                     context.startActivity(intent)
                 },
             ) {
-                Text("Open Settings")
+                Text(stringResource(R.string.permission_gate_change_in_settings))
             }
         } else {
             TextButton(onClick = { launcher.launch(permission) }) {
