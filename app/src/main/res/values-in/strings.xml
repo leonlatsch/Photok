@@ -163,7 +163,7 @@
     <string name="settings_security_biometric_summary">Buka kunci Photok dengan autentikasi biometrik.</string>
     <string name="settings_security_biometric_not_available">Buka Kunci Biometrik tidak tersedia</string>
     <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">View or regenerate your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Batas Waktu Kunci Otomatis</string>
     <string name="settings_security_timeout_summary">Kunci otomatis setelah waktu tertentu di latar belakang</string>
     <string name="settings_security_timeout_immediately">Segera</string>

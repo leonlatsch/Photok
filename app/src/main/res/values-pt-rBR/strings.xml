@@ -164,7 +164,7 @@
     <string name="settings_security_biometric_summary">Desbloqueie Photok com autentificação biométrica.</string>
     <string name="settings_security_biometric_not_available">Desbloqueio por biometria não disponível</string>
     <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">View or regenerate your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>

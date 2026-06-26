@@ -165,7 +165,7 @@
     <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
     <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht verfügbar</string>
     <string name="settings_security_recovery_phrase_title">Wiederherstellungsphrase</string>
-    <string name="settings_security_recovery_phrase_summary">Zeig oder erstelle deine Wiederherstellungsphrase.</string>
+    <string name="settings_security_recovery_phrase_summary">Wiederherstellungsphrase verwalten.</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>

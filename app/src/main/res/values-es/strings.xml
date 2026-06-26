@@ -165,7 +165,7 @@
     <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
     <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">View or regenerate your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
     <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
     <string name="settings_security_timeout_immediately">Inmediatamente</string>

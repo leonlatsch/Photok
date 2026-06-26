@@ -146,7 +146,7 @@
     <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
     <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
     <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">View or regenerate your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
     <string name="settings_security_timeout_title">Automatische vergrendel time-out</string>
     <string name="settings_security_timeout_summary">Automatische vergrendeling na bepaalde tijd op de achtergrond</string>
     <string name="settings_security_timeout_immediately">Onmiddellijk</string>
