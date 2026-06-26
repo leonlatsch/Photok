@@ -16,43 +16,25 @@
 
 package dev.leonlatsch.photok.backup.ui
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.DialogViewModelStoreOwner
+import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -122,73 +104,17 @@ private fun Content(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 if (subtitle != null) {
-                    Text(
-                        text = subtitle,
-                    )
+                    Text(text = subtitle)
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    var passwordVisible by rememberSaveable { mutableStateOf(false) }
-
-                    OutlinedTextField(
-                        value = uiState.password,
-                        visualTransformation = if (passwordVisible) {
-                            VisualTransformation.None
-                        } else {
-                            PasswordVisualTransformation()
-                        },
-                        onValueChange = {
-                            handleUiEvent(ConfirmPasswordUiEvent.PasswordValueChange(it))
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done,
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                handleUiEvent(ConfirmPasswordUiEvent.ConfirmPassword)
-                            }
-                        ),
-                        isError = uiState.error != null,
-                        supportingText = if (uiState.error == null) {
-                            null
-                        } else {
-                            {
-                                Text(uiState.error)
-                            }
-                        },
-                        maxLines = 1,
-                        label = {
-                            Text(
-                                text = stringResource(R.string.common_password)
-                            )
-                        },
-                        suffix = {
-                            val icon = if (passwordVisible) {
-                                R.drawable.ic_eye_closed
-                            } else {
-                                R.drawable.ic_eye
-                            }
-
-                            Crossfade(icon) { icon ->
-                                Icon(
-                                    painter = painterResource(icon),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .size(24.dp)
-                                        .clickable(role = Role.Button) {
-                                            passwordVisible = !passwordVisible
-                                        }
-                                )
-                            }
-
-                        }
-                    )
-                }
+                PasswordField(
+                    value = uiState.password,
+                    onValueChange = { handleUiEvent(ConfirmPasswordUiEvent.PasswordValueChange(it)) },
+                    label = stringResource(R.string.common_password),
+                    error = uiState.error,
+                    imeAction = ImeAction.Done,
+                    onDone = { handleUiEvent(ConfirmPasswordUiEvent.ConfirmPassword) },
+                )
             }
         }
     )

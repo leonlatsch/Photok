@@ -28,6 +28,7 @@ class VaultService @Inject constructor(
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
     private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>,
+    private val recoveryPhraseProtectionHandler: VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase>,
     private val config: Config,
 ) {
     suspend fun unlock(request: UnlockRequest): Result<VaultSession> {
@@ -54,7 +55,13 @@ class VaultService @Inject constructor(
 
                     biometricProtectionHandler.unlock(request, protection)
                 }
+                is UnlockRequest.RecoveryPhrase -> {
+                    requireNotNull(protection)
+                    recoveryPhraseProtectionHandler.unlock(request, protection)
+                }
             }
+
+            config.lastUsedUnlockMethod = request.protectionType
 
             VaultSession(
                 vmk = vmk,
@@ -66,6 +73,7 @@ class VaultService @Inject constructor(
         val protection = when (request) {
             is CreateRequest.Password -> passwordProtectionHandler.create(request)
             is CreateRequest.Biometric -> biometricProtectionHandler.create(request)
+            is CreateRequest.RecoveryPhrase -> recoveryPhraseProtectionHandler.create(request)
         }
 
         vaultProtectionRepository.createProtection(protection)
@@ -80,6 +88,7 @@ class VaultService @Inject constructor(
                 config.biometricAuthenticationEnabled = false
                 biometricProtectionHandler.reset()
             }
+            VaultProtectionType.RecoveryPhrase -> recoveryPhraseProtectionHandler.reset()
         }
     }
 
@@ -90,6 +99,7 @@ class VaultService @Inject constructor(
     suspend fun canMigrate(type: VaultProtectionType): Boolean = when (type) {
         VaultProtectionType.Password -> passwordProtectionHandler.canMigrate()
         VaultProtectionType.Biometric -> biometricProtectionHandler.canMigrate()
+        VaultProtectionType.RecoveryPhrase -> recoveryPhraseProtectionHandler.canMigrate()
     }
 
     suspend fun canUnlock(): Boolean {
@@ -99,4 +109,3 @@ class VaultService @Inject constructor(
         return protectionsAreSetup || canMigrate
     }
 }
-

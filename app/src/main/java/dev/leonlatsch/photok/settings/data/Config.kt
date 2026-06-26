@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
@@ -153,6 +154,7 @@ class Config(context: Context) {
 
     // In memory flags
     var justFinishedSetup: Boolean = false
+    var lastUsedUnlockMethod: VaultProtectionType? = null
 
 
     // --- Legacy

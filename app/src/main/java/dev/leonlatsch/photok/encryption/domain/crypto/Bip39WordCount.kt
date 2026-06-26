@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,20 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.ui.changepassword
+package dev.leonlatsch.photok.encryption.domain.crypto
 
-/**
- * Enum to indicate the state of [ChangePasswordDialog]
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class ChangePasswordState {
-    START,
-    CHECKING_OLD,
-    OLD_VALID,
-    OLD_INVALID,
-    NEW_VALID,
-    NEW_INVALID,
-    DONE,
+/** Supported BIP-39 phrase lengths and their corresponding entropy sizes. */
+enum class Bip39WordCount(
+    val words: Int,
+    val entropyBytes: Int,
+) {
+    Twelve(12, 16),
+    TwentyFour(24, 32),
 }
