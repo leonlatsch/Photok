@@ -46,7 +46,6 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
@@ -66,6 +65,7 @@ import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseFlowRow
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiEvent
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiState
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseViewModel
+import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -125,7 +125,6 @@ private fun Content(
     Scaffold(
         bottomBar = {
             Column() {
-
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier.fillMaxWidth()
@@ -193,13 +192,10 @@ private fun Content(
     ) { contentPadding ->
         val hapticFeedback = LocalHapticFeedback.current
 
-        Column(
+        CenteredScrollableColumn(
             modifier = Modifier
                 .padding(contentPadding)
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = stringResource(R.string.recovery_phrase_title),

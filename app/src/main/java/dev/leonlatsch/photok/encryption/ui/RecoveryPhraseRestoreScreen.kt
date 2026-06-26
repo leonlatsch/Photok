@@ -82,6 +82,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
@@ -175,13 +176,10 @@ private fun RecoveryPhraseRestoreContent(
             )
         },
     ) { contentPadding ->
-        Column(
+        CenteredScrollableColumn(
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(horizontal = 24.dp)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+                .fillMaxSize()
         ) {
             Text(
                 text = stringResource(R.string.recovery_phrase_restore_enter_title),
