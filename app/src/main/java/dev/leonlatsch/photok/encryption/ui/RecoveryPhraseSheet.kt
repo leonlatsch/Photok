@@ -163,7 +163,9 @@ fun RecoveryPhraseSheet(
             )
 
             if (uiState.phrase == null || uiState.phrase!!.words.isEmpty()) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(20.dp)
+                )
             } else {
                 RecoveryPhraseFlowRow(
                     phrase = uiState.phrase,
@@ -241,7 +243,7 @@ fun RecoveryPhraseSheet(
 fun RecoveryPhraseFlowRow(
     phrase: RecoveryPhrase?,
     animated: Boolean,
-    verticalPadding: Dp = 24.dp,
+    verticalPadding: Dp = 20.dp,
     modifier: Modifier = Modifier,
 ) {
     val isPreview = LocalInspectionMode.current

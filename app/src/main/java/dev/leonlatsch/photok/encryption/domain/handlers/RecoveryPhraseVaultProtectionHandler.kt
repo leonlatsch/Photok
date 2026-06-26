@@ -119,5 +119,7 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
         throw UnsupportedOperationException("RecoveryPhrase protection has no legacy migration path")
     }
 
-    override suspend fun reset() {}
+    override suspend fun reset() {
+        recoveryPhraseStore.clear()
+    }
 }

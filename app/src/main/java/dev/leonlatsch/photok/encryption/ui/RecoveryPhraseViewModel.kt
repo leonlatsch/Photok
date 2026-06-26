@@ -33,6 +33,7 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.Dispatchers
@@ -62,8 +63,12 @@ data class RecoveryPhraseUiState(
 sealed interface RecoveryPhraseUiEvent {
     data class UpdateWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseUiEvent
     data class Share(val context: Context, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
-    data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
-    data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : RecoveryPhraseUiEvent
+    data class SaveToFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) :
+        RecoveryPhraseUiEvent
+
+    data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) :
+        RecoveryPhraseUiEvent
+
     data object ShowQrCode : RecoveryPhraseUiEvent
     data object DismissQrSheet : RecoveryPhraseUiEvent
     data object MarkPhraseSaved : RecoveryPhraseUiEvent
@@ -97,6 +102,16 @@ class RecoveryPhraseViewModel @Inject constructor(
             inputs = inputs,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseUiState())
+
+    init {
+        viewModelScope.launch {
+            if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                vaultService.create(
+                    CreateRequest.RecoveryPhrase(sessionRepository.require(), Bip39WordCount.Twelve)
+                )
+            }
+        }
+    }
 
     fun handleUiEvent(event: RecoveryPhraseUiEvent) {
         when (event) {
@@ -158,7 +173,10 @@ class RecoveryPhraseViewModel @Inject constructor(
                 io.copy(inputStream, outputStream)
 
                 val fileName = io.getFileName(event.uri)
-                Dialogs.showLongToast(event.context, resources.getString(R.string.recovery_phrase_saved_to_file, fileName))
+                Dialogs.showLongToast(
+                    event.context,
+                    resources.getString(R.string.recovery_phrase_saved_to_file, fileName)
+                )
 
                 inputs.update {
                     it.copy(phraseWasSaved = true)
@@ -167,7 +185,10 @@ class RecoveryPhraseViewModel @Inject constructor(
 
             is RecoveryPhraseUiEvent.CopyToClipboard -> {
                 viewModelScope.launch {
-                    val clipData = ClipData.newPlainText("photok-recovery-phrase", event.phrase.toMnemonicString())
+                    val clipData = ClipData.newPlainText(
+                        "photok-recovery-phrase",
+                        event.phrase.toMnemonicString()
+                    )
                     event.clipboard.setClipEntry(ClipEntry(clipData))
 
                     inputs.update {
@@ -195,13 +216,7 @@ class RecoveryPhraseViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     inputs.update { it.copy(loading = true, phraseWasSaved = false) }
 
-                    recoveryPhraseStore.clear()
-                    vaultService.create(
-                        CreateRequest.RecoveryPhrase(
-                            session,
-                            Bip39WordCount.Twelve,
-                        )
-                    )
+                    vaultService.reset(VaultProtectionType.RecoveryPhrase)
 
                     inputs.update { it.copy(loading = false) }
                     _navEvents.trySend(RecoveryPhraseNavEvent.NavigateToSetup)
