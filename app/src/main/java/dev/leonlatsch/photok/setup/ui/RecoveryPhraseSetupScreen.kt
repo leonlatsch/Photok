@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.setup.ui
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -110,6 +112,14 @@ private fun Content(
             onDismiss = { handleUiEvent(RecoveryPhraseUiEvent.DismissQrSheet) },
             onSaved = { handleUiEvent(RecoveryPhraseUiEvent.MarkPhraseSaved) },
         )
+    }
+
+    BackHandler {
+        if (!uiState.inputs.phraseWasSaved) {
+            Toast.makeText(context, R.string.recovery_phrase_save_warning, Toast.LENGTH_SHORT).show()
+        } else {
+            activity?.finish()
+        }
     }
 
     Scaffold(

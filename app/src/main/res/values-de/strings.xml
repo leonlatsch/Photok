@@ -362,6 +362,7 @@
     <string name="recovery_phrase_title">Deine Wiederherstellungsphrase</string>
     <string name="recovery_phrase_description">Schreib diese Wörter der Reihe nach auf und bewahre sie sicher auf. Mit dieser Phrase kommst du wieder in deinen Safe.</string>
     <string name="recovery_phrase_confirm">Phrase gespeichert</string>
+    <string name="recovery_phrase_save_warning">Bitte speichere deine Wiederherstellungsphrase</string>
     <string name="recovery_phrase_create_new">Neue Phrase erstellen</string>
     <string name="recovery_phrase_create_new_confirm">Eine neue Phrase ersetzt deine aktuelle dauerhaft. Die alte Phrase funktioniert danach nicht mehr.</string>
     <string name="recovery_phrase_saved_to_file">Gespeichert in %1$s</string>

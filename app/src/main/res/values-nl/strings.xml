@@ -341,6 +341,7 @@
     <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
     <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
     <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
+    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
     <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
     <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
     <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
