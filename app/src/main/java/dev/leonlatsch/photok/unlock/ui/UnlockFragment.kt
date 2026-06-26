@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
@@ -35,12 +36,12 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.vanish
 import dev.leonlatsch.photok.other.systemBarsPadding
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -60,6 +61,9 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
 
     @Inject
     lateinit var vaultService: VaultService
+
+    @Inject
+    lateinit var navigateToGallery: NavigateToGallery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.systemBarsPadding()
@@ -82,13 +86,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     UnlockState.Unlocked -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
-
-                        val startPageDest = when (config.galleryStartPage) {
-                            StartPage.AllFiles -> R.id.action_unlockFragment_to_galleryFragment
-                            StartPage.Albums -> R.id.action_unlockFragment_to_albumsFragment
-                        }
-
-                        findNavController().navigate(startPageDest)
+                        navigateToGallery(findNavController())
                     }
 
                     UnlockState.StartLegacyMigration -> {
@@ -99,6 +97,12 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     }
 
                     UnlockState.Error -> showErrorToast()
+
+                    UnlockState.ShowRecoveryPhrase -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+                        findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
+                    }
                 }
             }
         }
@@ -121,11 +125,28 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                 binding.unlockUseBiometricUnlockButton.hide()
             }
         }
+
+        lifecycleScope.launch {
+            if (vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                binding.unlockForgotPassword.show()
+            } else {
+                binding.unlockForgotPassword.hide()
+            }
+        }
     }
 
     private fun showErrorToast() {
         binding.loadingOverlay.hide()
         Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
+    }
+
+    fun forgotPassword() {
+        try {
+            findNavController().navigate(R.id.action_unlockFragment_to_recoveryPhraseRestoreFragment)
+        } catch (e: Exception) {
+            Timber.e(e)
+            showErrorToast()
+        }
     }
 
     override fun bind(binding: FragmentUnlockBinding) {

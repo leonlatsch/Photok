@@ -110,7 +110,7 @@ val PreferenceScreenConfigContent = buildList {
                 ),
                 Preference.Simple(
                     key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
-                    icon = R.drawable.ic_key,
+                    icon = R.drawable.ic_password,
                     title = R.string.change_password_title,
                     summary = R.string.settings_security_change_password_summary,
                 ),
@@ -140,6 +140,12 @@ val PreferenceScreenConfigContent = buildList {
                     icon = R.drawable.ic_app_blocking,
                     title = R.string.settings_security_hide_app_title,
                     summary = R.string.settings_security_hide_app_summary,
+                ),
+                Preference.Simple(
+                    key = SettingsFragment.KEY_ACTION_RECOVERY_PHRASE,
+                    icon = R.drawable.ic_key,
+                    title = R.string.settings_security_recovery_phrase_title,
+                    summary = R.string.settings_security_recovery_phrase_summary,
                 ),
             ),
         )

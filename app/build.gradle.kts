@@ -177,6 +177,16 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.activity:activity-compose")
 
+    // ZXing - QR code generation and scanning
+    implementation("com.google.zxing:core:3.5.3")
+
+    // CameraX - camera access for QR scanning
+    val cameraXVersion = "1.4.2"
+    implementation("androidx.camera:camera-core:$cameraXVersion")
+    implementation("androidx.camera:camera-camera2:$cameraXVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraXVersion")
+    implementation("androidx.camera:camera-view:$cameraXVersion")
+
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 

@@ -91,18 +91,34 @@
                 android:onClick="@{() -> viewModel.unlockWithPassword()}"
                 android:text="@string/unlock_button" />
 
+            <Button
+                android:id="@+id/unlockForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:maxLines="1"
+                android:onClick="@{() -> context.forgotPassword()}"
+                android:text="@string/recovery_phrase_forgot_password"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </LinearLayout>
 
         <Button
             android:id="@+id/unlockUseBiometricUnlockButton"
-            android:onClick="@{() -> viewModel.unlockWithBiometric(context)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:maxLines="1"
+            android:onClick="@{() -> viewModel.unlockWithBiometric(context)}"
             android:text="@string/biometric_unlock_hint_button"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

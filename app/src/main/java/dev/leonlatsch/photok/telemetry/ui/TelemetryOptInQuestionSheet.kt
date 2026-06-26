@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
@@ -55,14 +56,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun TelemetryOptInQuestionSheet() {
     val config = LocalConfig.current
-    val viewModel: TelemetryViewModel = hiltViewModel()
-
     var visible by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         config ?: return@LaunchedEffect
 
-        if (!TelemetryEnabledByDefault && !config.telemetryAskedForOptIn && !config.justFinishedSetup) {
+        if (
+            !TelemetryEnabledByDefault
+            && !config.telemetryAskedForOptIn
+            && !config.justFinishedSetup
+            && config.lastUsedUnlockMethod != VaultProtectionType.RecoveryPhrase
+        ) {
             delay(300)
             visible = true
             config.telemetryAskedForOptIn = true
@@ -70,6 +74,8 @@ fun TelemetryOptInQuestionSheet() {
     }
 
     if (visible) {
+        val viewModel: TelemetryViewModel = hiltViewModel()
+
         SheetContent(
             updateEnabled = {
                 viewModel.updateTelemetryEnabled(it)
@@ -105,9 +111,9 @@ private fun SheetContent(
                 .padding(20.dp)
         ) {
             Text(
-            text = stringResource(R.string.telemetry_sheet_title),
-            style = MaterialTheme.typography.titleLarge,
-        )
+                text = stringResource(R.string.telemetry_sheet_title),
+                style = MaterialTheme.typography.titleLarge,
+            )
 
             Text(
                 text = stringResource(R.string.telemetry_sheet_paragraph_1)
