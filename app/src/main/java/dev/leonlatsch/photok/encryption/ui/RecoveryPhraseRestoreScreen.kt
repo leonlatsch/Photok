@@ -315,7 +315,7 @@ private fun RecoveryPhraseRestoreContent(
                             maxLines = 4,
                             shape = RoundedCornerShape(24.dp),
                             label = {
-                                Text(stringResource(R.string.recovery_phrase_restore_input_label))
+                                Text(stringResource(R.string.recovery_phrase_label))
                             },
                             placeholder = {
                                 Text(stringResource(R.string.recovery_phrase_restore_input_placeholder))

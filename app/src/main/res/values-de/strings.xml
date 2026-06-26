@@ -164,6 +164,8 @@
     <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
     <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
     <string name="settings_security_biometric_not_available">Biometrisches entsperren ist nicht verfügbar</string>
+    <string name="settings_security_recovery_phrase_title">Wiederherstellungsphrase</string>
+    <string name="settings_security_recovery_phrase_summary">Sieh dir deine Wiederherstellungsphrase an oder erstelle eine neue.</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
     <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
@@ -227,6 +229,7 @@
     <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
     <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
     <string name="change_password_done">Passwort wurde geändert</string>
+    <string name="change_password_recovery_phrase_used">Wiederherstellungsphrase wurde verwendet — altes Passwort wird nicht benötigt</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Passwort prüfen</string>
@@ -353,4 +356,39 @@
     <string name="telemetry_choice_no">Nein danke</string>
     <string name="telemetry_choice_yes">Anonyme Nutzungsdaten teilen</string>
     <string name="telemetry_toggle">Teilen von Nutzungsdaten erlauben</string>
+
+    <!-- Recovery Phrase — General -->
+    <string name="recovery_phrase_label">Wiederherstellungsphrase</string>
+    <string name="recovery_phrase_title">Deine Wiederherstellungsphrase</string>
+    <string name="recovery_phrase_description">Schreibe diese Wörter der Reihe nach auf und bewahre sie sicher auf. Du kannst diese Phrase verwenden, um wieder Zugriff auf deinen Safe zu erhalten.</string>
+    <string name="recovery_phrase_confirm">Ich habe meine Wiederherstellungsphrase gespeichert</string>
+    <string name="recovery_phrase_create_new">Neue Phrase erstellen</string>
+    <string name="recovery_phrase_create_new_confirm">Das Erstellen einer neuen Phrase ersetzt deine aktuelle dauerhaft. Deine bestehende Phrase funktioniert dann nicht mehr zur Wiederherstellung deines Safes.</string>
+    <string name="recovery_phrase_saved_to_file">Gespeichert in %1$s</string>
+
+    <!-- Recovery Phrase — Setup -->
+    <string name="recovery_phrase_select_word_count">Wortanzahl</string>
+
+    <!-- Recovery Phrase — QR Code -->
+    <string name="recovery_phrase_qr_save_as_image">Als Bild speichern</string>
+
+    <!-- Recovery Phrase — Restore -->
+    <string name="recovery_phrase_forgot_password">Passwort vergessen</string>
+    <string name="recovery_phrase_restore_button">Wiederherstellen</string>
+    <string name="recovery_phrase_restore_word_placeholder">Wort %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Wiederherstellungsphrase eingeben</string>
+    <string name="recovery_phrase_restore_choose_option">Wähle, wie du deine Wiederherstellungsphrase eingeben möchtest.</string>
+    <string name="recovery_phrase_restore_option_type">Manuell eingeben</string>
+    <string name="recovery_phrase_restore_option_open_file">Aus Datei laden</string>
+    <string name="recovery_phrase_restore_option_scan_qr">QR-Code scannen</string>
+    <string name="recovery_phrase_restore_option_paste">Aus Zwischenablage einfügen</string>
+    <string name="recovery_phrase_restore_input_placeholder">Tippe deine Wiederherstellungsphrase Wort für Wort</string>
+    <string name="recovery_phrase_restore_unlocked">Entsperrt</string>
+    <string name="recovery_phrase_restore_unlocking">Entsperren…</string>
+    <string name="recovery_phrase_restore_error_generic">Safe konnte nicht wiederhergestellt werden. Überprüfe deine Phrase und versuche es erneut.</string>
+    <string name="recovery_phrase_restore_error_invalid">Ungültige Wiederherstellungsphrase. Bitte überprüfe die Wörter.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">Der QR-Code enthält keine gültige Wiederherstellungsphrase.</string>
+    <string name="recovery_phrase_restore_source_qr">Vom QR-Code gescannt</string>
+    <string name="recovery_phrase_restore_source_file">Geladen von %1$s</string>
+    <string name="recovery_phrase_restore_source_clipboard">Aus Zwischenablage eingefügt</string>
 </resources>

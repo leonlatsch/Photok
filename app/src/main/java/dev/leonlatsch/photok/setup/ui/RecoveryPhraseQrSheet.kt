@@ -97,7 +97,7 @@ private fun Content(
             AppName()
 
             Text(
-                text = stringResource(R.string.recovery_phrase_qr_title)
+                text = stringResource(R.string.recovery_phrase_label)
             )
 
             QRCodeImage(

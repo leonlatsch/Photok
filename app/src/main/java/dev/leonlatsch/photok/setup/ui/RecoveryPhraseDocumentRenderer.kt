@@ -87,7 +87,7 @@ internal fun createRecoveryPhraseDocument(
     y += appNameH + sectionGap
 
     // Subtitle
-    canvas.drawText(context.getString(R.string.recovery_phrase_document_title), centerX, y - subtitlePaint.ascent(), subtitlePaint)
+    canvas.drawText(context.getString(R.string.recovery_phrase_label), centerX, y - subtitlePaint.ascent(), subtitlePaint)
     y += subtitleH + sectionGap
 
     // QR code
