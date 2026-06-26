@@ -130,7 +130,7 @@ class RecoveryPhraseViewModel @Inject constructor(
 
             is RecoveryPhraseUiEvent.Share -> {
                 val text = """
-                    Photok Recovery Phrase
+                    Photok ${resources.getString(R.string.recovery_phrase_label)}
 
                     ${event.phrase.toMnemonicString()}
                 """.trimIndent()

@@ -21,10 +21,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,8 +39,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -55,8 +61,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -133,6 +141,7 @@ fun RecoveryPhraseSheet(
     ) {
         Column(
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -153,10 +162,14 @@ fun RecoveryPhraseSheet(
                 textAlign = TextAlign.Center,
             )
 
-            RecoveryPhraseFlowRow(
-                phrase = uiState.phrase,
-                animated = true,
-            )
+            if (uiState.phrase == null || uiState.phrase!!.words.isEmpty()) {
+                CircularProgressIndicator()
+            } else {
+                RecoveryPhraseFlowRow(
+                    phrase = uiState.phrase,
+                    animated = true,
+                )
+            }
 
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
@@ -294,8 +307,24 @@ internal fun WordChip(
     word: String,
     modifier: Modifier = Modifier,
 ) {
+    val haptic = LocalHapticFeedback.current
+    val scope = rememberCoroutineScope()
+    val rotation = remember { Animatable(0f) }
+
     Box(
         modifier = modifier
+            .graphicsLayer { rotationZ = rotation.value }
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+            ) {
+                haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+                scope.launch {
+                    if (rotation.isRunning) rotation.stop()
+                    rotation.snapTo(12f)
+                    rotation.animateTo(0f, spring(dampingRatio = 0.3f, stiffness = 500f))
+                }
+            }
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(8.dp),
