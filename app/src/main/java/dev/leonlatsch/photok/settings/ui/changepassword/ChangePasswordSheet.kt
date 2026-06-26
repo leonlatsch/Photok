@@ -43,6 +43,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -61,7 +62,8 @@ import dev.leonlatsch.photok.ui.components.DialogViewModelStoreOwner
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,58 +71,78 @@ fun ChangePasswordSheet(
     onDismissRequest: () -> Unit,
 ) {
     DialogViewModelStoreOwner {
-        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val viewModel: ChangePasswordViewModel = hiltViewModel()
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val context = LocalContext.current
 
-        LaunchedEffect(uiState.done) {
-            if (uiState.done) {
-                Toast.makeText(context, R.string.change_password_done, Toast.LENGTH_LONG).show()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        SheetContent(
+            uiState = uiState,
+            handleUiEvent = viewModel::handleUiEvent,
+            onDismissRequest = onDismissRequest,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SheetContent(
+    uiState: ChangePasswordUiState,
+    handleUiEvent: (ChangePasswordUiEvent) -> Unit,
+    onDismissRequest: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(uiState.done) {
+        if (uiState.done) {
+            Toast.makeText(context, R.string.change_password_done, Toast.LENGTH_LONG).show()
+
+            scope.launch {
                 sheetState.hide()
+            }.invokeOnCompletion {
                 onDismissRequest()
             }
         }
+    }
 
-        ModalBottomSheet(
-            onDismissRequest = onDismissRequest,
-            sheetState = sheetState,
+    ModalBottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = sheetState,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .navigationBarsPadding()
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .navigationBarsPadding()
-                    .padding(bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.change_password_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
+            Text(
+                text = stringResource(R.string.change_password_title),
+                style = MaterialTheme.typography.headlineSmall,
+            )
 
-                if (uiState.recoveryPhraseWasUsed) {
-                    RecoveryPhraseUsedBanner()
-                }
+            if (uiState.recoveryPhraseWasUsed) {
+                RecoveryPhraseUsedBanner()
+            }
 
-                AnimatedContent(
-                    targetState = uiState.step,
-                    transitionSpec = {
-                        (slideInHorizontally { it } + fadeIn()) togetherWith
-                                (slideOutHorizontally { -it } + fadeOut())
-                    },
-                    label = "ChangePasswordStep",
-                ) { step ->
-                    when (step) {
-                        ChangePasswordStep.CheckOld -> OldPasswordSection(
-                            uiState = uiState,
-                            onEvent = viewModel::handleUiEvent,
-                        )
-                        ChangePasswordStep.SetNew -> NewPasswordSection(
-                            uiState = uiState,
-                            onEvent = viewModel::handleUiEvent,
-                        )
-                    }
+            AnimatedContent(
+                targetState = uiState.step,
+                transitionSpec = {
+                    (slideInHorizontally { it } + fadeIn()) togetherWith
+                            (slideOutHorizontally { -it } + fadeOut())
+                },
+            ) { step ->
+                when (step) {
+                    ChangePasswordUiState.Step.CheckOld -> OldPasswordSection(
+                        uiState = uiState,
+                        handleUiEvent = handleUiEvent,
+                    )
+                    ChangePasswordUiState.Step.SetNew -> NewPasswordSection(
+                        uiState = uiState,
+                        handleUiEvent = handleUiEvent,
+                    )
                 }
             }
         }
@@ -157,20 +179,20 @@ private fun RecoveryPhraseUsedBanner() {
 @Composable
 private fun OldPasswordSection(
     uiState: ChangePasswordUiState,
-    onEvent: (ChangePasswordUiEvent) -> Unit,
+    handleUiEvent: (ChangePasswordUiEvent) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         PasswordField(
             value = uiState.oldPassword,
-            onValueChange = { onEvent(ChangePasswordUiEvent.OldPasswordChanged(it)) },
+            onValueChange = { handleUiEvent(ChangePasswordUiEvent.OldPasswordChanged(it)) },
             label = stringResource(R.string.change_password_old_password),
             error = uiState.oldPasswordError,
             imeAction = ImeAction.Done,
-            onDone = { onEvent(ChangePasswordUiEvent.CheckOldPassword) },
+            onDone = { handleUiEvent(ChangePasswordUiEvent.CheckOldPassword) },
         )
 
         Button(
-            onClick = { onEvent(ChangePasswordUiEvent.CheckOldPassword) },
+            onClick = { handleUiEvent(ChangePasswordUiEvent.CheckOldPassword) },
             enabled = uiState.oldPassword.isNotEmpty() && !uiState.loading,
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -182,7 +204,7 @@ private fun OldPasswordSection(
 @Composable
 private fun NewPasswordSection(
     uiState: ChangePasswordUiState,
-    onEvent: (ChangePasswordUiEvent) -> Unit,
+    handleUiEvent: (ChangePasswordUiEvent) -> Unit,
 ) {
     val newPasswordValid = PasswordUtils.validatePassword(uiState.newPassword)
     val passwordsMatch = PasswordUtils.passwordsNotEmptyAndEqual(uiState.newPassword, uiState.newPasswordConfirm)
@@ -190,14 +212,14 @@ private fun NewPasswordSection(
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
-        delay(3.seconds)
+        delay(300.milliseconds)
         focusRequester.requestFocus()
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         PasswordField(
             value = uiState.newPassword,
-            onValueChange = { onEvent(ChangePasswordUiEvent.NewPasswordChanged(it)) },
+            onValueChange = { handleUiEvent(ChangePasswordUiEvent.NewPasswordChanged(it)) },
             label = stringResource(R.string.change_password_enter_new_password),
             imeAction = ImeAction.Next,
             modifier = Modifier.focusRequester(focusRequester),
@@ -206,18 +228,18 @@ private fun NewPasswordSection(
         AnimatedVisibility(visible = newPasswordValid) {
             PasswordField(
                 value = uiState.newPasswordConfirm,
-                onValueChange = { onEvent(ChangePasswordUiEvent.NewPasswordConfirmChanged(it)) },
+                onValueChange = { handleUiEvent(ChangePasswordUiEvent.NewPasswordConfirmChanged(it)) },
                 label = stringResource(R.string.change_password_confirm_new_password),
                 error = if (uiState.newPasswordConfirm.isNotEmpty() && !passwordsMatch) {
                     stringResource(R.string.setup_password_match_warning)
                 } else null,
                 imeAction = ImeAction.Done,
-                onDone = { if (canSubmit) onEvent(ChangePasswordUiEvent.ChangePassword) },
+                onDone = { if (canSubmit) handleUiEvent(ChangePasswordUiEvent.ChangePassword) },
             )
         }
 
         Button(
-            onClick = { onEvent(ChangePasswordUiEvent.ChangePassword) },
+            onClick = { handleUiEvent(ChangePasswordUiEvent.ChangePassword) },
             enabled = canSubmit && !uiState.loading,
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -230,53 +252,19 @@ private fun NewPasswordSection(
 @Composable
 private fun PreviewCheckOld() {
     AppTheme {
-        Surface {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.change_password_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                OldPasswordSection(
-                    uiState = ChangePasswordUiState(),
-                    onEvent = {},
-                )
-            }
-        }
-    }
-}
-
-@PreviewLightDark
-@Composable
-private fun PreviewSetNew() {
-    AppTheme {
-        Surface {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.change_password_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                RecoveryPhraseUsedBanner()
-                NewPasswordSection(
-                    uiState = ChangePasswordUiState(
-                        step = ChangePasswordStep.SetNew,
-                        recoveryPhraseWasUsed = true,
-                        newPassword = "password",
-                    ),
-                    onEvent = {},
-                )
-            }
-        }
+        SheetContent(
+            uiState = ChangePasswordUiState(
+                loading = false,
+                recoveryPhraseWasUsed = false,
+                step = ChangePasswordUiState.Step.CheckOld,
+                oldPassword = "",
+                newPassword = "",
+                newPasswordConfirm = "",
+                oldPasswordError = "",
+                done = false,
+            ),
+            onDismissRequest = {},
+            handleUiEvent = {}
+        )
     }
 }

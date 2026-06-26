@@ -38,18 +38,19 @@ import javax.inject.Inject
 data class ChangePasswordUiState(
     val loading: Boolean = false,
     val recoveryPhraseWasUsed: Boolean = false,
-    val step: ChangePasswordStep = ChangePasswordStep.CheckOld,
+    val step: Step = Step.CheckOld,
     val oldPassword: String = "",
     val oldPasswordError: String? = null,
     val newPassword: String = "",
     val newPasswordConfirm: String = "",
     val done: Boolean = false,
-)
-
-enum class ChangePasswordStep {
-    CheckOld,
-    SetNew,
+) {
+    enum class Step {
+        CheckOld,
+        SetNew,
+    }
 }
+
 
 sealed interface ChangePasswordUiEvent {
     data class OldPasswordChanged(val value: String) : ChangePasswordUiEvent
@@ -67,19 +68,19 @@ class ChangePasswordViewModel @Inject constructor(
     private val resources: Resources,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ChangePasswordUiState())
-    val uiState = _uiState.asStateFlow()
+    private val recoveryPhraseUsed = config.lastUsedUnlockMethod == VaultProtectionType.RecoveryPhrase
 
-    init {
-        if (config.lastUsedUnlockMethod == VaultProtectionType.RecoveryPhrase) {
-            _uiState.update {
-                it.copy(
-                    recoveryPhraseWasUsed = true,
-                    step = ChangePasswordStep.SetNew,
-                )
-            }
-        }
-    }
+    private val _uiState = MutableStateFlow(
+        ChangePasswordUiState(
+            recoveryPhraseWasUsed = recoveryPhraseUsed,
+            step = if (recoveryPhraseUsed) {
+                ChangePasswordUiState.Step.SetNew
+            } else {
+                ChangePasswordUiState.Step.CheckOld
+            },
+        )
+    )
+    val uiState = _uiState.asStateFlow()
 
     fun handleUiEvent(event: ChangePasswordUiEvent) {
         when (event) {
@@ -100,7 +101,7 @@ class ChangePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Password(password))
                 .onSuccess {
-                    _uiState.update { it.copy(loading = false, step = ChangePasswordStep.SetNew) }
+                    _uiState.update { it.copy(loading = false, step = ChangePasswordUiState.Step.SetNew) }
                 }
                 .onFailure {
                     _uiState.update {
