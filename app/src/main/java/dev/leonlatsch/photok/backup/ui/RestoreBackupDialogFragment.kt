@@ -20,13 +20,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Dialog for loading and validating a backup file.
@@ -39,6 +43,9 @@ class RestoreBackupDialogFragment() :
     BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
     private val viewModel: RestoreBackupViewModel by viewModels()
+
+    @Inject
+    lateinit var inAppReview: InAppReview
 
     private val uri: Uri by lazy(LazyThreadSafetyMode.NONE) {
         requireArguments().getParcelable(ARG_URI)!!
@@ -80,6 +87,9 @@ class RestoreBackupDialogFragment() :
                     viewModel.zipFileName = getString(R.string.process_finished)
                     binding.restoreProgressIndicator.hide()
                     binding.restoreCloseButton.show()
+                    lifecycleScope.launch {
+                        inAppReview.requestInAppReview(requireActivity())
+                    }
                 }
 
                 RestoreState.FINISHED_WITH_ERRORS -> {

@@ -19,6 +19,5 @@ package dev.leonlatsch.photok.review
 import android.app.Activity
 
 interface InAppReview {
-    val supported: Boolean
     suspend fun requestInAppReview(activity: Activity)
 }

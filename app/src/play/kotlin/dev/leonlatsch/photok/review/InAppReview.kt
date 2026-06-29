@@ -17,21 +17,47 @@
 package dev.leonlatsch.photok.review
 
 import android.app.Activity
+import android.content.Context
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.testing.FakeReviewManager
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.settings.data.Config
+import javax.inject.Inject
 
-class InAppReviewImpl : InAppReview {
-    override val supported: Boolean = true
+class InAppReviewImpl @Inject constructor(
+    private val config: Config,
+    @ApplicationContext private val context: Context,
+) : InAppReview {
 
     override suspend fun requestInAppReview(activity: Activity) {
-        val manager = ReviewManagerFactory.create(activity)
+        if (config.inAppReviewRequested) return
+        if (!isInstallOldEnough()) return
 
+        config.inAppReviewRequested = true
+
+        val manager = if (BuildConfig.DEBUG) {
+            FakeReviewManager(activity)
+        } else {
+            ReviewManagerFactory.create(activity)
+        }
         val request = manager.requestReviewFlow()
         request.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val reviewInfo = task.result
-
-                manager.launchReviewFlow(activity, reviewInfo)
+                manager.launchReviewFlow(activity, task.result)
             }
         }
+    }
+
+    private fun isInstallOldEnough(): Boolean {
+        if (BuildConfig.DEBUG) return true
+        val installTime = runCatching {
+            context.packageManager.getPackageInfo(context.packageName, 0).firstInstallTime
+        }.getOrDefault(Long.MAX_VALUE)
+        return System.currentTimeMillis() - installTime >= SEVEN_DAYS_MS
+    }
+
+    companion object {
+        private const val SEVEN_DAYS_MS = 7L * 24 * 60 * 60 * 1000
     }
 }

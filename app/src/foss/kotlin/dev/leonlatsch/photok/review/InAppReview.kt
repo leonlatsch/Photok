@@ -17,8 +17,8 @@
 package dev.leonlatsch.photok.review
 
 import android.app.Activity
+import javax.inject.Inject
 
-class InAppReviewImpl : InAppReview {
-    override val supported: Boolean = false
+class InAppReviewImpl @Inject constructor() : InAppReview {
     override suspend fun requestInAppReview(activity: Activity) {}
 }
