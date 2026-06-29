@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,7 +58,7 @@ class ImportBottomSheetDialogFragment(
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             viewModel.reviewTrigger.collect {
-                inAppReview.requestInAppReview(requireActivity())
+                inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.Import)
             }
         }
     }

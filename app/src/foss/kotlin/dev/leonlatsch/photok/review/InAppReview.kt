@@ -17,8 +17,9 @@
 package dev.leonlatsch.photok.review
 
 import android.app.Activity
+import dev.leonlatsch.photok.review.ReviewTrigger
 import javax.inject.Inject
 
 class InAppReviewImpl @Inject constructor() : InAppReview {
-    override suspend fun requestInAppReview(activity: Activity) {}
+    override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {}
 }

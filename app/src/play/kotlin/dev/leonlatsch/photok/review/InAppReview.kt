@@ -18,46 +18,50 @@ package dev.leonlatsch.photok.review
 
 import android.app.Activity
 import android.content.Context
+import android.widget.Toast
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.testing.FakeReviewManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 class InAppReviewImpl @Inject constructor(
     private val config: Config,
     @ApplicationContext private val context: Context,
+    private val appScope: CoroutineScope,
 ) : InAppReview {
 
-    override suspend fun requestInAppReview(activity: Activity) {
+    override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {
         if (config.inAppReviewRequested) return
-        if (!isInstallOldEnough()) return
+        if (!trigger.meetsRequirements(context)) return
 
-        config.inAppReviewRequested = true
+        appScope.launch {
+            delay(3.seconds)
 
-        val manager = if (BuildConfig.DEBUG) {
-            FakeReviewManager(activity)
-        } else {
-            ReviewManagerFactory.create(activity)
-        }
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                manager.launchReviewFlow(activity, task.result)
+            withContext(Dispatchers.Main) {
+                if (BuildConfig.DEBUG) {
+                    Toast.makeText(activity, "DEBUG Review Request", Toast.LENGTH_LONG).show()
+                    config.inAppReviewRequested = true
+                    return@withContext
+                }
+
+                val manager = ReviewManagerFactory.create(activity)
+                val request = manager.requestReviewFlow()
+
+                request.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        config.inAppReviewRequested = true
+                        manager.launchReviewFlow(activity, task.result)
+                    }
+                }
             }
         }
     }
 
-    private fun isInstallOldEnough(): Boolean {
-        if (BuildConfig.DEBUG) return true
-        val installTime = runCatching {
-            context.packageManager.getPackageInfo(context.packageName, 0).firstInstallTime
-        }.getOrDefault(Long.MAX_VALUE)
-        return System.currentTimeMillis() - installTime >= SEVEN_DAYS_MS
-    }
-
-    companion object {
-        private const val SEVEN_DAYS_MS = 7L * 24 * 60 * 60 * 1000
-    }
 }

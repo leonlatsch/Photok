@@ -19,5 +19,5 @@ package dev.leonlatsch.photok.review
 import android.app.Activity
 
 interface InAppReview {
-    suspend fun requestInAppReview(activity: Activity)
+    fun requestInAppReview(activity: Activity, trigger: ReviewTrigger)
 }

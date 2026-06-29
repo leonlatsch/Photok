@@ -22,13 +22,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,9 +49,7 @@ class RecoveryPhraseRestoreFragment : Fragment() {
                 AppTheme {
                     RecoveryPhraseRestoreScreen(
                         onUnlocked = {
-                            lifecycleScope.launch {
-                                inAppReview.requestInAppReview(requireActivity())
-                            }
+                            inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.RecoveryPhraseUsed)
                             navigateToGallery(findNavController())
                         },
                         onBack = {

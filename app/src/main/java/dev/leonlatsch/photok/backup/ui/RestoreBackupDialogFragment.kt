@@ -20,7 +20,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -28,8 +27,8 @@ import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -87,9 +86,6 @@ class RestoreBackupDialogFragment() :
                     viewModel.zipFileName = getString(R.string.process_finished)
                     binding.restoreProgressIndicator.hide()
                     binding.restoreCloseButton.show()
-                    lifecycleScope.launch {
-                        inAppReview.requestInAppReview(requireActivity())
-                    }
                 }
 
                 RestoreState.FINISHED_WITH_ERRORS -> {
@@ -103,6 +99,14 @@ class RestoreBackupDialogFragment() :
 
         viewModel.zipFileName = getString(R.string.backup_restore_validating)
         viewModel.loadAndValidateBackup(uri)
+    }
+
+    override fun dismiss() {
+        if (viewModel.restoreState == RestoreState.FINISHED) {
+            inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.BackupRestored)
+        }
+
+        super.dismiss()
     }
 
     fun onRestoreAndUnlock() {
