@@ -163,8 +163,8 @@
     <string name="settings_security_biometric_title">Desbloqueio por biometria</string>
     <string name="settings_security_biometric_summary">Desbloqueie Photok com autentificação biométrica.</string>
     <string name="settings_security_biometric_not_available">Desbloqueio por biometria não disponível</string>
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_title">Frase de recuperação</string>
+    <string name="settings_security_recovery_phrase_summary">Gerenciar sua frase de recuperação.</string>
     <string name="settings_security_timeout_title">O tempo limite de bloqueio automático</string>
     <string name="settings_security_timeout_summary">Bloquear automaticamente após algum tempo em segundo plano</string>
     <string name="settings_security_timeout_immediately">Imediatamente</string>
@@ -224,7 +224,7 @@
     <string name="change_password_confirm_message">Um Backup é recomendado!<br /> Ao alterar sua senha o Photok vai criptografar todos seus arquivos de novo! Você quer continuar?</string>
     <string name="change_password_reencrypting">Arquivo(s) sendo criptografado(s) de novo…</string>
     <string name="change_password_done">A senha foi alterada</string>
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_recovery_phrase_used">Frase de recuperação usada — antiga verificação por senha não necessária</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verifique a senha</string>
@@ -355,41 +355,41 @@
     <string name="telemetry_toggle">Permitir coleta de dados de uso</string>
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Frase de recuração</string>
+    <string name="recovery_phrase_title">Sua frase de recuração</string>
+    <string name="recovery_phrase_description">Escreva essas palavras em ordem e guarde em algum lugar seguro. Você pode usar essa frase para recuperar acesso ao seu cofre.</string>
+    <string name="recovery_phrase_confirm">Frase salva</string>
+    <string name="recovery_phrase_save_warning">Por favor, salve sua frase de recuração</string>
+    <string name="recovery_phrase_create_new">Criar nova frase</string>
+    <string name="recovery_phrase_create_new_confirm">Criar uma nova frase vai substituir permanentemente a atual. Sua frase atual não irá mais funcionar para recuperar acesso ao seu cofre.</string>
+    <string name="recovery_phrase_saved_to_file">Salvo em %1$s</string>
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Contagem de palavras </string>
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">Salvar como imagem</string>
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Senha esquecida</string>
+    <string name="recovery_phrase_restore_button">Restaurar</string>
+    <string name="recovery_phrase_restore_word_placeholder">Palavra %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Inserir frase de recuração</string>
+    <string name="recovery_phrase_restore_choose_option">Escolher como inserir sua frase de recuração.</string>
+    <string name="recovery_phrase_restore_option_type">Escrever à mão</string>
+    <string name="recovery_phrase_restore_option_open_file">Carregar por arquivo</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Escanear QR Code</string>
+    <string name="recovery_phrase_restore_option_paste">Colar da área de transferência</string>
+    <string name="recovery_phrase_restore_input_placeholder">Digitar frase de recuração palavra por palavra</string>
+    <string name="recovery_phrase_restore_unlocked">Desbloqueado</string>
+    <string name="recovery_phrase_restore_unlocking">Desbloqueando&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">Não foi possível recuperar o cofre. Por favor, verifique sua frase e tente novamente.</string>
+    <string name="recovery_phrase_restore_error_invalid">Frase de recuperação inválida. Por favor, verifique as palavras.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">O QR code não tem uma frase de recuperação válida.</string>
+    <string name="recovery_phrase_restore_source_qr">Escaneado por QR code</string>
+    <string name="recovery_phrase_restore_source_file">Carregado por %1$s</string> 
+    <string name="recovery_phrase_restore_source_clipboard">Colado pela área de transferência</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Necessita de permissão de uso da câmera</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Permissão de uso da câmera é necessário para leitura do QR code.</string>
+    <string name="permission_gate_change_in_settings">Mudar nas Configurações</string>
 </resources>
