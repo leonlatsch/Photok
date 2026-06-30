@@ -3,8 +3,7 @@ import com.android.sdklib.AndroidVersion.VersionCodes
 plugins {
     id("com.android.application")
     id("com.jaredsburrows.license")
-    kotlin("android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
 }
 
@@ -15,6 +14,7 @@ val appVersionCode: String by project
 
 val telemetryDeckAppId: String? by project
 
+apply(plugin = "com.android.legacy-kapt")
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
@@ -30,13 +30,6 @@ android {
         versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += "room.incremental" to "true"
-                arguments += "room.schemaLocation" to "$projectDir/schemas"
-            }
-        }
 
         base {
             archivesName = "photok-$versionName"
@@ -92,11 +85,8 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     lint {
@@ -104,6 +94,17 @@ android {
         baseline = file("$rootDir/gradle/lint-baseline.xml")
     }
     namespace = "dev.leonlatsch.photok"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
 }
 
 licenseReport {
@@ -134,7 +135,7 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:2.8.4")
     implementation("androidx.room:room-paging:2.8.4")
-    kapt("androidx.room:room-compiler:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
 
     // Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.8.4")
@@ -158,15 +159,15 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Dagger Core
-    implementation("com.google.dagger:dagger:2.57.2")
-    kapt("com.google.dagger:dagger-compiler:2.57.2")
+    implementation("com.google.dagger:dagger:2.60")
+    ksp("com.google.dagger:dagger-compiler:2.60")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.57.2")
-    kapt("com.google.dagger:hilt-android-compiler:2.57.2")
+    implementation("com.google.dagger:hilt-android:2.60")
+    ksp("com.google.dagger:hilt-android-compiler:2.60")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
-    kapt("androidx.hilt:hilt-compiler:1.3.0")
+    ksp("androidx.hilt:hilt-compiler:1.3.0")
 
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.12.4")
@@ -226,8 +227,8 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.14.1")
     testImplementation("io.mockk:mockk:1.14.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-    testImplementation("com.google.dagger:hilt-android-testing:2.57.2")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.57.2")
+    testImplementation("com.google.dagger:hilt-android-testing:2.60")
+    kspTest("com.google.dagger:hilt-android-compiler:2.60")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 
