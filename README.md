@@ -85,20 +85,18 @@ These analytics are never used for advertising or cross-app tracking.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
-## Telemetry
+## Differences Between Play and FOSS
 
-Photok can optionally send anonymous usage statistics to help improve the app.
+Photok is distributed in two variants: **Google Play** and **FOSS** (F-Droid, GitHub, IzzyOnDroid).
+The core app is identical, but some features differ due to platform requirements and privacy expectations.
 
-### Google Play
+| Feature | Google Play | FOSS |
+|---|---|---|
+| **Telemetry** | Enabled by default (can be disabled in settings) | Disabled by default (can be enabled in settings) |
+| **Telemetry opt-in prompt** | No prompt shown | Shown once after first unlock |
+| **In-App Review** | Requested after usage milestones | Not available |
 
-Telemetry is *enabled* by default. Users can disable it at any time in the settings.
-
-### FOSS (F-Droid, GitHub, etc.)
-
-Telemetry is *disabled* by default. Users can enable it at any time in the settings.  
-In addition, Photok will prompt the user to enable telemetry after the first unlock (not during initial setup).
-
-No data is transmitted unless the user has explicitly opted in. This behavior is required to avoid the *Tracking* anti-feature flag in F-Droid and aligns with user expectations for apps installed from F-Droid.
+> **Why is telemetry off by default on FOSS?** F-Droid flags apps that transmit data without explicit opt-in as having the *Tracking* anti-feature. No data is ever transmitted unless the user has actively opted in.
 
 ## Community
 
