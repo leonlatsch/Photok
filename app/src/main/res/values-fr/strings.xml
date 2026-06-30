@@ -379,18 +379,18 @@
     <string name="recovery_phrase_restore_choose_option">Choisissez comment saisir votre phrase.</string>
     <string name="recovery_phrase_restore_option_type">Saisie manuelle</string>
     <string name="recovery_phrase_restore_option_open_file">Charger depuis un fichier</string>
-    <string name="recovery_phrase_restore_option_scan_qr">Scanner un code QR</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Scanner un QR code</string>
     <string name="recovery_phrase_restore_option_paste">Coller depuis le presse-papiers</string>
     <string name="recovery_phrase_restore_input_placeholder">Saisissez votre phrase de récupération mot par mot</string>
     <string name="recovery_phrase_restore_unlocked">Déverrouillé</string>
     <string name="recovery_phrase_restore_unlocking">Déverrouillage en cours&#x2026;</string>
     <string name="recovery_phrase_restore_error_generic">Impossible de restaurer le coffre-fort. Veuillez vérifier votre phrase et réessayer.</string>
     <string name="recovery_phrase_restore_error_invalid">Phrase de récupération invalide. Veuillez vérifier les mots.</string>
-    <string name="recovery_phrase_restore_error_invalid_qr">Le code QR ne contient pas de phrase de récupération valide.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">Le QR code ne contient pas de phrase de récupération valide.</string>
     <string name="recovery_phrase_restore_source_qr">Scanné depuis un code QR</string>
     <string name="recovery_phrase_restore_source_file">Chargé depuis %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Collé depuis le presse-papiers</string>
     <string name="recovery_phrase_restore_camera_permission_button">Demander l\'autorisation d\'utiliser la caméra</string>
     <string name="recovery_phrase_restore_camera_permission_rationale">L\'autorisation d\'utiliser la caméra est requise pour scanner les codes QR.</string>
-    <string name="permission_gate_change_in_settings">Modifier dans les paramètres</string>
+    <string name="permission_gate_change_in_settings">Modifier dans les Paramètres</string>
 </resources>
