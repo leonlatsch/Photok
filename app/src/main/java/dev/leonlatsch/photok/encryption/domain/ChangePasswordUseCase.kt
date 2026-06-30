@@ -20,6 +20,7 @@ import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.settings.data.Config
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -30,6 +31,7 @@ class ChangePasswordUseCase @Inject constructor(
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val sessionRepository: SessionRepository,
     private val keyGen: KeyGen,
+    private val config: Config,
 ) {
     suspend operator fun invoke(newPassword: String) = runCatching {
         val currentProtection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
@@ -65,5 +67,6 @@ class ChangePasswordUseCase @Inject constructor(
         )
 
         vaultProtectionRepository.updateProtection(newProtection)
+        config.lastUsedUnlockMethod = newProtection.type
     }
 }
