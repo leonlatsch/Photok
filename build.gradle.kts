@@ -4,11 +4,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.13.1")
+        classpath("com.android.tools.build:gradle:9.1.1")
+        classpath("com.android.tools.build:gradle-kotlin:9.1.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.21")
+        classpath("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.9")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.9.6")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.57.2")
-        classpath("com.jaredsburrows:gradle-license-plugin:0.9.8")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.60")
+        classpath("com.jaredsburrows:gradle-license-plugin:0.9.9")
     }
 }
 
