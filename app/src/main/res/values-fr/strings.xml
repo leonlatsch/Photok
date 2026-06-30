@@ -229,7 +229,7 @@
     <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
     <string name="change_password_done">Mot de passe modifié</string>
-    <string name="change_password_recovery_phrase_used">La phrase de récupération a été utilisée — la vérification de l\'ancien mot de passe n'est pas requise</string>
+    <string name="change_password_recovery_phrase_used">La phrase de récupération a été utilisée — la vérification de l\'ancien mot de passe n\'est pas requise</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
@@ -369,7 +369,7 @@
     <string name="recovery_phrase_select_word_count">Nombre de mots</string>
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Enregistrer en tant qu'image</string>
+    <string name="recovery_phrase_qr_save_as_image">Enregistrer en tant qu\'image</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Mot de passe oublié</string>
