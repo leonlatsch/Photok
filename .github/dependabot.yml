@@ -13,5 +13,27 @@ updates:
       - leonlatsch
     groups:
       dependencies:
-        patterns: 
+        patterns:
+          - "*"
+
+  - package-ecosystem: "bundler" # Fastlane (Gemfile)
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    reviewers:
+      - leonlatsch
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    reviewers:
+      - leonlatsch
+    groups:
+      dependencies:
+        patterns:
           - "*"

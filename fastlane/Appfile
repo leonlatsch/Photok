@@ -1,0 +1,2 @@
+json_key_file(ENV["PLAY_JSON_KEY_FILE"] || "fastlane/play-service-account.json") # Google Play service account, see https://docs.fastlane.tools/actions/supply/#setup
+package_name("dev.leonlatsch.photok")

@@ -1,0 +1,49 @@
+name: Prepare Release
+
+# Run this from a release/* branch (select it as the workflow ref when dispatching).
+# It bumps the version, refreshes the open source license reports and scaffolds an
+# empty changelog file, then commits the result back to the branch.
+#
+# Flow: branch release/X.Y.Z off main -> run this -> fill in the changelog ->
+# wait for CI -> push tag X.Y.Z (triggers Release) -> merge back to main, keep branch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version, e.g. 3.2.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Ruby + Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Prepare release
+        run: bundle exec fastlane prepare version:${{ github.event.inputs.version }}
+
+      - name: Commit and push
+        run: |
+          git config user.name "Release Bot"
+          git config user.email "actions@github.com"
+          git add gradle.properties \
+            app/src/play/assets/open_source_licenses.html \
+            app/src/foss/assets/open_source_licenses.html \
+            fastlane/metadata/android/en-US/changelogs
+          git commit -m "Prepare release ${{ github.event.inputs.version }}"
+          git push

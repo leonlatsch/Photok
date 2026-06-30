@@ -12,3 +12,11 @@
 .kotlin/
 
 kls_database.db
+
+# Fastlane / signing secrets — provided via env/CI, never committed
+/fastlane/play-service-account.json
+*.keystore
+*.jks
+/fastlane/report.xml
+/fastlane/Preview.html
+/vendor/bundle

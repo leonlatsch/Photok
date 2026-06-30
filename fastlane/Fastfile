@@ -1,0 +1,193 @@
+# Fastlane configuration for Photok.
+#
+# All build, sign and release logic lives here so that CI (GitHub Actions or any
+# other runner) only has to invoke a lane. Everything below also works locally.
+#
+# Distribution channels:
+#   * Google Play   -> signed `play` AAB, uploaded via supply (draft)
+#   * GitHub release -> signed `foss` APK attached (IzzyOnDroid picks it up)
+#   * F-Droid        -> builds the `foss` flavor itself from the pushed git tag
+#
+# Docs: https://docs.fastlane.tools
+
+require "fileutils"
+
+default_platform(:android)
+
+REPO = "leonlatsch/Photok".freeze
+
+platform :android do
+  #
+  # ---- CI lanes -----------------------------------------------------------
+  #
+
+  desc "Run unit tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Compile everything (CI build check)"
+  lane :build do
+    gradle(task: "build")
+  end
+
+  #
+  # ---- Release ------------------------------------------------------------
+  #
+
+  desc "Full release: build & sign Play AAB + FOSS APK, upload AAB to Play (draft), create GitHub release with the APK"
+  lane :release do
+    version_name = gradle_property("appVersionName")
+    version_code = gradle_property("appVersionCode")
+    tag = ENV["RELEASE_TAG"] || "#{version_name}"
+
+    UI.message("Releasing Photok #{version_name} (code #{version_code}, tag #{tag})")
+
+    gradle(task: "clean")
+
+    # Build & sign the Google Play bundle.
+    gradle(
+      task: "bundlePlayRelease",
+      properties: signing_properties.merge(telemetry_properties)
+    )
+    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+
+    # Build & sign the FOSS APK (GitHub / IzzyOnDroid).
+    gradle(
+      task: "assembleFossRelease",
+      properties: signing_properties.merge(telemetry_properties)
+    )
+    apk_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+
+    # Upload the AAB to Google Play as a draft. supply reads the changelog for
+    # this version code from fastlane/metadata/android/<locale>/changelogs/.
+    upload_to_play_store(
+      track: ENV["PLAY_TRACK"] || "production",
+      release_status: "draft",
+      aab: aab_path,
+
+      skip_upload_apk: true,
+      skip_upload_aab: false,
+      skip_upload_changelogs: false,
+
+      skip_upload_metadata: true,    # don't overwrite store title/description
+      skip_upload_images: true,      # don't overwrite graphics
+      skip_upload_screenshots: true  # don't overwrite screenshots
+    )
+
+    # Create the GitHub release for the (already pushed) tag and attach the APK.
+    set_github_release(
+      repository_name: REPO,
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "#{version_name}",
+      tag_name: tag,
+      description: changelog_for(version_code),
+      upload_assets: [apk_path]
+    )
+  end
+
+  #
+  # ---- Release preparation ------------------------------------------------
+  #
+
+  desc "Prepare a release branch: bump version, refresh open source licenses, scaffold changelog. Pass version:X.Y.Z"
+  lane :prepare do |options|
+    version = options[:version]
+    UI.user_error!("Pass the version, e.g. `fastlane prepare version:3.2.0`") if version.to_s.empty?
+
+    # Bump appVersionName + increment appVersionCode in gradle.properties.
+    gradle(task: "updateVersion", properties: { "version" => version })
+
+    # Refresh the bundled open source license reports for both flavors.
+    gradle(task: "licensePlayReleaseReport")
+    gradle(task: "licenseFossReleaseReport")
+    update_license_assets
+
+    # Scaffold an (empty) changelog file for the new version code.
+    new_version_code = gradle_property("appVersionCode")
+    changelog_file = changelog_path(new_version_code)
+    unless File.exist?(changelog_file)
+      FileUtils.mkdir_p(File.dirname(changelog_file))
+      File.write(changelog_file, "")
+      UI.important("Created empty changelog: #{rel(changelog_file)} — fill it in before tagging!")
+    end
+
+    UI.success("Prepared #{version} (version code #{new_version_code}). Edit the changelog, commit, then tag #{version}.")
+  end
+
+  #
+  # ---- Housekeeping -------------------------------------------------------
+  #
+
+  desc "Update README translation badges and push the change"
+  lane :translations do
+    gradle(task: "updateTranslations")
+
+    # `sh` runs relative to the fastlane/ dir, so address git at the repo root.
+    root = File.expand_path("..", __dir__)
+    if sh("git -C '#{root}' status --porcelain README.md", log: false).strip.empty?
+      UI.message("Translation badges already up to date")
+    else
+      sh("git -C '#{root}' add README.md")
+      sh("git -C '#{root}' commit -m 'Update Translation Badges in README.md'")
+      sh("git -C '#{root}' push")
+    end
+  end
+end
+
+#
+# ---- Helpers --------------------------------------------------------------
+#
+
+def gradle_property(key)
+  path = File.expand_path("../gradle.properties", __dir__)
+  File.readlines(path).each do |line|
+    stripped = line.strip
+    return stripped.split("=", 2).last.strip if stripped.start_with?("#{key}=")
+  end
+  UI.user_error!("Property '#{key}' not found in gradle.properties")
+end
+
+# AGP injected signing — keeps signing config out of the Gradle files and lets
+# any runner sign by providing these env vars (keystore decoded to KEYSTORE_PATH).
+def signing_properties
+  {
+    "android.injected.signing.store.file" => ENV["KEYSTORE_PATH"],
+    "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+    "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+    "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
+  }
+end
+
+def telemetry_properties
+  { "telemetryDeckAppId" => ENV["TELEMETRY_DECK_APP_ID"].to_s }
+end
+
+def changelog_path(version_code)
+  File.expand_path("metadata/android/en-US/changelogs/#{version_code}.txt", __dir__)
+end
+
+def changelog_for(version_code)
+  path = changelog_path(version_code)
+  return "Release #{version_code}" unless File.exist?(path)
+
+  text = File.read(path).strip
+  text.empty? ? "Release #{version_code}" : text
+end
+
+# After license*ReleaseReport runs, the html lands in the variant-specific
+# assets dir; move it to the flavor dir the app actually reads at runtime.
+def update_license_assets
+  {
+    "playRelease" => "play",
+    "fossRelease" => "foss"
+  }.each do |variant, flavor|
+    src = File.expand_path("../app/src/#{variant}/assets/open_source_licenses.html", __dir__)
+    dst = File.expand_path("../app/src/#{flavor}/assets/open_source_licenses.html", __dir__)
+    FileUtils.mv(src, dst) if File.exist?(src)
+  end
+end
+
+def rel(path)
+  path.sub("#{File.expand_path('..', __dir__)}/", "")
+end

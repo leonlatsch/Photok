@@ -1,0 +1,62 @@
+name: Release
+
+# Triggered by pushing a version tag on a release/* branch, e.g. `git tag 3.2.0 && git push origin 3.2.0`.
+# Tag the commit only after CI on the release branch is green.
+#
+# This lane:
+#   * builds & signs the Play AAB and the FOSS APK
+#   * uploads the AAB to Google Play as a draft (you tap "publish")
+#   * creates the GitHub release with the FOSS APK attached (IzzyOnDroid picks it up)
+# F-Droid builds the foss flavor itself from the pushed tag.
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write # create the GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Ruby + Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Decode signing keystore
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          echo "$SIGNING_KEY" | base64 --decode > "$RUNNER_TEMP/keystore.jks"
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/keystore.jks" >> "$GITHUB_ENV"
+
+      - name: Decode Play service account
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$PLAY_SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/play-service-account.json"
+          echo "PLAY_JSON_KEY_FILE=$RUNNER_TEMP/play-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Release
+        env:
+          # Signing — KEY_PASSWORD is reused for both the store and the key.
+          KEYSTORE_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          # Build config
+          TELEMETRY_DECK_APP_ID: ${{ secrets.TELEMETRY_DECK_APP_ID }}
+          # GitHub release + tag
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: bundle exec fastlane release
