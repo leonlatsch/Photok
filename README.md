@@ -85,7 +85,7 @@ These analytics are never used for advertising or cross-app tracking.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
-## Differences Between Play and FOSS
+## Differences Between Google Play and FOSS
 
 Photok is distributed in two variants: **Google Play** and **FOSS** (F-Droid, GitHub, IzzyOnDroid).
 The core app is identical, but some features differ due to platform requirements and privacy expectations.
