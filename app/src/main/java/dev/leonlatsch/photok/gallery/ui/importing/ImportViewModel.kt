@@ -23,6 +23,8 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 /**
@@ -42,6 +44,9 @@ class ImportViewModel @Inject constructor(
     var albumUUID: String? = null
     var importSource = ImportSource.InApp
 
+    private val _reviewTrigger = Channel<Unit>(Channel.CONFLATED)
+    val reviewTrigger = _reviewTrigger.receiveAsFlow()
+
     override suspend fun processItem(item: Uri) {
         val photoUUID = photoRepository.safeImportPhoto(
             sourceUri = item,
@@ -59,7 +64,13 @@ class ImportViewModel @Inject constructor(
 
     override suspend fun postProcess() {
         super.postProcess()
-
         sharedUrisStore.reset()
+        if (!failuresOccurred && photoRepository.countAll() >= REVIEW_PHOTO_THRESHOLD) {
+            _reviewTrigger.trySend(Unit)
+        }
+    }
+
+    companion object {
+        private const val REVIEW_PHOTO_THRESHOLD = 100
     }
 }

@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -33,6 +35,9 @@ class RecoveryPhraseRestoreFragment : Fragment() {
 
     @Inject
     lateinit var navigateToGallery: NavigateToGallery
+
+    @Inject
+    lateinit var inAppReview: InAppReview
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +49,7 @@ class RecoveryPhraseRestoreFragment : Fragment() {
                 AppTheme {
                     RecoveryPhraseRestoreScreen(
                         onUnlocked = {
+                            inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.RecoveryPhraseUsed)
                             navigateToGallery(findNavController())
                         },
                         onBack = {

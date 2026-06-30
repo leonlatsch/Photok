@@ -26,7 +26,10 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.DialogRestoreBackupBinding
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
+import javax.inject.Inject
 
 /**
  * Dialog for loading and validating a backup file.
@@ -39,6 +42,9 @@ class RestoreBackupDialogFragment() :
     BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
     private val viewModel: RestoreBackupViewModel by viewModels()
+
+    @Inject
+    lateinit var inAppReview: InAppReview
 
     private val uri: Uri by lazy(LazyThreadSafetyMode.NONE) {
         requireArguments().getParcelable(ARG_URI)!!
@@ -93,6 +99,14 @@ class RestoreBackupDialogFragment() :
 
         viewModel.zipFileName = getString(R.string.backup_restore_validating)
         viewModel.loadAndValidateBackup(uri)
+    }
+
+    override fun dismiss() {
+        if (viewModel.restoreState == RestoreState.FINISHED) {
+            inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.BackupRestored)
+        }
+
+        super.dismiss()
     }
 
     fun onRestoreAndUnlock() {
