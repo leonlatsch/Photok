@@ -144,6 +144,8 @@
     <string name="settings_security_biometric_title">Biyometrik Kilit Açma</string>
     <string name="settings_security_biometric_summary">Biyometrik kimlik doğrulama ile Photok\'un kilidini açın.</string>
     <string name="settings_security_biometric_not_available">Biyometrik Kilit Açma özelliği mevcut değildir.</string>
+    <string name="settings_security_recovery_phrase_title">Kurtarma Kelimeleri</string>
+    <string name="settings_security_recovery_phrase_summary">Kurtalma kelimelerini yönetin.</string>
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
     <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
     <string name="settings_security_timeout_immediately">Hemen</string>
@@ -207,6 +209,7 @@
     <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
     <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
     <string name="change_password_done">Şifre değiştirildi</string>
+    <string name="change_password_recovery_phrase_used">Kurtarma kelimeleri kullanıldı — eski şifre kontrolü gerekmiyor</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
@@ -333,4 +336,43 @@
     <string name="telemetry_choice_no">Hayır teşekkürler</string>
     <string name="telemetry_choice_yes">Anonim kullanım verilerini paylaş</string>
     <string name="telemetry_toggle">Kullanım verilerinin toplanmasına izin ver</string>
+
+    <!-- Recovery Phrase — General -->
+    <string name="recovery_phrase_label">Kurtarma Kelimeleri</string>
+    <string name="recovery_phrase_title">Kurtarma Kelimeleri</string>
+    <string name="recovery_phrase_description">Bu kelimeleri sırayla yazın ve güvenli bir yerde saklayın. Bu ifadeyi, kasanıza yeniden erişim sağlamak için kullanabilirsiniz.</string>
+    <string name="recovery_phrase_confirm">Kelimeler kaydedildi</string>
+    <string name="recovery_phrase_save_warning">Lütfen kurtarma kelimelerinizi not alın</string>
+    <string name="recovery_phrase_create_new">Yeni Kurtarma Kelimeleri Oluşturun</string>
+    <string name="recovery_phrase_create_new_confirm">Yeni bir kurtarma kelimeleri oluşturmak, mevcut kelimelerinizin kalıcı olarak yerine geçecektir. Eski kelimeleriniz artık kasanızı kurtarmak için kullanılamaz</string>
+    <string name="recovery_phrase_saved_to_file">%1$s\'e kaydedildi</string>
+
+    <!-- Recovery Phrase — Setup -->
+    <string name="recovery_phrase_select_word_count">Kelime Sayısı</string>
+
+    <!-- Recovery Phrase — QR Code -->
+    <string name="recovery_phrase_qr_save_as_image">Görsel Olarak Kaydet</string>
+
+    <!-- Recovery Phrase — Restore -->
+    <string name="recovery_phrase_forgot_password">Şifremi Unuttum</string>
+    <string name="recovery_phrase_restore_button">Kurtar</string>
+    <string name="recovery_phrase_restore_word_placeholder">Kelime %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Kurtarma Kelimelerinizi Girin</string>
+    <string name="recovery_phrase_restore_choose_option">Kelimelerinizi nasıl gireceğinizi seçin</string>
+    <string name="recovery_phrase_restore_option_type">Elle gir</string>
+    <string name="recovery_phrase_restore_option_open_file">Dosyadan yükle</string>
+    <string name="recovery_phrase_restore_option_scan_qr">QR Kod Tarat</string>
+    <string name="recovery_phrase_restore_option_paste">Panodan Yapıştır</string>
+    <string name="recovery_phrase_restore_input_placeholder">Kurtarma Kelimelerinizi kelime kelime girin</string>
+    <string name="recovery_phrase_restore_unlocked">Kilit Açıldı</string>
+    <string name="recovery_phrase_restore_unlocking">Kilit Açılıyor&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">Kasa kurtalılamadı. Lütfen kelimelerinizi kontrol edin ve tekrar deneyin.</string>
+    <string name="recovery_phrase_restore_error_invalid">Geçersiz kurtrma kelimeleri. Lütfen kelimeleri tekrar kontrol edin.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">QR Kod, kurtarma kelimeleri içermiyor.</string>
+    <string name="recovery_phrase_restore_source_qr">QR Kodundan Taratıldı</string>
+    <string name="recovery_phrase_restore_source_file">%1$s Adlı Dosyadan Yüklendi</string>
+    <string name="recovery_phrase_restore_source_clipboard">Panodan Yapıştırıldı</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Kamera İzni Gerekli</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">QR Kod taratmak için kamera izni gereklidir.</string>
+    <string name="permission_gate_change_in_settings">Ayarlardan Değiştirin</string>
 </resources>

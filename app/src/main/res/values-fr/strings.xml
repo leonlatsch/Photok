@@ -164,6 +164,8 @@
     <string name="settings_security_biometric_title">Déverrouillage biométrique</string>
     <string name="settings_security_biometric_summary">Déverrouiller Photok grâce à l\'authentification biométrique.</string>
     <string name="settings_security_biometric_not_available">Déverrouillage biométrique non disponible</string>
+    <string name="settings_security_recovery_phrase_title">Phrase de récupération</string>
+    <string name="settings_security_recovery_phrase_summary">Gérez votre phrase de récupération.</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
     <string name="settings_security_timeout_summary">Verrouillage automatique après un certain délai en arrière-plan</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>
@@ -227,6 +229,7 @@
     <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
     <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
     <string name="change_password_done">Mot de passe modifié</string>
+    <string name="change_password_recovery_phrase_used">La phrase de récupération a été utilisée — la vérification de l\'ancien mot de passe n\'est pas requise</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
@@ -351,4 +354,43 @@
     <string name="telemetry_choice_no">Non, merci</string>
     <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
     <string name="telemetry_toggle">Autoriser la collecte des données d\'utilisation</string>
+
+    <!-- Recovery Phrase — General -->
+    <string name="recovery_phrase_label">Phrase de récupération</string>
+    <string name="recovery_phrase_title">Votre phrase de récupération</string>
+    <string name="recovery_phrase_description">Notez ces mots dans l\'ordre et conservez-les en lieu sûr. Vous pouvez utiliser cette phrase pour récupérer l\'accès à votre coffre-fort.</string>
+    <string name="recovery_phrase_confirm">Phrase enregistrée</string>
+    <string name="recovery_phrase_save_warning">Veuillez enregistrer votre phrase de récupération</string>
+    <string name="recovery_phrase_create_new">Créer une nouvelle phrase</string>
+    <string name="recovery_phrase_create_new_confirm">La création d\'une nouvelle phrase remplacera définitivement la précédente. Votre phrase actuelle ne fonctionnera plus pour restaurer votre coffre-fort.</string>
+    <string name="recovery_phrase_saved_to_file">Enregistré dans %1$s</string>
+
+    <!-- Recovery Phrase — Setup -->
+    <string name="recovery_phrase_select_word_count">Nombre de mots</string>
+
+    <!-- Recovery Phrase — QR Code -->
+    <string name="recovery_phrase_qr_save_as_image">Enregistrer en tant qu\'image</string>
+
+    <!-- Recovery Phrase — Restore -->
+    <string name="recovery_phrase_forgot_password">Mot de passe oublié</string>
+    <string name="recovery_phrase_restore_button">Restaurer</string>
+    <string name="recovery_phrase_restore_word_placeholder">Mot %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Saisir la phrase de récupération</string>
+    <string name="recovery_phrase_restore_choose_option">Choisissez comment saisir votre phrase.</string>
+    <string name="recovery_phrase_restore_option_type">Saisie manuelle</string>
+    <string name="recovery_phrase_restore_option_open_file">Charger depuis un fichier</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Scanner un QR code</string>
+    <string name="recovery_phrase_restore_option_paste">Coller depuis le presse-papiers</string>
+    <string name="recovery_phrase_restore_input_placeholder">Saisissez votre phrase de récupération mot par mot</string>
+    <string name="recovery_phrase_restore_unlocked">Déverrouillé</string>
+    <string name="recovery_phrase_restore_unlocking">Déverrouillage en cours&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">Impossible de restaurer le coffre-fort. Veuillez vérifier votre phrase et réessayer.</string>
+    <string name="recovery_phrase_restore_error_invalid">Phrase de récupération invalide. Veuillez vérifier les mots.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">Le QR code ne contient pas de phrase de récupération valide.</string>
+    <string name="recovery_phrase_restore_source_qr">Scanné depuis un code QR</string>
+    <string name="recovery_phrase_restore_source_file">Chargé depuis %1$s</string>
+    <string name="recovery_phrase_restore_source_clipboard">Collé depuis le presse-papiers</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Demander l\'autorisation d\'utiliser la caméra</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">L\'autorisation d\'utiliser la caméra est requise pour scanner les QR codes.</string>
+    <string name="permission_gate_change_in_settings">Modifier dans les Paramètres</string>
 </resources>

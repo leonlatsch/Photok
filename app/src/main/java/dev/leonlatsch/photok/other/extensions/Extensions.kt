@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.other.extensions
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
@@ -42,4 +44,14 @@ fun Context.startActivityAndIgnoreTimer(intent: Intent, activity: Activity?) {
 fun Context.areBiometricsAvailable(): Boolean {
     val biometricManager = BiometricManager.from(this)
     return biometricManager.canAuthenticate(BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
+}
+
+fun Context.getDeviceDisplayName(): String {
+    val fallback = "${Build.MANUFACTURER} ${Build.MODEL}"
+
+    return try {
+        Settings.Global.getString(contentResolver, Settings.Global.DEVICE_NAME).ifEmpty { fallback }
+    } catch (_: Exception) {
+        fallback
+    }
 }

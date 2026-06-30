@@ -21,14 +21,17 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.encryption.data.RecoveryPhraseStoreImpl
 import dev.leonlatsch.photok.encryption.data.SessionRepositoryImpl
 import dev.leonlatsch.photok.encryption.data.VaultProtectionRepositoryImpl
+import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import dev.leonlatsch.photok.encryption.domain.handlers.BiometricVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.handlers.RecoveryPhraseVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
@@ -48,10 +51,16 @@ interface EncryptionBindingModule {
     fun bindBiometricUnlocker(impl: BiometricVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>
 
     @Binds
+    fun bindRecoveryPhraseHandler(impl: RecoveryPhraseVaultProtectionHandler): VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase>
+
+    @Binds
     fun bindSessionRepository(impl: SessionRepositoryImpl): SessionRepository
 
     @Binds
     fun bindCryptoEngine(impl: CbcCryptoEngine): CryptoEngine
+
+    @Binds
+    fun bindRecoveryPhraseStore(impl: RecoveryPhraseStoreImpl): RecoveryPhraseStore
 }
 
 @Module

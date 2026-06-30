@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,20 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.ui.changepassword
+package dev.leonlatsch.photok.review.di
 
-/**
- * Enum to indicate the state of [ChangePasswordDialog]
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class ChangePasswordState {
-    START,
-    CHECKING_OLD,
-    OLD_VALID,
-    OLD_INVALID,
-    NEW_VALID,
-    NEW_INVALID,
-    DONE,
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.InAppReviewImpl
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface InAppReviewModule {
+
+    @Binds
+    fun bindInAppReview(impl: InAppReviewImpl): InAppReview
 }

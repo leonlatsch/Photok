@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
@@ -151,8 +152,13 @@ class Config(context: Context) {
         get() = getBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT)
         set(value) = putBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, value)
 
+    var inAppReviewRequested: Boolean
+        get() = getBoolean(IN_APP_REVIEW_REQUESTED, false)
+        set(value) = putBoolean(IN_APP_REVIEW_REQUESTED, value)
+
     // In memory flags
     var justFinishedSetup: Boolean = false
+    var lastUsedUnlockMethod: VaultProtectionType? = null
 
 
     // --- Legacy
@@ -283,5 +289,7 @@ class Config(context: Context) {
 
         const val TELEMETRY_ASSSKED_FOR_OPT_IN = "telemetry^askedForOptIn"
         const val TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT = false
+
+        const val IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
     }
 }

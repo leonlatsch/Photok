@@ -19,5 +19,5 @@ package dev.leonlatsch.photok.encryption.domain.models
 enum class VaultProtectionType {
     Password,
     Biometric,
-    // Recovery Key
+    RecoveryPhrase,
 }

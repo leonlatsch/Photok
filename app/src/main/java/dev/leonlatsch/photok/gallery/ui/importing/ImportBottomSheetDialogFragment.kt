@@ -17,11 +17,18 @@
 package dev.leonlatsch.photok.gallery.ui.importing
 
 import android.net.Uri
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.ImportSource
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
@@ -43,6 +50,18 @@ class ImportBottomSheetDialogFragment(
 ) {
 
     override val viewModel: ImportViewModel by viewModels()
+
+    @Inject
+    lateinit var inAppReview: InAppReview
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch {
+            viewModel.reviewTrigger.collect {
+                inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.Import)
+            }
+        }
+    }
 
     override fun prepareViewModel(items: List<Uri>?) {
         viewModel.albumUUID = albumUUID

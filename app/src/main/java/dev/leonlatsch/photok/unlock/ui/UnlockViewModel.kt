@@ -27,7 +27,10 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
@@ -88,6 +91,9 @@ class UnlockViewModel @Inject constructor(
                             legacyEncryptionMigrator.initialize(legacySession)
 
                             unlockState.update { UnlockState.StartLegacyMigration }
+                        } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                            vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                            unlockState.update { UnlockState.ShowRecoveryPhrase }
                         } else {
                             unlockState.update { UnlockState.Unlocked }
                         }

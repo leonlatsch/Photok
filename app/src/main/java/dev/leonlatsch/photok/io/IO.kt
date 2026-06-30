@@ -127,7 +127,15 @@ class IO @Inject constructor(
         try {
             context.contentResolver.openInputStream(fileUri)
         } catch (e: Exception) {
-            Timber.Forest.e("Error opening external file at $fileUri: $e")
+            Timber.e("Error opening external file at $fileUri: $e")
+            null
+        }
+
+    fun openFileOutput(fileUri: Uri): OutputStream? =
+        try {
+            context.contentResolver.openOutputStream(fileUri)
+        } catch (e: Exception) {
+            Timber.e("Error opening external file at $fileUri: $e")
             null
         }
 
@@ -143,7 +151,7 @@ class IO @Inject constructor(
                 newFile?.uri?.let { contentResolver.openOutputStream(it) }
             }
         } catch (e: IOException) {
-            Timber.Forest.e("Error opening external file at $destinationUri: $e")
+            Timber.e("Error opening external file at $destinationUri: $e")
             null
         }
     }

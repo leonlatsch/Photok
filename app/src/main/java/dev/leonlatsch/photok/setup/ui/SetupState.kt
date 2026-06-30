@@ -25,5 +25,6 @@ package dev.leonlatsch.photok.setup.ui
 enum class SetupState {
     SETUP,
     LOADING,
-    FINISHED
+    FINISHED,
+    SHOW_RECOVERY_PHRASE,
 }
