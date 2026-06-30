@@ -58,6 +58,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
+import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.DialogViewModelStoreOwner
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -147,6 +148,13 @@ private fun SheetContent(
             }
         }
     }
+
+    ConfirmationDialog(
+        show = uiState.showConfirmChangeDialog,
+        onDismissRequest = { handleUiEvent(ChangePasswordUiEvent.UpdateShowConfirmationDialog(false)) },
+        text = stringResource(R.string.common_are_you_sure),
+        onConfirm = { handleUiEvent(ChangePasswordUiEvent.ConfirmChangePassword) }
+    )
 }
 
 @Composable
@@ -234,12 +242,12 @@ private fun NewPasswordSection(
                     stringResource(R.string.setup_password_match_warning)
                 } else null,
                 imeAction = ImeAction.Done,
-                onDone = { if (canSubmit) handleUiEvent(ChangePasswordUiEvent.ChangePassword) },
+                onDone = { if (canSubmit) handleUiEvent(ChangePasswordUiEvent.UpdateShowConfirmationDialog(true)) },
             )
         }
 
         Button(
-            onClick = { handleUiEvent(ChangePasswordUiEvent.ChangePassword) },
+            onClick = { handleUiEvent(ChangePasswordUiEvent.UpdateShowConfirmationDialog(true)) },
             enabled = canSubmit && !uiState.loading,
             modifier = Modifier.fillMaxWidth(),
         ) {

@@ -43,6 +43,7 @@ data class ChangePasswordUiState(
     val oldPasswordError: String? = null,
     val newPassword: String = "",
     val newPasswordConfirm: String = "",
+    val showConfirmChangeDialog: Boolean = false,
     val done: Boolean = false,
 ) {
     enum class Step {
@@ -57,7 +58,8 @@ sealed interface ChangePasswordUiEvent {
     data object CheckOldPassword : ChangePasswordUiEvent
     data class NewPasswordChanged(val value: String) : ChangePasswordUiEvent
     data class NewPasswordConfirmChanged(val value: String) : ChangePasswordUiEvent
-    data object ChangePassword : ChangePasswordUiEvent
+    data class UpdateShowConfirmationDialog(val show: Boolean) : ChangePasswordUiEvent
+    data object ConfirmChangePassword : ChangePasswordUiEvent
 }
 
 @HiltViewModel
@@ -91,7 +93,10 @@ class ChangePasswordViewModel @Inject constructor(
                 _uiState.update { it.copy(newPassword = event.value) }
             is ChangePasswordUiEvent.NewPasswordConfirmChanged ->
                 _uiState.update { it.copy(newPasswordConfirm = event.value) }
-            is ChangePasswordUiEvent.ChangePassword -> changePassword()
+            is ChangePasswordUiEvent.UpdateShowConfirmationDialog -> _uiState.update {
+                it.copy(showConfirmChangeDialog = event.show)
+            }
+            is ChangePasswordUiEvent.ConfirmChangePassword -> changePassword()
         }
     }
 
