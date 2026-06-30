@@ -28,5 +28,5 @@ import dev.leonlatsch.photok.review.InAppReviewImpl
 interface InAppReviewModule {
 
     @Binds
-    fun bindInAPpReview(impl: InAppReviewImpl): InAppReview
+    fun bindInAppReview(impl: InAppReviewImpl): InAppReview
 }
