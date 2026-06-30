@@ -27,7 +27,6 @@ import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import dev.leonlatsch.photok.settings.data.Config as AppConfig
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -42,6 +41,7 @@ import org.junit.runner.RunWith
 import org.mindrot.jbcrypt.BCrypt
 import org.robolectric.RobolectricTestRunner
 import java.util.Base64
+import dev.leonlatsch.photok.settings.data.Config as AppConfig
 
 /**
  * End-to-end tests for the full vault lifecycle: create, unlock, change password, and
@@ -61,6 +61,7 @@ class VaultLifecycleTest {
         vaultProtectionRepository = mockProtectionRepository,
         sessionRepository = mockSessionRepository,
         keyGen = keyGen,
+        config = mockConfig,
     )
 
     private val password = "correct-horse-battery-staple"
