@@ -25,6 +25,7 @@ import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.other.extensions.getDeviceDisplayName
 
 internal fun createRecoveryPhraseDocument(
     context: Context,
@@ -54,11 +55,6 @@ internal fun createRecoveryPhraseDocument(
         textSize = 36f
         color = Color.BLACK
         textAlign = Paint.Align.CENTER
-    }
-
-    val dividerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFFCCCCCC.toInt()
-        strokeWidth = 2f
     }
 
     val qrSize = qrBitmap.width
@@ -99,6 +95,12 @@ internal fun createRecoveryPhraseDocument(
         canvas.drawText(line, centerX, y - phrasePaint.ascent(), phrasePaint)
         y += phraseLineH
     }
+
+    y += sectionGap
+
+    // Device name
+    canvas.drawText(context.getDeviceDisplayName(), centerX, y - phrasePaint.ascent(), phrasePaint)
+    y += subtitleH + sectionGap
 
     return bitmap
 }
