@@ -391,6 +391,6 @@
     <string name="recovery_phrase_restore_source_file">Chargé depuis %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Collé depuis le presse-papiers</string>
     <string name="recovery_phrase_restore_camera_permission_button">Demander l\'autorisation d\'utiliser la caméra</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">L\'autorisation d\'utiliser la caméra est requise pour scanner les codes QR.</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">L\'autorisation d\'utiliser la caméra est requise pour scanner les QR codes.</string>
     <string name="permission_gate_change_in_settings">Modifier dans les Paramètres</string>
 </resources>
