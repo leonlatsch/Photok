@@ -369,6 +369,7 @@ private fun RecoveryPhraseRestoreContent(
                     text = uiState.error.orEmpty(),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
                 )
             }
 

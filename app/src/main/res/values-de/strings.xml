@@ -386,7 +386,7 @@
     <string name="recovery_phrase_restore_input_placeholder">Tippe deine Wiederherstellungswörter Wort für Wort</string>
     <string name="recovery_phrase_restore_unlocked">Entsperrt</string>
     <string name="recovery_phrase_restore_unlocking">Entsperren…</string>
-    <string name="recovery_phrase_restore_error_generic">Der Safe konnte nicht entsperrt werden. Überprüf deine Phrase und versuch es nochmal.</string>
+    <string name="recovery_phrase_restore_error_generic">Der Safe konnte nicht entsperrt werden. Überprüfe die Wörter und versuch es nochmal.</string>
     <string name="recovery_phrase_restore_error_invalid">Ungültige Wiederherstellungswörter. Überprüfe sie nochmal.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">Der QR-Code enthält keine gültigen Wiederherstellungswörter.</string>
     <string name="recovery_phrase_restore_source_qr">Vom QR-Code gescannt</string>
