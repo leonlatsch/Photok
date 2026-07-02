@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.model.io
 import android.content.Context
 import android.graphics.Bitmap
 import coil.request.ImageRequest
+import coil.request.videoFramePercent
 import coil.size.Size
 import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -64,6 +65,7 @@ class CreateThumbnailsUseCase @Inject constructor(
                 .size(THUMBNAIL_SIZE)
                 .transformations(CenterCropTransformation)
                 .allowHardware(false)
+                .apply { if (photo.type.isVideo) videoFramePercent(0.5) }
                 .build()
 
             val thumbnailResult = imageStorage.execAndWrite(
@@ -77,6 +79,7 @@ class CreateThumbnailsUseCase @Inject constructor(
                 val videoPreviewRequest = ImageRequest.Builder(context)
                     .data(data)
                     .allowHardware(false)
+                    .videoFramePercent(0.5)
                     .build()
 
                 imageStorage.execAndWrite(
