@@ -99,7 +99,7 @@
     <string name="view_photo_detail_import_at_label">Importado en</string>
     <string name="view_photo_detail_file_type_label">Tipo de archivo</string>
     <string name="view_photo_detail_size_label">Tamaño del archivo</string>
-    <string name="view_photo_detail_last_modified">última modificación</string>
+    <string name="view_photo_detail_last_modified">Última modificación</string>
     <string name="view_photo_loop_video_disabled">Bucle desactivado</string>
     <string name="view_photo_loop_video_enabled">Bucle activado</string>
     <string name="view_photo_video_playback_speed">Velocidad de reproducción</string>
@@ -163,8 +163,8 @@
     <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_security_biometric_title">Desbloqueo Biométrico</string>
     <string name="settings_security_biometric_summary">Desbloquear Photok con tus datos biométricos.</string>
-    <string name="settings_security_biometric_not_available">Desbloqueo Biométrico no esta disponible</string>
-    <string name="settings_security_recovery_phrase_title">Frese de recuperación</string>
+    <string name="settings_security_biometric_not_available">EL Desbloqueo Biométrico no esta disponible</string>
+    <string name="settings_security_recovery_phrase_title">Frase de recuperación</string>
     <string name="settings_security_recovery_phrase_summary">Gestiona tu frase de recuperación.</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
     <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
@@ -270,7 +270,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
     <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
-    <string name="backup_confirm_password">Introduce tu contraseña para crear un respaldo.</string>
+    <string name="backup_confirm_password">Introduce tu contraseña para crear una copia de seguridad.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novedades en</string>
@@ -317,7 +317,7 @@
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Desbloquear Photok</string>
-    <string name="biometric_unlock_subtitle">Comprueba tú identidad para desbloquear</string>
+    <string name="biometric_unlock_subtitle">Comprueba tu identidad para desbloquear</string>
     <string name="biometric_unlock_cancel">Usar contraseña de Photok</string>
 
     <string name="biometric_unlock_setup_title">Activar desbloqueo biométrico</string>
