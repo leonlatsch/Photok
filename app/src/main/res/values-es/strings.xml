@@ -83,7 +83,7 @@
     <string name="import_menu_restore_title">Restaurar una copia de seguridad</string>
     <string name="import_menu_restore_description">Restaurar una copia de seguridad de Photok. Los archivos serán añadidos a tus archivos actuales.</string>
     <string name="import_menu_delete_warning">Los archivos importados se eliminarán</string>
-    <string name="import_menu_album_tooltip">Los archivos se añadiran a \"%s\" después de importarlos</string> 
+    <string name="import_menu_album_tooltip">Los archivos se añadirán a \"%s\" después de importarlos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
