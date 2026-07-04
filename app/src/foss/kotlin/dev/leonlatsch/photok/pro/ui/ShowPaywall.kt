@@ -14,19 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.domain
+package dev.leonlatsch.photok.pro.ui
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
+import android.app.Activity
 
-
-class ProFeaturesActiveUseCaseImpl @Inject constructor() : ProFeaturesActiveUseCase {
-    override fun get(): Boolean {
-        return false
-    }
-
-    override fun observe(): StateFlow<Boolean> {
-        return MutableStateFlow(false)
-    }
+fun Activity.showPaywall() {
+    // Impl in pro module
 }
