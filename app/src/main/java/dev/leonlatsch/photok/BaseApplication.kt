@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
@@ -60,6 +61,9 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     @Inject
     lateinit var telemetryService: TelemetryService
 
+    @Inject
+    lateinit var proFeaturesLifecycle: ProFeaturesLifecycle
+
 
     private var wentToBackgroundAt = 0L
     private var ignoreNextTimeout = false
@@ -67,6 +71,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     override fun onCreate() {
         super<Application>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        proFeaturesLifecycle.register(ProcessLifecycleOwner.get().lifecycle)
         telemetryService.setup()
 
         if (BuildConfig.DEBUG) {

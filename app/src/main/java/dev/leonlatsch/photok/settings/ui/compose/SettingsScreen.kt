@@ -622,7 +622,7 @@ fun PreferenceView(
             )
         }
 
-        if (proFeature) {
+        if (proFeature && !proFeaturesActive) {
             Text(
                 text = "PRO",
                 fontWeight = FontWeight.Black,
