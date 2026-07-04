@@ -162,8 +162,8 @@
     <string name="settings_security_biometric_title">生物特征解锁</string>
     <string name="settings_security_biometric_summary">使用生物识别解锁 Photok</string>
     <string name="settings_security_biometric_not_available">生物特征解锁不可用</string>
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_title">恢复短语</string>
+    <string name="settings_security_recovery_phrase_summary">管理恢复短语</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
     <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
     <string name="settings_security_timeout_immediately">立即</string>
@@ -225,7 +225,7 @@
     <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有文件！你想继续吗？</string>
     <string name="change_password_reencrypting">重新加密文件中……</string>
     <string name="change_password_done">已更改密码</string>
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_recovery_phrase_used">使用了恢复短语 — 无需检查旧密码</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">验证密码</string>
@@ -354,41 +354,41 @@
     <string name="telemetry_toggle">允许收集使用情况数据</string>
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">恢复短语</string> 
+    <string name="recovery_phrase_title">你的恢复短语</string>
+    <string name="recovery_phrase_description">按顺序写下这些单词并将它们存储在某个安全之处。可以使用此短语恢复对文件保险库的访问。</string>
+    <string name="recovery_phrase_confirm">已保存短语</string>
+    <string name="recovery_phrase_save_warning">请保存恢复短语</string>
+    <string name="recovery_phrase_create_new">创建新短语</string>
+    <string name="recovery_phrase_create_new_confirm">创建新短语会永久替代当前短语。 现有短语无法再用于还原保险库。</string> 
+    <string name="recovery_phrase_saved_to_file">已保存到 %1$s</string>
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">单词数</string>
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">另存为图片</string>
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">忘记密码</string>
+    <string name="recovery_phrase_restore_button">恢复</string>
+    <string name="recovery_phrase_restore_word_placeholder">单词 %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">输入恢复短语</string>
+    <string name="recovery_phrase_restore_choose_option">选择如何输入短语</string>
+    <string name="recovery_phrase_restore_option_type">手动输入</string>
+    <string name="recovery_phrase_restore_option_open_file">从文件加载</string>
+    <string name="recovery_phrase_restore_option_scan_qr">扫描二维码</string>
+    <string name="recovery_phrase_restore_option_paste">从剪贴板粘贴</string>
+    <string name="recovery_phrase_restore_input_placeholder">逐个单词输入恢复短语</string>
+    <string name="recovery_phrase_restore_unlocked">已解锁</string>
+    <string name="recovery_phrase_restore_unlocking">正在解锁&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">无法恢复保险库。 请检查短语并重试。</string>
+    <string name="recovery_phrase_restore_error_invalid">恢复短语无效。请仔细检查输入的单词。</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">二维码不含有效恢复短语。</string>
+    <string name="recovery_phrase_restore_source_qr">从二维码扫描</string>
+    <string name="recovery_phrase_restore_source_file">从 %1$s 加载</string>
+    <string name="recovery_phrase_restore_source_clipboard">从剪贴板粘贴</string>
+    <string name="recovery_phrase_restore_camera_permission_button">请求相机权限</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">需要相机权限来扫描二维码。</string>
+    <string name="permission_gate_change_in_settings">在设置中更改</string>
 </resources>
