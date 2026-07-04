@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.other
 
+import android.content.ActivityNotFoundException
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -30,13 +31,16 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
 import android.view.WindowInsets
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -112,16 +116,29 @@ fun setAppDesign(design: SystemDesignEnum) {
 fun Fragment.openUrl(url: String?) {
     url ?: return
     val intent = Intent(Intent.ACTION_VIEW)
-    intent.data = Uri.parse(url)
-    startActivity(intent)
+    intent.data = url.toUri()
+
+    try {
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        Timber.e(e)
+        val context = this.context ?: return
+        Toast.makeText(context, R.string.common_error, Toast.LENGTH_LONG).show()
+    }
 }
 
 fun Context.openUrl(url: String?) {
     url ?: return
 
     val intent = Intent(Intent.ACTION_VIEW)
-    intent.data = Uri.parse(url)
-    startActivity(intent)
+    intent.data = url.toUri()
+
+    try {
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        Timber.e(e)
+        Toast.makeText(this, R.string.common_error, Toast.LENGTH_LONG).show()
+    }
 }
 
 /**

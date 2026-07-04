@@ -17,28 +17,43 @@
 package dev.leonlatsch.photok.other.extensions
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.core.app.ActivityOptionsCompat
+import dev.leonlatsch.photok.R
+import timber.log.Timber
 
 fun <I> ActivityResultLauncher<I>.launchAndIgnoreTimer(
     input: I,
     activity: Activity?,
     options: ActivityOptionsCompat? = null,
 ) {
-    launch(input, options)
-    activity?.getBaseApplication()?.ignoreNextTimeout()
+    try {
+        launch(input, options)
+        activity?.getBaseApplication()?.ignoreNextTimeout()
+    } catch (e: ActivityNotFoundException) {
+        Timber.e(e)
+        activity ?: return
+        Toast.makeText(activity, R.string.common_error, Toast.LENGTH_LONG).show()
+    }
 }
 
 fun Context.startActivityAndIgnoreTimer(intent: Intent, activity: Activity?) {
-    startActivity(intent)
-    activity?.getBaseApplication()?.ignoreNextTimeout()
-
+    try {
+        startActivity(intent)
+        activity?.getBaseApplication()?.ignoreNextTimeout()
+    } catch (e: ActivityNotFoundException) {
+        Timber.e(e)
+        activity ?: return
+        Toast.makeText(activity, R.string.common_error, Toast.LENGTH_LONG).show()
+    }
 }
 
 fun Context.areBiometricsAvailable(): Boolean {
