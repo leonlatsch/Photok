@@ -37,7 +37,7 @@
     <string name="common_create">Crear</string>
     <string name="common_empty">Vacío</string>
     <string name="common_rename">Renombrar</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">Intentar de nuevo</string>
     <string name="common_continue">Continuar</string>
 
     <!-- IMPORT -->
@@ -83,7 +83,7 @@
     <string name="import_menu_restore_title">Restaurar una copia de seguridad</string>
     <string name="import_menu_restore_description">Restaurar una copia de seguridad de Photok. Los archivos serán añadidos a tus archivos actuales.</string>
     <string name="import_menu_delete_warning">Los archivos importados se eliminarán</string>
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_album_tooltip">Los archivos se añadirán a \"%s\" después de importarlos</string>
 
     <!-- PROCESS -->
     <string name="process_close">Cerrar</string>
@@ -99,10 +99,10 @@
     <string name="view_photo_detail_import_at_label">Importado en</string>
     <string name="view_photo_detail_file_type_label">Tipo de archivo</string>
     <string name="view_photo_detail_size_label">Tamaño del archivo</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Última modificación</string>
+    <string name="view_photo_loop_video_disabled">Bucle desactivado</string>
+    <string name="view_photo_loop_video_enabled">Bucle activado</string>
+    <string name="view_photo_video_playback_speed">Velocidad de reproducción</string>
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Bloquear</string>
@@ -154,18 +154,18 @@
     <string name="settings_app_design_system_default">Por defecto del sistema</string>
     <string name="settings_app_design_system_light">Claro</string>
     <string name="settings_app_design_system_dark">Oscuro</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Página de inicio</string>
 
     <string name="settings_category_security">Seguridad</string>
     <string name="settings_security_allow_screenshots_title">Permitir capturas de pantalla</string>
     <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
     <string name="settings_security_change_password_title">Cambiar contraseña</string>
     <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Desbloqueo Biométrico</string>
+    <string name="settings_security_biometric_summary">Desbloquear Photok con tus datos biométricos.</string>
+    <string name="settings_security_biometric_not_available">EL Desbloqueo Biométrico no esta disponible</string>
+    <string name="settings_security_recovery_phrase_title">Frase de recuperación</string>
+    <string name="settings_security_recovery_phrase_summary">Gestiona tu frase de recuperación.</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
     <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
     <string name="settings_security_timeout_immediately">Inmediatamente</string>
@@ -208,8 +208,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Créditos</string>
     <string name="settings_other_credits_summary">Contribuyentes y créditos</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Recolección de datos</string>
+    <string name="settings_other_telemetry_summary">Gestiona la recolección de datos de uso</string>
     <string name="settings_other_about_title">Sobre</string>
     <string name="settings_other_about_summary">Sobre Photok</string>
 
@@ -228,8 +228,8 @@
     <string name="change_password_button">Cambiar contraseña</string>
     <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
     <string name="change_password_reencrypting">Encriptando foto(s)…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">Tu contraseña ha sido cambiada</string>
+    <string name="change_password_recovery_phrase_used">Se usó la frase de recuperación — no es necesario verificar la contraseña anterior</string>
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">Verificar contraseña</string>
@@ -270,7 +270,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
     <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
     <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Introduce tu contraseña para crear una copia de seguridad.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novedades en</string>
@@ -316,48 +316,48 @@
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Desbloquear Photok</string>
+    <string name="biometric_unlock_subtitle">Comprueba tu identidad para desbloquear</string>
+    <string name="biometric_unlock_cancel">Usar contraseña de Photok</string>
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Activar desbloqueo biométrico</string>
+    <string name="biometric_unlock_setup_subtitle">Para activar el desbloqueo biométrico, confirma tu identidad</string>
+    <string name="biometric_unlock_error">Error en el desbloqueo biométrico. Usa tu contraseña de Photok.</string>
+    <string name="biometric_unlock_hint_button">Desbloquear con datos biométricos</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Ordenar</string>
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Ascendente</string>
+    <string name="sorting_order_desc_label">Descendente</string>
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Fecha de importación</string>
+    <string name="sorting_field_filename_label">Nombre del archivo</string>
+    <string name="sorting_field_size_label">Tamaño del archivo</string>
+    <string name="sorting_field_added_to_album_label">Añadido al álbum</string>
+    <string name="sorting_field_last_modified">Última modificación</string>
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Restaurar a los valores predeterminados</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Reproducir</string>
+    <string name="video_player_pause">Pausar</string>
+    <string name="video_player_mute">Silenciar</string>
+    <string name="video_player_unmute">Activar sonido</string>
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Ayuda a mejorar Photok</string>
+    <string name="telemetry_sheet_paragraph_1">En Photok puedes habilitar enviar opcionalmente estadísticas de uso anónimas para ayudar a mejorar la aplicación.</string>
+    <string name="telemetry_sheet_paragraph_2">El procesamiento de los datos es completamente anónimo y no permite identificar ni obtener información personal.</string>
+    <string name="telemetry_sheet_paragraph_3">Enviar datos anónimos de uso es opcional y puede ser desactivado en cualquier momento desde los ajustes.</string>
+    <string name="telemetry_learn_more">Saber más</string>
+    <string name="telemetry_choice_no">No gracias</string>
+    <string name="telemetry_choice_yes">Compartir datos anónimos de uso</string>
+    <string name="telemetry_toggle">Permitir la recopilación de datos de uso</string>
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Frase de Recuperación</string>
+    <string name="recovery_phrase_title">Tu Frase de Recuperación</string>
     <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
     <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
     <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
@@ -369,7 +369,7 @@
     <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">Guardar como Imagen</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
