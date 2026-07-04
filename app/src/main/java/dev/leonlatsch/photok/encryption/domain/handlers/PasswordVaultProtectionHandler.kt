@@ -50,18 +50,15 @@ class PasswordVaultProtectionHandler @Inject constructor(
     ): SecretKey {
         val params = protection.params
 
-        requireNotNull(params.salt)
-        requireNotNull(params.iv)
-        requireNotNull(params.kdf)
-        requireNotNull(params.kdfIterations)
-        requireNotNull(params.keySize)
-        requireNotNull(params.algorithm)
+        val salt = requireNotNull(params.salt)
+        val kdf = requireNotNull(params.kdf)
+        val kdfIterations = requireNotNull(params.kdfIterations)
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(
             password = request.password,
-            salt = Base64.decode(params.salt),
-            kdf = params.kdf,
-            kdfIterations = params.kdfIterations,
+            salt = Base64.decode(salt),
+            kdf = kdf,
+            kdfIterations = kdfIterations,
             keySize = params.keySize,
         )
 

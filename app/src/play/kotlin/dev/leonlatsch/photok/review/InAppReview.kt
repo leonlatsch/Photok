@@ -22,7 +22,6 @@ import android.widget.Toast
 import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.pro.SampleProFeature
 import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +35,9 @@ class InAppReviewImpl @Inject constructor(
     private val config: Config,
     @ApplicationContext private val context: Context,
     private val appScope: CoroutineScope,
-    private val sampleProFeature: SampleProFeature,
 ) : InAppReview {
 
     override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {
-        sampleProFeature.show()
         if (config.inAppReviewRequested) return
         if (!trigger.meetsRequirements(context)) return
 

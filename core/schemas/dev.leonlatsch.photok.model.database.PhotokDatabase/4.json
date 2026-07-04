@@ -1,0 +1,187 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "2a27816567553848b8aadad3ea0db1f8",
+    "entities": [
+      {
+        "tableName": "photo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fileName` TEXT NOT NULL, `importedAt` INTEGER NOT NULL, `type` INTEGER NOT NULL, `size` INTEGER NOT NULL, `photo_uuid` TEXT NOT NULL, PRIMARY KEY(`photo_uuid`))",
+        "fields": [
+          {
+            "fieldPath": "fileName",
+            "columnName": "fileName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "importedAt",
+            "columnName": "importedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "size",
+            "columnName": "size",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "photo_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "photo_uuid"
+          ]
+        }
+      },
+      {
+        "tableName": "album",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `album_uuid` TEXT NOT NULL, `modified_at` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`album_uuid`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "album_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modifiedAt",
+            "columnName": "modified_at",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "album_uuid"
+          ]
+        }
+      },
+      {
+        "tableName": "album_photos_cross_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_uuid` TEXT NOT NULL, `photo_uuid` TEXT NOT NULL, `linked_at` INTEGER NOT NULL, PRIMARY KEY(`album_uuid`, `photo_uuid`))",
+        "fields": [
+          {
+            "fieldPath": "albumUUID",
+            "columnName": "album_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "photoUUID",
+            "columnName": "photo_uuid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "linkedAt",
+            "columnName": "linked_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "album_uuid",
+            "photo_uuid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_album_photos_cross_ref_photo_uuid",
+            "unique": false,
+            "columnNames": [
+              "photo_uuid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_album_photos_cross_ref_photo_uuid` ON `${TABLE_NAME}` (`photo_uuid`)"
+          }
+        ]
+      },
+      {
+        "tableName": "sort",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `album_uuid` TEXT, `field` INTEGER NOT NULL, `order` INTEGER NOT NULL, FOREIGN KEY(`album_uuid`) REFERENCES `album`(`album_uuid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "albumUuid",
+            "columnName": "album_uuid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "field",
+            "columnName": "field",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "order",
+            "columnName": "order",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sort_album_uuid",
+            "unique": false,
+            "columnNames": [
+              "album_uuid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sort_album_uuid` ON `${TABLE_NAME}` (`album_uuid`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "album",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "album_uuid"
+            ],
+            "referencedColumns": [
+              "album_uuid"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2a27816567553848b8aadad3ea0db1f8')"
+    ]
+  }
+}
