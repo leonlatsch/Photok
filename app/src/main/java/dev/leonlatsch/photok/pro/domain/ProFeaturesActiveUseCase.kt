@@ -14,23 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.pro.domain
 
-import android.content.Context
-import android.content.Intent
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
+import kotlinx.coroutines.flow.StateFlow
 
-class LockAppUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val sessionRepository: SessionRepository,
-) {
-
-    operator fun invoke() {
-        sessionRepository.reset()
-
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-    }
+interface ProFeaturesActiveUseCase {
+    fun get(): Boolean
+    fun observe(): StateFlow<Boolean>
 }

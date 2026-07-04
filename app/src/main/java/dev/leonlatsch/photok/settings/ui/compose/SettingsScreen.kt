@@ -16,11 +16,13 @@
 
 package dev.leonlatsch.photok.settings.ui.compose
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,6 +50,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -66,6 +69,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -84,10 +88,10 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.ui.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.FreePreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.Preference
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
 import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
@@ -106,6 +110,7 @@ fun createBackupFilename(): String {
     return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
 }
 
+@SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val fragment = LocalFragment.current
@@ -257,7 +262,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             onDismissRequest = { showRecoveryPhraseSheet = false },
             onNavigateToSetup = {
                 showRecoveryPhraseSheet = false
-                fragment?.findNavController()?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
+                fragment?.findNavController()
+                    ?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
             },
         )
     }
@@ -278,7 +284,7 @@ fun SettingsScreen() {
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         SettingsContent(
-            screenConfig = uiState.screenConfig,
+            uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
         )
     }
@@ -291,7 +297,7 @@ fun SettingsScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsContent(
-    screenConfig: PreferenceScreenConfig,
+    uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
 ) {
     val fragment = LocalFragment.current
@@ -316,7 +322,7 @@ fun SettingsContent(
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
         ) {
-            for (section in screenConfig.sections) {
+            for (section in uiState.screenConfig.sections) {
 
                 PreferenceSectionView(
                     section = section,
@@ -332,58 +338,67 @@ fun SettingsContent(
                             else -> RoundedCornerShape(6.dp)
                         }
 
-                        Surface(
-                            shape = shape,
-                            color = MaterialTheme.colorScheme.surfaceContainerLow,
-                            modifier = Modifier.padding(bottom = 2.dp),
-                        ) {
-                            when (preference) {
-                                is Preference.Simple -> {
-                                    PreferenceView(
-                                        icon = painterResource(preference.icon),
-                                        title = stringResource(preference.title),
-                                        summary = stringResource(preference.summary),
-                                        onClick = {
-                                            fragment ?: return@PreferenceView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    null
+                        Box {
+
+                            Surface(
+                                shape = shape,
+                                color = MaterialTheme.colorScheme.surfaceContainerLow,
+                                modifier = Modifier
+                                    .padding(bottom = 2.dp)
+                            ) {
+                                when (preference) {
+                                    is Preference.Simple -> {
+                                        PreferenceView(
+                                            icon = painterResource(preference.icon),
+                                            title = stringResource(preference.title),
+                                            summary = stringResource(preference.summary),
+                                            proFeature = preference.proFeature,
+                                            onClick = {
+                                                fragment ?: return@PreferenceView
+                                                handleUiEvent(
+                                                    SettingsUiEvent.OnPreferenceClick(
+                                                        preference,
+                                                        null
+                                                    )
                                                 )
-                                            )
-                                        }
-                                    )
+                                            },
+                                            proFeaturesActive = uiState.proFeaturesActive,
+                                        )
+                                    }
+
+                                    is Preference.Switch -> {
+                                        PreferenceSwitchView(
+                                            preference = preference,
+                                            onSwitchChange = { value ->
+                                                fragment ?: return@PreferenceSwitchView
+                                                handleUiEvent(
+                                                    SettingsUiEvent.OnPreferenceClick(
+                                                        preference,
+                                                        value
+                                                    )
+                                                )
+                                            },
+                                            proFeaturesActive = uiState.proFeaturesActive,
+                                        )
+                                    }
+
+                                    is Preference.Enum<*> -> {
+                                        PreferenceEnumView(
+                                            preference = preference,
+                                            onItemSelected = { value ->
+                                                fragment ?: return@PreferenceEnumView
+                                                handleUiEvent(
+                                                    SettingsUiEvent.OnPreferenceClick(
+                                                        preference,
+                                                        value
+                                                    )
+                                                )
+                                            },
+                                            proFeaturesActive = uiState.proFeaturesActive,
+                                        )
+                                    }
                                 }
 
-                                is Preference.Switch -> {
-                                    PreferenceSwitchView(
-                                        preference = preference,
-                                        onSwitchChange = { value ->
-                                            fragment ?: return@PreferenceSwitchView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    value
-                                                )
-                                            )
-                                        },
-                                    )
-                                }
-
-                                is Preference.Enum<*> -> {
-                                    PreferenceEnumView(
-                                        preference = preference,
-                                        onItemSelected = { value ->
-                                            fragment ?: return@PreferenceEnumView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    value
-                                                )
-                                            )
-                                        },
-                                    )
-                                }
                             }
                         }
                     }
@@ -413,7 +428,7 @@ fun PreferenceSectionView(
 
         if (section.summary != null) {
             Text(
-                text = stringResource(section.summary),
+                text = stringResource(section.summary!!),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
@@ -439,6 +454,7 @@ fun PreferenceSectionView(
 fun <T : SettingsEnum> PreferenceEnumView(
     preference: Preference.Enum<T>,
     onItemSelected: (T) -> Unit,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -451,8 +467,14 @@ fun <T : SettingsEnum> PreferenceEnumView(
     PreferenceView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
-        summary = stringResource(value.label),
+        summary = if (!proFeaturesActive) { // has pro
+            preference.explanation?.let { stringResource(it) } ?: stringResource(value.label)
+        } else {
+            stringResource(value.label)
+        },
+        proFeature = preference.proFeature,
         onClick = { showDialog = true },
+        proFeaturesActive = proFeaturesActive,
         modifier = modifier,
     )
 
@@ -510,6 +532,7 @@ fun <T : SettingsEnum> PreferenceEnumView(
 fun PreferenceSwitchView(
     preference: Preference.Switch,
     onSwitchChange: (Boolean) -> Unit,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -521,6 +544,8 @@ fun PreferenceSwitchView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
         summary = summary,
+        proFeature = preference.proFeature,
+        proFeaturesActive = proFeaturesActive,
         trailing = {
             Switch(
                 checked = value,
@@ -541,16 +566,24 @@ fun PreferenceView(
     icon: Painter,
     title: String,
     summary: String,
+    proFeature: Boolean,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
 ) {
+    val activity = LocalActivity.current
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(15.dp),
         modifier = modifier
             .clickable(enabled = onClick != null) {
-                onClick?.invoke()
+                if (proFeature && !proFeaturesActive) {
+                    activity?.showPaywall()
+                } else {
+                    onClick?.invoke()
+                }
             }
             .fillMaxWidth()
             .padding(
@@ -589,11 +622,22 @@ fun PreferenceView(
             )
         }
 
-        if (trailing != null) {
+        if (proFeature) {
+            Text(
+                text = "PRO",
+                fontWeight = FontWeight.Black,
+                fontSize = 12.sp,
+                color = contentColorFor(MaterialTheme.colorScheme.tertiary),
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.tertiary)
+                    .padding(horizontal = 8.dp)
+                    .padding(vertical = 1.dp)
+            )
+        } else if (trailing != null) {
             trailing()
         }
     }
-
 }
 
 @Preview(heightDp = 1000)
@@ -603,7 +647,9 @@ private fun Preview() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
-                screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+                uiState = SettingsUiState(
+                    screenConfig = FreePreferenceScreenConfig,
+                ),
                 handleUiEvent = {},
             )
         }
@@ -617,7 +663,9 @@ private fun PreviewDark() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
-                screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+                uiState = SettingsUiState(
+                    screenConfig = FreePreferenceScreenConfig,
+                ),
                 handleUiEvent = {},
             )
         }

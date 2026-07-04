@@ -30,21 +30,23 @@ import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
+import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.ActiveSettingsConfig
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SettingsUiState(
-    val screenConfig: PreferenceScreenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+    val screenConfig: PreferenceScreenConfig = ActiveSettingsConfig,
     val preferencesValues: Map<String, *> = emptyMap<String, String>(),
+    val proFeaturesActive: Boolean = false,
 )
 
 sealed interface SettingsUiEvent {
@@ -59,15 +61,27 @@ class SettingsViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val proFeaturesActive: ProFeaturesActiveUseCase,
 ) : ViewModel() {
 
 
-    val uiState = config.valuesFlow.map {  values ->
+    val uiState = combine(
+        config.valuesFlow,
+        proFeaturesActive.observe(),
+    ) { values, proFeaturesActive ->
         SettingsUiState(
-            screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+            screenConfig = ActiveSettingsConfig,
             preferencesValues = values,
+            proFeaturesActive = proFeaturesActive,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SettingsUiState(preferencesValues = config.values))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = SettingsUiState(
+            preferencesValues = config.values,
+            proFeaturesActive = proFeaturesActive.get(),
+        ),
+    )
 
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {
@@ -80,8 +94,16 @@ class SettingsViewModel @Inject constructor(
 
                 when (event.preference) {
 
-                    is Preference.Enum<*> -> config.putString(event.preference.key, (event.value as SettingsEnum).value)
-                    is Preference.Switch -> config.putBoolean(event.preference.key, event.value as Boolean)
+                    is Preference.Enum<*> -> config.putString(
+                        event.preference.key,
+                        (event.value as SettingsEnum).value
+                    )
+
+                    is Preference.Switch -> config.putBoolean(
+                        event.preference.key,
+                        event.value as Boolean
+                    )
+
                     is Preference.Simple -> Unit
                 }
             }

@@ -14,20 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.settings.domain.models
+package dev.leonlatsch.photok.pro.di
 
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
+import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCaseImpl
 
-enum class PanicLockMotion(
-    override val value: String,
-    override val label: Int
-) : SettingsEnum {
-    None("none", R.string.settings_pro_panic_lock_none),
-    Shake("shake", R.string.settings_pro_panic_lock_shake),
-    Flip("flip", R.string.settings_pro_panic_lock_flip);
+@Module
+@InstallIn(SingletonComponent::class)
+interface ProFeaturesModule {
 
-    companion object {
-        fun fromValue(value: String?): PanicLockMotion {
-            return PanicLockMotion.entries.find { it.value == value } ?: None
-        }
-    }
+    @Binds
+    fun bindProFeaturesActiveUseCase(impl: ProFeaturesActiveUseCaseImpl): ProFeaturesActiveUseCase
 }

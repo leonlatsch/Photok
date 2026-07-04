@@ -107,9 +107,9 @@ class Config(context: Context) {
         get() = getString(SECURITY_DIAL_LAUNCH_CODE, SECURITY_DIAL_LAUNCH_CODE_DEFAULT)
         set(value) = putString(SECURITY_DIAL_LAUNCH_CODE, value!!)
 
-    var securityPanicLock: PanicLockMotion
-        get() = PanicLockMotion.fromValue(getString(SECURITY_PANIC_LOCK, SECURITY_PANIC_LOCK_DEFAULT.value))
-        set(value) = putString(SECURITY_PANIC_LOCK, value.value)
+    var securityPanicLock: String
+        get() = getString(SECURITY_PANIC_LOCK, SECURITY_PANIC_LOCK_DEFAULT) ?: SECURITY_PANIC_LOCK_DEFAULT
+        set(value) = putString(SECURITY_PANIC_LOCK, value)
 
     /**
      * Determines if files should be deleted after importing them.
@@ -278,7 +278,7 @@ class Config(context: Context) {
         const val SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT = false
 
         const val SECURITY_PANIC_LOCK = "security^panicLock"
-        val SECURITY_PANIC_LOCK_DEFAULT = PanicLockMotion.None
+        const val SECURITY_PANIC_LOCK_DEFAULT = "none"
 
         const val IMAGE_VIEWER_LOOP_VIDEO = "imageViewer^loopVideo"
         const val IMAGE_VIEWER_LOOP_VIDEO_DEFAULT = false
