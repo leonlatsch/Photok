@@ -21,13 +21,11 @@ import androidx.annotation.StringRes
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE
-import dev.leonlatsch.photok.settings.data.Config.Companion.GALLERY_START_PAGE_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_ALLOW_SCREENSHOTS
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_ALLOW_SCREENSHOTS_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED
 import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED_DEFAULT
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN
-import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN_DEFAULT
 import dev.leonlatsch.photok.settings.domain.models.LockTimeout
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.StartPage
@@ -83,14 +81,14 @@ val PreferenceScreenConfigContent = buildList {
                     key = SYSTEM_DESIGN,
                     icon = R.drawable.ic_brush,
                     title = R.string.settings_app_design_title,
-                    default = SYSTEM_DESIGN_DEFAULT,
+                    default = SystemDesignEnum.System,
                     possibleValues = SystemDesignEnum.entries,
                 ),
                 Preference.Enum(
                     key = GALLERY_START_PAGE,
                     icon = R.drawable.ic_gallery_thumbnail,
                     title = R.string.settings_gallery_start_page_title,
-                    default = GALLERY_START_PAGE_DEFAULT,
+                    default = StartPage.AllFiles,
                     possibleValues = StartPage.entries,
                 )
             )

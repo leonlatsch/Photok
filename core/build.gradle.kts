@@ -12,6 +12,12 @@ android {
         minSdk = 28
     }
 
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("play") { dimension = "distribution" }
+        create("foss") { dimension = "distribution" }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -47,4 +53,7 @@ dependencies {
 
     // Timber (for VaultFileStorage)
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // SharedPreferences edit extension
+    implementation("androidx.core:core-ktx:1.16.0")
 }

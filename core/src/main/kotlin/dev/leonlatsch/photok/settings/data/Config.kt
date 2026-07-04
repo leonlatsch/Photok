@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,10 +19,7 @@ package dev.leonlatsch.photok.settings.data
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
-import dev.leonlatsch.photok.settings.domain.models.StartPage
-import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,16 +75,16 @@ class Config(context: Context) {
     /*
      * Sets the app design to "light", "dark" or "system"
      */
-    var systemDesign: SystemDesignEnum
-        get() = SystemDesignEnum.fromValue(getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT.value))
-        set(value) = putString(SYSTEM_DESIGN, value.value)
+    var systemDesign: String
+        get() = getString(SYSTEM_DESIGN, SYSTEM_DESIGN_DEFAULT) ?: SYSTEM_DESIGN_DEFAULT
+        set(value) = putString(SYSTEM_DESIGN, value)
 
     /**
      * Determines the start page of the gallery.
      */
-    var galleryStartPage: StartPage
-        get() = StartPage.fromValue(getString(GALLERY_START_PAGE, GALLERY_START_PAGE_DEFAULT.value))
-        set(value) = putString(GALLERY_START_PAGE, value.value)
+    var galleryStartPage: String
+        get() = getString(GALLERY_START_PAGE, GALLERY_START_PAGE_DEFAULT) ?: GALLERY_START_PAGE_DEFAULT
+        set(value) = putString(GALLERY_START_PAGE, value)
 
     /**
      * Determines if screenshots should be allowed.
@@ -233,7 +230,7 @@ class Config(context: Context) {
         /**
          * The filename used to store the preferences.
          */
-        const val FILE_NAME = "${BuildConfig.APPLICATION_ID}_preferences"
+        const val FILE_NAME = "dev.leonlatsch.photok_preferences"
 
         /**
          * Always use private mode to open preferences.
@@ -247,10 +244,10 @@ class Config(context: Context) {
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
 
         const val SYSTEM_DESIGN = "system^design"
-        val SYSTEM_DESIGN_DEFAULT = SystemDesignEnum.System
+        const val SYSTEM_DESIGN_DEFAULT = "system"
 
         const val GALLERY_START_PAGE = "gallery^startPage"
-        val GALLERY_START_PAGE_DEFAULT = StartPage.AllFiles
+        const val GALLERY_START_PAGE_DEFAULT = "all_files"
 
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false

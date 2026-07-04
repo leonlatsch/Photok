@@ -74,7 +74,7 @@ class AlbumsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         finishOnBackWhileStarted(
-            enabled = config.galleryStartPage == StartPage.Albums,
+            enabled = config.galleryStartPage == StartPage.Albums.value,
         )
 
         launchLifecycleAwareJob {

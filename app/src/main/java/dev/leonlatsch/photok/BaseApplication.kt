@@ -27,6 +27,7 @@ import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -70,7 +71,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
             Timber.plant(Timber.DebugTree())
         }
 
-        setAppDesign(config.systemDesign)
+        setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
     }
 
