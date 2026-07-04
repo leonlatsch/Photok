@@ -128,6 +128,8 @@ platform :android do
     if sh("git -C '#{root}' status --porcelain README.md", log: false).strip.empty?
       UI.message("Translation badges already up to date")
     else
+      sh("git -C '#{root}' config user.email 'Update Translation Badges in README.md'")
+      sh("git -C '#{root}' config user.name 'Translation Bot'")
       sh("git -C '#{root}' add README.md")
       sh("git -C '#{root}' commit -m 'Update Translation Badges in README.md'")
       sh("git -C '#{root}' push")
