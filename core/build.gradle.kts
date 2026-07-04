@@ -56,4 +56,7 @@ dependencies {
 
     // SharedPreferences edit extension
     implementation("androidx.core:core-ktx:1.16.0")
+
+    // Timber Logging
+    implementation("com.jakewharton.timber:timber:5.0.1")
 }

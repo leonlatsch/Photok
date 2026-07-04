@@ -16,13 +16,21 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
-import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import kotlinx.coroutines.flow.StateFlow
+import android.content.Context
+import android.content.Intent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-interface SessionRepository {
-    fun set(session: VaultSession)
-    fun get(): VaultSession?
-    fun require(): VaultSession
-    fun observe(): StateFlow<VaultSession?>
-    fun reset()
+class LockAppUseCase @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val sessionRepository: SessionRepository,
+) {
+
+    operator fun invoke() {
+        sessionRepository.reset()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
 }

@@ -14,15 +14,20 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.domain
+package dev.leonlatsch.photok.settings.domain.models
 
-import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import kotlinx.coroutines.flow.StateFlow
 
-interface SessionRepository {
-    fun set(session: VaultSession)
-    fun get(): VaultSession?
-    fun require(): VaultSession
-    fun observe(): StateFlow<VaultSession?>
-    fun reset()
+enum class PanicLockMotion(
+    override val value: String,
+    override val label: Int
+) : SettingsEnum {
+    None("none", R.string.settings_pro_panic_lock_none),
+    Shake("shake", R.string.settings_pro_panic_lock_shake),
+    Flip("flip", R.string.settings_pro_panic_lock_flip);
+
+    companion object {
+        fun fromValue(value: String?): PanicLockMotion {
+            return PanicLockMotion.entries.find { it.value == value } ?: None
+        }
+    }
 }

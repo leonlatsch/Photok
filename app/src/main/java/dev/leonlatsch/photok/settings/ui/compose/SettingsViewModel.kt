@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
@@ -154,6 +153,6 @@ class SettingsViewModel @Inject constructor(
         config.legacyPasswordHash = null
         config.legacyUserSalt = null
 
-        (app as BaseApplication).lockApp()
+        sessionRepository.reset()
     }
 }
