@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-
 class ProFeaturesActiveUseCaseImpl @Inject constructor() : ProFeaturesActiveUseCase {
     override fun get(): Boolean {
         return false

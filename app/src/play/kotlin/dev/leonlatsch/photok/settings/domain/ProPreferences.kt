@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.pro.PanicLockMotion
+import dev.leonlatsch.photok.pro.paniclock.PanicLockMotion
 import dev.leonlatsch.photok.settings.data.Config
 
 object ProPreferences {

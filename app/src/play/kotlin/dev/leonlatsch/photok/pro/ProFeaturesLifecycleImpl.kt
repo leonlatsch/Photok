@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.pro
 
 import androidx.lifecycle.Lifecycle
+import dev.leonlatsch.photok.pro.paniclock.PanicLockFeature
 import javax.inject.Inject
 
 class ProFeaturesLifecycleImpl @Inject constructor(
