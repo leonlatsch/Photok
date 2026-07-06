@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,19 +16,10 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-/**
- * Sealed class indicating state of the unlock process.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-sealed class UnlockState {
-    data object Initial : UnlockState()
-    data object PasswordError : UnlockState()
-    data object Error : UnlockState()
-    data object Loading : UnlockState()
-    data object Unlocked : UnlockState()
-    data object StartLegacyMigration : UnlockState()
-    data object ShowRecoveryPhrase : UnlockState()
-    data class Locked(val lockedUntil: Long) : UnlockState()
-}
+import androidx.compose.ui.platform.ComposeView
+import kotlinx.coroutines.flow.StateFlow
+
+internal fun ComposeView.bindLockoutState(
+    stateFlow: StateFlow<UnlockState>,
+    onUnlocked: () -> Unit,
+) = Unit

@@ -34,6 +34,8 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
+import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
+import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -60,6 +62,7 @@ class UnlockViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     private val legacyEncryption: LegacyEncryption,
+    private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -71,8 +74,15 @@ class UnlockViewModel @Inject constructor(
 
     val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
 
+    init {
+        val lockedUntil = passwordAttemptsUseCase.currentLockout()
+        if (lockedUntil > System.currentTimeMillis()) {
+            unlockState.update { UnlockState.Locked(lockedUntil) }
+        }
+    }
+
     /**
-     * Tries to unlock the save.
+     * Tries to unlock the safe.
      * Compares [password] to saved hash.
      * Updates UnlockState.
      * Called by ui.
@@ -84,6 +94,7 @@ class UnlockViewModel @Inject constructor(
             try {
                 vaultService.unlock(UnlockRequest.Password(password))
                     .onSuccess { session ->
+                        passwordAttemptsUseCase.onSuccessfulUnlock()
                         sessionRepository.set(session)
 
                         if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) {
@@ -99,13 +110,21 @@ class UnlockViewModel @Inject constructor(
                         }
                     }
                     .onFailure {
-                        unlockState.update { UnlockState.PasswordError }
+                        when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
+                            is PasswordAttemptsResult.Locked -> unlockState.update { UnlockState.Locked(result.lockedUntil) }
+                            PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
+                        }
                     }
             } catch (e: Exception) {
                 Timber.e(e)
                 unlockState.update { UnlockState.Error }
             }
         }
+    }
+
+    fun dismissLockout() {
+        passwordAttemptsUseCase.onSuccessfulUnlock()
+        unlockState.update { UnlockState.Initial }
     }
 
     fun unlockWithBiometric(fragment: Fragment) {
@@ -125,5 +144,4 @@ class UnlockViewModel @Inject constructor(
                 }
         }
     }
-
 }

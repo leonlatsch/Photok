@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,21 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.unlock.ui
+package dev.leonlatsch.photok.pro
 
-/**
- * Sealed class indicating state of the unlock process.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-sealed class UnlockState {
-    data object Initial : UnlockState()
-    data object PasswordError : UnlockState()
-    data object Error : UnlockState()
-    data object Loading : UnlockState()
-    data object Unlocked : UnlockState()
-    data object StartLegacyMigration : UnlockState()
-    data object ShowRecoveryPhrase : UnlockState()
-    data class Locked(val lockedUntil: Long) : UnlockState()
+import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
+import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
+import javax.inject.Inject
+
+class PasswordAttemptsUseCaseImpl @Inject constructor() : PasswordAttemptsUseCase {
+    override fun onFailedAttempt() = PasswordAttemptsResult.None
+    override fun onSuccessfulUnlock() = Unit
+    override fun currentLockout() = 0L
 }

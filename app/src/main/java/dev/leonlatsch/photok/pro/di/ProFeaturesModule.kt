@@ -20,8 +20,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.pro.PasswordAttemptsUseCaseImpl
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycleImpl
+import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
 import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
 import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCaseImpl
 
@@ -34,4 +36,7 @@ interface ProFeaturesModule {
 
     @Binds
     fun bindProFeaturesLifecycle(impl: ProFeaturesLifecycleImpl): ProFeaturesLifecycle
+
+    @Binds
+    fun bindPasswordAttemptsUseCase(impl: PasswordAttemptsUseCaseImpl): PasswordAttemptsUseCase
 }

@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.paniclock.PanicLockMotion
+import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsLimit
 import dev.leonlatsch.photok.settings.data.Config
 
 object ProPreferences {
@@ -29,6 +30,16 @@ object ProPreferences {
         explanation = R.string.settings_pro_panic_lock_summary,
         default = PanicLockMotion.None,
         possibleValues = PanicLockMotion.entries,
+        proFeature = true,
+    )
+
+    val PasswordAttempts = Preference.Enum(
+        key = Config.SECURITY_MAX_PASSWORD_ATTEMPTS,
+        icon = R.drawable.ic_key,
+        title = R.string.settings_pro_password_attempts_title,
+        explanation = R.string.settings_pro_password_attempts_summary,
+        default = PasswordAttemptsLimit.Unlimited,
+        possibleValues = PasswordAttemptsLimit.entries,
         proFeature = true,
     )
 }

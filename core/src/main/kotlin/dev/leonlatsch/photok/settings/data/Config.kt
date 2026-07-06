@@ -111,6 +111,10 @@ class Config(context: Context) {
         get() = getString(SECURITY_PANIC_LOCK, SECURITY_PANIC_LOCK_DEFAULT) ?: SECURITY_PANIC_LOCK_DEFAULT
         set(value) = putString(SECURITY_PANIC_LOCK, value)
 
+    var securityMaxPasswordAttempts: String
+        get() = getString(SECURITY_MAX_PASSWORD_ATTEMPTS, SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT) ?: SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT
+        set(value) = putString(SECURITY_MAX_PASSWORD_ATTEMPTS, value)
+
     /**
      * Determines if files should be deleted after importing them.
      */
@@ -279,6 +283,9 @@ class Config(context: Context) {
 
         const val SECURITY_PANIC_LOCK = "security^panicLock"
         const val SECURITY_PANIC_LOCK_DEFAULT = "none"
+
+        const val SECURITY_MAX_PASSWORD_ATTEMPTS = "security^maxPasswordAttempts"
+        const val SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT = "0"
 
         const val IMAGE_VIEWER_LOOP_VIDEO = "imageViewer^loopVideo"
         const val IMAGE_VIEWER_LOOP_VIDEO_DEFAULT = false

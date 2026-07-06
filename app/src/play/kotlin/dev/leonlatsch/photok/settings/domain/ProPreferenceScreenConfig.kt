@@ -40,6 +40,7 @@ val ProPreferenceScreenConfig = PreferenceScreenConfig(
                 AppPreferences.HideApp,
                 AppPreferences.RecoveryPhrase,
                 ProPreferences.PanicLock,
+                ProPreferences.PasswordAttempts,
             ),
         ),
         PreferenceSection(
