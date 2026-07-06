@@ -62,4 +62,13 @@ sealed interface Preference {
         val possibleValues: List<T>,
         override val proFeature: Boolean = false,
     ) : Preference
+
+    data class Page(
+        override val key: String,
+        override val icon: Int,
+        override val title: Int,
+        @get:StringRes val summary: Int,
+        val subPageConfig: PreferenceScreenConfig,
+        override val proFeature: Boolean = false,
+    ) : Preference
 }

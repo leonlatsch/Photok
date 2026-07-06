@@ -19,15 +19,23 @@ package dev.leonlatsch.photok.settings.ui.compose
 import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +49,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -50,6 +59,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -61,6 +71,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -279,16 +290,48 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var subPageKey by rememberSaveable { mutableStateOf<String?>(null) }
+
+    BackHandler(enabled = subPageKey != null) { subPageKey = null }
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
-        SettingsContent(
-            uiState = uiState,
-            handleUiEvent = viewModel::handleUiEvent,
-        )
+        AnimatedContent(
+            targetState = subPageKey,
+            transitionSpec = {
+                if (targetState != null) {
+                    (slideInHorizontally { it } + fadeIn()) togetherWith
+                            (slideOutHorizontally { -it / 4 } + fadeOut())
+                } else {
+                    (slideInHorizontally { -it / 4 } + fadeIn()) togetherWith
+                            (slideOutHorizontally { it } + fadeOut())
+                }
+            },
+            label = "settings_page",
+        ) { key ->
+            if (key != null) {
+                val page = uiState.screenConfig.sections
+                    .flatMap { it.preferences }
+                    .filterIsInstance<Preference.Page>()
+                    .find { it.key == key }
+                page?.let {
+                    SettingsSubPageScreen(
+                        page = it,
+                        proFeaturesActive = uiState.proFeaturesActive,
+                        handleUiEvent = viewModel::handleUiEvent,
+                        onBack = { subPageKey = null },
+                    )
+                }
+            } else {
+                SettingsContent(
+                    uiState = uiState,
+                    handleUiEvent = viewModel::handleUiEvent,
+                    onNavigateToSubPage = { subPageKey = it },
+                )
+            }
+        }
         SettingsCallbacks(viewModel)
-        ProSettingsCallbacks(viewModel)
     }
 }
 
@@ -298,106 +341,156 @@ fun SettingsScreen() {
 fun SettingsContent(
     uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
+    onNavigateToSubPage: (String) -> Unit,
 ) {
-    val fragment = LocalFragment.current
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
             LargeTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.settings_title)
-                    )
+                title = { Text(stringResource(R.string.settings_title)) },
+                scrollBehavior = scrollBehavior,
+            )
+        },
+    ) { contentPadding ->
+        SettingsPreferenceSections(
+            sections = uiState.screenConfig.sections,
+            proFeaturesActive = uiState.proFeaturesActive,
+            handleUiEvent = handleUiEvent,
+            onNavigateToSubPage = onNavigateToSubPage,
+            scrollBehavior = scrollBehavior,
+            contentPadding = contentPadding,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsSubPageScreen(
+    page: Preference.Page,
+    proFeaturesActive: Boolean,
+    handleUiEvent: (SettingsUiEvent) -> Unit,
+    onBack: () -> Unit,
+) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        topBar = {
+            LargeTopAppBar(
+                title = { Text(stringResource(page.title)) },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_back),
+                            contentDescription = null,
+                        )
+                    }
                 },
                 scrollBehavior = scrollBehavior,
             )
         },
     ) { contentPadding ->
-        Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .verticalScroll(rememberScrollState())
-                .padding(contentPadding)
-        ) {
-            for (section in uiState.screenConfig.sections) {
+        SettingsPreferenceSections(
+            sections = page.subPageConfig.sections,
+            proFeaturesActive = proFeaturesActive,
+            handleUiEvent = handleUiEvent,
+            onNavigateToSubPage = {},
+            scrollBehavior = scrollBehavior,
+            contentPadding = contentPadding,
+        )
+    }
+}
 
-                PreferenceSectionView(
-                    section = section,
-                ) {
-                    for (preference in section.preferences) {
-                        val isFirst = preference == section.preferences.first()
-                        val isLast = preference == section.preferences.last()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SettingsPreferenceSections(
+    sections: List<PreferenceSection>,
+    proFeaturesActive: Boolean,
+    handleUiEvent: (SettingsUiEvent) -> Unit,
+    onNavigateToSubPage: (String) -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
+    contentPadding: PaddingValues,
+) {
+    val fragment = LocalFragment.current
 
-                        val shape = when {
-                            section.preferences.size == 1 -> RoundedCornerShape(18.dp)
-                            isFirst -> RoundedCornerShape(18.dp, 18.dp, 6.dp, 6.dp)
-                            isLast -> RoundedCornerShape(6.dp, 6.dp, 18.dp, 18.dp)
-                            else -> RoundedCornerShape(6.dp)
-                        }
+    Column(
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .verticalScroll(rememberScrollState())
+            .padding(contentPadding)
+    ) {
+        for (section in sections) {
+            PreferenceSectionView(section = section) {
+                for (preference in section.preferences) {
+                    val isFirst = preference == section.preferences.first()
+                    val isLast = preference == section.preferences.last()
 
-                        Box {
+                    val shape = when {
+                        section.preferences.size == 1 -> RoundedCornerShape(18.dp)
+                        isFirst -> RoundedCornerShape(18.dp, 18.dp, 6.dp, 6.dp)
+                        isLast -> RoundedCornerShape(6.dp, 6.dp, 18.dp, 18.dp)
+                        else -> RoundedCornerShape(6.dp)
+                    }
 
-                            Surface(
-                                shape = shape,
-                                color = MaterialTheme.colorScheme.surfaceContainerLow,
-                                modifier = Modifier
-                                    .padding(bottom = 2.dp)
-                            ) {
-                                when (preference) {
-                                    is Preference.Simple -> {
-                                        PreferenceView(
-                                            icon = painterResource(preference.icon),
-                                            title = stringResource(preference.title),
-                                            summary = stringResource(preference.summary),
-                                            proFeature = preference.proFeature,
-                                            onClick = {
-                                                fragment ?: return@PreferenceView
-                                                handleUiEvent(
-                                                    SettingsUiEvent.OnPreferenceClick(
-                                                        preference,
-                                                        null
-                                                    )
-                                                )
-                                            },
-                                            proFeaturesActive = uiState.proFeaturesActive,
-                                        )
-                                    }
-
-                                    is Preference.Switch -> {
-                                        PreferenceSwitchView(
-                                            preference = preference,
-                                            onSwitchChange = { value ->
-                                                fragment ?: return@PreferenceSwitchView
-                                                handleUiEvent(
-                                                    SettingsUiEvent.OnPreferenceClick(
-                                                        preference,
-                                                        value
-                                                    )
-                                                )
-                                            },
-                                            proFeaturesActive = uiState.proFeaturesActive,
-                                        )
-                                    }
-
-                                    is Preference.Enum<*> -> {
-                                        PreferenceEnumView(
-                                            preference = preference,
-                                            onItemSelected = { value ->
-                                                fragment ?: return@PreferenceEnumView
-                                                handleUiEvent(
-                                                    SettingsUiEvent.OnPreferenceClick(
-                                                        preference,
-                                                        value
-                                                    )
-                                                )
-                                            },
-                                            proFeaturesActive = uiState.proFeaturesActive,
-                                        )
-                                    }
+                    Box {
+                        Surface(
+                            shape = shape,
+                            color = MaterialTheme.colorScheme.surfaceContainerLow,
+                            modifier = Modifier.padding(bottom = 2.dp),
+                        ) {
+                            when (preference) {
+                                is Preference.Simple -> {
+                                    PreferenceView(
+                                        icon = painterResource(preference.icon),
+                                        title = stringResource(preference.title),
+                                        summary = stringResource(preference.summary),
+                                        proFeature = preference.proFeature,
+                                        onClick = {
+                                            fragment ?: return@PreferenceView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
+                                        },
+                                        proFeaturesActive = proFeaturesActive,
+                                    )
                                 }
 
+                                is Preference.Switch -> {
+                                    PreferenceSwitchView(
+                                        preference = preference,
+                                        onSwitchChange = { value ->
+                                            fragment ?: return@PreferenceSwitchView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
+                                        },
+                                        proFeaturesActive = proFeaturesActive,
+                                    )
+                                }
+
+                                is Preference.Enum<*> -> {
+                                    PreferenceEnumView(
+                                        preference = preference,
+                                        onItemSelected = { value ->
+                                            fragment ?: return@PreferenceEnumView
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
+                                        },
+                                        proFeaturesActive = proFeaturesActive,
+                                    )
+                                }
+
+                                is Preference.Page -> {
+                                    PreferenceView(
+                                        icon = painterResource(preference.icon),
+                                        title = stringResource(preference.title),
+                                        summary = stringResource(preference.summary),
+                                        proFeature = preference.proFeature,
+                                        onClick = { onNavigateToSubPage(preference.key) },
+                                        proFeaturesActive = proFeaturesActive,
+                                        trailing = {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_chevron_right),
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            )
+                                        },
+                                    )
+                                }
                             }
                         }
                     }
@@ -650,6 +743,7 @@ private fun Preview() {
                     screenConfig = FreePreferenceScreenConfig,
                 ),
                 handleUiEvent = {},
+                onNavigateToSubPage = {},
             )
         }
     }
@@ -666,6 +760,7 @@ private fun PreviewDark() {
                     screenConfig = FreePreferenceScreenConfig,
                 ),
                 handleUiEvent = {},
+                onNavigateToSubPage = {},
             )
         }
     }

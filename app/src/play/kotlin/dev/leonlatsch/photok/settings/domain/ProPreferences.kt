@@ -18,10 +18,11 @@ package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.paniclock.PanicLockMotion
-import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsAction as PasswordAttemptsActionEnum
+import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsAction
 import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsLimit
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.ui.SettingsFragment
+import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
+import dev.leonlatsch.photok.settings.domain.PreferenceSection
 
 object ProPreferences {
 
@@ -35,15 +36,6 @@ object ProPreferences {
         proFeature = true,
     )
 
-    val BruteforceProtection = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_BRUTEFORCE_PROTECTION,
-        icon = R.drawable.ic_key,
-        title = R.string.settings_pro_bruteforce_protection_title,
-        summary = R.string.settings_pro_bruteforce_protection_summary,
-        proFeature = true,
-    )
-
-    // Used internally for persisting values via handleUiEvent — not shown in the settings list.
     val PasswordAttempts = Preference.Enum(
         key = Config.SECURITY_MAX_PASSWORD_ATTEMPTS,
         icon = R.drawable.ic_key,
@@ -51,17 +43,36 @@ object ProPreferences {
         explanation = R.string.settings_pro_password_attempts_summary,
         default = PasswordAttemptsLimit.Unlimited,
         possibleValues = PasswordAttemptsLimit.entries,
-        proFeature = true,
     )
 
-    // Used internally for persisting values via handleUiEvent — not shown in the settings list.
     val PasswordAttemptsAction = Preference.Enum(
         key = Config.SECURITY_PASSWORD_ATTEMPTS_ACTION,
         icon = R.drawable.ic_warning,
         title = R.string.settings_pro_password_attempts_action_title,
         explanation = R.string.settings_pro_password_attempts_action_summary,
-        default = PasswordAttemptsActionEnum.Lockout,
-        possibleValues = PasswordAttemptsActionEnum.entries,
+        default = PasswordAttemptsAction.Lockout,
+        possibleValues = PasswordAttemptsAction.entries,
+    )
+
+    val BruteforceProtection = Preference.Page(
+        key = "page_bruteforce_protection",
+        icon = R.drawable.ic_key,
+        title = R.string.settings_pro_bruteforce_protection_title,
+        summary = R.string.settings_pro_bruteforce_protection_summary,
+        subPageConfig = PreferenceScreenConfig(
+            sections = listOf(
+                PreferenceSection(
+                    title = R.string.settings_pro_bruteforce_protection_attempts_label,
+                    summary = null,
+                    preferences = listOf(PasswordAttempts),
+                ),
+                PreferenceSection(
+                    title = R.string.settings_pro_bruteforce_protection_action_label,
+                    summary = null,
+                    preferences = listOf(PasswordAttemptsAction),
+                ),
+            )
+        ),
         proFeature = true,
     )
 }
