@@ -69,5 +69,6 @@ class SettingsFragment : Fragment() {
         const val KEY_ACTION_CREDITS = "action_credits"
         const val KEY_ACTION_TELEMETRY = "action_telemetry"
         const val KEY_ACTION_ABOUT = "action_about"
+        const val KEY_ACTION_BRUTEFORCE_PROTECTION = "action_bruteforce_protection"
     }
 }

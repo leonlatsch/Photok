@@ -22,13 +22,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.EraseVaultUseCase
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
-import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
 import dev.leonlatsch.photok.settings.data.Config
@@ -57,10 +56,9 @@ sealed interface SettingsUiEvent {
 class SettingsViewModel @Inject constructor(
     private val config: Config,
     private val app: Application,
-    private val photoRepository: PhotoRepository,
-    private val albumRepository: AlbumRepository,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val eraseVaultUseCase: EraseVaultUseCase,
     private val proFeaturesActive: ProFeaturesActiveUseCase,
 ) : ViewModel() {
 
@@ -161,20 +159,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun resetApp() = viewModelScope.launch {
-        val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
-        for (photo in allPhotos) {
-            photoRepository.deleteInternalPhotoData(photo)
-        }
-        photoRepository.deleteAll()
-        albumRepository.deleteAll()
-        albumRepository.unlinkAll()
-
-        vaultService.reset(VaultProtectionType.Password)
-        vaultService.reset(VaultProtectionType.Biometric)
-
-        config.legacyPasswordHash = null
-        config.legacyUserSalt = null
-
-        sessionRepository.reset()
+        eraseVaultUseCase()
     }
 }

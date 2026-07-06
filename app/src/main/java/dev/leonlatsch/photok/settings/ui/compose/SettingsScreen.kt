@@ -287,10 +287,9 @@ fun SettingsScreen() {
             uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
         )
+        SettingsCallbacks(viewModel)
+        ProSettingsCallbacks(viewModel)
     }
-
-    SettingsCallbacks(viewModel)
-
 }
 
 

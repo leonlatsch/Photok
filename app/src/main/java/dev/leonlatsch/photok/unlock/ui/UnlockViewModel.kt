@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.EraseVaultUseCase
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
@@ -63,6 +64,7 @@ class UnlockViewModel @Inject constructor(
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     private val legacyEncryption: LegacyEncryption,
     private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
+    private val eraseVaultUseCase: EraseVaultUseCase,
 ) : ObservableViewModel(app) {
 
     @Bindable
@@ -113,6 +115,10 @@ class UnlockViewModel @Inject constructor(
                         when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
                             is PasswordAttemptsResult.Locked -> unlockState.update { UnlockState.Locked(result.lockedUntil) }
                             PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
+                            PasswordAttemptsResult.Erased -> {
+                                eraseVaultUseCase()
+                                unlockState.update { UnlockState.Erased }
+                            }
                         }
                     }
             } catch (e: Exception) {

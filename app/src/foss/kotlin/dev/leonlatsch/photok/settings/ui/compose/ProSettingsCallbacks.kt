@@ -14,16 +14,9 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.domain
+package dev.leonlatsch.photok.settings.ui.compose
 
-interface PasswordAttemptsUseCase {
-    fun onFailedAttempt(): PasswordAttemptsResult
-    fun onSuccessfulUnlock()
-    fun currentLockout(): Long
-}
+import androidx.compose.runtime.Composable
 
-sealed interface PasswordAttemptsResult {
-    data object None : PasswordAttemptsResult
-    data class Locked(val lockedUntil: Long) : PasswordAttemptsResult
-    data object Erased : PasswordAttemptsResult
-}
+@Composable
+internal fun ProSettingsCallbacks(viewModel: SettingsViewModel) = Unit
