@@ -63,6 +63,7 @@ class SettingsFragment : Fragment() {
         const val KEY_ACTION_HIDE_APP = "action_hide_app"
         const val KEY_ACTION_BACKUP = "action_backup_safe"
         const val KEY_ACTION_RECOVERY_PHRASE = "action_recovery_phrase"
+        const val KEY_BRUTEFORCE_PROTECTION = "action_bruteforce_protection"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
         const val KEY_ACTION_DONATE = "action_donate"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"

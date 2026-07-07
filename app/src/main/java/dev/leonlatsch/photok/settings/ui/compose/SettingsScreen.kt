@@ -19,16 +19,9 @@ package dev.leonlatsch.photok.settings.ui.compose
 import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -49,7 +42,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -98,6 +90,7 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.ui.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.FreePreferenceScreenConfig
@@ -143,6 +136,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     var showChangePasswordSheet by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForBackup by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForReset by rememberSaveable { mutableStateOf(false) }
+    var showBruteforceProtectionSheet by rememberSaveable {mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -169,6 +163,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RECOVERY_PHRASE) {
             showRecoveryPhraseSheet = true
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_BRUTEFORCE_PROTECTION) {
+            showBruteforceProtectionSheet = true
             false
         }
 
@@ -226,6 +225,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
         }
+
     }
 
     SecretLaunchCodeDialog(
@@ -283,6 +283,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             onDismissRequest = { showChangePasswordSheet = false },
         )
     }
+
+    if (showBruteforceProtectionSheet) {
+        BruteforceProtectionSheet(
+            onDismissRequest = { showBruteforceProtectionSheet = false },
+        )
+    }
 }
 
 @Composable
@@ -290,45 +296,13 @@ fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    BackHandler(enabled = uiState.subPageKey != null) {
-        viewModel.handleUiEvent(SettingsUiEvent.SetSubPageKey(null))
-    }
-
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
-        AnimatedContent(
-            targetState = uiState.subPageKey,
-            transitionSpec = {
-                if (targetState != null) {
-                    (slideInHorizontally { it } + fadeIn()) togetherWith
-                            (slideOutHorizontally { -it / 4 } + fadeOut())
-                } else {
-                    (slideInHorizontally { -it / 4 } + fadeIn()) togetherWith
-                            (slideOutHorizontally { it } + fadeOut())
-                }
-            },
-            label = "settings_page",
-        ) { key ->
-            if (key != null) {
-                val page = uiState.screenConfig.sections
-                    .flatMap { it.preferences }
-                    .filterIsInstance<Preference.Page>()
-                    .find { it.key == key }
-                page?.let {
-                    SettingsSubPageScreen(
-                        page = it,
-                        proFeaturesActive = uiState.proFeaturesActive,
-                        handleUiEvent = viewModel::handleUiEvent,
-                    )
-                }
-            } else {
-                SettingsContent(
-                    uiState = uiState,
-                    handleUiEvent = viewModel::handleUiEvent,
-                )
-            }
-        }
+        SettingsContent(
+            uiState = uiState,
+            handleUiEvent = viewModel::handleUiEvent,
+        )
         SettingsCallbacks(viewModel)
     }
 }
@@ -352,42 +326,6 @@ fun SettingsContent(
         SettingsPreferenceSections(
             sections = uiState.screenConfig.sections,
             proFeaturesActive = uiState.proFeaturesActive,
-            handleUiEvent = handleUiEvent,
-            scrollBehavior = scrollBehavior,
-            contentPadding = contentPadding,
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SettingsSubPageScreen(
-    page: Preference.Page,
-    proFeaturesActive: Boolean,
-    handleUiEvent: (SettingsUiEvent) -> Unit,
-) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    Scaffold(
-        topBar = {
-            LargeTopAppBar(
-                title = { Text(stringResource(page.title)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { handleUiEvent(SettingsUiEvent.SetSubPageKey(null)) }
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_back),
-                            contentDescription = null,
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-            )
-        },
-    ) { contentPadding ->
-        SettingsPreferenceSections(
-            sections = page.subPageConfig.sections,
-            proFeaturesActive = proFeaturesActive,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
             contentPadding = contentPadding,
@@ -466,26 +404,6 @@ private fun SettingsPreferenceSections(
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
                                         proFeaturesActive = proFeaturesActive,
-                                    )
-                                }
-
-                                is Preference.Page -> {
-                                    PreferenceView(
-                                        icon = painterResource(preference.icon),
-                                        title = stringResource(preference.title),
-                                        summary = stringResource(preference.summary),
-                                        proFeature = preference.proFeature,
-                                        onClick = {
-                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
-                                        },
-                                        proFeaturesActive = proFeaturesActive,
-                                        trailing = {
-                                            Icon(
-                                                painter = painterResource(R.drawable.ic_chevron_right),
-                                                contentDescription = null,
-                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            )
-                                        },
                                     )
                                 }
                             }

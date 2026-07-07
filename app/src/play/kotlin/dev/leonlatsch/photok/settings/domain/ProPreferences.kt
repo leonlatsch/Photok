@@ -18,8 +18,6 @@ package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.paniclock.PanicLockMotion
-import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsAction
-import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsLimit
 import dev.leonlatsch.photok.settings.data.Config
 
 object ProPreferences {
@@ -34,43 +32,11 @@ object ProPreferences {
         proFeature = true,
     )
 
-    val PasswordAttempts = Preference.Enum(
-        key = Config.SECURITY_MAX_PASSWORD_ATTEMPTS,
-        icon = R.drawable.ic_key,
-        title = R.string.settings_pro_password_attempts_title,
-        explanation = R.string.settings_pro_password_attempts_summary,
-        default = PasswordAttemptsLimit.Unlimited,
-        possibleValues = PasswordAttemptsLimit.entries,
-    )
-
-    val PasswordAttemptsActionPref = Preference.Enum(
-        key = Config.SECURITY_PASSWORD_ATTEMPTS_ACTION,
-        icon = R.drawable.ic_warning,
-        title = R.string.settings_pro_password_attempts_action_title,
-        explanation = R.string.settings_pro_password_attempts_action_summary,
-        default = PasswordAttemptsAction.Lockout,
-        possibleValues = PasswordAttemptsAction.entries,
-    )
-
-    val BruteforceProtection = Preference.Page(
-        key = "page_bruteforce_protection",
+    val BruteforceProtection = Preference.Simple(
+        key = "action_bruteforce_protection",
         icon = R.drawable.ic_key,
         title = R.string.settings_pro_bruteforce_protection_title,
         summary = R.string.settings_pro_bruteforce_protection_summary,
-        subPageConfig = PreferenceScreenConfig(
-            sections = listOf(
-                PreferenceSection(
-                    title = R.string.settings_pro_bruteforce_protection_attempts_label,
-                    summary = null,
-                    preferences = listOf(PasswordAttempts),
-                ),
-                PreferenceSection(
-                    title = R.string.settings_pro_bruteforce_protection_action_label,
-                    summary = null,
-                    preferences = listOf(PasswordAttemptsActionPref),
-                ),
-            )
-        ),
         proFeature = true,
     )
 }
