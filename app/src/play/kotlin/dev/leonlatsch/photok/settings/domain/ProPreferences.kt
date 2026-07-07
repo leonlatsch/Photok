@@ -21,8 +21,6 @@ import dev.leonlatsch.photok.pro.paniclock.PanicLockMotion
 import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsAction
 import dev.leonlatsch.photok.pro.passwordattempts.PasswordAttemptsLimit
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
-import dev.leonlatsch.photok.settings.domain.PreferenceSection
 
 object ProPreferences {
 
@@ -45,7 +43,7 @@ object ProPreferences {
         possibleValues = PasswordAttemptsLimit.entries,
     )
 
-    val PasswordAttemptsAction = Preference.Enum(
+    val PasswordAttemptsActionPref = Preference.Enum(
         key = Config.SECURITY_PASSWORD_ATTEMPTS_ACTION,
         icon = R.drawable.ic_warning,
         title = R.string.settings_pro_password_attempts_action_title,
@@ -69,7 +67,7 @@ object ProPreferences {
                 PreferenceSection(
                     title = R.string.settings_pro_bruteforce_protection_action_label,
                     summary = null,
-                    preferences = listOf(PasswordAttemptsAction),
+                    preferences = listOf(PasswordAttemptsActionPref),
                 ),
             )
         ),

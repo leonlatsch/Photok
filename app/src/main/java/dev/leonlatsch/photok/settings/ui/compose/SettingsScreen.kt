@@ -71,7 +71,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -290,15 +289,16 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var subPageKey by rememberSaveable { mutableStateOf<String?>(null) }
 
-    BackHandler(enabled = subPageKey != null) { subPageKey = null }
+    BackHandler(enabled = uiState.subPageKey != null) {
+        viewModel.handleUiEvent(SettingsUiEvent.SetSubPageKey(null))
+    }
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         AnimatedContent(
-            targetState = subPageKey,
+            targetState = uiState.subPageKey,
             transitionSpec = {
                 if (targetState != null) {
                     (slideInHorizontally { it } + fadeIn()) togetherWith
@@ -320,14 +320,12 @@ fun SettingsScreen() {
                         page = it,
                         proFeaturesActive = uiState.proFeaturesActive,
                         handleUiEvent = viewModel::handleUiEvent,
-                        onBack = { subPageKey = null },
                     )
                 }
             } else {
                 SettingsContent(
                     uiState = uiState,
                     handleUiEvent = viewModel::handleUiEvent,
-                    onNavigateToSubPage = { subPageKey = it },
                 )
             }
         }
@@ -341,7 +339,6 @@ fun SettingsScreen() {
 fun SettingsContent(
     uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
-    onNavigateToSubPage: (String) -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -356,7 +353,6 @@ fun SettingsContent(
             sections = uiState.screenConfig.sections,
             proFeaturesActive = uiState.proFeaturesActive,
             handleUiEvent = handleUiEvent,
-            onNavigateToSubPage = onNavigateToSubPage,
             scrollBehavior = scrollBehavior,
             contentPadding = contentPadding,
         )
@@ -369,7 +365,6 @@ fun SettingsSubPageScreen(
     page: Preference.Page,
     proFeaturesActive: Boolean,
     handleUiEvent: (SettingsUiEvent) -> Unit,
-    onBack: () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -377,7 +372,9 @@ fun SettingsSubPageScreen(
             LargeTopAppBar(
                 title = { Text(stringResource(page.title)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(
+                        onClick = { handleUiEvent(SettingsUiEvent.SetSubPageKey(null)) }
+                    ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
                             contentDescription = null,
@@ -392,7 +389,6 @@ fun SettingsSubPageScreen(
             sections = page.subPageConfig.sections,
             proFeaturesActive = proFeaturesActive,
             handleUiEvent = handleUiEvent,
-            onNavigateToSubPage = {},
             scrollBehavior = scrollBehavior,
             contentPadding = contentPadding,
         )
@@ -405,7 +401,6 @@ private fun SettingsPreferenceSections(
     sections: List<PreferenceSection>,
     proFeaturesActive: Boolean,
     handleUiEvent: (SettingsUiEvent) -> Unit,
-    onNavigateToSubPage: (String) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     contentPadding: PaddingValues,
 ) {
@@ -480,7 +475,9 @@ private fun SettingsPreferenceSections(
                                         title = stringResource(preference.title),
                                         summary = stringResource(preference.summary),
                                         proFeature = preference.proFeature,
-                                        onClick = { onNavigateToSubPage(preference.key) },
+                                        onClick = {
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
+                                        },
                                         proFeaturesActive = proFeaturesActive,
                                         trailing = {
                                             Icon(
@@ -743,7 +740,6 @@ private fun Preview() {
                     screenConfig = FreePreferenceScreenConfig,
                 ),
                 handleUiEvent = {},
-                onNavigateToSubPage = {},
             )
         }
     }
@@ -760,7 +756,6 @@ private fun PreviewDark() {
                     screenConfig = FreePreferenceScreenConfig,
                 ),
                 handleUiEvent = {},
-                onNavigateToSubPage = {},
             )
         }
     }

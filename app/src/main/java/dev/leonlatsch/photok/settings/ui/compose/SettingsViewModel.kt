@@ -36,9 +36,11 @@ import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,10 +48,16 @@ data class SettingsUiState(
     val screenConfig: PreferenceScreenConfig = ActiveSettingsConfig,
     val preferencesValues: Map<String, *> = emptyMap<String, String>(),
     val proFeaturesActive: Boolean = false,
-)
+    val subPageKey: String? = null,
+) {
+    data class Inputs(
+        val subPageKey: String? = null,
+    )
+}
 
 sealed interface SettingsUiEvent {
     data class OnPreferenceClick(val preference: Preference, val value: Any?) : SettingsUiEvent
+    data class SetSubPageKey(val key: String?) : SettingsUiEvent
 }
 
 @HiltViewModel
@@ -62,15 +70,18 @@ class SettingsViewModel @Inject constructor(
     private val proFeaturesActive: ProFeaturesActiveUseCase,
 ) : ViewModel() {
 
+    private val inputs = MutableStateFlow(SettingsUiState.Inputs())
 
     val uiState = combine(
+        inputs,
         config.valuesFlow,
         proFeaturesActive.observe(),
-    ) { values, proFeaturesActive ->
+    ) { inputs, values, proFeaturesActive ->
         SettingsUiState(
             screenConfig = ActiveSettingsConfig,
             preferencesValues = values,
             proFeaturesActive = proFeaturesActive,
+            subPageKey = inputs.subPageKey,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -102,8 +113,16 @@ class SettingsViewModel @Inject constructor(
                         event.value as Boolean
                     )
 
+                    is Preference.Page -> inputs.update {
+                        it.copy(subPageKey = event.preference.key)
+                    }
+
                     is Preference.Simple -> Unit
                 }
+            }
+
+            is SettingsUiEvent.SetSubPageKey -> inputs.update {
+                it.copy(subPageKey = event.key)
             }
         }
     }
