@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.unlock.ui
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
-import dev.leonlatsch.photok.pro.passwordattempts.ErasedOverlay
 import dev.leonlatsch.photok.pro.passwordattempts.LockoutOverlay
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +31,7 @@ internal fun ComposeView.bindLockoutState(
         val state by stateFlow.collectAsState()
         when (val s = state) {
             is UnlockState.Locked -> AppTheme { LockoutOverlay(s.lockedUntil, onUnlocked) }
-            UnlockState.Erased -> AppTheme { ErasedOverlay() }
+            UnlockState.Erased -> Unit // Silent
             else -> Unit
         }
     }
