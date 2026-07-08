@@ -115,7 +115,7 @@ fun ImageViewerScreen(
             }
         }
 
-        LaunchedEffect(pagerState.settledPage, uiState.items) {
+        LaunchedEffect(currentItem?.photo?.uuid) {
             val item = currentItem
             if (item is ImageViewerItem.Video) {
                 player.apply {
