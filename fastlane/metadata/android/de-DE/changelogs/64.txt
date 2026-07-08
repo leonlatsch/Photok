@@ -1,0 +1,3 @@
+- Fix: Video Player swiping
+- Improve Video Thumbnails
+- Improve translations
