@@ -21,10 +21,8 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class EraseVaultUseCase @Inject constructor(
+class ResetVaultUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
     private val vaultService: VaultService,
@@ -47,5 +45,20 @@ class EraseVaultUseCase @Inject constructor(
         config.legacyUserSalt = null
 
         sessionRepository.reset()
+    }
+}
+
+class EraseVaultDataUseCase @Inject constructor(
+    private val photoRepository: PhotoRepository,
+    private val albumRepository: AlbumRepository,
+) {
+    suspend operator fun invoke() {
+        val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
+        for (photo in allPhotos) {
+            photoRepository.deleteInternalPhotoData(photo)
+        }
+        photoRepository.deleteAll()
+        albumRepository.deleteAll()
+        albumRepository.unlinkAll()
     }
 }

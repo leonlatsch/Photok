@@ -31,5 +31,4 @@ sealed class UnlockState {
     data object StartLegacyMigration : UnlockState()
     data object ShowRecoveryPhrase : UnlockState()
     data class Locked(val lockedUntil: Long) : UnlockState()
-    data object Erased : UnlockState()
 }

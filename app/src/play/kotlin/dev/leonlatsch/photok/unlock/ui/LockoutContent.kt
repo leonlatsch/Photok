@@ -31,7 +31,6 @@ internal fun ComposeView.bindLockoutState(
         val state by stateFlow.collectAsState()
         when (val s = state) {
             is UnlockState.Locked -> AppTheme { LockoutOverlay(s.lockedUntil, onUnlocked) }
-            UnlockState.Erased -> Unit // Silent
             else -> Unit
         }
     }

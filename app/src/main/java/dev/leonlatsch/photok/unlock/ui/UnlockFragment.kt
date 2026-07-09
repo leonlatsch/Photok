@@ -107,7 +107,6 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                     }
 
                     is UnlockState.Locked -> Unit
-                    UnlockState.Erased -> Unit
                 }
             }
         }

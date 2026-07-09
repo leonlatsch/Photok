@@ -111,14 +111,6 @@ class Config(context: Context) {
         get() = getString(SECURITY_PANIC_LOCK, SECURITY_PANIC_LOCK_DEFAULT) ?: SECURITY_PANIC_LOCK_DEFAULT
         set(value) = putString(SECURITY_PANIC_LOCK, value)
 
-    var securityMaxPasswordAttempts: String
-        get() = getString(SECURITY_MAX_PASSWORD_ATTEMPTS, SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT) ?: SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT
-        set(value) = putString(SECURITY_MAX_PASSWORD_ATTEMPTS, value)
-
-    var securityPasswordAttemptsAction: String
-        get() = getString(SECURITY_PASSWORD_ATTEMPTS_ACTION, SECURITY_PASSWORD_ATTEMPTS_ACTION_DEFAULT) ?: SECURITY_PASSWORD_ATTEMPTS_ACTION_DEFAULT
-        set(value) = putString(SECURITY_PASSWORD_ATTEMPTS_ACTION, value)
-
     /**
      * Determines if files should be deleted after importing them.
      */
@@ -288,11 +280,6 @@ class Config(context: Context) {
         const val SECURITY_PANIC_LOCK = "security^panicLock"
         const val SECURITY_PANIC_LOCK_DEFAULT = "none"
 
-        const val SECURITY_MAX_PASSWORD_ATTEMPTS = "security^maxPasswordAttempts"
-        const val SECURITY_MAX_PASSWORD_ATTEMPTS_DEFAULT = "0"
-
-        const val SECURITY_PASSWORD_ATTEMPTS_ACTION = "security^passwordAttemptsAction"
-        const val SECURITY_PASSWORD_ATTEMPTS_ACTION_DEFAULT = "lockout"
 
         const val IMAGE_VIEWER_LOOP_VIDEO = "imageViewer^loopVideo"
         const val IMAGE_VIEWER_LOOP_VIDEO_DEFAULT = false

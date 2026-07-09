@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.encryption.domain.EraseVaultUseCase
+import dev.leonlatsch.photok.encryption.domain.ResetVaultUseCase
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
@@ -59,7 +59,7 @@ class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
-    private val eraseVaultUseCase: EraseVaultUseCase,
+    private val resetVaultUseCase: ResetVaultUseCase,
     private val proFeaturesActive: ProFeaturesActiveUseCase,
 ) : ViewModel() {
 
@@ -159,6 +159,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun resetApp() = viewModelScope.launch {
-        eraseVaultUseCase()
+        resetVaultUseCase()
     }
 }
