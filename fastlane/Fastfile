@@ -4,7 +4,7 @@
 # other runner) only has to invoke a lane. Everything below also works locally.
 #
 # Distribution channels:
-#   * Google Play   -> signed `play` AAB, uploaded via supply (draft)
+#   * Google Play   -> signed `play` AAB, published via supply
 #   * GitHub release -> signed `foss` APK attached (IzzyOnDroid picks it up)
 #   * F-Droid        -> builds the `foss` flavor itself from the pushed git tag
 #
@@ -35,7 +35,7 @@ platform :android do
   # ---- Release ------------------------------------------------------------
   #
 
-  desc "Full release: build & sign Play AAB + FOSS APK, upload AAB to Play (draft), create GitHub release with the APK"
+  desc "Full release: build & sign Play AAB + FOSS APK, publish AAB to Play, create GitHub release with the APK"
   lane :release do
     version_name = gradle_property("appVersionName")
     version_code = gradle_property("appVersionCode")
@@ -59,11 +59,16 @@ platform :android do
     )
     apk_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
 
-    # Upload the AAB to Google Play as a draft. supply reads the changelog for
-    # this version code from fastlane/metadata/android/<locale>/changelogs/.
+    # AGP appends "-signed" to APKs signed via injected signing. Drop it so the
+    # GitHub release asset is named e.g. photok-3.2.0-foss.apk.
+    release_apk = apk_path.sub("-signed.apk", ".apk")
+    FileUtils.mv(apk_path, release_apk) if apk_path != release_apk
+
+    # Publish the AAB to Google Play. supply reads the changelog for this
+    # version code from fastlane/metadata/android/<locale>/changelogs/.
     upload_to_play_store(
       track: ENV["PLAY_TRACK"] || "production",
-      release_status: "draft",
+      release_status: "completed",
       aab: aab_path,
 
       skip_upload_apk: true,
@@ -78,11 +83,10 @@ platform :android do
     # Create the GitHub release for the (already pushed) tag and attach the APK.
     set_github_release(
       repository_name: REPO,
-      api_token: ENV["GITHUB_TOKEN"],
-      name: "#{version_name}",
+      api_bearer: ENV["GITHUB_TOKEN"], # This this and NOT api_token. If running from github actions
       tag_name: tag,
-      description: changelog_for(version_code),
-      upload_assets: [apk_path]
+      is_generate_release_notes: true,
+      upload_assets: [release_apk]
     )
   end
 
@@ -167,14 +171,6 @@ end
 
 def changelog_path(version_code)
   File.expand_path("metadata/android/en-US/changelogs/#{version_code}.txt", __dir__)
-end
-
-def changelog_for(version_code)
-  path = changelog_path(version_code)
-  return "Release #{version_code}" unless File.exist?(path)
-
-  text = File.read(path).strip
-  text.empty? ? "Release #{version_code}" : text
 end
 
 # After license*ReleaseReport runs, the html lands in the variant-specific
