@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
 }
 
 android {
@@ -16,6 +17,10 @@ android {
     productFlavors {
         create("play") { dimension = "distribution" }
         create("foss") { dimension = "distribution" }
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     compileOptions {
@@ -59,4 +64,12 @@ dependencies {
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Compose (AppTheme lives here so it can be shared across modules for previews)
+    api(platform("androidx.compose:compose-bom:2026.02.00"))
+    api("androidx.compose.ui:ui")
+    api("androidx.compose.foundation:foundation")
+    api("androidx.compose.material3:material3")
+    api("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 }
