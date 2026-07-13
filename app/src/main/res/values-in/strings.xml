@@ -49,11 +49,9 @@
     <string name="setup_confirm_password">Konfirmasi kata sandimu</string>
     <string name="setup_password_strength_label">Kekuatan kata sandimu:</string>
     <string name="setup_button">Buat</string>
-    <string name="setup_password_strength_very_weak">Sangat lemah</string>
     <string name="setup_password_strength_weak">Lemah</string>
     <string name="setup_password_strength_moderate">Sedang</string>
     <string name="setup_password_strength_strong">Kuat</string>
-    <string name="setup_password_strength_very_strong">Sangat kuat</string>
     <string name="setup_password_match_warning">\u26A0 Kata sandi tidak sama</string>
     <string name="setupSetup">Pengaturan Awal</string>
 
