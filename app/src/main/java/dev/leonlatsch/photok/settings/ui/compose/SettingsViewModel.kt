@@ -29,7 +29,7 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
-import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
+import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.ActiveSettingsConfig
 import dev.leonlatsch.photok.settings.domain.Preference
@@ -60,7 +60,7 @@ class SettingsViewModel @Inject constructor(
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
     private val resetVaultUseCase: ResetVaultUseCase,
-    private val proFeaturesActive: ProFeaturesActiveUseCase,
+    private val proFeaturesActive: PurchaseService,
 ) : ViewModel() {
 
     val uiState = combine(

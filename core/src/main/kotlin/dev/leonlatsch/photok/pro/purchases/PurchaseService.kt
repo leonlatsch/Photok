@@ -17,8 +17,11 @@
 package dev.leonlatsch.photok.pro.purchases
 
 import android.content.Context
+import kotlinx.coroutines.flow.StateFlow
 
 interface PurchaseService {
     fun init(context: Context)
     suspend fun getOfferings(): List<String>
+    fun get(): Boolean
+    fun observe(): StateFlow<Boolean>
 }

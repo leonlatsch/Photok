@@ -24,15 +24,10 @@ import dev.leonlatsch.photok.pro.PasswordAttemptsUseCaseImpl
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycleImpl
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
-import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCase
-import dev.leonlatsch.photok.pro.domain.ProFeaturesActiveUseCaseImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface ProFeaturesModule {
-
-    @Binds
-    fun bindProFeaturesActiveUseCase(impl: ProFeaturesActiveUseCaseImpl): ProFeaturesActiveUseCase
 
     @Binds
     fun bindProFeaturesLifecycle(impl: ProFeaturesLifecycleImpl): ProFeaturesLifecycle

@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.pro.purchases
 
 import android.content.Context
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class PurchaseServiceStub @Inject constructor() : PurchaseService {
@@ -26,4 +28,8 @@ class PurchaseServiceStub @Inject constructor() : PurchaseService {
     override suspend fun getOfferings(): List<String> {
         throw NotImplementedError()
     }
+
+    override fun get(): Boolean = false
+
+    override fun observe(): StateFlow<Boolean> = MutableStateFlow(false)
 }
