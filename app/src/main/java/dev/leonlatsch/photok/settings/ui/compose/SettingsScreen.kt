@@ -91,7 +91,7 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
-import dev.leonlatsch.photok.pro.ui.showPaywall
+import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.FreePreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.Preference

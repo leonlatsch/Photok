@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,30 +14,25 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.ui.components
+package dev.leonlatsch.photok.ui.uicomponents
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.core.R
 
 @Composable
 fun AppName(
-    color: Color = colorResource(R.color.appTitleColor),
     fontSize: TextUnit = 38.sp,
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = stringResource(R.string.app_name),
-        color = color,
+        text = "Photok",
         fontFamily = FontFamily(Font(R.font.lobster_regular)),
         fontSize = fontSize,
         modifier = modifier

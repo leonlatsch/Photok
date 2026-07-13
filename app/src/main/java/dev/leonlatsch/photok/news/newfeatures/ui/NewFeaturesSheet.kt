@@ -65,8 +65,8 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.AppName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

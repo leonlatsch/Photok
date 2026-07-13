@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.ui
+package dev.leonlatsch.photok.pro.paywall
 
 import android.app.Activity
 

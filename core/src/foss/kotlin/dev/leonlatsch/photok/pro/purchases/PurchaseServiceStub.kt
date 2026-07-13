@@ -25,10 +25,6 @@ class PurchaseServiceStub @Inject constructor() : PurchaseService {
     override fun init(context: Context) {
     }
 
-    override suspend fun getOfferings(): List<String> {
-        throw NotImplementedError()
-    }
-
     override fun get(): Boolean = false
 
     override fun observe(): StateFlow<Boolean> = MutableStateFlow(false)
