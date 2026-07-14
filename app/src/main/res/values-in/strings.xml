@@ -98,8 +98,8 @@
     <string name="view_photo_detail_file_type_label">Jenis file</string>
     <string name="view_photo_detail_size_label">Ukuran file</string>
     <string name="view_photo_detail_last_modified">Terakhir diubah</string>
-    <string name="view_photo_loop_video_disabled">Mode perulangan dinonaktifkan</string>
-    <string name="view_photo_loop_video_enabled">Mode perulangan diaktifkan</string>
+    <string name="view_photo_loop_video_disabled">Mode pengulangan dinonaktifkan</string>
+    <string name="view_photo_loop_video_enabled">Mode pengulangan diaktifkan</string>
     <string name="view_photo_video_playback_speed">Kecepatan pemutaran</string>
 
     <!-- MAIN MENU -->
@@ -119,15 +119,15 @@
     <string name="viewer_unpin_confirmation">Dilepas dari sematan</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">Yakin kamu ingin <b>menghapus</b> %1$d file?</string>
-    <string name="delete_are_you_sure_this">Yakin kamu ingin <b>menghapus</b> file ini?</string>
+    <string name="delete_are_you_sure">Kamu yakin ingin <b>menghapus</b> %1$d file?</string>
+    <string name="delete_are_you_sure_this">Kamu yakin ingin <b>menghapus</b> file ini?</string>
     <string name="delete_deleting">Menghapus file…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">Yakin kamu ingin <b>mengekspor</b> %1$d file kembali ke galerimu?</string>
-    <string name="export_and_delete_are_you_sure">Yakin kamu ingin <b>mengekspor</b> %1$d file kembali ke galerimu dan menghapusnya setelah itu?</string>
-    <string name="export_are_you_sure_this">Yakin kamu ingin <b>mengekspor</b> file ini ke galerimu?</string>
-    <string name="export_and_delete_are_you_sure_this">Yakin kamu ingin <b>mengekspor</b> file ini ke galerimu dan menghapusnya setelah itu?</string>
+    <string name="export_are_you_sure">Kamu yakin ingin <b>mengekspor</b> %1$d file kembali ke galerimu?</string>
+    <string name="export_and_delete_are_you_sure">Kamu yakin ingin <b>mengekspor</b> %1$d file kembali ke galerimu dan menghapusnya setelah itu?</string>
+    <string name="export_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu?</string>
+    <string name="export_and_delete_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu dan menghapusnya setelah itu?</string>
     <string name="export_exporting">Mengekspor file…</string>
     <string name="export_permission_rationale">Photok perlu akses ke penyimpanan kamu untuk mengekspor file.</string>
     <string name="export_finished">Telah diekspor</string>
@@ -172,8 +172,8 @@
     <string name="settings_security_timeout_ten_minute">10 Menit</string>
     <string name="settings_security_timeout_never">Tidak Pernah</string>
     <string name="settings_security_launch_code_title">Kode Rahasia Peluncuran</string>
-    <string name="settings_security_launch_code_summary">Kode rahasia untuk meluncurkan Photok dari dialer ponselmu.</string>
-    <string name="settings_security_launch_code_message">Masukkan *#*#[kodemu]#*#* di dialer ponselmu untuk meluncurkan Photok.</string>
+    <string name="settings_security_launch_code_summary">Kode rahasia untuk meluncurkan Photok dari aplikasi dialer ponselmu.</string>
+    <string name="settings_security_launch_code_message">Masukkan *#*#[kodemu]#*#* di aplikasi dialer ponselmu untuk meluncurkan Photok.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="settings_security_hide_app_title">Sembunyikan Aplikasi</string>
@@ -183,7 +183,7 @@
     <string name="settings_category_advanced_summary">Gunakan dengan hati-hati</string>
     <string name="settings_advanced_reset_title">Atur Ulang Brankas</string>
     <string name="settings_advanced_reset_summary">Hapus data dan atur ulang kata sandi</string>
-    <string name="settings_advanced_reset_confirmation">Yakin kamu BENAR-BENAR ingin mengatur ulang brankasmu? Semua data akan hilang!</string>
+    <string name="settings_advanced_reset_confirmation">Kamu yakin BENAR-BENAR ingin mengatur ulang brankasmu? Semua data akan hilang!</string>
     <string name="settings_advanced_backup_title">Cadangan</string>
     <string name="settings_advanced_backup_summary">Buat cadangan brankasmu</string>
     <string name="settings_advanced_delete_imported_title">Hapus file yang telah diimpor</string>
@@ -201,7 +201,7 @@
     <string name="settings_other_donate_summary">Dukung pengembangan Photok</string>
     <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
     <string name="settings_other_sourcecode_title">Kode Sumber</string>
-    <string name="settings_other_sourcecode_summary">Berkontribusi untuk Photok</string>
+    <string name="settings_other_sourcecode_summary">Berkontribusi pada Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Kredit</string>
     <string name="settings_other_credits_summary">Kontributor dan kredit</string>
@@ -238,9 +238,9 @@
     <string name="hide_app_status_visible">TERLIHAT</string>
     <string name="hide_app_status_hidden">TERSEMBUNYI</string>
     <string name="hide_app_app_name_stealth">Dialer</string>
-    <string name="hide_app_confirm_hide">Yakin kamu ingin menyembunyikan Photok?</string>
-    <string name="hide_app_confirm_show">Yakin kamu ingin menampilkan Photok lagi?</string>
-    <string name="hide_app_hint">Setelah disembunyikan, Photok hanya bisa dijalankan dari dial pad ponsel, dengan kode rahasia peluncuranmu.</string>
+    <string name="hide_app_confirm_hide">Kamu yakin ingin menyembunyikan Photok?</string>
+    <string name="hide_app_confirm_show">Kamu yakin ingin menampilkan Photok lagi?</string>
+    <string name="hide_app_hint">Setelah disembunyikan, Photok hanya bisa dijalankan dari dial pad di aplikasi dialer pada ponselmu, dengan kode rahasia peluncuranmu.</string>
     <string name="hide_app_hint_current_code">Kode peluncuran saat ini:</string>
 
     <!-- ON BOARDING -->
@@ -249,11 +249,11 @@
     <string name="onboarding_skip"><u>Lewati</u></string>
 
     <string name="onboarding_slide1_title">Selamat datang di</string>
-    <string name="onboarding_slide1_description">Tempat aman untuk fotomu.</string>
+    <string name="onboarding_slide1_description">Tempat aman untuk foto dan video kamu.</string>
     <string name="onboarding_slide2_title">Buat kata sandi</string>
-    <string name="onboarding_slide2_description">Buat kata sandi yang aman. Kata sandimu dipakai untuk mengenkripsi fotomu secara langsung di ponselmu.</string>
+    <string name="onboarding_slide2_description">Buat kata sandi yang aman. Kata sandimu dipakai untuk mengenkripsi foto dan video kamu secara langsung di ponselmu.</string>
     <string name="onboarding_slide3_title">Mulai Mengimpor</string>
-    <string name="onboarding_slide3_description">Mulai impor fotomu dan jaga keamanannya dari orang lain.\nSetelah itu kamu bisa menghapusnya di galerimu.</string>
+    <string name="onboarding_slide3_description">Mulai impor foto dan video kamu untuk menjaga keamanannya dari orang lain.\nSetelah itu kamu bisa menghapusnya dari galerimu.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Membuat cadangan…</string>
@@ -307,9 +307,8 @@
 
     <string name="notification_channel_background_tasks">Tugas Latar Belakang</string>
     <string name="migration_error_extract_data">Ekstrak data</string>
-    <string name="migration_error_extract_confirmation_text">Yakin kamu ingin mengekstrak semua file kamu TANPA ENKRIPSI ke dalam file ZIP?</string>
+    <string name="migration_error_extract_confirmation_text">Kamu yakin ingin mengekstrak semua file kamu TANPA ENKRIPSI ke dalam file ZIP?</string>
     <string name="migration_error_extracting_title">Mendekripsi ke ZIP…</string>
-
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Buka Kunci Photok</string>
@@ -341,12 +340,12 @@
     <string name="video_player_pause">Jeda</string>
     <string name="video_player_mute">Bisukan</string>
     <string name="video_player_unmute">Aktifkan Suara</string>
-    
+
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Bantu tingkatkan Photok</string>
     <string name="telemetry_sheet_paragraph_1">Photok bisa mengirim statistik penggunaan anonim untuk membantu meningkatkan aplikasi.</string>
     <string name="telemetry_sheet_paragraph_2">Data yang diproses sepenuhnya dianonimkan dan tidak memungkinkan penarikan kesimpulan apa pun tentang informasi pribadimu.</string>
-    <string name="telemetry_sheet_paragraph_3">Mengirim data penggunaan anonim itu opsional dan bisa dimatikan kapan saja di pengaturan.</string>
+    <string name="telemetry_sheet_paragraph_3">Mengirim data penggunaan anonim itu bersifat opsional dan bisa dimatikan kapan saja di pengaturan.</string>
     <string name="telemetry_learn_more">Pelajari lebih lanjut</string>
     <string name="telemetry_choice_no">Tidak, terima kasih</string>
     <string name="telemetry_choice_yes">Bagikan data penggunaan anonim</string>
