@@ -46,7 +46,7 @@ class AlbumDetailNavigator @Inject constructor() {
         event: NavigationEvent.StartImport,
         fragmentManager: FragmentManager
     ) {
-       ImportBottomSheetDialogFragment(
+       ImportBottomSheetDialogFragment.newInstance(
            uris = event.fileUris,
            albumUUID = event.albumUuid,
            importSource = ImportSource.InApp,

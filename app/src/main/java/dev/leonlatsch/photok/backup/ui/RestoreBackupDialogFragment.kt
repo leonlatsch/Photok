@@ -19,7 +19,7 @@ package dev.leonlatsch.photok.backup.ui
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
@@ -41,7 +41,7 @@ import javax.inject.Inject
 class RestoreBackupDialogFragment() :
     BindableDialogFragment<DialogRestoreBackupBinding>(R.layout.dialog_restore_backup) {
 
-    private val viewModel: RestoreBackupViewModel by viewModels()
+    private val viewModel: RestoreBackupViewModel by activityViewModels()
 
     @Inject
     lateinit var inAppReview: InAppReview
@@ -110,10 +110,8 @@ class RestoreBackupDialogFragment() :
     }
 
     fun onRestoreAndUnlock() {
-        val unlockDialog = UnlockBackupDialogFragment(uri = uri, metaData = viewModel.metaData!!) { session ->
-                viewModel.restoreBackup(session)
-            }
-        unlockDialog.show(requireActivity().supportFragmentManager)
+        UnlockBackupDialogFragment.newInstance(uri)
+            .show(requireActivity().supportFragmentManager)
     }
 
     override fun bind(binding: DialogRestoreBackupBinding) {

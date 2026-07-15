@@ -16,11 +16,16 @@
 
 package dev.leonlatsch.photok.model.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.sort.domain.Sort
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -62,6 +67,14 @@ interface PhotoDao {
      */
     @Query("SELECT * FROM photo WHERE photo_uuid = :uuid")
     suspend fun get(uuid: String): Photo
+
+    /**
+     * Get one [Photo] by [id].
+     *
+     * @return the photo with [id]
+     */
+    @Query("SELECT * FROM photo WHERE photo_uuid IN (:uuids)")
+    suspend fun get(uuids: List<String>): List<Photo>
 
     /**
      * Get all photos, ordered by imported At (desc).

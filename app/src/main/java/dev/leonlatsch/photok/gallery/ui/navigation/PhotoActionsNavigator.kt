@@ -50,14 +50,14 @@ class PhotoActionsNavigator @Inject constructor() {
         target: Uri,
         fragmentManager: FragmentManager,
     ) {
-        ExportBottomSheetDialogFragment(photos, target).show(fragmentManager)
+        ExportBottomSheetDialogFragment.newInstance(photos, target).show(fragmentManager)
     }
 
     private fun confirmAndDelete(
         photos: List<Photo>,
         fragmentManager: FragmentManager
     ) {
-        DeleteBottomSheetDialogFragment(photos).show(fragmentManager)
+        DeleteBottomSheetDialogFragment.newInstance(photos).show(fragmentManager)
     }
 
     private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navController: NavController) {

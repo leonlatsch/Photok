@@ -64,7 +64,7 @@ class ImportSharedViewModel @Inject constructor(
         when (event) {
             is ImportSharedUiEvent.ClearSharedUris -> sharedUrisStore.reset()
             is ImportSharedUiEvent.StartImportShared -> {
-                ImportBottomSheetDialogFragment(
+                ImportBottomSheetDialogFragment.newInstance(
                     uris = uiState.value.sharedUris.toList(),
                     albumUUID = null,
                     importSource = ImportSource.Share,

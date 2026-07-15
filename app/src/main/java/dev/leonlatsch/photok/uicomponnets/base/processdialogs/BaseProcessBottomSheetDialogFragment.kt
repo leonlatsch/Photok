@@ -38,19 +38,18 @@ import kotlinx.coroutines.launch
  * Holds an [BaseProcessViewModel] which also needs to be overridden.
  * [viewModel] is abstract and needs to be set in the child.
  *
- * @param processingLabelTextResource The string resource to be displayed while processing.
  * @param T Type of elements to be processed
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-abstract class BaseProcessBottomSheetDialogFragment<T>(
-    private val itemSource: List<T>?,
-    @StringRes private val processingLabelTextResource: Int,
-    val canAbort: Boolean
-) : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
+abstract class BaseProcessBottomSheetDialogFragment<T> : BindableBottomSheetDialogFragment<DialogBottomSheetProcessBinding>(
     R.layout.dialog_bottom_sheet_process
 ) {
+    @get:StringRes
+    abstract val processingLabelTextResource: Int
+    abstract val canAbort: Boolean
+    open val itemSource: List<T>? = null
 
     /**
      * Abstract [BaseProcessViewModel].

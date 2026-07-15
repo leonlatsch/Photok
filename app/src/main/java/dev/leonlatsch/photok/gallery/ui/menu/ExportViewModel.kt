@@ -36,7 +36,14 @@ class ExportViewModel @Inject constructor(
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {
 
+    var photoUuids: List<String> = emptyList()
     lateinit var target: Uri
+
+    override suspend fun preProcess() {
+        items = photoRepository.get(photoUuids)
+        elementsToProcess = items.size
+        super.preProcess()
+    }
 
     override suspend fun processItem(item: Photo) {
         val result = photoRepository.exportPhoto(item, target)
