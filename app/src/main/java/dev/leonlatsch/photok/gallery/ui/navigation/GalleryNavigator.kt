@@ -46,7 +46,7 @@ class GalleryNavigator @Inject constructor() {
     }
 
     private fun startImport(fileUris: List<Uri>, fragmentManager: FragmentManager, importSource: ImportSource) {
-        ImportBottomSheetDialogFragment(
+        ImportBottomSheetDialogFragment.newInstance(
             uris = fileUris,
             albumUUID = null,
             importSource = importSource,

@@ -35,6 +35,14 @@ class DeleteViewModel @Inject constructor(
     private val photoRepository: PhotoRepository
 ) : BaseProcessViewModel<Photo>(app) {
 
+    var photoUuids: List<String> = emptyList()
+
+    override suspend fun preProcess() {
+        items = photoUuids.map { photoRepository.get(it) }
+        elementsToProcess = items.size
+        super.preProcess()
+    }
+
     override suspend fun processItem(item: Photo) {
         if (item.uuid.isEmpty()) {
             failuresOccurred = true

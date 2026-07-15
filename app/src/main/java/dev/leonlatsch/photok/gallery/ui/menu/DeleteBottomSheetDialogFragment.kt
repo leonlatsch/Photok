@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.menu
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.R
@@ -30,13 +31,25 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class DeleteBottomSheetDialogFragment(
-    photos: List<Photo>
-) : BaseProcessBottomSheetDialogFragment<Photo>(
-    photos,
-    R.string.delete_deleting,
-    true
-) {
+class DeleteBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment<Photo>() {
+
+    override val processingLabelTextResource = R.string.delete_deleting
+    override val canAbort = true
 
     override val viewModel: DeleteViewModel by viewModels()
+
+    override fun prepareViewModel(items: List<Photo>?) {
+        viewModel.photoUuids = requireArguments().getStringArrayList(ARG_UUIDS)!!
+    }
+
+    companion object {
+        private const val ARG_UUIDS = "uuids"
+
+        fun newInstance(photos: List<Photo>): DeleteBottomSheetDialogFragment =
+            DeleteBottomSheetDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putStringArrayList(ARG_UUIDS, ArrayList(photos.map { it.uuid }))
+                }
+            }
+    }
 }
