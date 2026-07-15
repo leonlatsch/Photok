@@ -41,15 +41,15 @@
     <string name="common_continue">Continuar</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importando foto(s)</string>
-    <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
-    <string name="import_sharted_question">¿Quieres importar %1$d foto(s)?</string>
+    <string name="import_importing">Importando archivo(s)</string>
+    <string name="import_permission_rationale">Photok necesita acceder al almacenamiento para importar archivos.</string>
+    <string name="import_sharted_question">¿Quieres importar %1$d archivo(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
     <string name="setup_enter_password">Introduce tu contraseña</string>
     <string name="setup_confirm_password">Confirma tu contraseña</string>
-    <string name="setup_password_strength_label">Longitud de la contraseña:</string>
+    <string name="setup_password_strength_label">Seguridad de la contraseña:</string>
     <string name="setup_button">Crear</string>
     <string name="setup_password_strength_weak">Débil</string>
     <string name="setup_password_strength_moderate">Moderada</string>
@@ -64,17 +64,17 @@
     <string name="unlock_wrong_password">\u26A0 Contraseña incorrecta</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">No hay fotos en tu baúl</string>
-    <string name="gallery_all_photos_label">Todas las Fotos</string>
+    <string name="gallery_placeholder">No hay archivos en tu baúl</string>
+    <string name="gallery_all_photos_label">Todos los archivos</string>
     <string name="gallery_albums_label">Álbumes</string>
     <string name="gallery_albums_placeholder">Crea tu primer álbum</string>
-    <string name="gallery_albums_create_title">Crear Álbum</string>
-    <string name="gallery_albums_rename_title">Renombrar Álbum</string>
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> 
-    <string name="gallery_albums_select_title">Selecciona un Álbum</string>
+    <string name="gallery_albums_create_title">Crear álbum</string>
+    <string name="gallery_albums_rename_title">Renombrar álbum</string>
+    <string name="gallery_albums_create_placeholder">Tarea ;)</string> 
+    <string name="gallery_albums_select_title">Selecciona un álbum</string>
     <string name="gallery_albums_deleted">Álbum eliminado</string>
     <string name="gallery_albums_photos_added">%1$d elementos añadidos</string>
-    <string name="magic_fab_new_album_label">Nuevo Álbum</string>
+    <string name="magic_fab_new_album_label">Nuevo álbum</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_fab_label">Importar</string>
@@ -121,16 +121,16 @@
     <string name="viewer_unpin_confirmation">Desanclado</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
-    <string name="delete_are_you_sure_this">¿Estás seguro de que quieres <b>borrar</b> esta foto?</string>
-    <string name="delete_deleting">Borrando foto(s)…</string>
+    <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d archivo(s)?</string>
+    <string name="delete_are_you_sure_this">¿Estás seguro de que quieres <b>borrar</b> este archivo?</string>
+    <string name="delete_deleting">Borrando archivo(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d foto(s), en tu galería?</string>
-    <string name="export_and_delete_are_you_sure">¿Estás seguro de querer <b>exportar</b> %1$d archivo(s), de nuevo a tu galería y eliminarlos?</string>
-    <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> esta foto en tu galería?</string>
+    <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) a tu galería?</string>
+    <string name="export_and_delete_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) de nuevo a tu galería y eliminarlos?</string>
+    <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería?</string>
     <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
-    <string name="export_exporting">Exportando foto(s)…</string>
+    <string name="export_exporting">Exportando archivo(s)…</string>
     <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar archivos.</string>
     <string name="export_finished">Exportado</string>
     <string name="export_and_delete_finished">Exportado y eliminado</string>
@@ -141,7 +141,7 @@
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
     <string name="about_third_party">Software de terceros</string>
-    <string name="about_privacy_policy">Política de Privacidad</string>
+    <string name="about_privacy_policy">Política de privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
     <string name="about_menu_news">Novedades</string>
 
@@ -161,9 +161,9 @@
     <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
     <string name="settings_security_change_password_title">Cambiar contraseña</string>
     <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
-    <string name="settings_security_biometric_title">Desbloqueo Biométrico</string>
+    <string name="settings_security_biometric_title">Desbloqueo biométrico</string>
     <string name="settings_security_biometric_summary">Desbloquear Photok con tus datos biométricos.</string>
-    <string name="settings_security_biometric_not_available">EL Desbloqueo Biométrico no esta disponible</string>
+    <string name="settings_security_biometric_not_available">El desbloqueo biométrico no está disponible</string>
     <string name="settings_security_recovery_phrase_title">Frase de recuperación</string>
     <string name="settings_security_recovery_phrase_summary">Gestiona tu frase de recuperación.</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
@@ -174,12 +174,12 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_launch_code_title">Código Secreto de Lanzamiento</string>
+    <string name="settings_security_launch_code_title">Código secreto de lanzamiento</string>
     <string name="settings_security_launch_code_summary">Código secreto para lanzar Photok desde la app de teléfono.</string>
     <string name="settings_security_launch_code_message">Introduce *#*#[tu código]#*#* en la app de teléfono para lanzar Photok.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="settings_security_hide_app_title">Ocultar App</string>
+    <string name="settings_security_hide_app_title">Ocultar aplicación</string>
     <string name="settings_security_hide_app_summary">Ocultar el icono de la app del cajón de aplicaciones.</string>
 
     <string name="settings_category_advanced">Avanzado</string>
@@ -187,7 +187,7 @@
     <string name="settings_advanced_reset_title">Restablecer baúl</string>
     <string name="settings_advanced_reset_summary">Borrar datos y restablecer contraseña</string>
     <string name="settings_advanced_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
-    <string name="settings_advanced_backup_title">Copia de Seguridad</string>
+    <string name="settings_advanced_backup_title">Copia de seguridad</string>
     <string name="settings_advanced_backup_summary">Crea una copia de seguridad de tu baúl</string>
     <string name="settings_advanced_delete_imported_title">Eliminar archivos importados</string>
     <string name="settings_advanced_delete_imported_summary">Eliminar archivos después de importarlos</string>
@@ -226,8 +226,8 @@
     <string name="change_password_enter_new_password">Introduce tu nueva contraseña</string>
     <string name="change_password_confirm_new_password">Confirma tu nueva contraseña</string>
     <string name="change_password_button">Cambiar contraseña</string>
-    <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
-    <string name="change_password_reencrypting">Encriptando foto(s)…</string>
+    <string name="change_password_confirm_message">¡Copia de seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todos tus archivos se vuelvan a cifrar! ¿Estás seguro de que quieres continuar?</string>
+    <string name="change_password_reencrypting">Cifrando archivo(s)…</string>
     <string name="change_password_done">Tu contraseña ha sido cambiada</string>
     <string name="change_password_recovery_phrase_used">Se usó la frase de recuperación — no es necesario verificar la contraseña anterior</string>
 
@@ -254,7 +254,7 @@
     <string name="onboarding_slide1_title">Bienvenido a</string>
     <string name="onboarding_slide1_description">Un lugar seguro para guardar tus fotos.</string>
     <string name="onboarding_slide2_title">Crea una contraseña</string>
-    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
+    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña se usa para cifrar las fotos directamente en tu teléfono.</string>
     <string name="onboarding_slide3_title">Empieza a importar</string>
     <string name="onboarding_slide3_description">Comienza a importar tus fotos y mantenlas a salvo de los demás.\nPodrás eliminarlas después en tu galería.</string>
 
@@ -263,7 +263,7 @@
     <string name="backup_restore_title">Restaurar copia de seguridad</string>
     <string name="backup_restore_validating">Validando copia de seguridad…</string>
     <string name="backup_restore_details_created_at">Creado el:</string>
-    <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
+    <string name="backup_restore_details_photos_contained">Archivos incluidos:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
     <string name="backup_restore_details_size">Tamaño:</string>
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
@@ -280,7 +280,7 @@
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menú de Recuperación</string>
     <string name="recovery_menu_item_open_photok">Abrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de Ocultar Aplicación</string>
+    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de ocultar aplicación</string>
 
 
     <!-- Migration -->
@@ -347,7 +347,7 @@
 
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Ayuda a mejorar Photok</string>
-    <string name="telemetry_sheet_paragraph_1">En Photok puedes habilitar enviar opcionalmente estadísticas de uso anónimas para ayudar a mejorar la aplicación.</string>
+    <string name="telemetry_sheet_paragraph_1">En Photok puedes habilitar el envío opcional de estadísticas de uso anónimas para ayudar a mejorar la aplicación.</string>
     <string name="telemetry_sheet_paragraph_2">El procesamiento de los datos es completamente anónimo y no permite identificar ni obtener información personal.</string>
     <string name="telemetry_sheet_paragraph_3">Enviar datos anónimos de uso es opcional y puede ser desactivado en cualquier momento desde los ajustes.</string>
     <string name="telemetry_learn_more">Saber más</string>
@@ -356,12 +356,12 @@
     <string name="telemetry_toggle">Permitir la recopilación de datos de uso</string>
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Frase de Recuperación</string>
-    <string name="recovery_phrase_title">Tu Frase de Recuperación</string>
+    <string name="recovery_phrase_label">Frase de recuperación</string>
+    <string name="recovery_phrase_title">Tu frase de recuperación</string>
     <string name="recovery_phrase_description">Anota estas palabras en orden y guárdalas en un lugar seguro. Puedes usar esta frase para recuperar el acceso a tu baúl.</string>
     <string name="recovery_phrase_confirm">Frase guardada</string>
     <string name="recovery_phrase_save_warning">Guarda tu frase de recuperación</string>
-    <string name="recovery_phrase_create_new">Crear Nueva Frase</string>
+    <string name="recovery_phrase_create_new">Crear nueva frase</string>
     <string name="recovery_phrase_create_new_confirm">Crear una nueva frase reemplazará permanentemente la actual. Tu frase existente ya no funcionará para restaurar tu baúl.</string>
     <string name="recovery_phrase_saved_to_file">Guardado en %1$s</string>
 
@@ -369,13 +369,13 @@
     <string name="recovery_phrase_select_word_count">Número de palabras</string>
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Guardar como Imagen</string>
+    <string name="recovery_phrase_qr_save_as_image">Guardar como imagen</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Olvidé mi contraseña</string>
     <string name="recovery_phrase_restore_button">Restaurar</string>
     <string name="recovery_phrase_restore_word_placeholder">Palabra %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Introduce la Frase de Recuperación</string>
+    <string name="recovery_phrase_restore_enter_title">Introduce la frase de recuperación</string>
     <string name="recovery_phrase_restore_choose_option">Elige cómo introducir tu frase.</string>
     <string name="recovery_phrase_restore_option_type">Escribir a mano</string>
     <string name="recovery_phrase_restore_option_open_file">Cargar desde archivo</string>
