@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("com.jaredsburrows.license")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.4.0"
 }
 
 val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
@@ -128,8 +128,8 @@ fun DependencyHandler.fossImplementation(dependencyNotation: Any) {
 
 dependencies {
     // Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -144,16 +144,16 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.9.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.9.7")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.9.8")
+    implementation("androidx.navigation:navigation-ui-ktx:2.9.8")
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -170,19 +170,19 @@ dependencies {
     ksp("androidx.hilt:hilt-compiler:1.3.0")
 
     // Activity KTX for viewModels()
-    implementation("androidx.activity:activity-ktx:1.12.4")
+    implementation("androidx.activity:activity-ktx:1.13.0")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2026.02.00"))
+    implementation(platform("androidx.compose:compose-bom:2026.06.00"))
     implementation("androidx.compose.material3:material3:1.4.0")
     implementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.activity:activity-compose")
 
     // ZXing - QR code generation and scanning
-    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:core:3.5.4")
 
     // CameraX - camera access for QR scanning
-    val cameraXVersion = "1.4.2"
+    val cameraXVersion = "1.6.1"
     implementation("androidx.camera:camera-core:$cameraXVersion")
     implementation("androidx.camera:camera-camera2:$cameraXVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraXVersion")
@@ -198,7 +198,7 @@ dependencies {
     implementation("androidx.exifinterface", "exifinterface", "1.4.2")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.18.0")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.19.0")
 
     // Coil
     val coilVersion = "2.7.0"
@@ -207,33 +207,33 @@ dependencies {
     implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.9.2")
-    implementation("androidx.media3:media3-ui:1.9.2")
-    implementation("androidx.media3:media3-ui-compose:1.9.2")
-    implementation("androidx.media3:media3-ui-compose-material3:1.9.2")
+    implementation("androidx.media3:media3-exoplayer:1.10.1")
+    implementation("androidx.media3:media3-ui:1.10.1")
+    implementation("androidx.media3:media3-ui-compose:1.10.1")
+    implementation("androidx.media3:media3-ui-compose-material3:1.10.1")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.core:core-ktx:1.19.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.activity:activity:1.12.4")
+    implementation("androidx.activity:activity:1.13.0")
 
     // Biometric
     implementation("androidx.biometric:biometric:1.1.0")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.14.1")
-    testImplementation("io.mockk:mockk:1.14.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
     testImplementation("com.google.dagger:hilt-android-testing:2.60")
     kspTest("com.google.dagger:hilt-android-compiler:2.60")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 
     // Telemetry
-    implementation("com.telemetrydeck:kotlin-sdk:6.3.0")
+    implementation("com.telemetrydeck:kotlin-sdk:7.0.0")
 
     // Play Review
     playImplementation("com.google.android.play:review:2.0.2")
