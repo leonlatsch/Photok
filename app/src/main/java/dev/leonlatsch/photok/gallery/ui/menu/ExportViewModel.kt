@@ -40,7 +40,7 @@ class ExportViewModel @Inject constructor(
     lateinit var target: Uri
 
     override suspend fun preProcess() {
-        items = photoUuids.map { photoRepository.get(it) }
+        items = photoRepository.get(photoUuids)
         elementsToProcess = items.size
         super.preProcess()
     }

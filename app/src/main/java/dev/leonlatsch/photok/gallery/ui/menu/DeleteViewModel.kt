@@ -38,7 +38,7 @@ class DeleteViewModel @Inject constructor(
     var photoUuids: List<String> = emptyList()
 
     override suspend fun preProcess() {
-        items = photoUuids.map { photoRepository.get(it) }
+        items = photoRepository.get(photoUuids)
         elementsToProcess = items.size
         super.preProcess()
     }

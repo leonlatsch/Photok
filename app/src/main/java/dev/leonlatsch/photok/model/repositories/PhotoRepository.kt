@@ -40,7 +40,6 @@ import java.io.OutputStream
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 /**
@@ -78,6 +77,16 @@ class PhotoRepository @Inject constructor(
     suspend fun deleteAll() = photoDao.deleteAll()
 
     suspend fun get(uuid: String) = photoDao.get(uuid)
+
+    suspend fun get(uuids: List<String>): List<Photo> {
+        val photos = mutableListOf<Photo>()
+
+        uuids.chunked(900).forEach {
+            photos.addAll(photoDao.get(it))
+        }
+
+        return photos
+    }
 
     /**
      * @see PhotoDao.findAllPhotosByImportDateDesc
