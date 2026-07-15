@@ -28,6 +28,7 @@ import javax.inject.Singleton
 enum class Signal {
     OnboardingFinished,
     SetupCompleted,
+    ReviewRequested,
 }
 
 @Singleton

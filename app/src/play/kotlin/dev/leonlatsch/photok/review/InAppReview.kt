@@ -23,6 +23,8 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -35,6 +37,7 @@ class InAppReviewImpl @Inject constructor(
     private val config: Config,
     @ApplicationContext private val context: Context,
     private val appScope: CoroutineScope,
+    private val telemetryService: TelemetryService,
 ) : InAppReview {
 
     override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {
@@ -56,8 +59,16 @@ class InAppReviewImpl @Inject constructor(
 
                 request.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        config.inAppReviewRequested = true
+                        launch {
+                            config.inAppReviewRequested = true
+                            telemetryService.signal(
+                                Signal.ReviewRequested,
+                                mapOf("trigger" to trigger.name)
+                            )
+                        }
+
                         manager.launchReviewFlow(activity, task.result)
+
                     }
                 }
             }
