@@ -115,10 +115,10 @@
     <string name="menu_ms_info">%1$d elemento(s) seleccionado(s)</string>
     <string name="menu_ms_add_to_album">Añadir al álbum</string>
     <string name="menu_ms_remove_from_album">Eliminar del álbum</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Anclar arriba</string>
+    <string name="menu_ms_unpin">Desanclar</string>
+    <string name="viewer_pin_confirmation">Anclado</string>
+    <string name="viewer_unpin_confirmation">Desanclado</string>
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
@@ -284,35 +284,35 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bienvenido a</string>
+    <string name="migration_initial_explaination">Esta versión de Photok introduce un nuevo método de cifrado. Para continuar a tu galería, se requiere una migración.</string>
+    <string name="migration_initial_button">Empezar</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Haz una copia de seguridad de tus datos</string>
+    <string name="migration_initial_stage_backup_explanation">Crea una copia de seguridad de tus datos antes de continuar</string>
+    <string name="migration_initial_stage_backup_button">Crear copia de seguridad</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Conceder permiso</string>
+    <string name="migration_initial_stage_permission_explanation">Concede permisos de notificación para ejecutar la migración de forma segura en segundo plano.</string>
+    <string name="migration_initial_stage_permission_button">Conceder permiso</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Todo listo</string>
+    <string name="migration_initial_stage_ready_button">Iniciar migración</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Migrando tu galería</string>
+    <string name="migration_running_progress">%d de %d archivos procesados</string>
+    <string name="migration_running_advice">Si esta pantalla se mantiene abierta, la migración será más rápida</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migración de galería terminada</string>
+    <string name="migration_done_progress">Todos los archivos migrados</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Error al migrar tu galería</string>
+    <string name="migration_error_button">Enviar informe de error</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tareas en segundo plano</string>
+    <string name="migration_error_extract_data">Extraer datos</string>
+    <string name="migration_error_extract_confirmation_text">¿Estás seguro de que quieres extraer todos tus archivos SIN CIFRAR a un archivo ZIP?</string>
+    <string name="migration_error_extracting_title">Descifrando a ZIP…</string>
 
 
     <!-- Biometric -->
@@ -358,39 +358,39 @@
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Frase de Recuperación</string>
     <string name="recovery_phrase_title">Tu Frase de Recuperación</string>
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_description">Anota estas palabras en orden y guárdalas en un lugar seguro. Puedes usar esta frase para recuperar el acceso a tu baúl.</string>
+    <string name="recovery_phrase_confirm">Frase guardada</string>
+    <string name="recovery_phrase_save_warning">Guarda tu frase de recuperación</string>
+    <string name="recovery_phrase_create_new">Crear Nueva Frase</string>
+    <string name="recovery_phrase_create_new_confirm">Crear una nueva frase reemplazará permanentemente la actual. Tu frase existente ya no funcionará para restaurar tu baúl.</string>
+    <string name="recovery_phrase_saved_to_file">Guardado en %1$s</string>
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Número de palabras</string>
 
     <!-- Recovery Phrase — QR Code -->
     <string name="recovery_phrase_qr_save_as_image">Guardar como Imagen</string>
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Olvidé mi contraseña</string>
+    <string name="recovery_phrase_restore_button">Restaurar</string>
+    <string name="recovery_phrase_restore_word_placeholder">Palabra %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Introduce la Frase de Recuperación</string>
+    <string name="recovery_phrase_restore_choose_option">Elige cómo introducir tu frase.</string>
+    <string name="recovery_phrase_restore_option_type">Escribir a mano</string>
+    <string name="recovery_phrase_restore_option_open_file">Cargar desde archivo</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Escanear código QR</string>
+    <string name="recovery_phrase_restore_option_paste">Pegar desde el portapapeles</string>
+    <string name="recovery_phrase_restore_input_placeholder">Escribe tu frase de recuperación palabra por palabra</string>
+    <string name="recovery_phrase_restore_unlocked">Desbloqueado</string>
+    <string name="recovery_phrase_restore_unlocking">Desbloqueando&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">No se pudo restaurar el baúl. Comprueba tu frase e inténtalo de nuevo.</string>
+    <string name="recovery_phrase_restore_error_invalid">Frase de recuperación no válida. Por favor, comprueba las palabras.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">El código QR no contiene una frase de recuperación válida.</string>
+    <string name="recovery_phrase_restore_source_qr">Escaneado de código QR</string>
+    <string name="recovery_phrase_restore_source_file">Cargado desde %1$s</string>
+    <string name="recovery_phrase_restore_source_clipboard">Pegado desde el portapapeles</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Solicitar permiso de cámara</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Se requiere permiso de cámara para escanear códigos QR.</string>
+    <string name="permission_gate_change_in_settings">Cambiar en los ajustes</string>
 </resources>
