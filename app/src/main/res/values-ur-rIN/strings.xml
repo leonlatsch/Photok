@@ -14,9 +14,7 @@
   ~   limitations under the License.
   -->
 
-
 <resources>
-
     <!-- COMMON -->
     <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
@@ -51,9 +49,11 @@
     <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
     <string name="setup_password_strength_label">پاس ورڈ کتنا مضبوط ہے:</string>
     <string name="setup_button">بنائیں</string>
+    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
     <string name="setup_password_strength_weak">کمزور</string>
     <string name="setup_password_strength_moderate">درمیانہ</string>
     <string name="setup_password_strength_strong">بہت مضبوط</string>
+    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
     <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
     <string name="setupSetup">تیاری</string>
 
