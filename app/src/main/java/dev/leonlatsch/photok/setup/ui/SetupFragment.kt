@@ -59,8 +59,8 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
         finishOnBackWhileStarted()
 
         if (BuildConfig.DEBUG) {
-            viewModel.password = "abcd1234"
-            viewModel.confirmPassword = "abcd1234"
+            viewModel.password = "abc123"
+            viewModel.confirmPassword = "abc123"
         }
 
         viewModel.addOnPropertyChange<String>(BR.password) {

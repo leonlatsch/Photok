@@ -179,7 +179,7 @@ object PasswordUtils {
         .flatMapIndexed { row, chars -> chars.mapIndexed { col, char -> char to (row to col) } }
         .toMap()
 
-    private const val PASSWORD_MIN_LENGTH = 8
+    private const val PASSWORD_MIN_LENGTH = 6
 
     private const val LOWERCASE_POOL_SIZE = 26
     private const val UPPERCASE_POOL_SIZE = 26
