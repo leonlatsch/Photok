@@ -17,9 +17,9 @@
 package dev.leonlatsch.photok.backup.ui
 
 import android.net.Uri
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
@@ -33,19 +33,34 @@ import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomS
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class BackupBottomSheetDialogFragment(
-    private val uri: Uri,
-    private val strategy: BackupStrategy.Name
-) : BaseProcessBottomSheetDialogFragment<Photo>(
-    itemSource = null,
-    processingLabelTextResource = strategy.title,
-    canAbort = true,
-) {
+class BackupBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment<Photo>() {
+
+    private val strategy: BackupStrategy.Name by lazy {
+        BackupStrategy.Name.valueOf(requireArguments().getString(ARG_STRATEGY)!!)
+    }
+
+    override val processingLabelTextResource: Int
+        get() = strategy.title
+    override val canAbort = true
+
     override val viewModel: BackupViewModel by viewModels()
 
     override fun prepareViewModel(items: List<Photo>?) {
-        super.prepareViewModel(items)
-        viewModel.uri = uri
+        @Suppress("DEPRECATION")
+        viewModel.uri = requireArguments().getParcelable(ARG_URI)!!
         viewModel.strategyName = strategy
+    }
+
+    companion object {
+        private const val ARG_URI = "uri"
+        private const val ARG_STRATEGY = "strategy"
+
+        fun newInstance(uri: Uri, strategy: BackupStrategy.Name): BackupBottomSheetDialogFragment =
+            BackupBottomSheetDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_URI, uri)
+                    putString(ARG_STRATEGY, strategy.name)
+                }
+            }
     }
 }

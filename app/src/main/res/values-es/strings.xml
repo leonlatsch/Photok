@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020–2026 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +15,6 @@
   -->
 
 <resources>
-
     <!-- COMMON -->
     <string name="common_copyright_notice">Copyright \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
@@ -41,19 +39,21 @@
     <string name="common_continue">Continuar</string>
 
     <!-- IMPORT -->
-    <string name="import_importing">Importando foto(s)</string>
-    <string name="import_permission_rationale">Photok acceder al almacenamiento para importar fotos.</string>
-    <string name="import_sharted_question">¿Quieres importar %1$d foto(s)?</string>
+    <string name="import_importing">Importando archivo(s)</string>
+    <string name="import_permission_rationale">Photok necesita acceder al almacenamiento para importar archivos.</string>
+    <string name="import_sharted_question">¿Quieres importar %1$d archivo(s)?</string>
 
     <!-- SETUP -->
     <string name="setup_create_your_password">Crea tu contraseña</string>
     <string name="setup_enter_password">Introduce tu contraseña</string>
     <string name="setup_confirm_password">Confirma tu contraseña</string>
-    <string name="setup_password_strength_label">Longitud de la contraseña:</string>
+    <string name="setup_password_strength_label">Seguridad de la contraseña:</string>
     <string name="setup_button">Crear</string>
+    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
     <string name="setup_password_strength_weak">Débil</string>
     <string name="setup_password_strength_moderate">Moderada</string>
     <string name="setup_password_strength_strong">Fuerte</string>
+    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
     <string name="setup_password_match_warning">\u26A0 Las contraseñas no coinciden</string>
     <string name="setupSetup">Inicio</string>
 
@@ -64,17 +64,17 @@
     <string name="unlock_wrong_password">\u26A0 Contraseña incorrecta</string>
 
     <!-- GALLERY -->
-    <string name="gallery_placeholder">No hay fotos en tu baúl</string>
-    <string name="gallery_all_photos_label">Todas las Fotos</string>
+    <string name="gallery_placeholder">No hay archivos en tu baúl</string>
+    <string name="gallery_all_photos_label">Todos los archivos</string>
     <string name="gallery_albums_label">Álbumes</string>
     <string name="gallery_albums_placeholder">Crea tu primer álbum</string>
-    <string name="gallery_albums_create_title">Crear Álbum</string>
-    <string name="gallery_albums_rename_title">Renombrar Álbum</string>
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> 
-    <string name="gallery_albums_select_title">Selecciona un Álbum</string>
+    <string name="gallery_albums_create_title">Crear álbum</string>
+    <string name="gallery_albums_rename_title">Renombrar álbum</string>
+    <string name="gallery_albums_create_placeholder">Tarea ;)</string> 
+    <string name="gallery_albums_select_title">Selecciona un álbum</string>
     <string name="gallery_albums_deleted">Álbum eliminado</string>
     <string name="gallery_albums_photos_added">%1$d elementos añadidos</string>
-    <string name="magic_fab_new_album_label">Nuevo Álbum</string>
+    <string name="magic_fab_new_album_label">Nuevo álbum</string>
 
     <!-- IMPORT MENU -->
     <string name="import_menu_fab_label">Importar</string>
@@ -115,22 +115,22 @@
     <string name="menu_ms_info">%1$d elemento(s) seleccionado(s)</string>
     <string name="menu_ms_add_to_album">Añadir al álbum</string>
     <string name="menu_ms_remove_from_album">Eliminar del álbum</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Anclar arriba</string>
+    <string name="menu_ms_unpin">Desanclar</string>
+    <string name="viewer_pin_confirmation">Anclado</string>
+    <string name="viewer_unpin_confirmation">Desanclado</string>
 
     <!-- DELETE -->
-    <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d foto(s)?</string>
-    <string name="delete_are_you_sure_this">¿Estás seguro de que quieres <b>borrar</b> esta foto?</string>
-    <string name="delete_deleting">Borrando foto(s)…</string>
+    <string name="delete_are_you_sure">¿Estás seguro de que quieres <b>borrar</b> %1$d archivo(s)?</string>
+    <string name="delete_are_you_sure_this">¿Estás seguro de que quieres <b>borrar</b> este archivo?</string>
+    <string name="delete_deleting">Borrando archivo(s)…</string>
 
     <!-- EXPORT -->
-    <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d foto(s), en tu galería?</string>
-    <string name="export_and_delete_are_you_sure">¿Estás seguro de querer <b>exportar</b> %1$d archivo(s), de nuevo a tu galería y eliminarlos?</string>
-    <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> esta foto en tu galería?</string>
+    <string name="export_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) a tu galería?</string>
+    <string name="export_and_delete_are_you_sure">¿Estás seguro de que quieres <b>exportar</b> %1$d archivo(s) de nuevo a tu galería y eliminarlos?</string>
+    <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería?</string>
     <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
-    <string name="export_exporting">Exportando foto(s)…</string>
+    <string name="export_exporting">Exportando archivo(s)…</string>
     <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar archivos.</string>
     <string name="export_finished">Exportado</string>
     <string name="export_and_delete_finished">Exportado y eliminado</string>
@@ -141,7 +141,7 @@
     <string name="about_website_label">leonlatsch.dev</string>
     <string name="about_website_url">https://leonlatsch.dev</string>
     <string name="about_third_party">Software de terceros</string>
-    <string name="about_privacy_policy">Política de Privacidad</string>
+    <string name="about_privacy_policy">Política de privacidad</string>
     <string name="about_privacy_policy_url">https://leonlatsch.dev/photok_privacy_policy</string>
     <string name="about_menu_news">Novedades</string>
 
@@ -161,9 +161,9 @@
     <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
     <string name="settings_security_change_password_title">Cambiar contraseña</string>
     <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
-    <string name="settings_security_biometric_title">Desbloqueo Biométrico</string>
+    <string name="settings_security_biometric_title">Desbloqueo biométrico</string>
     <string name="settings_security_biometric_summary">Desbloquear Photok con tus datos biométricos.</string>
-    <string name="settings_security_biometric_not_available">EL Desbloqueo Biométrico no esta disponible</string>
+    <string name="settings_security_biometric_not_available">El desbloqueo biométrico no está disponible</string>
     <string name="settings_security_recovery_phrase_title">Frase de recuperación</string>
     <string name="settings_security_recovery_phrase_summary">Gestiona tu frase de recuperación.</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
@@ -174,12 +174,12 @@
     <string name="settings_security_timeout_five_minute">5 minutos</string>
     <string name="settings_security_timeout_ten_minute">10 minutos</string>
     <string name="settings_security_timeout_never">Nunca</string>
-    <string name="settings_security_launch_code_title">Código Secreto de Lanzamiento</string>
+    <string name="settings_security_launch_code_title">Código secreto de lanzamiento</string>
     <string name="settings_security_launch_code_summary">Código secreto para lanzar Photok desde la app de teléfono.</string>
     <string name="settings_security_launch_code_message">Introduce *#*#[tu código]#*#* en la app de teléfono para lanzar Photok.</string>
     <string name="settings_security_launch_code_prefix">*#*#</string>
     <string name="settings_security_launch_code_suffix">#*#*</string>
-    <string name="settings_security_hide_app_title">Ocultar App</string>
+    <string name="settings_security_hide_app_title">Ocultar aplicación</string>
     <string name="settings_security_hide_app_summary">Ocultar el icono de la app del cajón de aplicaciones.</string>
 
     <string name="settings_category_advanced">Avanzado</string>
@@ -187,7 +187,7 @@
     <string name="settings_advanced_reset_title">Restablecer baúl</string>
     <string name="settings_advanced_reset_summary">Borrar datos y restablecer contraseña</string>
     <string name="settings_advanced_reset_confirmation">¿Estás REALMENTE seguro de que quieres restablecer tu baúl? ¡Todos los datos se perderán!</string>
-    <string name="settings_advanced_backup_title">Copia de Seguridad</string>
+    <string name="settings_advanced_backup_title">Copia de seguridad</string>
     <string name="settings_advanced_backup_summary">Crea una copia de seguridad de tu baúl</string>
     <string name="settings_advanced_delete_imported_title">Eliminar archivos importados</string>
     <string name="settings_advanced_delete_imported_summary">Eliminar archivos después de importarlos</string>
@@ -226,8 +226,8 @@
     <string name="change_password_enter_new_password">Introduce tu nueva contraseña</string>
     <string name="change_password_confirm_new_password">Confirma tu nueva contraseña</string>
     <string name="change_password_button">Cambiar contraseña</string>
-    <string name="change_password_confirm_message">¡Copia de Seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todas tus fotos vuelvan a encriptar! ¿Seguro que quieres continuar?</string>
-    <string name="change_password_reencrypting">Encriptando foto(s)…</string>
+    <string name="change_password_confirm_message">¡Copia de seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todos tus archivos se vuelvan a cifrar! ¿Estás seguro de que quieres continuar?</string>
+    <string name="change_password_reencrypting">Cifrando archivo(s)…</string>
     <string name="change_password_done">Tu contraseña ha sido cambiada</string>
     <string name="change_password_recovery_phrase_used">Se usó la frase de recuperación — no es necesario verificar la contraseña anterior</string>
 
@@ -254,7 +254,7 @@
     <string name="onboarding_slide1_title">Bienvenido a</string>
     <string name="onboarding_slide1_description">Un lugar seguro para guardar tus fotos.</string>
     <string name="onboarding_slide2_title">Crea una contraseña</string>
-    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña es usada para encriptar las fotos directamente en tu teléfono.</string>
+    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña se usa para cifrar las fotos directamente en tu teléfono.</string>
     <string name="onboarding_slide3_title">Empieza a importar</string>
     <string name="onboarding_slide3_description">Comienza a importar tus fotos y mantenlas a salvo de los demás.\nPodrás eliminarlas después en tu galería.</string>
 
@@ -263,7 +263,7 @@
     <string name="backup_restore_title">Restaurar copia de seguridad</string>
     <string name="backup_restore_validating">Validando copia de seguridad…</string>
     <string name="backup_restore_details_created_at">Creado el:</string>
-    <string name="backup_restore_details_photos_contained">Fotos incluidas:</string>
+    <string name="backup_restore_details_photos_contained">Archivos incluidos:</string>
     <string name="backup_restore_details_compatible">Compatible:</string>
     <string name="backup_restore_details_size">Tamaño:</string>
     <string name="backup_restore_button">Desbloquear y Restaurar</string>
@@ -280,39 +280,39 @@
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menú de Recuperación</string>
     <string name="recovery_menu_item_open_photok">Abrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de Ocultar Aplicación</string>
+    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de ocultar aplicación</string>
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Bienvenido a</string>
+    <string name="migration_initial_explaination">Esta versión de Photok introduce un nuevo método de cifrado. Para continuar a tu galería, se requiere una migración.</string>
+    <string name="migration_initial_button">Empezar</string>
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Haz una copia de seguridad de tus datos</string>
+    <string name="migration_initial_stage_backup_explanation">Crea una copia de seguridad de tus datos antes de continuar</string>
+    <string name="migration_initial_stage_backup_button">Crear copia de seguridad</string>
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Conceder permiso</string>
+    <string name="migration_initial_stage_permission_explanation">Concede permisos de notificación para ejecutar la migración de forma segura en segundo plano.</string>
+    <string name="migration_initial_stage_permission_button">Conceder permiso</string>
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Todo listo</string>
+    <string name="migration_initial_stage_ready_button">Iniciar migración</string>
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Migrando tu galería</string>
+    <string name="migration_running_progress">%d de %d archivos procesados</string>
+    <string name="migration_running_advice">Si esta pantalla se mantiene abierta, la migración será más rápida</string>
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migración de galería terminada</string>
+    <string name="migration_done_progress">Todos los archivos migrados</string>
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Error al migrar tu galería</string>
+    <string name="migration_error_button">Enviar informe de error</string>
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Tareas en segundo plano</string>
+    <string name="migration_error_extract_data">Extraer datos</string>
+    <string name="migration_error_extract_confirmation_text">¿Estás seguro de que quieres extraer todos tus archivos SIN CIFRAR a un archivo ZIP?</string>
+    <string name="migration_error_extracting_title">Descifrando a ZIP…</string>
 
 
     <!-- Biometric -->
@@ -347,7 +347,7 @@
 
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Ayuda a mejorar Photok</string>
-    <string name="telemetry_sheet_paragraph_1">En Photok puedes habilitar enviar opcionalmente estadísticas de uso anónimas para ayudar a mejorar la aplicación.</string>
+    <string name="telemetry_sheet_paragraph_1">En Photok puedes habilitar el envío opcional de estadísticas de uso anónimas para ayudar a mejorar la aplicación.</string>
     <string name="telemetry_sheet_paragraph_2">El procesamiento de los datos es completamente anónimo y no permite identificar ni obtener información personal.</string>
     <string name="telemetry_sheet_paragraph_3">Enviar datos anónimos de uso es opcional y puede ser desactivado en cualquier momento desde los ajustes.</string>
     <string name="telemetry_learn_more">Saber más</string>
@@ -356,41 +356,41 @@
     <string name="telemetry_toggle">Permitir la recopilación de datos de uso</string>
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Frase de Recuperación</string>
-    <string name="recovery_phrase_title">Tu Frase de Recuperación</string>
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Frase de recuperación</string>
+    <string name="recovery_phrase_title">Tu frase de recuperación</string>
+    <string name="recovery_phrase_description">Anota estas palabras en orden y guárdalas en un lugar seguro. Puedes usar esta frase para recuperar el acceso a tu baúl.</string>
+    <string name="recovery_phrase_confirm">Frase guardada</string>
+    <string name="recovery_phrase_save_warning">Guarda tu frase de recuperación</string>
+    <string name="recovery_phrase_create_new">Crear nueva frase</string>
+    <string name="recovery_phrase_create_new_confirm">Crear una nueva frase reemplazará permanentemente la actual. Tu frase existente ya no funcionará para restaurar tu baúl.</string>
+    <string name="recovery_phrase_saved_to_file">Guardado en %1$s</string>
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Número de palabras</string>
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Guardar como Imagen</string>
+    <string name="recovery_phrase_qr_save_as_image">Guardar como imagen</string>
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Olvidé mi contraseña</string>
+    <string name="recovery_phrase_restore_button">Restaurar</string>
+    <string name="recovery_phrase_restore_word_placeholder">Palabra %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Introduce la frase de recuperación</string>
+    <string name="recovery_phrase_restore_choose_option">Elige cómo introducir tu frase.</string>
+    <string name="recovery_phrase_restore_option_type">Escribir a mano</string>
+    <string name="recovery_phrase_restore_option_open_file">Cargar desde archivo</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Escanear código QR</string>
+    <string name="recovery_phrase_restore_option_paste">Pegar desde el portapapeles</string>
+    <string name="recovery_phrase_restore_input_placeholder">Escribe tu frase de recuperación palabra por palabra</string>
+    <string name="recovery_phrase_restore_unlocked">Desbloqueado</string>
+    <string name="recovery_phrase_restore_unlocking">Desbloqueando&#x2026;</string>
+    <string name="recovery_phrase_restore_error_generic">No se pudo restaurar el baúl. Comprueba tu frase e inténtalo de nuevo.</string>
+    <string name="recovery_phrase_restore_error_invalid">Frase de recuperación no válida. Por favor, comprueba las palabras.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">El código QR no contiene una frase de recuperación válida.</string>
+    <string name="recovery_phrase_restore_source_qr">Escaneado de código QR</string>
+    <string name="recovery_phrase_restore_source_file">Cargado desde %1$s</string>
+    <string name="recovery_phrase_restore_source_clipboard">Pegado desde el portapapeles</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Solicitar permiso de cámara</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Se requiere permiso de cámara para escanear códigos QR.</string>
+    <string name="permission_gate_change_in_settings">Cambiar en los ajustes</string>
 </resources>

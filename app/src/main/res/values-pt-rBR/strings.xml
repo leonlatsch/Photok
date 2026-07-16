@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2020–2026 Leon Latsch
   ~
   ~   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +15,6 @@
   -->
 
 <resources>
-
     <!-- COMMON -->
     <string name="common_copyright_notice">Direitos autorais \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
@@ -51,9 +49,11 @@
     <string name="setup_confirm_password">Confirmar sua senha</string>
     <string name="setup_password_strength_label">Força da senha:</string>
     <string name="setup_button">Criar</string>
+    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
     <string name="setup_password_strength_weak">Fraca</string>
     <string name="setup_password_strength_moderate">Moderada</string>
     <string name="setup_password_strength_strong">Forte</string>
+    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
     <string name="setup_password_match_warning">\u26A0 Senhas não correspondem</string>
     <string name="setupSetup">Configurar</string>
 

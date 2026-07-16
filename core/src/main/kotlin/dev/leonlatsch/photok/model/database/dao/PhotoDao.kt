@@ -43,6 +43,9 @@ interface PhotoDao {
     @Query("SELECT * FROM photo WHERE photo_uuid = :uuid")
     suspend fun get(uuid: String): Photo
 
+    @Query("SELECT * FROM photo WHERE photo_uuid IN (:uuids)")
+    suspend fun get(uuids: List<String>): List<Photo>
+
     @Query("SELECT * FROM photo ORDER BY importedAt DESC")
     suspend fun findAllPhotosByImportDateDesc(): List<Photo>
 

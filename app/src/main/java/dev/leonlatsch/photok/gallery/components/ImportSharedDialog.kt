@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.gallery.components
 
 import android.net.Uri
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
@@ -34,7 +33,6 @@ import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -64,7 +62,7 @@ class ImportSharedViewModel @Inject constructor(
         when (event) {
             is ImportSharedUiEvent.ClearSharedUris -> sharedUrisStore.reset()
             is ImportSharedUiEvent.StartImportShared -> {
-                ImportBottomSheetDialogFragment(
+                ImportBottomSheetDialogFragment.newInstance(
                     uris = uiState.value.sharedUris.toList(),
                     albumUUID = null,
                     importSource = ImportSource.Share,

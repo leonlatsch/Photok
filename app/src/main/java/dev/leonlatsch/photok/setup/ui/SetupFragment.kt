@@ -26,6 +26,8 @@ import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.FragmentSetupBinding
+import dev.leonlatsch.photok.encryption.domain.PasswordUtils
+import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
@@ -63,22 +65,21 @@ class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_s
 
         viewModel.addOnPropertyChange<String>(BR.password) {
             if (it.isNotEmpty()) {
-                val value = when (it.length) {
-                    1, 2, 3, 4, 5 -> {
-                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkRed))
-                        getString(R.string.setup_password_strength_weak)
-                    }
-                    6, 7, 8, 9, 10 -> {
-                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkYellow))
-                        getString(R.string.setup_password_strength_moderate)
-                    }
-                    else -> {
-                        binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(R.color.darkGreen))
-                        getString(R.string.setup_password_strength_strong)
-                    }
+                val (colorRes, textRes) = when (PasswordUtils.calculateStrength(it)) {
+                    PasswordStrength.VERY_WEAK ->
+                        R.color.darkRedStrong to R.string.setup_password_strength_very_weak
+                    PasswordStrength.WEAK ->
+                        R.color.darkRed to R.string.setup_password_strength_weak
+                    PasswordStrength.MODERATE ->
+                        R.color.darkYellow to R.string.setup_password_strength_moderate
+                    PasswordStrength.STRONG ->
+                        R.color.darkGreen to R.string.setup_password_strength_strong
+                    PasswordStrength.VERY_STRONG ->
+                        R.color.colorPrimaryDark to R.string.setup_password_strength_very_strong
                 }
+                binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(colorRes))
+                binding.setupPasswordStrengthValue.text = getString(textRes)
                 binding.setupPasswordStrengthLayout.show()
-                binding.setupPasswordStrengthValue.text = value
             } else {
                 binding.setupPasswordStrengthLayout.hide()
             }

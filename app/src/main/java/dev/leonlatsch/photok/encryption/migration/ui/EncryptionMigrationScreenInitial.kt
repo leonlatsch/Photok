@@ -98,7 +98,7 @@ fun EncryptionMigrationScreenInitial(
             it ?: return@rememberLauncherForActivityResult
             if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
 
-            BackupBottomSheetDialogFragment(
+            BackupBottomSheetDialogFragment.newInstance(
                 uri = it,
                 strategy = BackupStrategy.Name.Legacy,
             ).show(activity.supportFragmentManager)

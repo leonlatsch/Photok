@@ -31,6 +31,7 @@
     <color name="dotUnselectedColor">@color/lightGray</color>
 
     <!-- Explicit -->
+    <color name="darkRedStrong">#B00020</color>
     <color name="darkRed">#FF0000</color>
     <color name="darkYellow">#FF7E00</color>
     <color name="darkGreen">#44CC00</color>

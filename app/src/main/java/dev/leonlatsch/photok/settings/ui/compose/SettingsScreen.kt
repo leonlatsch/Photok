@@ -122,7 +122,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
             uri ?: return@rememberLauncherForActivityResult
             fragment ?: return@rememberLauncherForActivityResult
-            BackupBottomSheetDialogFragment(
+            BackupBottomSheetDialogFragment.newInstance(
                 uri,
                 BackupStrategy.Name.Default
             ).show(fragment.parentFragmentManager)

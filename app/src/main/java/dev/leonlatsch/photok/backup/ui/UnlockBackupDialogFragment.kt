@@ -19,15 +19,14 @@ package dev.leonlatsch.photok.backup.ui
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.databinding.DialogBackupUnlockBinding
-import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment
@@ -41,16 +40,16 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class UnlockBackupDialogFragment(
-    private val uri: Uri,
-    private val metaData: BackupMetaData,
-    val onUnlockSuccess: (session: Session) -> Unit
-) : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
+class UnlockBackupDialogFragment : BindableDialogFragment<DialogBackupUnlockBinding>(R.layout.dialog_backup_unlock) {
 
     private val viewModel: UnlockBackupViewModel by viewModels()
+    private val restoreBackupViewModel: RestoreBackupViewModel by activityViewModels()
 
     @Inject
     lateinit var unlockBackupUseCase: UnlockBackupUseCase
+
+    @Suppress("DEPRECATION")
+    private val uri: Uri by lazy { requireArguments().getParcelable(ARG_URI)!! }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,11 +62,13 @@ class UnlockBackupDialogFragment(
     fun onUnlock() {
         binding.unlockBackupWrongPasswordWarning.hide()
 
+        val metaData = restoreBackupViewModel.metaData ?: return
+
         lifecycleScope.launch {
             unlockBackupUseCase(uri, metaData, viewModel.password)
                 .onSuccess { session ->
+                    restoreBackupViewModel.restoreBackup(session)
                     dismiss()
-                    onUnlockSuccess(session)
                 }
                 .onFailure {
                     binding.unlockBackupWrongPasswordWarning.show()
@@ -79,5 +80,16 @@ class UnlockBackupDialogFragment(
         super.bind(binding)
         binding.viewModel = viewModel
         binding.context = this
+    }
+
+    companion object {
+        private const val ARG_URI = "uri"
+
+        fun newInstance(uri: Uri): UnlockBackupDialogFragment =
+            UnlockBackupDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_URI, uri)
+                }
+            }
     }
 }
