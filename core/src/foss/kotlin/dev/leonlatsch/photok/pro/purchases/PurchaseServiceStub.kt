@@ -22,9 +22,6 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class PurchaseServiceStub @Inject constructor() : PurchaseService {
-    override fun init(context: Context) {
-    }
-
     override fun get(): Boolean = false
 
     override fun observe(): StateFlow<Boolean> = MutableStateFlow(false)

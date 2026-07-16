@@ -79,7 +79,6 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
         proFeaturesLifecycle.register(ProcessLifecycleOwner.get().lifecycle)
 
         telemetryService.setup()
-        purchaseService.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
