@@ -39,15 +39,14 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class ImportBottomSheetDialogFragment(
-    uris: List<Uri>,
-    private val albumUUID: String? = "",
-    private val importSource: ImportSource,
-) : BaseProcessBottomSheetDialogFragment<Uri>(
-    uris,
-    R.string.import_importing,
-    true
-) {
+class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment<Uri>() {
+
+    override val processingLabelTextResource = R.string.import_importing
+    override val canAbort = true
+    override val itemSource: List<Uri> by lazy {
+        @Suppress("DEPRECATION")
+        requireArguments().getParcelableArrayList(ARG_URIS)!!
+    }
 
     override val viewModel: ImportViewModel by viewModels()
 
@@ -64,8 +63,26 @@ class ImportBottomSheetDialogFragment(
     }
 
     override fun prepareViewModel(items: List<Uri>?) {
-        viewModel.albumUUID = albumUUID
-        viewModel.importSource = importSource
+        viewModel.albumUUID = requireArguments().getString(ARG_ALBUM_UUID)
+        viewModel.importSource = ImportSource.valueOf(requireArguments().getString(ARG_IMPORT_SOURCE)!!)
         super.prepareViewModel(items?.reversed()) // Reverse list to keep order in system gallery
+    }
+
+    companion object {
+        private const val ARG_URIS = "uris"
+        private const val ARG_ALBUM_UUID = "album_uuid"
+        private const val ARG_IMPORT_SOURCE = "import_source"
+
+        fun newInstance(
+            uris: List<Uri>,
+            albumUUID: String? = null,
+            importSource: ImportSource,
+        ): ImportBottomSheetDialogFragment = ImportBottomSheetDialogFragment().apply {
+            arguments = Bundle().apply {
+                putParcelableArrayList(ARG_URIS, ArrayList(uris))
+                putString(ARG_ALBUM_UUID, albumUUID)
+                putString(ARG_IMPORT_SOURCE, importSource.name)
+            }
+        }
     }
 }

@@ -38,10 +38,10 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
 
     /**
      * List of [T].
-     * Gets set automatically by fragment.
+     * Set by the fragment or loaded by the ViewModel in [preProcess].
      * Gets processed in [processLoop].
      */
-    lateinit var items: List<T>
+    var items: List<T> = emptyList()
 
     /**
      * The processing state should be checked every time in [processLoop].
