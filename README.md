@@ -1,3 +1,5 @@
+> ⚠️ Development is paused from mid July 2026 to mid August 2026. Still responding to issues and PRs. But there will be no releases.
+
 ![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
 [![GitHub release](https://img.shields.io/github/v/release/leonlatsch/Photok.svg?logo=github&label=GitHub)](https://github.com/leonlatsch/Photok/releases/latest)
