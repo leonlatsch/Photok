@@ -46,8 +46,6 @@ object AppPreferences {
         default = StartPage.AllFiles,
         possibleValues = StartPage.entries,
     )
-
-    // Security section
     val Screenshots = Preference.Switch(
         key = SECURITY_ALLOW_SCREENSHOTS,
         icon = R.drawable.ic_screen_lock,
@@ -55,11 +53,31 @@ object AppPreferences {
         summary = R.string.settings_security_allow_screenshots_summary,
         default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
     )
+    val HideApp = Preference.Simple(
+        key = SettingsFragment.KEY_ACTION_HIDE_APP,
+        icon = R.drawable.ic_app_blocking,
+        title = R.string.settings_security_hide_app_title,
+        summary = R.string.settings_security_hide_app_summary,
+    )
+    val LaunchCode = Preference.Simple(
+        key = Config.SECURITY_DIAL_LAUNCH_CODE,
+        icon = R.drawable.ic_dialpad,
+        title = R.string.settings_security_launch_code_title,
+        summary = R.string.settings_security_launch_code_summary,
+    )
+
+    // Security section
     val ChangePassword = Preference.Simple(
         key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
         icon = R.drawable.ic_password,
         title = R.string.change_password_title,
         summary = R.string.settings_security_change_password_summary,
+    )
+    val RecoveryPhrase = Preference.Simple(
+        key = SettingsFragment.KEY_ACTION_RECOVERY_PHRASE,
+        icon = R.drawable.ic_key,
+        title = R.string.settings_security_recovery_phrase_title,
+        summary = R.string.settings_security_recovery_phrase_summary,
     )
     val Biometric = Preference.Switch(
         key = SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED,
@@ -74,24 +92,6 @@ object AppPreferences {
         title = R.string.settings_security_timeout_title,
         default = LockTimeoutEnum.FiveMinute,
         possibleValues = LockTimeoutEnum.entries,
-    )
-    val LaunchCode = Preference.Simple(
-        key = Config.SECURITY_DIAL_LAUNCH_CODE,
-        icon = R.drawable.ic_dialpad,
-        title = R.string.settings_security_launch_code_title,
-        summary = R.string.settings_security_launch_code_summary,
-    )
-    val HideApp = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_HIDE_APP,
-        icon = R.drawable.ic_app_blocking,
-        title = R.string.settings_security_hide_app_title,
-        summary = R.string.settings_security_hide_app_summary,
-    )
-    val RecoveryPhrase = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_RECOVERY_PHRASE,
-        icon = R.drawable.ic_key,
-        title = R.string.settings_security_recovery_phrase_title,
-        summary = R.string.settings_security_recovery_phrase_summary,
     )
 
     // Advanced section

@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
 
-val ProPreferenceScreenConfig = PreferenceScreenConfig(
+val PrefsScreenConfig = PreferenceScreenConfig(
     sections = listOf(
         PreferenceSection(
             title = R.string.settings_category_app,
@@ -26,19 +26,19 @@ val ProPreferenceScreenConfig = PreferenceScreenConfig(
             preferences = listOf(
                 AppPreferences.SystemDesign,
                 AppPreferences.GalleryStartPage,
+                AppPreferences.Screenshots,
+                AppPreferences.HideApp,
+                AppPreferences.LaunchCode,
             ),
         ),
         PreferenceSection(
             title = R.string.settings_category_security,
             summary = null,
             preferences = listOf(
-                AppPreferences.Screenshots,
                 AppPreferences.ChangePassword,
+                AppPreferences.RecoveryPhrase,
                 AppPreferences.Biometric,
                 AppPreferences.LockTimeout,
-                AppPreferences.LaunchCode,
-                AppPreferences.HideApp,
-                AppPreferences.RecoveryPhrase,
                 ProPreferences.PanicLock,
                 ProPreferences.BruteforceProtection,
             ),

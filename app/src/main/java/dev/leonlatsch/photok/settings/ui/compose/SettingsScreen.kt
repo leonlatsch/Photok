@@ -91,9 +91,9 @@ import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.FreePreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceSection
+import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
@@ -655,7 +655,7 @@ private fun Preview() {
         AppTheme {
             SettingsContent(
                 uiState = SettingsUiState(
-                    screenConfig = FreePreferenceScreenConfig,
+                    screenConfig = PrefsScreenConfig,
                 ),
                 handleUiEvent = {},
             )
@@ -671,7 +671,7 @@ private fun PreviewDark() {
         AppTheme {
             SettingsContent(
                 uiState = SettingsUiState(
-                    screenConfig = FreePreferenceScreenConfig,
+                    screenConfig = PrefsScreenConfig,
                 ),
                 handleUiEvent = {},
             )

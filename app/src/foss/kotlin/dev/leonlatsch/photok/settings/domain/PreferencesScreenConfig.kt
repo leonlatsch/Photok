@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.settings.domain
 
 import dev.leonlatsch.photok.R
 
-val FreePreferenceScreenConfig = PreferenceScreenConfig(
+val PrefsScreenConfig = PreferenceScreenConfig(
     sections = listOf(
         PreferenceSection(
             title = R.string.settings_category_app,
@@ -26,19 +26,19 @@ val FreePreferenceScreenConfig = PreferenceScreenConfig(
             preferences = listOf(
                 AppPreferences.SystemDesign,
                 AppPreferences.GalleryStartPage,
+                AppPreferences.Screenshots,
+                AppPreferences.HideApp,
+                AppPreferences.LaunchCode,
             ),
         ),
         PreferenceSection(
             title = R.string.settings_category_security,
             summary = null,
             preferences = listOf(
-                AppPreferences.Screenshots,
                 AppPreferences.ChangePassword,
+                AppPreferences.RecoveryPhrase,
                 AppPreferences.Biometric,
                 AppPreferences.LockTimeout,
-                AppPreferences.LaunchCode,
-                AppPreferences.HideApp,
-                AppPreferences.RecoveryPhrase,
             ),
         ),
         PreferenceSection(

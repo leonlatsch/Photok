@@ -31,9 +31,9 @@ import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.ActiveSettingsConfig
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
+import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SettingsUiState(
-    val screenConfig: PreferenceScreenConfig = ActiveSettingsConfig,
+    val screenConfig: PreferenceScreenConfig = PrefsScreenConfig,
     val preferencesValues: Map<String, *> = emptyMap<String, String>(),
     val proFeaturesActive: Boolean = false,
 ) {
@@ -68,7 +68,7 @@ class SettingsViewModel @Inject constructor(
         proFeaturesActive.observe(),
     ) { values, proFeaturesActive ->
         SettingsUiState(
-            screenConfig = ActiveSettingsConfig,
+            screenConfig = PrefsScreenConfig,
             preferencesValues = values,
             proFeaturesActive = proFeaturesActive,
         )
