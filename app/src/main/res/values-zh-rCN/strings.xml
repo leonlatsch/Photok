@@ -49,11 +49,11 @@
     <string name="setup_confirm_password">确认你的密码</string>
     <string name="setup_password_strength_label">密码强度:</string>
     <string name="setup_button">创建</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">非常弱</string>
     <string name="setup_password_strength_weak">弱</string>
     <string name="setup_password_strength_moderate">中等</string>
     <string name="setup_password_strength_strong">强</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">非常强</string>
     <string name="setup_password_match_warning">\u26A0 密码不匹配</string>
     <string name="setupSetup">设置</string>
 
