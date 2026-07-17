@@ -1,0 +1,2 @@
+- Bugfixes and improvements
+- Improved password strength algorithm
