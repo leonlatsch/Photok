@@ -1,0 +1,2 @@
+- Fehlerbehebungen und Verbesserungen
+- Verbesserter Passwort-stärke Algorithmus
