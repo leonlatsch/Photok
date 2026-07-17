@@ -59,16 +59,17 @@ platform :android do
     )
     apk_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
 
-    # AGP appends "-signed" to APKs signed via injected signing. Drop it so the
+    # AGP appends "-release-signed" to APKs signed via injected signing. Drop it so the
     # GitHub release asset is named e.g. photok-3.2.0-foss.apk.
-    release_apk = apk_path.sub("-signed.apk", ".apk")
+    release_apk = apk_path.sub("-release-signed.apk", ".apk")
     FileUtils.mv(apk_path, release_apk) if apk_path != release_apk
 
     # Publish the AAB to Google Play. supply reads the changelog for this
     # version code from fastlane/metadata/android/<locale>/changelogs/.
     upload_to_play_store(
       track: ENV["PLAY_TRACK"] || "production",
-      release_status: "completed",
+      release_status: "inProgress",
+      rollout: 0.1,
       aab: aab_path,
 
       skip_upload_apk: true,
