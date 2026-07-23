@@ -74,45 +74,54 @@ class PasswordVaultProtectionHandler @Inject constructor(
         return SecretKeySpec(vmkBytes, "AES")
     }
 
-    override suspend fun create(request: CreateRequest.Password): VaultProtection {
-
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val kdf = Kdf.PBKDF2WithHmacSHA256
-
-        val params = VaultProtectionParams(
-            salt = Base64.encode(salt),
-            iv = Base64.encode(iv),
-            kdf = kdf,
-            kdfIterations = KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
-        )
-
-        val vmk = keyGen.generateVaultMasterKey()
-
-        val kek = keyGen.derivePasswordKeyEncryptionKey(
+override suspend fun create(request: CreateRequest.Password): VaultProtection {
+    val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
+    val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
+    
+    val kdf = Kdf.PBKDF2WithHmacSHA256
+    
+    val params = VaultProtectionParams(
+        salt = Base64.encode(salt),
+        iv = Base64.encode(iv),
+        kdf = kdf,
+        kdfIterations = KEK_ITERATIONS,
+        algorithm = Algorithm.AesCbcPkcs7Padding,
+        keySize = KEK_SIZE,
+    )
+    
+    val vmk = keyGen.generateVaultMasterKey()
+    
+    synchronized(keyGen) { // add synchronized block to ensure code owns the monitor before calling notify()
+        keyGen.derivePasswordKeyEncryptionKey(
             password = request.password,
             salt = salt,
             kdf = kdf,
             kdfIterations = KEK_ITERATIONS,
             keySize = params.keySize,
         )
-
-        val cipher = Cipher.getInstance(params.algorithm.value).apply {
-            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
-        }
-
-        val wrappedVmk = cipher.doFinal(vmk.encoded)
-
-        return VaultProtection(
-            id = UUID.randomUUID().toString(),
-            type = request.protectionType,
-            wrappedVMK = wrappedVmk,
-            params = params,
-        )
     }
+    
+    val kek = keyGen.derivePasswordKeyEncryptionKey(
+        password = request.password,
+        salt = salt,
+        kdf = kdf,
+        kdfIterations = KEK_ITERATIONS,
+        keySize = params.keySize,
+    )
+    
+    val cipher = Cipher.getInstance(params.algorithm.value).apply {
+        init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
+    }
+    
+    val wrappedVmk = cipher.doFinal(vmk.encoded)
+    
+    return VaultProtection(
+        id = UUID.randomUUID().toString(),
+        type = request.protectionType,
+        wrappedVMK = wrappedVmk,
+        params = params,
+    )
+}
 
     override suspend fun canMigrate(): Boolean {
         // 1.x.x users have no legacyUserSalt — migrate() handles that case by generating a fresh
