@@ -86,6 +86,7 @@ import kotlinx.coroutines.launch
 fun RecoveryPhraseSheet(
     onDismissRequest: () -> Unit,
     onNavigateToSetup: () -> Unit,
+    onNavigateToUnlock: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
@@ -113,6 +114,12 @@ fun RecoveryPhraseSheet(
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         onDismissRequest()
                         onNavigateToSetup()
+                    }
+                }
+                RecoveryPhraseNavEvent.NavigateToUnlock -> {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        onDismissRequest()
+                        onNavigateToUnlock()
                     }
                 }
             }

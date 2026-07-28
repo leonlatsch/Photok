@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import javax.inject.Inject
 
@@ -78,6 +79,7 @@ sealed interface RecoveryPhraseUiEvent {
 
 sealed interface RecoveryPhraseNavEvent {
     data object NavigateToSetup : RecoveryPhraseNavEvent
+    data object NavigateToUnlock : RecoveryPhraseNavEvent
 }
 
 @HiltViewModel
@@ -91,6 +93,7 @@ class RecoveryPhraseViewModel @Inject constructor(
 
     private val inputs = MutableStateFlow(RecoveryPhraseUiState.Inputs())
     private val session = sessionRepository.get()
+    private var missingSessionHandled = false
 
     private val _navEvents = Channel<RecoveryPhraseNavEvent>(Channel.UNLIMITED)
     val navEvents = _navEvents.receiveAsFlow()
@@ -106,7 +109,10 @@ class RecoveryPhraseViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseUiState())
 
     init {
-        val session = session ?: return
+        val session = session ?: run {
+            handleMissingSession("init")
+            return
+        }
         viewModelScope.launch {
             if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
                 vaultService.create(
@@ -130,7 +136,10 @@ class RecoveryPhraseViewModel @Inject constructor(
                     )
                 }
 
-                val session = session ?: return
+                val session = session ?: run {
+                    handleMissingSession("updateWordCount")
+                    return
+                }
                 viewModelScope.launch(Dispatchers.IO) {
                     vaultService.create(
                         CreateRequest.RecoveryPhrase(
@@ -214,8 +223,10 @@ class RecoveryPhraseViewModel @Inject constructor(
             }
 
             RecoveryPhraseUiEvent.CreateNewPhrase -> {
-                val session = sessionRepository.get()
-                session ?: return // This event cannot be used if not logged in
+                val session = session ?: run {
+                    handleMissingSession("createNewPhrase")
+                    return
+                }
 
                 viewModelScope.launch(Dispatchers.IO) {
                     inputs.update { it.copy(loading = true, phraseWasSaved = false) }
@@ -226,6 +237,14 @@ class RecoveryPhraseViewModel @Inject constructor(
                     _navEvents.trySend(RecoveryPhraseNavEvent.NavigateToSetup)
                 }
             }
+        }
+
+        private fun handleMissingSession(source: String) {
+            if (missingSessionHandled) return
+            missingSessionHandled = true
+
+            Timber.w("Recovery phrase flow without active session at %s, redirecting to unlock", source)
+            _navEvents.trySend(RecoveryPhraseNavEvent.NavigateToUnlock)
         }
     }
 }

@@ -72,6 +72,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
+import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
@@ -258,6 +259,10 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             onNavigateToSetup = {
                 showRecoveryPhraseSheet = false
                 fragment?.findNavController()?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
+            },
+            onNavigateToUnlock = {
+                showRecoveryPhraseSheet = false
+                (activity?.application as? BaseApplication)?.lockApp()
             },
         )
     }
@@ -623,4 +628,3 @@ private fun PreviewDark() {
         }
     }
 }
-

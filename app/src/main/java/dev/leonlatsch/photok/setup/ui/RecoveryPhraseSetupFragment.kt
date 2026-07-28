@@ -22,15 +22,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseNavEvent
+import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseViewModel
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecoveryPhraseSetupFragment : Fragment() {
+
+    private val viewModel: RecoveryPhraseViewModel by viewModels()
 
     @Inject
     lateinit var navigateToGallery: NavigateToGallery
@@ -53,6 +60,21 @@ class RecoveryPhraseSetupFragment : Fragment() {
                             }
                         }
                     )
+                }
+            }
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+            launchLifecycleAwareJob {
+                viewModel.navEvents.collect { event ->
+                    when (event) {
+                        RecoveryPhraseNavEvent.NavigateToUnlock -> {
+                            (activity?.application as? BaseApplication)?.lockApp()
+                        }
+                        RecoveryPhraseNavEvent.NavigateToSetup -> {}
+                    }
                 }
             }
         }
