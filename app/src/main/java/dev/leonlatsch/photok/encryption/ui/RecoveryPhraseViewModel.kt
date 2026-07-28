@@ -41,6 +41,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -89,12 +90,13 @@ class RecoveryPhraseViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(RecoveryPhraseUiState.Inputs())
+    private val session = sessionRepository.get()
 
     private val _navEvents = Channel<RecoveryPhraseNavEvent>(Channel.UNLIMITED)
     val navEvents = _navEvents.receiveAsFlow()
 
     val uiState = combine(
-        recoveryPhraseStore.observe(sessionRepository.require()),
+        session?.let(recoveryPhraseStore::observe) ?: flowOf(null),
         inputs,
     ) { phrase, inputs ->
         RecoveryPhraseUiState(
@@ -104,10 +106,11 @@ class RecoveryPhraseViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseUiState())
 
     init {
+        val session = session ?: return
         viewModelScope.launch {
             if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
                 vaultService.create(
-                    CreateRequest.RecoveryPhrase(sessionRepository.require(), Bip39WordCount.Twelve)
+                    CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve)
                 )
             }
         }
@@ -127,10 +130,11 @@ class RecoveryPhraseViewModel @Inject constructor(
                     )
                 }
 
+                val session = session ?: return
                 viewModelScope.launch(Dispatchers.IO) {
                     vaultService.create(
                         CreateRequest.RecoveryPhrase(
-                            sessionRepository.require(),
+                            session,
                             event.wordCount,
                         )
                     )
