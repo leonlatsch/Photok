@@ -65,11 +65,11 @@ class PasswordVaultProtectionHandler @Inject constructor(
             keySize = params.keySize,
 val cipher = Cipher.getInstance(params.algorithm.value).apply {
     val iv = Base64.decode(params.iv)
-    if (kek != null) {
-        init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv))
-    } else {
-        throw NullPointerException("Encryption key is null")
-    }
+if (kek != null) {
+    init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv));
+} else {
+    throw new IllegalArgumentException("Encryption key is required");
+}
 }
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
