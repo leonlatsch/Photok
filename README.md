@@ -81,7 +81,7 @@ These analytics are never used for advertising or cross-app tracking.
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-99%25-brightgreen)
 ![Russian](https://img.shields.io/badge/Russian-62%25-orange)
 ![Spanish](https://img.shields.io/badge/Spanish-99%25-brightgreen)
-![Turkish](https://img.shields.io/badge/Turkish-99%25-brightgreen)
+![Turkish](https://img.shields.io/badge/Turkish-100%25-brightgreen)
 ![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-80%25-yellow)
 <!-- END-TRANSLATIONS -->
 
