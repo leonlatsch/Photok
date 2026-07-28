@@ -63,12 +63,14 @@ class PasswordVaultProtectionHandler @Inject constructor(
             kdf = params.kdf,
             kdfIterations = params.kdfIterations,
             keySize = params.keySize,
-        )
-
-        val cipher = Cipher.getInstance(params.algorithm.value).apply {
-            val iv = Base64.decode(params.iv)
-            init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv))
-        }
+val cipher = Cipher.getInstance(params.algorithm.value).apply {
+    val iv = Base64.decode(params.iv)
+    if (kek != null) {
+        init(Cipher.DECRYPT_MODE, kek, IvParameterSpec(iv))
+    } else {
+        throw NullPointerException("Encryption key is null")
+    }
+}
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
         return SecretKeySpec(vmkBytes, "AES")
