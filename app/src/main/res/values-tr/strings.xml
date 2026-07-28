@@ -49,11 +49,11 @@
     <string name="setup_confirm_password">Şifrenizi onaylayın</string>
     <string name="setup_password_strength_label">Şifre Gücü:</string>
     <string name="setup_button">Oluştur</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Çok zayıf</string>
     <string name="setup_password_strength_weak">Zayıf</string>
     <string name="setup_password_strength_moderate">Orta</string>
     <string name="setup_password_strength_strong">Güçlü</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Çok güçlü</string>
     <string name="setup_password_match_warning">\u26A0 Şifreler eşleşmiyor</string>
     <string name="setupSetup">Kurulum</string>
 
