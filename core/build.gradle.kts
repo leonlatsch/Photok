@@ -15,8 +15,13 @@ android {
 
     flavorDimensions += "distribution"
     productFlavors {
-        create("play") { dimension = "distribution" }
-        create("foss") { dimension = "distribution" }
+        create("play") {
+            isDefault = true
+            dimension = "distribution"
+        }
+        create("foss") {
+            dimension = "distribution"
+        }
     }
 
     buildFeatures {

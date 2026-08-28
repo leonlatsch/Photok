@@ -45,6 +45,7 @@ android {
     flavorDimensions += "distribution"
     productFlavors {
         create("play") {
+            isDefault = true
             dimension = "distribution"
             buildConfigField("Boolean", "PLAY", "true")
 
