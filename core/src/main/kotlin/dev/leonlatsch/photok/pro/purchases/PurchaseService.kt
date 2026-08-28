@@ -16,9 +16,9 @@
 
 package dev.leonlatsch.photok.pro.purchases
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface PurchaseService {
     fun get(): Boolean
-    fun observe(): StateFlow<Boolean>
+    fun observe(): Flow<Boolean>
 }
