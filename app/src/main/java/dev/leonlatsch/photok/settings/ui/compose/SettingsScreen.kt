@@ -380,7 +380,8 @@ private fun SettingsPreferenceSections(
                                         icon = painterResource(preference.icon),
                                         title = stringResource(preference.title),
                                         summary = stringResource(preference.summary),
-                                        proFeature = preference.proFeature,
+                                        proProtectedByPaywall = preference.proProtectedByPaywall,
+                                        showProBadge = preference.showProBadge,
                                         onClick = {
                                             fragment ?: return@PreferenceView
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
@@ -483,7 +484,8 @@ fun <T : SettingsEnum> PreferenceEnumView(
         } else {
             stringResource(value.label)
         },
-        proFeature = preference.proFeature,
+        proProtectedByPaywall = preference.proProtectedByPaywall,
+        showProBadge = preference.showProBadge,
         onClick = { showDialog = true },
         proFeaturesActive = proFeaturesActive,
         modifier = modifier,
@@ -555,7 +557,8 @@ fun PreferenceSwitchView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
         summary = summary,
-        proFeature = preference.proFeature,
+        proProtectedByPaywall = preference.proProtectedByPaywall,
+        showProBadge = preference.showProBadge,
         proFeaturesActive = proFeaturesActive,
         trailing = {
             Switch(
@@ -577,7 +580,8 @@ fun PreferenceView(
     icon: Painter,
     title: String,
     summary: String,
-    proFeature: Boolean,
+    proProtectedByPaywall: Boolean,
+    showProBadge: Boolean,
     proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
@@ -590,7 +594,7 @@ fun PreferenceView(
         horizontalArrangement = Arrangement.spacedBy(15.dp),
         modifier = modifier
             .clickable(enabled = onClick != null) {
-                if (proFeature && !proFeaturesActive) {
+                if (proProtectedByPaywall && !proFeaturesActive) {
                     activity?.showPaywall()
                 } else {
                     onClick?.invoke()
@@ -633,7 +637,7 @@ fun PreferenceView(
             )
         }
 
-        if (proFeature && !proFeaturesActive) {
+        if (showProBadge && !proFeaturesActive) {
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer,
                 shape = MaterialTheme.shapes.small,

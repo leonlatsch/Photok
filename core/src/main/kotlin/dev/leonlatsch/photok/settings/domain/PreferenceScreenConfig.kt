@@ -34,14 +34,16 @@ sealed interface Preference {
     val key: String
     @get:DrawableRes val icon: Int
     @get:StringRes val title: Int
-    val proFeature: Boolean
+    val proProtectedByPaywall: Boolean
+    val showProBadge: Boolean
 
     data class Simple(
         override val key: String,
         override val icon: Int,
         override val title: Int,
         val summary: Int,
-        override val proFeature: Boolean = false,
+        override val proProtectedByPaywall: Boolean = false,
+        override val showProBadge: Boolean = false,
     ) : Preference
 
     data class Switch(
@@ -50,7 +52,8 @@ sealed interface Preference {
         override val title: Int,
         val summary: Int,
         val default: Boolean,
-        override val proFeature: Boolean = false,
+        override val proProtectedByPaywall: Boolean = false,
+        override val showProBadge: Boolean = false,
     ) : Preference
 
     data class Enum<T : SettingsEnum>(
@@ -60,6 +63,7 @@ sealed interface Preference {
         val explanation: Int? = null,
         val default: T,
         val possibleValues: List<T>,
-        override val proFeature: Boolean = false,
+        override val proProtectedByPaywall: Boolean = false,
+        override val showProBadge: Boolean = false,
     ) : Preference
 }
