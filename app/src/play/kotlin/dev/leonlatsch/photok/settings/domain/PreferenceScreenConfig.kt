@@ -29,6 +29,7 @@ val PrefsScreenConfig = PreferenceScreenConfig(
                 AppPreferences.Screenshots,
                 AppPreferences.HideApp,
                 AppPreferences.LaunchCode,
+                ProPreferences.PanicLock,
             ),
         ),
         PreferenceSection(
@@ -39,8 +40,8 @@ val PrefsScreenConfig = PreferenceScreenConfig(
                 AppPreferences.RecoveryPhrase,
                 AppPreferences.Biometric,
                 AppPreferences.LockTimeout,
-                ProPreferences.PanicLock,
                 ProPreferences.BruteforceProtection,
+                ProPreferences.IntruderSelfies,
             ),
         ),
         PreferenceSection(
