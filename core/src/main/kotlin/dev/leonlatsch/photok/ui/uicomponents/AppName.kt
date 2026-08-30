@@ -16,7 +16,9 @@
 
 package dev.leonlatsch.photok.ui.uicomponents
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
@@ -35,6 +37,7 @@ fun AppName(
         text = "Photok",
         fontFamily = FontFamily(Font(R.font.lobster_regular)),
         fontSize = fontSize,
+        color = contentColorFor(MaterialTheme.colorScheme.background),
         modifier = modifier
     )
 }
