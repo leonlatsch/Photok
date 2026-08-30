@@ -16,10 +16,12 @@
 
 package dev.leonlatsch.photok.other
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
+import dev.leonlatsch.photok.core.R
 import timber.log.Timber
 
 fun Context.openUrl(url: String?) {
@@ -33,4 +35,32 @@ fun Context.openUrl(url: String?) {
     } catch (e: ActivityNotFoundException) {
         Timber.e(e)
     }
+}
+
+fun Activity.overrideTransitionSlideInEnter() {
+    overridePendingTransition(
+        R.anim.slide_in_from_right,
+        R.anim.slide_out_to_left,
+    )
+}
+
+fun Activity.overrideTransitionSlideOutExit() {
+    overridePendingTransition(
+        R.anim.slide_in_from_left,
+        R.anim.slide_out_to_right,
+    )
+}
+
+fun Activity.overrideTransitionSlideUpEnter() {
+    overridePendingTransition(
+        R.anim.slide_to_top,
+        0,
+    )
+}
+
+fun Activity.overrideTransitionSlideDownExit() {
+    overridePendingTransition(
+        0,
+        R.anim.slide_to_bottom,
+    )
 }
