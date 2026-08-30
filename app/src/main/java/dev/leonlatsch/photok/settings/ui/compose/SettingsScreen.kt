@@ -171,7 +171,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_SELFIES) {
-            context.showIntruderSelfiesActivity()
+            activity?.showIntruderSelfiesActivity()
             false
         }
 

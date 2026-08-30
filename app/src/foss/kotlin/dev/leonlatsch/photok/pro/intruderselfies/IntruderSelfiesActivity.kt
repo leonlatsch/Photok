@@ -16,8 +16,8 @@
 
 package dev.leonlatsch.photok.pro.intruderselfies
 
-import android.content.Context
+import android.app.Activity
 
-fun Context.showIntruderSelfiesActivity() {
+fun Activity.showIntruderSelfiesActivity() {
     // No impl
 }
