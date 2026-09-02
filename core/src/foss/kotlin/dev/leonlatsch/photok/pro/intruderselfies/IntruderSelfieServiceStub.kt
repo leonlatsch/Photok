@@ -14,19 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies.data
+package dev.leonlatsch.photok.pro.intruderselfies
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfie
+import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfieService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
-@Dao
-interface IntruderSelfieDao {
-
-    @Query("SELECT * FROM intruder_selfie ORDER BY timestamp DESC")
-    fun observeAll(): Flow<List<IntruderSelfieTable>>
-
-    @Insert
-    suspend fun insert(selfie: IntruderSelfieTable)
+class IntruderSelfieServiceStub @Inject constructor() : IntruderSelfieService {
+    override fun observeSelfies(): Flow<List<IntruderSelfie>> = flowOf(emptyList())
+    override fun observeEnabled(): Flow<Boolean> = flowOf(false)
+    override fun setEnabled(enabled: Boolean) = Unit
+    override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)
 }

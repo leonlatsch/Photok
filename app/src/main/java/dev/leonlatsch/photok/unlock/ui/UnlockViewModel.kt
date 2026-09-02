@@ -37,6 +37,7 @@ import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
+import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfieService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -64,6 +65,7 @@ class UnlockViewModel @Inject constructor(
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     private val legacyEncryption: LegacyEncryption,
     private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
+    private val intruderSelfieService: IntruderSelfieService,
     private val eraseVaultDataUseCase: EraseVaultDataUseCase,
 ) : ObservableViewModel(app) {
 
@@ -112,6 +114,13 @@ class UnlockViewModel @Inject constructor(
                         }
                     }
                     .onFailure {
+                        viewModelScope.launch {
+                            intruderSelfieService.captureWrongPasswordAttempt()
+                                .onFailure { error ->
+                                    Timber.e(error, "Failed to capture intruder selfie")
+                                }
+                        }
+
                         when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
                             is PasswordAttemptsResult.Locked -> unlockState.update { UnlockState.Locked(result.lockedUntil) }
                             PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
