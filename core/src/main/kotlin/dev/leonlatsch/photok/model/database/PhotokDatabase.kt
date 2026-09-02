@@ -30,10 +30,12 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
+import dev.leonlatsch.photok.pro.intruderselfies.data.IntruderSelfieDao
+import dev.leonlatsch.photok.pro.intruderselfies.data.IntruderSelfieTable
 import dev.leonlatsch.photok.sort.data.db.SortDao
 import dev.leonlatsch.photok.sort.data.db.model.SortTable
 
-private const val DATABASE_VERSION = 6
+private const val DATABASE_VERSION = 7
 const val DATABASE_NAME = "photok.db"
 
 @Database(
@@ -43,6 +45,7 @@ const val DATABASE_NAME = "photok.db"
         AlbumPhotoCrossRefTable::class,
         SortTable::class,
         VaultProtectionTable::class,
+        IntruderSelfieTable::class,
     ],
     version = DATABASE_VERSION,
     autoMigrations = [
@@ -67,6 +70,10 @@ const val DATABASE_NAME = "photok.db"
             from = 5,
             to = 6,
         ),
+        AutoMigration(
+            from = 6,
+            to = 7,
+        ),
     ]
 )
 @TypeConverters(Converters::class)
@@ -77,6 +84,7 @@ abstract class PhotokDatabase : RoomDatabase() {
     abstract fun getAlbumDao(): AlbumDao
     abstract fun getSortDao(): SortDao
     abstract fun getVaultProtectionDao(): VaultProtectionDao
+    abstract fun getIntruderSelfieDao(): IntruderSelfieDao
 }
 
 @DeleteColumn.Entries(

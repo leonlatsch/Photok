@@ -32,11 +32,10 @@ import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.database.DATABASE_NAME
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.settings.data.Config
-import timber.log.Timber
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 /**
@@ -77,6 +76,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAlbumDao(database: PhotokDatabase) = database.getAlbumDao()
+
+    @Provides
+    fun provideIntruderSelfieDao(database: PhotokDatabase) = database.getIntruderSelfieDao()
 
     @Provides
     @Singleton

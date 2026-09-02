@@ -21,6 +21,7 @@ import com.google.gson.Gson
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.sort.domain.Sort
+import java.util.Date
 
 class Converters {
 
@@ -53,4 +54,10 @@ class Converters {
         val gson = Gson()
         return gson.fromJson(string, VaultProtectionParams::class.java)
     }
+
+    @TypeConverter
+    fun fromDate(date: Date): Long = date.time
+
+    @TypeConverter
+    fun toDate(millis: Long): Date = Date(millis)
 }
