@@ -18,12 +18,12 @@ package dev.leonlatsch.photok.pro
 
 import androidx.lifecycle.Lifecycle
 import dev.leonlatsch.photok.pro.paniclock.PanicLockFeature
-import dev.leonlatsch.photok.pro.purchases.RCPurchaseService
+import dev.leonlatsch.photok.pro.purchases.PlayBillingPurchaseService
 import javax.inject.Inject
 
 class ProFeaturesLifecycleImpl @Inject constructor(
     private val panicLockFeature: PanicLockFeature,
-    private val purchaseService: RCPurchaseService
+    private val purchaseService: PlayBillingPurchaseService
 ) : ProFeaturesLifecycle {
 
     override fun register(lifecycle: Lifecycle) {
