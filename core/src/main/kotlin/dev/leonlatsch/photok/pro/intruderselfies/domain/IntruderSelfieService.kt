@@ -23,4 +23,5 @@ interface IntruderSelfieService {
     fun observeEnabled(): Flow<Boolean>
     fun setEnabled(enabled: Boolean)
     suspend fun captureWrongPasswordAttempt(): Result<Unit>
+    suspend fun captureWrongBiometrics(): Result<Unit>
 }

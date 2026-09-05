@@ -27,4 +27,5 @@ class IntruderSelfieServiceStub @Inject constructor() : IntruderSelfieService {
     override fun observeEnabled(): Flow<Boolean> = flowOf(false)
     override fun setEnabled(enabled: Boolean) = Unit
     override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)
+    override suspend fun captureWrongBiometrics(): Result<Unit> = Result.success(Unit)
 }

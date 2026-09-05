@@ -22,5 +22,20 @@ import java.util.UUID
 data class IntruderSelfie(
     val id: String = UUID.randomUUID().toString(),
     val timestamp: Date = Date(),
-    val type: String,
+    val type: IntruderSelfieType,
 )
+
+enum class IntruderSelfieType(val value: String) {
+    Password("password"),
+    Biometrics("biometrics");
+
+    companion object {
+        fun fromValue(value: String): IntruderSelfieType {
+            return when (value) {
+                Password.value -> Password
+                Biometrics.value -> Biometrics
+                else -> Password
+            }
+        }
+    }
+}

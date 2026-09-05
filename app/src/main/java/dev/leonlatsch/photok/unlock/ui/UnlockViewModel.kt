@@ -153,6 +153,7 @@ class UnlockViewModel @Inject constructor(
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
+                        intruderSelfieService.captureWrongBiometrics()
                         Dialogs.showLongToast(
                             context = fragment.requireContext(),
                             message = resources.getString(R.string.biometric_unlock_error),
