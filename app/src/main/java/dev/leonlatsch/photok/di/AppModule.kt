@@ -78,7 +78,7 @@ object AppModule {
     fun provideAlbumDao(database: PhotokDatabase) = database.getAlbumDao()
 
     @Provides
-    fun provideIntruderSelfieDao(database: PhotokDatabase) = database.getIntruderSelfieDao()
+    fun provideIntruderWarningDao(database: PhotokDatabase) = database.getIntruderWarningDao()
 
     @Provides
     @Singleton

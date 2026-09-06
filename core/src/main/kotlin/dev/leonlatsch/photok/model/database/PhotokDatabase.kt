@@ -30,8 +30,8 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.AlbumTable
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.ref.AlbumPhotoCrossRefTable
-import dev.leonlatsch.photok.pro.intruderselfies.data.IntruderSelfieDao
-import dev.leonlatsch.photok.pro.intruderselfies.data.IntruderSelfieTable
+import dev.leonlatsch.photok.pro.intruderwarnings.data.IntruderWarningDao
+import dev.leonlatsch.photok.pro.intruderwarnings.data.IntruderWarningTable
 import dev.leonlatsch.photok.sort.data.db.SortDao
 import dev.leonlatsch.photok.sort.data.db.model.SortTable
 
@@ -45,7 +45,7 @@ const val DATABASE_NAME = "photok.db"
         AlbumPhotoCrossRefTable::class,
         SortTable::class,
         VaultProtectionTable::class,
-        IntruderSelfieTable::class,
+        IntruderWarningTable::class,
     ],
     version = DATABASE_VERSION,
     autoMigrations = [
@@ -84,7 +84,7 @@ abstract class PhotokDatabase : RoomDatabase() {
     abstract fun getAlbumDao(): AlbumDao
     abstract fun getSortDao(): SortDao
     abstract fun getVaultProtectionDao(): VaultProtectionDao
-    abstract fun getIntruderSelfieDao(): IntruderSelfieDao
+    abstract fun getIntruderWarningDao(): IntruderWarningDao
 }
 
 @DeleteColumn.Entries(

@@ -37,7 +37,7 @@ import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
-import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfieService
+import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
@@ -65,7 +65,7 @@ class UnlockViewModel @Inject constructor(
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
     private val legacyEncryption: LegacyEncryption,
     private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
-    private val intruderSelfieService: IntruderSelfieService,
+    private val intruderWarningService: IntruderWarningService,
     private val eraseVaultDataUseCase: EraseVaultDataUseCase,
 ) : ObservableViewModel(app) {
 
@@ -115,9 +115,9 @@ class UnlockViewModel @Inject constructor(
                     }
                     .onFailure {
                         viewModelScope.launch {
-                            intruderSelfieService.captureWrongPasswordAttempt()
+                            intruderWarningService.captureWrongPasswordAttempt()
                                 .onFailure { error ->
-                                    Timber.e(error, "Failed to capture intruder selfie")
+                                    Timber.e(error, "Failed to capture intruder warning")
                                 }
                         }
 
@@ -153,7 +153,7 @@ class UnlockViewModel @Inject constructor(
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
-                        intruderSelfieService.captureWrongBiometrics()
+                        intruderWarningService.captureWrongBiometrics()
                         Dialogs.showLongToast(
                             context = fragment.requireContext(),
                             message = resources.getString(R.string.biometric_unlock_error),

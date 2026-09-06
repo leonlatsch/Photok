@@ -14,15 +14,28 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies.data
+package dev.leonlatsch.photok.pro.intruderwarnings.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.util.Date
+import java.util.UUID
 
-@Entity(tableName = "intruder_selfie")
-data class IntruderSelfieTable(
-    @PrimaryKey val id: String,
-    val timestamp: Date,
-    val type: String,
+data class IntruderWarning(
+    val id: String = UUID.randomUUID().toString(),
+    val timestamp: Date = Date(),
+    val type: IntruderWarningType,
 )
+
+enum class IntruderWarningType(val value: String) {
+    Password("password"),
+    Biometrics("biometrics");
+
+    companion object {
+        fun fromValue(value: String): IntruderWarningType {
+            return when (value) {
+                Password.value -> Password
+                Biometrics.value -> Biometrics
+                else -> Password
+            }
+        }
+    }
+}

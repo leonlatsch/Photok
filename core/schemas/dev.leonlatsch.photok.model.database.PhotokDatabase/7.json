@@ -239,7 +239,7 @@
         ]
       },
       {
-        "tableName": "intruder_selfie",
+        "tableName": "intruder_warning",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `type` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {

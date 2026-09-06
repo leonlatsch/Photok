@@ -87,7 +87,7 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
-import dev.leonlatsch.photok.pro.intruderselfies.showIntruderSelfiesActivity
+import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
@@ -170,8 +170,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_SELFIES) {
-            activity?.showIntruderSelfiesActivity()
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
+            activity?.showIntruderWarningsActivity()
             false
         }
 

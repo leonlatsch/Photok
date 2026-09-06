@@ -14,12 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies.domain
+package dev.leonlatsch.photok.pro.intruderwarnings.domain
 
 import kotlinx.coroutines.flow.Flow
 
-interface IntruderSelfieService {
-    fun observeSelfies(): Flow<List<IntruderSelfie>>
+interface IntruderWarningService {
+    fun observeWarnings(): Flow<List<IntruderWarning>>
     fun observeEnabled(): Flow<Boolean>
     fun setEnabled(enabled: Boolean)
     suspend fun captureWrongPasswordAttempt(): Result<Unit>

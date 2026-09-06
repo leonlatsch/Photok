@@ -41,7 +41,7 @@ val PrefsScreenConfig = PreferenceScreenConfig(
                 AppPreferences.Biometric,
                 AppPreferences.LockTimeout,
                 ProPreferences.BruteforceProtection,
-                ProPreferences.IntruderSelfies,
+                ProPreferences.IntruderWarnings,
             ),
         ),
         PreferenceSection(

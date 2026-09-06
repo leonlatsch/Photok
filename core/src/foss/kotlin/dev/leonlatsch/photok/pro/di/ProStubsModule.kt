@@ -22,8 +22,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.pro.purchases.PurchaseServiceStub
-import dev.leonlatsch.photok.pro.intruderselfies.IntruderSelfieServiceStub
-import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfieService
+import dev.leonlatsch.photok.pro.intruderwarnings.IntruderWarningServiceStub
+import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,5 +33,5 @@ interface ProStubsModule {
     fun bindPurchaseService(impl: PurchaseServiceStub): PurchaseService
 
     @Binds
-    fun bindIntruderSelfieService(impl: IntruderSelfieServiceStub): IntruderSelfieService
+    fun bindIntruderWarningService(impl: IntruderWarningServiceStub): IntruderWarningService
 }

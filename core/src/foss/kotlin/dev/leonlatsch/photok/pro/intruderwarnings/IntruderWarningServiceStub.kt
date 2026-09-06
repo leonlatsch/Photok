@@ -14,16 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies
+package dev.leonlatsch.photok.pro.intruderwarnings
 
-import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfie
-import dev.leonlatsch.photok.pro.intruderselfies.domain.IntruderSelfieService
+import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarning
+import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-class IntruderSelfieServiceStub @Inject constructor() : IntruderSelfieService {
-    override fun observeSelfies(): Flow<List<IntruderSelfie>> = flowOf(emptyList())
+class IntruderWarningServiceStub @Inject constructor() : IntruderWarningService {
+    override fun observeWarnings(): Flow<List<IntruderWarning>> = flowOf(emptyList())
     override fun observeEnabled(): Flow<Boolean> = flowOf(false)
     override fun setEnabled(enabled: Boolean) = Unit
     override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)

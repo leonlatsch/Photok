@@ -14,11 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies.domain
+package dev.leonlatsch.photok.pro.intruderwarnings.data
 
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
-interface IntruderSelfieRepository {
-    fun observe(): Flow<List<IntruderSelfie>>
-    suspend fun insert(selfie: IntruderSelfie)
+@Dao
+interface IntruderWarningDao {
+
+    @Query("SELECT * FROM intruder_warning ORDER BY timestamp DESC")
+    fun observeAll(): Flow<List<IntruderWarningTable>>
+
+    @Insert
+    suspend fun insert(warning: IntruderWarningTable)
 }

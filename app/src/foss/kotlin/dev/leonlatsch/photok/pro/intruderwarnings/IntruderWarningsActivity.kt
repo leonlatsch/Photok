@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderselfies
+package dev.leonlatsch.photok.pro.intruderwarnings
 
 import android.app.Activity
 
-fun Activity.showIntruderSelfiesActivity() {
+fun Activity.showIntruderWarningsActivity() {
     // No impl
 }
