@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
@@ -37,7 +38,13 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import javax.inject.Inject
 
-val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.albumsFragment, R.id.settingsFragment, R.id.albumDetailFragment)
+val FragmentsWithMenu = listOfNotNull(
+    R.id.galleryFragment,
+    R.id.albumsFragment,
+    R.id.settingsFragment,
+    R.id.albumDetailFragment,
+    R.id.devSettingsFragment.takeIf { BuildConfig.DEBUG },
+)
 
 /**
  * The main Activity.
