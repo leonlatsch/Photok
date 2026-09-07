@@ -121,8 +121,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                             resId = it,
                             args = null,
                             navOptions = NavOptions.Builder()
-                                .setEnterAnim(android.R.anim.fade_in)
-                                .setExitAnim(android.R.anim.fade_out)
+                                .setLaunchSingleTop(true)
+                                .setRestoreState(true)
+                                .setPopUpTo(R.id.galleryFragment, inclusive = false, saveState = true)
                                 .build()
                         )
                     }
