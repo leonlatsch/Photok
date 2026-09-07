@@ -20,6 +20,9 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import dev.leonlatsch.photok.core.R
 import timber.log.Timber
@@ -63,4 +66,25 @@ fun Activity.overrideTransitionSlideDownExit() {
         0,
         R.anim.slide_to_bottom,
     )
+}
+
+/**
+ * Whether [permission] has been permanently denied, meaning the system will no longer
+ * show its request dialog and the user has to grant it from the app's Settings page instead.
+ *
+ * Only reliable once the permission has actually been requested at least once in this
+ * install - on a cold start before any request, this returns false for every permission.
+ */
+fun Activity.shouldRequestPermissionInSettings(permission: String): Boolean {
+    val hasPermission = ContextCompat.checkSelfPermission(
+        this,
+        permission,
+    ) == PackageManager.PERMISSION_GRANTED
+
+    val shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+        this,
+        permission,
+    )
+
+    return !hasPermission && shouldShowRationale
 }
