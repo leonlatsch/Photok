@@ -179,7 +179,7 @@ Use `@Singleton` for expensive objects. ViewModels are `@HiltViewModel`.
 
 ## Translations & Strings
 
-The supported locales are the `values-*/` directories under `app/src/main/res/`. Check those directories for the current list — do not rely on any enumeration in this file.
+The supported locales are the `values-*/` directories under `core/src/main/res/`. Check those directories for the current list — do not rely on any enumeration in this file.
 
 ### Rule: Always add strings to every locale file
 

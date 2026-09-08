@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.core.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
