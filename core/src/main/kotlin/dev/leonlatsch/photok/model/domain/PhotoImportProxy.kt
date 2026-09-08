@@ -23,6 +23,12 @@ import java.io.File
  *
  * Declared here and implemented in the app module, so feature modules
  * (e.g. :pro) can import into the vault without depending on the app module.
+ *
+ * FIXME: This proxy only exists because of the current app/core module split.
+ *  PhotoRepository and its dependencies (IO, CreateThumbnailsUseCase, ImageStorage,
+ *  file metadata helpers) still live in :app, so :pro cannot reach them directly.
+ *  Move them into :core and let feature modules use PhotoRepository itself,
+ *  then delete this interface and its app side implementation.
  */
 interface PhotoImportProxy {
     suspend fun importFile(file: File, fileName: String): Result<Unit>
