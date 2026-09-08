@@ -29,7 +29,6 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
-import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningService
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
@@ -47,7 +46,6 @@ data class SettingsUiState(
     val screenConfig: PreferenceScreenConfig = PrefsScreenConfig,
     val preferencesValues: Map<String, *> = emptyMap<String, String>(),
     val proFeaturesActive: Boolean = false,
-    val intruderWarningCount: Int = 0,
 ) {
 }
 
@@ -63,19 +61,16 @@ class SettingsViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val resetVaultUseCase: ResetVaultUseCase,
     private val proFeaturesActive: PurchaseService,
-    private val intruderWarningService: IntruderWarningService,
 ) : ViewModel() {
 
     val uiState = combine(
         config.valuesFlow,
         proFeaturesActive.observe(),
-        intruderWarningService.observeNotImportedWarningCount(),
-    ) { values, proFeaturesActive, intruderWarningCount ->
+    ) { values, proFeaturesActive ->
         SettingsUiState(
             screenConfig = PrefsScreenConfig,
             preferencesValues = values,
             proFeaturesActive = proFeaturesActive,
-            intruderWarningCount = intruderWarningCount,
         )
     }.stateIn(
         scope = viewModelScope,

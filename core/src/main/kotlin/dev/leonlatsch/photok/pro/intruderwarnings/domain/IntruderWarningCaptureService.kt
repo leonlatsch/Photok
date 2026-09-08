@@ -16,17 +16,11 @@
 
 package dev.leonlatsch.photok.pro.intruderwarnings.domain
 
-import kotlinx.coroutines.flow.Flow
-
-interface IntruderWarningService {
-    fun observeWarnings(): Flow<List<IntruderWarning>>
-    fun observeNotImportedWarningCount(): Flow<Int>
-    fun observeEnabled(): Flow<Boolean>
-    fun setEnabled(enabled: Boolean)
+/**
+ * The only part of intruder warnings used outside the pro module: recording a failed unlock.
+ * Viewing and managing warnings is IntruderWarningService, which lives in the pro module.
+ */
+interface IntruderWarningCaptureService {
     suspend fun captureWrongPasswordAttempt(): Result<Unit>
     suspend fun captureWrongBiometrics(): Result<Unit>
-    suspend fun deleteWarning(id: String): Result<Unit>
-    suspend fun deleteAllWarnings(): Result<Unit>
-    suspend fun deleteImportedWarnings(): Result<Unit>
-    suspend fun importWarningPhoto(id: String): Result<Unit>
 }

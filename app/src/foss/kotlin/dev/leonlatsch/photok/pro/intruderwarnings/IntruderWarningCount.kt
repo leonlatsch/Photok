@@ -14,18 +14,9 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderwarnings.domain
+package dev.leonlatsch.photok.pro.intruderwarnings
 
-import kotlinx.coroutines.flow.Flow
+import androidx.compose.runtime.Composable
 
-interface IntruderWarningRepository {
-    fun observe(): Flow<List<IntruderWarning>>
-    fun observeNotImportedCount(): Flow<Int>
-    suspend fun get(id: String): IntruderWarning?
-    suspend fun getImportedIds(): List<String>
-    suspend fun delete(id: String)
-    suspend fun deleteAll()
-    suspend fun deleteAllImported()
-    suspend fun insert(warning: IntruderWarning)
-    suspend fun markImported(id: String)
-}
+@Composable
+fun rememberIntruderWarningCount(): Int = 0

@@ -14,24 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.di
+package dev.leonlatsch.photok.pro.intruderwarnings
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dev.leonlatsch.photok.pro.purchases.PurchaseService
-import dev.leonlatsch.photok.pro.purchases.PurchaseServiceStub
-import dev.leonlatsch.photok.pro.intruderwarnings.IntruderWarningCaptureServiceStub
 import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningCaptureService
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface ProStubsModule {
-
-    @Binds
-    fun bindPurchaseService(impl: PurchaseServiceStub): PurchaseService
-
-    @Binds
-    fun bindIntruderWarningCaptureService(impl: IntruderWarningCaptureServiceStub): IntruderWarningCaptureService
+class IntruderWarningCaptureServiceStub @Inject constructor() : IntruderWarningCaptureService {
+    override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)
+    override suspend fun captureWrongBiometrics(): Result<Unit> = Result.success(Unit)
 }

@@ -87,6 +87,7 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.showPaywall
@@ -326,7 +327,6 @@ fun SettingsContent(
         SettingsPreferenceSections(
             sections = uiState.screenConfig.sections,
             proFeaturesActive = uiState.proFeaturesActive,
-            intruderWarningCount = uiState.intruderWarningCount,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
             contentPadding = contentPadding,
@@ -339,12 +339,12 @@ fun SettingsContent(
 private fun SettingsPreferenceSections(
     sections: List<PreferenceSection>,
     proFeaturesActive: Boolean,
-    intruderWarningCount: Int,
     handleUiEvent: (SettingsUiEvent) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     contentPadding: PaddingValues,
 ) {
     val fragment = LocalFragment.current
+    val intruderWarningCount = rememberIntruderWarningCount()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
