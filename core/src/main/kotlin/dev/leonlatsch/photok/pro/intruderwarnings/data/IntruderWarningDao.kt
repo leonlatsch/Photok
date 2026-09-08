@@ -29,4 +29,7 @@ interface IntruderWarningDao {
 
     @Insert
     suspend fun insert(warning: IntruderWarningTable)
+
+    @Query("DELETE FROM intruder_warning WHERE id = :id")
+    suspend fun delete(id: String)
 }

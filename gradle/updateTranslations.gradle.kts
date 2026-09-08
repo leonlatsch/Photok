@@ -17,7 +17,7 @@ import java.util.*
  */
 
 tasks.register("updateTranslations") {
-    val resPath = "app/src/main/res"
+    val resPath = "core/src/main/res"
     val bytes = java.io.FileInputStream(File("$resPath/values/strings.xml")).readBytes()
     val enLines = String(bytes).split("\n")
 
