@@ -29,4 +29,5 @@ class IntruderWarningServiceStub @Inject constructor() : IntruderWarningService 
     override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)
     override suspend fun captureWrongBiometrics(): Result<Unit> = Result.success(Unit)
     override suspend fun deleteWarning(id: String): Result<Unit> = Result.success(Unit)
+    override suspend fun importWarningPhoto(id: String): Result<Unit> = Result.success(Unit)
 }

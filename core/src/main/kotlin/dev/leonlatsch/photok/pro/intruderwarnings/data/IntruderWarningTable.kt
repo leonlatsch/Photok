@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.pro.intruderwarnings.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
@@ -25,4 +26,5 @@ data class IntruderWarningTable(
     @PrimaryKey val id: String,
     val timestamp: Date,
     val type: String,
+    @ColumnInfo(defaultValue = "0") val imported: Boolean = false,
 )

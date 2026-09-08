@@ -14,16 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderwarnings.domain
+package dev.leonlatsch.photok.model.domain
 
-import kotlinx.coroutines.flow.Flow
+import java.io.File
 
-interface IntruderWarningService {
-    fun observeWarnings(): Flow<List<IntruderWarning>>
-    fun observeEnabled(): Flow<Boolean>
-    fun setEnabled(enabled: Boolean)
-    suspend fun captureWrongPasswordAttempt(): Result<Unit>
-    suspend fun captureWrongBiometrics(): Result<Unit>
-    suspend fun deleteWarning(id: String): Result<Unit>
-    suspend fun importWarningPhoto(id: String): Result<Unit>
+/**
+ * Proxy for the vault import machinery, which lives in the app module.
+ *
+ * Declared here and implemented in the app module, so feature modules
+ * (e.g. :pro) can import into the vault without depending on the app module.
+ */
+interface PhotoImportProxy {
+    suspend fun importFile(file: File, fileName: String): Result<Unit>
 }

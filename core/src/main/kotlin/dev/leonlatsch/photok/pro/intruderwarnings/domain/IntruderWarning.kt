@@ -23,6 +23,7 @@ data class IntruderWarning(
     val id: String = UUID.randomUUID().toString(),
     val timestamp: Date = Date(),
     val type: IntruderWarningType,
+    val imported: Boolean = false,
 )
 
 enum class IntruderWarningType(val value: String) {

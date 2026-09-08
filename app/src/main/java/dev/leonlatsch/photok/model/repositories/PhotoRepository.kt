@@ -34,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -144,17 +145,48 @@ class PhotoRepository @Inject constructor(
     }
 
     /**
+     * Import a photo from a [file] in app internal storage.
+     *
+     * Encrypts the file into the vault and creates thumbnails.
+     * Does not modify or delete [file].
+     *
+     * @return the created uuid, or [String.empty] on failure
+     */
+    suspend fun safeImportPhotoFile(file: File, fileName: String, type: PhotoType): String {
+        val photo = Photo(
+            fileName = fileName,
+            importedAt = System.currentTimeMillis(),
+            lastModified = file.lastModified(),
+            type = type,
+            size = file.length(),
+        )
+
+        val inputStream = try {
+            file.inputStream()
+        } catch (e: IOException) {
+            Timber.e("Error opening file for import: $e")
+            return String.empty
+        }
+
+        val created = safeCreatePhoto(photo, inputStream, file)
+        inputStream.lazyClose()
+
+        return if (created) photo.uuid else String.empty
+    }
+
+    /**
      * Writes and encrypts the [source] into internal storage.
      * Saves the [photo] afterwords.
      * It is up to the caller to close the [source].
-     * Does create a thumbnail, IF [origUri] is specified.
+     * Does create a thumbnail, IF [thumbnailSource] is specified.
+     * [thumbnailSource] may be anything coil can load, e.g. a system [Uri] or a [File].
      *
      * @return true, if everything worked
      */
     private suspend fun safeCreatePhoto(
         photo: Photo,
         source: InputStream?,
-        origUri: Uri? = null
+        thumbnailSource: Any? = null
     ): Boolean {
         val fileLen = createPhotoFile(photo, source)
         var success = fileLen != -1L
@@ -162,8 +194,8 @@ class PhotoRepository @Inject constructor(
         if (success) {
             photo.size = fileLen
 
-            if (origUri != null) {
-                createThumbnail(photo, origUri)
+            if (thumbnailSource != null) {
+                createThumbnail(photo, thumbnailSource)
             }
 
             val photoId = insert(photo)

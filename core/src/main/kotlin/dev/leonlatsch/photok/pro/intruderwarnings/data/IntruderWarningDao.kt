@@ -30,6 +30,12 @@ interface IntruderWarningDao {
     @Insert
     suspend fun insert(warning: IntruderWarningTable)
 
+    @Query("SELECT * FROM intruder_warning WHERE id = :id")
+    suspend fun get(id: String): IntruderWarningTable?
+
     @Query("DELETE FROM intruder_warning WHERE id = :id")
     suspend fun delete(id: String)
+
+    @Query("UPDATE intruder_warning SET imported = 1 WHERE id = :id")
+    suspend fun markImported(id: String)
 }

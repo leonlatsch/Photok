@@ -14,16 +14,18 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderwarnings.domain
+package dev.leonlatsch.photok.model.di
 
-import kotlinx.coroutines.flow.Flow
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dev.leonlatsch.photok.model.domain.PhotoImportProxy
+import dev.leonlatsch.photok.model.repositories.PhotoImportProxyImpl
 
-interface IntruderWarningService {
-    fun observeWarnings(): Flow<List<IntruderWarning>>
-    fun observeEnabled(): Flow<Boolean>
-    fun setEnabled(enabled: Boolean)
-    suspend fun captureWrongPasswordAttempt(): Result<Unit>
-    suspend fun captureWrongBiometrics(): Result<Unit>
-    suspend fun deleteWarning(id: String): Result<Unit>
-    suspend fun importWarningPhoto(id: String): Result<Unit>
+@Module
+@InstallIn(SingletonComponent::class)
+interface PhotoModule {
+    @Binds
+    fun bindPhotoImportProxy(impl: PhotoImportProxyImpl): PhotoImportProxy
 }
