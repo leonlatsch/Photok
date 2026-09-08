@@ -103,6 +103,7 @@ import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.CountBadge
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
@@ -325,6 +326,7 @@ fun SettingsContent(
         SettingsPreferenceSections(
             sections = uiState.screenConfig.sections,
             proFeaturesActive = uiState.proFeaturesActive,
+            intruderWarningCount = uiState.intruderWarningCount,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
             contentPadding = contentPadding,
@@ -337,6 +339,7 @@ fun SettingsContent(
 private fun SettingsPreferenceSections(
     sections: List<PreferenceSection>,
     proFeaturesActive: Boolean,
+    intruderWarningCount: Int,
     handleUiEvent: (SettingsUiEvent) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     contentPadding: PaddingValues,
@@ -377,6 +380,11 @@ private fun SettingsPreferenceSections(
                                         summary = stringResource(preference.summary),
                                         proProtectedByPaywall = preference.proProtectedByPaywall,
                                         showProBadge = preference.showProBadge,
+                                        badgeCount = if (preference.key == SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
+                                            intruderWarningCount
+                                        } else {
+                                            0
+                                        },
                                         onClick = {
                                             fragment ?: return@PreferenceView
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
@@ -579,6 +587,7 @@ fun PreferenceView(
     showProBadge: Boolean,
     proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
+    badgeCount: Int = 0,
     onClick: (() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
 ) {
@@ -632,7 +641,10 @@ fun PreferenceView(
             )
         }
 
-        if (showProBadge && !proFeaturesActive) {
+        if (badgeCount > 0) {
+            CountBadge(badgeCount)
+
+        } else if (showProBadge && !proFeaturesActive) {
             ShimmerProBadge()
 
         } else if (trailing != null) {

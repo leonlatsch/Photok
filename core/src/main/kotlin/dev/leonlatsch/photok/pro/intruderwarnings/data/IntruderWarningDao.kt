@@ -27,6 +27,9 @@ interface IntruderWarningDao {
     @Query("SELECT * FROM intruder_warning ORDER BY timestamp DESC")
     fun observeAll(): Flow<List<IntruderWarningTable>>
 
+    @Query("SELECT COUNT(*) FROM intruder_warning WHERE imported = 0")
+    fun observeNotImportedCount(): Flow<Int>
+
     @Insert
     suspend fun insert(warning: IntruderWarningTable)
 

@@ -24,6 +24,7 @@ import javax.inject.Inject
 
 class IntruderWarningServiceStub @Inject constructor() : IntruderWarningService {
     override fun observeWarnings(): Flow<List<IntruderWarning>> = flowOf(emptyList())
+    override fun observeNotImportedWarningCount(): Flow<Int> = flowOf(0)
     override fun observeEnabled(): Flow<Boolean> = flowOf(false)
     override fun setEnabled(enabled: Boolean) = Unit
     override suspend fun captureWrongPasswordAttempt(): Result<Unit> = Result.success(Unit)

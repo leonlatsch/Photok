@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IntruderWarningRepository {
     fun observe(): Flow<List<IntruderWarning>>
+    fun observeNotImportedCount(): Flow<Int>
     suspend fun get(id: String): IntruderWarning?
     suspend fun getImportedIds(): List<String>
     suspend fun delete(id: String)

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IntruderWarningService {
     fun observeWarnings(): Flow<List<IntruderWarning>>
+    fun observeNotImportedWarningCount(): Flow<Int>
     fun observeEnabled(): Flow<Boolean>
     fun setEnabled(enabled: Boolean)
     suspend fun captureWrongPasswordAttempt(): Result<Unit>
