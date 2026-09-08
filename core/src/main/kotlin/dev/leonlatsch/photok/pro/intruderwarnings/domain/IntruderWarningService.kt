@@ -25,5 +25,7 @@ interface IntruderWarningService {
     suspend fun captureWrongPasswordAttempt(): Result<Unit>
     suspend fun captureWrongBiometrics(): Result<Unit>
     suspend fun deleteWarning(id: String): Result<Unit>
+    suspend fun deleteAllWarnings(): Result<Unit>
+    suspend fun deleteImportedWarnings(): Result<Unit>
     suspend fun importWarningPhoto(id: String): Result<Unit>
 }
