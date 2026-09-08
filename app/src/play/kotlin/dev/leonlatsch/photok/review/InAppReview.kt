@@ -59,13 +59,11 @@ class InAppReviewImpl @Inject constructor(
 
                 request.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        launch {
-                            config.inAppReviewRequested = true
-                            telemetryService.signal(
-                                Signal.ReviewRequested,
-                                mapOf("trigger" to trigger.name)
-                            )
-                        }
+                        config.inAppReviewRequested = true
+                        telemetryService.signal(
+                            Signal.ReviewRequested,
+                            mapOf("trigger" to trigger.name)
+                        )
 
                         manager.launchReviewFlow(activity, task.result)
 
