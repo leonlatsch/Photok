@@ -205,11 +205,6 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_DONATE) {
-            fragment.openUrl(context.getString(R.string.settings_other_donate_url))
-            false
-        }
-
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_SOURCECODE) {
             fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))
             false

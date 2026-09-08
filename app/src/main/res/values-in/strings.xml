@@ -199,9 +199,9 @@
     <string name="settings_other_feedback_mail_subject">Masukan untuk Photok</string>
     <string name="settings_other_feedback_mail_body">Tulis masukanmu tentang Photok :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Donasi</string>
-    <string name="settings_other_donate_summary">Dukung pengembangan Photok</string>
-    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+
+
+
     <string name="settings_other_sourcecode_title">Kode Sumber</string>
     <string name="settings_other_sourcecode_summary">Berkontribusi pada Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

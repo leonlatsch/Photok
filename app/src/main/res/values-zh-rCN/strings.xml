@@ -197,9 +197,9 @@
     <string name="settings_other_feedback_mail_subject">向 Photok 提供反馈</string>
     <string name="settings_other_feedback_mail_body">写一则 Photok 的反馈 :)</string>
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">捐赠</string>
-    <string name="settings_other_donate_summary">支持 Photok 开发</string>
-    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+
+
+
     <string name="settings_other_sourcecode_title">源代码</string>
     <string name="settings_other_sourcecode_summary">给 Photok 作贡献</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

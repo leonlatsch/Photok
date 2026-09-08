@@ -199,9 +199,9 @@
     <string name="settings_other_feedback_mail_subject">Feedback to Photok</string> <!-- KEPT IN ENGLISH FOR EMAIL SUBJECT -->
     <string name="settings_other_feedback_mail_body">Write a feedback about Photok :)</string> <!-- KEPT IN ENGLISH FOR EMAIL BODY -->
     <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
-    <string name="settings_other_donate_title">Dona</string>
-    <string name="settings_other_donate_summary">Supporta lo sviluppo di Photok</string>
-    <string name="settings_other_donate_url">https://ko-fi.com/leonlatsch</string>
+
+
+
     <string name="settings_other_sourcecode_title">Codice Sorgente</string>
     <string name="settings_other_sourcecode_summary">Contribuisci a Photok</string>
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>

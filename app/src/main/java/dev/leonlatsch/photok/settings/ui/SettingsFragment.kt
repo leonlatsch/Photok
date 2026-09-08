@@ -66,7 +66,6 @@ class SettingsFragment : Fragment() {
         const val KEY_ACTION_BRUTEFORCE_PROTECTION = "action_bruteforce_protection"
         const val KEY_ACTION_INTRUDER_WARNINGS = "action_intruder_warnings"
         const val KEY_ACTION_FEEDBACK = "action_feedback"
-        const val KEY_ACTION_DONATE = "action_donate"
         const val KEY_ACTION_SOURCECODE = "action_sourcecode"
         const val KEY_ACTION_CREDITS = "action_credits"
         const val KEY_ACTION_TELEMETRY = "action_telemetry"

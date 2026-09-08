@@ -129,12 +129,6 @@ object AppPreferences {
         title = R.string.settings_other_feedback_title,
         summary = R.string.settings_other_feedback_summary,
     )
-    val Donate = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_DONATE,
-        icon = R.drawable.ic_money,
-        title = R.string.settings_other_donate_title,
-        summary = R.string.settings_other_donate_summary,
-    )
     val SourceCode = Preference.Simple(
         key = SettingsFragment.KEY_ACTION_SOURCECODE,
         icon = R.drawable.ic_code,

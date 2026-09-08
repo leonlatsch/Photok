@@ -59,7 +59,6 @@ val PrefsScreenConfig = PreferenceScreenConfig(
             summary = null,
             preferences = listOf(
                 AppPreferences.Feedback,
-                AppPreferences.Donate,
                 AppPreferences.SourceCode,
                 AppPreferences.Credits,
                 AppPreferences.Telemetry,
