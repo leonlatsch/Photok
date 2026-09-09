@@ -33,6 +33,7 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.encryption.ui.BiometricAuthenticationFailedException
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
@@ -153,7 +154,12 @@ class UnlockViewModel @Inject constructor(
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
-                        intruderWarningCaptureService.captureWrongBiometrics()
+                        if (it is BiometricAuthenticationFailedException) {
+                            intruderWarningCaptureService.captureWrongBiometrics()
+                                .onFailure { error ->
+                                    Timber.e(error, "Failed to capture intruder warning")
+                                }
+                        }
                         Dialogs.showLongToast(
                             context = fragment.requireContext(),
                             message = resources.getString(R.string.biometric_unlock_error),
