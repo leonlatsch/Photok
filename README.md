@@ -45,8 +45,6 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
       alt="Get it on IzzyOnDroid"
       height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1UPJIV)
-
 ## Features
 
 - Import photos and videos from your gallery
