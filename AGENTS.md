@@ -9,16 +9,17 @@ Read it fully before writing any code.
 
 1. [Project Overview](#project-overview)
 2. [Repository Layout](#repository-layout)
-3. [Architecture](#architecture)
-4. [UI Patterns](#ui-patterns)
-5. [Encryption System](#encryption-system)
-6. [Key Libraries](#key-libraries)
-7. [Database](#database)
-8. [Dependency Injection](#dependency-injection)
-9. [Translations & Strings](#translations--strings)
-10. [Testing](#testing)
-11. [Product Flavors](#product-flavors)
-12. [Rules & Conventions](#rules--conventions)
+3. [Modules](#modules)
+4. [Architecture](#architecture)
+5. [UI Patterns](#ui-patterns)
+6. [Encryption System](#encryption-system)
+7. [Key Libraries](#key-libraries)
+8. [Database](#database)
+9. [Dependency Injection](#dependency-injection)
+10. [Translations & Strings](#translations--strings)
+11. [Testing](#testing)
+12. [Product Flavors](#product-flavors)
+13. [Rules & Conventions](#rules--conventions)
 
 ---
 
@@ -32,11 +33,11 @@ Key features: gallery, albums, backup/restore, biometric unlock, recovery phrase
 
 ## Repository Layout
 
-The top-level directory contains `app/`, `gradle/`, `adr/`, `ENCRYPTION.md`, and this file. All source code lives under `app/src/main/java/dev/leonlatsch/photok/`.
+The top-level Gradle project contains `app/`, `core/`, `pro/`, `gradle/`, `adr/`, `ENCRYPTION.md`, and this file. `pro/` is a Git submodule and may be absent in a checkout that has not initialized submodules. Source lives in the module that owns the concern; do not assume `app/` owns all code.
 
-To orient yourself, browse that root package — each top-level directory is a self-contained feature. The current list of features is the live source of truth; do not rely on any enumeration in this file.
+To orient yourself, browse the relevant module's `src` tree and the `dev/leonlatsch/photok/` package. Each top-level package is a self-contained feature. The current source tree is the live source of truth; do not rely on an enumeration in this file.
 
-All dependencies are declared in `app/build.gradle.kts` — check there for the current library stack.
+Dependencies are declared by module in `app/build.gradle.kts`, `core/build.gradle.kts`, and, when present, `pro/build.gradle.kts`. Check the owning module's build file before adding or changing a dependency.
 
 Each feature follows the same internal structure:
 
@@ -46,7 +47,30 @@ Each feature follows the same internal structure:
 - **`ui/`** — ViewModels, Fragments, Compose screens, navigator classes.
   - **`ui/compose/`** — screen-level and sub-composables.
 
-Shared UI components and the theme live in `ui/`. Legacy base classes (`Bindable*`, `Base*`) live in `uicomponnets/`. Extensions and misc utilities live in `other/`.
+Shared UI components, the theme, core models, encryption, persistence, and shared interfaces belong in `core/`. App-specific UI and Android entry points belong in `app/`. Legacy base classes (`Bindable*`, `Base*`) live in `app/.../uicomponnets/`. Extensions and misc utilities live in the owning module's `other/` package.
+
+---
+
+## Modules
+
+The project has three Gradle modules:
+
+| Module | Role | Dependency direction |
+|---|---|---|
+| `:core` | Shared vault/domain infrastructure: encryption, file storage, Room database, common models, shared UI/theme, configuration, and interfaces/stubs used by other modules. | Must not depend on `:app` or `:pro`. |
+| `:app` | Installable application: `MainActivity`, manifest, navigation graph, app-specific features, resources, flavor source sets, and composition/wiring. | Depends on `:core`; uses `:pro` only for the Play variant when the submodule is available. |
+| `:pro` | Private paid-feature Android library: billing, paywall, intruder warnings, panic lock, and pro implementations. | Git submodule; depends on `:core`, never on `:app`. |
+
+Keep dependency flow one-way: `:app` → `:core` and `:pro` → `:core`. Put reusable contracts in `:core`; neither `:core` nor `:pro` may import app implementation code.
+
+### Pro Git Submodule
+
+`pro/` is declared in `.gitmodules` and is conditionally included by `settings.gradle.kts` only when `pro/build.gradle.kts` exists. A checkout without it is intentional and must still build the FOSS app.
+
+- Initialize it after cloning when pro work or Play builds are needed: `git submodule update --init --recursive`.
+- Do not edit, stage, commit, or push inside `pro/` unless the task explicitly includes the private pro repository. Changes there have their own Git history and review lifecycle.
+- Changes to the submodule pointer in the parent repository are deliberate release/integration changes; make them only when explicitly requested.
+- Never add a compile-time `:pro` dependency that prevents a checkout without the submodule from configuring. Follow the existing guarded inclusion and Play-only dependency pattern.
 
 ---
 
@@ -54,16 +78,16 @@ Shared UI components and the theme live in `ui/`. Legacy base classes (`Bindable
 
 ### Core Pattern
 
-The app follows a **feature-first layered architecture**:
+The codebase follows a **feature-first layered architecture** within the module that owns a feature:
 
 - **`domain`** — pure Kotlin. Interfaces, models, use cases. No Android imports.
 - **`data`** — Room tables, DAOs, repository implementations. Implements `domain` interfaces.
 - **`di`** — Hilt modules that bind `data` implementations to `domain` interfaces.
-- **`ui`** — ViewModels + Compose screens + Fragments + Navigator classes.
+- **`ui`** — ViewModels + Compose screens + Fragments + Navigator classes. App entry points and navigation remain in `:app`.
 
 ### Single Activity
 
-There is a single `MainActivity` (with `DataBinding`). All screens are **Fragments** navigated via the Jetpack Navigation Component (`main_nav_graph.xml`). Fragments host Compose UIs via `ComposeView`.
+The installable `:app` module has a single `MainActivity` (with `DataBinding`). All screens are **Fragments** navigated via `app/src/main/res/navigation/main_nav_graph.xml`. Fragments host Compose UIs via `ComposeView`.
 
 ### Navigation
 
@@ -103,17 +127,17 @@ Still used in `unlock` and a few others. They extend `BindableFragment<ViewDataB
 
 ### Theme
 
-`AppTheme` (in `ui/theme/Theme.kt`) wraps every Compose entry point. It respects the system dark/light setting. Always call `AppTheme { ... }` at the root of a Fragment's `ComposeView.setContent { }`.
+`AppTheme` (in `core/.../ui/theme/Theme.kt`) wraps every Compose entry point. It respects the system dark/light setting. Always call `AppTheme { ... }` at the root of a Fragment's `ComposeView.setContent { }`.
 
 ### CompositionLocals
 
-Shared objects are injected into the Compose tree via `CompositionLocal`. Check `ui/CompositionLocals.kt` and feature-specific files (e.g. `transcoding/compose/LocalEncryptedImageLoader.kt`, `settings/ui/compose/ConfigCompositionLocal.kt`) for the current set.
+Shared objects are injected into the Compose tree via `CompositionLocal`. Check the relevant module's UI package and feature-specific files (for example, `app/.../transcoding/compose/LocalEncryptedImageLoader.kt`) for the current set.
 
 Provide them in the Fragment's `setContent { }` block using `CompositionLocalProvider`.
 
 ### Compose Components
 
-Reusable composables live in `ui/components/` (e.g., `AppName`, `ConfirmationDialog`, `MagicFab`, `MultiSelectionMenu`). **Compose first** means building components here and reusing them across features.
+Reusable composables belong in `core/.../ui/components/` when they are module-neutral; otherwise keep them in the owning app or pro feature. **Compose first** means building reusable components at the narrowest shared module boundary.
 
 ---
 
@@ -131,7 +155,7 @@ Reusable composables live in `ui/components/` (e.g., `AppName`, `ConfirmationDia
 
 ### Key Classes
 
-All encryption classes live under `encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (in `io/`) is the only place that opens encrypted file streams. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
+Encryption classes live in `core/src/main/kotlin/dev/leonlatsch/photok/encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (in `core/.../io/`) is the only place that opens encrypted file streams. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
 
 ### Rules for Encryption Code
 
@@ -144,7 +168,7 @@ All encryption classes live under `encryption/`. Start with `VaultService` (in `
 
 ## Key Libraries
 
-Check `app/build.gradle.kts` for the current library list. Key areas to know:
+Check the owning module's build file for the current library list. Key areas to know:
 
 - **Jetpack Compose + Material3** — all new UI.
 - **Hilt / Dagger** — DI throughout.
@@ -163,7 +187,7 @@ Check `app/build.gradle.kts` for the current library list. Key areas to know:
 
 ## Database
 
-The app uses a Room database (`photok.db`). The `PhotokDatabase` class in `model/database/` is the source of truth for all entities and the current schema version.
+The app uses a Room database (`photok.db`). The `PhotokDatabase` class in `core/.../model/database/` is the source of truth for all entities and the current schema version. Room schema exports live in `core/schemas/`.
 
 All schema changes must use **Room auto-migrations** declared in `@Database(autoMigrations = [...])`. Always add a new `AutoMigration(from = N, to = N+1)` entry and bump `DATABASE_VERSION` when changing the schema. Never write manual SQL migrations unless Room cannot handle the change automatically.
 
@@ -171,7 +195,7 @@ All schema changes must use **Room auto-migrations** declared in `@Database(auto
 
 ## Dependency Injection
 
-Hilt is used throughout. Each feature that needs DI has a `di/` sub-package containing a Hilt module — look there for the current bindings. The top-level `di/AppModule.kt` provides app-wide singletons (database, DAOs, config, Gson, etc.).
+Hilt is used throughout. Each feature that needs DI has a `di/` sub-package containing a Hilt module — look there for the current bindings. Put bindings with the implementation they construct: shared database/configuration bindings in `:core`, app composition bindings in `app/.../di/`, and paid-feature bindings in `:pro`. Do not make `:core` depend on app or pro implementations.
 
 Use `@Singleton` for expensive objects. ViewModels are `@HiltViewModel`.
 
@@ -199,7 +223,7 @@ The `<!-- TODO -->` annotation is required: the `updateTranslations` Gradle task
 
 ## Testing
 
-Unit tests live in `app/src/test/` and use JUnit 4, Robolectric (Android runtime emulation), MockK, and `kotlinx-coroutines-test`. Look at existing tests under `encryption/` for representative examples of the style.
+Unit tests live in the owning module's `src/test/` tree (`app/src/test/` or `core/src/test/`) and use JUnit 4, Robolectric (Android runtime emulation), MockK, and `kotlinx-coroutines-test`. Look at the encryption tests for representative examples of the style.
 
 When writing tests:
 - Prefer integration tests for crypto flows.
@@ -215,7 +239,7 @@ When writing tests:
 | `play` | `true` | Google Play release; includes TelemetryDeck |
 | `foss` | `false` | F-Droid / sideload release; no telemetry |
 
-Flavor-specific code goes in `src/play/` or `src/foss/`. Use `playImplementation` / `fossImplementation` in `build.gradle.kts` for flavor-specific dependencies.
+Flavor-specific code belongs in the owning module's `src/play/` or `src/foss/` source set. `:app` and `:core` define the `distribution` dimension. `:app` consumes `:pro` only through its guarded `playImplementation` dependency; FOSS behavior is provided by core/app stubs and must not require the submodule.
 
 ---
 
@@ -225,6 +249,7 @@ Flavor-specific code goes in `src/play/` or `src/foss/`. Use `playImplementation
 
 - **Do not commit on your own.** Stage and propose changes, but never run `git commit` or `git push`.
 - If you are on a feature branch, run `git diff main` (or `git diff $(git merge-base HEAD main)`) early to understand what has already changed in this feature.
+- Treat `pro/` as a separate repository according to the [Pro Git Submodule](#pro-git-submodule) rules above.
 
 ### Code Style
 
