@@ -29,6 +29,7 @@ enum class Signal {
     OnboardingFinished,
     SetupCompleted,
     ReviewRequested,
+    MigratedFromAesGcm,
 }
 
 @Singleton
