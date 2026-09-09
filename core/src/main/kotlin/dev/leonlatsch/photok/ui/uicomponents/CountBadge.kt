@@ -20,14 +20,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.ui.theme.Colors
 
 @Composable
 fun CountBadge(
@@ -38,14 +41,14 @@ fun CountBadge(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .sizeIn(minWidth = 26.dp, minHeight = 26.dp)
-            .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colorScheme.secondaryContainer),
+            .clip(CircleShape)
+            .background(Colors.Warning),
     ) {
         Text(
             text = count.toString(),
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Black,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = Color.White,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
         )
     }
