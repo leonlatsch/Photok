@@ -93,8 +93,13 @@ The core app is identical, but some features differ due to platform requirements
 | **Telemetry** | Enabled by default (can be disabled in settings) | Disabled by default (can be enabled in settings) |
 | **Telemetry opt-in prompt** | No prompt shown | Shown once after first unlock |
 | **In-App Review** | Requested after usage milestones | Not available |
+| **Photok Pro** | Available as an optional add-on | Not available |
 
 > **Why is telemetry off by default on FOSS?** F-Droid flags apps that transmit data without explicit opt-in as having the *Tracking* anti-feature. No data is ever transmitted unless the user has actively opted in.
+
+## Photok Pro
+
+Photok Pro is an optional add-on for the Google Play version of Photok. It unlocks additional features while supporting ongoing development and helping me build more features for Photok. Photok no longer accepts donations; Photok Pro is now the way to support its development.
 
 ## Community
 
