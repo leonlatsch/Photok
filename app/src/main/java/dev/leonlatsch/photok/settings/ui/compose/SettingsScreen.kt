@@ -39,6 +39,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
@@ -69,6 +70,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -104,7 +106,6 @@ import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.ui.uicomponents.CountBadge
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
@@ -642,7 +643,14 @@ fun PreferenceView(
         }
 
         if (badgeCount > 0) {
-            CountBadge(badgeCount)
+            Badge(modifier = modifier) {
+                Text(
+                    text = badgeCount.toString(),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Black,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                )
+            }
 
         } else if (showProBadge && !proFeaturesActive) {
             ShimmerProBadge()
