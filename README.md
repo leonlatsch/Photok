@@ -99,7 +99,7 @@ The core app is identical, but some features differ due to platform requirements
 
 ## Photok Pro
 
-Photok Pro is an optional add-on for the Google Play version of Photok. It unlocks additional features while supporting ongoing development and helping me build more features for Photok. Photok no longer accepts donations; Photok Pro is now the way to support its development.
+Photok Pro is an optional add-on for the Google Play version of Photok. It unlocks additional features while supporting ongoing development and helping me build more features for Photok.
 
 The FOSS will stay true to its name and continue to be free open source software.
 
