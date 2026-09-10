@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.4.10"
 }
 
 android {
@@ -52,20 +52,20 @@ dependencies {
     ksp("androidx.room:room-compiler:2.8.4")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.60")
-    ksp("com.google.dagger:hilt-android-compiler:2.60")
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.60.1")
 
     // Gson (for Converters)
-    implementation("com.google.code.gson:gson:2.13.2")
+    implementation("com.google.code.gson:gson:2.14.0")
 
     // Timber (for VaultFileStorage)
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // SharedPreferences edit extension
-    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.core:core-ktx:1.19.0")
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
