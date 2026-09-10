@@ -45,22 +45,14 @@ platform :android do
   # ---- Release ------------------------------------------------------------
   #
 
-  desc "Full release: build & sign Play AAB + FOSS APK, publish AAB to Play, create GitHub release with the APK"
-  lane :release do
+  desc "Build & sign the FOSS APK, create the GitHub release with it attached (no :pro submodule needed)"
+  lane :release_foss do
     version_name = gradle_property("appVersionName")
-    version_code = gradle_property("appVersionCode")
-    tag = ENV["RELEASE_TAG"] || "#{version_name}"
+    tag = ENV["RELEASE_TAG"] || version_name
 
-    UI.message("Releasing Photok #{version_name} (code #{version_code}, tag #{tag})")
+    UI.message("Releasing Photok #{version_name} FOSS (tag #{tag})")
 
     gradle(task: "clean")
-
-    # Build & sign the Google Play bundle.
-    gradle(
-      task: "bundlePlayRelease",
-      properties: signing_properties.merge(telemetry_properties)
-    )
-    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
 
     # Build & sign the FOSS APK (GitHub / IzzyOnDroid).
     gradle(
@@ -74,12 +66,36 @@ platform :android do
     release_apk = apk_path.sub("-release-signed.apk", ".apk")
     FileUtils.mv(apk_path, release_apk) if apk_path != release_apk
 
-    # Publish the AAB to Google Play. supply reads the changelog for this
-    # version code from fastlane/metadata/android/<locale>/changelogs/.
+    # Create the GitHub release for the (already pushed) tag and attach the APK.
+    set_github_release(
+      repository_name: REPO,
+      api_bearer: ENV["GITHUB_TOKEN"], # This this and NOT api_token. If running from github actions
+      tag_name: tag,
+      is_generate_release_notes: true,
+      upload_assets: [release_apk]
+    )
+  end
+
+  desc "Build & sign the Play AAB, publish it to Play (needs :pro submodule)"
+  lane :release_play do
+    version_name = gradle_property("appVersionName")
+    version_code = gradle_property("appVersionCode")
+
+    UI.message("Releasing Photok #{version_name} Play (code #{version_code})")
+
+    gradle(task: "clean")
+
+    # Build & sign the Google Play bundle.
+    gradle(
+      task: "bundlePlayRelease",
+      properties: signing_properties.merge(telemetry_properties)
+    )
+    aab_path = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+
+    # Publish the AAB to Google Play's internal testing track. supply reads the
+    # changelog for this version code from fastlane/metadata/android/<locale>/changelogs/.
     upload_to_play_store(
-      track: ENV["PLAY_TRACK"] || "production",
-      release_status: "inProgress",
-      rollout: 0.1,
+      track: ENV["PLAY_TRACK"] || "internal",
       aab: aab_path,
 
       skip_upload_apk: true,
@@ -89,15 +105,6 @@ platform :android do
       skip_upload_metadata: true,    # don't overwrite store title/description
       skip_upload_images: true,      # don't overwrite graphics
       skip_upload_screenshots: true  # don't overwrite screenshots
-    )
-
-    # Create the GitHub release for the (already pushed) tag and attach the APK.
-    set_github_release(
-      repository_name: REPO,
-      api_bearer: ENV["GITHUB_TOKEN"], # This this and NOT api_token. If running from github actions
-      tag_name: tag,
-      is_generate_release_notes: true,
-      upload_assets: [release_apk]
     )
   end
 
