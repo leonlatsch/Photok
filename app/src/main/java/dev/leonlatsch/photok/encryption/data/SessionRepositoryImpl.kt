@@ -18,26 +18,33 @@ package dev.leonlatsch.photok.encryption.data
 
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SessionRepositoryImpl @Inject constructor(): SessionRepository {
-    private var session: VaultSession? = null
+    private var session = MutableStateFlow<VaultSession?>(null)
 
     override fun set(session: VaultSession) {
-        this.session = session
+        this.session .update { session }
     }
 
     override fun get(): VaultSession? {
-        return session
+        return session.value
     }
 
     override fun require(): VaultSession {
-        return session ?: error("Vault is locked")
+        return session.value ?: error("Vault is locked")
     }
 
     override fun reset() {
-        session = null
+        session.update { null }
+    }
+
+    override fun observe(): StateFlow<VaultSession?> {
+        return session
     }
 }

@@ -17,17 +17,18 @@
 package dev.leonlatsch.photok.unlock.ui
 
 /**
- * Enum class indicating state of the unlock process.
+ * Sealed class indicating state of the unlock process.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-enum class UnlockState {
-    Initial,
-    PasswordError,
-    Error,
-    Loading,
-    Unlocked,
-    StartLegacyMigration,
-    ShowRecoveryPhrase,
+sealed class UnlockState {
+    data object Initial : UnlockState()
+    data object PasswordError : UnlockState()
+    data object Error : UnlockState()
+    data object Loading : UnlockState()
+    data object Unlocked : UnlockState()
+    data object StartLegacyMigration : UnlockState()
+    data object ShowRecoveryPhrase : UnlockState()
+    data class Locked(val lockedUntil: Long) : UnlockState()
 }

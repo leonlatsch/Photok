@@ -27,7 +27,7 @@ class NavigateToGallery @Inject constructor(
     private val config: Config,
 ) {
     operator fun invoke(navController: NavController) {
-        val dest = when (config.galleryStartPage) {
+        val dest = when (StartPage.fromValue(config.galleryStartPage)) {
             StartPage.AllFiles -> R.id.action_global_galleryFragment
             StartPage.Albums -> R.id.action_global_albumsFragment
         }

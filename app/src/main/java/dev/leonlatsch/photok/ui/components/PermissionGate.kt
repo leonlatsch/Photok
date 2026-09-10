@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.ui.components
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -44,10 +43,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.other.shouldRequestPermissionInSettings
 
 /**
  * Requests [permission] on first composition and gates [content] behind it.
@@ -82,7 +81,7 @@ fun PermissionGate(
     }
 
     var shouldRequestInSettings by remember {
-        mutableStateOf(activity?.shouldRequestInSettings(permission) == true)
+        mutableStateOf(activity?.shouldRequestPermissionInSettings(permission) == true)
     }
 
     val launcher = rememberLauncherForActivityResult(
@@ -146,18 +145,4 @@ fun PermissionGate(
             }
         }
     }
-}
-
-fun Activity.shouldRequestInSettings(permission: String): Boolean {
-    val hasPermission = ContextCompat.checkSelfPermission(
-        this,
-        permission
-    ) == PackageManager.PERMISSION_GRANTED
-
-    val shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(
-        this,
-        permission
-    )
-
-    return !hasPermission && shouldShowRationale
 }

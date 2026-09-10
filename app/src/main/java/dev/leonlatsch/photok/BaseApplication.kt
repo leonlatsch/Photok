@@ -26,10 +26,15 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
+import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,6 +46,9 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class BaseApplication : Application(), DefaultLifecycleObserver {
+
+    @Inject
+    lateinit var purchaseService: PurchaseService
 
     @Inject
     lateinit var appScope: CoroutineScope
@@ -57,21 +65,39 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     @Inject
     lateinit var telemetryService: TelemetryService
 
+    @Inject
+    lateinit var proFeaturesLifecycle: ProFeaturesLifecycle
+
 
     private var wentToBackgroundAt = 0L
     private var ignoreNextTimeout = false
 
     override fun onCreate() {
         super<Application>.onCreate()
+
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        proFeaturesLifecycle.register(ProcessLifecycleOwner.get().lifecycle)
+
         telemetryService.setup()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
-        setAppDesign(config.systemDesign)
+        setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
+
+        appScope.launch {
+            var session = sessionRepository.get()
+
+            sessionRepository.observe().collectLatest { newSession ->
+                if (newSession == null && session != null) {
+                    restartApp()
+                }
+
+                session = newSession
+            }
+        }
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
@@ -92,7 +118,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
             && wentToBackgroundAt != 0L
             && System.currentTimeMillis() - wentToBackgroundAt >= config.securityLockTimeout
         ) {
-            lockApp()
+            sessionRepository.reset()
         }
     }
 
@@ -112,9 +138,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     /**
      * Reset the [EncryptionManager], set [applicationState] to [ApplicationState.LOCKED] and start [MainActivity] with NEW_TESK.
      */
-    fun lockApp() {
-        sessionRepository.reset()
-
+    private fun restartApp() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

@@ -54,8 +54,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.LocalFragment
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 sealed interface AboutUiEvent {
     data object Close : AboutUiEvent

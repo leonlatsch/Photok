@@ -45,6 +45,7 @@ android {
     flavorDimensions += "distribution"
     productFlavors {
         create("play") {
+            isDefault = true
             dimension = "distribution"
             buildConfigField("Boolean", "PLAY", "true")
 
@@ -238,4 +239,12 @@ dependencies {
     // Play Review
     playImplementation("com.google.android.play:review:2.0.2")
     playImplementation("com.google.android.play:review-ktx:2.0.2")
+
+    // Core shared module
+    implementation(project(":core"))
+
+    // Pro features (private submodule — only included when present)
+    if (findProject(":pro") != null) {
+        add("playImplementation", project(":pro"))
+    }
 }

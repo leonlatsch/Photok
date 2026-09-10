@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.encryption.domain
 
 import androidx.lifecycle.LiveData
+import dev.leonlatsch.photok.encryption.domain.PasswordUtils.MIN_PATTERN_RUN_LENGTH
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils.PASSWORD_MIN_LENGTH
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import kotlin.math.log2

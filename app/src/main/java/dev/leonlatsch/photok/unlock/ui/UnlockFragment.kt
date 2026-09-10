@@ -73,6 +73,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.password = "abc123"
         }
 
+        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState, viewModel::dismissLockout)
+
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
@@ -103,6 +105,8 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                         activity?.hideKeyboard()
                         findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
+
+                    is UnlockState.Locked -> Unit
                 }
             }
         }

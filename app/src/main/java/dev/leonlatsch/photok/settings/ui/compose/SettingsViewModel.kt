@@ -21,32 +21,33 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BaseApplication
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.ResetVaultUseCase
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
-import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
+import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
+import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SettingsUiState(
-    val screenConfig: PreferenceScreenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+    val screenConfig: PreferenceScreenConfig = PrefsScreenConfig,
     val preferencesValues: Map<String, *> = emptyMap<String, String>(),
-)
+    val proFeaturesActive: Boolean = false,
+) {
+}
 
 sealed interface SettingsUiEvent {
     data class OnPreferenceClick(val preference: Preference, val value: Any?) : SettingsUiEvent
@@ -56,19 +57,29 @@ sealed interface SettingsUiEvent {
 class SettingsViewModel @Inject constructor(
     private val config: Config,
     private val app: Application,
-    private val photoRepository: PhotoRepository,
-    private val albumRepository: AlbumRepository,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val resetVaultUseCase: ResetVaultUseCase,
+    private val proFeaturesActive: PurchaseService,
 ) : ViewModel() {
 
-
-    val uiState = config.valuesFlow.map {  values ->
+    val uiState = combine(
+        config.valuesFlow,
+        proFeaturesActive.observe(),
+    ) { values, proFeaturesActive ->
         SettingsUiState(
-            screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+            screenConfig = PrefsScreenConfig,
             preferencesValues = values,
+            proFeaturesActive = proFeaturesActive,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SettingsUiState(preferencesValues = config.values))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = SettingsUiState(
+            preferencesValues = config.values,
+            proFeaturesActive = proFeaturesActive.get(),
+        ),
+    )
 
     fun handleUiEvent(event: SettingsUiEvent) {
         when (event) {
@@ -81,8 +92,16 @@ class SettingsViewModel @Inject constructor(
 
                 when (event.preference) {
 
-                    is Preference.Enum<*> -> config.putString(event.preference.key, (event.value as SettingsEnum).value)
-                    is Preference.Switch -> config.putBoolean(event.preference.key, event.value as Boolean)
+                    is Preference.Enum<*> -> config.putString(
+                        event.preference.key,
+                        (event.value as SettingsEnum).value
+                    )
+
+                    is Preference.Switch -> config.putBoolean(
+                        event.preference.key,
+                        event.value as Boolean
+                    )
+
                     is Preference.Simple -> Unit
                 }
             }
@@ -140,20 +159,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun resetApp() = viewModelScope.launch {
-        val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
-        for (photo in allPhotos) {
-            photoRepository.deleteInternalPhotoData(photo)
-        }
-        photoRepository.deleteAll()
-        albumRepository.deleteAll()
-        albumRepository.unlinkAll()
-
-        vaultService.reset(VaultProtectionType.Password)
-        vaultService.reset(VaultProtectionType.Biometric)
-
-        config.legacyPasswordHash = null
-        config.legacyUserSalt = null
-
-        (app as BaseApplication).lockApp()
+        resetVaultUseCase()
     }
 }

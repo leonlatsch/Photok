@@ -217,4 +217,8 @@
         android:name="dev.leonlatsch.photok.encryption.ui.RecoveryPhraseRestoreFragment"
         android:label="RecoveryPhraseRestoreFragment" >
     </fragment>
+    <fragment
+        android:id="@+id/devSettingsFragment"
+        android:name="dev.leonlatsch.photok.devsettings.ui.DevSettingsFragment"
+        android:label="DevSettingsFragment" />
 </navigation>

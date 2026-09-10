@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.backup.ui
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope

@@ -77,7 +77,7 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         finishOnBackWhileStarted(
-            enabled = config.galleryStartPage == StartPage.AllFiles,
+            enabled = config.galleryStartPage == StartPage.AllFiles.value,
         )
 
         launchLifecycleAwareJob {

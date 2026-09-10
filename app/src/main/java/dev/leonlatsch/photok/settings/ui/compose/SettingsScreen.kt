@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.settings.ui.compose
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import androidx.activity.compose.LocalActivity
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,6 +39,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
@@ -48,6 +51,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -66,6 +70,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -84,11 +89,14 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
+import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
+import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
+import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
+import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
-import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfigContent
 import dev.leonlatsch.photok.settings.domain.PreferenceSection
+import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.settings.ui.SettingsFragment
@@ -98,6 +106,7 @@ import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
     compositionLocalOf { emptyMap<String, String>() }
@@ -106,6 +115,7 @@ fun createBackupFilename(): String {
     return "photok_backup_${BindingConverters.millisToFormattedDateConverter(System.currentTimeMillis())}.zip"
 }
 
+@SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val fragment = LocalFragment.current
@@ -128,6 +138,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     var showChangePasswordSheet by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForBackup by rememberSaveable { mutableStateOf(false) }
     var showConfirmPasswordDialogForReset by rememberSaveable { mutableStateOf(false) }
+    var showBruteforceProtectionSheet by rememberSaveable {mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         fragment ?: return@LaunchedEffect
@@ -154,6 +165,16 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RECOVERY_PHRASE) {
             showRecoveryPhraseSheet = true
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BRUTEFORCE_PROTECTION) {
+            showBruteforceProtectionSheet = true
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
+            activity?.showIntruderWarningsActivity()
             false
         }
 
@@ -187,11 +208,6 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_DONATE) {
-            fragment.openUrl(context.getString(R.string.settings_other_donate_url))
-            false
-        }
-
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_SOURCECODE) {
             fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))
             false
@@ -211,6 +227,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
             false
         }
+
     }
 
     SecretLaunchCodeDialog(
@@ -257,7 +274,8 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             onDismissRequest = { showRecoveryPhraseSheet = false },
             onNavigateToSetup = {
                 showRecoveryPhraseSheet = false
-                fragment?.findNavController()?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
+                fragment?.findNavController()
+                    ?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
             },
         )
     }
@@ -265,6 +283,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     if (showChangePasswordSheet) {
         ChangePasswordSheet(
             onDismissRequest = { showChangePasswordSheet = false },
+        )
+    }
+
+    if (showBruteforceProtectionSheet) {
+        BruteforceProtectionSheet(
+            onDismissRequest = { showBruteforceProtectionSheet = false },
         )
     }
 }
@@ -278,60 +302,72 @@ fun SettingsScreen() {
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         SettingsContent(
-            screenConfig = uiState.screenConfig,
+            uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
         )
+        SettingsCallbacks(viewModel)
     }
-
-    SettingsCallbacks(viewModel)
-
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsContent(
-    screenConfig: PreferenceScreenConfig,
+    uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
 ) {
-    val fragment = LocalFragment.current
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
             LargeTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.settings_title)
-                    )
-                },
+                title = { Text(stringResource(R.string.settings_title)) },
                 scrollBehavior = scrollBehavior,
             )
         },
     ) { contentPadding ->
-        Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .verticalScroll(rememberScrollState())
-                .padding(contentPadding)
-        ) {
-            for (section in screenConfig.sections) {
+        SettingsPreferenceSections(
+            sections = uiState.screenConfig.sections,
+            proFeaturesActive = uiState.proFeaturesActive,
+            handleUiEvent = handleUiEvent,
+            scrollBehavior = scrollBehavior,
+            contentPadding = contentPadding,
+        )
+    }
+}
 
-                PreferenceSectionView(
-                    section = section,
-                ) {
-                    for (preference in section.preferences) {
-                        val isFirst = preference == section.preferences.first()
-                        val isLast = preference == section.preferences.last()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SettingsPreferenceSections(
+    sections: List<PreferenceSection>,
+    proFeaturesActive: Boolean,
+    handleUiEvent: (SettingsUiEvent) -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
+    contentPadding: PaddingValues,
+) {
+    val fragment = LocalFragment.current
+    val intruderWarningCount = rememberIntruderWarningCount()
 
-                        val shape = when {
-                            section.preferences.size == 1 -> RoundedCornerShape(18.dp)
-                            isFirst -> RoundedCornerShape(18.dp, 18.dp, 6.dp, 6.dp)
-                            isLast -> RoundedCornerShape(6.dp, 6.dp, 18.dp, 18.dp)
-                            else -> RoundedCornerShape(6.dp)
-                        }
+    Column(
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .verticalScroll(rememberScrollState())
+            .padding(contentPadding)
+    ) {
+        for (section in sections) {
+            PreferenceSectionView(section = section) {
+                for (preference in section.preferences) {
+                    val isFirst = preference == section.preferences.first()
+                    val isLast = preference == section.preferences.last()
 
+                    val shape = when {
+                        section.preferences.size == 1 -> RoundedCornerShape(18.dp)
+                        isFirst -> RoundedCornerShape(18.dp, 18.dp, 6.dp, 6.dp)
+                        isLast -> RoundedCornerShape(6.dp, 6.dp, 18.dp, 18.dp)
+                        else -> RoundedCornerShape(6.dp)
+                    }
+
+                    Box {
                         Surface(
                             shape = shape,
                             color = MaterialTheme.colorScheme.surfaceContainerLow,
@@ -343,15 +379,18 @@ fun SettingsContent(
                                         icon = painterResource(preference.icon),
                                         title = stringResource(preference.title),
                                         summary = stringResource(preference.summary),
+                                        proProtectedByPaywall = preference.proProtectedByPaywall,
+                                        showProBadge = preference.showProBadge,
+                                        badgeCount = if (preference.key == SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
+                                            intruderWarningCount
+                                        } else {
+                                            0
+                                        },
                                         onClick = {
                                             fragment ?: return@PreferenceView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    null
-                                                )
-                                            )
-                                        }
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
+                                        },
+                                        proFeaturesActive = proFeaturesActive,
                                     )
                                 }
 
@@ -360,13 +399,9 @@ fun SettingsContent(
                                         preference = preference,
                                         onSwitchChange = { value ->
                                             fragment ?: return@PreferenceSwitchView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    value
-                                                )
-                                            )
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
+                                        proFeaturesActive = proFeaturesActive,
                                     )
                                 }
 
@@ -375,13 +410,9 @@ fun SettingsContent(
                                         preference = preference,
                                         onItemSelected = { value ->
                                             fragment ?: return@PreferenceEnumView
-                                            handleUiEvent(
-                                                SettingsUiEvent.OnPreferenceClick(
-                                                    preference,
-                                                    value
-                                                )
-                                            )
+                                            handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
+                                        proFeaturesActive = proFeaturesActive,
                                     )
                                 }
                             }
@@ -413,7 +444,7 @@ fun PreferenceSectionView(
 
         if (section.summary != null) {
             Text(
-                text = stringResource(section.summary),
+                text = stringResource(section.summary!!),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
@@ -439,6 +470,7 @@ fun PreferenceSectionView(
 fun <T : SettingsEnum> PreferenceEnumView(
     preference: Preference.Enum<T>,
     onItemSelected: (T) -> Unit,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -451,8 +483,15 @@ fun <T : SettingsEnum> PreferenceEnumView(
     PreferenceView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
-        summary = stringResource(value.label),
+        summary = if (!proFeaturesActive) { // has pro
+            preference.explanation?.let { stringResource(it) } ?: stringResource(value.label)
+        } else {
+            stringResource(value.label)
+        },
+        proProtectedByPaywall = preference.proProtectedByPaywall,
+        showProBadge = preference.showProBadge,
         onClick = { showDialog = true },
+        proFeaturesActive = proFeaturesActive,
         modifier = modifier,
     )
 
@@ -510,6 +549,7 @@ fun <T : SettingsEnum> PreferenceEnumView(
 fun PreferenceSwitchView(
     preference: Preference.Switch,
     onSwitchChange: (Boolean) -> Unit,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val preferencesValues = LocalPreferencesValues.current
@@ -521,6 +561,9 @@ fun PreferenceSwitchView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
         summary = summary,
+        proProtectedByPaywall = preference.proProtectedByPaywall,
+        showProBadge = preference.showProBadge,
+        proFeaturesActive = proFeaturesActive,
         trailing = {
             Switch(
                 checked = value,
@@ -541,16 +584,26 @@ fun PreferenceView(
     icon: Painter,
     title: String,
     summary: String,
+    proProtectedByPaywall: Boolean,
+    showProBadge: Boolean,
+    proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
+    badgeCount: Int = 0,
     onClick: (() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
 ) {
+    val activity = LocalActivity.current
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(15.dp),
         modifier = modifier
             .clickable(enabled = onClick != null) {
-                onClick?.invoke()
+                if (proProtectedByPaywall && !proFeaturesActive) {
+                    activity?.showPaywall()
+                } else {
+                    onClick?.invoke()
+                }
             }
             .fillMaxWidth()
             .padding(
@@ -589,11 +642,23 @@ fun PreferenceView(
             )
         }
 
-        if (trailing != null) {
+        if (badgeCount > 0) {
+            Badge(modifier = modifier) {
+                Text(
+                    text = badgeCount.toString(),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Black,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                )
+            }
+
+        } else if (showProBadge && !proFeaturesActive) {
+            ShimmerProBadge()
+
+        } else if (trailing != null) {
             trailing()
         }
     }
-
 }
 
 @Preview(heightDp = 1000)
@@ -603,7 +668,9 @@ private fun Preview() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
-                screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+                uiState = SettingsUiState(
+                    screenConfig = PrefsScreenConfig,
+                ),
                 handleUiEvent = {},
             )
         }
@@ -617,10 +684,11 @@ private fun PreviewDark() {
     CompositionLocalProvider(LocalConfig provides Config(context)) {
         AppTheme {
             SettingsContent(
-                screenConfig = PreferenceScreenConfig(PreferenceScreenConfigContent),
+                uiState = SettingsUiState(
+                    screenConfig = PrefsScreenConfig,
+                ),
                 handleUiEvent = {},
             )
         }
     }
 }
-

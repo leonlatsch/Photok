@@ -70,8 +70,8 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.openNotificationSettings
 import dev.leonlatsch.photok.other.requestInSettings
 import dev.leonlatsch.photok.settings.ui.compose.createBackupFilename
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 
 @Composable

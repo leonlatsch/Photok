@@ -44,8 +44,8 @@ class SortRepositoryImpl @Inject constructor(
         return sortDao.observeSortsForAlbums().map { sorts ->
             buildMap {
                 for (sort in sorts) {
-                    sort.albumUuid ?: continue
-                    put(sort.albumUuid, sort.toDomain())
+                    val albumUuid = sort.albumUuid ?: continue
+                    put(albumUuid, sort.toDomain())
                 }
             }
         }

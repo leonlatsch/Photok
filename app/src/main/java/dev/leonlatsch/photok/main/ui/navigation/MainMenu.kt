@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -26,7 +28,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -59,8 +63,19 @@ fun MainMenu(
             currentSelectedFragmentId = uiState.currentFragmentId,
             iconRes = R.drawable.ic_settings,
             label = stringResource(R.string.menu_main_settings),
-            onNavigationItemClicked = onNavigationItemClicked
+            onNavigationItemClicked = onNavigationItemClicked,
+            badgeCount = rememberIntruderWarningCount()
         )
+
+        if (BuildConfig.DEBUG) {
+            MainNavItem(
+                fragmentsId = R.id.devSettingsFragment,
+                currentSelectedFragmentId = uiState.currentFragmentId,
+                iconRes = R.drawable.ic_code,
+                label = "Dev Settings",
+                onNavigationItemClicked = onNavigationItemClicked
+            )
+        }
     }
 }
 
@@ -84,6 +99,7 @@ private fun RowScope.MainNavItem(
     label: String,
     onNavigationItemClicked: (Int) -> Unit,
     additionalFragmentsId: List<Int> = emptyList(),
+    badgeCount: Int = 0,
 ) {
 
     NavigationBarItem(
@@ -92,7 +108,17 @@ private fun RowScope.MainNavItem(
         ),
         onClick = { onNavigationItemClicked(fragmentsId) },
         icon = {
-            Icon(painter = painterResource(iconRes), contentDescription = label)
+            BadgedBox(
+                badge = {
+                    if (badgeCount > 0) {
+                        Badge {
+                            Text(badgeCount.toString())
+                        }
+                    }
+                }
+            ) {
+                Icon(painter = painterResource(iconRes), contentDescription = label)
+            }
         },
         label = {
             Text(label)
