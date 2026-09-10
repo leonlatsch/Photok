@@ -21,14 +21,24 @@ platform :android do
   # ---- CI lanes -----------------------------------------------------------
   #
 
-  desc "Run unit tests"
-  lane :test do
-    gradle(task: "test")
+  desc "Run unit tests (foss flavor, no :pro submodule needed)"
+  lane :test_foss do
+    gradle(task: "testFossDebugUnitTest")
   end
 
-  desc "Compile everything (CI build check)"
-  lane :build do
-    gradle(task: "build")
+  desc "Compile foss flavor (CI build check, no :pro submodule needed)"
+  lane :build_foss do
+    gradle(task: "assembleFossDebug")
+  end
+
+  desc "Run unit tests (play flavor, needs :pro submodule)"
+  lane :test_play do
+    gradle(task: "testPlayDebugUnitTest")
+  end
+
+  desc "Compile play flavor (CI build check, needs :pro submodule)"
+  lane :build_play do
+    gradle(task: "assemblePlayDebug")
   end
 
   #
