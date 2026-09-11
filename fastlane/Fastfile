@@ -121,8 +121,10 @@ platform :android do
     gradle(task: "updateVersion", properties: { "version" => version })
 
     # Refresh the bundled open source license reports for both flavors.
-    gradle(task: "licensePlayReleaseReport")
-    gradle(task: "licenseFossReleaseReport")
+    # --rerun-tasks is required: the report task only declares build/reports as its
+    # output, so Gradle reports UP-TO-DATE and skips the copy into the assets dir.
+    gradle(task: "licensePlayReleaseReport", flags: "--rerun-tasks")
+    gradle(task: "licenseFossReleaseReport", flags: "--rerun-tasks")
     update_license_assets
 
     # Scaffold an (empty) changelog file for the new version code.
@@ -200,7 +202,8 @@ def update_license_assets
   }.each do |variant, flavor|
     src = File.expand_path("../app/src/#{variant}/assets/open_source_licenses.html", __dir__)
     dst = File.expand_path("../app/src/#{flavor}/assets/open_source_licenses.html", __dir__)
-    FileUtils.mv(src, dst) if File.exist?(src)
+    UI.user_error!("Missing #{rel(src)} — the license report did not write it, so #{rel(dst)} would silently stay stale.") unless File.exist?(src)
+    FileUtils.mv(src, dst)
   end
 end
 
