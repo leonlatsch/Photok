@@ -67,13 +67,13 @@ These analytics are never used for advertising or cross-app tracking.
 ## Translations
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-54%25-orange)
+![Arabic](https://img.shields.io/badge/Arabic-55%25-orange)
 ![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
-![Dutch](https://img.shields.io/badge/Dutch-54%25-orange)
+![Dutch](https://img.shields.io/badge/Dutch-55%25-orange)
 ![French](https://img.shields.io/badge/French-99%25-brightgreen)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
 ![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
-![Italian](https://img.shields.io/badge/Italian-75%25-yellow)
+![Italian](https://img.shields.io/badge/Italian-76%25-yellow)
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-99%25-brightgreen)
 ![Russian](https://img.shields.io/badge/Russian-62%25-orange)
 ![Spanish](https://img.shields.io/badge/Spanish-100%25-brightgreen)
