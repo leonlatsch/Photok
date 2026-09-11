@@ -30,12 +30,12 @@
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Weet je het zeker?</string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_more">Meer</string> <!-- TODO: machine translated | EN: More -->
+    <string name="common_cancel">Annuleren</string> <!-- TODO: machine translated | EN: Cancel -->
+    <string name="common_create">Aanmaken</string> <!-- TODO: machine translated | EN: Create -->
+    <string name="common_empty">Leeg</string> <!-- TODO: machine translated | EN: Empty -->
+    <string name="common_rename">Hernoemen</string> <!-- TODO: machine translated | EN: Rename -->
+    <string name="common_try_again">Probeer opnieuw</string> <!-- TODO: machine translated | EN: Try again -->
     <string name="common_continue">Doorgaan</string>
     <string name="common_hold_to_confirm">Houd ingedrukt om te bevestigen</string>
 
@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">Bevestig je wachtwoord</string>
     <string name="setup_password_strength_label">Wachtwoord sterkte:</string>
     <string name="setup_button">Creëren</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Zeer zwak</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">Zwak</string>
     <string name="setup_password_strength_moderate">Gematigd</string>
     <string name="setup_password_strength_strong">Sterk</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Zeer sterk</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Wachtwoorden komen niet overeen</string>
     <string name="setupSetup">Opstelling</string>
 
@@ -67,24 +67,24 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">Er zijn geen bestanden in je kluis</string>
     <string name="gallery_all_photos_label">Alle bestanden</string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="gallery_albums_label">Albums</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="gallery_albums_placeholder">Maak je eerste album aan</string> <!-- TODO: machine translated | EN: Create your first album -->
+    <string name="gallery_albums_create_title">Album aanmaken</string> <!-- TODO: machine translated | EN: Create Album -->
+    <string name="gallery_albums_rename_title">Album hernoemen</string> <!-- TODO: machine translated | EN: Rename Album -->
+    <string name="gallery_albums_create_placeholder">Huiswerk ;)</string> <!-- TODO: machine translated | EN: Homework ;) -->
+    <string name="gallery_albums_select_title">Selecteer een album</string> <!-- TODO: machine translated | EN: Select an Album -->
+    <string name="gallery_albums_deleted">Album verwijderd</string> <!-- TODO: machine translated | EN: Album deleted -->
+    <string name="gallery_albums_photos_added">%1$d items toegevoegd</string> <!-- TODO: machine translated | EN: %1$d items added -->
+    <string name="magic_fab_new_album_label">Nieuw album</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Importeren</string> <!-- TODO: machine translated | EN: Import -->
+    <string name="import_menu_new_files_title">Nieuwe bestanden importeren</string> <!-- TODO: machine translated | EN: Import new files -->
+    <string name="import_menu_new_files_description">Importeer foto\'s en video\'s uit je galerij.</string> <!-- TODO: machine translated | EN: Import photos and videos from your gallery. -->
+    <string name="import_menu_restore_title">Back-up herstellen</string> <!-- TODO: machine translated | EN: Restore a backup -->
+    <string name="import_menu_restore_description">Herstel een Photok back-up. Bestanden worden toegevoegd aan je huidige bestanden.</string> <!-- TODO: machine translated | EN: Restore a Photok backup. Files will be added to your current files. -->
+    <string name="import_menu_delete_warning">Geïmporteerde bestanden worden verwijderd</string> <!-- TODO: machine translated | EN: Imported files will be deleted -->
+    <string name="import_menu_album_tooltip">Bestanden worden na het importeren toegevoegd aan \"%s\"</string> <!-- TODO: machine translated | EN: Files will be added to \"%s\" after importing -->
 
     <!-- PROCESS -->
     <string name="process_close">Sluit</string>
@@ -100,10 +100,10 @@
     <string name="view_photo_detail_import_at_label">Geïmporteerd op</string>
     <string name="view_photo_detail_file_type_label">Bestandstype</string>
     <string name="view_photo_detail_size_label">Bestandsgrootte</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Laatst gewijzigd</string> <!-- TODO: machine translated | EN: Last modified -->
+    <string name="view_photo_loop_video_disabled">Herhalen uitgeschakeld</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">Herhalen ingeschakeld</string> <!-- TODO: machine translated | EN: Looping enabled -->
+    <string name="view_photo_video_playback_speed">Afspeelsnelheid</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Slot</string>
@@ -113,13 +113,13 @@
     <string name="menu_ms_select_all">Selecteer alles</string>
     <string name="menu_ms_delete">Verwijder</string>
     <string name="menu_ms_export">Exporteren</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_info">%1$d item(s) geselecteerd</string> <!-- TODO: machine translated | EN: %1$d item(s) selected -->
+    <string name="menu_ms_add_to_album">Toevoegen aan album</string> <!-- TODO: machine translated | EN: Add to album -->
+    <string name="menu_ms_remove_from_album">Verwijderen uit album</string> <!-- TODO: machine translated | EN: Remove from album -->
+    <string name="menu_ms_pin">Vastzetten bovenaan</string> <!-- TODO: machine translated | EN: Pin at top -->
+    <string name="menu_ms_unpin">Losmaken</string> <!-- TODO: machine translated | EN: Unpin -->
+    <string name="viewer_pin_confirmation">Vastgezet bovenaan</string> <!-- TODO: machine translated | EN: Pinned at top -->
+    <string name="viewer_unpin_confirmation">Losgemaakt</string> <!-- TODO: machine translated | EN: Removed from pinned -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>verwijderen</b>?</string>
@@ -129,9 +129,9 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>exporteren</b>, terug naar uw galerij?</string>
     <string name="export_are_you_sure_this">Weet je zeker dat je dit bestand wilt <b>exporteren</b> naar je galerij?</string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">Weet je zeker dat je %1$d bestand(en) wilt <b>exporteren</b> naar je galerij en daarna wilt verwijderen?</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them? -->
+    <string name="export_and_delete_are_you_sure_this">Weet je zeker dat je dit bestand wilt <b>exporteren</b> naar je galerij en daarna wilt verwijderen?</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> this file to your gallery and delete it? -->
+    <string name="export_and_delete_finished">Geëxporteerd en verwijderd</string> <!-- TODO: machine translated | EN: Exported and deleted -->
     <string name="export_exporting">Bestand(en) exporteren…</string>
     <string name="export_permission_rationale">Photok heeft toegang nodig tot je opslag om bestanden te exporteren.</string>
     <string name="export_finished">Geëxporteerd</string>
@@ -154,18 +154,18 @@
     <string name="settings_app_design_system_default">Systeem Standaard</string>
     <string name="settings_app_design_system_light">Licht</string>
     <string name="settings_app_design_system_dark">Donker</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Startpagina</string> <!-- TODO: machine translated | EN: Start page -->
 
     <string name="settings_category_security">Veiligheid</string>
     <string name="settings_security_allow_screenshots_title">Screenshots toestaan</string>
     <string name="settings_security_allow_screenshots_summary">Sta het maken van screenshots toe. Opnieuw opstarten vereist.</string>
     <string name="settings_security_change_password_title">Wijzig Wachtwoord</string>
     <string name="settings_security_change_password_summary">Wijzig je wachtwoord</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Biometrische ontgrendeling</string> <!-- TODO: machine translated | EN: Biometric Unlock -->
+    <string name="settings_security_biometric_summary">Ontgrendel Photok met biometrische authenticatie.</string> <!-- TODO: machine translated | EN: Unlock Photok with biometric authentication. -->
+    <string name="settings_security_biometric_not_available">Biometrische ontgrendeling is niet beschikbaar</string> <!-- TODO: machine translated | EN: Biometric Unlock is not available -->
+    <string name="settings_security_recovery_phrase_title">Herstelzin</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="settings_security_recovery_phrase_summary">Beheer je herstelzin.</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">Automatische vergrendel time-out</string>
     <string name="settings_security_timeout_summary">Automatische vergrendeling na bepaalde tijd op de achtergrond</string>
     <string name="settings_security_timeout_immediately">Onmiddellijk</string>
@@ -191,8 +191,8 @@
     <string name="settings_advanced_backup_summary">Maak een back-up van uw kluis</string>
     <string name="settings_advanced_delete_imported_title">Verwijder geïmporteerde bestanden</string>
     <string name="settings_advanced_delete_imported_summary">Verwijder bestanden na het importeren</string>
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">Verwijder geëxporteerde bestanden</string> <!-- TODO: machine translated | EN: Delete exported files -->
+    <string name="settings_advanced_delete_exported_summary">Verwijder bestanden na het exporteren</string> <!-- TODO: machine translated | EN: Delete files after exporting them -->
 
     <string name="settings_other_title">Andere</string>
     <string name="settings_other_feedback_title">Feedback</string>
@@ -206,8 +206,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Credits</string>
     <string name="settings_other_credits_summary">Bijdragers en credits</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Gegevensverzameling</string> <!-- TODO: machine translated | EN: Data collection -->
+    <string name="settings_other_telemetry_summary">Beheer verzameling van gebruiksgegevens</string> <!-- TODO: machine translated | EN: Manage collection of usage data -->
     <string name="settings_other_about_title">Over</string>
     <string name="settings_other_about_summary">Informatie over Photok</string>
 
@@ -226,11 +226,11 @@
     <string name="change_password_button">Wijzig wachtwoord</string>
     <string name="change_password_confirm_message">Back-up aanbevolen!<br /> Als je je wachtwoord wijzigt, moeten al je bestanden opnieuw worden versleuteld! Wil je doorgaan?</string>
     <string name="change_password_reencrypting">Bestand(en) opnieuw versleutelen…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">Wachtwoord is gewijzigd</string> <!-- TODO: machine translated | EN: Password has been changed -->
+    <string name="change_password_recovery_phrase_used">Herstelzin gebruikt — controle van oud wachtwoord niet vereist</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Wachtwoord verifiëren</string> <!-- TODO: machine translated | EN: Verify Password -->
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Verberg Photok</string>
@@ -268,7 +268,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Ongeldig bestand</string>
     <string name="backup_restore_processing">Back-up herstellen…</string>
     <string name="backup_unlock_title">Ontgrendel back-up</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Bevestig je wachtwoord om een back-up te maken.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nieuw in</string>
@@ -282,113 +282,113 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Welkom bij</string> <!-- TODO: machine translated | EN: Welcome to -->
+    <string name="migration_initial_explaination">Deze versie van Photok introduceert een nieuwe versleutelingsmethode. Om verder te gaan naar je galerij, is een migratie vereist.</string> <!-- TODO: machine translated | EN: This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required. -->
+    <string name="migration_initial_button">Aan de slag</string> <!-- TODO: machine translated | EN: Get started -->
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Maak een back-up van je gegevens</string> <!-- TODO: machine translated | EN: Backup your data -->
+    <string name="migration_initial_stage_backup_explanation">Maak een back-up van je gegevens voordat je verdergaat</string> <!-- TODO: machine translated | EN: Create a backup of your data before continuing -->
+    <string name="migration_initial_stage_backup_button">Back-up maken</string> <!-- TODO: machine translated | EN: Create backup -->
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Verleen toestemming</string> <!-- TODO: machine translated | EN: Grant permission -->
+    <string name="migration_initial_stage_permission_explanation">Verleen meldingstoestemmingen om de migratie betrouwbaar op de achtergrond uit te voeren.</string> <!-- TODO: machine translated | EN: Please grant notification permissions in order to run the migration reliably in the background. -->
+    <string name="migration_initial_stage_permission_button">Toestemming verlenen</string> <!-- TODO: machine translated | EN: Grant permission -->
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Je bent helemaal klaar</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="migration_initial_stage_ready_button">Migratie starten</string> <!-- TODO: machine translated | EN: Start migration -->
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Je galerij migreren</string> <!-- TODO: machine translated | EN: Migrating your gallery -->
+    <string name="migration_running_progress">%d van %d bestanden verwerkt</string> <!-- TODO: machine translated | EN: %d of %d files processed -->
+    <string name="migration_running_advice">Als dit scherm open blijft, verloopt de migratie sneller</string> <!-- TODO: machine translated | EN: If this screen stays open, the migration will run faster -->
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Migratie van galerij voltooid</string> <!-- TODO: machine translated | EN: Gallery migration done -->
+    <string name="migration_done_progress">Alle bestanden gemigreerd</string> <!-- TODO: machine translated | EN: All files migrated -->
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Fout tijdens het migreren van je galerij</string> <!-- TODO: machine translated | EN: Error while migrating your gallery -->
+    <string name="migration_error_button">Foutrapport verzenden</string> <!-- TODO: machine translated | EN: Send error report -->
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Achtergrondtaken</string> <!-- TODO: machine translated | EN: Background Tasks -->
+    <string name="migration_error_extract_data">Gegevens extraheren</string> <!-- TODO: machine translated | EN: Extract data -->
+    <string name="migration_error_extract_confirmation_text">Weet je zeker dat je al je bestanden ONVERSLEUTELD wilt extraheren naar een ZIP-bestand?</string> <!-- TODO: machine translated | EN: Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file? -->
+    <string name="migration_error_extracting_title">Ontsleutelen naar ZIP…</string> <!-- TODO: machine translated | EN: Decrypting to ZIP… -->
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Ontgrendel Photok</string> <!-- TODO: machine translated | EN: Unlock Photok -->
+    <string name="biometric_unlock_subtitle">Verifieer je identiteit om te ontgrendelen</string> <!-- TODO: machine translated | EN: Verify your identity to unlock -->
+    <string name="biometric_unlock_cancel">Gebruik Photok-wachtwoord</string> <!-- TODO: machine translated | EN: Use Photok password -->
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Biometrische ontgrendeling inschakelen</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="biometric_unlock_setup_subtitle">Bevestig je identiteit om biometrische ontgrendeling in te schakelen</string> <!-- TODO: machine translated | EN: To enable biometric unlock, confirm your identity -->
+    <string name="biometric_unlock_error">Biometrische ontgrendeling mislukt. Gebruik je Photok-wachtwoord.</string> <!-- TODO: machine translated | EN: Biometric unlock failed. Use your Photok password. -->
+    <string name="biometric_unlock_hint_button">Ontgrendelen met biometrie</string> <!-- TODO: machine translated | EN: Unlock with biometrics -->
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Sorteren</string> <!-- TODO: machine translated | EN: Sort -->
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Oplopend</string> <!-- TODO: machine translated | EN: Ascending -->
+    <string name="sorting_order_desc_label">Aflopend</string> <!-- TODO: machine translated | EN: Descending -->
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Importdatum</string> <!-- TODO: machine translated | EN: Import date -->
+    <string name="sorting_field_filename_label">Bestandsnaam</string> <!-- TODO: machine translated | EN: Filename -->
+    <string name="sorting_field_size_label">Bestandsgrootte</string> <!-- TODO: machine translated | EN: File size -->
+    <string name="sorting_field_added_to_album_label">Toegevoegd aan album</string> <!-- TODO: machine translated | EN: Added to album -->
+    <string name="sorting_field_last_modified">Laatst gewijzigd</string> <!-- TODO: machine translated | EN: Last modified -->
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Standaard herstellen</string> <!-- TODO: machine translated | EN: Restore Default -->
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Afspelen</string> <!-- TODO: machine translated | EN: Play -->
+    <string name="video_player_pause">Pauzeren</string> <!-- TODO: machine translated | EN: Pause -->
+    <string name="video_player_mute">Dempen</string> <!-- TODO: machine translated | EN: Mute -->
+    <string name="video_player_unmute">Dempen opheffen</string> <!-- TODO: machine translated | EN: Unmute -->
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Help Photok verbeteren</string> <!-- TODO: machine translated | EN: Help improve Photok -->
+    <string name="telemetry_sheet_paragraph_1">Photok kan optioneel anonieme gebruiksstatistieken versturen om de app te helpen verbeteren.</string> <!-- TODO: machine translated | EN: Photok can optionally send anonymous usage statistics to help improve the app. -->
+    <string name="telemetry_sheet_paragraph_2">De verwerkte gegevens zijn volledig geanonimiseerd en laten geen conclusies toe over persoonlijke informatie.</string> <!-- TODO: machine translated | EN: The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information. -->
+    <string name="telemetry_sheet_paragraph_3">Het verzenden van anonieme gebruiksgegevens is optioneel en kan op elk moment worden uitgeschakeld in de instellingen.</string> <!-- TODO: machine translated | EN: Sending anonymous usage data is optional and can be turned off at any time in the settings. -->
+    <string name="telemetry_learn_more">Meer informatie</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="telemetry_choice_no">Nee, bedankt</string> <!-- TODO: machine translated | EN: No thanks -->
+    <string name="telemetry_choice_yes">Anonieme gebruiksgegevens delen</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
+    <string name="telemetry_toggle">Sta verzameling van gebruiksgegevens toe</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Herstelzin</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="recovery_phrase_title">Je herstelzin</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
+    <string name="recovery_phrase_description">Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek. Je kunt deze zin gebruiken om weer toegang te krijgen tot je kluis.</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
+    <string name="recovery_phrase_confirm">Zin opgeslagen</string> <!-- TODO: machine translated | EN: Phrase saved -->
+    <string name="recovery_phrase_save_warning">Sla je herstelzin op</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
+    <string name="recovery_phrase_create_new">Nieuwe zin aanmaken</string> <!-- TODO: machine translated | EN: Create New Phrase -->
+    <string name="recovery_phrase_create_new_confirm">Als je een nieuwe zin aanmaakt, wordt je huidige zin permanent vervangen. Je bestaande zin werkt dan niet meer om je kluis te herstellen.</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
+    <string name="recovery_phrase_saved_to_file">Opgeslagen in %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Aantal woorden</string> <!-- TODO: machine translated | EN: Word Count -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">Opslaan als afbeelding</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Wachtwoord vergeten</string> <!-- TODO: machine translated | EN: Forgot password -->
+    <string name="recovery_phrase_restore_button">Herstellen</string> <!-- TODO: machine translated | EN: Restore -->
+    <string name="recovery_phrase_restore_word_placeholder">Woord %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
+    <string name="recovery_phrase_restore_enter_title">Herstelzin invoeren</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
+    <string name="recovery_phrase_restore_choose_option">Kies hoe je je zin wilt invoeren.</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
+    <string name="recovery_phrase_restore_option_type">Handmatig typen</string> <!-- TODO: machine translated | EN: Type by hand -->
+    <string name="recovery_phrase_restore_option_open_file">Laden vanuit bestand</string> <!-- TODO: machine translated | EN: Load from file -->
+    <string name="recovery_phrase_restore_option_scan_qr">QR-code scannen</string> <!-- TODO: machine translated | EN: Scan QR Code -->
+    <string name="recovery_phrase_restore_option_paste">Plakken vanaf klembord</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
+    <string name="recovery_phrase_restore_input_placeholder">Typ je herstelzin woord voor woord</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
+    <string name="recovery_phrase_restore_unlocked">Ontgrendeld</string> <!-- TODO: machine translated | EN: Unlocked -->
+    <string name="recovery_phrase_restore_unlocking">Ontgrendelen&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
+    <string name="recovery_phrase_restore_error_generic">Kon de kluis niet herstellen. Controleer je zin en probeer het opnieuw.</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
+    <string name="recovery_phrase_restore_error_invalid">Ongeldige herstelzin. Controleer de woorden nogmaals.</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
+    <string name="recovery_phrase_restore_error_invalid_qr">De QR-code bevat geen geldige herstelzin.</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
+    <string name="recovery_phrase_restore_source_qr">Gescand vanaf QR-code</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
+    <string name="recovery_phrase_restore_source_file">Geladen vanuit %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
+    <string name="recovery_phrase_restore_source_clipboard">Geplakt vanaf klembord</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_camera_permission_button">Cameratoestemming aanvragen</string> <!-- TODO: machine translated | EN: Request camera permission -->
+    <string name="recovery_phrase_restore_camera_permission_rationale">Cameratoestemming is vereist om QR-codes te scannen.</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
+    <string name="permission_gate_change_in_settings">Wijzigen in instellingen</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>

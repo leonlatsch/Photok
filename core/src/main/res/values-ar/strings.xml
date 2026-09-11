@@ -30,12 +30,12 @@
     <string name="common_ok">نعم </string>
     <string name="common_are_you_sure">هل أنت متأكد؟ </string>
     <string name="common_bullet">•</string>
-    <string name="common_more">More</string> <!-- TODO -->
-    <string name="common_cancel">Cancel</string> <!-- TODO -->
-    <string name="common_create">Create</string> <!-- TODO -->
-    <string name="common_empty">Empty</string> <!-- TODO -->
-    <string name="common_rename">Rename</string> <!-- TODO -->
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_more">المزيد</string> <!-- TODO: machine translated | EN: More -->
+    <string name="common_cancel">إلغاء</string> <!-- TODO: machine translated | EN: Cancel -->
+    <string name="common_create">إنشاء</string> <!-- TODO: machine translated | EN: Create -->
+    <string name="common_empty">فارغ</string> <!-- TODO: machine translated | EN: Empty -->
+    <string name="common_rename">إعادة تسمية</string> <!-- TODO: machine translated | EN: Rename -->
+    <string name="common_try_again">حاول مرة أخرى</string> <!-- TODO: machine translated | EN: Try again -->
     <string name="common_continue">متابعة</string>
     <string name="common_hold_to_confirm">اضغط مطولاً للتأكيد</string>
 
@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">أكد رقمك السري </string>
     <string name="setup_password_strength_label">قوة كلمة المرور: </string>
     <string name="setup_button">إنشاء</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">ضعيف جداً</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">ضعيف </string>
     <string name="setup_password_strength_moderate">معتدل </string>
     <string name="setup_password_strength_strong">قوي </string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">قوي جداً</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 كلمة المرور غير مطابقة </string>
     <string name="setupSetup">تنصيب</string>
 
@@ -67,24 +67,24 @@
     <!-- GALLERY -->
     <string name="gallery_placeholder">لا توجد ملفات في خزنتك </string>
     <string name="gallery_all_photos_label">كل الملفات </string>
-    <string name="gallery_albums_label">Albums</string> <!-- TODO -->
-    <string name="gallery_albums_placeholder">Create your first album</string> <!-- TODO -->
-    <string name="gallery_albums_create_title">Create Album</string> <!-- TODO -->
-    <string name="gallery_albums_rename_title">Rename Album</string> <!-- TODO -->
-    <string name="gallery_albums_create_placeholder">Homework ;)</string> <!-- TODO -->
-    <string name="gallery_albums_select_title">Select an Album</string> <!-- TODO -->
-    <string name="gallery_albums_deleted">Album deleted</string> <!-- TODO -->
-    <string name="gallery_albums_photos_added">%1$d items added</string> <!-- TODO -->
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="gallery_albums_label">ألبومات</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="gallery_albums_placeholder">أنشئ أول ألبوم لك</string> <!-- TODO: machine translated | EN: Create your first album -->
+    <string name="gallery_albums_create_title">إنشاء ألبوم</string> <!-- TODO: machine translated | EN: Create Album -->
+    <string name="gallery_albums_rename_title">إعادة تسمية الألبوم</string> <!-- TODO: machine translated | EN: Rename Album -->
+    <string name="gallery_albums_create_placeholder">واجب منزلي ;)</string> <!-- TODO: machine translated | EN: Homework ;) -->
+    <string name="gallery_albums_select_title">اختر ألبوماً</string> <!-- TODO: machine translated | EN: Select an Album -->
+    <string name="gallery_albums_deleted">تم حذف الألبوم</string> <!-- TODO: machine translated | EN: Album deleted -->
+    <string name="gallery_albums_photos_added">تمت إضافة %1$d عنصر</string> <!-- TODO: machine translated | EN: %1$d items added -->
+    <string name="magic_fab_new_album_label">ألبوم جديد</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">استيراد</string> <!-- TODO: machine translated | EN: Import -->
+    <string name="import_menu_new_files_title">استيراد ملفات جديدة</string> <!-- TODO: machine translated | EN: Import new files -->
+    <string name="import_menu_new_files_description">استيراد الصور ومقاطع الفيديو من معرض الصور الخاص بك.</string> <!-- TODO: machine translated | EN: Import photos and videos from your gallery. -->
+    <string name="import_menu_restore_title">استعادة نسخة احتياطية</string> <!-- TODO: machine translated | EN: Restore a backup -->
+    <string name="import_menu_restore_description">استعادة نسخة احتياطية من Photok. ستتم إضافة الملفات إلى ملفاتك الحالية.</string> <!-- TODO: machine translated | EN: Restore a Photok backup. Files will be added to your current files. -->
+    <string name="import_menu_delete_warning">سيتم حذف الملفات المستوردة</string> <!-- TODO: machine translated | EN: Imported files will be deleted -->
+    <string name="import_menu_album_tooltip">ستتم إضافة الملفات إلى \"%s\" بعد الاستيراد</string> <!-- TODO: machine translated | EN: Files will be added to \"%s\" after importing -->
 
     <!-- PROCESS -->
     <string name="process_close">إغلاق</string>
@@ -100,10 +100,10 @@
     <string name="view_photo_detail_import_at_label">مستورد في</string>
     <string name="view_photo_detail_file_type_label">نوع الملف</string>
     <string name="view_photo_detail_size_label">حجم الملف</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">آخر تعديل</string> <!-- TODO: machine translated | EN: Last modified -->
+    <string name="view_photo_loop_video_disabled">التكرار معطل</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">التكرار مفعّل</string> <!-- TODO: machine translated | EN: Looping enabled -->
+    <string name="view_photo_video_playback_speed">سرعة التشغيل</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">قفل</string>
@@ -113,13 +113,13 @@
     <string name="menu_ms_select_all">اختر الكل</string>
     <string name="menu_ms_delete">مسح</string>
     <string name="menu_ms_export">تصدير</string>
-    <string name="menu_ms_info">%1$d item(s) selected</string> <!-- TODO -->
-    <string name="menu_ms_add_to_album">Add to album</string> <!-- TODO -->
-    <string name="menu_ms_remove_from_album">Remove from album</string> <!-- TODO -->
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_info">تم تحديد %1$d عنصر (عناصر)</string> <!-- TODO: machine translated | EN: %1$d item(s) selected -->
+    <string name="menu_ms_add_to_album">إضافة إلى ألبوم</string> <!-- TODO: machine translated | EN: Add to album -->
+    <string name="menu_ms_remove_from_album">إزالة من الألبوم</string> <!-- TODO: machine translated | EN: Remove from album -->
+    <string name="menu_ms_pin">تثبيت في الأعلى</string> <!-- TODO: machine translated | EN: Pin at top -->
+    <string name="menu_ms_unpin">إلغاء التثبيت</string> <!-- TODO: machine translated | EN: Unpin -->
+    <string name="viewer_pin_confirmation">تم التثبيت في الأعلى</string> <!-- TODO: machine translated | EN: Pinned at top -->
+    <string name="viewer_unpin_confirmation">تمت إزالة التثبيت</string> <!-- TODO: machine translated | EN: Removed from pinned -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">هل أنت متأكد أنك تريد  <b>حذف</b> %1$d ملف (ملفات) ?</string>
@@ -129,9 +129,9 @@
     <!-- EXPORT -->
     <string name="export_are_you_sure">هل أنت متأكد أنك تريد  <b>تصدير</b> %1$d file(s),إلى معرض الصور الخاص بك؟</string>
     <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
-    <string name="export_and_delete_are_you_sure">Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them?</string> <!-- TODO -->
-    <string name="export_and_delete_are_you_sure_this">Are you sure, you want to <b>export</b> this file to your gallery and delete it?</string> <!-- TODO -->
-    <string name="export_and_delete_finished">Exported and deleted</string> <!-- TODO -->
+    <string name="export_and_delete_are_you_sure">هل أنت متأكد أنك تريد <b>تصدير</b> %1$d ملف (ملفات) إلى معرض الصور الخاص بك وحذفها؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them? -->
+    <string name="export_and_delete_are_you_sure_this">هل أنت متأكد أنك تريد <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك وحذفه؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> this file to your gallery and delete it? -->
+    <string name="export_and_delete_finished">تم التصدير والحذف</string> <!-- TODO: machine translated | EN: Exported and deleted -->
     <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
     <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
     <string name="export_finished">تم التصدير</string>
@@ -155,18 +155,18 @@
     <string name="settings_app_design_system_light">ساطع</string>
     <string name="settings_app_design_system_dark">مظلم</string>
 
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">صفحة البدء</string> <!-- TODO: machine translated | EN: Start page -->
 
     <string name="settings_category_security">حماية</string>
     <string name="settings_security_allow_screenshots_title">السماح بلقطات الشاشة</string>
     <string name="settings_security_allow_screenshots_summary">السماح بأخذ لقطة شاشة. يتطلب إعادة التشغيل.</string>
     <string name="settings_security_change_password_title">تغيير كلمة المرور</string>
     <string name="settings_security_change_password_summary">غير كلمة المرور الخاصة بك</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">الفتح البيومتري</string> <!-- TODO: machine translated | EN: Biometric Unlock -->
+    <string name="settings_security_biometric_summary">افتح Photok باستخدام المصادقة البيومترية.</string> <!-- TODO: machine translated | EN: Unlock Photok with biometric authentication. -->
+    <string name="settings_security_biometric_not_available">الفتح البيومتري غير متوفر</string> <!-- TODO: machine translated | EN: Biometric Unlock is not available -->
+    <string name="settings_security_recovery_phrase_title">عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="settings_security_recovery_phrase_summary">إدارة عبارة الاسترداد الخاصة بك.</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">مهلة القفل التلقائي</string>
     <string name="settings_security_timeout_summary">قفل تلقائي بعد وقت معين في الخلفية</string>
     <string name="settings_security_timeout_immediately">في الحال</string>
@@ -192,8 +192,8 @@
     <string name="settings_advanced_backup_summary">قم بإنشاء نسخة احتياطية من خزنتك </string>
     <string name="settings_advanced_delete_imported_title">احذف الملفات المستوردة</string>
     <string name="settings_advanced_delete_imported_summary">احذف الملفات بعد استيرادها</string>
-    <string name="settings_advanced_delete_exported_title">Delete exported files</string> <!-- TODO -->
-    <string name="settings_advanced_delete_exported_summary">Delete files after exporting them</string> <!-- TODO -->
+    <string name="settings_advanced_delete_exported_title">احذف الملفات المصدرة</string> <!-- TODO: machine translated | EN: Delete exported files -->
+    <string name="settings_advanced_delete_exported_summary">احذف الملفات بعد تصديرها</string> <!-- TODO: machine translated | EN: Delete files after exporting them -->
 
     <string name="settings_other_title">آخر</string>
     <string name="settings_other_feedback_title">تعليق</string>
@@ -207,8 +207,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">الاعتمادات</string>
     <string name="settings_other_credits_summary">المساهمون والاعتمادات</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">جمع البيانات</string> <!-- TODO: machine translated | EN: Data collection -->
+    <string name="settings_other_telemetry_summary">إدارة جمع بيانات الاستخدام</string> <!-- TODO: machine translated | EN: Manage collection of usage data -->
     <string name="settings_other_about_title">عن</string>
     <string name="settings_other_about_summary">معلومات حول Photok</string>
 
@@ -227,11 +227,11 @@
     <string name="change_password_button">تغيير كلمة المرور</string>
     <string name="change_password_confirm_message">موصي بالنسخ الاحتياطي! <br /> يتطلب تغيير كلمة المرور إعادة تشفير جميع ملفاتك! هل تريد الاستمرار؟ </string>
     <string name="change_password_reencrypting">إعادة تشفير الملف (الملفات) ...</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">تم تغيير كلمة المرور</string> <!-- TODO: machine translated | EN: Password has been changed -->
+    <string name="change_password_recovery_phrase_used">تم استخدام عبارة الاسترداد — لا حاجة للتحقق من كلمة المرور القديمة</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">التحقق من كلمة المرور</string> <!-- TODO: machine translated | EN: Verify Password -->
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">إخفاء فوتوك</string>
@@ -269,7 +269,7 @@
     <string name="backup_restore_invalid_file">\u26A0 ملف غير صالح</string>
     <string name="backup_restore_processing">استعادة النسخة الاحتياطية ...</string>
     <string name="backup_unlock_title">فتح النسخ الاحتياطي</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">أكد كلمة المرور الخاصة بك لإنشاء نسخة احتياطية.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">الجديد في</string>
@@ -282,114 +282,114 @@
     <string name="recovery_subtitle_reset_hide_app">إعادة تعيين إعدادات إخفاء التطبيق</string>
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">مرحباً بك في</string> <!-- TODO: machine translated | EN: Welcome to -->
+    <string name="migration_initial_explaination">يقدم هذا الإصدار من Photok طريقة تشفير جديدة. للمتابعة إلى معرض الصور الخاص بك، يلزم إجراء عملية ترحيل.</string> <!-- TODO: machine translated | EN: This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required. -->
+    <string name="migration_initial_button">ابدأ</string> <!-- TODO: machine translated | EN: Get started -->
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">نسخ بياناتك احتياطياً</string> <!-- TODO: machine translated | EN: Backup your data -->
+    <string name="migration_initial_stage_backup_explanation">أنشئ نسخة احتياطية من بياناتك قبل المتابعة</string> <!-- TODO: machine translated | EN: Create a backup of your data before continuing -->
+    <string name="migration_initial_stage_backup_button">إنشاء نسخة احتياطية</string> <!-- TODO: machine translated | EN: Create backup -->
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">منح الإذن</string> <!-- TODO: machine translated | EN: Grant permission -->
+    <string name="migration_initial_stage_permission_explanation">يرجى منح إذن الإشعارات لتشغيل عملية الترحيل بشكل موثوق في الخلفية.</string> <!-- TODO: machine translated | EN: Please grant notification permissions in order to run the migration reliably in the background. -->
+    <string name="migration_initial_stage_permission_button">منح الإذن</string> <!-- TODO: machine translated | EN: Grant permission -->
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">أنت جاهز الآن</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="migration_initial_stage_ready_button">بدء الترحيل</string> <!-- TODO: machine translated | EN: Start migration -->
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">جارٍ ترحيل معرض الصور الخاص بك</string> <!-- TODO: machine translated | EN: Migrating your gallery -->
+    <string name="migration_running_progress">تمت معالجة %d من %d ملف</string> <!-- TODO: machine translated | EN: %d of %d files processed -->
+    <string name="migration_running_advice">إذا بقيت هذه الشاشة مفتوحة، ستكون عملية الترحيل أسرع</string> <!-- TODO: machine translated | EN: If this screen stays open, the migration will run faster -->
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">اكتمل ترحيل معرض الصور</string> <!-- TODO: machine translated | EN: Gallery migration done -->
+    <string name="migration_done_progress">تم ترحيل جميع الملفات</string> <!-- TODO: machine translated | EN: All files migrated -->
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">حدث خطأ أثناء ترحيل معرض الصور الخاص بك</string> <!-- TODO: machine translated | EN: Error while migrating your gallery -->
+    <string name="migration_error_button">إرسال تقرير الخطأ</string> <!-- TODO: machine translated | EN: Send error report -->
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">مهام الخلفية</string> <!-- TODO: machine translated | EN: Background Tasks -->
 
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="migration_error_extract_data">استخراج البيانات</string> <!-- TODO: machine translated | EN: Extract data -->
+    <string name="migration_error_extract_confirmation_text">هل أنت متأكد أنك تريد استخراج جميع ملفاتك غير مشفرة في ملف ZIP؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file? -->
+    <string name="migration_error_extracting_title">جارٍ فك التشفير إلى ZIP…</string> <!-- TODO: machine translated | EN: Decrypting to ZIP… -->
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">فتح Photok</string> <!-- TODO: machine translated | EN: Unlock Photok -->
+    <string name="biometric_unlock_subtitle">تحقق من هويتك لفتح القفل</string> <!-- TODO: machine translated | EN: Verify your identity to unlock -->
+    <string name="biometric_unlock_cancel">استخدام كلمة مرور Photok</string> <!-- TODO: machine translated | EN: Use Photok password -->
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">تفعيل الفتح البيومتري</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="biometric_unlock_setup_subtitle">لتفعيل الفتح البيومتري، قم بتأكيد هويتك</string> <!-- TODO: machine translated | EN: To enable biometric unlock, confirm your identity -->
+    <string name="biometric_unlock_error">فشل الفتح البيومتري. استخدم كلمة مرور Photok الخاصة بك.</string> <!-- TODO: machine translated | EN: Biometric unlock failed. Use your Photok password. -->
+    <string name="biometric_unlock_hint_button">الفتح البيومتري</string> <!-- TODO: machine translated | EN: Unlock with biometrics -->
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">فرز</string> <!-- TODO: machine translated | EN: Sort -->
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">تصاعدي</string> <!-- TODO: machine translated | EN: Ascending -->
+    <string name="sorting_order_desc_label">تنازلي</string> <!-- TODO: machine translated | EN: Descending -->
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">تاريخ الاستيراد</string> <!-- TODO: machine translated | EN: Import date -->
+    <string name="sorting_field_filename_label">اسم الملف</string> <!-- TODO: machine translated | EN: Filename -->
+    <string name="sorting_field_size_label">حجم الملف</string> <!-- TODO: machine translated | EN: File size -->
+    <string name="sorting_field_added_to_album_label">تمت الإضافة إلى الألبوم</string> <!-- TODO: machine translated | EN: Added to album -->
+    <string name="sorting_field_last_modified">آخر تعديل</string> <!-- TODO: machine translated | EN: Last modified -->
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">استعادة الافتراضي</string> <!-- TODO: machine translated | EN: Restore Default -->
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">تشغيل</string> <!-- TODO: machine translated | EN: Play -->
+    <string name="video_player_pause">إيقاف مؤقت</string> <!-- TODO: machine translated | EN: Pause -->
+    <string name="video_player_mute">كتم الصوت</string> <!-- TODO: machine translated | EN: Mute -->
+    <string name="video_player_unmute">إلغاء كتم الصوت</string> <!-- TODO: machine translated | EN: Unmute -->
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">ساعد في تحسين Photok</string> <!-- TODO: machine translated | EN: Help improve Photok -->
+    <string name="telemetry_sheet_paragraph_1">يمكن لـ Photok إرسال إحصاءات استخدام مجهولة الهوية بشكل اختياري للمساعدة في تحسين التطبيق.</string> <!-- TODO: machine translated | EN: Photok can optionally send anonymous usage statistics to help improve the app. -->
+    <string name="telemetry_sheet_paragraph_2">البيانات المعالجة مجهولة الهوية بالكامل ولا تسمح باستخلاص أي استنتاجات حول المعلومات الشخصية.</string> <!-- TODO: machine translated | EN: The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information. -->
+    <string name="telemetry_sheet_paragraph_3">إرسال بيانات الاستخدام المجهولة اختياري ويمكن إيقافه في أي وقت من الإعدادات.</string> <!-- TODO: machine translated | EN: Sending anonymous usage data is optional and can be turned off at any time in the settings. -->
+    <string name="telemetry_learn_more">اعرف المزيد</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="telemetry_choice_no">لا شكراً</string> <!-- TODO: machine translated | EN: No thanks -->
+    <string name="telemetry_choice_yes">مشاركة بيانات الاستخدام المجهولة</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
+    <string name="telemetry_toggle">السماح بجمع بيانات الاستخدام</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="recovery_phrase_title">عبارة الاسترداد الخاصة بك</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
+    <string name="recovery_phrase_description">اكتب هذه الكلمات بالترتيب واحتفظ بها في مكان آمن. يمكنك استخدام هذه العبارة لاستعادة الوصول إلى خزنتك.</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
+    <string name="recovery_phrase_confirm">تم حفظ العبارة</string> <!-- TODO: machine translated | EN: Phrase saved -->
+    <string name="recovery_phrase_save_warning">يرجى حفظ عبارة الاسترداد الخاصة بك</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
+    <string name="recovery_phrase_create_new">إنشاء عبارة جديدة</string> <!-- TODO: machine translated | EN: Create New Phrase -->
+    <string name="recovery_phrase_create_new_confirm">سيؤدي إنشاء عبارة جديدة إلى استبدال عبارتك الحالية بشكل دائم. لن تعمل عبارتك الحالية بعد الآن لاستعادة خزنتك.</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
+    <string name="recovery_phrase_saved_to_file">تم الحفظ في %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">عدد الكلمات</string> <!-- TODO: machine translated | EN: Word Count -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">حفظ كصورة</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">نسيت كلمة المرور</string> <!-- TODO: machine translated | EN: Forgot password -->
+    <string name="recovery_phrase_restore_button">استعادة</string> <!-- TODO: machine translated | EN: Restore -->
+    <string name="recovery_phrase_restore_word_placeholder">الكلمة %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
+    <string name="recovery_phrase_restore_enter_title">إدخال عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
+    <string name="recovery_phrase_restore_choose_option">اختر طريقة إدخال عبارتك.</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
+    <string name="recovery_phrase_restore_option_type">الكتابة يدوياً</string> <!-- TODO: machine translated | EN: Type by hand -->
+    <string name="recovery_phrase_restore_option_open_file">التحميل من ملف</string> <!-- TODO: machine translated | EN: Load from file -->
+    <string name="recovery_phrase_restore_option_scan_qr">مسح رمز QR</string> <!-- TODO: machine translated | EN: Scan QR Code -->
+    <string name="recovery_phrase_restore_option_paste">اللصق من الحافظة</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
+    <string name="recovery_phrase_restore_input_placeholder">اكتب عبارة الاسترداد الخاصة بك كلمة بكلمة</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
+    <string name="recovery_phrase_restore_unlocked">تم الفتح</string> <!-- TODO: machine translated | EN: Unlocked -->
+    <string name="recovery_phrase_restore_unlocking">جارٍ الفتح&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
+    <string name="recovery_phrase_restore_error_generic">تعذرت استعادة الخزنة. يرجى التحقق من عبارتك والمحاولة مرة أخرى.</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
+    <string name="recovery_phrase_restore_error_invalid">عبارة استرداد غير صالحة. يرجى التحقق من الكلمات مرة أخرى.</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
+    <string name="recovery_phrase_restore_error_invalid_qr">لا يحتوي رمز QR على عبارة استرداد صالحة.</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
+    <string name="recovery_phrase_restore_source_qr">تم المسح من رمز QR</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
+    <string name="recovery_phrase_restore_source_file">تم التحميل من %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
+    <string name="recovery_phrase_restore_source_clipboard">تم اللصق من الحافظة</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_camera_permission_button">طلب إذن الكاميرا</string> <!-- TODO: machine translated | EN: Request camera permission -->
+    <string name="recovery_phrase_restore_camera_permission_rationale">إذن الكاميرا مطلوب لمسح رموز QR.</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
+    <string name="permission_gate_change_in_settings">التغيير من الإعدادات</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>

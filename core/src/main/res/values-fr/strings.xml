@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">Confirmer votre mot de passe</string>
     <string name="setup_password_strength_label">Force du mot de passe :</string>
     <string name="setup_button">Créer</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Très faible</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">Faible</string>
     <string name="setup_password_strength_moderate">Modéré</string>
     <string name="setup_password_strength_strong">Fort</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Très fort</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
     <string name="setupSetup">Installation</string>
 

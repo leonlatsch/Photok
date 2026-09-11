@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
     <string name="setup_password_strength_label">پاس ورڈ کتنا مضبوط ہے:</string>
     <string name="setup_button">بنائیں</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">بہت کمزور</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">کمزور</string>
     <string name="setup_password_strength_moderate">درمیانہ</string>
     <string name="setup_password_strength_strong">بہت مضبوط</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">انتہائی مضبوط</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
     <string name="setupSetup">تیاری</string>
 
@@ -101,7 +101,7 @@
     <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
     <string name="view_photo_detail_size_label">سائز:</string>
     <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_video_playback_speed">چلنے کی رفتار</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">لاک کریں</string>
@@ -114,10 +114,10 @@
     <string name="menu_ms_info">%1$d چیزیں منتخب کر لیں</string>
     <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
     <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">اوپر پن کریں</string> <!-- TODO: machine translated | EN: Pin at top -->
+    <string name="menu_ms_unpin">پن ہٹائیں</string> <!-- TODO: machine translated | EN: Unpin -->
+    <string name="viewer_pin_confirmation">اوپر پن کر دیا گیا</string> <!-- TODO: machine translated | EN: Pinned at top -->
+    <string name="viewer_unpin_confirmation">پن سے ہٹا دیا گیا</string> <!-- TODO: machine translated | EN: Removed from pinned -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">کیا آپ واقعی %1$d فائلیں مٹانا چاہتے ہیں؟</string>
@@ -162,8 +162,8 @@
     <string name="settings_security_biometric_title">فنگر پرنٹ یا چہرہ</string>
     <string name="settings_security_biometric_summary">Photok کو فون کے لاک سے کھولیں۔</string>
     <string name="settings_security_biometric_not_available">یہ سہولت دستیاب نہیں ہے</string>
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_title">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="settings_security_recovery_phrase_summary">اپنی ریکوری فریز کا انتظام کریں۔</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">خودکار لاک کا وقت</string>
     <string name="settings_security_timeout_summary">بیک گراؤنڈ میں جانے کے کتنی دیر بعد لاک ہو</string>
     <string name="settings_security_timeout_immediately">فوراً</string>
@@ -206,8 +206,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">شکریہ</string>
     <string name="settings_other_credits_summary">مدد کرنے والوں کے نام</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">ڈیٹا اکٹھا کرنا</string> <!-- TODO: machine translated | EN: Data collection -->
+    <string name="settings_other_telemetry_summary">استعمال کے ڈیٹا کے اکٹھا ہونے کا انتظام کریں</string> <!-- TODO: machine translated | EN: Manage collection of usage data -->
     <string name="settings_other_about_title">بارے میں</string>
     <string name="settings_other_about_summary">ایپ کی معلومات</string>
 
@@ -226,8 +226,8 @@
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
     <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
     <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">پاس ورڈ بدل دیا گیا</string> <!-- TODO: machine translated | EN: Password has been changed -->
+    <string name="change_password_recovery_phrase_used">ریکوری فریز استعمال کی گئی — پرانے پاس ورڈ کی جانچ ضروری نہیں</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
 
     <!-- CHECK PASSWORD -->
     <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
@@ -268,7 +268,7 @@
     <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
     <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
     <string name="backup_unlock_title">بیک اپ کھولیں</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">بیک اپ بنانے کے لیے اپنے پاس ورڈ کی تصدیق کریں۔</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>
@@ -337,57 +337,57 @@
     <string name="sorting_restore_default">پہلے جیسا کریں</string>
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">چلائیں</string> <!-- TODO: machine translated | EN: Play -->
+    <string name="video_player_pause">روکیں</string> <!-- TODO: machine translated | EN: Pause -->
+    <string name="video_player_mute">آواز بند کریں</string> <!-- TODO: machine translated | EN: Mute -->
+    <string name="video_player_unmute">آواز چالو کریں</string> <!-- TODO: machine translated | EN: Unmute -->
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Photok کو بہتر بنانے میں مدد کریں</string> <!-- TODO: machine translated | EN: Help improve Photok -->
+    <string name="telemetry_sheet_paragraph_1">Photok چاہے تو ایپ کو بہتر بنانے کے لیے گمنام استعمال کے اعداد و شمار بھیج سکتا ہے۔</string> <!-- TODO: machine translated | EN: Photok can optionally send anonymous usage statistics to help improve the app. -->
+    <string name="telemetry_sheet_paragraph_2">استعمال ہونے والا ڈیٹا مکمل طور پر گمنام ہوتا ہے اور اس سے ذاتی معلومات کے بارے میں کوئی نتیجہ نہیں نکالا جا سکتا۔</string> <!-- TODO: machine translated | EN: The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information. -->
+    <string name="telemetry_sheet_paragraph_3">گمنام استعمال کا ڈیٹا بھیجنا اختیاری ہے اور اسے کسی بھی وقت سیٹنگز میں بند کیا جا سکتا ہے۔</string> <!-- TODO: machine translated | EN: Sending anonymous usage data is optional and can be turned off at any time in the settings. -->
+    <string name="telemetry_learn_more">مزید جانیں</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="telemetry_choice_no">نہیں شکریہ</string> <!-- TODO: machine translated | EN: No thanks -->
+    <string name="telemetry_choice_yes">گمنام استعمال کا ڈیٹا شیئر کریں</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
+    <string name="telemetry_toggle">استعمال کے ڈیٹا کے اکٹھا ہونے کی اجازت دیں</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="recovery_phrase_title">آپ کی ریکوری فریز</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
+    <string name="recovery_phrase_description">یہ الفاظ ترتیب سے لکھ لیں اور کسی محفوظ جگہ رکھیں۔ آپ اس فریز سے اپنے سیف تک دوبارہ رسائی حاصل کر سکتے ہیں۔</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
+    <string name="recovery_phrase_confirm">فریز محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Phrase saved -->
+    <string name="recovery_phrase_save_warning">براہ کرم اپنی ریکوری فریز محفوظ کریں</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
+    <string name="recovery_phrase_create_new">نئی فریز بنائیں</string> <!-- TODO: machine translated | EN: Create New Phrase -->
+    <string name="recovery_phrase_create_new_confirm">نئی فریز بنانے سے آپ کی موجودہ فریز ہمیشہ کے لیے بدل جائے گی۔ پرانی فریز سے آپ کا سیف واپس نہیں لایا جا سکے گا۔</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
+    <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">الفاظ کی تعداد</string> <!-- TODO: machine translated | EN: Word Count -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">پاس ورڈ بھول گئے؟</string> <!-- TODO: machine translated | EN: Forgot password -->
+    <string name="recovery_phrase_restore_button">واپس لائیں</string> <!-- TODO: machine translated | EN: Restore -->
+    <string name="recovery_phrase_restore_word_placeholder">لفظ %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
+    <string name="recovery_phrase_restore_enter_title">ریکوری فریز لکھیں</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
+    <string name="recovery_phrase_restore_choose_option">اپنی فریز لکھنے کا طریقہ منتخب کریں۔</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
+    <string name="recovery_phrase_restore_option_type">ہاتھ سے لکھیں</string> <!-- TODO: machine translated | EN: Type by hand -->
+    <string name="recovery_phrase_restore_option_open_file">فائل سے لائیں</string> <!-- TODO: machine translated | EN: Load from file -->
+    <string name="recovery_phrase_restore_option_scan_qr">QR کوڈ اسکین کریں</string> <!-- TODO: machine translated | EN: Scan QR Code -->
+    <string name="recovery_phrase_restore_option_paste">کلپ بورڈ سے پیسٹ کریں</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
+    <string name="recovery_phrase_restore_input_placeholder">اپنی ریکوری فریز لفظ بہ لفظ لکھیں</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
+    <string name="recovery_phrase_restore_unlocked">کھل گیا</string> <!-- TODO: machine translated | EN: Unlocked -->
+    <string name="recovery_phrase_restore_unlocking">کھل رہا ہے&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
+    <string name="recovery_phrase_restore_error_generic">سیف واپس نہیں لایا جا سکا۔ اپنی فریز چیک کریں اور دوبارہ کوشش کریں۔</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
+    <string name="recovery_phrase_restore_error_invalid">غلط ریکوری فریز۔ الفاظ دوبارہ چیک کریں۔</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
+    <string name="recovery_phrase_restore_error_invalid_qr">اس QR کوڈ میں صحیح ریکوری فریز موجود نہیں ہے۔</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
+    <string name="recovery_phrase_restore_source_qr">QR کوڈ سے اسکین کی گئی</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
+    <string name="recovery_phrase_restore_source_file">%1$s سے لائی گئی</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
+    <string name="recovery_phrase_restore_source_clipboard">کلپ بورڈ سے پیسٹ کی گئی</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_camera_permission_button">کیمرے کی اجازت مانگیں</string> <!-- TODO: machine translated | EN: Request camera permission -->
+    <string name="recovery_phrase_restore_camera_permission_rationale">QR کوڈ اسکین کرنے کے لیے کیمرے کی اجازت درکار ہے۔</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
+    <string name="permission_gate_change_in_settings">سیٹنگز میں بدلیں</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>

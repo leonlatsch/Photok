@@ -65,6 +65,7 @@ Photok can use minimal privacy-friendly analytics to improve stability and user 
 These analytics are never used for advertising or cross-app tracking.
 
 ## Translations
+Indicates how much of a language was translated by a human. The rest in machine translated.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-55%25-orange)

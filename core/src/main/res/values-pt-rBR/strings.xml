@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">Confirmar sua senha</string>
     <string name="setup_password_strength_label">Força da senha:</string>
     <string name="setup_button">Criar</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Muito fraca</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">Fraca</string>
     <string name="setup_password_strength_moderate">Moderada</string>
     <string name="setup_password_strength_strong">Forte</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Muito forte</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Senhas não correspondem</string>
     <string name="setupSetup">Configurar</string>
 

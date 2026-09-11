@@ -26,6 +26,8 @@ There are several `strings.xml`  files in `core/src/main/res/values[your_languag
 In these files un-translated texts are marked with `<!-- TODO -->`. Translate these and remove the marker.
 Open a Pull Request with your new text.
 
+Some texts are marked `<!-- TODO: machine translated | EN: ... -->` instead. Those were pre-translated by a machine and have never been checked by a human, so they are still counted as un-translated. The `EN:` part is the original English text the machine translated from. Correct the translation if needed and remove the whole comment.
+
 [Example](https://github.com/leonlatsch/Photok/pull/411)
 
 **Add a new language**

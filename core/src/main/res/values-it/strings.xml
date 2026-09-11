@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">Conferma la tua password</string>
     <string name="setup_password_strength_label">Sicurezza password:</string>
     <string name="setup_button">Crea</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Molto debole</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">Debole</string>
     <string name="setup_password_strength_moderate">Moderata</string>
     <string name="setup_password_strength_strong">Forte</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Molto forte</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Le password non corrispondono</string>
     <string name="setupSetup">Configurazione</string>
 
@@ -84,7 +84,7 @@
     <string name="import_menu_restore_title">Ripristina un backup</string>
     <string name="import_menu_restore_description">Ripristina un backup Photok. I file verranno aggiunti ai tuoi file attuali.</string>
     <string name="import_menu_delete_warning">I file importati verranno eliminati</string>
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_album_tooltip">I file verranno aggiunti a \"%s\" dopo l\'importazione</string> <!-- TODO: machine translated | EN: Files will be added to \"%s\" after importing -->
 
     <!-- PROCESS -->
     <string name="process_close">Chiudi</string>
@@ -100,10 +100,10 @@
     <string name="view_photo_detail_import_at_label">Importato il</string>
     <string name="view_photo_detail_file_type_label">Tipo di file</string>
     <string name="view_photo_detail_size_label">Dimensione file</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Ultima modifica</string> <!-- TODO: machine translated | EN: Last modified -->
+    <string name="view_photo_loop_video_disabled">Ripetizione disattivata</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">Ripetizione attivata</string> <!-- TODO: machine translated | EN: Looping enabled -->
+    <string name="view_photo_video_playback_speed">Velocità di riproduzione</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Blocca</string>
@@ -116,10 +116,10 @@
     <string name="menu_ms_info">%1$d elemento(i) selezionati</string>
     <string name="menu_ms_add_to_album">Aggiungi ad un album</string>
     <string name="menu_ms_remove_from_album">Rimuovi dall\'album</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Fissa in alto</string> <!-- TODO: machine translated | EN: Pin at top -->
+    <string name="menu_ms_unpin">Rimuovi fissaggio</string> <!-- TODO: machine translated | EN: Unpin -->
+    <string name="viewer_pin_confirmation">Fissato in alto</string> <!-- TODO: machine translated | EN: Pinned at top -->
+    <string name="viewer_unpin_confirmation">Rimosso dai fissati</string> <!-- TODO: machine translated | EN: Removed from pinned -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Sei sicuro di voler <b>eliminare</b> %1$d file?</string>
@@ -154,7 +154,7 @@
     <string name="settings_app_design_system_default">Impostazione di sistema</string>
     <string name="settings_app_design_system_light">Chiaro</string>
     <string name="settings_app_design_system_dark">Scuro</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Pagina iniziale</string> <!-- TODO: machine translated | EN: Start page -->
 
     <string name="settings_category_security">Sicurezza</string>
     <string name="settings_security_allow_screenshots_title">Consenti screenshot</string>
@@ -164,8 +164,8 @@
     <string name="settings_security_biometric_title">Sblocco Biometrico</string>
     <string name="settings_security_biometric_summary">Sblocca Photok con l\'autenticazione biometrica.</string>
     <string name="settings_security_biometric_not_available">Lo Sblocco Biometrico non è disponibile</string>
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_recovery_phrase_title">Frase di Recupero</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="settings_security_recovery_phrase_summary">Gestisci la tua frase di recupero.</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">Timeout Blocco Automatico</string>
     <string name="settings_security_timeout_summary">Blocco automatico dopo un determinato periodo di tempo in background</string>
     <string name="settings_security_timeout_immediately">Immediatamente</string>
@@ -208,8 +208,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Crediti</string>
     <string name="settings_other_credits_summary">Collaboratori e crediti</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Raccolta dati</string> <!-- TODO: machine translated | EN: Data collection -->
+    <string name="settings_other_telemetry_summary">Gestisci la raccolta dei dati di utilizzo</string> <!-- TODO: machine translated | EN: Manage collection of usage data -->
     <string name="settings_other_about_title">Info</string>
     <string name="settings_other_about_summary">Informazioni su Photok</string>
 
@@ -228,8 +228,8 @@
     <string name="change_password_button">Modifica Password</string>
     <string name="change_password_confirm_message">Backup consigliato!<br /> La modifica della password richiede la ricrittografia di tutti i file! Vuoi continuare?</string>
     <string name="change_password_reencrypting">Ricrittografia file…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">Password modificata</string> <!-- TODO: machine translated | EN: Password has been changed -->
+    <string name="change_password_recovery_phrase_used">È stata usata la frase di recupero: verifica della vecchia password non richiesta</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
 
     <!-- CHECk PASSWORD -->
     <string name="settings_security_check_password_title">Verifica Password</string>
@@ -270,7 +270,7 @@
     <string name="backup_restore_invalid_file">\u26A0 File non valido</string>
     <string name="backup_restore_processing">Ripristino Backup…</string>
     <string name="backup_unlock_title">Sblocco Backup</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Conferma la tua password per creare un backup.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novità in</string> 
@@ -326,71 +326,71 @@
     <string name="biometric_unlock_hint_button">Sblocca con dati biometrici</string>
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Ordina</string> <!-- TODO: machine translated | EN: Sort -->
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">Crescente</string> <!-- TODO: machine translated | EN: Ascending -->
+    <string name="sorting_order_desc_label">Decrescente</string> <!-- TODO: machine translated | EN: Descending -->
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Data di importazione</string> <!-- TODO: machine translated | EN: Import date -->
+    <string name="sorting_field_filename_label">Nome file</string> <!-- TODO: machine translated | EN: Filename -->
+    <string name="sorting_field_size_label">Dimensione file</string> <!-- TODO: machine translated | EN: File size -->
+    <string name="sorting_field_added_to_album_label">Aggiunto all\'album</string> <!-- TODO: machine translated | EN: Added to album -->
+    <string name="sorting_field_last_modified">Ultima modifica</string> <!-- TODO: machine translated | EN: Last modified -->
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Ripristina predefiniti</string> <!-- TODO: machine translated | EN: Restore Default -->
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Riproduci</string> <!-- TODO: machine translated | EN: Play -->
+    <string name="video_player_pause">Pausa</string> <!-- TODO: machine translated | EN: Pause -->
+    <string name="video_player_mute">Disattiva audio</string> <!-- TODO: machine translated | EN: Mute -->
+    <string name="video_player_unmute">Attiva audio</string> <!-- TODO: machine translated | EN: Unmute -->
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Aiuta a migliorare Photok</string> <!-- TODO: machine translated | EN: Help improve Photok -->
+    <string name="telemetry_sheet_paragraph_1">Photok può inviare facoltativamente statistiche di utilizzo anonime per aiutare a migliorare l\'app.</string> <!-- TODO: machine translated | EN: Photok can optionally send anonymous usage statistics to help improve the app. -->
+    <string name="telemetry_sheet_paragraph_2">I dati elaborati sono completamente anonimizzati e non consentono di risalire a informazioni personali.</string> <!-- TODO: machine translated | EN: The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information. -->
+    <string name="telemetry_sheet_paragraph_3">L\'invio di dati di utilizzo anonimi è facoltativo e può essere disattivato in qualsiasi momento nelle impostazioni.</string> <!-- TODO: machine translated | EN: Sending anonymous usage data is optional and can be turned off at any time in the settings. -->
+    <string name="telemetry_learn_more">Scopri di più</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="telemetry_choice_no">No grazie</string> <!-- TODO: machine translated | EN: No thanks -->
+    <string name="telemetry_choice_yes">Condividi dati di utilizzo anonimi</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
+    <string name="telemetry_toggle">Consenti la raccolta dei dati di utilizzo</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Frase di Recupero</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="recovery_phrase_title">La tua Frase di Recupero</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
+    <string name="recovery_phrase_description">Scrivi queste parole in ordine e conservale in un luogo sicuro. Puoi usare questa frase per recuperare l\'accesso alla tua Safe.</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
+    <string name="recovery_phrase_confirm">Frase salvata</string> <!-- TODO: machine translated | EN: Phrase saved -->
+    <string name="recovery_phrase_save_warning">Salva la tua frase di recupero</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
+    <string name="recovery_phrase_create_new">Crea Nuova Frase</string> <!-- TODO: machine translated | EN: Create New Phrase -->
+    <string name="recovery_phrase_create_new_confirm">Creare una nuova frase sostituirà definitivamente quella attuale. La frase esistente non funzionerà più per ripristinare la tua Safe.</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
+    <string name="recovery_phrase_saved_to_file">Salvato in %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Numero di Parole</string> <!-- TODO: machine translated | EN: Word Count -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">Salva come Immagine</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Password dimenticata</string> <!-- TODO: machine translated | EN: Forgot password -->
+    <string name="recovery_phrase_restore_button">Ripristina</string> <!-- TODO: machine translated | EN: Restore -->
+    <string name="recovery_phrase_restore_word_placeholder">Parola %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
+    <string name="recovery_phrase_restore_enter_title">Inserisci Frase di Recupero</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
+    <string name="recovery_phrase_restore_choose_option">Scegli come inserire la tua frase.</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
+    <string name="recovery_phrase_restore_option_type">Digita manualmente</string> <!-- TODO: machine translated | EN: Type by hand -->
+    <string name="recovery_phrase_restore_option_open_file">Carica da file</string> <!-- TODO: machine translated | EN: Load from file -->
+    <string name="recovery_phrase_restore_option_scan_qr">Scansiona Codice QR</string> <!-- TODO: machine translated | EN: Scan QR Code -->
+    <string name="recovery_phrase_restore_option_paste">Incolla dagli Appunti</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
+    <string name="recovery_phrase_restore_input_placeholder">Digita la tua frase di recupero parola per parola</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
+    <string name="recovery_phrase_restore_unlocked">Sbloccato</string> <!-- TODO: machine translated | EN: Unlocked -->
+    <string name="recovery_phrase_restore_unlocking">Sblocco in corso&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
+    <string name="recovery_phrase_restore_error_generic">Impossibile ripristinare la Safe. Controlla la tua frase e riprova.</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
+    <string name="recovery_phrase_restore_error_invalid">Frase di recupero non valida. Controlla nuovamente le parole.</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
+    <string name="recovery_phrase_restore_error_invalid_qr">Il codice QR non contiene una frase di recupero valida.</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
+    <string name="recovery_phrase_restore_source_qr">Scansionata dal codice QR</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
+    <string name="recovery_phrase_restore_source_file">Caricata da %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
+    <string name="recovery_phrase_restore_source_clipboard">Incollata dagli appunti</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_camera_permission_button">Richiedi permesso fotocamera</string> <!-- TODO: machine translated | EN: Request camera permission -->
+    <string name="recovery_phrase_restore_camera_permission_rationale">Il permesso della fotocamera è necessario per scansionare i codici QR.</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
+    <string name="permission_gate_change_in_settings">Modifica nelle Impostazioni</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>

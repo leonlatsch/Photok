@@ -217,7 +217,17 @@ When you add a new string to `values/strings.xml`, you **must** also add a copy 
 <string name="my_new_string">My new string</string> <!-- TODO -->
 ```
 
-The `<!-- TODO -->` annotation is required: the `updateTranslations` Gradle task (in `gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `TODO` to calculate each locale's translation percentage. Lines with `TODO` are intentionally excluded so the badge reflects real human translation coverage.
+The `<!-- TODO -->` annotation is required: the `updateTranslations` Gradle task (in `gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `<!-- TODO` to calculate each locale's translation percentage. Lines with `<!-- TODO` are intentionally excluded so the badge reflects real human translation coverage.
+
+#### Machine-translated placeholders
+
+Some locales carry a machine-translated placeholder instead of the raw English text, so the app is usable in that language before a human translator gets to it. These keep the `<!-- TODO` marker and additionally carry the original English value in the same comment:
+
+```xml
+<string name="my_new_string">Mein neuer Text</string> <!-- TODO: machine translated | EN: My new string -->
+```
+
+This still counts as untranslated for the badge. A human translator replaces the value and deletes the whole comment. Keep the `EN:` part verbatim so reviewers can see what the machine translated from; never write `--` inside it, since it would terminate the XML comment.
 
 ---
 

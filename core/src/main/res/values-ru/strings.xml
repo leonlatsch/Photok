@@ -35,7 +35,7 @@
     <string name="common_create">Создать</string>
     <string name="common_empty">Пусто</string>
     <string name="common_rename">Переименовать</string>
-    <string name="common_try_again">Try again</string> <!-- TODO -->
+    <string name="common_try_again">Попробовать снова</string> <!-- TODO: machine translated | EN: Try again -->
     <string name="common_continue">Продолжить</string>
     <string name="common_hold_to_confirm">Удерживайте для подтверждения</string>
 
@@ -50,11 +50,11 @@
     <string name="setup_confirm_password">Подтвердите свой пароль</string>
     <string name="setup_password_strength_label">Сложность пароля:</string>
     <string name="setup_button">Создать</string>
-    <string name="setup_password_strength_very_weak">Very weak</string> <!-- TODO -->
+    <string name="setup_password_strength_very_weak">Очень слабая</string> <!-- TODO: machine translated | EN: Very weak -->
     <string name="setup_password_strength_weak">Слабая</string>
     <string name="setup_password_strength_moderate">Средняя</string>
     <string name="setup_password_strength_strong">Сильная</string>
-    <string name="setup_password_strength_very_strong">Very strong</string> <!-- TODO -->
+    <string name="setup_password_strength_very_strong">Очень сильная</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Пароли не совпадают</string>
     <string name="setupSetup">Настроить</string>
 
@@ -75,16 +75,16 @@
     <string name="gallery_albums_select_title">Выберите альбом</string>
     <string name="gallery_albums_deleted">Альбом удален</string>
     <string name="gallery_albums_photos_added">%1$d элементов добавлено</string>
-    <string name="magic_fab_new_album_label">New Album</string> <!-- TODO -->
+    <string name="magic_fab_new_album_label">Новый альбом</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->
-    <string name="import_menu_fab_label">Import</string> <!-- TODO -->
-    <string name="import_menu_new_files_title">Import new files</string> <!-- TODO -->
-    <string name="import_menu_new_files_description">Import photos and videos from your gallery.</string> <!-- TODO -->
-    <string name="import_menu_restore_title">Restore a backup</string> <!-- TODO -->
-    <string name="import_menu_restore_description">Restore a Photok backup. Files will be added to your current files.</string> <!-- TODO -->
-    <string name="import_menu_delete_warning">Imported files will be deleted</string> <!-- TODO -->
-    <string name="import_menu_album_tooltip">Files will be added to \"%s\" after importing</string> <!-- TODO -->
+    <string name="import_menu_fab_label">Импорт</string> <!-- TODO: machine translated | EN: Import -->
+    <string name="import_menu_new_files_title">Импортировать новые файлы</string> <!-- TODO: machine translated | EN: Import new files -->
+    <string name="import_menu_new_files_description">Импортируйте фото и видео из вашей галереи.</string> <!-- TODO: machine translated | EN: Import photos and videos from your gallery. -->
+    <string name="import_menu_restore_title">Восстановить резервную копию</string> <!-- TODO: machine translated | EN: Restore a backup -->
+    <string name="import_menu_restore_description">Восстановите резервную копию Photok. Файлы будут добавлены к вашим текущим файлам.</string> <!-- TODO: machine translated | EN: Restore a Photok backup. Files will be added to your current files. -->
+    <string name="import_menu_delete_warning">Импортированные файлы будут удалены</string> <!-- TODO: machine translated | EN: Imported files will be deleted -->
+    <string name="import_menu_album_tooltip">Файлы будут добавлены в \"%s\" после импорта</string> <!-- TODO: machine translated | EN: Files will be added to \"%s\" after importing -->
 
     <!-- PROCESS -->
     <string name="process_close">Закрыть</string>
@@ -100,10 +100,10 @@
     <string name="view_photo_detail_import_at_label">Импортировано</string>
     <string name="view_photo_detail_file_type_label">Тип файла</string>
     <string name="view_photo_detail_size_label">Размер файла</string>
-    <string name="view_photo_detail_last_modified">Last modified</string> <!-- TODO -->
-    <string name="view_photo_loop_video_disabled">Looping disabled</string> <!-- TODO -->
-    <string name="view_photo_loop_video_enabled">Looping enabled</string> <!-- TODO -->
-    <string name="view_photo_video_playback_speed">Playback speed</string> <!-- TODO -->
+    <string name="view_photo_detail_last_modified">Последнее изменение</string> <!-- TODO: machine translated | EN: Last modified -->
+    <string name="view_photo_loop_video_disabled">Повтор отключён</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">Повтор включён</string> <!-- TODO: machine translated | EN: Looping enabled -->
+    <string name="view_photo_video_playback_speed">Скорость воспроизведения</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_lock">Заблокировать</string>
@@ -116,10 +116,10 @@
     <string name="menu_ms_info">%1$d элемент(ов) выбрано</string>
     <string name="menu_ms_add_to_album">Добавить в альбом</string>
     <string name="menu_ms_remove_from_album">Удалить из альбома</string>
-    <string name="menu_ms_pin">Pin at top</string> <!-- TODO -->
-    <string name="menu_ms_unpin">Unpin</string> <!-- TODO -->
-    <string name="viewer_pin_confirmation">Pinned at top</string> <!-- TODO -->
-    <string name="viewer_unpin_confirmation">Removed from pinned</string> <!-- TODO -->
+    <string name="menu_ms_pin">Закрепить вверху</string> <!-- TODO: machine translated | EN: Pin at top -->
+    <string name="menu_ms_unpin">Открепить</string> <!-- TODO: machine translated | EN: Unpin -->
+    <string name="viewer_pin_confirmation">Закреплено вверху</string> <!-- TODO: machine translated | EN: Pinned at top -->
+    <string name="viewer_unpin_confirmation">Откреплено</string> <!-- TODO: machine translated | EN: Removed from pinned -->
 
     <!-- DELETE -->
     <string name="delete_are_you_sure">Вы уверены, что хотите <b>удалить</b> %1$d файл(ов)?</string>
@@ -154,18 +154,18 @@
     <string name="settings_app_design_system_default">Системный</string>
     <string name="settings_app_design_system_light">Светлый</string>
     <string name="settings_app_design_system_dark">Тёмный</string>
-    <string name="settings_gallery_start_page_title">Start page</string> <!-- TODO -->
+    <string name="settings_gallery_start_page_title">Начальная страница</string> <!-- TODO: machine translated | EN: Start page -->
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>
     <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
     <string name="settings_security_change_password_title">Изменить пароль</string>
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
-    <string name="settings_security_biometric_title">Biometric Unlock</string> <!-- TODO -->
-    <string name="settings_security_biometric_summary">Unlock Photok with biometric authentication.</string> <!-- TODO -->
-    <string name="settings_security_biometric_not_available">Biometric Unlock is not available</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_title">Recovery Phrase</string> <!-- TODO -->
-    <string name="settings_security_recovery_phrase_summary">Manage your recovery phrase.</string> <!-- TODO -->
+    <string name="settings_security_biometric_title">Биометрическая разблокировка</string> <!-- TODO: machine translated | EN: Biometric Unlock -->
+    <string name="settings_security_biometric_summary">Разблокируйте Photok с помощью биометрической аутентификации.</string> <!-- TODO: machine translated | EN: Unlock Photok with biometric authentication. -->
+    <string name="settings_security_biometric_not_available">Биометрическая разблокировка недоступна</string> <!-- TODO: machine translated | EN: Biometric Unlock is not available -->
+    <string name="settings_security_recovery_phrase_title">Фраза восстановления</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="settings_security_recovery_phrase_summary">Управляйте фразой восстановления.</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">Автоматическая блокировка</string>
     <string name="settings_security_timeout_summary">Автоматически блокировать сейф после определённого времени</string>
     <string name="settings_security_timeout_immediately">Немедленно</string>
@@ -208,8 +208,8 @@
     <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
     <string name="settings_other_credits_title">Титры</string>
     <string name="settings_other_credits_summary">Вкладчики и титры</string>
-    <string name="settings_other_telemetry_title">Data collection</string> <!-- TODO -->
-    <string name="settings_other_telemetry_summary">Manage collection of usage data</string> <!-- TODO -->
+    <string name="settings_other_telemetry_title">Сбор данных</string> <!-- TODO: machine translated | EN: Data collection -->
+    <string name="settings_other_telemetry_summary">Управление сбором данных об использовании</string> <!-- TODO: machine translated | EN: Manage collection of usage data -->
     <string name="settings_other_about_title">О приложении</string>
     <string name="settings_other_about_summary">Информация о Photok</string>
 
@@ -228,11 +228,11 @@
     <string name="change_password_button">Изменить пароль</string>
     <string name="change_password_confirm_message">Советуем сделать резервную копию!<br /> Смена пароля требует повторного шифрования всех файлов! Хотите продолжить?</string>
     <string name="change_password_reencrypting">Повторное шифрование файла(ов)…</string>
-    <string name="change_password_done">Password has been changed</string> <!-- TODO -->
-    <string name="change_password_recovery_phrase_used">Recovery phrase was used — old password check not required</string> <!-- TODO -->
+    <string name="change_password_done">Пароль изменён</string> <!-- TODO: machine translated | EN: Password has been changed -->
+    <string name="change_password_recovery_phrase_used">Использована фраза восстановления — проверка старого пароля не требуется</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
 
     <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verify Password</string> <!-- TODO -->
+    <string name="settings_security_check_password_title">Проверка пароля</string> <!-- TODO: machine translated | EN: Verify Password -->
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Спрятать Photok</string>
@@ -270,7 +270,7 @@
     <string name="backup_restore_invalid_file">\u26A0 Некорректный файл</string>
     <string name="backup_restore_processing">Восстановление резервной копии…</string>
     <string name="backup_unlock_title">Разблокировать резервную копию</string>
-    <string name="backup_confirm_password">Confirm your password to create a backup.</string> <!-- TODO -->
+    <string name="backup_confirm_password">Подтвердите пароль, чтобы создать резервную копию.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Нововведения в</string>
@@ -284,113 +284,113 @@
 
 
     <!-- Migration -->
-    <string name="migration_initial_title_welcome">Welcome to</string> <!-- TODO -->
-    <string name="migration_initial_explaination">This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required.</string> <!-- TODO -->
-    <string name="migration_initial_button">Get started</string> <!-- TODO -->
+    <string name="migration_initial_title_welcome">Добро пожаловать в</string> <!-- TODO: machine translated | EN: Welcome to -->
+    <string name="migration_initial_explaination">В этой версии Photok используется новый метод шифрования. Чтобы продолжить пользоваться галереей, необходимо выполнить миграцию.</string> <!-- TODO: machine translated | EN: This version of Photok introduces a new encryption method. In order to continue to your gallery, there is a migration required. -->
+    <string name="migration_initial_button">Начать</string> <!-- TODO: machine translated | EN: Get started -->
 
-    <string name="migration_initial_stage_backup_checklist">Backup your data</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_explanation">Create a backup of your data before continuing</string> <!-- TODO -->
-    <string name="migration_initial_stage_backup_button">Create backup</string> <!-- TODO -->
+    <string name="migration_initial_stage_backup_checklist">Резервное копирование данных</string> <!-- TODO: machine translated | EN: Backup your data -->
+    <string name="migration_initial_stage_backup_explanation">Создайте резервную копию данных перед продолжением</string> <!-- TODO: machine translated | EN: Create a backup of your data before continuing -->
+    <string name="migration_initial_stage_backup_button">Создать резервную копию</string> <!-- TODO: machine translated | EN: Create backup -->
 
-    <string name="migration_initial_stage_permission_checklist">Grant permission</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_explanation">Please grant notification permissions in order to run the migration reliably in the background.</string> <!-- TODO -->
-    <string name="migration_initial_stage_permission_button">Grant permission</string> <!-- TODO -->
+    <string name="migration_initial_stage_permission_checklist">Предоставить разрешение</string> <!-- TODO: machine translated | EN: Grant permission -->
+    <string name="migration_initial_stage_permission_explanation">Предоставьте разрешение на уведомления, чтобы миграция могла надёжно выполняться в фоновом режиме.</string> <!-- TODO: machine translated | EN: Please grant notification permissions in order to run the migration reliably in the background. -->
+    <string name="migration_initial_stage_permission_button">Предоставить разрешение</string> <!-- TODO: machine translated | EN: Grant permission -->
 
-    <string name="migration_initial_stage_ready_explanation">You\'re all set</string> <!-- TODO -->
-    <string name="migration_initial_stage_ready_button">Start migration</string> <!-- TODO -->
+    <string name="migration_initial_stage_ready_explanation">Всё готово</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="migration_initial_stage_ready_button">Начать миграцию</string> <!-- TODO: machine translated | EN: Start migration -->
 
-    <string name="migration_running_title">Migrating your gallery</string> <!-- TODO -->
-    <string name="migration_running_progress">%d of %d files processed</string> <!-- TODO -->
-    <string name="migration_running_advice">If this screen stays open, the migration will run faster</string> <!-- TODO -->
+    <string name="migration_running_title">Миграция вашей галереи</string> <!-- TODO: machine translated | EN: Migrating your gallery -->
+    <string name="migration_running_progress">Обработано %d из %d файлов</string> <!-- TODO: machine translated | EN: %d of %d files processed -->
+    <string name="migration_running_advice">Если этот экран остаётся открытым, миграция выполняется быстрее</string> <!-- TODO: machine translated | EN: If this screen stays open, the migration will run faster -->
 
-    <string name="migration_done_title">Gallery migration done</string> <!-- TODO -->
-    <string name="migration_done_progress">All files migrated</string> <!-- TODO -->
+    <string name="migration_done_title">Миграция галереи завершена</string> <!-- TODO: machine translated | EN: Gallery migration done -->
+    <string name="migration_done_progress">Все файлы перенесены</string> <!-- TODO: machine translated | EN: All files migrated -->
 
-    <string name="migration_error_title">Error while migrating your gallery</string> <!-- TODO -->
-    <string name="migration_error_button">Send error report</string> <!-- TODO -->
+    <string name="migration_error_title">Ошибка при миграции галереи</string> <!-- TODO: machine translated | EN: Error while migrating your gallery -->
+    <string name="migration_error_button">Отправить отчёт об ошибке</string> <!-- TODO: machine translated | EN: Send error report -->
 
-    <string name="notification_channel_background_tasks">Background Tasks</string> <!-- TODO -->
-    <string name="migration_error_extract_data">Extract data</string> <!-- TODO -->
-    <string name="migration_error_extract_confirmation_text">Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file?</string> <!-- TODO -->
-    <string name="migration_error_extracting_title">Decrypting to ZIP…</string> <!-- TODO -->
+    <string name="notification_channel_background_tasks">Фоновые задачи</string> <!-- TODO: machine translated | EN: Background Tasks -->
+    <string name="migration_error_extract_data">Извлечь данные</string> <!-- TODO: machine translated | EN: Extract data -->
+    <string name="migration_error_extract_confirmation_text">Вы уверены, что хотите извлечь все файлы В НЕЗАШИФРОВАННОМ виде в ZIP-архив?</string> <!-- TODO: machine translated | EN: Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file? -->
+    <string name="migration_error_extracting_title">Расшифровка в ZIP…</string> <!-- TODO: machine translated | EN: Decrypting to ZIP… -->
 
 
     <!-- Biometric -->
-    <string name="biometric_unlock_title">Unlock Photok</string> <!-- TODO -->
-    <string name="biometric_unlock_subtitle">Verify your identity to unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_cancel">Use Photok password</string> <!-- TODO -->
+    <string name="biometric_unlock_title">Разблокировать Photok</string> <!-- TODO: machine translated | EN: Unlock Photok -->
+    <string name="biometric_unlock_subtitle">Подтвердите личность, чтобы разблокировать</string> <!-- TODO: machine translated | EN: Verify your identity to unlock -->
+    <string name="biometric_unlock_cancel">Использовать пароль Photok</string> <!-- TODO: machine translated | EN: Use Photok password -->
 
-    <string name="biometric_unlock_setup_title">Enable biometric unlock</string> <!-- TODO -->
-    <string name="biometric_unlock_setup_subtitle">To enable biometric unlock, confirm your identity</string> <!-- TODO -->
-    <string name="biometric_unlock_error">Biometric unlock failed. Use your Photok password.</string> <!-- TODO -->
-    <string name="biometric_unlock_hint_button">Unlock with biometrics</string> <!-- TODO -->
+    <string name="biometric_unlock_setup_title">Включить биометрическую разблокировку</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="biometric_unlock_setup_subtitle">Чтобы включить биометрическую разблокировку, подтвердите личность</string> <!-- TODO: machine translated | EN: To enable biometric unlock, confirm your identity -->
+    <string name="biometric_unlock_error">Не удалось выполнить биометрическую разблокировку. Используйте пароль Photok.</string> <!-- TODO: machine translated | EN: Biometric unlock failed. Use your Photok password. -->
+    <string name="biometric_unlock_hint_button">Разблокировать с помощью биометрии</string> <!-- TODO: machine translated | EN: Unlock with biometrics -->
 
     <!-- Sorting -->
-    <string name="sorting_sort">Sort</string> <!-- TODO -->
+    <string name="sorting_sort">Сортировка</string> <!-- TODO: machine translated | EN: Sort -->
 
-    <string name="sorting_order_asc_label">Ascending</string> <!-- TODO -->
-    <string name="sorting_order_desc_label">Descending</string> <!-- TODO -->
+    <string name="sorting_order_asc_label">По возрастанию</string> <!-- TODO: machine translated | EN: Ascending -->
+    <string name="sorting_order_desc_label">По убыванию</string> <!-- TODO: machine translated | EN: Descending -->
 
-    <string name="sorting_field_import_date_label">Import date</string> <!-- TODO -->
-    <string name="sorting_field_filename_label">Filename</string> <!-- TODO -->
-    <string name="sorting_field_size_label">File size</string> <!-- TODO -->
-    <string name="sorting_field_added_to_album_label">Added to album</string> <!-- TODO -->
-    <string name="sorting_field_last_modified">Last modified</string> <!-- TODO -->
+    <string name="sorting_field_import_date_label">Дата импорта</string> <!-- TODO: machine translated | EN: Import date -->
+    <string name="sorting_field_filename_label">Имя файла</string> <!-- TODO: machine translated | EN: Filename -->
+    <string name="sorting_field_size_label">Размер файла</string> <!-- TODO: machine translated | EN: File size -->
+    <string name="sorting_field_added_to_album_label">Добавлено в альбом</string> <!-- TODO: machine translated | EN: Added to album -->
+    <string name="sorting_field_last_modified">Последнее изменение</string> <!-- TODO: machine translated | EN: Last modified -->
 
-    <string name="sorting_restore_default">Restore Default</string> <!-- TODO -->
+    <string name="sorting_restore_default">Восстановить по умолчанию</string> <!-- TODO: machine translated | EN: Restore Default -->
 
     <!-- Video Player -->
-    <string name="video_player_play">Play</string> <!-- TODO -->
-    <string name="video_player_pause">Pause</string> <!-- TODO -->
-    <string name="video_player_mute">Mute</string> <!-- TODO -->
-    <string name="video_player_unmute">Unmute</string> <!-- TODO -->
+    <string name="video_player_play">Воспроизвести</string> <!-- TODO: machine translated | EN: Play -->
+    <string name="video_player_pause">Пауза</string> <!-- TODO: machine translated | EN: Pause -->
+    <string name="video_player_mute">Выключить звук</string> <!-- TODO: machine translated | EN: Mute -->
+    <string name="video_player_unmute">Включить звук</string> <!-- TODO: machine translated | EN: Unmute -->
 
     <!-- Telemetry -->
-    <string name="telemetry_sheet_title">Help improve Photok</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_1">Photok can optionally send anonymous usage statistics to help improve the app.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_2">The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information.</string> <!-- TODO -->
-    <string name="telemetry_sheet_paragraph_3">Sending anonymous usage data is optional and can be turned off at any time in the settings.</string> <!-- TODO -->
-    <string name="telemetry_learn_more">Learn more</string> <!-- TODO -->
-    <string name="telemetry_choice_no">No thanks</string> <!-- TODO -->
-    <string name="telemetry_choice_yes">Share anonymous usage data</string> <!-- TODO -->
-    <string name="telemetry_toggle">Allow collection of usage data</string> <!-- TODO -->
+    <string name="telemetry_sheet_title">Помогите улучшить Photok</string> <!-- TODO: machine translated | EN: Help improve Photok -->
+    <string name="telemetry_sheet_paragraph_1">Photok может по желанию отправлять анонимную статистику использования, чтобы помочь улучшить приложение.</string> <!-- TODO: machine translated | EN: Photok can optionally send anonymous usage statistics to help improve the app. -->
+    <string name="telemetry_sheet_paragraph_2">Обрабатываемые данные полностью анонимны и не позволяют сделать выводы о личной информации.</string> <!-- TODO: machine translated | EN: The data processed is completely anonymized and does not allow any conclusions to be drawn about personal information. -->
+    <string name="telemetry_sheet_paragraph_3">Отправка анонимных данных об использовании необязательна и может быть отключена в любое время в настройках.</string> <!-- TODO: machine translated | EN: Sending anonymous usage data is optional and can be turned off at any time in the settings. -->
+    <string name="telemetry_learn_more">Узнать больше</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="telemetry_choice_no">Нет, спасибо</string> <!-- TODO: machine translated | EN: No thanks -->
+    <string name="telemetry_choice_yes">Отправлять анонимные данные об использовании</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
+    <string name="telemetry_toggle">Разрешить сбор данных об использовании</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
     <!-- Recovery Phrase — General -->
-    <string name="recovery_phrase_label">Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_title">Your Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_description">Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_confirm">Phrase saved</string> <!-- TODO -->
-    <string name="recovery_phrase_save_warning">Please save your recovery phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new">Create New Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_create_new_confirm">Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault.</string> <!-- TODO -->
-    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string> <!-- TODO -->
+    <string name="recovery_phrase_label">Фраза восстановления</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
+    <string name="recovery_phrase_title">Ваша фраза восстановления</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
+    <string name="recovery_phrase_description">Запишите эти слова по порядку и храните их в надёжном месте. Эту фразу можно использовать для восстановления доступа к сейфу.</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
+    <string name="recovery_phrase_confirm">Фраза сохранена</string> <!-- TODO: machine translated | EN: Phrase saved -->
+    <string name="recovery_phrase_save_warning">Сохраните вашу фразу восстановления</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
+    <string name="recovery_phrase_create_new">Создать новую фразу</string> <!-- TODO: machine translated | EN: Create New Phrase -->
+    <string name="recovery_phrase_create_new_confirm">Создание новой фразы навсегда заменит текущую. Прежняя фраза больше не будет работать для восстановления сейфа.</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
+    <string name="recovery_phrase_saved_to_file">Сохранено в %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
 
     <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Word Count</string> <!-- TODO -->
+    <string name="recovery_phrase_select_word_count">Количество слов</string> <!-- TODO: machine translated | EN: Word Count -->
 
     <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Save as Image</string> <!-- TODO -->
+    <string name="recovery_phrase_qr_save_as_image">Сохранить как изображение</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
-    <string name="recovery_phrase_forgot_password">Forgot password</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_button">Restore</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_word_placeholder">Word %1$d</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_enter_title">Enter Recovery Phrase</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_choose_option">Choose how to enter your phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_type">Type by hand</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_open_file">Load from file</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_scan_qr">Scan QR Code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_option_paste">Paste from Clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_input_placeholder">Type your recovery phrase word by word</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocked">Unlocked</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_unlocking">Unlocking&#x2026;</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_generic">Could not restore vault. Please check your phrase and try again.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid">Invalid recovery phrase. Please double-check the words.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_error_invalid_qr">The QR code does not contain a valid recovery phrase.</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_button">Request camera permission</string> <!-- TODO -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">Camera permission is required to scan QR codes.</string> <!-- TODO -->
-    <string name="permission_gate_change_in_settings">Change in Settings</string> <!-- TODO -->
+    <string name="recovery_phrase_forgot_password">Забыли пароль</string> <!-- TODO: machine translated | EN: Forgot password -->
+    <string name="recovery_phrase_restore_button">Восстановить</string> <!-- TODO: machine translated | EN: Restore -->
+    <string name="recovery_phrase_restore_word_placeholder">Слово %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
+    <string name="recovery_phrase_restore_enter_title">Введите фразу восстановления</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
+    <string name="recovery_phrase_restore_choose_option">Выберите способ ввода фразы.</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
+    <string name="recovery_phrase_restore_option_type">Ввести вручную</string> <!-- TODO: machine translated | EN: Type by hand -->
+    <string name="recovery_phrase_restore_option_open_file">Загрузить из файла</string> <!-- TODO: machine translated | EN: Load from file -->
+    <string name="recovery_phrase_restore_option_scan_qr">Сканировать QR-код</string> <!-- TODO: machine translated | EN: Scan QR Code -->
+    <string name="recovery_phrase_restore_option_paste">Вставить из буфера обмена</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
+    <string name="recovery_phrase_restore_input_placeholder">Введите фразу восстановления слово за словом</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
+    <string name="recovery_phrase_restore_unlocked">Разблокировано</string> <!-- TODO: machine translated | EN: Unlocked -->
+    <string name="recovery_phrase_restore_unlocking">Разблокировка&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
+    <string name="recovery_phrase_restore_error_generic">Не удалось восстановить сейф. Проверьте фразу и попробуйте снова.</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
+    <string name="recovery_phrase_restore_error_invalid">Неверная фраза восстановления. Проверьте слова ещё раз.</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
+    <string name="recovery_phrase_restore_error_invalid_qr">QR-код не содержит корректной фразы восстановления.</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
+    <string name="recovery_phrase_restore_source_qr">Отсканировано из QR-кода</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
+    <string name="recovery_phrase_restore_source_file">Загружено из %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
+    <string name="recovery_phrase_restore_source_clipboard">Вставлено из буфера обмена</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_camera_permission_button">Запросить разрешение на камеру</string> <!-- TODO: machine translated | EN: Request camera permission -->
+    <string name="recovery_phrase_restore_camera_permission_rationale">Для сканирования QR-кодов требуется разрешение на использование камеры.</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
+    <string name="permission_gate_change_in_settings">Изменить в настройках</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>
