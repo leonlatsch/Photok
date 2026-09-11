@@ -37,6 +37,7 @@
     <string name="common_rename">نام بدلیں</string>
     <string name="common_try_again">دوبارہ کوشش کریں</string>
     <string name="common_continue">جاری رکھیں</string>
+    <string name="common_hold_to_confirm">تصدیق کے لیے دبائے رکھیں</string>
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>

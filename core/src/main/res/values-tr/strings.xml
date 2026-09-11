@@ -37,6 +37,7 @@
     <string name="common_rename">Yeniden Adlandır</string>
     <string name="common_try_again">Tekrar deneyin</string>
     <string name="common_continue">Devam Et</string>
+    <string name="common_hold_to_confirm">Onaylamak için basılı tutun</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>

@@ -37,6 +37,7 @@
     <string name="common_rename">重命名</string>
     <string name="common_try_again">重试</string>
     <string name="common_continue">继续</string>
+    <string name="common_hold_to_confirm">长按确认</string>
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>

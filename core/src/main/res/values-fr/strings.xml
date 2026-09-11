@@ -37,6 +37,7 @@
     <string name="common_rename">Renommer</string>
     <string name="common_try_again">Réessayer</string>
     <string name="common_continue">Continuer</string>
+    <string name="common_hold_to_confirm">Maintenir pour confirmer</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importation de fichier(s)</string>

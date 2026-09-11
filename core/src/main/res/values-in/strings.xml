@@ -37,6 +37,7 @@
     <string name="common_rename">Ganti nama</string>
     <string name="common_try_again">Coba lagi</string>
     <string name="common_continue">Lanjutkan</string>
+    <string name="common_hold_to_confirm">Tahan untuk mengonfirmasi</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>

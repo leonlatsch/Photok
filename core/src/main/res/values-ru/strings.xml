@@ -37,6 +37,7 @@
     <string name="common_rename">Переименовать</string>
     <string name="common_try_again">Try again</string> <!-- TODO -->
     <string name="common_continue">Продолжить</string>
+    <string name="common_hold_to_confirm">Удерживайте для подтверждения</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>

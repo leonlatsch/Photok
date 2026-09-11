@@ -37,6 +37,7 @@
     <string name="common_rename">Rename</string> <!-- TODO -->
     <string name="common_try_again">Try again</string> <!-- TODO -->
     <string name="common_continue">متابعة</string>
+    <string name="common_hold_to_confirm">اضغط مطولاً للتأكيد</string>
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
