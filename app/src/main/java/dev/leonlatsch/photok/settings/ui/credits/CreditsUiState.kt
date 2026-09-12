@@ -17,14 +17,23 @@
 package dev.leonlatsch.photok.settings.ui.credits
 
 /**
- * Raw entry as it is stored in the contributors asset file.
+ * State of the credits screen.
  *
  * @since 1.2.0
  * @author Leon Latsch
  */
-data class CreditEntry(
-    val contribution: String = "",
-    val name: String = "",
-    val contact: String = "",
-    val website: String = "",
+data class CreditsUiState(
+    val contributors: List<Contributor> = emptyList(),
+    val iconCreditsHtml: String = "",
+)
+
+/**
+ * A single contributor, ready to be displayed.
+ */
+data class Contributor(
+    val name: String,
+    val contribution: String,
+    val contact: String,
+    val website: String,
+    val websiteUrl: String,
 )
