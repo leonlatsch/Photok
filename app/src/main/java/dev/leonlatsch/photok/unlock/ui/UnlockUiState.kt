@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020-2026 Leon Latsch
+ *   Copyright 2020–2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,10 +16,17 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-import androidx.compose.runtime.Composable
-import dev.leonlatsch.photok.pro.passwordattempts.LockoutOverlay
-
-@Composable
-internal fun LockoutContent(lockedUntil: Long) {
-    LockoutOverlay(lockedUntil)
-}
+/**
+ * State of the unlock screen.
+ *
+ * @since 1.0.0
+ * @author Leon Latsch
+ */
+data class UnlockUiState(
+    val password: String = "",
+    val loading: Boolean = false,
+    val wrongPassword: Boolean = false,
+    val biometricAvailable: Boolean = false,
+    val recoveryPhraseAvailable: Boolean = false,
+    val lockedUntil: Long? = null,
+)

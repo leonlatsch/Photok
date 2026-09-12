@@ -16,15 +16,13 @@
 
 package dev.leonlatsch.photok.setup.ui
 
-/**
- * Enum to indicate state in setup.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class SetupState {
-    SETUP,
-    LOADING,
-    FINISHED,
-    SHOW_RECOVERY_PHRASE,
+sealed interface SetupUiEvent {
+    data class PasswordChanged(val password: String) : SetupUiEvent
+    data class ConfirmPasswordChanged(val confirmPassword: String) : SetupUiEvent
+    data object Setup : SetupUiEvent
+}
+
+sealed interface SetupNavigationEvent {
+    data object ShowRecoveryPhraseSetup : SetupNavigationEvent
+    data object ShowError : SetupNavigationEvent
 }

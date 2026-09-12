@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-import androidx.compose.ui.platform.ComposeView
-import kotlinx.coroutines.flow.StateFlow
+import androidx.compose.runtime.Composable
 
-internal fun ComposeView.bindLockoutState(stateFlow: StateFlow<UnlockState>) = Unit
+@Composable
+internal fun LockoutContent(lockedUntil: Long) = Unit

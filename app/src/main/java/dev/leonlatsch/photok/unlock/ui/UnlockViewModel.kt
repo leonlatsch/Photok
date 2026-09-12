@@ -16,13 +16,12 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-import android.app.Application
 import android.content.res.Resources
-import androidx.databinding.Bindable
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BR
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.EraseVaultDataUseCase
 import dev.leonlatsch.photok.encryption.domain.LegacyEncryption
@@ -35,16 +34,17 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.encryption.ui.BiometricAuthenticationFailedException
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
-import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsResult
 import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
 import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningCaptureService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -61,7 +61,6 @@ import kotlin.time.Duration.Companion.seconds
  */
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
-    app: Application,
     private val config: Config,
     private val resources: Resources,
     private val vaultService: VaultService,
@@ -71,16 +70,15 @@ class UnlockViewModel @Inject constructor(
     private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
     private val intruderWarningCaptureService: IntruderWarningCaptureService,
     private val eraseVaultDataUseCase: EraseVaultDataUseCase,
-) : ObservableViewModel(app) {
+) : ViewModel() {
 
-    @Bindable
-    var password: String = String.empty
-        set(value) {
-            field = value
-            notifyChange(BR.password, value)
-        }
+    private val _uiState = MutableStateFlow(
+        UnlockUiState(password = if (BuildConfig.DEBUG) "abc123" else "")
+    )
+    val uiState = _uiState.asStateFlow()
 
-    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
+    private val navigationEventsChannel = Channel<UnlockNavigationEvent>()
+    val navigationEvents = navigationEventsChannel.receiveAsFlow()
 
     private var lockoutJob: Job? = null
 
@@ -89,13 +87,42 @@ class UnlockViewModel @Inject constructor(
         if (lockedUntil > System.currentTimeMillis()) {
             lockUntil(lockedUntil)
         }
+
+        viewModelScope.launch {
+            val available = vaultService.isSetup(VaultProtectionType.Biometric) ||
+                    vaultService.canMigrate(VaultProtectionType.Biometric)
+
+            _uiState.update { it.copy(biometricAvailable = available) }
+        }
+
+        viewModelScope.launch {
+            val available = vaultService.isSetup(VaultProtectionType.RecoveryPhrase)
+
+            _uiState.update { it.copy(recoveryPhraseAvailable = available) }
+        }
+    }
+
+    fun handleUiEvent(event: UnlockUiEvent) {
+        when (event) {
+            is UnlockUiEvent.PasswordChanged -> _uiState.update {
+                it.copy(password = event.password, wrongPassword = false)
+            }
+
+            UnlockUiEvent.UnlockWithPassword -> unlockWithPassword()
+
+            is UnlockUiEvent.UnlockWithBiometric -> unlockWithBiometric(event.fragment)
+
+            UnlockUiEvent.ForgotPassword -> {
+                navigationEventsChannel.trySend(UnlockNavigationEvent.ShowRecoveryPhraseRestore)
+            }
+        }
     }
 
     /**
      * Enters the lockout state and leaves it again once [lockedUntil] has passed.
      */
     private fun lockUntil(lockedUntil: Long) {
-        unlockState.update { UnlockState.Locked(lockedUntil) }
+        _uiState.update { it.copy(lockedUntil = lockedUntil, loading = false) }
 
         lockoutJob?.cancel()
         lockoutJob = viewModelScope.launch {
@@ -106,14 +133,18 @@ class UnlockViewModel @Inject constructor(
         }
     }
 
+    private fun dismissLockout() {
+        passwordAttemptsUseCase.onSuccessfulUnlock()
+        _uiState.update { it.copy(lockedUntil = null) }
+    }
+
     /**
      * Tries to unlock the safe.
-     * Compares [password] to saved hash.
-     * Updates UnlockState.
-     * Called by ui.
+     * Compares the entered password to the saved hash.
      */
-    fun unlockWithPassword() {
-        unlockState.update { UnlockState.Loading }
+    private fun unlockWithPassword() {
+        val password = _uiState.value.password
+        _uiState.update { it.copy(loading = true, wrongPassword = false) }
 
         viewModelScope.launch {
             try {
@@ -126,12 +157,16 @@ class UnlockViewModel @Inject constructor(
                             val legacySession = legacyEncryption.obtainSession(password)
                             legacyEncryptionMigrator.initialize(legacySession)
 
-                            unlockState.update { UnlockState.StartLegacyMigration }
+                            _uiState.update { it.copy(loading = false) }
+                            navigationEventsChannel.trySend(UnlockNavigationEvent.StartLegacyMigration)
                         } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
                             vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
-                            unlockState.update { UnlockState.ShowRecoveryPhrase }
+
+                            _uiState.update { it.copy(loading = false) }
+                            navigationEventsChannel.trySend(UnlockNavigationEvent.ShowRecoveryPhraseSetup)
                         } else {
-                            unlockState.update { UnlockState.Unlocked }
+                            _uiState.update { it.copy(loading = false) }
+                            navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
                         }
                     }
                     .onFailure {
@@ -144,37 +179,36 @@ class UnlockViewModel @Inject constructor(
 
                         when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
                             is PasswordAttemptsResult.Locked -> lockUntil(result.lockedUntil)
-                            PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
+                            PasswordAttemptsResult.None -> _uiState.update {
+                                it.copy(loading = false, wrongPassword = true)
+                            }
+
                             PasswordAttemptsResult.Erased -> {
                                 viewModelScope.launch {
                                     eraseVaultDataUseCase()
                                 }
-                                unlockState.update { UnlockState.PasswordError }
+                                _uiState.update { it.copy(loading = false, wrongPassword = true) }
                             }
                         }
                     }
             } catch (e: Exception) {
                 Timber.e(e)
-                unlockState.update { UnlockState.Error }
+                _uiState.update { it.copy(loading = false) }
+                navigationEventsChannel.trySend(UnlockNavigationEvent.ShowError)
             }
         }
     }
 
-    fun dismissLockout() {
-        passwordAttemptsUseCase.onSuccessfulUnlock()
-        unlockState.update { UnlockState.Initial }
-    }
-
-    fun unlockWithBiometric(fragment: Fragment) {
+    private fun unlockWithBiometric(fragment: Fragment) {
         // A bruteforce lockout must not be skippable by falling back to biometrics.
-        if (unlockState.value is UnlockState.Locked) return
+        if (_uiState.value.lockedUntil != null) return
 
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Biometric(fragment))
                 .onSuccess { session ->
                     passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
-                    unlockState.update { UnlockState.Unlocked }
+                    navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {

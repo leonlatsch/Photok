@@ -53,8 +53,7 @@
     <fragment
         android:id="@+id/setupFragment"
         android:name="dev.leonlatsch.photok.setup.ui.SetupFragment"
-        android:label="fragment_setup"
-        tools:layout="@layout/fragment_setup">
+        android:label="fragment_setup">
         <action
             android:id="@+id/action_setupFragment_to_encryptionMigrationFragment"
             app:destination="@id/encryptionMigrationFragment"
@@ -69,8 +68,7 @@
     <fragment
         android:id="@+id/unlockFragment"
         android:name="dev.leonlatsch.photok.unlock.ui.UnlockFragment"
-        android:label="fragment_unlock"
-        tools:layout="@layout/fragment_unlock">
+        android:label="fragment_unlock">
         <action
             android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
             app:destination="@id/encryptionMigrationFragment"

@@ -17,154 +17,95 @@
 package dev.leonlatsch.photok.unlock.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentUnlockBinding
-import dev.leonlatsch.photok.encryption.domain.VaultService
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
-import dev.leonlatsch.photok.other.extensions.hide
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.extensions.vanish
-import dev.leonlatsch.photok.other.systemBarsPadding
-import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * Unlock fragment.
- * Handles state and login.
+ * Hosts [UnlockScreen] and performs the navigation it asks for.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment_unlock) {
+class UnlockFragment : Fragment() {
 
     private val viewModel: UnlockViewModel by viewModels()
 
     @Inject
-    lateinit var config: Config
-
-    @Inject
-    lateinit var vaultService: VaultService
-
-    @Inject
     lateinit var navigateToGallery: NavigateToGallery
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = ComposeView(requireContext()).apply {
+        setContent {
+            CompositionLocalProvider(
+                LocalFragment provides this@UnlockFragment,
+            ) {
+                UnlockScreen(viewModel)
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.unlockContraintLayout.systemBarsPadding()
+        super.onViewCreated(view, savedInstanceState)
         finishOnBackWhileStarted()
 
-        if (BuildConfig.DEBUG) {
-            viewModel.password = "abc123"
-        }
-
-        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState)
-
         launchLifecycleAwareJob {
-            viewModel.unlockState.collect {
-                when (it) {
-                    UnlockState.Initial -> {
-                        binding.unlockWrongPasswordWarningTextView.hide()
-                    }
-                    UnlockState.PasswordError -> {
-                        binding.loadingOverlay.hide()
-                        binding.unlockWrongPasswordWarningTextView.show()
-                    }
-
-                    UnlockState.Loading -> binding.loadingOverlay.show()
-                    UnlockState.Unlocked -> {
-                        binding.loadingOverlay.hide()
-                        activity?.hideKeyboard()
-                        navigateToGallery(findNavController())
-                    }
-
-                    UnlockState.StartLegacyMigration -> {
-                        binding.loadingOverlay.hide()
-                        activity?.hideKeyboard()
-
-                        findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
-                    }
-
-                    UnlockState.Error -> showErrorToast()
-
-                    UnlockState.ShowRecoveryPhrase -> {
-                        binding.loadingOverlay.hide()
-                        activity?.hideKeyboard()
-                        findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
-                    }
-
-                    is UnlockState.Locked -> {
-                        binding.loadingOverlay.hide()
-                        activity?.hideKeyboard()
-                    }
-                }
-            }
-        }
-
-        viewModel.addOnPropertyChange<String>(BR.password) {
-            if (binding.unlockWrongPasswordWarningTextView.visibility != View.INVISIBLE) {
-                binding.unlockWrongPasswordWarningTextView.vanish()
-            }
-        }
-
-        super.onViewCreated(view, savedInstanceState)
-
-        lifecycleScope.launch {
-            if (viewModel.unlockState.value !is UnlockState.Locked) {
-                return@launch
-            }
-
-            if (vaultService.isSetup(VaultProtectionType.Biometric) || vaultService.canMigrate(VaultProtectionType.Biometric)) {
-                binding.unlockUseBiometricUnlockButton.show()
-
-                delay(500L)
-                viewModel.unlockWithBiometric(fragment = this@UnlockFragment)
-            } else {
-                binding.unlockUseBiometricUnlockButton.hide()
-            }
-        }
-
-        lifecycleScope.launch {
-            if (vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
-                binding.unlockForgotPassword.show()
-            } else {
-                binding.unlockForgotPassword.hide()
+            viewModel.navigationEvents.collect { event ->
+                navigate(event)
             }
         }
     }
 
-    private fun showErrorToast() {
-        binding.loadingOverlay.hide()
-        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
-    }
+    private fun navigate(event: UnlockNavigationEvent) {
+        if (event == UnlockNavigationEvent.ShowError) {
+            showErrorToast()
+            return
+        }
 
-    fun forgotPassword() {
+        activity?.hideKeyboard()
+
         try {
-            findNavController().navigate(R.id.action_unlockFragment_to_recoveryPhraseRestoreFragment)
+            when (event) {
+                UnlockNavigationEvent.Unlocked -> navigateToGallery(findNavController())
+
+                UnlockNavigationEvent.StartLegacyMigration ->
+                    findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
+
+                UnlockNavigationEvent.ShowRecoveryPhraseSetup ->
+                    findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
+
+                UnlockNavigationEvent.ShowRecoveryPhraseRestore ->
+                    findNavController().navigate(R.id.action_unlockFragment_to_recoveryPhraseRestoreFragment)
+
+                UnlockNavigationEvent.ShowError -> Unit
+            }
         } catch (e: Exception) {
             Timber.e(e)
             showErrorToast()
         }
     }
 
-    override fun bind(binding: FragmentUnlockBinding) {
-        super.bind(binding)
-        binding.context = this
-        binding.viewModel = viewModel
+    private fun showErrorToast() {
+        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
     }
 }

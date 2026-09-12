@@ -14,21 +14,30 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.unlock.ui
+package dev.leonlatsch.photok.setup.ui
+
+import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 
 /**
- * Sealed class indicating state of the unlock process.
+ * State of the setup screen.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-sealed class UnlockState {
-    data object Initial : UnlockState()
-    data object PasswordError : UnlockState()
-    data object Error : UnlockState()
-    data object Loading : UnlockState()
-    data object Unlocked : UnlockState()
-    data object StartLegacyMigration : UnlockState()
-    data object ShowRecoveryPhrase : UnlockState()
-    data class Locked(val lockedUntil: Long) : UnlockState()
+data class SetupUiState(
+    val password: String = "",
+    val confirmPassword: String = "",
+
+    /** `null` while no password has been entered yet. */
+    val passwordStrength: PasswordStrength? = null,
+    val showConfirmPassword: Boolean = false,
+    val passwordsMismatch: Boolean = false,
+    val canSetup: Boolean = false,
+    val loading: Boolean = false,
+) {
+    data class Inputs(
+        val password: String = "",
+        val confirmPassword: String = "",
+        val loading: Boolean = false,
+    )
 }
