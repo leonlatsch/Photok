@@ -73,12 +73,14 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.password = "abc123"
         }
 
-        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState, viewModel::dismissLockout)
+        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState)
 
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
-                    UnlockState.Initial -> Unit
+                    UnlockState.Initial -> {
+                        binding.unlockWrongPasswordWarningTextView.hide()
+                    }
                     UnlockState.PasswordError -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
@@ -106,7 +108,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                         findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
 
-                    is UnlockState.Locked -> binding.loadingOverlay.hide()
+                    is UnlockState.Locked -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+                    }
                 }
             }
         }
