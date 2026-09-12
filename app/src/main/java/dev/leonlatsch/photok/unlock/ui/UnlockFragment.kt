@@ -66,7 +66,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     lateinit var navigateToGallery: NavigateToGallery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.systemBarsPadding()
+        binding.unlockContraintLayout.systemBarsPadding()
         finishOnBackWhileStarted()
 
         if (BuildConfig.DEBUG) {
