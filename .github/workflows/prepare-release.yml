@@ -44,6 +44,6 @@ jobs:
           git add gradle.properties \
             app/src/play/assets/open_source_licenses.html \
             app/src/foss/assets/open_source_licenses.html \
-            fastlane/metadata/android/en-US/changelogs
+            fastlane/metadata/android/*/changelogs
           git commit -m "Prepare release ${{ github.event.inputs.version }}"
           git push

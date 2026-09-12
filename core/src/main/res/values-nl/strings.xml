@@ -199,7 +199,7 @@
     <string name="settings_other_feedback_summary">Stuur me een e-mail met feedback</string>
     <string name="settings_other_feedback_mail_subject">Feedback naar Photok</string>
     <string name="settings_other_feedback_mail_body">Schrijf feedback over Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
 
     <string name="settings_other_sourcecode_title">Broncode</string>
     <string name="settings_other_sourcecode_summary">Bijdragen aan Photok</string>

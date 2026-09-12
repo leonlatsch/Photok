@@ -198,7 +198,7 @@
     <string name="settings_other_feedback_summary">Geri bildirim içeren bir e-posta gönder</string>
     <string name="settings_other_feedback_mail_subject">Photok Hakkında Geri Bildirim</string>
     <string name="settings_other_feedback_mail_body">Photok hakkında geri bildiriminizi yazın :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
 
 
 

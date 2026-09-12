@@ -199,7 +199,7 @@
     <string name="settings_other_feedback_summary">Kirim email berisi masukan ke saya</string>
     <string name="settings_other_feedback_mail_subject">Masukan untuk Photok</string>
     <string name="settings_other_feedback_mail_body">Tulis masukanmu tentang Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
 
 
 

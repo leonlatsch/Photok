@@ -66,19 +66,21 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
     lateinit var navigateToGallery: NavigateToGallery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.systemBarsPadding()
+        binding.unlockContraintLayout.systemBarsPadding()
         finishOnBackWhileStarted()
 
         if (BuildConfig.DEBUG) {
             viewModel.password = "abc123"
         }
 
-        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState, viewModel::dismissLockout)
+        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState)
 
         launchLifecycleAwareJob {
             viewModel.unlockState.collect {
                 when (it) {
-                    UnlockState.Initial -> Unit
+                    UnlockState.Initial -> {
+                        binding.unlockWrongPasswordWarningTextView.hide()
+                    }
                     UnlockState.PasswordError -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
@@ -106,7 +108,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                         findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
 
-                    is UnlockState.Locked -> Unit
+                    is UnlockState.Locked -> {
+                        binding.loadingOverlay.hide()
+                        activity?.hideKeyboard()
+                    }
                 }
             }
         }
@@ -120,6 +125,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
+            if (viewModel.unlockState.value !is UnlockState.Locked) {
+                return@launch
+            }
+
             if (vaultService.isSetup(VaultProtectionType.Biometric) || vaultService.canMigrate(VaultProtectionType.Biometric)) {
                 binding.unlockUseBiometricUnlockButton.show()
 

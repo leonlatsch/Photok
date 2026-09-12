@@ -42,11 +42,14 @@ import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningCaptureS
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * ViewModel for unlocking the safe.
@@ -79,10 +82,27 @@ class UnlockViewModel @Inject constructor(
 
     val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
 
+    private var lockoutJob: Job? = null
+
     init {
         val lockedUntil = passwordAttemptsUseCase.currentLockout()
         if (lockedUntil > System.currentTimeMillis()) {
-            unlockState.update { UnlockState.Locked(lockedUntil) }
+            lockUntil(lockedUntil)
+        }
+    }
+
+    /**
+     * Enters the lockout state and leaves it again once [lockedUntil] has passed.
+     */
+    private fun lockUntil(lockedUntil: Long) {
+        unlockState.update { UnlockState.Locked(lockedUntil) }
+
+        lockoutJob?.cancel()
+        lockoutJob = viewModelScope.launch {
+            while (System.currentTimeMillis() < lockedUntil) {
+                delay(1.seconds)
+            }
+            dismissLockout()
         }
     }
 
@@ -123,7 +143,7 @@ class UnlockViewModel @Inject constructor(
                         }
 
                         when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
-                            is PasswordAttemptsResult.Locked -> unlockState.update { UnlockState.Locked(result.lockedUntil) }
+                            is PasswordAttemptsResult.Locked -> lockUntil(result.lockedUntil)
                             PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
                             PasswordAttemptsResult.Erased -> {
                                 viewModelScope.launch {
@@ -146,9 +166,13 @@ class UnlockViewModel @Inject constructor(
     }
 
     fun unlockWithBiometric(fragment: Fragment) {
+        // A bruteforce lockout must not be skippable by falling back to biometrics.
+        if (unlockState.value is UnlockState.Locked) return
+
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Biometric(fragment))
                 .onSuccess { session ->
+                    passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
                     unlockState.update { UnlockState.Unlocked }
                 }
