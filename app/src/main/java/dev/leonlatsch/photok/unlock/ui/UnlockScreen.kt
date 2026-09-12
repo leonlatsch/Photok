@@ -173,7 +173,7 @@ private fun UnlockScreenContent(
 
                 Button(
                     onClick = { unlockWithPassword() },
-                    enabled = !uiState.loading,
+                    enabled = !uiState.loading && uiState.password.isNotEmpty(),
                     modifier = Modifier
                         .width(200.dp)
                         .align(Alignment.CenterHorizontally)

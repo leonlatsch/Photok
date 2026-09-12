@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-private val DEBUG_PASSWORD = if (BuildConfig.DEBUG) "" else ""
+private val DEBUG_PASSWORD = if (BuildConfig.DEBUG) "abc123" else ""
 
 /**
  * ViewModel for the setup.
