@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.components.PhotoGallery
+import dev.leonlatsch.photok.gallery.components.MultiSelectionState
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -43,11 +44,9 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun AlbumDetailContent(
     uiState: AlbumDetailUiState,
     handleUiEvent: (AlbumDetailUiEvent) -> Unit,
+    multiSelectionState: MultiSelectionState,
     modifier: Modifier = Modifier,
 ) {
-    val multiSelectionState =
-        rememberMultiSelectionState(items = uiState.photos.map { it.uuid })
-
     var showAlbumSelection by rememberSaveable(multiSelectionState.selectedItems.value) {
         mutableStateOf(false)
     }
@@ -172,6 +171,7 @@ private fun AlbumsDetailScreenPreview() {
                 )
             ),
             handleUiEvent = {},
+            multiSelectionState = rememberMultiSelectionState(items = emptyList()),
         )
     }
 }
