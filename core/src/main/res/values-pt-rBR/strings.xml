@@ -195,7 +195,7 @@
     <string name="settings_other_feedback_summary">Envie-me um e-mail com o feedback</string>
     <string name="settings_other_feedback_mail_subject">Feedback para Photok</string>
     <string name="settings_other_feedback_mail_body">Escreva um feedback sobre Photok :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
 
 
 

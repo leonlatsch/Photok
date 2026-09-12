@@ -197,7 +197,7 @@
     <string name="settings_other_feedback_summary">给我发送一封带反馈的电子邮件</string>
     <string name="settings_other_feedback_mail_subject">向 Photok 提供反馈</string>
     <string name="settings_other_feedback_mail_body">写一则 Photok 的反馈 :)</string>
-    <string name="settings_other_feedback_mail_emailaddress">photok@leonlatsch.dev</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
 
 
 
