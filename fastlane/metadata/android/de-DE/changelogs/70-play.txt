@@ -1,0 +1,10 @@
+Photok Pro ist da — mehr Schutz, mehr Privatsphäre. Einmal zahlen, kein Abo:
+- Brute-Force-Schutz: Limit für falsche Passwörter, Eindringlinge aussperren oder den Safe automatisch löschen
+- Panik-Sperre: Sperre deinen Safe im Bruchteil einer Sekunde durch Schütteln oder Umdrehen
+- Eindringlings Warnungen: Jeder fehlgeschlagene Entsperrversuch macht heimlich ein Foto des Eindringlings
+
+Photoks Kernverschlüsselung und Datenschutzfunktionen bleiben kostenlos und quelloffen. Photok Pro schaltet zusätzliche Komfortfunktionen frei, um die weitere Entwicklung zu unterstützen.
+
+- Fehler behoben: Biometrische Entsperrung schlug in manchen Fällen fälschlicherweise fehl
+- Animationen im Hauptmenü verbessert
+- Übersetzungen verbessert
