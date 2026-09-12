@@ -106,7 +106,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
                         findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
 
-                    is UnlockState.Locked -> Unit
+                    is UnlockState.Locked -> binding.loadingOverlay.hide()
                 }
             }
         }
@@ -120,6 +120,10 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
+            if (viewModel.unlockState.value !is UnlockState.Locked) {
+                return@launch
+            }
+
             if (vaultService.isSetup(VaultProtectionType.Biometric) || vaultService.canMigrate(VaultProtectionType.Biometric)) {
                 binding.unlockUseBiometricUnlockButton.show()
 

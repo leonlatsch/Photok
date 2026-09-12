@@ -107,10 +107,7 @@
                     android:onClick="@{() -> context.forgotPassword()}"
                     android:text="@string/recovery_phrase_forgot_password"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -138,9 +135,7 @@
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/lockoutOverlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 

@@ -146,9 +146,13 @@ class UnlockViewModel @Inject constructor(
     }
 
     fun unlockWithBiometric(fragment: Fragment) {
+        // A bruteforce lockout must not be skippable by falling back to biometrics.
+        if (unlockState.value is UnlockState.Locked) return
+
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Biometric(fragment))
                 .onSuccess { session ->
+                    passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
                     unlockState.update { UnlockState.Unlocked }
                 }
