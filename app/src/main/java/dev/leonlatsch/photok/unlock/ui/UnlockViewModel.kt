@@ -80,7 +80,7 @@ class UnlockViewModel @Inject constructor(
             notifyChange(BR.password, value)
         }
 
-    val unlockState: MutableStateFlow<UnlockState> = MutableStateFlow(UnlockState.Initial)
+    val uiState: MutableStateFlow<UnlockUiState> = MutableStateFlow(UnlockUiState.Initial)
 
     private var lockoutJob: Job? = null
 
@@ -95,7 +95,7 @@ class UnlockViewModel @Inject constructor(
      * Enters the lockout state and leaves it again once [lockedUntil] has passed.
      */
     private fun lockUntil(lockedUntil: Long) {
-        unlockState.update { UnlockState.Locked(lockedUntil) }
+        uiState.update { UnlockUiState.Locked(lockedUntil) }
 
         lockoutJob?.cancel()
         lockoutJob = viewModelScope.launch {
@@ -113,7 +113,7 @@ class UnlockViewModel @Inject constructor(
      * Called by ui.
      */
     fun unlockWithPassword() {
-        unlockState.update { UnlockState.Loading }
+        uiState.update { UnlockUiState.Loading }
 
         viewModelScope.launch {
             try {
@@ -126,12 +126,12 @@ class UnlockViewModel @Inject constructor(
                             val legacySession = legacyEncryption.obtainSession(password)
                             legacyEncryptionMigrator.initialize(legacySession)
 
-                            unlockState.update { UnlockState.StartLegacyMigration }
+                            uiState.update { UnlockUiState.StartLegacyMigration }
                         } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
                             vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
-                            unlockState.update { UnlockState.ShowRecoveryPhrase }
+                            uiState.update { UnlockUiState.ShowRecoveryPhrase }
                         } else {
-                            unlockState.update { UnlockState.Unlocked }
+                            uiState.update { UnlockUiState.Unlocked }
                         }
                     }
                     .onFailure {
@@ -144,37 +144,37 @@ class UnlockViewModel @Inject constructor(
 
                         when (val result = passwordAttemptsUseCase.onFailedAttempt()) {
                             is PasswordAttemptsResult.Locked -> lockUntil(result.lockedUntil)
-                            PasswordAttemptsResult.None -> unlockState.update { UnlockState.PasswordError }
+                            PasswordAttemptsResult.None -> uiState.update { UnlockUiState.PasswordError }
                             PasswordAttemptsResult.Erased -> {
                                 viewModelScope.launch {
                                     eraseVaultDataUseCase()
                                 }
-                                unlockState.update { UnlockState.PasswordError }
+                                uiState.update { UnlockUiState.PasswordError }
                             }
                         }
                     }
             } catch (e: Exception) {
                 Timber.e(e)
-                unlockState.update { UnlockState.Error }
+                uiState.update { UnlockUiState.Error }
             }
         }
     }
 
     fun dismissLockout() {
         passwordAttemptsUseCase.onSuccessfulUnlock()
-        unlockState.update { UnlockState.Initial }
+        uiState.update { UnlockUiState.Initial }
     }
 
     fun unlockWithBiometric(fragment: Fragment) {
         // A bruteforce lockout must not be skippable by falling back to biometrics.
-        if (unlockState.value is UnlockState.Locked) return
+        if (uiState.value is UnlockUiState.Locked) return
 
         viewModelScope.launch {
             vaultService.unlock(UnlockRequest.Biometric(fragment))
                 .onSuccess { session ->
                     passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
-                    unlockState.update { UnlockState.Unlocked }
+                    uiState.update { UnlockUiState.Unlocked }
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {

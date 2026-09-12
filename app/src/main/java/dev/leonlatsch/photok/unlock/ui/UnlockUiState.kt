@@ -22,13 +22,13 @@ package dev.leonlatsch.photok.unlock.ui
  * @since 1.0.0
  * @author Leon Latsch
  */
-sealed class UnlockState {
-    data object Initial : UnlockState()
-    data object PasswordError : UnlockState()
-    data object Error : UnlockState()
-    data object Loading : UnlockState()
-    data object Unlocked : UnlockState()
-    data object StartLegacyMigration : UnlockState()
-    data object ShowRecoveryPhrase : UnlockState()
-    data class Locked(val lockedUntil: Long) : UnlockState()
+sealed class UnlockUiState {
+    data object Initial : UnlockUiState()
+    data object PasswordError : UnlockUiState()
+    data object Error : UnlockUiState()
+    data object Loading : UnlockUiState()
+    data object Unlocked : UnlockUiState()
+    data object StartLegacyMigration : UnlockUiState()
+    data object ShowRecoveryPhrase : UnlockUiState()
+    data class Locked(val lockedUntil: Long) : UnlockUiState()
 }

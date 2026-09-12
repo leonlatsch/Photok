@@ -73,42 +73,42 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
             viewModel.password = "abc123"
         }
 
-        binding.lockoutOverlay.bindLockoutState(viewModel.unlockState)
+        binding.lockoutOverlay.bindLockoutState(viewModel.uiState)
 
         launchLifecycleAwareJob {
-            viewModel.unlockState.collect {
+            viewModel.uiState.collect {
                 when (it) {
-                    UnlockState.Initial -> {
+                    UnlockUiState.Initial -> {
                         binding.unlockWrongPasswordWarningTextView.hide()
                     }
-                    UnlockState.PasswordError -> {
+                    UnlockUiState.PasswordError -> {
                         binding.loadingOverlay.hide()
                         binding.unlockWrongPasswordWarningTextView.show()
                     }
 
-                    UnlockState.Loading -> binding.loadingOverlay.show()
-                    UnlockState.Unlocked -> {
+                    UnlockUiState.Loading -> binding.loadingOverlay.show()
+                    UnlockUiState.Unlocked -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
                         navigateToGallery(findNavController())
                     }
 
-                    UnlockState.StartLegacyMigration -> {
+                    UnlockUiState.StartLegacyMigration -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
 
                         findNavController().navigate(R.id.action_unlockFragment_to_encryptionMigrationFragment)
                     }
 
-                    UnlockState.Error -> showErrorToast()
+                    UnlockUiState.Error -> showErrorToast()
 
-                    UnlockState.ShowRecoveryPhrase -> {
+                    UnlockUiState.ShowRecoveryPhrase -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
                         findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                     }
 
-                    is UnlockState.Locked -> {
+                    is UnlockUiState.Locked -> {
                         binding.loadingOverlay.hide()
                         activity?.hideKeyboard()
                     }
@@ -125,7 +125,7 @@ class UnlockFragment : BindableFragment<FragmentUnlockBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            if (viewModel.unlockState.value !is UnlockState.Locked) {
+            if (viewModel.uiState.value !is UnlockUiState.Locked) {
                 return@launch
             }
 

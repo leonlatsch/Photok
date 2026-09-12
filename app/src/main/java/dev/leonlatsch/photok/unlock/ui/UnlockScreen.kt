@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.appstart.ui.AppStartState
 import dev.leonlatsch.photok.core.R
+import dev.leonlatsch.photok.pro.passwordattempts.LockoutOverlay
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -73,50 +74,58 @@ private fun UnlockScreenContent(modifier: Modifier = Modifier) {
             }
         }
     ) { contentPadding ->
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .padding(contentPadding)
-        ) {
-            Text(
-                text = stringResource(R.string.unlock_title),
-                style = MaterialTheme.typography.displayMedium,
-                modifier = Modifier.width(280.dp)
-            )
-
-            Spacer(Modifier.height(20.dp))
-
-            var password by remember { mutableStateOf("") }
-            val wrong by remember { mutableStateOf(false) }
-
-            PasswordField(
-                value = password,
-                onValueChange = { password = it },
-                label = stringResource(R.string.unlock_enter_password),
-                error = stringResource(R.string.unlock_wrong_password).takeIf { wrong },
-            )
-
-            Spacer(Modifier.height(20.dp))
-
-            Button(
-                onClick = {
-                    // TODO
-                },
+        Box {
+            Column(
                 modifier = Modifier
-                    .width(200.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 20.dp)
+                    .padding(contentPadding)
             ) {
-                Text(stringResource(R.string.unlock_button))
+                Text(
+                    text = stringResource(R.string.unlock_title),
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = Modifier.width(280.dp)
+                )
+
+                Spacer(Modifier.height(20.dp))
+
+                var password by remember { mutableStateOf("") }
+                val wrong by remember { mutableStateOf(false) }
+
+                PasswordField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = stringResource(R.string.unlock_enter_password),
+                    error = stringResource(R.string.unlock_wrong_password).takeIf { wrong },
+                )
+
+                Spacer(Modifier.height(20.dp))
+
+                Button(
+                    onClick = {
+                        // TODO
+                    },
+                    modifier = Modifier
+                        .width(200.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Text(stringResource(R.string.unlock_button))
+                }
+
+                TextButton(
+                    onClick = {
+                        // TODO
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Text(stringResource(R.string.recovery_phrase_forgot_password))
+                }
             }
 
-            TextButton(
-                onClick = {
-                    // TODO
-                },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Text(stringResource(R.string.recovery_phrase_forgot_password))
+            if (false) { // state is locked out
+                LockoutOverlay(
+                    lockedUntil = 0L
+                )
             }
         }
     }
