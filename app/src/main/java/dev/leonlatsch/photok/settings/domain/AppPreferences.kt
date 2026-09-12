@@ -46,6 +46,12 @@ object AppPreferences {
         default = StartPage.AllFiles,
         possibleValues = StartPage.entries,
     )
+    val Language = Preference.Simple(
+        key = SettingsFragment.KEY_ACTION_LANGUAGE,
+        icon = R.drawable.ic_globe,
+        title = R.string.settings_app_language_title,
+        summary = R.string.settings_app_language_summary,
+    )
     val Screenshots = Preference.Switch(
         key = SECURITY_ALLOW_SCREENSHOTS,
         icon = R.drawable.ic_screen_lock,

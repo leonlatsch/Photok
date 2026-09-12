@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.settings.domain
 
+import android.os.Build
 import dev.leonlatsch.photok.R
 
 val PrefsScreenConfig = PreferenceScreenConfig(
@@ -23,9 +24,10 @@ val PrefsScreenConfig = PreferenceScreenConfig(
         PreferenceSection(
             title = R.string.settings_category_app,
             summary = null,
-            preferences = listOf(
+            preferences = listOfNotNull(
                 AppPreferences.SystemDesign,
                 AppPreferences.GalleryStartPage,
+                AppPreferences.Language.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU },
                 AppPreferences.Screenshots,
                 AppPreferences.HideApp,
                 AppPreferences.LaunchCode,
