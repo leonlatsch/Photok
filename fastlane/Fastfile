@@ -108,6 +108,21 @@ platform :android do
     )
   end
 
+  desc "Upload only the Play Store screenshots/graphics from fastlane/metadata (no build, no :pro submodule needed)"
+  lane :upload_screenshots do
+    UI.message("Uploading Play Store images from fastlane/metadata/android")
+
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true,
+      skip_upload_metadata: true,   # don't overwrite store title/description
+
+      skip_upload_images: false,    # icon, featureGraphic
+      skip_upload_screenshots: false
+    )
+  end
+
   #
   # ---- Release preparation ------------------------------------------------
   #
