@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.review
 
 import android.content.Context
-import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.core.BuildConfig
 import kotlin.time.Duration.Companion.days
 
 enum class ReviewTrigger {
@@ -36,6 +36,9 @@ enum class ReviewTrigger {
         override fun meetsRequirements(context: Context) = true
     },
     RecoveryPhraseUsed {
+        override fun meetsRequirements(context: Context) = true
+    },
+    ProPurchased {
         override fun meetsRequirements(context: Context) = true
     };
 

@@ -40,9 +40,19 @@ class InAppReviewImpl @Inject constructor(
     private val telemetryService: TelemetryService,
 ) : InAppReview {
 
-    override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {
-        if (config.inAppReviewRequested) return
-        if (!trigger.meetsRequirements(context)) return
+    override fun requestInAppReview(
+        activity: Activity,
+        trigger: ReviewTrigger,
+        onFinished: () -> Unit,
+    ) {
+        if (config.inAppReviewRequested) {
+            onFinished()
+            return
+        }
+        if (!trigger.meetsRequirements(context)) {
+            onFinished()
+            return
+        }
 
         appScope.launch {
             delay(3.seconds)
@@ -51,6 +61,7 @@ class InAppReviewImpl @Inject constructor(
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(activity, "DEBUG Review Request", Toast.LENGTH_LONG).show()
                     config.inAppReviewRequested = true
+                    onFinished()
                     return@withContext
                 }
 
@@ -66,6 +77,9 @@ class InAppReviewImpl @Inject constructor(
                     if (task.isSuccessful) {
                         config.inAppReviewRequested = true
                         manager.launchReviewFlow(activity, task.result)
+                            .addOnCompleteListener { onFinished() }
+                    } else {
+                        onFinished()
                     }
                 }
             }
