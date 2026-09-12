@@ -27,11 +27,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -101,20 +103,6 @@ private fun UnlockScreenContent(
     }
 
     Scaffold(
-        topBar = {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-            ) {
-                AppName(
-                    fontSize = 62.sp,
-                    modifier = Modifier
-                        .padding(top = 20.dp, bottom = 40.dp)
-                )
-            }
-        },
         bottomBar = {
             Box(
                 contentAlignment = Alignment.Center,
@@ -145,11 +133,26 @@ private fun UnlockScreenContent(
         }
     ) { contentPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
+            // The app name scrolls along so the form still fits on small screens with the keyboard open.
             Column(
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(contentPadding)
+                    .imePadding()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 20.dp)
             ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppName(
+                        fontSize = 62.sp,
+                        modifier = Modifier
+                            .padding(top = 20.dp, bottom = 40.dp)
+                    )
+                }
+
                 Text(
                     text = stringResource(R.string.unlock_title),
                     style = MaterialTheme.typography.displayMedium,
@@ -198,6 +201,8 @@ private fun UnlockScreenContent(
                         Text(stringResource(R.string.recovery_phrase_forgot_password))
                     }
                 }
+
+                Spacer(Modifier.height(20.dp))
             }
 
             if (uiState.lockedUntil != null) {
