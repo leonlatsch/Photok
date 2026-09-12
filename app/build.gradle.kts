@@ -225,7 +225,9 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.14.1")
+    // 4.15.1+ required: it ships ASM 9.8, which can read the Java 25 bytecode of the JBR
+    // that Android Studio runs the test JVM on. 4.14.1 fails with "class file major version 69".
+    testImplementation("org.robolectric:robolectric:4.15.1")
     testImplementation("io.mockk:mockk:1.14.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
     testImplementation("com.google.dagger:hilt-android-testing:2.60")
