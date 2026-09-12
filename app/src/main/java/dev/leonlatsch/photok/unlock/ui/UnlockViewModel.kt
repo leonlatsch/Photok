@@ -73,7 +73,7 @@ class UnlockViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
-        UnlockUiState(password = if (BuildConfig.DEBUG) "abc123" else "")
+        UnlockUiState(password = if (BuildConfig.DEBUG) "" else "")
     )
     val uiState = _uiState.asStateFlow()
 

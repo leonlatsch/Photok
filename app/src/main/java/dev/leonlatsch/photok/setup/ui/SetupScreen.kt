@@ -1,3 +1,19 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package dev.leonlatsch.photok.setup.ui
 
 import androidx.compose.animation.AnimatedVisibility
@@ -17,30 +33,49 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.leonlatsch.photok.R.string
-import dev.leonlatsch.photok.core.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
-fun SetupScreen(modifier: Modifier = Modifier) {
+fun SetupScreen(viewModel: SetupViewModel) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     AppTheme {
-        SetupScreenContent()
+        SetupScreenContent(
+            uiState = uiState,
+            handleUiEvent = viewModel::handleUiEvent,
+        )
     }
 }
 
 @Composable
-private fun SetupScreenContent() {
+private fun SetupScreenContent(
+    uiState: SetupUiState,
+    handleUiEvent: (SetupUiEvent) -> Unit,
+) {
+    val focusManager = LocalFocusManager.current
+
+    fun setup() {
+        focusManager.clearFocus()
+        handleUiEvent(SetupUiEvent.Setup)
+    }
+
     Scaffold(
         topBar = {
             Column(
@@ -68,7 +103,7 @@ private fun SetupScreenContent() {
                 .padding(horizontal = 20.dp)
         ) {
             Text(
-                text = stringResource(string.setup_create_your_password),
+                text = stringResource(R.string.setup_create_your_password),
                 style = MaterialTheme.typography.displayMedium,
                 modifier = Modifier.width(280.dp)
             )
@@ -76,49 +111,49 @@ private fun SetupScreenContent() {
             Spacer(Modifier.height(20.dp))
 
             PasswordField(
-                value = "",
-                onValueChange = {},
-                label = stringResource(string.setup_enter_password),
-                error = stringResource(string.setup_confirm_password).takeIf { false }, // does not match conditions
-                onDone = {},
+                value = uiState.password,
+                onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
+                label = stringResource(R.string.setup_enter_password),
+                imeAction = ImeAction.Next,
             )
 
             AnimatedVisibility(
-                visible = true, // first password matches conditions
+                visible = uiState.showConfirmPassword,
             ) {
                 PasswordField(
-                    value = "",
-                    onValueChange = {},
-                    label = stringResource(string.unlock_enter_password),
-                    error = stringResource(string.unlock_wrong_password).takeIf { false }, // does not match conditions
-                    onDone = {},
+                    value = uiState.confirmPassword,
+                    onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
+                    label = stringResource(R.string.setup_confirm_password),
+                    onDone = { setup() },
                     modifier = Modifier.padding(top = 10.dp)
                 )
             }
 
             Spacer(Modifier.height(10.dp))
 
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(horizontal = 15.dp)
+            AnimatedVisibility(
+                visible = uiState.passwordStrength != null,
             ) {
-                Text(
-                    text = stringResource(R.string.setup_password_strength_label),
-                    color = MaterialTheme.colorScheme.outline,
-                    style = MaterialTheme.typography.labelLarge,
-                )
-                Text(
-                    text = stringResource(R.string.setup_password_strength_strong),// get real level from ui state and map to string
-                    color = Color.Green // Same as for text. Get based on level
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.setup_password_strength_label),
+                        color = MaterialTheme.colorScheme.outline,
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                    Text(
+                        text = stringResource(uiState.passwordStrength.labelRes()),
+                        color = uiState.passwordStrength.color(),
+                    )
+                }
             }
 
             AnimatedVisibility(
-                visible = true, // passwords dont match
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+                visible = uiState.passwordsMismatch,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             ) {
                 Text(
                     text = stringResource(R.string.setup_password_match_warning),
@@ -130,29 +165,76 @@ private fun SetupScreenContent() {
             }
 
             Button(
-                onClick = {},
-                enabled = true, // loading
+                onClick = { setup() },
+                enabled = uiState.canSetup,
                 modifier = Modifier
                     .width(200.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 20.dp)
             ) {
-                if (false) { // loading
+                if (uiState.loading) {
                     CircularProgressIndicator(
                         strokeWidth = 2.dp,
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(20.dp)
                     )
                 } else {
-                    Text(stringResource(R.string.setupSetup))
+                    Text(stringResource(R.string.setup_button))
                 }
             }
         }
     }
 }
 
-@Preview
+private fun PasswordStrength?.labelRes() = when (this) {
+    PasswordStrength.VERY_WEAK -> R.string.setup_password_strength_very_weak
+    PasswordStrength.WEAK -> R.string.setup_password_strength_weak
+    PasswordStrength.MODERATE -> R.string.setup_password_strength_moderate
+    PasswordStrength.STRONG -> R.string.setup_password_strength_strong
+    PasswordStrength.VERY_STRONG -> R.string.setup_password_strength_very_strong
+    null -> R.string.setup_password_strength_very_weak
+}
+
+@Composable
+private fun PasswordStrength?.color() = when (this) {
+    PasswordStrength.VERY_WEAK -> colorResource(R.color.darkRedStrong)
+    PasswordStrength.WEAK -> colorResource(R.color.darkRed)
+    PasswordStrength.MODERATE -> colorResource(R.color.darkYellow)
+    PasswordStrength.STRONG -> colorResource(R.color.darkGreen)
+    PasswordStrength.VERY_STRONG -> MaterialTheme.colorScheme.primary
+    null -> MaterialTheme.colorScheme.outline
+}
+
+@Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
-    SetupScreen()
+    AppTheme {
+        SetupScreenContent(
+            uiState = SetupUiState(
+                password = "secret",
+                confirmPassword = "secret",
+                passwordStrength = PasswordStrength.STRONG,
+                showConfirmPassword = true,
+                canSetup = true,
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewMismatch() {
+    AppTheme {
+        SetupScreenContent(
+            uiState = SetupUiState(
+                password = "secret",
+                confirmPassword = "secretx",
+                passwordStrength = PasswordStrength.VERY_WEAK,
+                showConfirmPassword = true,
+                passwordsMismatch = true,
+            ),
+            handleUiEvent = {},
+        )
+    }
 }
