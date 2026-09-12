@@ -16,19 +16,10 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.runtime.Composable
 import dev.leonlatsch.photok.pro.passwordattempts.LockoutOverlay
-import dev.leonlatsch.photok.ui.theme.AppTheme
-import kotlinx.coroutines.flow.StateFlow
 
-internal fun ComposeView.bindLockoutState(stateFlow: StateFlow<UnlockUiState>) {
-    setContent {
-        val state by stateFlow.collectAsState()
-        when (val s = state) {
-            is UnlockUiState.Locked -> AppTheme { LockoutOverlay(s.lockedUntil) }
-            else -> Unit
-        }
-    }
+@Composable
+internal fun LockoutContent(lockedUntil: Long) {
+    LockoutOverlay(lockedUntil)
 }

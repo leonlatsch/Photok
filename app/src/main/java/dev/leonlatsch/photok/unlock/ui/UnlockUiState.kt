@@ -17,18 +17,16 @@
 package dev.leonlatsch.photok.unlock.ui
 
 /**
- * Sealed class indicating state of the unlock process.
+ * State of the unlock screen.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
-sealed class UnlockUiState {
-    data object Initial : UnlockUiState()
-    data object PasswordError : UnlockUiState()
-    data object Error : UnlockUiState()
-    data object Loading : UnlockUiState()
-    data object Unlocked : UnlockUiState()
-    data object StartLegacyMigration : UnlockUiState()
-    data object ShowRecoveryPhrase : UnlockUiState()
-    data class Locked(val lockedUntil: Long) : UnlockUiState()
-}
+data class UnlockUiState(
+    val password: String = "",
+    val loading: Boolean = false,
+    val wrongPassword: Boolean = false,
+    val biometricAvailable: Boolean = false,
+    val recoveryPhraseAvailable: Boolean = false,
+    val lockedUntil: Long? = null,
+)
