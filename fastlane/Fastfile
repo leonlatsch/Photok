@@ -61,9 +61,9 @@ platform :android do
     )
     apk_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
 
-    # AGP appends "-release-signed" to APKs signed via injected signing. Drop it so the
-    # GitHub release asset is named e.g. photok-3.2.0-foss.apk.
-    release_apk = apk_path.sub("-release-signed.apk", ".apk")
+    # AGP's output name varies (it appends "-release-signed" for injected signing).
+    # Rename to a fixed, predictable asset name: photok-3.2.0-foss.apk.
+    release_apk = File.join(File.dirname(apk_path), "photok-#{version_name}-foss.apk")
     FileUtils.mv(apk_path, release_apk) if apk_path != release_apk
 
     # Create the GitHub release for the (already pushed) tag and attach the APK.
