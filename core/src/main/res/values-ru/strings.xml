@@ -155,6 +155,8 @@
     <string name="settings_app_design_system_light">Светлый</string>
     <string name="settings_app_design_system_dark">Тёмный</string>
     <string name="settings_gallery_start_page_title">Начальная страница</string> <!-- TODO: machine translated | EN: Start page -->
+    <string name="settings_app_language_title">Язык</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">Изменить язык приложения</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>

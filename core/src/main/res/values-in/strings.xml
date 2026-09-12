@@ -155,6 +155,8 @@
     <string name="settings_app_design_system_light">Terang</string>
     <string name="settings_app_design_system_dark">Gelap</string>
     <string name="settings_gallery_start_page_title">Halaman awal</string>
+    <string name="settings_app_language_title">Bahasa</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">Ubah bahasa aplikasi</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">Keamanan</string>
     <string name="settings_security_allow_screenshots_title">Izinkan Tangkapan Layar</string>

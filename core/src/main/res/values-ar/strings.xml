@@ -156,6 +156,8 @@
     <string name="settings_app_design_system_dark">مظلم</string>
 
     <string name="settings_gallery_start_page_title">صفحة البدء</string> <!-- TODO: machine translated | EN: Start page -->
+    <string name="settings_app_language_title">اللغة</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">تغيير لغة التطبيق</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">حماية</string>
     <string name="settings_security_allow_screenshots_title">السماح بلقطات الشاشة</string>

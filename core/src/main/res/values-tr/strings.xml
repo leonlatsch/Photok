@@ -154,6 +154,8 @@
     <string name="settings_app_design_system_light">Açık</string>
     <string name="settings_app_design_system_dark">Koyu</string>
     <string name="settings_gallery_start_page_title">Başlangıç Sayfası</string>
+    <string name="settings_app_language_title">Dil</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">Uygulamanın dilini değiştir</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>

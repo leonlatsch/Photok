@@ -155,6 +155,8 @@
     <string name="settings_app_design_system_light">Licht</string>
     <string name="settings_app_design_system_dark">Donker</string>
     <string name="settings_gallery_start_page_title">Startpagina</string> <!-- TODO: machine translated | EN: Start page -->
+    <string name="settings_app_language_title">Taal</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">Wijzig de taal van de app</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">Veiligheid</string>
     <string name="settings_security_allow_screenshots_title">Screenshots toestaan</string>

@@ -153,6 +153,8 @@
     <string name="settings_app_design_system_light">لائٹ (روشن)</string>
     <string name="settings_app_design_system_dark">ڈارک (اندھیرا)</string>
     <string name="settings_gallery_start_page_title">پہلا صفحہ</string>
+    <string name="settings_app_language_title">زبان</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">ایپ کی زبان تبدیل کریں</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">حفاظت</string>
     <string name="settings_security_allow_screenshots_title">اسکرین شاٹ کی اجازت</string>

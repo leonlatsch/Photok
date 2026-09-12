@@ -155,6 +155,8 @@
     <string name="settings_app_design_system_light">Chiaro</string>
     <string name="settings_app_design_system_dark">Scuro</string>
     <string name="settings_gallery_start_page_title">Pagina iniziale</string> <!-- TODO: machine translated | EN: Start page -->
+    <string name="settings_app_language_title">Lingua</string> <!-- TODO: machine translated | EN: Language -->
+    <string name="settings_app_language_summary">Cambia la lingua dell\'app</string> <!-- TODO: machine translated | EN: Change the language of the app -->
 
     <string name="settings_category_security">Sicurezza</string>
     <string name="settings_security_allow_screenshots_title">Consenti screenshot</string>
