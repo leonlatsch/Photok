@@ -16,8 +16,12 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.DropdownMenuItem
@@ -33,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -43,6 +48,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
+import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
@@ -58,6 +64,10 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
 
     var showConfirmDeleteDialog by remember { mutableStateOf(false) }
     var showRenameDialog by remember { mutableStateOf(false) }
+
+    val multiSelectionState = rememberMultiSelectionState(
+        items = uiState.photos.map { it.uuid }
+    )
 
     AppTheme {
         Scaffold(
@@ -79,61 +89,69 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
                     windowInsets = WindowInsets.statusBars,
                     scrollBehavior = scrollBehavior,
                     actions = {
-                        var showSortMenu by remember { mutableStateOf(false) }
-
-                        SortingMenuIconButton(
-                            config = SortConfig.Album,
-                            sort = uiState.sort,
-                            onClick = { showSortMenu = true }
-                        )
-
-                        SortingMenu(
-                            config = SortConfig.Album,
-                            expanded = showSortMenu,
-                            onDismissRequest = {showSortMenu = false },
-                            sort = uiState.sort,
-                            onSortChanged = { viewModel.handleUiEvent(AlbumDetailUiEvent.SortChanged(it)) },
-                        )
-
-                        IconButton(onClick = { showMore = true }) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_more),
-                                contentDescription = stringResource(R.string.common_more)
-                            )
-                        }
-
-                        RoundedDropdownMenu(
-                            expanded = showMore,
-                            onDismissRequest = { showMore = false },
-                            modifier = Modifier.animateContentSize()
+                        AnimatedVisibility(
+                            visible = multiSelectionState.isActive.value.not(),
+                            enter = fadeIn(),
+                            exit = fadeOut(),
                         ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.common_delete)) },
-                                onClick = {
-                                    showMore = false
-                                    showConfirmDeleteDialog = true
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        painter = painterResource(R.drawable.ic_delete),
-                                        contentDescription = stringResource(R.string.common_delete)
-                                    )
-                                }
-                            )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                var showSortMenu by remember { mutableStateOf(false) }
 
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.common_rename)) },
-                                onClick = {
-                                    showMore = false
-                                    showRenameDialog = true
-                                },
-                                leadingIcon = {
+                                SortingMenuIconButton(
+                                    config = SortConfig.Album,
+                                    sort = uiState.sort,
+                                    onClick = { showSortMenu = true }
+                                )
+
+                                SortingMenu(
+                                    config = SortConfig.Album,
+                                    expanded = showSortMenu,
+                                    onDismissRequest = { showSortMenu = false },
+                                    sort = uiState.sort,
+                                    onSortChanged = { viewModel.handleUiEvent(AlbumDetailUiEvent.SortChanged(it)) },
+                                )
+
+                                IconButton(onClick = { showMore = true }) {
                                     Icon(
-                                        painter = painterResource(R.drawable.ic_edit),
-                                        contentDescription = stringResource(R.string.common_rename),
+                                        painter = painterResource(R.drawable.ic_more),
+                                        contentDescription = stringResource(R.string.common_more)
                                     )
                                 }
-                            )
+
+                                RoundedDropdownMenu(
+                                    expanded = showMore,
+                                    onDismissRequest = { showMore = false },
+                                    modifier = Modifier.animateContentSize()
+                                ) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.common_delete)) },
+                                        onClick = {
+                                            showMore = false
+                                            showConfirmDeleteDialog = true
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_delete),
+                                                contentDescription = stringResource(R.string.common_delete)
+                                            )
+                                        }
+                                    )
+
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.common_rename)) },
+                                        onClick = {
+                                            showMore = false
+                                            showRenameDialog = true
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_edit),
+                                                contentDescription = stringResource(R.string.common_rename),
+                                            )
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 )
@@ -142,6 +160,7 @@ fun AlbumDetailScreen(viewModel: AlbumDetailViewModel, navController: NavControl
             AlbumDetailContent(
                 uiState = uiState,
                 handleUiEvent = { viewModel.handleUiEvent(it) },
+                multiSelectionState = multiSelectionState,
                 modifier = Modifier
                     .padding(top = contentPadding.calculateTopPadding())
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
