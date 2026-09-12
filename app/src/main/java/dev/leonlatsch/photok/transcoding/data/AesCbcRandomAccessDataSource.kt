@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.transcoding.data
 
 import android.net.Uri
+import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DataSpec
@@ -32,9 +33,13 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.channels.Channels
+import java.nio.channels.FileChannel
+import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.spec.IvParameterSpec
+
+private const val AES_CBC_NO_PADDING = "AES/CBC/NoPadding"
 
 /**
  * AES-CBC Random Access DataSource (Block-Aligned Seeking)
@@ -86,6 +91,7 @@ class AesCbcRandomAccessDataSource(
 
     private var inputStream: CipherInputStream? = null
     private var fileInputStream: FileInputStream? = null
+    private var bytesRemaining: Long = 0
     private lateinit var uri: Uri
 
     override fun open(dataSpec: DataSpec): Long {
@@ -130,6 +136,16 @@ class AesCbcRandomAccessDataSource(
         // --- Resolve key  ---
         val key = sessionRepository.require().vmk
 
+        // --- Determine plaintext length ---
+        // See resolvePlainLength for why open() must not return C.LENGTH_UNSET.
+        val plainLength = resolvePlainLength(
+            channel = channel,
+            version = version,
+            fileIv = fileIv,
+            fileLength = file.length(),
+            key = key,
+        )
+
         // --- Compute target block ---
         val plainOffset = dataSpec.position
         val blockIndex = (plainOffset / BLOCK_SIZE).toInt()
@@ -162,18 +178,94 @@ class AesCbcRandomAccessDataSource(
             inputStream?.read(skip, 0, discard)
         }
 
-        return dataSpec.length
+        bytesRemaining = if (dataSpec.length != C.LENGTH_UNSET.toLong()) {
+            dataSpec.length
+        } else {
+            (plainLength - plainOffset).coerceAtLeast(0)
+        }
+
+        return bytesRemaining
+    }
+
+    /**
+     * Returns the plaintext length of the encrypted file.
+     *
+     * Media3 needs it: an mp4 box with a size field of 0 extends to the end of the file, and
+     * Mp4Extractor resolves that only via the input length, which is the value open() returns.
+     * With C.LENGTH_UNSET it throws "Atom size less than header length (unsupported)". Signal
+     * on Android writes the mdat box that way, Signal on iOS writes an explicit size field.
+     *
+     * The file length is not the plaintext length: the header comes first, and the PKCS7
+     * padded ciphertext is 1 to 16 bytes longer than the plaintext. The padding count is not
+     * stored anywhere, but in CBC a block depends only on the block before it, so decrypting
+     * the last ciphertext block with the one before it as IV is enough. NoPadding is used on
+     * purpose, PKCS7Padding would strip the padding and discard the count. In PKCS7 every
+     * padding byte holds the padding count, so the last decrypted byte is the padding count.
+     */
+    private fun resolvePlainLength(
+        channel: FileChannel,
+        version: EncryptionVersionByte,
+        fileIv: ByteArray,
+        fileLength: Long,
+        key: Key,
+    ): Long {
+        val cipherLength = fileLength - version.headerSize
+
+        if (cipherLength < BLOCK_SIZE || cipherLength % BLOCK_SIZE != 0L) {
+            // Not a well formed CBC stream, best effort.
+            return cipherLength.coerceAtLeast(0)
+        }
+
+        val lastBlockOffset = version.headerSize + cipherLength - BLOCK_SIZE
+
+        val ivForLastBlock = if (cipherLength == BLOCK_SIZE.toLong()) {
+            fileIv
+        } else {
+            val prev = ByteArray(BLOCK_SIZE)
+            channel.position(lastBlockOffset - BLOCK_SIZE)
+            channel.read(ByteBuffer.wrap(prev))
+            prev
+        }
+
+        val lastBlock = ByteArray(BLOCK_SIZE)
+        channel.position(lastBlockOffset)
+        channel.read(ByteBuffer.wrap(lastBlock))
+
+        val cipher = Cipher.getInstance(AES_CBC_NO_PADDING)
+        cipher.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(ivForLastBlock))
+        val decrypted = cipher.doFinal(lastBlock)
+
+        val padding = decrypted.last().toInt() and 0xFF
+        if (padding !in 1..BLOCK_SIZE) {
+            return cipherLength
+        }
+
+        return cipherLength - padding
     }
 
     @Throws(IOException::class)
-    override fun read(target: ByteArray, offset: Int, length: Int): Int =
-        if (length == 0) 0 else inputStream?.read(target, offset, length) ?: 0
+    override fun read(target: ByteArray, offset: Int, length: Int): Int {
+        if (length == 0) return 0
+        if (bytesRemaining == 0L) return C.RESULT_END_OF_INPUT
+
+        val toRead = minOf(length.toLong(), bytesRemaining).toInt()
+        val read = inputStream?.read(target, offset, toRead) ?: C.RESULT_END_OF_INPUT
+
+        if (read == -1) {
+            bytesRemaining = 0
+            return C.RESULT_END_OF_INPUT
+        }
+
+        bytesRemaining -= read
+        return read
+    }
 
     override fun addTransferListener(transferListener: TransferListener) {}
 
     override fun getUri(): Uri = uri
 
     override fun close() {
+        bytesRemaining = 0
         inputStream?.close()
         fileInputStream?.close()
     }
