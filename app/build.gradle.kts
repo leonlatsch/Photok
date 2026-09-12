@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("com.jaredsburrows.license")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
 }
 
 val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
@@ -145,8 +145,8 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
 
     // Coroutine Lifecycle Scopes
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
@@ -160,15 +160,15 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Dagger Core
-    implementation("com.google.dagger:dagger:2.60")
-    ksp("com.google.dagger:dagger-compiler:2.60")
+    implementation("com.google.dagger:dagger:2.60.1")
+    ksp("com.google.dagger:dagger-compiler:2.60.1")
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:2.60")
-    ksp("com.google.dagger:hilt-android-compiler:2.60")
-    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.60.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.4.0")
 
-    ksp("androidx.hilt:hilt-compiler:1.3.0")
+    ksp("androidx.hilt:hilt-compiler:1.4.0")
 
     // Activity KTX for viewModels()
     implementation("androidx.activity:activity-ktx:1.12.4")
@@ -180,7 +180,7 @@ dependencies {
     implementation("androidx.activity:activity-compose")
 
     // ZXing - QR code generation and scanning
-    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:core:3.5.4")
 
     // CameraX - camera access for QR scanning
     val cameraXVersion = "1.4.2"
@@ -199,7 +199,7 @@ dependencies {
     implementation("androidx.exifinterface", "exifinterface", "1.4.2")
 
     // Telephoto
-    implementation("me.saket.telephoto:zoomable-image-coil:0.18.0")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.19.0")
 
     // Coil
     val coilVersion = "2.7.0"
@@ -216,9 +216,9 @@ dependencies {
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.17.0")
-    implementation("androidx.appcompat:appcompat:1.7.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.appcompat:appcompat:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.2")
     implementation("androidx.activity:activity:1.12.4")
 
     // Biometric
@@ -227,16 +227,16 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // 4.15.1+ required: it ships ASM 9.8, which can read the Java 25 bytecode of the JBR
     // that Android Studio runs the test JVM on. 4.14.1 fails with "class file major version 69".
-    testImplementation("org.robolectric:robolectric:4.15.1")
-    testImplementation("io.mockk:mockk:1.14.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-    testImplementation("com.google.dagger:hilt-android-testing:2.60")
-    kspTest("com.google.dagger:hilt-android-compiler:2.60")
+    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
+    testImplementation("com.google.dagger:hilt-android-testing:2.60.1")
+    kspTest("com.google.dagger:hilt-android-compiler:2.60.1")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 
     // Telemetry
-    implementation("com.telemetrydeck:kotlin-sdk:6.3.0")
+    implementation("com.telemetrydeck:kotlin-sdk:7.2.0")
 
     // Play Review
     playImplementation("com.google.android.play:review:2.0.2")
