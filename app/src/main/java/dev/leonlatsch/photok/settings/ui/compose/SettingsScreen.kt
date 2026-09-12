@@ -17,8 +17,10 @@
 package dev.leonlatsch.photok.settings.ui.compose
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
+import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -74,6 +76,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -86,6 +89,7 @@ import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.other.extensions.startActivityAndIgnoreTimer
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
@@ -175,6 +179,17 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 
         viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
             activity?.showIntruderWarningsActivity()
+            false
+        }
+
+        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_LANGUAGE) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+                val intent = Intent(
+                    Settings.ACTION_APP_LOCALE_SETTINGS,
+                    "package:${context.packageName}".toUri()
+                )
+                context.startActivityAndIgnoreTimer(intent, activity)
+            }
             false
         }
 
