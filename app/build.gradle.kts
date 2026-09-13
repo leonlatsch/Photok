@@ -12,8 +12,6 @@ val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it
 val appVersionName: String by project
 val appVersionCode: String by project
 
-val telemetryDeckAppId: String? by project
-
 apply(plugin = "com.android.legacy-kapt")
 apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
@@ -34,12 +32,6 @@ android {
         base {
             archivesName = "photok-$versionName"
         }
-
-        buildConfigField(
-            "String",
-            "TELEMETRY_DECK_APP_ID",
-            "\"${telemetryDeckAppId.orEmpty()}\""
-        )
     }
 
     flavorDimensions += "distribution"
@@ -239,9 +231,6 @@ dependencies {
     kspTest("com.google.dagger:hilt-android-compiler:2.60.1")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-
-    // Telemetry
-    implementation("com.telemetrydeck:kotlin-sdk:7.2.0")
 
     // Play Review
     playImplementation("com.google.android.play:review:2.0.2")

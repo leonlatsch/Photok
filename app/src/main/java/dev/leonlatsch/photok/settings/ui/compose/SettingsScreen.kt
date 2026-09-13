@@ -97,6 +97,7 @@ import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
+import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
@@ -632,7 +633,7 @@ fun PreferenceView(
         modifier = modifier
             .clickable(enabled = onClick != null) {
                 if (proProtectedByPaywall && !proFeaturesActive) {
-                    activity?.showPaywall()
+                    activity?.showPaywall(PaywallSource.Settings)
                 } else {
                     onClick?.invoke()
                 }

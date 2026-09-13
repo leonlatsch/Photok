@@ -16,8 +16,11 @@
 
 package dev.leonlatsch.photok.pro.paywall
 
-import android.app.Activity
-
-fun Activity.showPaywall(source: PaywallSource) {
-    // Impl in pro module
+/**
+ * Where the paywall was opened from. Reported as the "source" param on every paywall
+ * telemetry signal so the purchase funnel can be broken down by entry point.
+ */
+enum class PaywallSource {
+    Settings,
+    IntruderWarnings,
 }

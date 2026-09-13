@@ -20,7 +20,7 @@ import android.content.Context
 import com.telemetrydeck.sdk.TelemetryDeck
 import com.telemetrydeck.sdk.providers.DefaultParameterProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.core.BuildConfig
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
@@ -31,6 +31,14 @@ enum class Signal {
     SetupCompleted,
     ReviewRequested,
     MigratedFromAesGcm,
+
+    // Purchase funnel. All PaywallX signals carry the "source" param (see PaywallSource).
+    PaywallOpened,
+    PaywallPurchaseStarted,
+    PaywallPurchaseSucceeded,
+    PaywallPurchaseCancelled,
+    PaywallPurchaseFailed,
+    PaywallDismissed,
 }
 
 @Singleton

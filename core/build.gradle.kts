@@ -1,3 +1,5 @@
+val telemetryDeckAppId: String? by project
+
 plugins {
     id("com.android.library")
     id("com.google.devtools.ksp")
@@ -11,6 +13,12 @@ android {
 
     defaultConfig {
         minSdk = 28
+
+        buildConfigField(
+            "String",
+            "TELEMETRY_DECK_APP_ID",
+            "\"${telemetryDeckAppId.orEmpty()}\""
+        )
     }
 
     flavorDimensions += "distribution"
@@ -61,6 +69,9 @@ dependencies {
 
     // Gson (for Converters)
     implementation("com.google.code.gson:gson:2.14.0")
+
+    // Telemetry (TelemetryService lives here so :app and :pro can both signal)
+    implementation("com.telemetrydeck:kotlin-sdk:7.2.0")
 
     // Timber (for VaultFileStorage)
     implementation("com.jakewharton.timber:timber:5.0.1")
