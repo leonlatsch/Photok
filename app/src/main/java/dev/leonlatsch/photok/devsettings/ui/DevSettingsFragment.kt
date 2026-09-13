@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.devsettings.ui.compose.DevSettingsScreen
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -36,7 +37,9 @@ class DevSettingsFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             AppTheme {
-                DevSettingsScreen()
+                DevSettingsScreen(
+                    onClose = { findNavController().popBackStack() },
+                )
             }
         }
     }

@@ -28,7 +28,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -66,16 +65,6 @@ fun MainMenu(
             onNavigationItemClicked = onNavigationItemClicked,
             badgeCount = rememberIntruderWarningCount()
         )
-
-        if (BuildConfig.DEBUG) {
-            MainNavItem(
-                fragmentsId = R.id.devSettingsFragment,
-                currentSelectedFragmentId = uiState.currentFragmentId,
-                iconRes = R.drawable.ic_code,
-                label = "Dev Settings",
-                onNavigationItemClicked = onNavigationItemClicked
-            )
-        }
     }
 }
 

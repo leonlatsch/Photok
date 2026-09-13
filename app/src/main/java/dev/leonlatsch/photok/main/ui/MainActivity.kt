@@ -38,7 +38,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import javax.inject.Inject
 
-val FragmentsWithMenu = listOfNotNull(
+val FragmentsWithMenu = listOf(
     R.id.galleryFragment,
     R.id.albumsFragment,
     R.id.settingsFragment,

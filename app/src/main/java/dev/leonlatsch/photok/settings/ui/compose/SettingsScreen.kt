@@ -44,6 +44,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -312,6 +313,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val fragment = LocalFragment.current
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
@@ -319,6 +321,10 @@ fun SettingsScreen() {
         SettingsContent(
             uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
+            onOpenDevSettings = {
+                fragment?.findNavController()
+                    ?.navigate(R.id.action_settingsFragment_to_devSettingsFragment)
+            },
         )
         SettingsCallbacks(viewModel)
     }
@@ -330,12 +336,23 @@ fun SettingsScreen() {
 fun SettingsContent(
     uiState: SettingsUiState,
     handleUiEvent: (SettingsUiEvent) -> Unit,
+    onOpenDevSettings: () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
             LargeTopAppBar(
                 title = { Text(stringResource(R.string.settings_title)) },
+                actions = {
+                    if (BuildConfig.DEBUG) {
+                        IconButton(onClick = onOpenDevSettings) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_code),
+                                contentDescription = "Dev Settings",
+                            )
+                        }
+                    }
+                },
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -687,6 +704,7 @@ private fun Preview() {
                     screenConfig = PrefsScreenConfig,
                 ),
                 handleUiEvent = {},
+                onOpenDevSettings = {},
             )
         }
     }
@@ -703,6 +721,7 @@ private fun PreviewDark() {
                     screenConfig = PrefsScreenConfig,
                 ),
                 handleUiEvent = {},
+                onOpenDevSettings = {},
             )
         }
     }
