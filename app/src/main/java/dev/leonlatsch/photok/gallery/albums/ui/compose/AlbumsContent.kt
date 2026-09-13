@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -59,21 +60,23 @@ fun AlbumsGridOrList(
     onAlbumClicked: (String) -> Unit,
     displayMode: DisplayMode,
 ) {
-    when (displayMode) {
-        DisplayMode.Grid -> {
-            AlbumsGrid(
-                albums = albums,
-                onAlbumClicked = onAlbumClicked,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+    Crossfade(displayMode) {
+        when (it) {
+            DisplayMode.Grid -> {
+                AlbumsGrid(
+                    albums = albums,
+                    onAlbumClicked = onAlbumClicked,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
 
-        DisplayMode.List -> {
-            AlbumsList(
-                albums = albums,
-                onAlbumClicked = onAlbumClicked,
-                modifier = Modifier.fillMaxWidth(),
-            )
+            DisplayMode.List -> {
+                AlbumsList(
+                    albums = albums,
+                    onAlbumClicked = onAlbumClicked,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
