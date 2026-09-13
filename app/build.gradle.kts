@@ -19,12 +19,12 @@ apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
-    compileSdk = VersionCodes.BAKLAVA
+    compileSdk = VersionCodes.CINNAMON_BUN
 
     defaultConfig {
         applicationId = "dev.leonlatsch.photok"
         minSdk = VersionCodes.P
-        targetSdk = VersionCodes.BAKLAVA
+        targetSdk = VersionCodes.CINNAMON_BUN
 
         versionCode = appVersionCode.toInt()
         versionName = appVersionName

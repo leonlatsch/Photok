@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "dev.leonlatsch.photok.core"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 28
