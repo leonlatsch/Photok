@@ -65,7 +65,11 @@ private fun AlbumListItem(
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedCornerShape(18.dp)
+    val cornerRadius = 18.dp
+    val contentPadding = 10.dp
+    val imageCornerRadius = cornerRadius - contentPadding // Keep image concentric to the surface
+
+    val shape = RoundedCornerShape(cornerRadius)
 
     Surface(
         tonalElevation = 6.dp,
@@ -76,13 +80,13 @@ private fun AlbumListItem(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(contentPadding),
+            modifier = Modifier.padding(contentPadding)
         ) {
             val contentModifier = Modifier
                 .width(80.dp)
                 .aspectRatio(1f)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(imageCornerRadius))
 
             if (album.albumCover == null || LocalInspectionMode.current) {
                 Box(
