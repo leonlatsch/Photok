@@ -75,6 +75,13 @@
     <string name="gallery_albums_select_title">Select an Album</string>
     <string name="gallery_albums_deleted">Album deleted</string>
     <string name="gallery_albums_photos_added">%1$d items added</string>
+    <string name="gallery_albums_show_as_grid">Show albums as grid</string>
+    <string name="gallery_albums_show_as_list">Show albums as list</string>
+    <string name="gallery_albums_empty_album">Empty album</string>
+    <plurals name="gallery_albums_item_count">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
     <string name="magic_fab_new_album_label">New Album</string>
 
     <!-- IMPORT MENU -->

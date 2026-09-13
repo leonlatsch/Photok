@@ -22,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
@@ -39,7 +40,7 @@ fun DisplayModeIconButton(
                 IconButton(onClick = { onDisplayModeSelected(DisplayMode.List) }, modifier = modifier) {
                     Icon(
                         painter = painterResource(R.drawable.ic_list_view),
-                        contentDescription = "Show albums as list",
+                        contentDescription = stringResource(R.string.gallery_albums_show_as_list),
                     )
                 }
             }
@@ -48,7 +49,7 @@ fun DisplayModeIconButton(
                 IconButton(onClick = { onDisplayModeSelected(DisplayMode.Grid) }, modifier = modifier) {
                     Icon(
                         painter = painterResource(R.drawable.ic_grid_view),
-                        contentDescription = "Show albums as grid",
+                        contentDescription = stringResource(R.string.gallery_albums_show_as_grid),
                     )
                 }
             }

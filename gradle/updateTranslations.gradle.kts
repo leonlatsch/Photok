@@ -24,7 +24,7 @@ tasks.register("updateTranslations") {
     var enStrings = 0
 
     for (line in enLines) {
-        if (line.contains("<string")) {
+        if (line.contains("<string") || line.contains("<plurals")) {
             enStrings++
         }
     }
@@ -41,7 +41,9 @@ tasks.register("updateTranslations") {
                     var author = "UNKNOWN"
                     val lines = String(java.io.FileInputStream(stringsFile).readBytes()).split("\n")
                     for (line in lines) {
-                        if (line.contains("<string") && !line.contains("<!-- TODO")) {
+                        if ((line.contains("<string") || line.contains("<plurals")) &&
+                            !line.contains("<!-- TODO")
+                        ) {
                             strings++
                         } else if (line.contains("MAINTAINED BY")) {
                             author = line.substring(line.indexOf("(") + 1, line.indexOf(")"))
