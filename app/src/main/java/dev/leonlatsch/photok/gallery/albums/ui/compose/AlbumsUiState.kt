@@ -24,6 +24,7 @@ sealed interface AlbumsUiState {
     ) : AlbumsUiState
     data class Content(
         val albums: List<AlbumItem>,
+        val displayMode: DisplayMode,
         override val showCreateDialog: Boolean = false,
     ) : AlbumsUiState
 }
@@ -39,3 +40,7 @@ data class AlbumCover(
     val filename: String,
     val mimeType: String,
 )
+
+enum class DisplayMode {
+    Grid, List
+}

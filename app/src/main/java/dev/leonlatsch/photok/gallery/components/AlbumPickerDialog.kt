@@ -42,6 +42,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsGridOrList
 import dev.leonlatsch.photok.gallery.albums.ui.compose.CreateAlbumDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
@@ -109,7 +110,7 @@ private fun AlbumPickerContent(
         val context = LocalContext.current
         val addedMessage = stringResource(R.string.gallery_albums_photos_added, selectedItemIds.size)
 
-        AlbumsGrid(
+        AlbumsGridOrList(
             albums = uiState.albums,
             onAlbumClicked = { uuid ->
                 handleUiEvent(AlbumPickerUiEvent.OnAlbumSelected(selectedItemIds, uuid))
@@ -117,6 +118,7 @@ private fun AlbumPickerContent(
                 onAlbumSelected()
                 onDismissRequest()
             },
+            displayMode = uiState.displayMode,
         )
     }
 

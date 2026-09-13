@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.gallery.albums.ui
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.toUi
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
+import dev.leonlatsch.photok.gallery.albums.ui.compose.DisplayMode
 import javax.inject.Inject
 
 class AlbumUiStateFactory @Inject constructor() {
@@ -30,6 +31,7 @@ class AlbumUiStateFactory @Inject constructor() {
         return AlbumsUiState.Content(
             albums = albums.map { album -> album.toUi() },
             showCreateDialog = showCreateDialog,
+            displayMode = DisplayMode.List,
         )
     }
 }

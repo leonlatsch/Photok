@@ -21,6 +21,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.albums.toUi
+import dev.leonlatsch.photok.gallery.albums.ui.compose.DisplayMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,7 +45,8 @@ class AlbumPickerViewModel @Inject constructor(
 
     val uiState = albumRepository.observeAllAlbumsWithPhotos().map { albums ->
         AlbumPickerUiState(
-            albums = albums.map { it.toUi() }
+            albums = albums.map { it.toUi() },
+            displayMode = DisplayMode.List,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
 
