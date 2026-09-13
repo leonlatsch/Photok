@@ -42,9 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -125,6 +123,7 @@ private fun SetupScreenContent(
                     value = uiState.confirmPassword,
                     onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
                     label = stringResource(R.string.setup_confirm_password),
+                    error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
                     onDone = { setup() },
                     modifier = Modifier.padding(top = 10.dp)
                 )
@@ -150,19 +149,6 @@ private fun SetupScreenContent(
                         color = uiState.passwordStrength.color(),
                     )
                 }
-            }
-
-            AnimatedVisibility(
-                visible = uiState.passwordsMismatch,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            ) {
-                Text(
-                    text = stringResource(R.string.setup_password_match_warning),
-                    color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 20.dp)
-                )
             }
 
             Button(
