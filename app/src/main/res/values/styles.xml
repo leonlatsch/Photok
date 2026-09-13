@@ -45,6 +45,14 @@
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
+    <!-- Splash screen theme. Uses the launcher icon background so the white icon
+         foreground stays visible in light and dark mode. -->
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+
     <style name="ActionModeCloseButtonStyle">
         <item name="tint">@color/textColor</item>
     </style>
