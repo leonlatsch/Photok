@@ -16,8 +16,10 @@
 
 package dev.leonlatsch.photok.gallery.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,7 +43,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
+import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsGridOrList
 import dev.leonlatsch.photok.gallery.albums.ui.compose.CreateAlbumDialog
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
@@ -109,15 +113,29 @@ private fun AlbumPickerContent(
         val context = LocalContext.current
         val addedMessage = stringResource(R.string.gallery_albums_photos_added, selectedItemIds.size)
 
-        AlbumsGrid(
-            albums = uiState.albums,
-            onAlbumClicked = { uuid ->
-                handleUiEvent(AlbumPickerUiEvent.OnAlbumSelected(selectedItemIds, uuid))
-                Dialogs.showLongToast(context, addedMessage)
-                onAlbumSelected()
-                onDismissRequest()
-            },
-        )
+        when (uiState) {
+            AlbumPickerUiState.Loading -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is AlbumPickerUiState.Content -> {
+                AlbumsGridOrList(
+                    albums = uiState.albums,
+                    onAlbumClicked = { uuid ->
+                        handleUiEvent(AlbumPickerUiEvent.OnAlbumSelected(selectedItemIds, uuid))
+                        Dialogs.showLongToast(context, addedMessage)
+                        onAlbumSelected()
+                        onDismissRequest()
+                    },
+                    displayMode = uiState.displayMode,
+                )
+            }
+        }
     }
 
     CreateAlbumDialog(
@@ -130,7 +148,7 @@ private fun AlbumPickerContent(
 @Composable
 private fun AlbumPickerPreview() {
     AlbumPickerContent(
-        uiState = AlbumPickerUiState(
+        uiState = AlbumPickerUiState.Content(
             albums = listOf(
                 AlbumItem(
                     id = "1",
@@ -158,6 +176,7 @@ private fun AlbumPickerPreview() {
                     itemCount = 50
                 ),
             ),
+            displayMode = DisplayMode.List,
         ),
         selectedItemIds = emptyList(),
         handleUiEvent = {},

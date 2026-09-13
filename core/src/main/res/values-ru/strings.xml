@@ -75,6 +75,9 @@
     <string name="gallery_albums_select_title">Выберите альбом</string>
     <string name="gallery_albums_deleted">Альбом удален</string>
     <string name="gallery_albums_photos_added">%1$d элементов добавлено</string>
+    <string name="gallery_albums_show_as_grid">Показать альбомы сеткой</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">Показать альбомы списком</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">Пустой альбом</string> <!-- TODO: machine translated | EN: Empty album -->
     <string name="magic_fab_new_album_label">Новый альбом</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->

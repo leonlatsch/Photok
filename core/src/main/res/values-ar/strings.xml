@@ -75,6 +75,9 @@
     <string name="gallery_albums_select_title">اختر ألبوماً</string> <!-- TODO: machine translated | EN: Select an Album -->
     <string name="gallery_albums_deleted">تم حذف الألبوم</string> <!-- TODO: machine translated | EN: Album deleted -->
     <string name="gallery_albums_photos_added">تمت إضافة %1$d عنصر</string> <!-- TODO: machine translated | EN: %1$d items added -->
+    <string name="gallery_albums_show_as_grid">عرض الألبومات كشبكة</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">عرض الألبومات كقائمة</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">ألبوم فارغ</string> <!-- TODO: machine translated | EN: Empty album -->
     <string name="magic_fab_new_album_label">ألبوم جديد</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->

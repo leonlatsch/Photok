@@ -75,6 +75,9 @@
     <string name="gallery_albums_select_title">کوئی البم منتخب کریں</string>
     <string name="gallery_albums_deleted">البم مٹا دیا گیا</string>
     <string name="gallery_albums_photos_added">%1$d چیزیں شامل کر دی گئیں</string>
+    <string name="gallery_albums_show_as_grid">البمز کو گرڈ میں دکھائیں</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">البمز کو فہرست میں دکھائیں</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">خالی البم</string> <!-- TODO: machine translated | EN: Empty album -->
     <string name="magic_fab_new_album_label">نیا البم</string>
 
     <!-- IMPORT MENU -->

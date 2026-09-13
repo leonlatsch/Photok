@@ -75,6 +75,9 @@
     <string name="gallery_albums_select_title">Seleziona un Album</string>
     <string name="gallery_albums_deleted">Album eliminato</string>
     <string name="gallery_albums_photos_added">%1$d elemento(i) aggiunti</string>
+    <string name="gallery_albums_show_as_grid">Mostra gli album in griglia</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">Mostra gli album in elenco</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">Album vuoto</string> <!-- TODO: machine translated | EN: Empty album -->
     <string name="magic_fab_new_album_label">Nuovo Album</string>
 
     <!-- IMPORT MENU -->
