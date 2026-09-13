@@ -78,10 +78,6 @@
     <string name="gallery_albums_show_as_grid">Albums als raster weergeven</string> <!-- TODO: machine translated | EN: Show albums as grid -->
     <string name="gallery_albums_show_as_list">Albums als lijst weergeven</string> <!-- TODO: machine translated | EN: Show albums as list -->
     <string name="gallery_albums_empty_album">Leeg album</string> <!-- TODO: machine translated | EN: Empty album -->
-    <plurals name="gallery_albums_item_count"> <!-- TODO: machine translated | EN: %1$d item / %1$d items -->
-        <item quantity="one">%1$d item</item>
-        <item quantity="other">%1$d items</item>
-    </plurals>
     <string name="magic_fab_new_album_label">Nieuw album</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->

@@ -78,14 +78,6 @@
     <string name="gallery_albums_show_as_grid">عرض الألبومات كشبكة</string> <!-- TODO: machine translated | EN: Show albums as grid -->
     <string name="gallery_albums_show_as_list">عرض الألبومات كقائمة</string> <!-- TODO: machine translated | EN: Show albums as list -->
     <string name="gallery_albums_empty_album">ألبوم فارغ</string> <!-- TODO: machine translated | EN: Empty album -->
-    <plurals name="gallery_albums_item_count"> <!-- TODO: machine translated | EN: %1$d item / %1$d items -->
-        <item quantity="zero">%1$d عنصر</item>
-        <item quantity="one">عنصر واحد</item>
-        <item quantity="two">عنصران</item>
-        <item quantity="few">%1$d عناصر</item>
-        <item quantity="many">%1$d عنصرًا</item>
-        <item quantity="other">%1$d عنصر</item>
-    </plurals>
     <string name="magic_fab_new_album_label">ألبوم جديد</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->

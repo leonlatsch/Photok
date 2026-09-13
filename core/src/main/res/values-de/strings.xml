@@ -78,10 +78,6 @@
     <string name="gallery_albums_show_as_grid">Alben als Raster anzeigen</string>
     <string name="gallery_albums_show_as_list">Alben als Liste anzeigen</string>
     <string name="gallery_albums_empty_album">Leeres Album</string>
-    <plurals name="gallery_albums_item_count">
-        <item quantity="one">%1$d Element</item>
-        <item quantity="other">%1$d Elemente</item>
-    </plurals>
     <string name="magic_fab_new_album_label">Neues Album</string>
 
     <!-- IMPORT MENU -->
