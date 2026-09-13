@@ -75,6 +75,12 @@
     <string name="gallery_albums_select_title">选择相簿</string>
     <string name="gallery_albums_deleted">已删除相簿</string>
     <string name="gallery_albums_photos_added">添加了 %1$d 个项目 </string>
+    <string name="gallery_albums_show_as_grid">以网格显示相册</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">以列表显示相册</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">空相册</string> <!-- TODO: machine translated | EN: Empty album -->
+    <plurals name="gallery_albums_item_count"> <!-- TODO: machine translated | EN: %1$d item / %1$d items -->
+        <item quantity="other">%1$d 个项目</item>
+    </plurals>
     <string name="magic_fab_new_album_label">新相簿</string>
 
     <!-- IMPORT MENU -->

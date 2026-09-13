@@ -75,6 +75,12 @@
     <string name="gallery_albums_select_title">Pilih Album</string>
     <string name="gallery_albums_deleted">Album telah dihapus</string>
     <string name="gallery_albums_photos_added">%1$d item telah ditambahkan</string>
+    <string name="gallery_albums_show_as_grid">Tampilkan album sebagai kisi</string> <!-- TODO: machine translated | EN: Show albums as grid -->
+    <string name="gallery_albums_show_as_list">Tampilkan album sebagai daftar</string> <!-- TODO: machine translated | EN: Show albums as list -->
+    <string name="gallery_albums_empty_album">Album kosong</string> <!-- TODO: machine translated | EN: Empty album -->
+    <plurals name="gallery_albums_item_count"> <!-- TODO: machine translated | EN: %1$d item / %1$d items -->
+        <item quantity="other">%1$d item</item>
+    </plurals>
     <string name="magic_fab_new_album_label">Album Baru</string>
 
     <!-- IMPORT MENU -->
