@@ -1,0 +1,6 @@
+- Neu: Sprache der App direkt in den Einstellungen ändern
+- Aufgefrischtes Design mit aktualisiertem Material Theming
+- Entsperr-, Einrichtungs- und Credits-Bildschirm neu gestaltet
+- Fehler behoben: Videos mit fehlerhafter mdat-Größe (z. B. von Signal) wurden nicht abgespielt
+- Fehler behoben: Versehentliches Löschen eines Albums in der Mehrfachauswahl verhindert
+- Übersetzungen verbessert
