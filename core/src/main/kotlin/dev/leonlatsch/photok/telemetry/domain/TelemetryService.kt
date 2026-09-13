@@ -23,6 +23,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.core.BuildConfig
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,6 +72,10 @@ class TelemetryService @Inject constructor(
     }
 
     fun signal(signal: Signal, params: Map<String, String> = emptyMap()) {
+        if (BuildConfig.DEBUG) {
+            Timber.d("SIGNAL: ${signal.name}")
+        }
+
         TelemetryDeck.signal(
             signalName = signal.name,
             params = params,
