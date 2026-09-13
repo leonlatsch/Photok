@@ -87,6 +87,13 @@ class Config(context: Context) {
         set(value) = putString(GALLERY_START_PAGE, value)
 
     /**
+     * Determines how albums are displayed in the albums screen.
+     */
+    var galleryAlbumsDisplayMode: String
+        get() = getString(GALLERY_ALBUMS_DISPLAY_MODE, GALLERY_ALBUMS_DISPLAY_MODE_DEFAULT) ?: GALLERY_ALBUMS_DISPLAY_MODE_DEFAULT
+        set(value) = putString(GALLERY_ALBUMS_DISPLAY_MODE, value)
+
+    /**
      * Determines if screenshots should be allowed.
      */
     var securityAllowScreenshots: Boolean
@@ -252,6 +259,9 @@ class Config(context: Context) {
 
         const val GALLERY_START_PAGE = "gallery^startPage"
         const val GALLERY_START_PAGE_DEFAULT = "all_files"
+
+        const val GALLERY_ALBUMS_DISPLAY_MODE = "gallery^albumsDisplayMode"
+        const val GALLERY_ALBUMS_DISPLAY_MODE_DEFAULT = "grid"
 
         const val SECURITY_ALLOW_SCREENSHOTS = "security^allowScreenshots"
         const val SECURITY_ALLOW_SCREENSHOTS_DEFAULT = false

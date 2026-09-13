@@ -16,6 +16,8 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
+
 sealed interface AlbumsUiState {
     val showCreateDialog: Boolean
 
@@ -41,6 +43,3 @@ data class AlbumCover(
     val mimeType: String,
 )
 
-enum class DisplayMode {
-    Grid, List
-}

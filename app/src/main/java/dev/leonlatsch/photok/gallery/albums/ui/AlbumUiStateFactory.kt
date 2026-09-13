@@ -16,14 +16,18 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui
 
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.albums.toUi
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
-import dev.leonlatsch.photok.gallery.albums.ui.compose.DisplayMode
 import javax.inject.Inject
 
 class AlbumUiStateFactory @Inject constructor() {
-    fun create(albums: List<Album>, showCreateDialog: Boolean): AlbumsUiState {
+    fun create(
+        albums: List<Album>,
+        showCreateDialog: Boolean,
+        displayMode: DisplayMode,
+    ): AlbumsUiState {
         if (albums.isEmpty()) {
             return AlbumsUiState.Empty(showCreateDialog)
         }
@@ -31,7 +35,7 @@ class AlbumUiStateFactory @Inject constructor() {
         return AlbumsUiState.Content(
             albums = albums.map { album -> album.toUi() },
             showCreateDialog = showCreateDialog,
-            displayMode = DisplayMode.List,
+            displayMode = displayMode,
         )
     }
 }

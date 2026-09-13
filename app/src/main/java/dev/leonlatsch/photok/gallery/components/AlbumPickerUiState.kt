@@ -16,8 +16,8 @@
 
 package dev.leonlatsch.photok.gallery.components
 
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
-import dev.leonlatsch.photok.gallery.albums.ui.compose.DisplayMode
 
 data class AlbumPickerUiState(
     val albums: List<AlbumItem> = emptyList(),

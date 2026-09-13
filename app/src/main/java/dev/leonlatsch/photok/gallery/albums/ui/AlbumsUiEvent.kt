@@ -16,8 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui
 
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
+
 sealed interface AlbumsUiEvent {
     data object ShowCreateDialog : AlbumsUiEvent
     data object HideCreateDialog : AlbumsUiEvent
     data class OpenAlbum(val uuid: String) : AlbumsUiEvent
+    data class SetDisplayMode(val displayMode: DisplayMode) : AlbumsUiEvent
 }

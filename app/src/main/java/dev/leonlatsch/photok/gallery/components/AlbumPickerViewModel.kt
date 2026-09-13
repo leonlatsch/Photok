@@ -20,12 +20,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.toUi
-import dev.leonlatsch.photok.gallery.albums.ui.compose.DisplayMode
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,12 +42,18 @@ sealed interface AlbumPickerUiEvent {
 class AlbumPickerViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val appScope: CoroutineScope,
+    private val config: Config,
 ) : ViewModel() {
 
-    val uiState = albumRepository.observeAllAlbumsWithPhotos().map { albums ->
+    val uiState = combine(
+        albumRepository.observeAllAlbumsWithPhotos(),
+        config.valuesFlow,
+    ) { albums, configValues ->
         AlbumPickerUiState(
             albums = albums.map { it.toUi() },
-            displayMode = DisplayMode.List,
+            displayMode = DisplayMode.fromConfigValue(
+                configValues[Config.GALLERY_ALBUMS_DISPLAY_MODE] as? String
+            ),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
 
