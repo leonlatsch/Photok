@@ -26,6 +26,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -45,17 +46,17 @@ class AlbumPickerViewModel @Inject constructor(
     private val config: Config,
 ) : ViewModel() {
 
-    val uiState = combine(
+    val uiState: StateFlow<AlbumPickerUiState> = combine(
         albumRepository.observeAllAlbumsWithPhotos(),
         config.valuesFlow,
     ) { albums, configValues ->
-        AlbumPickerUiState(
+        AlbumPickerUiState.Content(
             albums = albums.map { it.toUi() },
             displayMode = DisplayMode.fromConfigValue(
                 configValues[Config.GALLERY_ALBUMS_DISPLAY_MODE] as? String
             ),
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumPickerUiState.Loading)
 
     fun handleUiEvent(event: AlbumPickerUiEvent) {
         when (event) {

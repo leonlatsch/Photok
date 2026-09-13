@@ -19,7 +19,11 @@ package dev.leonlatsch.photok.gallery.components
 import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 
-data class AlbumPickerUiState(
-    val albums: List<AlbumItem> = emptyList(),
-    val displayMode: DisplayMode = DisplayMode.Grid,
-)
+sealed interface AlbumPickerUiState {
+    data object Loading : AlbumPickerUiState
+
+    data class Content(
+        val albums: List<AlbumItem>,
+        val displayMode: DisplayMode,
+    ) : AlbumPickerUiState
+}
