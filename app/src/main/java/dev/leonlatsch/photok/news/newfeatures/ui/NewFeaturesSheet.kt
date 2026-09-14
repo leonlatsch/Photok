@@ -77,24 +77,19 @@ enum class NewFeature(
     val summary: Int
 ) {
     NewFeature1(
-        image = R.drawable.ic_key,
+        image = R.drawable.ic_list_view,
         title = R.string.release_title_1,
         summary = R.string.release_summary_1,
     ),
     NewFeature2(
-        image = R.drawable.ic_pin,
+        image = R.drawable.ic_globe,
         title = R.string.release_title_2,
         summary = R.string.release_summary_2,
     ),
     NewFeature3(
-        image = R.drawable.ic_png,
+        image = R.drawable.ic_brush,
         title = R.string.release_title_3,
         summary = R.string.release_summary_3,
-    ),
-    NewFeature4(
-        image = R.drawable.ic_settings,
-        title = R.string.release_title_4,
-        summary = R.string.release_summary_4,
     ),
 }
 
@@ -102,7 +97,7 @@ enum class NewFeature(
  * Increase for this Dialog to show on the next update.
  * @see dev.leonlatsch.photok.gallery.ui.GalleryViewModel.runIfNews
  */
-const val FEATURE_VERSION_CODE = 13
+const val FEATURE_VERSION_CODE = 14
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
