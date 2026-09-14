@@ -16,16 +16,13 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="release_title_1" tools:ignore="MissingTranslation">Stronger Security, Faster Password Changes</string>
-    <string name="release_summary_1" tools:ignore="MissingTranslation">Photok now uses a more secure way to protect your vault. Changing your password is now instant.</string>
+    <string name="release_title_1" tools:ignore="MissingTranslation">Grid or List View in Albums</string>
+    <string name="release_summary_1" tools:ignore="MissingTranslation">Switch your albums between the classic grid and a new list view.</string>
 
-    <string name="release_title_2" tools:ignore="MissingTranslation">Pin Files to the Top of an Album</string>
-    <string name="release_summary_2" tools:ignore="MissingTranslation">Keep your most important photos and videos always within reach.</string>
+    <string name="release_title_2" tools:ignore="MissingTranslation">Choose the App Language</string>
+    <string name="release_summary_2" tools:ignore="MissingTranslation">Set the language of Photok directly in the settings, independent of your system language.</string>
 
-    <string name="release_title_3" tools:ignore="MissingTranslation">HEIC Image Support</string>
-    <string name="release_summary_3" tools:ignore="MissingTranslation">Photok now supports HEIC. A high-efficiency format used by many modern cameras and devices.</string>
-
-    <string name="release_title_4" tools:ignore="MissingTranslation">Redesigned Settings</string>
-    <string name="release_summary_4" tools:ignore="MissingTranslation">The settings screen has been redesigned with a clean, Pixel-inspired look.</string>
+    <string name="release_title_3" tools:ignore="MissingTranslation">Refreshed Design</string>
+    <string name="release_summary_3" tools:ignore="MissingTranslation">Updated Material theming throughout the app, with redesigned unlock, setup and credits screens.</string>
 
 </resources>

@@ -1,0 +1,4 @@
+- Neu: Zwischen Raster- und Listenansicht in Alben wechseln
+- Unterstützung für Android 17
+- Fehler behoben: Splashscreen wurde nicht korrekt angezeigt
+- Übersetzungen verbessert

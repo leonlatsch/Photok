@@ -1,0 +1,4 @@
+- New: Switch between grid and list view in albums
+- Support for Android 17
+- Fix: Splash screen not showing correctly
+- Improve translations
