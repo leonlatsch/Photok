@@ -37,6 +37,7 @@ interface AlbumRepository {
     suspend fun unlinkAll()
     suspend fun rename(albumUUID: String, newName: String)
     suspend fun getAllAlbumPhotoLinks(): List<AlbumPhotoRef>
+    suspend fun getAlbumUUIDsForPhoto(photoUUID: String): Set<String>
 
     fun observePinnedPhotoUUIDs(albumUUID: String): Flow<Set<String>>
     suspend fun setPinned(photoUUIDs: List<String>, albumUUID: String, pinned: Boolean)

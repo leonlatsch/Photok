@@ -68,7 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
+import dev.leonlatsch.photok.gallery.components.ChangeAlbumSheet
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
@@ -227,12 +227,12 @@ fun ImageViewerControls(
                             },
                         )
                         BottomActionItem(
-                            text = stringResource(R.string.menu_ms_add_to_album),
-                            icon = R.drawable.ic_add,
+                            text = stringResource(R.string.change_album_title),
+                            icon = R.drawable.ic_folder,
                             action = {
                                 handleUiEvent(
                                     ImageViewerUiEvent.UpdateCurrentDialog(
-                                        ImageViewerUiState.Dialog.AlbumPicker
+                                        ImageViewerUiState.Dialog.ChangeAlbum
                                     )
                                 )
                             },
@@ -301,13 +301,15 @@ fun ImageViewerControls(
             }
         )
 
-        AlbumPickerDialog(
-            visible = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.AlbumPicker,
-            selectedItemIds = if (currentItem == null) emptyList() else listOf(currentItem.photo.uuid),
-            onDismissRequest = {
-                handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
-            },
-        )
+        currentItem?.let {
+            ChangeAlbumSheet(
+                visible = uiState.inputs.currentDialog == ImageViewerUiState.Dialog.ChangeAlbum,
+                photoUuid = it.photo.uuid,
+                onDismissRequest = {
+                    handleUiEvent(ImageViewerUiEvent.UpdateCurrentDialog(null))
+                },
+            )
+        }
     }
 }
 

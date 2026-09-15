@@ -63,6 +63,9 @@ abstract class AlbumDao {
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract suspend fun getAlbum(uuid: String): AlbumTable?
 
+    @Query("SELECT album_uuid FROM album_photos_cross_ref WHERE photo_uuid = :photoUUID")
+    abstract suspend fun getAlbumUUIDsForPhoto(photoUUID: String): List<String>
+
     @Query("SELECT photo_uuid, linked_at FROM album_photos_cross_ref WHERE photo_uuid in (:photoUUIDs)")
     abstract suspend fun getLinkedAtFor(
         photoUUIDs: List<String>

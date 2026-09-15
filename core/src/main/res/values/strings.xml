@@ -35,6 +35,7 @@
     <string name="common_create">Create</string>
     <string name="common_empty">Empty</string>
     <string name="common_rename">Rename</string>
+    <string name="common_save">Save</string>
     <string name="common_try_again">Try again</string>
     <string name="common_continue">Continue</string>
     <string name="common_hold_to_confirm">Hold to confirm</string>
@@ -78,6 +79,8 @@
     <string name="gallery_albums_show_as_grid">Show albums as grid</string>
     <string name="gallery_albums_show_as_list">Show albums as list</string>
     <string name="gallery_albums_empty_album">Empty album</string>
+    <string name="change_album_title">Change Album</string>
+    <string name="change_album_description">Select what albums this file should be in</string>
     <string name="magic_fab_new_album_label">New Album</string>
 
     <!-- IMPORT MENU -->

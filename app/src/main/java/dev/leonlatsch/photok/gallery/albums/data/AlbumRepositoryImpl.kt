@@ -111,6 +111,10 @@ class AlbumRepositoryImpl @Inject constructor(
     }
 
 
+    override suspend fun getAlbumUUIDsForPhoto(photoUUID: String): Set<String> = withContext(IO) {
+        albumDao.getAlbumUUIDsForPhoto(photoUUID).toSet()
+    }
+
     override fun observePinnedPhotoUUIDs(albumUUID: String): Flow<Set<String>> =
         albumDao.observePinnedPhotoUUIDs(albumUUID).map { it.toSet() }
 

@@ -85,7 +85,7 @@ data class ImageViewerUiState(
         ConfirmDelete,
         ConfirmExport,
         MoreMenu,
-        AlbumPicker,
+        ChangeAlbum,
         DetailsSheet
     }
 }
