@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.settings.domain
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 
 data class PreferenceScreenConfig(
@@ -34,7 +35,8 @@ sealed interface Preference {
     val key: String
     @get:DrawableRes val icon: Int
     @get:StringRes val title: Int
-    val proProtectedByPaywall: Boolean
+    /** Non-null when the preference is behind the paywall. Used as the paywall's telemetry source. */
+    val paywallSource: PaywallSource?
     val showProBadge: Boolean
 
     data class Simple(
@@ -42,7 +44,7 @@ sealed interface Preference {
         override val icon: Int,
         override val title: Int,
         val summary: Int,
-        override val proProtectedByPaywall: Boolean = false,
+        override val paywallSource: PaywallSource? = null,
         override val showProBadge: Boolean = false,
     ) : Preference
 
@@ -52,7 +54,7 @@ sealed interface Preference {
         override val title: Int,
         val summary: Int,
         val default: Boolean,
-        override val proProtectedByPaywall: Boolean = false,
+        override val paywallSource: PaywallSource? = null,
         override val showProBadge: Boolean = false,
     ) : Preference
 
@@ -63,7 +65,7 @@ sealed interface Preference {
         val explanation: Int? = null,
         val default: T,
         val possibleValues: List<T>,
-        override val proProtectedByPaywall: Boolean = false,
+        override val paywallSource: PaywallSource? = null,
         override val showProBadge: Boolean = false,
     ) : Preference
 }

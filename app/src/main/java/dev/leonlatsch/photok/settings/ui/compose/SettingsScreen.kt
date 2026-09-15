@@ -412,7 +412,7 @@ private fun SettingsPreferenceSections(
                                         icon = painterResource(preference.icon),
                                         title = stringResource(preference.title),
                                         summary = stringResource(preference.summary),
-                                        proProtectedByPaywall = preference.proProtectedByPaywall,
+                                        paywallSource = preference.paywallSource,
                                         showProBadge = preference.showProBadge,
                                         badgeCount = if (preference.key == SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
                                             intruderWarningCount
@@ -521,7 +521,7 @@ fun <T : SettingsEnum> PreferenceEnumView(
         } else {
             stringResource(value.label)
         },
-        proProtectedByPaywall = preference.proProtectedByPaywall,
+        paywallSource = preference.paywallSource,
         showProBadge = preference.showProBadge,
         onClick = { showDialog = true },
         proFeaturesActive = proFeaturesActive,
@@ -594,7 +594,7 @@ fun PreferenceSwitchView(
         icon = painterResource(preference.icon),
         title = stringResource(preference.title),
         summary = summary,
-        proProtectedByPaywall = preference.proProtectedByPaywall,
+        paywallSource = preference.paywallSource,
         showProBadge = preference.showProBadge,
         proFeaturesActive = proFeaturesActive,
         trailing = {
@@ -617,7 +617,7 @@ fun PreferenceView(
     icon: Painter,
     title: String,
     summary: String,
-    proProtectedByPaywall: Boolean,
+    paywallSource: PaywallSource?,
     showProBadge: Boolean,
     proFeaturesActive: Boolean,
     modifier: Modifier = Modifier,
@@ -632,8 +632,8 @@ fun PreferenceView(
         horizontalArrangement = Arrangement.spacedBy(15.dp),
         modifier = modifier
             .clickable(enabled = onClick != null) {
-                if (proProtectedByPaywall && !proFeaturesActive) {
-                    activity?.showPaywall(PaywallSource.Settings)
+                if (paywallSource != null && !proFeaturesActive) {
+                    activity?.showPaywall(paywallSource)
                 } else {
                     onClick?.invoke()
                 }

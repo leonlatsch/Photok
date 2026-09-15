@@ -73,7 +73,7 @@ class TelemetryService @Inject constructor(
 
     fun signal(signal: Signal, params: Map<String, String> = emptyMap()) {
         if (BuildConfig.DEBUG) {
-            Timber.d("SIGNAL: ${signal.name}")
+            Timber.d("SIGNAL: ${signal.name} | params: $params")
         }
 
         TelemetryDeck.signal(

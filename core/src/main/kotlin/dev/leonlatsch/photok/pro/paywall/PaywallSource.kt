@@ -22,5 +22,7 @@ package dev.leonlatsch.photok.pro.paywall
  */
 enum class PaywallSource {
     Settings,
+    PanicLock,
+    BruteforceProtection,
     IntruderWarnings,
 }
