@@ -98,6 +98,7 @@ import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.PaywallSource
+import dev.leonlatsch.photok.pro.paywall.ProSettingsBanner
 import dev.leonlatsch.photok.pro.paywall.showPaywall
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
@@ -387,6 +388,12 @@ private fun SettingsPreferenceSections(
             .verticalScroll(rememberScrollState())
             .padding(contentPadding)
     ) {
+        if (!proFeaturesActive) {
+            ProSettingsBanner(
+                modifier = Modifier.padding(horizontal = 15.dp)
+            )
+        }
+
         for (section in sections) {
             PreferenceSectionView(section = section) {
                 for (preference in section.preferences) {
