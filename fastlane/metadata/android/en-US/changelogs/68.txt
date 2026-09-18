@@ -1,0 +1,3 @@
+- Fix: Biometric unlock incorrectly failing in some cases
+- Fix main menu animations
+- Improve translations

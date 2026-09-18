@@ -20,8 +20,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsUiState
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigationEvent
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,6 +37,7 @@ import javax.inject.Inject
 class AlbumsViewModel @Inject constructor(
     private val albumsRepositoryImpl: AlbumRepository,
     private val albumUiStateFactory: AlbumUiStateFactory,
+    private val config: Config,
 ) : ViewModel() {
 
     private val showCreateDialog = MutableStateFlow(false)
@@ -42,9 +45,14 @@ class AlbumsViewModel @Inject constructor(
 
     val uiState: StateFlow<AlbumsUiState> = combine(
         albumsRepositoryImpl.observeAllAlbumsWithPhotos(),
-        showCreateDialog
-    ) { albums, showCreateDialog ->
-        albumUiStateFactory.create(albums, showCreateDialog)
+        showCreateDialog,
+        config.valuesFlow,
+    ) { albums, showCreateDialog, configValues ->
+        val displayMode = DisplayMode.fromConfigValue(
+            configValues[Config.GALLERY_ALBUMS_DISPLAY_MODE] as? String
+        )
+
+        albumUiStateFactory.create(albums, showCreateDialog, displayMode)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumsUiState.Empty())
 
     private val navEventChannel = Channel<AlbumsNavigationEvent>()
@@ -54,6 +62,9 @@ class AlbumsViewModel @Inject constructor(
         when (event) {
             AlbumsUiEvent.ShowCreateDialog -> showCreateDialog.value = true
             AlbumsUiEvent.HideCreateDialog -> showCreateDialog.value = false
+            is AlbumsUiEvent.SetDisplayMode -> {
+                config.galleryAlbumsDisplayMode = event.displayMode.configValue
+            }
             is AlbumsUiEvent.OpenAlbum -> navEventChannel.trySend(
                 AlbumsNavigationEvent.OpenAlbumDetail(
                     event.uuid

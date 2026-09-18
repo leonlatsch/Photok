@@ -21,5 +21,11 @@ import dev.leonlatsch.photok.review.ReviewTrigger
 import javax.inject.Inject
 
 class InAppReviewImpl @Inject constructor() : InAppReview {
-    override fun requestInAppReview(activity: Activity, trigger: ReviewTrigger) {}
+    override fun requestInAppReview(
+        activity: Activity,
+        trigger: ReviewTrigger,
+        onFinished: () -> Unit,
+    ) {
+        onFinished()
+    }
 }

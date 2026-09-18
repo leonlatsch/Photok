@@ -15,16 +15,13 @@
   -->
 <resources>
 
-    <string name="release_title_1">Stärkere Sicherheit, schnellerer Passwortwechsel</string>
-    <string name="release_summary_1">Photok schützt deinen Tresor jetzt noch sicherer. Das Ändern deines Passworts geht sofort.</string>
+    <string name="release_title_1">Raster- oder Listenansicht in Alben</string>
+    <string name="release_summary_1">Wechsle in deinen Alben zwischen dem klassischen Raster und einer neuen Listenansicht.</string>
 
-    <string name="release_title_2">Dateien oben im Album anheften</string>
-    <string name="release_summary_2">Halte deine wichtigsten Fotos und Videos immer griffbereit.</string>
+    <string name="release_title_2">App-Sprache auswählen</string>
+    <string name="release_summary_2">Stelle die Sprache von Photok direkt in den Einstellungen ein, unabhängig von deiner Systemsprache.</string>
 
-    <string name="release_title_3">HEIC-Unterstützung</string>
-    <string name="release_summary_3">Photok unterstützt jetzt HEIC. Ein hocheffizientes Format moderner Kameras und Geräte.</string>
-
-    <string name="release_title_4">Neues Design für Einstellungen</string>
-    <string name="release_summary_4">Die Einstellungen haben nun ein neues, Pixel-inspiriertes, Design.</string>
+    <string name="release_title_3">Aufgefrischtes Design</string>
+    <string name="release_summary_3">Aktualisiertes Material-Design in der ganzen App, mit neu gestalteten Entsperr-, Einrichtungs- und Credits-Screens.</string>
 
 </resources>

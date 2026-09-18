@@ -40,6 +40,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
@@ -191,11 +192,6 @@ fun BoxScope.ImageViewerVideoPage(
     TopGradient(visible = uiState.inputs.showControls)
     BottomVideoGradient(visible = uiState.inputs.showControls)
 
-    val navBarHeight = WindowInsets
-        .navigationBarsIgnoringVisibility
-        .asPaddingValues()
-        .calculateBottomPadding()
-
     val sliderOffset = if (LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE) {
         20.dp
     } else {
@@ -213,7 +209,8 @@ fun BoxScope.ImageViewerVideoPage(
                     .only(WindowInsetsSides.Horizontal)
                     .asPaddingValues()
             )
-            .padding(bottom = navBarHeight + sliderOffset)
+            .padding(bottom = sliderOffset)
+            .navigationBarsPadding()
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),

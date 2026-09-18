@@ -23,12 +23,14 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
@@ -37,7 +39,13 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import javax.inject.Inject
 
-val FragmentsWithMenu = listOf(R.id.galleryFragment, R.id.albumsFragment, R.id.settingsFragment, R.id.albumDetailFragment)
+val FragmentsWithMenu = listOf(
+    R.id.galleryFragment,
+    R.id.albumsFragment,
+    R.id.settingsFragment,
+    R.id.albumDetailFragment,
+    R.id.devSettingsFragment.takeIf { BuildConfig.DEBUG },
+)
 
 /**
  * The main Activity.
@@ -57,6 +65,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
     }
@@ -114,8 +123,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
                             resId = it,
                             args = null,
                             navOptions = NavOptions.Builder()
-                                .setEnterAnim(android.R.anim.fade_in)
-                                .setExitAnim(android.R.anim.fade_out)
+                                .setLaunchSingleTop(true)
+                                .setRestoreState(true)
+                                .setPopUpTo(R.id.galleryFragment, inclusive = false, saveState = true)
                                 .build()
                         )
                     }

@@ -26,6 +26,8 @@ import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
@@ -56,6 +58,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val config: Config,
     private val io: IO,
     private val photoRepository: PhotoRepository,
+    private val telemetryService: TelemetryService,
 ) {
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
@@ -154,6 +157,7 @@ class LegacyEncryptionMigrator @Inject constructor(
         }
 
         config.legacyCurrentlyMigrating = false
+        telemetryService.signal(Signal.MigratedFromAesGcm)
     }
 
     private suspend fun migrateSingleFile(legacyName: String): Result<Unit> = runCatching {

@@ -48,6 +48,18 @@ fun AlbumsScreen(viewModel: AlbumsViewModel) {
                 LargeTopAppBar(
                     title = { Text(stringResource(R.string.gallery_albums_label)) },
                     scrollBehavior = scrollBehavior,
+                    actions = {
+                        val content = uiState as? AlbumsUiState.Content
+
+                        if (content != null) {
+                            DisplayModeIconButton(
+                                displayMode = content.displayMode,
+                                onDisplayModeSelected = { displayMode ->
+                                    viewModel.handleUiEvent(AlbumsUiEvent.SetDisplayMode(displayMode))
+                                },
+                            )
+                        }
+                    },
                 )
             },
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

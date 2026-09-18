@@ -42,8 +42,8 @@ import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
-import dev.leonlatsch.photok.ui.components.AppName
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -16,18 +16,19 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.components.AlbumsGrid
+import dev.leonlatsch.photok.gallery.components.AlbumsList
 import dev.leonlatsch.photok.ui.components.MagicFab
-import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun AlbumsContent(
@@ -38,10 +39,10 @@ fun AlbumsContent(
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        AlbumsGrid(
+        AlbumsGridOrList(
             albums = content.albums,
             onAlbumClicked = { handleUiEvent(AlbumsUiEvent.OpenAlbum(it)) },
-            modifier = Modifier.fillMaxWidth(),
+            displayMode = content.displayMode,
         )
 
         MagicFab(
@@ -53,41 +54,29 @@ fun AlbumsContent(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun AlbumsContentPreview() {
-    AppTheme {
-        AlbumsContent(
-            content = AlbumsUiState.Content(
-                listOf(
-                    AlbumItem(
-                        id = "1",
-                        name = "Album 1",
-                        itemCount = 10,
-                    ),
-                    AlbumItem(
-                        id = "2",
-                        name = "Album 2",
-                        itemCount = 20,
-                    ),
-                    AlbumItem(
-                        id = "3",
-                        name = "Album 3",
-                        itemCount = 30,
-                    ),
-                    AlbumItem(
-                        id = "4",
-                        name = "Album 4",
-                        itemCount = 40
-                    ),
-                    AlbumItem(
-                        id = "5",
-                        name = "Album 5",
-                        itemCount = 50
-                    ),
+fun AlbumsGridOrList(
+    albums: List<AlbumItem>,
+    onAlbumClicked: (String) -> Unit,
+    displayMode: DisplayMode,
+) {
+    Crossfade(displayMode) {
+        when (it) {
+            DisplayMode.Grid -> {
+                AlbumsGrid(
+                    albums = albums,
+                    onAlbumClicked = onAlbumClicked,
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            ),
-            handleUiEvent = {}
-        )
+            }
+
+            DisplayMode.List -> {
+                AlbumsList(
+                    albums = albums,
+                    onAlbumClicked = onAlbumClicked,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
     }
 }

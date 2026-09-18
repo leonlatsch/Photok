@@ -22,9 +22,11 @@ If you want to help translate Photok you are very welcome to do so.
 
 **Improve an existing language**
 
-There are several `strings.xml`  files in `app/src/main/res/values[your_language]/strings.xml`.
+There are several `strings.xml`  files in `core/src/main/res/values[your_language]/strings.xml`.
 In these files un-translated texts are marked with `<!-- TODO -->`. Translate these and remove the marker.
 Open a Pull Request with your new text.
+
+Some texts are marked `<!-- TODO: machine translated | EN: ... -->` instead. Those were pre-translated by a machine and have never been checked by a human, so they are still counted as un-translated. The `EN:` part is the original English text the machine translated from. Correct the translation if needed and remove the whole comment.
 
 [Example](https://github.com/leonlatsch/Photok/pull/411)
 
@@ -32,7 +34,7 @@ Open a Pull Request with your new text.
 
 Adding a new language is about the same process as editing an existing one.
 
-You will need to create a new file in `app/src/main/res/values[your_language]/strings.xml`
+You will need to create a new file in `core/src/main/res/values[your_language]/strings.xml`
 *Copy* the contents of the english `strings.xml` and translate them.
 Open a Pull Request with your new text.
 

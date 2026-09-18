@@ -1,0 +1,10 @@
+Introducing Photok Pro — more protection, more privacy. Pay once, no subscription:
+- Bruteforce Protection: limit wrong password attempts, lock intruders out or wipe your vault automatically
+- Panic Lock: instantly lock your vault with a shake or flip
+- Intruder Warnings: every failed unlock attempt silently captures a photo of the intruder
+
+Photok's core encryption and privacy features remain free and open source. Photok Pro unlocks these extra features to support ongoing development.
+
+- Fix: Biometric unlock incorrectly failing in some cases
+- Fix main menu animations
+- Improve translations

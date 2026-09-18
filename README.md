@@ -1,5 +1,3 @@
-> ⚠️ Development is paused from mid July 2026 to mid August 2026. Still responding to issues and PRs. But there will be no releases.
-
 ![Photok](fastlane/metadata/android/en-US/images/featureGraphic.jpg)
 
 [![GitHub release](https://img.shields.io/github/v/release/leonlatsch/Photok.svg?logo=github&label=GitHub)](https://github.com/leonlatsch/Photok/releases/latest)
@@ -47,8 +45,6 @@ Photok is available on Google Play and F-Droid. Aswell as some alternatives.
       alt="Get it on IzzyOnDroid"
       height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.leonlatsch.photok)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D1UPJIV)
-
 ## Features
 
 - Import photos and videos from your gallery
@@ -69,20 +65,21 @@ Photok can use minimal privacy-friendly analytics to improve stability and user 
 These analytics are never used for advertising or cross-app tracking.
 
 ## Translations
+Indicates how much of a language was translated by a human. The rest in machine translated.
 <!-- BEGIN-TRANSLATIONS -->
 ![English](https://img.shields.io/badge/English-100%25-brightgreen)
 ![Arabic](https://img.shields.io/badge/Arabic-54%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-100%25-brightgreen)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
 ![Dutch](https://img.shields.io/badge/Dutch-54%25-orange)
-![French](https://img.shields.io/badge/French-99%25-brightgreen)
+![French](https://img.shields.io/badge/French-97%25-yellow)
 ![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-100%25-brightgreen)
-![Italian](https://img.shields.io/badge/Italian-76%25-yellow)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-99%25-brightgreen)
-![Russian](https://img.shields.io/badge/Russian-62%25-orange)
-![Spanish](https://img.shields.io/badge/Spanish-99%25-brightgreen)
-![Turkish](https://img.shields.io/badge/Turkish-99%25-brightgreen)
-![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-80%25-yellow)
+![Indonesian](https://img.shields.io/badge/Indonesian-98%25-yellow)
+![Italian](https://img.shields.io/badge/Italian-74%25-orange)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-97%25-yellow)
+![Russian](https://img.shields.io/badge/Russian-61%25-orange)
+![Spanish](https://img.shields.io/badge/Spanish-98%25-yellow)
+![Turkish](https://img.shields.io/badge/Turkish-98%25-yellow)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-78%25-yellow)
 <!-- END-TRANSLATIONS -->
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
@@ -93,12 +90,23 @@ Photok is distributed in two variants: **Google Play** and **FOSS** (F-Droid, Gi
 The core app is identical, but some features differ due to platform requirements and privacy expectations.
 
 | Feature | Google Play | FOSS |
-|---|---|---|
+| --- | --- | --- |
 | **Telemetry** | Enabled by default (can be disabled in settings) | Disabled by default (can be enabled in settings) |
 | **Telemetry opt-in prompt** | No prompt shown | Shown once after first unlock |
 | **In-App Review** | Requested after usage milestones | Not available |
+| **Photok Pro** | Available as an optional add-on | Not available |
 
 > **Why is telemetry off by default on FOSS?** F-Droid flags apps that transmit data without explicit opt-in as having the *Tracking* anti-feature. No data is ever transmitted unless the user has actively opted in.
+
+## Photok Pro
+
+Photok Pro is an optional add-on for the Google Play version of Photok. It unlocks additional features while supporting ongoing development and helping me build more features for Photok.
+
+The FOSS will stay true to its name and continue to be free open source software.
+
+- No ads
+- No payments
+- Fully open source under the same Apache 2.0 License.
 
 ## Community
 

@@ -25,6 +25,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class UserCanceledBiometricsException : Exception()
+class BiometricAuthenticationFailedException : Exception()
 
 /**
  * Unlocks a [Cipher] that is protected by biometric authentication.
@@ -43,20 +44,37 @@ class UnlockBiometricCipherPrompt @Inject constructor() {
         title: String,
         subtitle: String,
         negativeButtonText: String,
+        onAuthenticationFailed: () -> Unit = {},
     ): Result<Cipher> = suspendCoroutine { continuation ->
-        val biometricPrompt = BiometricPrompt(
+        var completed = false
+
+        fun resume(result: Result<Cipher>) {
+            if (!completed) {
+                completed = true
+                continuation.resume(result)
+            }
+        }
+
+        lateinit var biometricPrompt: BiometricPrompt
+        biometricPrompt = BiometricPrompt(
             fragment,
             ContextCompat.getMainExecutor(fragment.requireContext()),
             object : BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    biometricPrompt.cancelAuthentication()
+                    resume(Result.failure(BiometricAuthenticationFailedException()))
+                }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     val cipher = result.cryptoObject?.cipher
 
                     if (cipher != null) {
-                        continuation.resume(Result.success(cipher))
+                        resume(Result.success(cipher))
                     } else {
-                        continuation.resume(Result.failure(IllegalStateException("Cipher is null")))
+                        resume(Result.failure(IllegalStateException("Cipher is null")))
                     }
                 }
 
@@ -73,7 +91,7 @@ class UnlockBiometricCipherPrompt @Inject constructor() {
                         Exception(errString.toString())
                     }
 
-                    continuation.resume(Result.failure(error))
+                    resume(Result.failure(error))
                 }
             }
         )

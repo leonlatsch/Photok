@@ -1,0 +1,6 @@
+- New: Change the app language directly in the settings
+- Refreshed design with updated Material theming
+- Redesigned unlock, setup and credits screens
+- Fix: Videos with broken mdat size (e.g. from Signal) not playing
+- Fix: Prevent accidentially deleting an album while in multi select
+- Improve translations

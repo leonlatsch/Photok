@@ -17,135 +17,79 @@
 package dev.leonlatsch.photok.setup.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.isVisible
+import android.view.ViewGroup
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.BR
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.FragmentSetupBinding
-import dev.leonlatsch.photok.encryption.domain.PasswordUtils
-import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
-import dev.leonlatsch.photok.gallery.ui.navigation.NavigateToGallery
-import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.finishOnBackWhileStarted
-import dev.leonlatsch.photok.other.extensions.hide
-import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.other.systemBarsPadding
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
+import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableFragment
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Fragment for the setup.
+ * Hosts [SetupScreen] and performs the navigation it asks for.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class SetupFragment : BindableFragment<FragmentSetupBinding>(R.layout.fragment_setup) {
+class SetupFragment : Fragment() {
 
     private val viewModel: SetupViewModel by viewModels()
 
-    @Inject
-    lateinit var navigateToGallery: NavigateToGallery
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View = ComposeView(requireContext()).apply {
+        setContent {
+            CompositionLocalProvider(
+                LocalFragment provides this@SetupFragment,
+            ) {
+                SetupScreen(viewModel)
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.systemBarsPadding()
+        super.onViewCreated(view, savedInstanceState)
         finishOnBackWhileStarted()
 
-        if (BuildConfig.DEBUG) {
-            viewModel.password = "abc123"
-            viewModel.confirmPassword = "abc123"
-        }
-
-        viewModel.addOnPropertyChange<String>(BR.password) {
-            if (it.isNotEmpty()) {
-                val (colorRes, textRes) = when (PasswordUtils.calculateStrength(it)) {
-                    PasswordStrength.VERY_WEAK ->
-                        R.color.darkRedStrong to R.string.setup_password_strength_very_weak
-                    PasswordStrength.WEAK ->
-                        R.color.darkRed to R.string.setup_password_strength_weak
-                    PasswordStrength.MODERATE ->
-                        R.color.darkYellow to R.string.setup_password_strength_moderate
-                    PasswordStrength.STRONG ->
-                        R.color.darkGreen to R.string.setup_password_strength_strong
-                    PasswordStrength.VERY_STRONG ->
-                        R.color.colorPrimaryDark to R.string.setup_password_strength_very_strong
-                }
-                binding.setupPasswordStrengthValue.setTextColor(requireContext().getColor(colorRes))
-                binding.setupPasswordStrengthValue.text = getString(textRes)
-                binding.setupPasswordStrengthLayout.show()
-            } else {
-                binding.setupPasswordStrengthLayout.hide()
+        launchLifecycleAwareJob {
+            viewModel.navigationEvents.collect { event ->
+                navigate(event)
             }
-
-            if (viewModel.validatePassword()) {
-                binding.setupConfirmPasswordEditText.show()
-            } else {
-                binding.setupConfirmPasswordEditText.setTextValue(String.empty)
-                binding.setupConfirmPasswordEditText.hide()
-            }
-
-            enableOrDisableSetup()
         }
+    }
 
-        viewModel.addOnPropertyChange<String>(BR.confirmPassword) {
-            enableOrDisableSetup()
-        }
-
-        viewModel.addOnPropertyChange<SetupState>(BR.setupState) {
-            when (it) {
-                SetupState.LOADING -> binding.loadingOverlay.show()
-                SetupState.SETUP -> binding.loadingOverlay.hide()
-                SetupState.FINISHED -> finishSetup()
-                SetupState.SHOW_RECOVERY_PHRASE -> {
-                    binding.loadingOverlay.hide()
+    private fun navigate(event: SetupNavigationEvent) {
+        try {
+            when (event) {
+                SetupNavigationEvent.ShowRecoveryPhraseSetup -> {
                     activity?.hideKeyboard()
                     findNavController().navigate(R.id.action_global_recoveryPhraseSetupFragment)
                 }
+
+                SetupNavigationEvent.ShowError -> {
+                    showErrorToast()
+                }
             }
-        }
-    }
-
-    private fun finishSetup() {
-        try {
-            val activity = activity
-            requireNotNull(activity)
-
-            activity.hideKeyboard()
-            binding.loadingOverlay.hide()
-
-            navigateToGallery(findNavController())
         } catch (e: Exception) {
             Timber.e(e)
-            Dialogs.showLongToast(
-                requireContext(),
-                getString(R.string.common_error)
-            )
+            showErrorToast()
         }
     }
 
-    private fun enableOrDisableSetup() {
-        if (!viewModel.passwordsEqual()
-            && binding.setupConfirmPasswordEditText.isVisible
-        ) {
-            binding.setupPasswordMatchWarningTextView.show()
-            binding.setupButton.isEnabled = false
-        } else {
-            binding.setupPasswordMatchWarningTextView.hide()
-            if (viewModel.validateBothPasswords()) {
-                binding.setupButton.isEnabled = true
-            }
-        }
-    }
-
-    override fun bind(binding: FragmentSetupBinding) {
-        super.bind(binding)
-        binding.viewModel = viewModel
+    private fun showErrorToast() {
+        Dialogs.showLongToast(requireContext(), getString(R.string.common_error))
     }
 }

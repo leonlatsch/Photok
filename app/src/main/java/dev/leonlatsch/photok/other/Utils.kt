@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.other
 
 import android.content.ActivityNotFoundException
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -127,19 +126,6 @@ fun Fragment.openUrl(url: String?) {
     }
 }
 
-fun Context.openUrl(url: String?) {
-    url ?: return
-
-    val intent = Intent(Intent.ACTION_VIEW)
-    intent.data = url.toUri()
-
-    try {
-        startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        Timber.e(e)
-        Toast.makeText(this, R.string.common_error, Toast.LENGTH_LONG).show()
-    }
-}
 
 /**
  * Reset all orientation exif tags for creating thumbnails

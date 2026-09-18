@@ -1,0 +1,29 @@
+name: Upload Screenshots
+
+# Manual only. Pushes the images under fastlane/metadata/android/<locale>/images
+# (phoneScreenshots, icon, featureGraphic) to the Google Play Store listing.
+# Nothing else is touched: no build, no AAB, no changelogs, no title/description.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload-screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Ruby + Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Decode Play service account
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$PLAY_SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/play-service-account.json"
+          echo "PLAY_JSON_KEY_FILE=$RUNNER_TEMP/play-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Upload screenshots
+        run: bundle exec fastlane upload_screenshots
