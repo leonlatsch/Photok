@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.ui.new
+package dev.leonlatsch.photok.backup.ui.restore
 
 import android.os.Bundle
 import android.view.LayoutInflater

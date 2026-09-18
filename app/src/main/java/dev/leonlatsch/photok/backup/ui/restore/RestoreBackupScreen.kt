@@ -1,4 +1,4 @@
-package dev.leonlatsch.photok.backup.ui.new
+package dev.leonlatsch.photok.backup.ui.restore
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -192,7 +192,7 @@ fun RestoreBackupScreen(
                 Spacer(Modifier.height(5.dp))
 
                 ArchiveInfoItem(
-                    icon = R.drawable.ic_clock,
+                    icon = R.drawable.ic_schedule,
                     label = "Created",
                     value = "19. Sep 2026, 13:41 Uhr"
                 )

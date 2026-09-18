@@ -228,7 +228,7 @@
         android:label="DevSettingsFragment" />
     <fragment
         android:id="@+id/restoreBackupFragment"
-        android:name="dev.leonlatsch.photok.backup.ui.new.RestoreBackupFragment"
+        android:name="dev.leonlatsch.photok.backup.ui.restore.RestoreBackupFragment"
         android:label="RestoreBackupFragment">
         <argument
             android:name="backup_uri"
