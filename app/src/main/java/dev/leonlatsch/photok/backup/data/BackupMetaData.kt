@@ -28,48 +28,49 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
  */
 sealed interface BackupMetaData {
     val photos: List<PhotoBackup>
+    val albums: List<AlbumBackup>
     val backupVersion: Int
     val createdAt: Long
 
     data class V1(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
+        @Expose override val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        @Expose val password: String,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V2(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
+        @Expose override val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        @Expose val password: String,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V3(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
+        @Expose override val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        @Expose val password: String,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V4(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
+        @Expose override val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        @Expose val password: String,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V5(
         @Expose override val photos: List<PhotoBackup>,
-        @Expose val albums: List<AlbumBackup>,
+        @Expose override val albums: List<AlbumBackup>,
         @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
         @Expose override val createdAt: Long = System.currentTimeMillis(),
         @Expose override val backupVersion: Int,

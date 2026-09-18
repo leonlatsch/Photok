@@ -23,20 +23,31 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.data.BackupMetaData
+import dev.leonlatsch.photok.backup.domain.BackupValidation
+import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.domain.models.Algorithm
+import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import java.text.DateFormat
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Overview(
+fun RestoreBackupOverview(
+    uiState: RestoreBackupUiState.Overview,
     onClose: () -> Unit
 ) {
     Scaffold(
@@ -83,6 +94,19 @@ fun Overview(
             }
         }
     ) { contentPadding ->
+
+        val dateFormat = remember {
+            DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        }
+
+        val formattedCreatedAt = remember(uiState.validation.metaData.createdAt) {
+            dateFormat.format(uiState.validation.metaData.createdAt)
+        }
+
+        val formattedFileSize = remember(uiState.validation.fileSize) {
+            BindingConverters.formatByteSizeConverter(uiState.validation.fileSize)
+        }
+
         Column(
             modifier = Modifier
                 .padding(contentPadding)
@@ -112,19 +136,22 @@ fun Overview(
                         )
                     }
 
+
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .padding(5.dp)
                     ) {
                         Text(
-                            text = "photok_backup_2026_12_21.zip",
+                            text = uiState.validation.fileName,
                             fontFamily = FontFamily.Monospace,
                             maxLines = 1,
                             overflow = TextOverflow.MiddleEllipsis,
                         )
+
+
                         Text(
-                            text = "12. Sep 2026, 14:21 • 4,3 GB",
+                            text = "$formattedCreatedAt • $formattedFileSize",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.outline,
                         )
@@ -147,16 +174,23 @@ fun Overview(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
+                val photoCount = remember(uiState.validation.metaData.photos.size) {
+                    uiState.validation.metaData.photos.count { !it.type.isVideo }
+                }
+                val videoCount = remember(uiState.validation.metaData.photos.size) {
+                    uiState.validation.metaData.photos.count { it.type.isVideo }
+                }
+
                 StatCard(
                     label = "Photos",
                     icon = R.drawable.ic_image,
-                    stat = "214",
+                    stat = photoCount.toString(),
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Videos",
                     icon = R.drawable.ic_videocam,
-                    stat = "312",
+                    stat = videoCount.toString(),
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -169,13 +203,13 @@ fun Overview(
                 StatCard(
                     label = "Albums",
                     icon = R.drawable.ic_folder,
-                    stat = "7",
+                    stat = uiState.validation.metaData.albums.size.toString(),
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Size",
                     icon = R.drawable.ic_database,
-                    stat = "4,21GB",
+                    stat = formattedFileSize,
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -193,7 +227,7 @@ fun Overview(
             ArchiveInfoItem(
                 icon = R.drawable.ic_schedule,
                 label = "Created",
-                value = "19. Sep 2026, 13:41 Uhr"
+                value = formattedCreatedAt
             )
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 10.dp)
@@ -201,7 +235,13 @@ fun Overview(
             ArchiveInfoItem(
                 icon = R.drawable.ic_lock,
                 label = "Encryption",
-                value = Algorithm.AesCbcPkcs7Padding.value
+                value = when (val metadate = uiState.validation.metaData) {
+                    is BackupMetaData.V1 -> Algorithm.AesGcmNoPadding
+                    is BackupMetaData.V2 -> Algorithm.AesGcmNoPadding
+                    is BackupMetaData.V3 -> Algorithm.AesGcmNoPadding
+                    is BackupMetaData.V4 -> Algorithm.AesCbcPkcs7Padding
+                    is BackupMetaData.V5 -> metadate.params.algorithm
+                }.value
             )
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 10.dp)
@@ -209,7 +249,7 @@ fun Overview(
             ArchiveInfoItem(
                 icon = R.drawable.ic_check_circle,
                 label = "Backup format",
-                value = "Version 5"
+                value = "Version ${uiState.validation.metaData.backupVersion}"
             )
         }
     }
@@ -292,5 +332,37 @@ fun ArchiveInfoItem(
                 maxLines = 1,
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun Preview() {
+    AppTheme {
+        RestoreBackupOverview(
+            uiState = RestoreBackupUiState.Overview(
+                validation = BackupValidation(
+                    metaData = BackupMetaData.V5(
+                        photos = emptyList(),
+                        albums = emptyList(),
+                        albumPhotoRefs = emptyList(),
+                        createdAt = Date().time,
+                        backupVersion = 5,
+                        wrappedVMK = "",
+                        params = VaultProtectionParams(
+                            salt = null,
+                            iv = "",
+                            kdf = Kdf.PBKDF2WithHmacSHA256,
+                            kdfIterations = 100000,
+                            algorithm = Algorithm.AesCbcPkcs7Padding,
+                            keySize = 256,
+                        )
+                    ),
+                    fileName = "photok_backup_1234.zip",
+                    fileSize = 123123123L,
+                )
+            ),
+            onClose = {},
+        )
     }
 }
