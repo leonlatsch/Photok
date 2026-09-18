@@ -134,7 +134,8 @@ class AesCbcRandomAccessDataSource(
         }
 
         // --- Resolve key  ---
-        val key = sessionRepository.require().vmk
+        val session = sessionRepository.get() ?: error("Vault is locked")
+        val key = session.vmk
 
         // --- Determine plaintext length ---
         // See resolvePlainLength for why open() must not return C.LENGTH_UNSET.

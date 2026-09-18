@@ -64,7 +64,7 @@ class AesCbcRandomAccessDataSourceTest {
     private val cryptoEngine = CbcCryptoEngine()
 
     private val sessionRepository = mockk<SessionRepository> {
-        every { require() } returns session
+        every { get() } returns session
     }
 
     /**

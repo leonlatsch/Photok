@@ -37,10 +37,13 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -93,8 +96,15 @@ class RecoveryPhraseViewModel @Inject constructor(
     private val _navEvents = Channel<RecoveryPhraseNavEvent>(Channel.UNLIMITED)
     val navEvents = _navEvents.receiveAsFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val phrase = sessionRepository.observe().flatMapLatest { session ->
+        // The vault can be locked while this screen is alive (e.g. coming back from background).
+        // There is no phrase to decrypt without a session.
+        session?.let { recoveryPhraseStore.observe(it) } ?: flowOf(null)
+    }
+
     val uiState = combine(
-        recoveryPhraseStore.observe(sessionRepository.require()),
+        phrase,
         inputs,
     ) { phrase, inputs ->
         RecoveryPhraseUiState(
@@ -105,9 +115,11 @@ class RecoveryPhraseViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val session = sessionRepository.get() ?: return@launch
+
             if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
                 vaultService.create(
-                    CreateRequest.RecoveryPhrase(sessionRepository.require(), Bip39WordCount.Twelve)
+                    CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve)
                 )
             }
         }
@@ -117,6 +129,9 @@ class RecoveryPhraseViewModel @Inject constructor(
         when (event) {
             is RecoveryPhraseUiEvent.UpdateWordCount -> {
                 if (inputs.value.wordCount == event.wordCount) return
+
+                val session = sessionRepository.get()
+                session ?: return // This event cannot be used if not logged in
 
                 recoveryPhraseStore.clear()
 
@@ -130,7 +145,7 @@ class RecoveryPhraseViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     vaultService.create(
                         CreateRequest.RecoveryPhrase(
-                            sessionRepository.require(),
+                            session,
                             event.wordCount,
                         )
                     )

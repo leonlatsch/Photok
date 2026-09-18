@@ -80,7 +80,7 @@ class EncryptedVideoExtractionTest {
     private val cryptoEngine = CbcCryptoEngine()
 
     private val sessionRepository = mockk<SessionRepository> {
-        every { require() } returns session
+        every { get() } returns session
     }
 
     /** `-c:v libx264 -pix_fmt yuv420p -movflags +faststart` */

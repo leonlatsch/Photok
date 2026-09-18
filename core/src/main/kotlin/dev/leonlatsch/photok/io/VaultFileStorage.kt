@@ -31,7 +31,7 @@ class VaultFileStorage @Inject constructor(
     private val app: Application,
 ) {
     fun openEncryptedInput(filename: String): CipherInputStream? = try {
-        val session = sessionRepository.require()
+        val session = requireNotNull(sessionRepository.get())
         val input = app.openFileInput(filename)
         cryptoEngine.createDecryptStream(input, session)
     } catch (e: Exception) {
@@ -40,7 +40,7 @@ class VaultFileStorage @Inject constructor(
     }
 
     fun openEncryptedOutput(fileName: String): CipherOutputStream? = try {
-        val session = sessionRepository.require()
+        val session = requireNotNull(sessionRepository.get())
         val output = app.openFileOutput(fileName, Context.MODE_PRIVATE)
         cryptoEngine.createEncryptStream(output, session)
     } catch (e: Exception) {

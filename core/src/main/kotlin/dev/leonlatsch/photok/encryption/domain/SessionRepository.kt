@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.StateFlow
 interface SessionRepository {
     fun set(session: VaultSession)
     fun get(): VaultSession?
-    fun require(): VaultSession
     fun observe(): StateFlow<VaultSession?>
     fun reset()
 }
