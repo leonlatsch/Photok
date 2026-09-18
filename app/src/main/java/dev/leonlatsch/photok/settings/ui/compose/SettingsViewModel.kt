@@ -139,7 +139,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
 
             val result = runCatching {
-                val session = sessionRepository.require()
+                val session = requireNotNull(sessionRepository.get())
                 vaultService.create(CreateRequest.Biometric(session, fragment))
             }
 

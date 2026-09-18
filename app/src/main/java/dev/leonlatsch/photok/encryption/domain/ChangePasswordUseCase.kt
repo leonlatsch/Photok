@@ -37,7 +37,7 @@ class ChangePasswordUseCase @Inject constructor(
         val currentProtection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
         requireNotNull(currentProtection)
 
-        val session = sessionRepository.require()
+        val session = requireNotNull(sessionRepository.get()) { "Vault is locked" }
 
         val newSalt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val newIv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
