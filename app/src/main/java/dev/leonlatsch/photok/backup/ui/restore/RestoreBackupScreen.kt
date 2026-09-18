@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -64,14 +65,18 @@ fun RestoreBackupScreen(
             bottomBar = {
                 Button(
                     onClick = {},
-                    modifier = Modifier.padding(
-                        horizontal = 20.dp
-                    )
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .navigationBarsPadding()
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
-                        modifier = Modifier.fillMaxWidth()
+                        horizontalArrangement = Arrangement.spacedBy(
+                            5.dp,
+                            Alignment.CenterHorizontally
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
                         Icon(
                             painterResource(R.drawable.ic_lock),
@@ -118,8 +123,7 @@ fun RestoreBackupScreen(
                                 .padding(5.dp)
                         ) {
                             Text(
-                                text = backupUri.lastPathSegment?.substringAfterLast('/')
-                                    ?: "photok_backup_2026_12_21.zip",
+                                text = "photok_backup_2026_12_21.zip",
                                 fontFamily = FontFamily.Monospace,
                                 maxLines = 1,
                                 overflow = TextOverflow.MiddleEllipsis,
