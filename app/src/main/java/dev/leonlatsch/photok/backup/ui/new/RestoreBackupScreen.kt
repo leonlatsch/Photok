@@ -1,22 +1,18 @@
 package dev.leonlatsch.photok.backup.ui.new
 
-import androidx.compose.foundation.BorderStroke
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,9 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,9 +37,11 @@ import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
-@PreviewLightDark
 @Composable
-fun RestoreBackupScreen() {
+fun RestoreBackupScreen(
+    backupUri: Uri,
+    onBack: () -> Unit,
+) {
     AppTheme {
         Scaffold(
             topBar = {
@@ -55,7 +51,7 @@ fun RestoreBackupScreen() {
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = {}
+                            onClick = onBack
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back),
@@ -122,7 +118,8 @@ fun RestoreBackupScreen() {
                                 .padding(5.dp)
                         ) {
                             Text(
-                                text = "photok_backup_2026_12_21.zip",
+                                text = backupUri.lastPathSegment?.substringAfterLast('/')
+                                    ?: "photok_backup_2026_12_21.zip",
                                 fontFamily = FontFamily.Monospace,
                                 maxLines = 1,
                                 overflow = TextOverflow.MiddleEllipsis,
@@ -297,4 +294,13 @@ fun ArchiveInfoItem(
             )
         }
     }
+}
+
+@PreviewLightDark
+@Composable
+private fun Preview() {
+    RestoreBackupScreen(
+        backupUri = Uri.EMPTY,
+        onBack = {},
+    )
 }

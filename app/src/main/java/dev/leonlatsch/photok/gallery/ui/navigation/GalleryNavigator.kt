@@ -20,7 +20,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
+import androidx.navigation.fragment.findNavController
+import dev.leonlatsch.photok.NavGraphDirections
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.show
@@ -35,14 +36,14 @@ class GalleryNavigator @Inject constructor() {
         when (event) {
             is GalleryNavigationEvent.ShowToast -> showToast(event, fragment)
             is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, fragment.childFragmentManager, event.importSource)
-            is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, fragment.childFragmentManager)
+            is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, fragment)
         }
     }
 
-    private fun startRestoreBackup(backupUri: Uri, fragmentManager: FragmentManager) {
-        RestoreBackupDialogFragment.newInstance(
-            uri = backupUri
-        ).show(fragmentManager)
+    private fun startRestoreBackup(backupUri: Uri, fragment: Fragment) {
+        fragment.findNavController().navigate(
+            NavGraphDirections.actionGlobalRestoreBackupFragment(backupUri = backupUri)
+        )
     }
 
     private fun startImport(fileUris: List<Uri>, fragmentManager: FragmentManager, importSource: ImportSource) {
