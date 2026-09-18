@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
 import dev.leonlatsch.photok.main.ui.navigation.MainMenu
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
@@ -67,7 +68,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
+
+        val hasSession = getBaseApplication().sessionRepository.get() != null
+        super.onCreate(savedInstanceState.takeIf { hasSession })
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
