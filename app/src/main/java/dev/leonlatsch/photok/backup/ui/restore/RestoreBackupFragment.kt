@@ -39,7 +39,7 @@ class RestoreBackupFragment : Fragment() {
         setContent {
             RestoreBackupScreen(
                 backupUri = args.backupUri,
-                onBack = { findNavController().navigateUp() },
+                onClose = { findNavController().navigateUp() },
             )
         }
     }
