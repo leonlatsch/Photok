@@ -73,8 +73,7 @@ fun RestoreBackupUnlock(
                 ) {
                     Text(
                         text = "Unlock & Restore",
-
-                        )
+                    )
                 }
             }
         }
