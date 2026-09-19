@@ -23,12 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.databinding.BindingConverters
-import dev.leonlatsch.photok.pro.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
@@ -69,27 +67,43 @@ fun RestoreBackupRestoring(
                 .padding(contentPadding)
                 .padding(20.dp)
         ) {
+            BackupFileHeader(
+                fileName = uiState.fileName,
+                subtitle = "Restoring…",
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            Spacer(Modifier.height(50.dp))
+
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
                     text = "${(uiState.progress * 100).roundToInt()}%",
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.displayMedium,
                     fontFamily = FontFamily.Monospace,
                 )
 
-                Text(
-                    text = "${uiState.filesDone} / ${uiState.filesTotal} files",
-                    fontFamily = FontFamily.Monospace,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.secondary
-                )
+                Column(
+                    horizontalAlignment = Alignment.End,
+                ) {
+                    Text(
+                        text = "${formatBytes(uiState.bytesDone)} of ${formatBytes(uiState.bytesTotal)}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontFamily = FontFamily.Monospace,
+                    )
+
+                    Text(
+                        text = "${formatBytes(uiState.bytesPerSecond)}/s",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.outline,
+                    )
+                }
             }
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(20.dp))
 
             LinearProgressIndicator(
                 progress = { uiState.progress },
@@ -98,25 +112,6 @@ fun RestoreBackupRestoring(
                     .fillMaxWidth()
             )
 
-            Spacer(Modifier.height(20.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                StatCard(
-                    label = "Speed",
-                    icon = R.drawable.ic_add,
-                    stat = "${formatBytes(uiState.bytesPerSecond)}/s",
-                    modifier = Modifier.weight(1f)
-                )
-                StatCard(
-                    label = "Remaining",
-                    icon = R.drawable.ic_clock,
-                    stat = formatTimeRemaining(uiState.millisRemaining),
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
             Spacer(Modifier.height(10.dp))
 
             Row(
@@ -125,36 +120,22 @@ fun RestoreBackupRestoring(
             ) {
                 Text(
                     text = "${uiState.filesDone} / ${uiState.filesTotal} files",
-                    color = MaterialTheme.colorScheme.outline,
-                )
-
-                Text(
-                    text = "${formatBytes(uiState.bytesDone)} / ${formatBytes(uiState.bytesTotal)}",
-                    color = MaterialTheme.colorScheme.outline,
-                )
-            }
-
-            Spacer(Modifier.height(5.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = "${formatBytes(uiState.bytesPerSecond)}/s",
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
 
                 Text(
                     text = formatTimeRemaining(uiState.millisRemaining),
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(50.dp))
 
             Text(
                 text = "This can take a while. Please keep the app open.",
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.fillMaxWidth(),
