@@ -31,6 +31,7 @@ sealed interface RestoreBackupUiState {
     ) : RestoreBackupUiState
 
     data class Unlock(
+        val fileName: String,
         val password: String,
     ) : RestoreBackupUiState
 
@@ -55,6 +56,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     private val validation = MutableStateFlow<BackupValidation?>(null)
     private val password = MutableStateFlow("")
+    private val unlocking = MutableStateFlow(false)
 
     private val validatingState = RestoreBackupUiState.Validating(
         fileName = io.getFileName(restoreBackupUri).orEmpty()
@@ -62,16 +64,38 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     val uiState = combine(
         password,
-        validation
-    ) { password, validation ->
+        validation,
+        unlocking,
+    ) { password, validation, unlocking ->
         when {
             validation == null -> validatingState
+            unlocking -> RestoreBackupUiState.Unlock(
+                fileName = validation.fileName,
+                password = password,
+            )
             else -> RestoreBackupUiState.Overview(
                 validation = validation,
                 emptyVault = photoRepository.countAll() == 0,
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
+
+    fun handleUiEvent(event: RestoreBackupUiEvent) {
+        when (event) {
+            is RestoreBackupUiEvent.UnlockBackupClicked -> unlocking.update { true }
+
+            is RestoreBackupUiEvent.BackToOverviewClicked -> {
+                password.update { "" }
+                unlocking.update { false }
+            }
+
+            is RestoreBackupUiEvent.PasswordChanged -> password.update { event.password }
+
+            is RestoreBackupUiEvent.ConfirmPasswordClicked -> {
+                // TODO: unlock backup and move to Restoring
+            }
+        }
+    }
 
     init {
         viewModelScope.launch {

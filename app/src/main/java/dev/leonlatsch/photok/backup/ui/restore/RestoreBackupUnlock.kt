@@ -1,0 +1,106 @@
+package dev.leonlatsch.photok.backup.ui.restore
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.ui.components.PasswordField
+import dev.leonlatsch.photok.ui.theme.AppTheme
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RestoreBackupUnlock(
+    uiState: RestoreBackupUiState.Unlock,
+    handleUiEvent: (RestoreBackupUiEvent) -> Unit,
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Unlock Backup")
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = { handleUiEvent(RestoreBackupUiEvent.BackToOverviewClicked) }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_back),
+                            contentDescription = "Back"
+                        )
+                    }
+                }
+            )
+        },
+        bottomBar = {
+            Button(
+                onClick = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
+                enabled = uiState.password.isNotEmpty(),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .navigationBarsPadding()
+                    .imePadding()
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Unlock & Restore",
+
+                        )
+                }
+            }
+        }
+    ) { contentPadding ->
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .padding(20.dp)
+        ) {
+            BackupFileHeader(
+                fileName = uiState.fileName,
+                subtitle = "Locked",
+            )
+
+            PasswordField(
+                value = uiState.password,
+                onValueChange = { handleUiEvent(RestoreBackupUiEvent.PasswordChanged(it)) },
+                label = "Backup password",
+                onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun Preview() {
+    AppTheme {
+        RestoreBackupUnlock(
+            uiState = RestoreBackupUiState.Unlock(
+                fileName = "photok_backup_1234.zip",
+                password = "",
+            ),
+            handleUiEvent = {},
+        )
+    }
+}

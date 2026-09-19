@@ -47,6 +47,7 @@ import java.util.Date
 @Composable
 fun RestoreBackupOverview(
     uiState: RestoreBackupUiState.Overview,
+    handleUiEvent: (RestoreBackupUiEvent) -> Unit,
     onClose: () -> Unit
 ) {
     Scaffold(
@@ -69,7 +70,7 @@ fun RestoreBackupOverview(
         },
         bottomBar = {
             Button(
-                onClick = {},
+                onClick = { handleUiEvent(RestoreBackupUiEvent.UnlockBackupClicked) },
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .navigationBarsPadding()
@@ -345,6 +346,7 @@ private fun Preview() {
                 ),
                 emptyVault = false,
             ),
+            handleUiEvent = {},
             onClose = {},
         )
     }

@@ -29,9 +29,13 @@ fun RestoreBackupScreen(
             )
             is RestoreBackupUiState.Overview -> RestoreBackupOverview(
                 uiState = state,
+                handleUiEvent = viewModel::handleUiEvent,
                 onClose = onClose,
             )
-            is RestoreBackupUiState.Unlock -> Unit
+            is RestoreBackupUiState.Unlock -> RestoreBackupUnlock(
+                uiState = state,
+                handleUiEvent = viewModel::handleUiEvent,
+            )
             is RestoreBackupUiState.Restoring -> Unit
         }
     }
