@@ -28,10 +28,3 @@ interface RestoreBackupStrategy<T : BackupMetaData> {
         session: Session,
     ): Flow<RestoreProgress>
 }
-
-/**
- * `true` for the entry holding the photo/video itself, `false` for its thumbnail (`.tn`)
- * or video preview (`.vp`) sidecar. Only main files count towards the restore progress.
- */
-internal fun isMainFile(entryName: String) =
-    !entryName.endsWith(".tn") && !entryName.endsWith(".vp")

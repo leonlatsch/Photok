@@ -1,5 +1,6 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
+import android.app.Activity
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +22,8 @@ import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -92,6 +95,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private var unlockBackupUseCase: UnlockBackupUseCase,
     private val photoRepository: PhotoRepository,
     private val io: IO,
+    private val inAppReview: InAppReview,
     private val v1Strategy: RestoreBackupV1,
     private val v2Strategy: RestoreBackupV2,
     private val v3Strategy: RestoreBackupV3,
@@ -113,8 +117,6 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
     private val validatingState = RestoreBackupUiState.Validating(fileName = fileName)
-
-    private val speedEstimator = RestoreSpeedEstimator()
 
     val uiState = combine(
         inputs,
@@ -148,24 +150,15 @@ class RestoreBackupViewModel @AssistedInject constructor(
         when (progress) {
             is RestoreProgress.Finalizing -> RestoreBackupUiState.Finalizing(fileName = fileName)
 
-            is RestoreProgress.Restoring -> {
-                val bytesPerSecond = speedEstimator.bytesPerSecond(progress.bytesDone)
-                val bytesRemaining = progress.bytesTotal - progress.bytesDone
-
-                RestoreBackupUiState.Restoring(
-                    fileName = fileName,
-                    filesDone = progress.filesDone,
-                    filesTotal = progress.filesTotal,
-                    bytesDone = progress.bytesDone,
-                    bytesTotal = progress.bytesTotal,
-                    bytesPerSecond = bytesPerSecond,
-                    millisRemaining = if (bytesPerSecond > 0) {
-                        bytesRemaining * 1000 / bytesPerSecond
-                    } else {
-                        null
-                    },
-                )
-            }
+            is RestoreProgress.Restoring -> RestoreBackupUiState.Restoring(
+                fileName = fileName,
+                filesDone = progress.filesDone,
+                filesTotal = progress.filesTotal,
+                bytesDone = progress.bytesDone,
+                bytesTotal = progress.bytesTotal,
+                bytesPerSecond = progress.bytesPerSecond,
+                millisRemaining = progress.millisRemaining,
+            )
 
             // Restore was started, the first progress has not arrived yet
             else -> RestoreBackupUiState.Restoring(
@@ -194,7 +187,18 @@ class RestoreBackupViewModel @AssistedInject constructor(
             }
 
             is RestoreBackupUiEvent.ConfirmPasswordClicked -> unlockAndRestore()
+
+            is RestoreBackupUiEvent.DoneClicked -> requestInAppReview(event.activity)
         }
+    }
+
+    private fun requestInAppReview(activity: Activity?) {
+        activity ?: return
+
+        val failedFiles = inputs.value.restoreResult?.failedFiles ?: return
+        if (failedFiles.isNotEmpty()) return
+
+        inAppReview.requestInAppReview(activity, ReviewTrigger.BackupRestored)
     }
 
     private fun unlockAndRestore() = viewModelScope.launch {

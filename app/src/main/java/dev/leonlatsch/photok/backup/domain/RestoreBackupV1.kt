@@ -27,7 +27,7 @@ import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -71,11 +71,11 @@ class RestoreBackupV1 @Inject constructor(
         metaData: BackupMetaData.V1,
         stream: ZipInputStream,
         session: Session,
-    ): Flow<RestoreProgress> = flow {
+    ): Flow<RestoreProgress> = channelFlow {
         val failedFiles = mutableListOf<String>()
         val tracker = RestoreProgressTracker(metaData.photos)
 
-        emit(tracker.snapshot())
+        send(tracker.snapshot())
 
         var ze = stream.nextEntry
 
@@ -104,12 +104,12 @@ class RestoreBackupV1 @Inject constructor(
             // V1 needs the whole photo in memory anyway, createThumbnails takes a ByteArray
             val photoBytesOutput = ByteArrayOutputStream()
             val photoCopied = io.copy(encryptedZipInput, photoBytesOutput) { chunk ->
-                tracker.advance(chunk)?.let { emit(it) }
+                tracker.advance(chunk)?.let { trySend(it) }
             }.isSuccess
 
             if (!photoCopied) {
                 failedFiles += photoBackup.fileName
-                emit(tracker.finishFile())
+                send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
             }
@@ -122,7 +122,7 @@ class RestoreBackupV1 @Inject constructor(
 
             if (!photoFileCreated) {
                 failedFiles += photoBackup.fileName
-                emit(tracker.finishFile())
+                send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
             }
@@ -132,12 +132,12 @@ class RestoreBackupV1 @Inject constructor(
                     if (photoBackup.fileName !in failedFiles) failedFiles += photoBackup.fileName
                 }
 
-            emit(tracker.finishFile())
+            send(tracker.finishFile())
 
             ze = stream.nextEntry
         }
 
-        emit(RestoreProgress.Finalizing)
+        send(RestoreProgress.Finalizing)
 
         metaData
             .getPhotosInOriginalOrder()
@@ -145,6 +145,6 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
             }
 
-        emit(RestoreProgress.Finished(RestoreResult(failedFiles)))
+        send(RestoreProgress.Finished(RestoreResult(failedFiles)))
     }.flowOn(Dispatchers.IO)
 }

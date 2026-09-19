@@ -22,6 +22,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.documentfile.provider.DocumentFile
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.IOException
@@ -116,26 +118,30 @@ class IO @Inject constructor(
     suspend fun copy(
         input: InputStream,
         output: OutputStream,
-        onBytesCopied: suspend (Long) -> Unit = {},
-    ): Result<Long> = try {
-        var bytesWritten = 0L
-        val buffer = ByteArray(COPY_BUFFER_SIZE)
+        onBytesCopied: (Long) -> Unit = {},
+    ): Result<Long> = withContext(Dispatchers.IO) {
+        suspendCoroutine { continuation ->
+            try {
+                var bytesWritten = 0L
+                val buffer = ByteArray(COPY_BUFFER_SIZE)
 
-        var read = input.read(buffer)
-        while (read >= 0) {
-            output.write(buffer, 0, read)
-            bytesWritten += read
-            onBytesCopied(read.toLong())
+                var read = input.read(buffer)
+                while (read >= 0) {
+                    output.write(buffer, 0, read)
+                    bytesWritten += read
+                    onBytesCopied(read.toLong())
 
-            read = input.read(buffer)
+                    read = input.read(buffer)
+                }
+
+                output.flush()
+                output.close()
+
+                continuation.resume(Result.success(bytesWritten))
+            } catch (e: Exception) {
+                continuation.resume(Result.failure(e))
+            }
         }
-
-        output.flush()
-        output.close()
-
-        Result.success(bytesWritten)
-    } catch (e: Exception) {
-        Result.failure(e)
     }
 
     fun openFileInput(fileUri: Uri): InputStream? =

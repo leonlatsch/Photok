@@ -23,6 +23,8 @@ sealed interface RestoreProgress {
         val filesTotal: Int,
         val bytesDone: Long,
         val bytesTotal: Long,
+        val bytesPerSecond: Long,
+        val millisRemaining: Long?,
     ) : RestoreProgress
 
     /** All media is on disk, the database rows (photos, albums, refs) are being written. */

@@ -1,6 +1,7 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -11,7 +12,6 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RestoreBackupScreen(
     backupUri: Uri,
     onClose: () -> Unit,
-    onRestoreSucceeded: () -> Unit,
 ) {
     AppTheme {
         val viewModel: RestoreBackupViewModel =
@@ -22,6 +22,7 @@ fun RestoreBackupScreen(
             )
 
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        val activity = LocalActivity.current
 
         when (val state = uiState) {
             is RestoreBackupUiState.Validating -> RestoreBackupOverviewLoading(
@@ -46,7 +47,7 @@ fun RestoreBackupScreen(
             is RestoreBackupUiState.Finished -> RestoreBackupFinished(
                 uiState = state,
                 onDone = {
-                    if (state.failedFiles.isEmpty()) onRestoreSucceeded()
+                    viewModel.handleUiEvent(RestoreBackupUiEvent.DoneClicked(activity))
                     onClose()
                 },
             )

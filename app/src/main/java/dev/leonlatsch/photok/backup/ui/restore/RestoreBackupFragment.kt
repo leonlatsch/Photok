@@ -25,15 +25,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.review.InAppReview
-import dev.leonlatsch.photok.review.ReviewTrigger
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RestoreBackupFragment : Fragment() {
-
-    @Inject
-    lateinit var inAppReview: InAppReview
 
     private val args: RestoreBackupFragmentArgs by navArgs()
 
@@ -46,9 +40,6 @@ class RestoreBackupFragment : Fragment() {
             RestoreBackupScreen(
                 backupUri = args.backupUri,
                 onClose = { findNavController().navigateUp() },
-                onRestoreSucceeded = {
-                    inAppReview.requestInAppReview(requireActivity(), ReviewTrigger.BackupRestored)
-                },
             )
         }
     }

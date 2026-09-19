@@ -22,23 +22,32 @@ import dev.leonlatsch.photok.backup.data.PhotoBackup
 private const val EMIT_INTERVAL_MILLIS = 100L
 
 /**
- * Counts restore progress for one backup. Bytes are the sizes declared in the backup
- * metadata, not the bytes actually written, so the total is known upfront and the progress
- * lands exactly on 100%.
+ * Counts restore progress for one backup.
  *
- * Thumbnail (`.tn`) and video preview (`.vp`) entries belong to their photo and are not
- * counted separately.
+ * Progress bytes are the sizes declared in the backup metadata, so the total is known
+ * upfront and the progress lands exactly on 100%. The speed is measured on the bytes
+ * actually copied instead, because the declared sizes are missing in old backups.
+ *
+ * Thumbnail and video preview entries belong to their photo and are not counted separately.
  */
-class RestoreProgressTracker(photos: List<PhotoBackup>) {
+class RestoreProgressTracker(
+    photos: List<PhotoBackup>,
+    private val now: () -> Long = System::currentTimeMillis,
+) {
 
     private val filesTotal = photos.size
     private val bytesTotal = photos.sumOf { it.size }
+
+    private val startedAt = now()
 
     private var filesDone = 0
     private var completedBytes = 0L
 
     private var currentFileSize = 0L
     private var currentFileBytes = 0L
+
+    /** Bytes taken off the stream, sidecars included. Unlike the declared sizes always real. */
+    private var copiedBytes = 0L
 
     private var lastEmitAt = 0L
 
@@ -49,13 +58,19 @@ class RestoreProgressTracker(photos: List<PhotoBackup>) {
 
     /** Returns `null` while throttled, so callers only emit every [EMIT_INTERVAL_MILLIS]. */
     fun advance(chunk: Long): RestoreProgress.Restoring? {
+        copiedBytes += chunk
         currentFileBytes = (currentFileBytes + chunk).coerceAtMost(currentFileSize)
 
-        val now = System.currentTimeMillis()
+        val now = now()
         if (now - lastEmitAt < EMIT_INTERVAL_MILLIS) return null
 
         lastEmitAt = now
         return snapshot()
+    }
+
+    /** Counts bytes of a sidecar towards the speed, but not towards the progress. */
+    fun advanceSidecar(chunk: Long) {
+        copiedBytes += chunk
     }
 
     fun finishFile(): RestoreProgress.Restoring {
@@ -63,15 +78,35 @@ class RestoreProgressTracker(photos: List<PhotoBackup>) {
         completedBytes += currentFileSize
         currentFileSize = 0L
         currentFileBytes = 0L
-        lastEmitAt = System.currentTimeMillis()
+        lastEmitAt = now()
 
         return snapshot()
     }
 
-    fun snapshot() = RestoreProgress.Restoring(
-        filesDone = filesDone,
-        filesTotal = filesTotal,
-        bytesDone = completedBytes + currentFileBytes,
-        bytesTotal = bytesTotal,
-    )
+    fun snapshot(): RestoreProgress.Restoring {
+        val elapsed = now() - startedAt
+        val bytesDone = completedBytes + currentFileBytes
+
+        return RestoreProgress.Restoring(
+            filesDone = filesDone,
+            filesTotal = filesTotal,
+            bytesDone = bytesDone,
+            bytesTotal = bytesTotal,
+            bytesPerSecond = if (elapsed > 0) copiedBytes * 1000 / elapsed else 0,
+            millisRemaining = millisRemaining(elapsed, bytesDone),
+        )
+    }
+
+    /**
+     * Estimated from the declared sizes while they look usable, from the file count
+     * otherwise. Old backups declare a size of 0 for some photos, which would leave
+     * [bytesDone] stuck at [bytesTotal] and the estimate at zero for the whole restore.
+     */
+    private fun millisRemaining(elapsed: Long, bytesDone: Long): Long? = when {
+        filesDone == 0 -> null
+
+        bytesDone in 1 until bytesTotal -> elapsed * (bytesTotal - bytesDone) / bytesDone
+
+        else -> elapsed * (filesTotal - filesDone) / filesDone
+    }
 }

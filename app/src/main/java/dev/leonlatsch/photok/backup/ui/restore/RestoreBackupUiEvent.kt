@@ -1,5 +1,7 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
+import android.app.Activity
+
 sealed interface RestoreBackupUiEvent {
 
     /** Overview -> Unlock */
@@ -11,4 +13,6 @@ sealed interface RestoreBackupUiEvent {
     data class PasswordChanged(val password: String) : RestoreBackupUiEvent
 
     data object ConfirmPasswordClicked : RestoreBackupUiEvent
+
+    data class DoneClicked(val activity: Activity?) : RestoreBackupUiEvent
 }
