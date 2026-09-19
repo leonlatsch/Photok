@@ -230,7 +230,7 @@ fun RestoreBackupOverview(
                 value = formattedCreatedAt
             )
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 10.dp)
+                modifier = Modifier.padding(10.dp)
             )
             ArchiveInfoItem(
                 icon = R.drawable.ic_lock,
@@ -244,7 +244,7 @@ fun RestoreBackupOverview(
                 }.value
             )
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 10.dp)
+                modifier = Modifier.padding(10.dp)
             )
             ArchiveInfoItem(
                 icon = R.drawable.ic_check_circle,
@@ -313,7 +313,7 @@ fun ArchiveInfoItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = 10.dp),
     ) {
         Icon(
             painter = painterResource(icon),
