@@ -7,8 +7,16 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
+import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,8 +58,14 @@ sealed interface RestoreBackupUiState {
 class RestoreBackupViewModel @AssistedInject constructor(
     @Assisted(RESTORE_BACKUP_URI) private val restoreBackupUri: Uri,
     private val validateBackupUseCase: ValidateBackupUseCase,
+    private var unlockBackupUseCase: UnlockBackupUseCase,
     private val photoRepository: PhotoRepository,
     private val io: IO,
+    private val v1Strategy: RestoreBackupV1,
+    private val v2Strategy: RestoreBackupV2,
+    private val v3Strategy: RestoreBackupV3,
+    private val v4Strategy: RestoreBackupV4,
+    private val v5Strategy: RestoreBackupV5,
 ): ViewModel() {
 
     private val validation = MutableStateFlow<BackupValidation?>(null)
@@ -103,8 +117,36 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 .onSuccess { validation ->
                     this@RestoreBackupViewModel.validation.update { validation }
                 }
-                .onFailure { }
+                .onFailure {
+                    // TODO
+                }
         }
+    }
+
+    private fun unlockBackup() = viewModelScope.launch {
+        val metaData = validation.value?.metaData ?: return@launch
+
+        unlockBackupUseCase(restoreBackupUri, metaData, password.value)
+            .onSuccess { session ->
+                restoreBackup(metaData, session)
+            }
+            .onFailure {
+                // TODO
+            }
+    }
+
+    private fun restoreBackup(metaData: BackupMetaData, session: Session) = viewModelScope.launch {
+        val zipInputStream = io.zip.openZipInput(restoreBackupUri)
+
+        val result = when (metaData) {
+            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
+        }
+
+        zipInputStream.close()
     }
 
     @AssistedFactory
