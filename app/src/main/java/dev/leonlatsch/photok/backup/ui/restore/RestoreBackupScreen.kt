@@ -36,7 +36,13 @@ fun RestoreBackupScreen(
                 uiState = state,
                 handleUiEvent = viewModel::handleUiEvent,
             )
-            is RestoreBackupUiState.Restoring -> Unit
+            is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
+                uiState = state,
+            )
+            is RestoreBackupUiState.Finished -> RestoreBackupFinished(
+                uiState = state,
+                onClose = onClose,
+            )
         }
     }
 }

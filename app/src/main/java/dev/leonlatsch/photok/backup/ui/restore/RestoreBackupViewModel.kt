@@ -14,6 +14,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.RestoreResult
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
@@ -22,6 +23,7 @@ import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -44,14 +46,32 @@ sealed interface RestoreBackupUiState {
     ) : RestoreBackupUiState
 
     data class Restoring(
-        val progress: Float,
+        val fileName: String,
+        // TODO: progress
         // TODO: speed
         // TODO: bytes written
         // TODO: time remaining / elapsed
         // TODO: success/error list
     ) : RestoreBackupUiState
 
-    // TODO: Finished state
+    data class Finished(
+        val fileName: String,
+        val errors: Int,
+    ) : RestoreBackupUiState
+
+    /** The step the user is on. [Validating] is shown until the backup was validated. */
+    enum class Step {
+        Overview,
+        Unlock,
+        Restoring,
+        Finished,
+    }
+
+    data class Inputs(
+        val step: Step = Step.Overview,
+        val password: String = "",
+        val restoreResult: RestoreResult? = null,
+    )
 }
 
 @HiltViewModel(assistedFactory = RestoreBackupViewModel.Factory::class)
@@ -66,76 +86,86 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val v3Strategy: RestoreBackupV3,
     private val v4Strategy: RestoreBackupV4,
     private val v5Strategy: RestoreBackupV5,
-): ViewModel() {
+) : ViewModel() {
 
-    private val validation = MutableStateFlow<BackupValidation?>(null)
-    private val password = MutableStateFlow("")
-    private val unlocking = MutableStateFlow(false)
+    private val fileName = io.getFileName(restoreBackupUri).orEmpty()
 
-    private val validatingState = RestoreBackupUiState.Validating(
-        fileName = io.getFileName(restoreBackupUri).orEmpty()
-    )
+    private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
+
+    /** `null` until the backup was validated. */
+    private val validation = flow {
+        emit(validateBackupUseCase(restoreBackupUri).getOrNull()) // TODO: error state
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    private val emptyVault = flow {
+        emit(photoRepository.countAll() == 0)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
+    private val validatingState = RestoreBackupUiState.Validating(fileName = fileName)
 
     val uiState = combine(
-        password,
+        inputs,
         validation,
-        unlocking,
-    ) { password, validation, unlocking ->
+        emptyVault,
+    ) { inputs, validation, emptyVault ->
         when {
             validation == null -> validatingState
-            unlocking -> RestoreBackupUiState.Unlock(
-                fileName = validation.fileName,
-                password = password,
+
+            inputs.step == RestoreBackupUiState.Step.Unlock -> RestoreBackupUiState.Unlock(
+                fileName = fileName,
+                password = inputs.password,
             )
+
+            inputs.step == RestoreBackupUiState.Step.Restoring -> RestoreBackupUiState.Restoring(
+                fileName = fileName,
+            )
+
+            inputs.step == RestoreBackupUiState.Step.Finished -> RestoreBackupUiState.Finished(
+                fileName = fileName,
+                errors = inputs.restoreResult?.errors ?: 0,
+            )
+
             else -> RestoreBackupUiState.Overview(
                 validation = validation,
-                emptyVault = photoRepository.countAll() == 0,
+                emptyVault = emptyVault,
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
 
     fun handleUiEvent(event: RestoreBackupUiEvent) {
         when (event) {
-            is RestoreBackupUiEvent.UnlockBackupClicked -> unlocking.update { true }
-
-            is RestoreBackupUiEvent.BackToOverviewClicked -> {
-                password.update { "" }
-                unlocking.update { false }
+            is RestoreBackupUiEvent.UnlockBackupClicked -> inputs.update {
+                it.copy(step = RestoreBackupUiState.Step.Unlock)
             }
 
-            is RestoreBackupUiEvent.PasswordChanged -> password.update { event.password }
-
-            is RestoreBackupUiEvent.ConfirmPasswordClicked -> {
-                // TODO: unlock backup and move to Restoring
+            is RestoreBackupUiEvent.BackToOverviewClicked -> inputs.update {
+                it.copy(step = RestoreBackupUiState.Step.Overview, password = "")
             }
+
+            is RestoreBackupUiEvent.PasswordChanged -> inputs.update {
+                it.copy(password = event.password)
+            }
+
+            is RestoreBackupUiEvent.ConfirmPasswordClicked -> unlockAndRestore()
         }
     }
 
-    init {
-        viewModelScope.launch {
-            validateBackupUseCase(restoreBackupUri)
-                .onSuccess { validation ->
-                    this@RestoreBackupViewModel.validation.update { validation }
-                }
-                .onFailure {
-                    // TODO
-                }
-        }
-    }
-
-    private fun unlockBackup() = viewModelScope.launch {
+    private fun unlockAndRestore() = viewModelScope.launch {
         val metaData = validation.value?.metaData ?: return@launch
+        val password = inputs.value.password
 
-        unlockBackupUseCase(restoreBackupUri, metaData, password.value)
+        inputs.update { it.copy(step = RestoreBackupUiState.Step.Restoring, password = "") }
+
+        unlockBackupUseCase(restoreBackupUri, metaData, password)
             .onSuccess { session ->
                 restoreBackup(metaData, session)
             }
             .onFailure {
-                // TODO
+                // TODO: error state
             }
     }
 
-    private fun restoreBackup(metaData: BackupMetaData, session: Session) = viewModelScope.launch {
+    private suspend fun restoreBackup(metaData: BackupMetaData, session: Session) {
         val zipInputStream = io.zip.openZipInput(restoreBackupUri)
 
         val result = when (metaData) {
@@ -147,6 +177,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
         }
 
         zipInputStream.close()
+
+        inputs.update {
+            it.copy(step = RestoreBackupUiState.Step.Finished, restoreResult = result)
+        }
     }
 
     @AssistedFactory
