@@ -3,21 +3,30 @@ package dev.leonlatsch.photok.backup.ui.restore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -71,21 +80,61 @@ fun RestoreBackupUnlock(
         }
     ) { contentPadding ->
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .padding(20.dp)
         ) {
-            BackupFileHeader(
-                fileName = uiState.fileName,
-                subtitle = "Locked",
+            Spacer(Modifier.height(20.dp))
+
+            Surface(
+                shape = RoundedCornerShape(18.dp),
+                tonalElevation = 10.dp,
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_lock),
+                    contentDescription = "ZIP",
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .size(32.dp)
+                )
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            Text(
+                text = "Enter Backup Password",
+                style = MaterialTheme.typography.headlineMedium
             )
+
+            Spacer(Modifier.height(20.dp))
+
+            Text(
+                text = "The backup is encrypted and needs to be unlock with the password that was used to create it.",
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.outline,
+            )
+
+            Spacer(Modifier.height(20.dp))
 
             PasswordField(
                 value = uiState.password,
                 onValueChange = { handleUiEvent(RestoreBackupUiEvent.PasswordChanged(it)) },
-                label = "Backup password",
+                label = "Password",
                 onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
                 modifier = Modifier.fillMaxWidth(),
+            )
+
+            Spacer(Modifier.height(10.dp))
+
+            Text(
+                text = "This password will only be used to unlock the backup and never be stored anywhere.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(horizontal = 20.dp)
             )
         }
     }
