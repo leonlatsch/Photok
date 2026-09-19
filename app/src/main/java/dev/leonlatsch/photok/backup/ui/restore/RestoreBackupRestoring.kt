@@ -7,24 +7,31 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.databinding.BindingConverters
+import dev.leonlatsch.photok.pro.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,44 +45,77 @@ fun RestoreBackupRestoring(
                     Text("Restoring Backup")
                 },
             )
+        },
+        bottomBar = {
+            OutlinedButton(
+                onClick = {},
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .navigationBarsPadding()
+            ) {
+                Text("Cancel restore")
+            }
         }
     ) { contentPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(contentPadding)
                 .padding(20.dp)
         ) {
-            CircularProgressIndicator(
-                progress = { uiState.progress },
-                modifier = Modifier.size(64.dp),
-                strokeWidth = 6.dp,
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "${(uiState.progress * 100).roundToInt()}%",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontFamily = FontFamily.Monospace,
+                )
 
-            Spacer(Modifier.height(20.dp))
-
-            Text(
-                text = "Restoring Backup",
-                style = MaterialTheme.typography.headlineMedium,
-            )
+                Text(
+                    text = "${uiState.filesDone} / ${uiState.filesTotal} files",
+                    fontFamily = FontFamily.Monospace,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
 
             Spacer(Modifier.height(10.dp))
 
-            Text(
-                text = uiState.fileName,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.fillMaxWidth(),
+            LinearProgressIndicator(
+                progress = { uiState.progress },
+                modifier = Modifier
+                    .height(8.dp)
+                    .fillMaxWidth()
             )
 
             Spacer(Modifier.height(20.dp))
 
-            LinearProgressIndicator(
-                progress = { uiState.progress },
-                modifier = Modifier.fillMaxWidth(),
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                StatCard(
+                    label = "Speed",
+                    icon = R.drawable.ic_add,
+                    stat = "${formatBytes(uiState.bytesPerSecond)}/s",
+                    modifier = Modifier.weight(1f)
+                )
+                StatCard(
+                    label = "Remaining",
+                    icon = R.drawable.ic_clock,
+                    stat = formatTimeRemaining(uiState.millisRemaining),
+                    modifier = Modifier.weight(1f)
+                )
+            }
 
             Spacer(Modifier.height(10.dp))
 
