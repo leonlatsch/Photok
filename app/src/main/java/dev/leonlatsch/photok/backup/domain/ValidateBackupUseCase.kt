@@ -22,6 +22,8 @@ import dev.leonlatsch.photok.backup.data.ReadBackupMetadataUseCase
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,7 +32,7 @@ class ValidateBackupUseCase @Inject constructor(
     private val io: IO,
 ) {
 
-    suspend operator fun invoke(uri: Uri): Result<BackupValidation> {
+    suspend operator fun invoke(uri: Uri): Result<BackupValidation> = withContext(Dispatchers.IO) {
         try {
             val zipInputStream = io.zip.openZipInput(uri)
 
@@ -55,11 +57,11 @@ class ValidateBackupUseCase @Inject constructor(
             }
 
             if ((cryptFiles == 0) && (photokFiles == 0)) {
-                return Result.failure(IllegalStateException("No crypt files or photok files found"))
+                return@withContext Result.failure(IllegalStateException("No crypt files or photok files found"))
             }
 
             if (metaData == null || backupVersion == null) {
-                return Result.failure(IllegalStateException("No metadata found"))
+                return@withContext Result.failure(IllegalStateException("No metadata found"))
             }
 
             val fileName = io.getFileName(uri)
@@ -71,10 +73,10 @@ class ValidateBackupUseCase @Inject constructor(
                 fileSize = fileSize,
             )
 
-            return Result.success(backupValidation)
+            return@withContext Result.success(backupValidation)
         } catch (e: Exception) {
             Timber.e(e)
-            return Result.failure(e)
+            return@withContext Result.failure(e)
         }
     }
 }
