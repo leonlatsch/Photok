@@ -33,7 +33,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 @Composable
 fun RestoreBackupFinished(
     uiState: RestoreBackupUiState.Finished,
-    onClose: () -> Unit,
+    onDone: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -45,7 +45,7 @@ fun RestoreBackupFinished(
         },
         bottomBar = {
             Button(
-                onClick = onClose,
+                onClick = onDone,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .navigationBarsPadding()
@@ -97,14 +97,27 @@ fun RestoreBackupFinished(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            Spacer(Modifier.height(20.dp))
+            if (uiState.failedFiles.isNotEmpty()) {
+                Spacer(Modifier.height(20.dp))
 
-            Text(
-                text = "${uiState.errors} errors",
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.fillMaxWidth(),
-            )
+                Text(
+                    text = "${uiState.failedFiles.size} files could not be restored",
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+                Spacer(Modifier.height(10.dp))
+
+                uiState.failedFiles.forEach { failedFile ->
+                    Text(
+                        text = failedFile,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
         }
     }
 }
@@ -116,9 +129,9 @@ private fun Preview() {
         RestoreBackupFinished(
             uiState = RestoreBackupUiState.Finished(
                 fileName = "photok_backup_1234.zip",
-                errors = 0,
+                failedFiles = emptyList(),
             ),
-            onClose = {},
+            onDone = {},
         )
     }
 }

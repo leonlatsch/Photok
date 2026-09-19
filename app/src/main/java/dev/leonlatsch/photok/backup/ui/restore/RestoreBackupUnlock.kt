@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -60,7 +61,7 @@ fun RestoreBackupUnlock(
         bottomBar = {
             Button(
                 onClick = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
-                enabled = uiState.password.isNotEmpty(),
+                enabled = uiState.password.isNotEmpty() && !uiState.unlocking,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .navigationBarsPadding()
@@ -71,6 +72,15 @@ fun RestoreBackupUnlock(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    if (uiState.unlocking) {
+                        CircularProgressIndicator(
+                            strokeWidth = 2.dp,
+                            modifier = Modifier.size(18.dp),
+                        )
+
+                        Spacer(Modifier.size(10.dp))
+                    }
+
                     Text(
                         text = "Unlock & Restore",
                     )
@@ -147,6 +157,7 @@ private fun Preview() {
             uiState = RestoreBackupUiState.Unlock(
                 fileName = "photok_backup_1234.zip",
                 password = "",
+                unlocking = false,
             ),
             handleUiEvent = {},
         )

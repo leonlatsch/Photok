@@ -16,22 +16,17 @@
 
 package dev.leonlatsch.photok.backup.domain
 
-import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.encryption.domain.models.Session
-import kotlinx.coroutines.flow.Flow
-import java.util.zip.ZipInputStream
+sealed interface RestoreProgress {
 
-interface RestoreBackupStrategy<T : BackupMetaData> {
-    fun restore(
-        metaData: T,
-        stream: ZipInputStream,
-        session: Session,
-    ): Flow<RestoreProgress>
+    data class Restoring(
+        val filesDone: Int,
+        val filesTotal: Int,
+        val bytesDone: Long,
+        val bytesTotal: Long,
+    ) : RestoreProgress
+
+    /** All media is on disk, the database rows (photos, albums, refs) are being written. */
+    data object Finalizing : RestoreProgress
+
+    data class Finished(val result: RestoreResult) : RestoreProgress
 }
-
-/**
- * `true` for the entry holding the photo/video itself, `false` for its thumbnail (`.tn`)
- * or video preview (`.vp`) sidecar. Only main files count towards the restore progress.
- */
-internal fun isMainFile(entryName: String) =
-    !entryName.endsWith(".tn") && !entryName.endsWith(".vp")

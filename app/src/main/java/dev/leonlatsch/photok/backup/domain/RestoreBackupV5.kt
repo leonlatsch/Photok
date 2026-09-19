@@ -25,6 +25,10 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -71,14 +75,17 @@ class RestoreBackupV5 @Inject constructor(
     private val cryptoEngine: CryptoEngine,
 ) : RestoreBackupStrategy<BackupMetaData.V5> {
 
-    override suspend fun restore(
+    override fun restore(
         metaData: BackupMetaData.V5,
         stream: ZipInputStream,
         session: Session,
-    ): RestoreResult {
+    ): Flow<RestoreProgress> = flow {
         val start = System.currentTimeMillis()
 
-        var errors = 0
+        val failedFiles = mutableListOf<String>()
+        val tracker = RestoreProgressTracker(metaData.photos)
+
+        emit(tracker.snapshot())
 
         var ze = stream.nextEntry
 
@@ -90,11 +97,15 @@ class RestoreBackupV5 @Inject constructor(
 
             // Skip files that are not mentioned in the metadata
             // These might be dead files from old versions of photok
-            if (metaData.photos.none { ze.name.contains(it.uuid) }) {
+            val photoBackup = metaData.photos.find { ze.name.contains(it.uuid) }
+            if (photoBackup == null) {
                 ze = stream.nextEntry
                 Timber.i("Skipping dead file in backup: ${ze.name}")
                 continue
             }
+
+            val isMainFile = isMainFile(ze.name)
+            if (isMainFile) tracker.startFile(photoBackup)
 
             val encryptedZipInput = cryptoEngine.createDecryptStream(stream, session)
             val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
@@ -105,14 +116,19 @@ class RestoreBackupV5 @Inject constructor(
             }
 
 
-            io.copy(encryptedZipInput, internalOutputStream)
-                .onFailure {
-                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
-                    errors++
-                }
+            io.copy(encryptedZipInput, internalOutputStream) { chunk ->
+                if (isMainFile) tracker.advance(chunk)?.let { emit(it) }
+            }.onFailure {
+                Timber.e(it, "Error restoring zip entry: ${ze.name}")
+                if (photoBackup.fileName !in failedFiles) failedFiles += photoBackup.fileName
+            }
+
+            if (isMainFile) emit(tracker.finishFile())
 
             ze = stream.nextEntry
         }
+
+        emit(RestoreProgress.Finalizing)
 
         metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
             val newPhoto = photoBackup
@@ -134,7 +150,6 @@ class RestoreBackupV5 @Inject constructor(
 
         Timber.d("PERFORMANCE: Restore backup took ${System.currentTimeMillis() - start}ms")
 
-        return RestoreResult(errors)
-    }
-
+        emit(RestoreProgress.Finished(RestoreResult(failedFiles)))
+    }.flowOn(Dispatchers.IO)
 }

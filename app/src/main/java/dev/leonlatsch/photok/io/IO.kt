@@ -35,6 +35,8 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+private const val COPY_BUFFER_SIZE = 8192
+
 @Singleton
 class IO @Inject constructor(
     @ApplicationContext val context: Context,
@@ -108,19 +110,32 @@ class IO @Inject constructor(
         return -1L
     }
 
+    /**
+     * Copy [input] to [output], reporting every copied chunk to [onBytesCopied].
+     */
     suspend fun copy(
         input: InputStream,
-        output: OutputStream
-    ): Result<Long> = suspendCoroutine { continuation ->
-        try {
-            val bytesWritten = input.copyTo(output, bufferSize = 8192)
-            output.flush()
-            output.close()
+        output: OutputStream,
+        onBytesCopied: suspend (Long) -> Unit = {},
+    ): Result<Long> = try {
+        var bytesWritten = 0L
+        val buffer = ByteArray(COPY_BUFFER_SIZE)
 
-            continuation.resume(Result.success(bytesWritten))
-        } catch (e: Exception) {
-            continuation.resume(Result.failure(e))
+        var read = input.read(buffer)
+        while (read >= 0) {
+            output.write(buffer, 0, read)
+            bytesWritten += read
+            onBytesCopied(read.toLong())
+
+            read = input.read(buffer)
         }
+
+        output.flush()
+        output.close()
+
+        Result.success(bytesWritten)
+    } catch (e: Exception) {
+        Result.failure(e)
     }
 
     fun openFileInput(fileUri: Uri): InputStream? =

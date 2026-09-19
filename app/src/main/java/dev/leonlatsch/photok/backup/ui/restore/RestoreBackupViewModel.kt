@@ -14,6 +14,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.RestoreProgress
 import dev.leonlatsch.photok.backup.domain.RestoreResult
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
@@ -43,23 +44,31 @@ sealed interface RestoreBackupUiState {
     data class Unlock(
         val fileName: String,
         val password: String,
+        val unlocking: Boolean,
     ) : RestoreBackupUiState
 
     data class Restoring(
         val fileName: String,
-        // TODO: progress
-        // TODO: speed
-        // TODO: bytes written
-        // TODO: time remaining / elapsed
-        // TODO: success/error list
+        val filesDone: Int,
+        val filesTotal: Int,
+        val bytesDone: Long,
+        val bytesTotal: Long,
+        val bytesPerSecond: Long,
+        val millisRemaining: Long?,
+    ) : RestoreBackupUiState {
+        val progress: Float =
+            if (bytesTotal == 0L) 0f else bytesDone.toFloat() / bytesTotal.toFloat()
+    }
+
+    data class Finalizing(
+        val fileName: String,
     ) : RestoreBackupUiState
 
     data class Finished(
         val fileName: String,
-        val errors: Int,
+        val failedFiles: List<String>,
     ) : RestoreBackupUiState
 
-    /** The step the user is on. [Validating] is shown until the backup was validated. */
     enum class Step {
         Overview,
         Unlock,
@@ -70,6 +79,8 @@ sealed interface RestoreBackupUiState {
     data class Inputs(
         val step: Step = Step.Overview,
         val password: String = "",
+        val unlocking: Boolean = false,
+        val progress: RestoreProgress? = null,
         val restoreResult: RestoreResult? = null,
     )
 }
@@ -103,6 +114,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     private val validatingState = RestoreBackupUiState.Validating(fileName = fileName)
 
+    private val speedEstimator = RestoreSpeedEstimator()
+
     val uiState = combine(
         inputs,
         validation,
@@ -114,15 +127,14 @@ class RestoreBackupViewModel @AssistedInject constructor(
             inputs.step == RestoreBackupUiState.Step.Unlock -> RestoreBackupUiState.Unlock(
                 fileName = fileName,
                 password = inputs.password,
+                unlocking = inputs.unlocking,
             )
 
-            inputs.step == RestoreBackupUiState.Step.Restoring -> RestoreBackupUiState.Restoring(
-                fileName = fileName,
-            )
+            inputs.step == RestoreBackupUiState.Step.Restoring -> restoringState(inputs.progress)
 
             inputs.step == RestoreBackupUiState.Step.Finished -> RestoreBackupUiState.Finished(
                 fileName = fileName,
-                errors = inputs.restoreResult?.errors ?: 0,
+                failedFiles = inputs.restoreResult?.failedFiles.orEmpty(),
             )
 
             else -> RestoreBackupUiState.Overview(
@@ -131,6 +143,41 @@ class RestoreBackupViewModel @AssistedInject constructor(
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
+
+    private fun restoringState(progress: RestoreProgress?): RestoreBackupUiState =
+        when (progress) {
+            is RestoreProgress.Finalizing -> RestoreBackupUiState.Finalizing(fileName = fileName)
+
+            is RestoreProgress.Restoring -> {
+                val bytesPerSecond = speedEstimator.bytesPerSecond(progress.bytesDone)
+                val bytesRemaining = progress.bytesTotal - progress.bytesDone
+
+                RestoreBackupUiState.Restoring(
+                    fileName = fileName,
+                    filesDone = progress.filesDone,
+                    filesTotal = progress.filesTotal,
+                    bytesDone = progress.bytesDone,
+                    bytesTotal = progress.bytesTotal,
+                    bytesPerSecond = bytesPerSecond,
+                    millisRemaining = if (bytesPerSecond > 0) {
+                        bytesRemaining * 1000 / bytesPerSecond
+                    } else {
+                        null
+                    },
+                )
+            }
+
+            // Restore was started, the first progress has not arrived yet
+            else -> RestoreBackupUiState.Restoring(
+                fileName = fileName,
+                filesDone = 0,
+                filesTotal = 0,
+                bytesDone = 0,
+                bytesTotal = 0,
+                bytesPerSecond = 0,
+                millisRemaining = null,
+            )
+        }
 
     fun handleUiEvent(event: RestoreBackupUiEvent) {
         when (event) {
@@ -154,21 +201,30 @@ class RestoreBackupViewModel @AssistedInject constructor(
         val metaData = validation.value?.metaData ?: return@launch
         val password = inputs.value.password
 
-        inputs.update { it.copy(step = RestoreBackupUiState.Step.Restoring, password = "") }
+        inputs.update { it.copy(unlocking = true) }
 
         unlockBackupUseCase(restoreBackupUri, metaData, password)
             .onSuccess { session ->
+                inputs.update {
+                    it.copy(
+                        step = RestoreBackupUiState.Step.Restoring,
+                        password = "",
+                        unlocking = false,
+                    )
+                }
+
                 restoreBackup(metaData, session)
             }
             .onFailure {
                 // TODO: error state
+                inputs.update { it.copy(unlocking = false) }
             }
     }
 
     private suspend fun restoreBackup(metaData: BackupMetaData, session: Session) {
         val zipInputStream = io.zip.openZipInput(restoreBackupUri)
 
-        val result = when (metaData) {
+        val progressFlow = when (metaData) {
             is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
             is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
             is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
@@ -176,11 +232,20 @@ class RestoreBackupViewModel @AssistedInject constructor(
             is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
         }
 
-        zipInputStream.close()
+        progressFlow.collect { progress ->
+            when (progress) {
+                is RestoreProgress.Finished -> inputs.update {
+                    it.copy(
+                        step = RestoreBackupUiState.Step.Finished,
+                        restoreResult = progress.result,
+                    )
+                }
 
-        inputs.update {
-            it.copy(step = RestoreBackupUiState.Step.Finished, restoreResult = result)
+                else -> inputs.update { it.copy(progress = progress) }
+            }
         }
+
+        zipInputStream.close()
     }
 
     @AssistedFactory

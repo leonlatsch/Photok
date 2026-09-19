@@ -22,13 +22,17 @@ import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.Session
+import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Backup Format V1
@@ -61,13 +65,17 @@ class RestoreBackupV1 @Inject constructor(
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
+    private val io: IO,
 ) : RestoreBackupStrategy<BackupMetaData.V1> {
-    override suspend fun restore(
+    override fun restore(
         metaData: BackupMetaData.V1,
         stream: ZipInputStream,
         session: Session,
-    ): RestoreResult {
-        var errors = 0
+    ): Flow<RestoreProgress> = flow {
+        val failedFiles = mutableListOf<String>()
+        val tracker = RestoreProgressTracker(metaData.photos)
+
+        emit(tracker.snapshot())
 
         var ze = stream.nextEntry
 
@@ -91,25 +99,45 @@ class RestoreBackupV1 @Inject constructor(
                 continue
             }
 
-            val photoBytes = suspendCoroutine {
-                it.resume(encryptedZipInput.readBytes())
+            tracker.startFile(photoBackup)
+
+            // V1 needs the whole photo in memory anyway, createThumbnails takes a ByteArray
+            val photoBytesOutput = ByteArrayOutputStream()
+            val photoCopied = io.copy(encryptedZipInput, photoBytesOutput) { chunk ->
+                tracker.advance(chunk)?.let { emit(it) }
+            }.isSuccess
+
+            if (!photoCopied) {
+                failedFiles += photoBackup.fileName
+                emit(tracker.finishFile())
+                ze = stream.nextEntry
+                continue
             }
+
+            val photoBytes = photoBytesOutput.toByteArray()
             val photoBytesInputStream = ByteArrayInputStream(photoBytes)
 
             val photoFileCreated =
                 photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
 
             if (!photoFileCreated) {
-                errors++
+                failedFiles += photoBackup.fileName
+                emit(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
             }
 
             createThumbnails(dummyPhoto, photoBytes)
-                .onFailure { errors++ }
+                .onFailure {
+                    if (photoBackup.fileName !in failedFiles) failedFiles += photoBackup.fileName
+                }
+
+            emit(tracker.finishFile())
 
             ze = stream.nextEntry
         }
+
+        emit(RestoreProgress.Finalizing)
 
         metaData
             .getPhotosInOriginalOrder()
@@ -117,6 +145,6 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
             }
 
-        return RestoreResult(errors)
-    }
+        emit(RestoreProgress.Finished(RestoreResult(failedFiles)))
+    }.flowOn(Dispatchers.IO)
 }

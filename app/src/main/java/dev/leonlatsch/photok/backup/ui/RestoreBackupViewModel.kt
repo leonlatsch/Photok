@@ -115,28 +115,28 @@ class RestoreBackupViewModel @Inject constructor(
     /**
      * Restore the validated backup with the original password.
      */
+    // TODO: Dead. Replaced by the compose restore flow in backup/ui/restore. Delete with the dialogs.
     fun restoreBackup(session: Session) = viewModelScope.launch(Dispatchers.IO) {
         restoreState = RestoreState.RESTORING
 
-        val metaData = metaData ?: error("meta.json was loaded without success")
-
-        val zipInputStream = io.zip.openZipInput(fileUri)
-
-        val result = when (metaData) {
-            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
-        }
-
-        zipInputStream.close()
-
-        restoreState = if (result.errors > 0) {
-            RestoreState.FINISHED_WITH_ERRORS
-        } else {
-            RestoreState.FINISHED
-        }
-
+//        val metaData = metaData ?: error("meta.json was loaded without success")
+//
+//        val zipInputStream = io.zip.openZipInput(fileUri)
+//
+//        val result = when (metaData) {
+//            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
+//            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
+//            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
+//            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
+//            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
+//        }
+//
+//        zipInputStream.close()
+//
+//        restoreState = if (result.errors > 0) {
+//            RestoreState.FINISHED_WITH_ERRORS
+//        } else {
+//            RestoreState.FINISHED
+//        }
     }
 }

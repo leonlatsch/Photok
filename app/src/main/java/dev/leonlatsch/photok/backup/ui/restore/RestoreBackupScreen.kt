@@ -11,6 +11,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RestoreBackupScreen(
     backupUri: Uri,
     onClose: () -> Unit,
+    onRestoreSucceeded: () -> Unit,
 ) {
     AppTheme {
         val viewModel: RestoreBackupViewModel =
@@ -39,9 +40,15 @@ fun RestoreBackupScreen(
             is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
                 uiState = state,
             )
+            is RestoreBackupUiState.Finalizing -> RestoreBackupFinalizing(
+                uiState = state,
+            )
             is RestoreBackupUiState.Finished -> RestoreBackupFinished(
                 uiState = state,
-                onClose = onClose,
+                onDone = {
+                    if (state.failedFiles.isEmpty()) onRestoreSucceeded()
+                    onClose()
+                },
             )
         }
     }
