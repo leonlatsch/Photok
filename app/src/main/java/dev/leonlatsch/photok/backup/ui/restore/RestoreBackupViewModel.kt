@@ -10,10 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.domain.BackupValidation
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,7 +26,8 @@ sealed interface RestoreBackupUiState {
     ) : RestoreBackupUiState
 
     data class Overview(
-        val validation: BackupValidation
+        val validation: BackupValidation,
+        val emptyVault: Boolean,
     ) : RestoreBackupUiState
 
     data class Unlock(
@@ -48,6 +49,7 @@ sealed interface RestoreBackupUiState {
 class RestoreBackupViewModel @AssistedInject constructor(
     @Assisted(RESTORE_BACKUP_URI) private val restoreBackupUri: Uri,
     private val validateBackupUseCase: ValidateBackupUseCase,
+    private val photoRepository: PhotoRepository,
     private val io: IO,
 ): ViewModel() {
 
@@ -64,7 +66,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
     ) { password, validation ->
         when {
             validation == null -> validatingState
-            else -> RestoreBackupUiState.Overview(validation)
+            else -> RestoreBackupUiState.Overview(
+                validation = validation,
+                emptyVault = photoRepository.countAll() == 0,
+            )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
 

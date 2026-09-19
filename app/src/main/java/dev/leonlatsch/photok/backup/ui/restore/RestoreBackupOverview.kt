@@ -217,18 +217,20 @@ fun RestoreBackupOverview(
                 value = subtitle,
             )
 
-            Spacer(Modifier.height(20.dp))
+            if (!uiState.emptyVault) {
+                Spacer(Modifier.height(20.dp))
 
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
-                shape = RoundedCornerShape(18.dp),
-            ) {
-                Text(
-                    text = "You already have files in your Vault. Restoring merges them with the files from this backup.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.padding(15.dp)
-                )
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    shape = RoundedCornerShape(18.dp),
+                ) {
+                    Text(
+                        text = "You already have files in your Vault. Restoring merges them with the files from this backup.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
             }
         }
     }
@@ -340,7 +342,8 @@ private fun Preview() {
                     ),
                     fileName = "photok_backup_1234.zip",
                     fileSize = 123123123L,
-                )
+                ),
+                emptyVault = false,
             ),
             onClose = {},
         )
