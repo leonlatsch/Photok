@@ -29,10 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
@@ -113,53 +111,10 @@ fun RestoreBackupOverview(
                 .padding(20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            Surface(
-                shape = RoundedCornerShape(18.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.padding(10.dp)
-                ) {
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        tonalElevation = 10.dp,
-                    ) {
-                        Text(
-                            text = "ZIP",
-                            fontWeight = FontWeight.Black,
-                            fontSize = 14.sp,
-                            fontFamily = FontFamily.Monospace,
-                            modifier = Modifier
-                                .padding(10.dp)
-                        )
-                    }
-
-
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(5.dp)
-                    ) {
-                        Text(
-                            text = uiState.validation.fileName,
-                            fontFamily = FontFamily.Monospace,
-                            maxLines = 1,
-                            overflow = TextOverflow.MiddleEllipsis,
-                        )
-
-
-                        Text(
-                            text = "$formattedCreatedAt • $formattedFileSize",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.outline,
-                        )
-                    }
-
-                }
-
-            }
+            BackupFileHeader(
+                fileName = uiState.validation.fileName,
+                subtitle = "$formattedCreatedAt • $formattedFileSize",
+            )
 
             Spacer(Modifier.height(20.dp))
 
