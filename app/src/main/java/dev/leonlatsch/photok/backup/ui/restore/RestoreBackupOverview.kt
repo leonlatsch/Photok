@@ -202,11 +202,34 @@ fun RestoreBackupOverview(
             HorizontalDivider(
                 modifier = Modifier.padding(10.dp)
             )
+
+            val subtitle = remember {
+                if (uiState.validation.metaData.backupVersion == BackupMetaData.CURRENT_BACKUP_VERSION) {
+                    "Up to date (V${uiState.validation.metaData.backupVersion})"
+                } else {
+                    "Backwards compatible (V${uiState.validation.metaData.backupVersion})"
+                }
+            }
+
             ArchiveInfoItem(
-                icon = R.drawable.ic_check_circle,
-                label = "Backup format",
-                value = "Version ${uiState.validation.metaData.backupVersion}"
+                icon = R.drawable.ic_extension,
+                label = "Compatibility",
+                value = subtitle,
             )
+
+            Spacer(Modifier.height(20.dp))
+
+            Surface(
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
+                shape = RoundedCornerShape(18.dp),
+            ) {
+                Text(
+                    text = "You already have files in your Vault. Restoring merges them with the files from this backup.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(15.dp)
+                )
+            }
         }
     }
 }
