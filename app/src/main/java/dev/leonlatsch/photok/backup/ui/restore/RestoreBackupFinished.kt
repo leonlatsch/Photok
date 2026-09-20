@@ -4,16 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +32,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.FailedFile
+import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
 import java.io.IOException
@@ -69,80 +69,118 @@ fun RestoreBackupFinished(
             }
         }
     ) { contentPadding ->
-        val hasFailures = uiState.failedFiles.isNotEmpty()
+        if (uiState.failedFiles.isEmpty()) {
+            RestoreBackupFinishedSuccess(
+                uiState = uiState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
+            )
+        } else {
+            RestoreBackupFinishedWithFailures(
+                uiState = uiState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
+            )
+        }
+    }
+}
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+@Composable
+private fun RestoreBackupFinishedSuccess(
+    uiState: RestoreBackupUiState.Finished,
+    modifier: Modifier = Modifier,
+) {
+    CenteredScrollableColumn(modifier = modifier) {
+        Icon(
+            painter = painterResource(R.drawable.ic_check_circle_outline),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(72.dp)
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = "Restored with no problems",
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(Modifier.height(10.dp))
+
+        Text(
+            text = summary(uiState),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.outline,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+private fun RestoreBackupFinishedWithFailures(
+    uiState: RestoreBackupUiState.Finished,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.padding(20.dp)
+    ) {
+        Spacer(Modifier.height(30.dp))
+
+        Icon(
+            painter = painterResource(R.drawable.ic_warning),
+            contentDescription = null,
+            tint = Colors.Warning,
+            modifier = Modifier.size(72.dp)
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = failuresHeadline(uiState.failedFiles.size),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(Modifier.height(10.dp))
+
+        Text(
+            text = summary(uiState),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.outline,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = "Failed items",
+            color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxSize()
-                .padding(contentPadding)
-                .padding(20.dp)
+                .align(Alignment.Start)
+                .padding(horizontal = 10.dp)
+        )
+
+        Spacer(Modifier.height(5.dp))
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
         ) {
-            Spacer(Modifier.height(30.dp))
-
-            if (hasFailures) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_warning),
-                    contentDescription = null,
-                    tint = Colors.Warning,
-                    modifier = Modifier.size(72.dp)
+            items(uiState.failedFiles) { failedFile ->
+                FailedItemCard(
+                    failedFile = failedFile,
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            } else {
-                Icon(
-                    painter = painterResource(R.drawable.ic_check_circle_outline),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(72.dp)
-                )
-            }
-
-            Spacer(Modifier.height(20.dp))
-
-            Text(
-                text = headline(uiState.failedFiles.size),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-            )
-
-            Spacer(Modifier.height(10.dp))
-
-            Text(
-                text = summary(uiState),
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.fillMaxWidth(),
-            )
-
-            if (hasFailures) {
-                Column(
-                    modifier = Modifier.fillMaxHeight()
-                ) {
-                    Spacer(Modifier.height(20.dp))
-
-                    Text(
-                        text = "Failed items",
-                        color = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier
-                            .align(Alignment.Start)
-                            .padding(horizontal = 10.dp)
-                    )
-
-                    Spacer(Modifier.height(5.dp))
-
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        uiState.failedFiles.forEach { failedFile ->
-                            FailedItemCard(
-                                failedFile = failedFile,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                    }
-                }
             }
         }
     }
@@ -190,8 +228,7 @@ private fun FailedItemCard(
     }
 }
 
-private fun headline(failedCount: Int): String = when (failedCount) {
-    0 -> "Restored with no problems"
+private fun failuresHeadline(failedCount: Int): String = when (failedCount) {
     1 -> "Restored with 1 problem"
     else -> "Restored with $failedCount problems"
 }
