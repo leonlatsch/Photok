@@ -4,13 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,11 +26,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.backup.domain.FailedFile
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Colors
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,65 +69,152 @@ fun RestoreBackupFinished(
             }
         }
     ) { contentPadding ->
+        val hasFailures = uiState.failedFiles.isNotEmpty()
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(contentPadding)
                 .padding(20.dp)
         ) {
-            Surface(
-                shape = RoundedCornerShape(18.dp),
-                tonalElevation = 10.dp,
-            ) {
+            Spacer(Modifier.height(30.dp))
+
+            if (hasFailures) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_restore),
+                    painter = painterResource(R.drawable.ic_warning),
                     contentDescription = null,
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .size(32.dp)
+                    tint = Colors.Warning,
+                    modifier = Modifier.size(72.dp)
+                )
+            } else {
+                Icon(
+                    painter = painterResource(R.drawable.ic_check_circle_outline),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(72.dp)
                 )
             }
 
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Backup Restored",
+                text = headline(uiState.failedFiles.size),
                 style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(Modifier.height(10.dp))
 
             Text(
-                text = uiState.fileName,
+                text = summary(uiState),
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            if (uiState.failedFiles.isNotEmpty()) {
-                Spacer(Modifier.height(20.dp))
+            if (hasFailures) {
+                Column(
+                    modifier = Modifier.fillMaxHeight()
+                ) {
+                    Spacer(Modifier.height(20.dp))
 
-                Text(
-                    text = "${uiState.failedFiles.size} files could not be restored",
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-
-                Spacer(Modifier.height(10.dp))
-
-                uiState.failedFiles.forEach { failedFile ->
                     Text(
-                        text = failedFile,
-                        textAlign = TextAlign.Center,
+                        text = "Failed items",
                         color = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(horizontal = 10.dp)
                     )
+
+                    Spacer(Modifier.height(5.dp))
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        uiState.failedFiles.forEach { failedFile ->
+                            FailedItemCard(
+                                failedFile = failedFile,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun FailedItemCard(
+    failedFile: FailedFile,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        modifier = modifier,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_warning),
+                contentDescription = null,
+                tint = Colors.Warning,
+                modifier = Modifier.size(20.dp)
+            )
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = failedFile.fileName,
+                    fontFamily = FontFamily.Monospace,
+                    maxLines = 1,
+                    overflow = TextOverflow.MiddleEllipsis,
+                )
+
+                Text(
+                    text = failedFile.cause?.localizedMessage ?: "Unknown error",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline,
+                )
+            }
+        }
+    }
+}
+
+private fun headline(failedCount: Int): String = when (failedCount) {
+    0 -> "Restored with no problems"
+    1 -> "Restored with 1 problem"
+    else -> "Restored with $failedCount problems"
+}
+
+private fun summary(uiState: RestoreBackupUiState.Finished): String {
+    val duration = formatDuration(uiState.durationMillis)
+
+    return if (uiState.albumsRestored > 0) {
+        "${uiState.filesRestored} of ${uiState.filesTotal} files and ${uiState.albumsRestored} " +
+            "albums were added to your vault in $duration."
+    } else {
+        "${uiState.filesRestored} of ${uiState.filesTotal} files were added to your vault " +
+            "in $duration."
+    }
+}
+
+private fun formatDuration(millis: Long): String {
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
+    val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60
+
+    return when {
+        minutes > 0 -> "$minutes min $seconds s"
+        else -> "$seconds s"
     }
 }
 
@@ -129,7 +225,70 @@ private fun Preview() {
         RestoreBackupFinished(
             uiState = RestoreBackupUiState.Finished(
                 fileName = "photok_backup_1234.zip",
+                filesRestored = 128,
+                filesTotal = 128,
+                albumsRestored = 4,
+                durationMillis = 134_000L,
                 failedFiles = emptyList(),
+            ),
+            onDone = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun PreviewWithFailures() {
+    AppTheme {
+        RestoreBackupFinished(
+            uiState = RestoreBackupUiState.Finished(
+                fileName = "photok_backup_1234.zip",
+                filesRestored = 125,
+                filesTotal = 128,
+                albumsRestored = 4,
+                durationMillis = 134_000L,
+                failedFiles = listOf(
+                    FailedFile(
+                        fileName = "IMG_20240418_102907.jpg",
+                        cause = IOException("Unexpected end of stream"),
+                    ),
+                    FailedFile(
+                        fileName = "VID_20240418_101233.mp4",
+                        cause = IOException("No space left on device"),
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                    FailedFile(
+                        fileName = "IMG_20240418_112238.jpg",
+                        cause = null,
+                    ),
+                ),
             ),
             onDone = {},
         )

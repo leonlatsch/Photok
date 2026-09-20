@@ -80,7 +80,9 @@ class RestoreBackupV3 @Inject constructor(
         stream: ZipInputStream,
         session: Session,
     ): Flow<RestoreProgress> = channelFlow {
-        val failedFiles = mutableListOf<String>()
+        val start = System.currentTimeMillis()
+
+        val failedFiles = mutableListOf<FailedFile>()
         val tracker = RestoreProgressTracker(metaData.photos)
 
         send(tracker.snapshot())
@@ -128,7 +130,9 @@ class RestoreBackupV3 @Inject constructor(
                 }
             }.onFailure {
                 Timber.e(it, "Error restoring zip entry: ${ze.name}")
-                if (photoBackup.fileName !in failedFiles) failedFiles += photoBackup.fileName
+                if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
+                    failedFiles += FailedFile(photoBackup.fileName, it)
+                }
             }
 
             if (isMainFile) send(tracker.finishFile())
@@ -156,6 +160,16 @@ class RestoreBackupV3 @Inject constructor(
             albumRepository.link(albumPhotoRef)
         }
 
-        send(RestoreProgress.Finished(RestoreResult(failedFiles)))
+        send(
+            RestoreProgress.Finished(
+                RestoreResult(
+                    filesRestored = metaData.photos.size - failedFiles.size,
+                    filesTotal = metaData.photos.size,
+                    albumsRestored = metaData.albums.size,
+                    durationMillis = System.currentTimeMillis() - start,
+                    failedFiles = failedFiles,
+                )
+            )
+        )
     }.flowOn(Dispatchers.IO)
 }

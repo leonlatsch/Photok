@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
@@ -72,7 +73,9 @@ class RestoreBackupV1 @Inject constructor(
         stream: ZipInputStream,
         session: Session,
     ): Flow<RestoreProgress> = channelFlow {
-        val failedFiles = mutableListOf<String>()
+        val start = System.currentTimeMillis()
+
+        val failedFiles = mutableListOf<FailedFile>()
         val tracker = RestoreProgressTracker(metaData.photos)
 
         send(tracker.snapshot())
@@ -103,12 +106,14 @@ class RestoreBackupV1 @Inject constructor(
 
             // V1 needs the whole photo in memory anyway, createThumbnails takes a ByteArray
             val photoBytesOutput = ByteArrayOutputStream()
-            val photoCopied = io.copy(encryptedZipInput, photoBytesOutput) { chunk ->
+            val copyResult = io.copy(encryptedZipInput, photoBytesOutput) { chunk ->
                 tracker.advance(chunk)?.let { trySend(it) }
-            }.isSuccess
+            }
 
-            if (!photoCopied) {
-                failedFiles += photoBackup.fileName
+            if (copyResult.isFailure) {
+                val cause = copyResult.exceptionOrNull()
+                Timber.e(cause, "Error restoring zip entry: ${ze.name}")
+                failedFiles += FailedFile(photoBackup.fileName, cause)
                 send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
@@ -121,7 +126,8 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
 
             if (!photoFileCreated) {
-                failedFiles += photoBackup.fileName
+                Timber.e("Could not create photo file for zip entry: ${ze.name}")
+                failedFiles += FailedFile(photoBackup.fileName, null)
                 send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
@@ -129,7 +135,10 @@ class RestoreBackupV1 @Inject constructor(
 
             createThumbnails(dummyPhoto, photoBytes)
                 .onFailure {
-                    if (photoBackup.fileName !in failedFiles) failedFiles += photoBackup.fileName
+                    Timber.e(it, "Error creating thumbnails for zip entry: ${ze.name}")
+                    if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
+                        failedFiles += FailedFile(photoBackup.fileName, it)
+                    }
                 }
 
             send(tracker.finishFile())
@@ -145,6 +154,16 @@ class RestoreBackupV1 @Inject constructor(
                 photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
             }
 
-        send(RestoreProgress.Finished(RestoreResult(failedFiles)))
+        send(
+            RestoreProgress.Finished(
+                RestoreResult(
+                    filesRestored = metaData.photos.size - failedFiles.size,
+                    filesTotal = metaData.photos.size,
+                    albumsRestored = 0,
+                    durationMillis = System.currentTimeMillis() - start,
+                    failedFiles = failedFiles,
+                )
+            )
+        )
     }.flowOn(Dispatchers.IO)
 }

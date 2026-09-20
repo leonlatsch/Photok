@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
+import dev.leonlatsch.photok.backup.domain.FailedFile
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
@@ -72,7 +73,11 @@ sealed interface RestoreBackupUiState {
 
     data class Finished(
         val fileName: String,
-        val failedFiles: List<String>,
+        val filesRestored: Int,
+        val filesTotal: Int,
+        val albumsRestored: Int,
+        val durationMillis: Long,
+        val failedFiles: List<FailedFile>,
     ) : RestoreBackupUiState
 
     enum class Step {
@@ -139,10 +144,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
             inputs.step == RestoreBackupUiState.Step.Restoring ->
                 restoringState(inputs.progress, inputs.log)
 
-            inputs.step == RestoreBackupUiState.Step.Finished -> RestoreBackupUiState.Finished(
-                fileName = fileName,
-                failedFiles = inputs.restoreResult?.failedFiles.orEmpty(),
-            )
+            inputs.step == RestoreBackupUiState.Step.Finished && inputs.restoreResult != null ->
+                finishedState(inputs.restoreResult)
 
             else -> RestoreBackupUiState.Overview(
                 validation = validation,
@@ -181,6 +184,15 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 log = emptyList(),
             )
         }
+
+    private fun finishedState(result: RestoreResult) = RestoreBackupUiState.Finished(
+        fileName = fileName,
+        filesRestored = result.filesRestored,
+        filesTotal = result.filesTotal,
+        albumsRestored = result.albumsRestored,
+        durationMillis = result.durationMillis,
+        failedFiles = result.failedFiles,
+    )
 
     fun handleUiEvent(event: RestoreBackupUiEvent) {
         when (event) {
