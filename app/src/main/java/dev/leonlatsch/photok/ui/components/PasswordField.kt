@@ -58,39 +58,41 @@ fun PasswordField(
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = imeAction,
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = { onDone?.invoke() },
-        ),
-        isError = error != null,
-        supportingText = if (error != null) {
-            { Text(error) }
-        } else null,
-        maxLines = 1,
-        shape = RoundedCornerShape(24.dp),
-        suffix = {
-            val icon = if (passwordVisible) R.drawable.ic_eye_closed else R.drawable.ic_eye
-            Crossfade(targetState = icon, label = "PasswordVisibility") { iconRes ->
-                Icon(
-                    painter = painterResource(iconRes),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(24.dp)
-                        .clickable(role = Role.Button) { passwordVisible = !passwordVisible }
-                )
-            }
-        },
-        modifier = modifier.fillMaxWidth(),
-    )
+    NoKeyboardLearning {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(label) },
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = imeAction,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { onDone?.invoke() },
+            ),
+            isError = error != null,
+            supportingText = if (error != null) {
+                { Text(error) }
+            } else null,
+            maxLines = 1,
+            shape = RoundedCornerShape(24.dp),
+            suffix = {
+                val icon = if (passwordVisible) R.drawable.ic_eye_closed else R.drawable.ic_eye
+                Crossfade(targetState = icon, label = "PasswordVisibility") { iconRes ->
+                    Icon(
+                        painter = painterResource(iconRes),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(24.dp)
+                            .clickable(role = Role.Button) { passwordVisible = !passwordVisible }
+                    )
+                }
+            },
+            modifier = modifier.fillMaxWidth(),
+        )
+    }
 }
 
 @PreviewLightDark
