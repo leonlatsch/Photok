@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.uicomponnets
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -68,9 +69,9 @@ class PasswordEditText @JvmOverloads constructor(
                         R.drawable.ic_eye_closed
                     )
                 )
-                INPUT_TYPE_TEXT
+                INPUT_TYPE_VISIBLE_PASSWORD
             }
-            INPUT_TYPE_TEXT -> {
+            INPUT_TYPE_VISIBLE_PASSWORD -> {
                 binding.passwordEditTextIcon.setImageDrawable(
                     AppCompatResources.getDrawable(
                         context,
@@ -148,8 +149,11 @@ class PasswordEditText @JvmOverloads constructor(
         }
 
     companion object {
-        const val INPUT_TYPE_PASSWORD = 129
-        const val INPUT_TYPE_TEXT = 1
+        const val INPUT_TYPE_PASSWORD =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        const val INPUT_TYPE_VISIBLE_PASSWORD =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
     }
 
     /**

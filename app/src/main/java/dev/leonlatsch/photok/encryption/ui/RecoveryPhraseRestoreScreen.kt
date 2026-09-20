@@ -83,6 +83,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
+import dev.leonlatsch.photok.ui.components.NoKeyboardLearning
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
@@ -292,39 +293,41 @@ private fun RecoveryPhraseRestoreContent(
             ) {
                 when (it) {
                     RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
-                        OutlinedTextField(
-                            value = uiState.phrase.toMnemonicString(),
-                            onValueChange = { raw ->
-                                val new = raw.cleanupRawInput()
+                        NoKeyboardLearning {
+                            OutlinedTextField(
+                                value = uiState.phrase.toMnemonicString(),
+                                onValueChange = { raw ->
+                                    val new = raw.cleanupRawInput()
 
-                                handleUiEvent(
-                                    RecoveryPhraseRestoreUiEvent.UpdatePhrase(
-                                        RecoveryPhrase.from(new)
+                                    handleUiEvent(
+                                        RecoveryPhraseRestoreUiEvent.UpdatePhrase(
+                                            RecoveryPhrase.from(new)
+                                        )
                                     )
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                capitalization = KeyboardCapitalization.None,
-                                autoCorrectEnabled = false,
-                                imeAction = ImeAction.Done,
-                                keyboardType = KeyboardType.Ascii,
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = { focusManager.clearFocus() }
-                            ),
-                            maxLines = 4,
-                            shape = RoundedCornerShape(24.dp),
-                            label = {
-                                Text(stringResource(R.string.recovery_phrase_label))
-                            },
-                            placeholder = {
-                                Text(stringResource(R.string.recovery_phrase_restore_input_placeholder))
-                            },
-                            modifier = Modifier
-                                .height(200.dp)
-                                .focusRequester(focusRequester)
-                                .padding(vertical = 20.dp)
-                        )
+                                },
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization = KeyboardCapitalization.None,
+                                    autoCorrectEnabled = false,
+                                    imeAction = ImeAction.Done,
+                                    keyboardType = KeyboardType.PasswordVisible,
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = { focusManager.clearFocus() }
+                                ),
+                                maxLines = 4,
+                                shape = RoundedCornerShape(24.dp),
+                                label = {
+                                    Text(stringResource(R.string.recovery_phrase_label))
+                                },
+                                placeholder = {
+                                    Text(stringResource(R.string.recovery_phrase_restore_input_placeholder))
+                                },
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .focusRequester(focusRequester)
+                                    .padding(vertical = 20.dp)
+                            )
+                        }
                     }
 
                     RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> {
