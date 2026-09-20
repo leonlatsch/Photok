@@ -65,7 +65,11 @@ fun PasswordField(
             label = { Text(label) },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
+                keyboardType = if (passwordVisible) {
+                    KeyboardType.PasswordVisible
+                } else {
+                    KeyboardType.Password
+                },
                 imeAction = imeAction,
             ),
             keyboardActions = KeyboardActions(

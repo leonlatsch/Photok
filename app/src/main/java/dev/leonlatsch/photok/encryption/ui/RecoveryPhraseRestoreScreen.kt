@@ -309,7 +309,7 @@ private fun RecoveryPhraseRestoreContent(
                                     capitalization = KeyboardCapitalization.None,
                                     autoCorrectEnabled = false,
                                     imeAction = ImeAction.Done,
-                                    keyboardType = KeyboardType.Ascii,
+                                    keyboardType = KeyboardType.PasswordVisible,
                                 ),
                                 keyboardActions = KeyboardActions(
                                     onDone = { focusManager.clearFocus() }
