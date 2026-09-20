@@ -34,6 +34,8 @@ import kotlinx.coroutines.launch
 
 const val RESTORE_BACKUP_URI = "restore_backup_uri"
 
+private const val LOG_ENTRIES = RESTORE_LOG_ROWS
+
 sealed interface RestoreBackupUiState {
     data class Validating(
         val fileName: String,
@@ -58,6 +60,7 @@ sealed interface RestoreBackupUiState {
         val bytesTotal: Long,
         val bytesPerSecond: Long,
         val millisRemaining: Long?,
+        val log: List<RestoreLogEntry>,
     ) : RestoreBackupUiState {
         val progress: Float =
             if (bytesTotal == 0L) 0f else bytesDone.toFloat() / bytesTotal.toFloat()
@@ -84,6 +87,7 @@ sealed interface RestoreBackupUiState {
         val password: String = "",
         val unlocking: Boolean = false,
         val progress: RestoreProgress? = null,
+        val log: List<RestoreLogEntry> = emptyList(),
         val restoreResult: RestoreResult? = null,
     )
 }
@@ -132,7 +136,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 unlocking = inputs.unlocking,
             )
 
-            inputs.step == RestoreBackupUiState.Step.Restoring -> restoringState(inputs.progress)
+            inputs.step == RestoreBackupUiState.Step.Restoring ->
+                restoringState(inputs.progress, inputs.log)
 
             inputs.step == RestoreBackupUiState.Step.Finished -> RestoreBackupUiState.Finished(
                 fileName = fileName,
@@ -146,7 +151,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
 
-    private fun restoringState(progress: RestoreProgress?): RestoreBackupUiState =
+    private fun restoringState(
+        progress: RestoreProgress?,
+        log: List<RestoreLogEntry>,
+    ): RestoreBackupUiState =
         when (progress) {
             is RestoreProgress.Finalizing -> RestoreBackupUiState.Finalizing(fileName = fileName)
 
@@ -158,6 +166,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 bytesTotal = progress.bytesTotal,
                 bytesPerSecond = progress.bytesPerSecond,
                 millisRemaining = progress.millisRemaining,
+                log = log,
             )
 
             // Restore was started, the first progress has not arrived yet
@@ -169,6 +178,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 bytesTotal = 0,
                 bytesPerSecond = 0,
                 millisRemaining = null,
+                log = emptyList(),
             )
         }
 
@@ -245,11 +255,26 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     )
                 }
 
+                is RestoreProgress.Restoring -> inputs.update {
+                    it.copy(progress = progress, log = it.log.append(progress.currentFile))
+                }
+
                 else -> inputs.update { it.copy(progress = progress) }
             }
         }
 
         zipInputStream.close()
+    }
+
+    /** Logs every file once, keyed on the index, because file names can repeat in a vault. */
+    private fun List<RestoreLogEntry>.append(
+        currentFile: RestoreProgress.CurrentFile?,
+    ): List<RestoreLogEntry> {
+        currentFile ?: return this
+        if (currentFile.index == lastOrNull()?.index) return this
+
+        return (this + RestoreLogEntry(currentFile.index, currentFile.fileName))
+            .takeLast(LOG_ENTRIES)
     }
 
     @AssistedFactory

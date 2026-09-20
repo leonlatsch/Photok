@@ -43,6 +43,11 @@ class RestoreProgressTracker(
     private var filesDone = 0
     private var completedBytes = 0L
 
+    private var filesStarted = 0
+
+    /** Kept after the file finished, so the unthrottled finish emit still names it. */
+    private var currentFile: RestoreProgress.CurrentFile? = null
+
     private var currentFileSize = 0L
     private var currentFileBytes = 0L
 
@@ -54,6 +59,9 @@ class RestoreProgressTracker(
     fun startFile(photo: PhotoBackup) {
         currentFileSize = photo.size
         currentFileBytes = 0L
+
+        filesStarted++
+        currentFile = RestoreProgress.CurrentFile(filesStarted, photo.fileName)
     }
 
     /** Returns `null` while throttled, so callers only emit every [EMIT_INTERVAL_MILLIS]. */
@@ -94,6 +102,7 @@ class RestoreProgressTracker(
             bytesTotal = bytesTotal,
             bytesPerSecond = if (elapsed > 0) copiedBytes * 1000 / elapsed else 0,
             millisRemaining = millisRemaining(elapsed, bytesDone),
+            currentFile = currentFile,
         )
     }
 

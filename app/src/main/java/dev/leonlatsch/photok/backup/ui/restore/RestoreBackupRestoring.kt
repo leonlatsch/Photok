@@ -45,17 +45,29 @@ fun RestoreBackupRestoring(
             )
         },
         bottomBar = {
-            OutlinedButton(
-                onClick = {},
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .navigationBarsPadding()
+            Column(
+                modifier = Modifier.navigationBarsPadding()
             ) {
-                Text("Cancel restore")
+                RestoreLog(
+                    entries = uiState.log,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                )
+
+                Spacer(Modifier.height(10.dp))
+
+                OutlinedButton(
+                    onClick = {},
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                ) {
+                    Text("Cancel restore")
+                }
             }
         }
     ) { contentPadding ->
@@ -171,6 +183,11 @@ private fun Preview() {
                 bytesTotal = 1_400_000_000L,
                 bytesPerSecond = 12_000_000L,
                 millisRemaining = 81_000L,
+                log = listOf(
+                    RestoreLogEntry(40, "VID_20240418_101233.mp4"),
+                    RestoreLogEntry(41, "IMG_20240418_102907.jpg"),
+                    RestoreLogEntry(42, "IMG_20240418_112238.jpg"),
+                ),
             ),
         )
     }

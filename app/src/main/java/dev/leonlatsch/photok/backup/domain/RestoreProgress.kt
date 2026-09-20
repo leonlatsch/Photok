@@ -25,7 +25,14 @@ sealed interface RestoreProgress {
         val bytesTotal: Long,
         val bytesPerSecond: Long,
         val millisRemaining: Long?,
+        val currentFile: CurrentFile?,
     ) : RestoreProgress
+
+    /** [index] is 1-based and counts started files, so the UI can log each file exactly once. */
+    data class CurrentFile(
+        val index: Int,
+        val fileName: String,
+    )
 
     /** All media is on disk, the database rows (photos, albums, refs) are being written. */
     data object Finalizing : RestoreProgress

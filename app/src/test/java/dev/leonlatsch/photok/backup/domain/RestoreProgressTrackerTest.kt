@@ -105,6 +105,29 @@ class RestoreProgressTrackerTest {
         assertEquals(100_000_000.0, progress.bytesPerSecond.toDouble(), 8_000_000.0)
     }
 
+    @Test
+    fun `reports the file currently being restored`() {
+        val photos = photos(count = 10)
+        val tracker = tracker(photos)
+
+        assertNull(tracker.snapshot().currentFile)
+
+        tracker.copyFile(photos[0])
+        tracker.finishFile()
+        tracker.copyFile(photos[1])
+
+        assertEquals(
+            RestoreProgress.CurrentFile(index = 2, fileName = "photo_2.jpg"),
+            tracker.snapshot().currentFile,
+        )
+
+        // The finish emit still names the file, so short files show up in the log
+        assertEquals(
+            RestoreProgress.CurrentFile(index = 2, fileName = "photo_2.jpg"),
+            tracker.finishFile().currentFile,
+        )
+    }
+
     private fun assertEquals(expected: Long, actual: Long, delta: Double) =
         assertEquals(expected.toDouble(), actual.toDouble(), delta)
 }
