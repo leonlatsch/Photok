@@ -81,6 +81,13 @@ android {
         generateLocaleConfig = true
     }
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
+        includeInApk = false
+        // Keep when building Android App Bundles (for Google Play)
+        includeInBundle = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
