@@ -143,7 +143,7 @@ fun SecretLaunchCodeDialog(
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Number,
+                                    keyboardType = KeyboardType.NumberPassword,
                                 ),
                                 maxLines = 1,
                                 textStyle = LocalTextStyle.current.copy(
