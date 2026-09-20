@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.review.ReviewTrigger
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -32,10 +33,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 const val RESTORE_BACKUP_URI = "restore_backup_uri"
 
 private const val LOG_ENTRIES = RESTORE_LOG_ROWS
+
+// Fast finalizing looks weird in UI. Keep screen active for at least this time
+private val MinFinalizingDuration = 2.seconds.inWholeMilliseconds
 
 sealed interface RestoreBackupUiState {
     data class Validating(
@@ -113,6 +120,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
 ) : ViewModel() {
 
     private val fileName = io.getFileName(restoreBackupUri).orEmpty()
+
+    private var finalizingStartedAt = 0L
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -260,22 +269,36 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
         progressFlow.collect { progress ->
             when (progress) {
-                is RestoreProgress.Finished -> inputs.update {
-                    it.copy(
-                        step = RestoreBackupUiState.Step.Finished,
-                        restoreResult = progress.result,
-                    )
-                }
-
                 is RestoreProgress.Restoring -> inputs.update {
                     it.copy(progress = progress, log = it.log.append(progress.currentFile))
                 }
 
-                else -> inputs.update { it.copy(progress = progress) }
+                is RestoreProgress.Finalizing -> {
+                    finalizingStartedAt = System.currentTimeMillis()
+                    inputs.update { it.copy(progress = progress) }
+                }
+
+                is RestoreProgress.Finished -> {
+                    awaitMinimumFinalizingTime()
+
+                    inputs.update {
+                        it.copy(
+                            step = RestoreBackupUiState.Step.Finished,
+                            restoreResult = progress.result,
+                        )
+                    }
+                }
             }
         }
 
         zipInputStream.close()
+    }
+
+    private suspend fun awaitMinimumFinalizingTime() {
+        val elapsed = System.currentTimeMillis() - finalizingStartedAt
+        val remaining = MinFinalizingDuration - elapsed
+
+        if (remaining > 0) delay(remaining.milliseconds)
     }
 
     /** Logs every file once, keyed on the index, because file names can repeat in a vault. */
