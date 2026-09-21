@@ -1,5 +1,6 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,10 @@ fun RestoreBackupUnlock(
     uiState: RestoreBackupUiState.Unlock,
     handleUiEvent: (RestoreBackupUiEvent) -> Unit,
 ) {
+    BackHandler {
+        handleUiEvent(RestoreBackupUiEvent.BackToOverviewClicked)
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
