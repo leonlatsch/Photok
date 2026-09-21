@@ -41,8 +41,8 @@ const val RESTORE_BACKUP_URI = "restore_backup_uri"
 
 private const val LOG_ENTRIES = RESTORE_LOG_ROWS
 
-// Fast finalizing looks weird in UI. Keep screen active for at least this time
-private val MinFinalizingDuration = 2.seconds.inWholeMilliseconds
+// Fast indexing looks weird in UI. Keep screen active for at least this time
+private val MinIndexingDuration = 2.seconds.inWholeMilliseconds
 
 sealed interface RestoreBackupUiState {
     data class Validating(
@@ -74,7 +74,7 @@ sealed interface RestoreBackupUiState {
             if (bytesTotal == 0L) 0f else bytesDone.toFloat() / bytesTotal.toFloat()
     }
 
-    data class Finalizing(
+    data class Indexing(
         val fileName: String,
     ) : RestoreBackupUiState
 
@@ -121,7 +121,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     private val fileName = io.getFileName(restoreBackupUri).orEmpty()
 
-    private var finalizingStartedAt = 0L
+    private var indexingStartedAt = 0L
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -168,7 +168,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
         log: List<RestoreLogEntry>,
     ): RestoreBackupUiState =
         when (progress) {
-            is RestoreProgress.Finalizing -> RestoreBackupUiState.Finalizing(fileName = fileName)
+            is RestoreProgress.Indexing -> RestoreBackupUiState.Indexing(fileName = fileName)
 
             is RestoreProgress.Restoring -> RestoreBackupUiState.Restoring(
                 fileName = fileName,
@@ -273,13 +273,13 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     it.copy(progress = progress, log = it.log.append(progress.currentFile))
                 }
 
-                is RestoreProgress.Finalizing -> {
-                    finalizingStartedAt = System.currentTimeMillis()
+                is RestoreProgress.Indexing -> {
+                    indexingStartedAt = System.currentTimeMillis()
                     inputs.update { it.copy(progress = progress) }
                 }
 
                 is RestoreProgress.Finished -> {
-                    awaitMinimumFinalizingTime()
+                    awaitMinimumIndexingTime()
 
                     inputs.update {
                         it.copy(
@@ -294,9 +294,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
         zipInputStream.close()
     }
 
-    private suspend fun awaitMinimumFinalizingTime() {
-        val elapsed = System.currentTimeMillis() - finalizingStartedAt
-        val remaining = MinFinalizingDuration - elapsed
+    private suspend fun awaitMinimumIndexingTime() {
+        val elapsed = System.currentTimeMillis() - indexingStartedAt
+        val remaining = MinIndexingDuration - elapsed
 
         if (remaining > 0) delay(remaining.milliseconds)
     }

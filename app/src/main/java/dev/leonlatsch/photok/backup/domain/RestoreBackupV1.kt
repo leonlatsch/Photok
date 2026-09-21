@@ -146,7 +146,7 @@ class RestoreBackupV1 @Inject constructor(
             ze = stream.nextEntry
         }
 
-        send(RestoreProgress.Finalizing)
+        send(RestoreProgress.Indexing)
 
         metaData
             .getPhotosInOriginalOrder()

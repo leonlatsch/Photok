@@ -41,7 +41,7 @@ fun RestoreBackupScreen(
             is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
                 uiState = state,
             )
-            is RestoreBackupUiState.Finalizing -> RestoreBackupFinalizing(
+            is RestoreBackupUiState.Indexing -> RestoreBackupIndexing(
                 uiState = state,
             )
             is RestoreBackupUiState.Finished -> RestoreBackupFinished(

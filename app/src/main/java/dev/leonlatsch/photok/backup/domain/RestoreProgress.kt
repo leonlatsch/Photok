@@ -35,7 +35,7 @@ sealed interface RestoreProgress {
     )
 
     /** All media is on disk, the database rows (photos, albums, refs) are being written. */
-    data object Finalizing : RestoreProgress
+    data object Indexing : RestoreProgress
 
     data class Finished(val result: RestoreResult) : RestoreProgress
 }

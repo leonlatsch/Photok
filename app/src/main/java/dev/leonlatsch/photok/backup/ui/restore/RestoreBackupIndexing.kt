@@ -29,8 +29,8 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RestoreBackupFinalizing(
-    uiState: RestoreBackupUiState.Finalizing,
+fun RestoreBackupIndexing(
+    uiState: RestoreBackupUiState.Indexing,
 ) {
     Scaffold(
         topBar = {
@@ -65,7 +65,7 @@ fun RestoreBackupFinalizing(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Finishing up",
+                text = "Indexing...",
                 style = MaterialTheme.typography.headlineMedium,
             )
 
@@ -83,7 +83,7 @@ fun RestoreBackupFinalizing(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "All files are restored. Writing your photos and albums.",
+                text = "All files restored, indexing your photos and albums.",
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
@@ -97,8 +97,8 @@ fun RestoreBackupFinalizing(
 @Composable
 private fun Preview() {
     AppTheme {
-        RestoreBackupFinalizing(
-            uiState = RestoreBackupUiState.Finalizing(
+        RestoreBackupIndexing(
+            uiState = RestoreBackupUiState.Indexing(
                 fileName = "photok_backup_1234.zip",
             ),
         )
