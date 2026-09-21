@@ -14,5 +14,7 @@ sealed interface RestoreBackupUiEvent {
 
     data object ConfirmPasswordClicked : RestoreBackupUiEvent
 
+    data object CancelRestoreClicked : RestoreBackupUiEvent
+
     data class DoneClicked(val activity: Activity?) : RestoreBackupUiEvent
 }

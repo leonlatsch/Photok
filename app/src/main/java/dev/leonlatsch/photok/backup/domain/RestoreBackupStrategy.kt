@@ -27,4 +27,6 @@ interface RestoreBackupStrategy<T : BackupMetaData> {
         stream: ZipInputStream,
         session: Session,
     ): Flow<RestoreProgress>
+
+    suspend fun abort()
 }

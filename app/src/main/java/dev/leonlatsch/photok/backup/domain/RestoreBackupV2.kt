@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -71,12 +72,16 @@ class RestoreBackupV2 @Inject constructor(
     private val vaultFileStorage: VaultFileStorage,
 ) : RestoreBackupStrategy<BackupMetaData.V2> {
 
+    private val writtenFiles = mutableListOf<String>()
+
     override fun restore(
         metaData: BackupMetaData.V2,
         stream: ZipInputStream,
         session: Session,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
+
+        writtenFiles.clear()
 
         val failedFiles = mutableListOf<FailedFile>()
         val tracker = RestoreProgressTracker(metaData.photos)
@@ -105,17 +110,18 @@ class RestoreBackupV2 @Inject constructor(
 
             val encryptedZipInput =
                 legacyGcmCryptoEngine.createDecryptStream(stream, session)
-            val internalOutputStream = vaultFileStorage.openEncryptedOutput(
-                ze.name.replace(
-                    oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
-                    newValue = PHOTOK_FILE_EXTENSION,
-                )
+            val internalFileName = ze.name.replace(
+                oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+                newValue = PHOTOK_FILE_EXTENSION,
             )
+            val internalOutputStream = vaultFileStorage.openEncryptedOutput(internalFileName)
 
             if (encryptedZipInput == null || internalOutputStream == null) {
                 ze = stream.nextEntry
                 continue
             }
+
+            writtenFiles += internalFileName
 
             io.copy(encryptedZipInput, internalOutputStream) { chunk ->
                 if (isMainFile) {
@@ -157,4 +163,9 @@ class RestoreBackupV2 @Inject constructor(
             )
         )
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun abort() = withContext(Dispatchers.IO) {
+        writtenFiles.forEach { vaultFileStorage.deleteEncryptedFile(it) }
+        writtenFiles.clear()
+    }
 }

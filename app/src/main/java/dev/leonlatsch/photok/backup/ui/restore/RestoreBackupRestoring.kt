@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +37,7 @@ import kotlin.math.roundToInt
 @Composable
 fun RestoreBackupRestoring(
     uiState: RestoreBackupUiState.Restoring,
+    handleUiEvent: (RestoreBackupUiEvent) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -58,7 +61,8 @@ fun RestoreBackupRestoring(
                 Spacer(Modifier.height(10.dp))
 
                 OutlinedButton(
-                    onClick = {},
+                    onClick = { handleUiEvent(RestoreBackupUiEvent.CancelRestoreClicked) },
+                    enabled = !uiState.canceling,
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.error,
                     ),
@@ -66,7 +70,16 @@ fun RestoreBackupRestoring(
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp)
                 ) {
-                    Text("Cancel restore")
+                    if (uiState.canceling) {
+                        CircularProgressIndicator(
+                            strokeWidth = 2.dp,
+                            modifier = Modifier.size(18.dp),
+                        )
+
+                        Spacer(Modifier.size(10.dp))
+                    }
+
+                    Text(if (uiState.canceling) "Canceling restore…" else "Cancel restore")
                 }
             }
         }
@@ -188,7 +201,9 @@ private fun Preview() {
                     RestoreLogEntry(41, "IMG_20240418_102907.jpg"),
                     RestoreLogEntry(42, "IMG_20240418_112238.jpg"),
                 ),
+                canceling = false,
             ),
+            handleUiEvent = {},
         )
     }
 }

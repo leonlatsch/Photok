@@ -30,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -74,12 +75,16 @@ class RestoreBackupV4 @Inject constructor(
     private val cryptoEngine: CryptoEngine,
 ) : RestoreBackupStrategy<BackupMetaData.V4> {
 
+    private val writtenFiles = mutableListOf<String>()
+
     override fun restore(
         metaData: BackupMetaData.V4,
         stream: ZipInputStream,
         session: Session,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
+
+        writtenFiles.clear()
 
         val failedFiles = mutableListOf<FailedFile>()
         val tracker = RestoreProgressTracker(metaData.photos)
@@ -114,6 +119,7 @@ class RestoreBackupV4 @Inject constructor(
                 continue
             }
 
+            writtenFiles += ze.name
 
             io.copy(encryptedZipInput, internalOutputStream) { chunk ->
                 if (isMainFile) {
@@ -167,4 +173,9 @@ class RestoreBackupV4 @Inject constructor(
             )
         )
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun abort() = withContext(Dispatchers.IO) {
+        writtenFiles.forEach { vaultFileStorage.deleteEncryptedFile(it) }
+        writtenFiles.clear()
+    }
 }

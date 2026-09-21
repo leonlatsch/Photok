@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
 import dev.leonlatsch.photok.backup.domain.FailedFile
+import dev.leonlatsch.photok.backup.domain.RestoreBackupStrategy
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
@@ -25,6 +26,8 @@ import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.review.ReviewTrigger
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -69,6 +72,7 @@ sealed interface RestoreBackupUiState {
         val bytesPerSecond: Long,
         val millisRemaining: Long?,
         val log: List<RestoreLogEntry>,
+        val canceling: Boolean,
     ) : RestoreBackupUiState {
         val progress: Float =
             if (bytesTotal == 0L) 0f else bytesDone.toFloat() / bytesTotal.toFloat()
@@ -87,11 +91,16 @@ sealed interface RestoreBackupUiState {
         val failedFiles: List<FailedFile>,
     ) : RestoreBackupUiState
 
+    data class Canceled(
+        val fileName: String,
+    ) : RestoreBackupUiState
+
     enum class Step {
         Overview,
         Unlock,
         Restoring,
         Finished,
+        Canceled,
     }
 
     data class Inputs(
@@ -99,6 +108,7 @@ sealed interface RestoreBackupUiState {
         val password: String = "",
         val unlocking: Boolean = false,
         val wrongPassword: Boolean = false,
+        val canceling: Boolean = false,
         val progress: RestoreProgress? = null,
         val log: List<RestoreLogEntry> = emptyList(),
         val restoreResult: RestoreResult? = null,
@@ -123,6 +133,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val fileName = io.getFileName(restoreBackupUri).orEmpty()
 
     private var indexingStartedAt = 0L
+
+    private var restoreJob: Job? = null
+
+    private var activeStrategy: RestoreBackupStrategy<*>? = null
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -153,7 +167,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
             )
 
             inputs.step == RestoreBackupUiState.Step.Restoring ->
-                restoringState(inputs.progress, inputs.log)
+                restoringState(inputs.progress, inputs.log, inputs.canceling)
+
+            inputs.step == RestoreBackupUiState.Step.Canceled ->
+                RestoreBackupUiState.Canceled(fileName = fileName)
 
             inputs.step == RestoreBackupUiState.Step.Finished && inputs.restoreResult != null ->
                 finishedState(inputs.restoreResult)
@@ -168,6 +185,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private fun restoringState(
         progress: RestoreProgress?,
         log: List<RestoreLogEntry>,
+        canceling: Boolean,
     ): RestoreBackupUiState =
         when (progress) {
             is RestoreProgress.Indexing -> RestoreBackupUiState.Indexing(fileName = fileName)
@@ -181,6 +199,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 bytesPerSecond = progress.bytesPerSecond,
                 millisRemaining = progress.millisRemaining,
                 log = log,
+                canceling = canceling,
             )
 
             // Restore was started, the first progress has not arrived yet
@@ -193,6 +212,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 bytesPerSecond = 0,
                 millisRemaining = null,
                 log = emptyList(),
+                canceling = canceling,
             )
         }
 
@@ -223,7 +243,11 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 it.copy(password = event.password, wrongPassword = false)
             }
 
-            is RestoreBackupUiEvent.ConfirmPasswordClicked -> unlockAndRestore()
+            is RestoreBackupUiEvent.ConfirmPasswordClicked -> {
+                restoreJob = unlockAndRestore()
+            }
+
+            is RestoreBackupUiEvent.CancelRestoreClicked -> cancelRestore()
 
             is RestoreBackupUiEvent.DoneClicked -> requestInAppReview(event.activity)
         }
@@ -262,42 +286,77 @@ class RestoreBackupViewModel @AssistedInject constructor(
             }
     }
 
+    private fun cancelRestore() = viewModelScope.launch {
+        val strategy = activeStrategy ?: return@launch
+
+        inputs.update { it.copy(canceling = true) }
+
+        restoreJob?.cancelAndJoin()
+        restoreJob = null
+
+        strategy.abort()
+        activeStrategy = null
+
+        inputs.update {
+            it.copy(step = RestoreBackupUiState.Step.Canceled, canceling = false)
+        }
+    }
+
     private suspend fun restoreBackup(metaData: BackupMetaData, session: Session) {
         val zipInputStream = io.zip.openZipInput(restoreBackupUri)
 
         val progressFlow = when (metaData) {
-            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V1 -> {
+                activeStrategy = v1Strategy
+                v1Strategy.restore(metaData, zipInputStream, session)
+            }
+
+            is BackupMetaData.V2 -> {
+                activeStrategy = v2Strategy
+                v2Strategy.restore(metaData, zipInputStream, session)
+            }
+
+            is BackupMetaData.V3 -> {
+                activeStrategy = v3Strategy
+                v3Strategy.restore(metaData, zipInputStream, session)
+            }
+
+            is BackupMetaData.V4 -> {
+                activeStrategy = v4Strategy
+                v4Strategy.restore(metaData, zipInputStream, session)
+            }
+
+            is BackupMetaData.V5 -> {
+                activeStrategy = v5Strategy
+                v5Strategy.restore(metaData, zipInputStream, session)
+            }
         }
 
-        progressFlow.collect { progress ->
-            when (progress) {
-                is RestoreProgress.Restoring -> inputs.update {
-                    it.copy(progress = progress, log = it.log.append(progress.currentFile))
-                }
+        zipInputStream.use { zipInputStream ->
+            progressFlow.collect { progress ->
+                when (progress) {
+                    is RestoreProgress.Restoring -> inputs.update {
+                        it.copy(progress = progress, log = it.log.append(progress.currentFile))
+                    }
 
-                is RestoreProgress.Indexing -> {
-                    indexingStartedAt = System.currentTimeMillis()
-                    inputs.update { it.copy(progress = progress) }
-                }
+                    is RestoreProgress.Indexing -> {
+                        indexingStartedAt = System.currentTimeMillis()
+                        inputs.update { it.copy(progress = progress) }
+                    }
 
-                is RestoreProgress.Finished -> {
-                    awaitMinimumIndexingTime()
+                    is RestoreProgress.Finished -> {
+                        awaitMinimumIndexingTime()
 
-                    inputs.update {
-                        it.copy(
-                            step = RestoreBackupUiState.Step.Finished,
-                            restoreResult = progress.result,
-                        )
+                        inputs.update {
+                            it.copy(
+                                step = RestoreBackupUiState.Step.Finished,
+                                restoreResult = progress.result,
+                            )
+                        }
                     }
                 }
             }
         }
-
-        zipInputStream.close()
     }
 
     private suspend fun awaitMinimumIndexingTime() {

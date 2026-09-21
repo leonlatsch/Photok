@@ -62,6 +62,7 @@ fun RestoreBackupScreen(
                 )
                 is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
                     uiState = state,
+                    handleUiEvent = viewModel::handleUiEvent,
                 )
                 is RestoreBackupUiState.Indexing -> RestoreBackupIndexing(
                     uiState = state,
@@ -72,6 +73,10 @@ fun RestoreBackupScreen(
                         viewModel.handleUiEvent(RestoreBackupUiEvent.DoneClicked(activity))
                         onClose()
                     },
+                )
+                is RestoreBackupUiState.Canceled -> RestoreBackupCanceled(
+                    uiState = state,
+                    onDone = onClose,
                 )
             }
         }
@@ -93,4 +98,5 @@ private val RestoreBackupUiState.stepPosition: Int
         is RestoreBackupUiState.Restoring -> 2
         is RestoreBackupUiState.Indexing -> 3
         is RestoreBackupUiState.Finished -> 4
+        is RestoreBackupUiState.Canceled -> 4
     }
