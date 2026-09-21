@@ -266,16 +266,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Création d\'une sauvegarde…</string>
-    <string name="backup_restore_title">Restaurer la sauvegarde</string>
-    <string name="backup_restore_validating">Validation de la sauvegarde…</string>
-    <string name="backup_restore_details_created_at">Créé le :</string>
-    <string name="backup_restore_details_photos_contained">Fichiers contenus :</string>
-    <string name="backup_restore_details_compatible">Compatible :</string>
-    <string name="backup_restore_details_size">Taille :</string>
-    <string name="backup_restore_button">Déverrouiller et restaurer</string>
-    <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
-    <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
-    <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
     <string name="backup_confirm_password">Confirmez votre mot de passe pour créer une sauvegarde.</string>
 
     <!-- NEWS -->

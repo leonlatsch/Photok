@@ -263,16 +263,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">بیک اپ بن رہا ہے…</string>
-    <string name="backup_restore_title">بیک اپ واپس لائیں</string>
-    <string name="backup_restore_validating">بیک اپ چیک ہو رہا ہے…</string>
-    <string name="backup_restore_details_created_at">بنایا گیا:</string>
-    <string name="backup_restore_details_photos_contained">موجود فائلیں:</string>
-    <string name="backup_restore_details_compatible">صحیح ہے:</string>
-    <string name="backup_restore_details_size">سائز:</string>
-    <string name="backup_restore_button">کھولیں اور واپس لائیں</string>
-    <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
-    <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
-    <string name="backup_unlock_title">بیک اپ کھولیں</string>
     <string name="backup_confirm_password">بیک اپ بنانے کے لیے اپنے پاس ورڈ کی تصدیق کریں۔</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->

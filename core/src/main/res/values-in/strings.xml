@@ -265,16 +265,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Membuat cadangan…</string>
-    <string name="backup_restore_title">Pulihkan Cadangan</string>
-    <string name="backup_restore_validating">Memvalidasi cadangan…</string>
-    <string name="backup_restore_details_created_at">Dibuat pada:</string>
-    <string name="backup_restore_details_photos_contained">Jumlah File:</string>
-    <string name="backup_restore_details_compatible">Kompatibel:</string>
-    <string name="backup_restore_details_size">Ukuran:</string>
-    <string name="backup_restore_button">Buka Kunci dan Pulihkan</string>
-    <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
-    <string name="backup_restore_processing">Memulihkan Cadangan…</string>
-    <string name="backup_unlock_title">Buka Kunci Cadangan</string>
     <string name="backup_confirm_password">Konfirmasi kata sandimu untuk membuat cadangan.</string>
 
     <!-- NEWS -->

@@ -263,16 +263,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Back-up maken…</string>
-    <string name="backup_restore_title">Back-up herstellen</string>
-    <string name="backup_restore_validating">Back-up valideren…</string>
-    <string name="backup_restore_details_created_at">Gemaakt op:</string>
-    <string name="backup_restore_details_photos_contained">Bevatte bestanden:</string>
-    <string name="backup_restore_details_compatible">Compatibel:</string>
-    <string name="backup_restore_details_size">Grootte:</string>
-    <string name="backup_restore_button">Ontgrendelen en herstellen</string>
-    <string name="backup_restore_invalid_file">\u26A0 Ongeldig bestand</string>
-    <string name="backup_restore_processing">Back-up herstellen…</string>
-    <string name="backup_unlock_title">Ontgrendel back-up</string>
     <string name="backup_confirm_password">Bevestig je wachtwoord om een back-up te maken.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->

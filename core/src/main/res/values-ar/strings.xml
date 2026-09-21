@@ -264,16 +264,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">جارٍ إنشاء نسخة احتياطية ...</string>
-    <string name="backup_restore_title">استرجاع النسخة الاحتياطية</string>
-    <string name="backup_restore_validating">التحقق من صحة النسخ الاحتياطي ...</string>
-    <string name="backup_restore_details_created_at">أنشئت في:</string>
-    <string name="backup_restore_details_photos_contained">الملفات المضمنة:</string>
-    <string name="backup_restore_details_compatible">متناسق:</string>
-    <string name="backup_restore_details_size">حجم:</string>
-    <string name="backup_restore_button">فتح واستعادة</string>
-    <string name="backup_restore_invalid_file">\u26A0 ملف غير صالح</string>
-    <string name="backup_restore_processing">استعادة النسخة الاحتياطية ...</string>
-    <string name="backup_unlock_title">فتح النسخ الاحتياطي</string>
     <string name="backup_confirm_password">أكد كلمة المرور الخاصة بك لإنشاء نسخة احتياطية.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
 
     <!-- NEWS -->

@@ -264,16 +264,6 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Yedekleme oluşturuluyor…</string>
-    <string name="backup_restore_title">Yedeği Geri Yükle</string>
-    <string name="backup_restore_validating">Yedek doğrulanıyor…</string>
-    <string name="backup_restore_details_created_at">Oluşturulma tarihi:</string>
-    <string name="backup_restore_details_photos_contained">İçerilen Dosyalar:</string>
-    <string name="backup_restore_details_compatible">Uyumluluk:</string>
-    <string name="backup_restore_details_size">Boyut:</string>
-    <string name="backup_restore_button">Kilidi Aç ve Geri Yükle</string>
-    <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
-    <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
-    <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
     <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>
 
     <!-- NEWS -->
