@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -136,6 +137,7 @@ fun RestoreBackupUnlock(
                 value = uiState.password,
                 onValueChange = { handleUiEvent(RestoreBackupUiEvent.PasswordChanged(it)) },
                 label = "Password",
+                error = stringResource(R.string.unlock_wrong_password).takeIf { uiState.wrongPassword },
                 onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -163,6 +165,23 @@ private fun Preview() {
                 fileName = "photok_backup_1234.zip",
                 password = "",
                 unlocking = false,
+                wrongPassword = false,
+            ),
+            handleUiEvent = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun PreviewWrongPassword() {
+    AppTheme {
+        RestoreBackupUnlock(
+            uiState = RestoreBackupUiState.Unlock(
+                fileName = "photok_backup_1234.zip",
+                password = "secret",
+                unlocking = false,
+                wrongPassword = true,
             ),
             handleUiEvent = {},
         )

@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 const val RESTORE_BACKUP_URI = "restore_backup_uri"
@@ -58,6 +57,7 @@ sealed interface RestoreBackupUiState {
         val fileName: String,
         val password: String,
         val unlocking: Boolean,
+        val wrongPassword: Boolean,
     ) : RestoreBackupUiState
 
     data class Restoring(
@@ -98,6 +98,7 @@ sealed interface RestoreBackupUiState {
         val step: Step = Step.Overview,
         val password: String = "",
         val unlocking: Boolean = false,
+        val wrongPassword: Boolean = false,
         val progress: RestoreProgress? = null,
         val log: List<RestoreLogEntry> = emptyList(),
         val restoreResult: RestoreResult? = null,
@@ -148,6 +149,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 fileName = fileName,
                 password = inputs.password,
                 unlocking = inputs.unlocking,
+                wrongPassword = inputs.wrongPassword,
             )
 
             inputs.step == RestoreBackupUiState.Step.Restoring ->
@@ -210,11 +212,15 @@ class RestoreBackupViewModel @AssistedInject constructor(
             }
 
             is RestoreBackupUiEvent.BackToOverviewClicked -> inputs.update {
-                it.copy(step = RestoreBackupUiState.Step.Overview, password = "")
+                it.copy(
+                    step = RestoreBackupUiState.Step.Overview,
+                    password = "",
+                    wrongPassword = false,
+                )
             }
 
             is RestoreBackupUiEvent.PasswordChanged -> inputs.update {
-                it.copy(password = event.password)
+                it.copy(password = event.password, wrongPassword = false)
             }
 
             is RestoreBackupUiEvent.ConfirmPasswordClicked -> unlockAndRestore()
@@ -236,7 +242,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
         val metaData = validation.value?.metaData ?: return@launch
         val password = inputs.value.password
 
-        inputs.update { it.copy(unlocking = true) }
+        inputs.update { it.copy(unlocking = true, wrongPassword = false) }
 
         unlockBackupUseCase(restoreBackupUri, metaData, password)
             .onSuccess { session ->
@@ -245,14 +251,14 @@ class RestoreBackupViewModel @AssistedInject constructor(
                         step = RestoreBackupUiState.Step.Restoring,
                         password = "",
                         unlocking = false,
+                        wrongPassword = false,
                     )
                 }
 
                 restoreBackup(metaData, session)
             }
             .onFailure {
-                // TODO: error state
-                inputs.update { it.copy(unlocking = false) }
+                inputs.update { it.copy(unlocking = false, wrongPassword = true) }
             }
     }
 
