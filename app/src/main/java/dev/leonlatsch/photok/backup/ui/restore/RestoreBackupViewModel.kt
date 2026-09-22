@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
+import dev.leonlatsch.photok.backup.domain.BackupValidationError
 import dev.leonlatsch.photok.backup.domain.FailedFile
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
@@ -101,6 +102,11 @@ sealed interface RestoreBackupUiState {
         val fileName: String,
     ) : RestoreBackupUiState
 
+    data class ValidationFailed(
+        val fileName: String,
+        val error: BackupValidationError,
+    ) : RestoreBackupUiState
+
     enum class Step {
         Overview,
         Unlock,
@@ -119,6 +125,12 @@ sealed interface RestoreBackupUiState {
         val log: List<RestoreLogEntry> = emptyList(),
         val restoreResult: RestoreResult? = null,
     )
+}
+
+private sealed interface ValidationState {
+    data object Validating : ValidationState
+    data class Valid(val validation: BackupValidation) : ValidationState
+    data class Invalid(val error: BackupValidationError) : ValidationState
 }
 
 @HiltViewModel(assistedFactory = RestoreBackupViewModel.Factory::class)
@@ -147,10 +159,17 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
-    /** `null` until the backup was validated. */
     private val validation = flow {
-        emit(validateBackupUseCase(restoreBackupUri).getOrNull()) // TODO: error state
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+        val state = validateBackupUseCase(restoreBackupUri).fold(
+            onSuccess = { ValidationState.Valid(it) },
+            onFailure = {
+                val error = it as? BackupValidationError ?: BackupValidationError.Unknown(it)
+                ValidationState.Invalid(error)
+            },
+        )
+
+        emit(state)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ValidationState.Validating)
 
     private val emptyVault = flow {
         emit(photoRepository.countAll() == 0)
@@ -163,27 +182,36 @@ class RestoreBackupViewModel @AssistedInject constructor(
         validation,
         emptyVault,
     ) { inputs, validation, emptyVault ->
-        when {
-            validation == null -> validatingState
+        val backup = when (validation) {
+            is ValidationState.Validating -> return@combine validatingState
 
-            inputs.step == RestoreBackupUiState.Step.Unlock -> RestoreBackupUiState.Unlock(
+            is ValidationState.Invalid -> return@combine RestoreBackupUiState.ValidationFailed(
+                fileName = fileName,
+                error = validation.error,
+            )
+
+            is ValidationState.Valid -> validation.validation
+        }
+
+        when (inputs.step) {
+            RestoreBackupUiState.Step.Unlock -> RestoreBackupUiState.Unlock(
                 fileName = fileName,
                 password = inputs.password,
                 unlocking = inputs.unlocking,
                 wrongPassword = inputs.wrongPassword,
             )
 
-            inputs.step == RestoreBackupUiState.Step.Restoring ->
+            RestoreBackupUiState.Step.Restoring ->
                 restoringState(inputs.progress, inputs.log, inputs.canceling)
 
-            inputs.step == RestoreBackupUiState.Step.Canceled ->
+            RestoreBackupUiState.Step.Canceled ->
                 RestoreBackupUiState.Canceled(fileName = fileName)
 
-            inputs.step == RestoreBackupUiState.Step.Finished && inputs.restoreResult != null ->
+            RestoreBackupUiState.Step.Finished if inputs.restoreResult != null ->
                 finishedState(inputs.restoreResult)
 
             else -> RestoreBackupUiState.Overview(
-                validation = validation,
+                validation = backup,
                 emptyVault = emptyVault,
             )
         }
@@ -274,7 +302,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }
 
     private fun unlockAndRestore() = viewModelScope.launch {
-        val metaData = validation.value?.metaData
+        val metaData = (validation.value as? ValidationState.Valid)?.validation?.metaData
         if (metaData == null) {
             inputs.update { it.copy(unlocking = false) }
             return@launch

@@ -35,9 +35,7 @@ class ValidateBackupUseCase @Inject constructor(
     suspend operator fun invoke(uri: Uri): Result<BackupValidation> = withContext(Dispatchers.IO) {
         try {
             val zipInputStream = io.zip.openZipInput(uri)
-                ?: return@withContext Result.failure(
-                    IllegalStateException("Could not open backup at $uri")
-                )
+                ?: return@withContext Result.failure(BackupValidationError.CannotOpenFile())
 
             var cryptFiles = 0
             var photokFiles = 0
@@ -60,11 +58,11 @@ class ValidateBackupUseCase @Inject constructor(
             }
 
             if ((cryptFiles == 0) && (photokFiles == 0)) {
-                return@withContext Result.failure(IllegalStateException("No crypt files or photok files found"))
+                return@withContext Result.failure(BackupValidationError.NoBackupFiles())
             }
 
             if (metaData == null || backupVersion == null) {
-                return@withContext Result.failure(IllegalStateException("No metadata found"))
+                return@withContext Result.failure(BackupValidationError.NoMetaData())
             }
 
             val fileName = io.getFileName(uri)
@@ -79,7 +77,7 @@ class ValidateBackupUseCase @Inject constructor(
             return@withContext Result.success(backupValidation)
         } catch (e: Exception) {
             Timber.e(e)
-            return@withContext Result.failure(e)
+            return@withContext Result.failure(BackupValidationError.Unknown(e))
         }
     }
 }
@@ -101,3 +99,14 @@ data class BackupValidation(
     val fileName: String,
     val fileSize: Long,
 )
+
+sealed class BackupValidationError(message: String) : Exception(message) {
+
+    class CannotOpenFile : BackupValidationError("Could not open backup")
+
+    class NoBackupFiles : BackupValidationError("No crypt files or photok files found")
+
+    class NoMetaData : BackupValidationError("No metadata found")
+
+    data class Unknown(override val cause: Throwable) : BackupValidationError("Validation failed")
+}

@@ -76,6 +76,10 @@ fun RestoreBackupScreen(
                     uiState = state,
                     onDone = onClose,
                 )
+                is RestoreBackupUiState.ValidationFailed -> RestoreBackupValidationFailed(
+                    uiState = state,
+                    onClose = onClose,
+                )
             }
         }
     }
@@ -85,13 +89,14 @@ fun RestoreBackupScreen(
  * Position of a state in the restore flow. It drives the slide direction and stays stable while a
  * single screen updates, so a fast updating screen like restoring does not restart the animation.
  *
- * Validating and Overview share a position on purpose: the loading overview turns into the real
- * overview without any animation.
+ * Validating, Overview and ValidationFailed share a position on purpose: the loading overview
+ * turns into the real overview, or into the error screen, without any animation.
  */
 private val RestoreBackupUiState.stepPosition: Int
     get() = when (this) {
         is RestoreBackupUiState.Validating -> 0
         is RestoreBackupUiState.Overview -> 0
+        is RestoreBackupUiState.ValidationFailed -> 0
         is RestoreBackupUiState.Unlock -> 1
         is RestoreBackupUiState.Restoring -> 2
         is RestoreBackupUiState.Indexing -> 3
