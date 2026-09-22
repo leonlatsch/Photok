@@ -47,6 +47,7 @@ fun RestoreBackupUnlock(
     }
 
     Scaffold(
+        modifier = Modifier.imePadding(),
         topBar = {
             TopAppBar(
                 title = {
@@ -65,31 +66,33 @@ fun RestoreBackupUnlock(
             )
         },
         bottomBar = {
-            Button(
-                onClick = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
-                enabled = uiState.password.isNotEmpty() && !uiState.unlocking,
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .navigationBarsPadding()
-                    .imePadding()
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
+            // Opaque, so the content scrolling underneath does not show through the bar
+            Surface(color = MaterialTheme.colorScheme.background) {
+                Button(
+                    onClick = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
+                    enabled = uiState.password.isNotEmpty() && !uiState.unlocking,
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(horizontal = 20.dp, vertical = 10.dp)
                 ) {
-                    if (uiState.unlocking) {
-                        CircularProgressIndicator(
-                            strokeWidth = 2.dp,
-                            modifier = Modifier.size(18.dp),
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        if (uiState.unlocking) {
+                            CircularProgressIndicator(
+                                strokeWidth = 2.dp,
+                                modifier = Modifier.size(18.dp),
+                            )
+
+                            Spacer(Modifier.size(10.dp))
+                        }
+
+                        Text(
+                            text = "Unlock & Restore",
                         )
-
-                        Spacer(Modifier.size(10.dp))
                     }
-
-                    Text(
-                        text = "Unlock & Restore",
-                    )
                 }
             }
         }
@@ -97,8 +100,8 @@ fun RestoreBackupUnlock(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
+                .verticalScroll(rememberScrollState())
                 .padding(20.dp)
         ) {
             Spacer(Modifier.height(20.dp))
