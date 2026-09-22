@@ -1,5 +1,6 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,9 @@ fun RestoreBackupRestoring(
     uiState: RestoreBackupUiState.Restoring,
     handleUiEvent: (RestoreBackupUiEvent) -> Unit,
 ) {
+    // Leaving here would kill the restore and leave half written files behind. Use cancel instead.
+    BackHandler {}
+
     Scaffold(
         topBar = {
             TopAppBar(

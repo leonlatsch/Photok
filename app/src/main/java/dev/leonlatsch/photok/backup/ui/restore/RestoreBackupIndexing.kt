@@ -1,5 +1,6 @@
 package dev.leonlatsch.photok.backup.ui.restore
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +33,9 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 fun RestoreBackupIndexing(
     uiState: RestoreBackupUiState.Indexing,
 ) {
+    // Leaving here would kill the restore while the database rows are written.
+    BackHandler {}
+
     Scaffold(
         topBar = {
             TopAppBar(

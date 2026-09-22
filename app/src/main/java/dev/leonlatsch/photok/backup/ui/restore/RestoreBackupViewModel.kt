@@ -11,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
 import dev.leonlatsch.photok.backup.domain.FailedFile
-import dev.leonlatsch.photok.backup.domain.RestoreBackupStrategy
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
@@ -36,12 +35,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 const val RESTORE_BACKUP_URI = "restore_backup_uri"
-
-private const val LOG_ENTRIES = RESTORE_LOG_ROWS
 
 // Fast indexing looks weird in UI. Keep screen active for at least this time
 private val MinIndexingDuration = 2.seconds.inWholeMilliseconds
@@ -74,8 +72,16 @@ sealed interface RestoreBackupUiState {
         val log: List<RestoreLogEntry>,
         val canceling: Boolean,
     ) : RestoreBackupUiState {
-        val progress: Float =
-            if (bytesTotal == 0L) 0f else bytesDone.toFloat() / bytesTotal.toFloat()
+        /**
+         * Counted in bytes, or in files when the declared sizes are unusable. Old backups
+         * declare a size of 0 for some photos, which would pin the bar at 0% for the whole
+         * restore. Same fallback the remaining time estimate uses.
+         */
+        val progress: Float = when {
+            bytesTotal > 0L -> bytesDone.toFloat() / bytesTotal.toFloat()
+            filesTotal > 0 -> filesDone.toFloat() / filesTotal.toFloat()
+            else -> 0f
+        }
     }
 
     data class Indexing(
@@ -136,7 +142,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
     private var restoreJob: Job? = null
 
-    private var activeStrategy: RestoreBackupStrategy<*>? = null
+    /** Aborting all of them is fine, only the one that ran has anything to clean up. */
+    private val strategies = listOf(v1Strategy, v2Strategy, v3Strategy, v4Strategy, v5Strategy)
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -243,8 +250,12 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 it.copy(password = event.password, wrongPassword = false)
             }
 
+            // The keyboard's done action fires next to the button, guard against a second restore
             is RestoreBackupUiEvent.ConfirmPasswordClicked -> {
-                restoreJob = unlockAndRestore()
+                if (!inputs.value.unlocking) {
+                    inputs.update { it.copy(unlocking = true, wrongPassword = false) }
+                    restoreJob = unlockAndRestore()
+                }
             }
 
             is RestoreBackupUiEvent.CancelRestoreClicked -> cancelRestore()
@@ -263,10 +274,13 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }
 
     private fun unlockAndRestore() = viewModelScope.launch {
-        val metaData = validation.value?.metaData ?: return@launch
-        val password = inputs.value.password
+        val metaData = validation.value?.metaData
+        if (metaData == null) {
+            inputs.update { it.copy(unlocking = false) }
+            return@launch
+        }
 
-        inputs.update { it.copy(unlocking = true, wrongPassword = false) }
+        val password = inputs.value.password
 
         unlockBackupUseCase(restoreBackupUri, metaData, password)
             .onSuccess { session ->
@@ -287,15 +301,14 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }
 
     private fun cancelRestore() = viewModelScope.launch {
-        val strategy = activeStrategy ?: return@launch
+        if (inputs.value.canceling) return@launch
 
         inputs.update { it.copy(canceling = true) }
 
         restoreJob?.cancelAndJoin()
         restoreJob = null
 
-        strategy.abort()
-        activeStrategy = null
+        strategies.forEach { it.abort() }
 
         inputs.update {
             it.copy(step = RestoreBackupUiState.Step.Canceled, canceling = false)
@@ -303,33 +316,20 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }
 
     private suspend fun restoreBackup(metaData: BackupMetaData, session: Session) {
+        // TODO: error state. Back to the overview for now, so the restore screen can not hang.
         val zipInputStream = io.zip.openZipInput(restoreBackupUri)
+        if (zipInputStream == null) {
+            Timber.e("Could not open backup for restoring: $restoreBackupUri")
+            inputs.update { it.copy(step = RestoreBackupUiState.Step.Overview) }
+            return
+        }
 
         val progressFlow = when (metaData) {
-            is BackupMetaData.V1 -> {
-                activeStrategy = v1Strategy
-                v1Strategy.restore(metaData, zipInputStream, session)
-            }
-
-            is BackupMetaData.V2 -> {
-                activeStrategy = v2Strategy
-                v2Strategy.restore(metaData, zipInputStream, session)
-            }
-
-            is BackupMetaData.V3 -> {
-                activeStrategy = v3Strategy
-                v3Strategy.restore(metaData, zipInputStream, session)
-            }
-
-            is BackupMetaData.V4 -> {
-                activeStrategy = v4Strategy
-                v4Strategy.restore(metaData, zipInputStream, session)
-            }
-
-            is BackupMetaData.V5 -> {
-                activeStrategy = v5Strategy
-                v5Strategy.restore(metaData, zipInputStream, session)
-            }
+            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
         }
 
         zipInputStream.use { zipInputStream ->
@@ -374,7 +374,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
         if (currentFile.index == lastOrNull()?.index) return this
 
         return (this + RestoreLogEntry(currentFile.index, currentFile.fileName))
-            .takeLast(LOG_ENTRIES)
+            .takeLast(RESTORE_LOG_ROWS)
     }
 
     @AssistedFactory

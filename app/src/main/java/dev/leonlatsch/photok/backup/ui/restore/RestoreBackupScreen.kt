@@ -6,9 +6,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,21 +29,22 @@ fun RestoreBackupScreen(
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val activity = LocalActivity.current
 
+        // Keying on the step position keeps a fast updating screen like restoring from restarting
+        // the animation on every progress update, and leaves the screen sliding out rendering the
+        // last state that belonged to it instead of the state of the screen sliding in.
         AnimatedContent(
-            targetState = uiState.stepPosition,
+            targetState = uiState,
+            contentKey = { it.stepPosition },
             transitionSpec = {
-                if (targetState > initialState) slideForward() else slideBackward()
+                if (targetState.stepPosition > initialState.stepPosition) {
+                    slideForward()
+                } else {
+                    slideBackward()
+                }
             },
             modifier = Modifier.fillMaxSize(),
-        ) { stepPosition ->
-            // The screen sliding out keeps the last state that belonged to it. Without this it
-            // would render the state of the screen sliding in and show nothing at all.
-            var screenState by remember { mutableStateOf(uiState) }
-            if (uiState.stepPosition == stepPosition) {
-                screenState = uiState
-            }
-
-            when (val state = screenState) {
+        ) { state ->
+            when (state) {
                 is RestoreBackupUiState.Validating -> RestoreBackupOverviewLoading(
                     uiState = state,
                     onClose = onClose,

@@ -109,7 +109,7 @@ fun RestoreBackupUnlock(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_lock),
-                    contentDescription = "ZIP",
+                    contentDescription = null,
                     modifier = Modifier
                         .padding(15.dp)
                         .size(32.dp)
@@ -126,7 +126,7 @@ fun RestoreBackupUnlock(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "The backup is encrypted and needs to be unlock with the password that was used to create it.",
+                text = "The backup is encrypted and needs to be unlocked with the password that was used to create it.",
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
             )

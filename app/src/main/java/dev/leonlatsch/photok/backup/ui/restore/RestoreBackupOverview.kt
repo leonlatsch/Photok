@@ -128,12 +128,10 @@ fun RestoreBackupOverview(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                val photoCount = remember(uiState.validation.metaData.photos.size) {
-                    uiState.validation.metaData.photos.count { !it.type.isVideo }
-                }
-                val videoCount = remember(uiState.validation.metaData.photos.size) {
-                    uiState.validation.metaData.photos.count { it.type.isVideo }
-                }
+                val photos = uiState.validation.metaData.photos
+
+                val photoCount = remember(photos) { photos.count { !it.type.isVideo } }
+                val videoCount = remember(photos) { photos.count { it.type.isVideo } }
 
                 StatCard(
                     label = "Photos",
@@ -201,11 +199,13 @@ fun RestoreBackupOverview(
                 modifier = Modifier.padding(10.dp)
             )
 
-            val subtitle = remember {
-                if (uiState.validation.metaData.backupVersion == BackupMetaData.CURRENT_BACKUP_VERSION) {
-                    "Up to date (V${uiState.validation.metaData.backupVersion})"
+            val backupVersion = uiState.validation.metaData.backupVersion
+
+            val subtitle = remember(backupVersion) {
+                if (backupVersion == BackupMetaData.CURRENT_BACKUP_VERSION) {
+                    "Up to date (V$backupVersion)"
                 } else {
-                    "Backwards compatible (V${uiState.validation.metaData.backupVersion})"
+                    "Backwards compatible (V$backupVersion)"
                 }
             }
 

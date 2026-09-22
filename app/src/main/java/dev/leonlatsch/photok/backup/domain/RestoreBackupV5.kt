@@ -117,6 +117,15 @@ class RestoreBackupV5 @Inject constructor(
             val internalOutputStream = vaultFileStorage.openEncryptedOutput(ze.name)
 
             if (encryptedZipInput == null || internalOutputStream == null) {
+                Timber.e("Could not open streams for zip entry: ${ze.name}")
+
+                if (isMainFile) {
+                    if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
+                        failedFiles += FailedFile(photoBackup.fileName, null)
+                    }
+                    send(tracker.finishFile())
+                }
+
                 ze = stream.nextEntry
                 continue
             }

@@ -35,6 +35,9 @@ class ValidateBackupUseCase @Inject constructor(
     suspend operator fun invoke(uri: Uri): Result<BackupValidation> = withContext(Dispatchers.IO) {
         try {
             val zipInputStream = io.zip.openZipInput(uri)
+                ?: return@withContext Result.failure(
+                    IllegalStateException("Could not open backup at $uri")
+                )
 
             var cryptFiles = 0
             var photokFiles = 0

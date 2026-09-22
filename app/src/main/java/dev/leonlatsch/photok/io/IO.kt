@@ -22,7 +22,9 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.documentfile.provider.DocumentFile
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.BufferedInputStream
@@ -46,19 +48,21 @@ class IO @Inject constructor(
     val zip = Zip(context)
 
     class Zip(private val context: Context) {
-        fun openZipInput(uri: Uri): ZipInputStream {
+        /** Returns `null` when the zip can not be opened. */
+        fun openZipInput(uri: Uri): ZipInputStream? {
             val inputStream = try {
                 context.contentResolver.openInputStream(uri)
-            } catch (e: IOException) {
-                Timber.Forest.d("Error opening zip at: $uri $e")
+            } catch (e: Exception) {
+                Timber.Forest.e(e, "Error opening zip at: $uri")
                 null
             }
 
-            return if (inputStream != null) {
-                ZipInputStream(BufferedInputStream(inputStream))
-            } else {
-                error("Could not open zip file at $uri")
+            if (inputStream == null) {
+                Timber.Forest.e("Could not open zip file at $uri")
+                return null
             }
+
+            return ZipInputStream(BufferedInputStream(inputStream))
         }
 
         fun openZipOutput(uri: Uri): ZipOutputStream {
@@ -114,19 +118,25 @@ class IO @Inject constructor(
 
     /**
      * Copy [input] to [output], reporting every copied chunk to [onBytesCopied].
+     *
+     * Cancelable between chunks, so canceling the caller stops the copy instead of running it to
+     * the end. [output] is closed either way, [input] is left open because it can be a stream the
+     * caller keeps reading from, like a single entry of a [ZipInputStream].
      */
     suspend fun copy(
         input: InputStream,
         output: OutputStream,
         onBytesCopied: (Long) -> Unit = {},
     ): Result<Long> = withContext(Dispatchers.IO) {
-        suspendCoroutine { continuation ->
-            try {
-                var bytesWritten = 0L
-                val buffer = ByteArray(COPY_BUFFER_SIZE)
+        try {
+            var bytesWritten = 0L
+            val buffer = ByteArray(COPY_BUFFER_SIZE)
 
+            output.use { output ->
                 var read = input.read(buffer)
                 while (read >= 0) {
+                    ensureActive()
+
                     output.write(buffer, 0, read)
                     bytesWritten += read
                     onBytesCopied(read.toLong())
@@ -135,12 +145,13 @@ class IO @Inject constructor(
                 }
 
                 output.flush()
-                output.close()
-
-                continuation.resume(Result.success(bytesWritten))
-            } catch (e: Exception) {
-                continuation.resume(Result.failure(e))
             }
+
+            Result.success(bytesWritten)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
