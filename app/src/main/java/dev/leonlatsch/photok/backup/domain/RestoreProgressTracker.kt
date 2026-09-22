@@ -21,6 +21,9 @@ import dev.leonlatsch.photok.backup.data.PhotoBackup
 /** Emitting on every copied chunk would produce thousands of elements per second. */
 private const val EMIT_INTERVAL_MILLIS = 100L
 
+/** Warm up before estimating, a first estimate off the first few chunks is noise. */
+private const val MIN_ELAPSED_MILLIS = 500L
+
 /**
  * Counts restore progress for one backup.
  *
@@ -110,12 +113,18 @@ class RestoreProgressTracker(
      * Estimated from the declared sizes while they look usable, from the file count
      * otherwise. Old backups declare a size of 0 for some photos, which would leave
      * [bytesDone] stuck at [bytesTotal] and the estimate at zero for the whole restore.
+     *
+     * The byte estimate counts the bytes of the file currently being copied, so a backup
+     * whose first file holds most of the bytes updates while that file is still running.
+     * Only the file count fallback has to wait for the first file to finish.
      */
     private fun millisRemaining(elapsed: Long, bytesDone: Long): Long? = when {
-        filesDone == 0 -> null
+        elapsed < MIN_ELAPSED_MILLIS -> null
 
         bytesDone in 1 until bytesTotal -> elapsed * (bytesTotal - bytesDone) / bytesDone
 
-        else -> elapsed * (filesTotal - filesDone) / filesDone
+        filesDone > 0 -> elapsed * (filesTotal - filesDone) / filesDone
+
+        else -> null
     }
 }

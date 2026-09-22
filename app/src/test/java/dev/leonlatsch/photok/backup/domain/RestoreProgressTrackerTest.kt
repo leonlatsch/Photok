@@ -6,11 +6,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 
-private const val PHOTO_SIZE = 2_000_000L
+private const val PHOTO_SIZE = 20_000_000L
 private const val CHUNK = 8192L
 
-/** 100 MB/s, so one chunk takes 0.08 ms. Counted in micros to stay on whole numbers. */
+/** ~100 MB/s, so one chunk takes 0.08 ms. Counted in micros to stay on whole numbers. */
 private const val MICROS_PER_CHUNK = 80L
+
+/** One photo of [PHOTO_SIZE] takes about this long to copy at the speed above. */
+private const val MILLIS_PER_PHOTO = 195L
 
 class RestoreProgressTrackerTest {
 
@@ -42,7 +45,7 @@ class RestoreProgressTrackerTest {
     }
 
     @Test
-    fun `reports no estimate before the first file finished`() {
+    fun `reports no estimate in the first moments of the restore`() {
         val photos = photos(count = 10)
         val tracker = tracker(photos)
 
@@ -55,11 +58,28 @@ class RestoreProgressTrackerTest {
     }
 
     @Test
+    fun `estimates while the first file is still being copied`() {
+        // A backup whose first file holds most of the bytes, the case that used to stay
+        // on "Estimating…" until that file was done
+        val photos = photos(count = 1, size = 9 * PHOTO_SIZE) + photos(count = 9)
+        val tracker = tracker(photos)
+
+        // Half of the big file, a quarter of the backup
+        tracker.copyFile(photos.first(), bytes = 9 * PHOTO_SIZE / 2)
+        val progress = tracker.snapshot()
+
+        assertEquals(0, progress.filesDone)
+
+        // A quarter took ~880 ms, the remaining three quarters need ~2640 ms
+        val remaining = requireNotNull(progress.millisRemaining)
+        assertEquals(3 * 880L, remaining, 200.0)
+    }
+
+    @Test
     fun `estimates the remaining time from the declared sizes`() {
         val photos = photos(count = 10)
         val tracker = tracker(photos)
 
-        // 10 files at 100 MB/s -> 200 ms total, 20 ms per file
         repeat(5) { tracker.copyFile(photos[it]) }
         tracker.copyFile(photos[5])
         val progress = tracker.finishFile()
@@ -70,7 +90,7 @@ class RestoreProgressTrackerTest {
 
         // 6 files worth of time elapsed for 1 file of progress -> 9 files still to go
         val remaining = requireNotNull(progress.millisRemaining)
-        assertEquals(9 * 120L, remaining, 50.0)
+        assertEquals(9 * 6 * MILLIS_PER_PHOTO, remaining, 300.0)
     }
 
     @Test
@@ -88,9 +108,9 @@ class RestoreProgressTrackerTest {
         assertEquals(4, progress.filesDone)
         assertEquals(0L, progress.bytesTotal)
 
-        // 4 files took 80 ms, the remaining 6 should be estimated at ~120 ms
+        // 4 files took ~780 ms, the remaining 6 should be estimated at ~1170 ms
         val remaining = requireNotNull(progress.millisRemaining)
-        assertEquals(120L, remaining, 50.0)
+        assertEquals(6 * MILLIS_PER_PHOTO, remaining, 100.0)
     }
 
     @Test
