@@ -37,8 +37,8 @@ class ReadBackupMetadataUseCase @Inject constructor(
             val header = gson.fromJson(string, BackupHeader::class.java)
 
             val metaData = when (header.backupVersion) {
-                1 -> gson.fromJson(string, BackupMetaData.V1::class.java)
-                2 -> gson.fromJson(string, BackupMetaData.V2::class.java)
+                1 -> gson.fromJson(string, BackupMetaData.V1::class.java)?.withEmptyAlbums()
+                2 -> gson.fromJson(string, BackupMetaData.V2::class.java)?.withEmptyAlbums()
                 3 -> gson.fromJson(string, BackupMetaData.V3::class.java)
                 4 -> gson.fromJson(string, BackupMetaData.V4::class.java)
                 5 -> gson.fromJson(string, BackupMetaData.V5::class.java)
@@ -48,4 +48,25 @@ class ReadBackupMetadataUseCase @Inject constructor(
 
             continuation.resume(metaData)
         }
+}
+
+private fun BackupMetaData.V1.withEmptyAlbums(): BackupMetaData.V1 {
+    val albums: List<AlbumBackup>? = albums
+    val albumPhotoRefs: List<AlbumPhotoRefBackup>? = albumPhotoRefs
+
+    return copy(
+        albums = albums.orEmpty(),
+        albumPhotoRefs = albumPhotoRefs.orEmpty(),
+    )
+}
+
+/** Same as for V1, albums only arrived with V3. */
+private fun BackupMetaData.V2.withEmptyAlbums(): BackupMetaData.V2 {
+    val albums: List<AlbumBackup>? = albums
+    val albumPhotoRefs: List<AlbumPhotoRefBackup>? = albumPhotoRefs
+
+    return copy(
+        albums = albums.orEmpty(),
+        albumPhotoRefs = albumPhotoRefs.orEmpty(),
+    )
 }
