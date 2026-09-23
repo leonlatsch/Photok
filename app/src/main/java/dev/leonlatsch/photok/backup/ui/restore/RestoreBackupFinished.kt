@@ -103,7 +103,7 @@ private fun RestoreBackupFinishedSuccess(
         Spacer(Modifier.height(20.dp))
 
         Text(
-            text = "Restored with no problems",
+            text = "Restored successfully",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
@@ -229,8 +229,8 @@ private fun FailedItemCard(
 }
 
 private fun failuresHeadline(failedCount: Int): String = when (failedCount) {
-    1 -> "Restored with 1 problem"
-    else -> "Restored with $failedCount problems"
+    1 -> "Restored with 1 issue"
+    else -> "Restored with $failedCount issues"
 }
 
 private fun summary(uiState: RestoreBackupUiState.Finished): String {
