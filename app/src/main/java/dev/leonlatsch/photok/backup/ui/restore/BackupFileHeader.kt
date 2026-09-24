@@ -42,7 +42,7 @@ fun BackupFileHeader(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_zip),
-                    contentDescription = "ZIP",
+                    contentDescription = null,
                     modifier = Modifier.padding(10.dp)
                 )
             }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ fun RestoreBackupOverview(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restore Backup")
+                    Text(stringResource(R.string.backup_restore_title))
                 },
                 navigationIcon = {
                     IconButton(
@@ -59,7 +60,7 @@ fun RestoreBackupOverview(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.common_back)
                         )
                     }
                 }
@@ -86,7 +87,7 @@ fun RestoreBackupOverview(
                         contentDescription = null,
                     )
 
-                    Text("Unlock Backup")
+                    Text(stringResource(R.string.backup_restore_unlock_title))
                 }
             }
         }
@@ -118,7 +119,7 @@ fun RestoreBackupOverview(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Stats",
+                text = stringResource(R.string.backup_restore_stats),
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 10.dp)
             )
@@ -134,13 +135,13 @@ fun RestoreBackupOverview(
                 val videoCount = remember(photos) { photos.count { it.type.isVideo } }
 
                 StatCard(
-                    label = "Photos",
+                    label = stringResource(R.string.backup_restore_stats_photos),
                     icon = R.drawable.ic_image,
                     stat = photoCount.toString(),
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
-                    label = "Videos",
+                    label = stringResource(R.string.backup_restore_stats_videos),
                     icon = R.drawable.ic_videocam_outline,
                     stat = videoCount.toString(),
                     modifier = Modifier.weight(1f),
@@ -153,13 +154,13 @@ fun RestoreBackupOverview(
                 horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 StatCard(
-                    label = "Albums",
+                    label = stringResource(R.string.backup_restore_stats_albums),
                     icon = R.drawable.ic_folder,
                     stat = uiState.validation.metaData.albums.size.toString(),
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
-                    label = "Size",
+                    label = stringResource(R.string.backup_restore_stats_size),
                     icon = R.drawable.ic_database,
                     stat = formattedFileSize,
                     modifier = Modifier.weight(1f),
@@ -169,7 +170,7 @@ fun RestoreBackupOverview(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Archive",
+                text = stringResource(R.string.backup_restore_archive),
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 10.dp)
             )
@@ -178,7 +179,7 @@ fun RestoreBackupOverview(
 
             ArchiveInfoItem(
                 icon = R.drawable.ic_schedule,
-                label = "Created",
+                label = stringResource(R.string.backup_restore_archive_created),
                 value = formattedCreatedAt
             )
             HorizontalDivider(
@@ -186,7 +187,7 @@ fun RestoreBackupOverview(
             )
             ArchiveInfoItem(
                 icon = R.drawable.ic_lock,
-                label = "Encryption",
+                label = stringResource(R.string.backup_restore_archive_encryption),
                 value = when (val metadate = uiState.validation.metaData) {
                     is BackupMetaData.V1 -> Algorithm.AesGcmNoPadding
                     is BackupMetaData.V2 -> Algorithm.AesGcmNoPadding
@@ -201,17 +202,15 @@ fun RestoreBackupOverview(
 
             val backupVersion = uiState.validation.metaData.backupVersion
 
-            val subtitle = remember(backupVersion) {
-                if (backupVersion == BackupMetaData.CURRENT_BACKUP_VERSION) {
-                    "Up to date (V$backupVersion)"
-                } else {
-                    "Backwards compatible (V$backupVersion)"
-                }
+            val subtitle = if (backupVersion == BackupMetaData.CURRENT_BACKUP_VERSION) {
+                stringResource(R.string.backup_restore_compatibility_up_to_date, backupVersion)
+            } else {
+                stringResource(R.string.backup_restore_compatibility_backwards, backupVersion)
             }
 
             ArchiveInfoItem(
                 icon = R.drawable.ic_extension,
-                label = "Compatibility",
+                label = stringResource(R.string.backup_restore_archive_compatibility),
                 value = subtitle,
             )
 
@@ -223,7 +222,7 @@ fun RestoreBackupOverview(
                     shape = RoundedCornerShape(18.dp),
                 ) {
                     Text(
-                        text = "You already have files in your Vault. Restoring merges them with the files from this backup.",
+                        text = stringResource(R.string.backup_restore_vault_not_empty),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.outline,
                         modifier = Modifier.padding(10.dp)

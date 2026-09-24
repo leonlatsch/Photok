@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -48,7 +49,7 @@ fun RestoreBackupFinished(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restore Finished")
+                    Text(stringResource(R.string.backup_restore_finished_title))
                 },
             )
         },
@@ -64,7 +65,7 @@ fun RestoreBackupFinished(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Done")
+                    Text(stringResource(R.string.common_done))
                 }
             }
         }
@@ -103,7 +104,7 @@ private fun RestoreBackupFinishedSuccess(
         Spacer(Modifier.height(20.dp))
 
         Text(
-            text = "Restored successfully",
+            text = stringResource(R.string.backup_restore_finished_headline),
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
@@ -161,7 +162,7 @@ private fun RestoreBackupFinishedWithFailures(
         Spacer(Modifier.height(20.dp))
 
         Text(
-            text = "Failed items",
+            text = stringResource(R.string.backup_restore_finished_failed_items),
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
                 .align(Alignment.Start)
@@ -219,7 +220,8 @@ private fun FailedItemCard(
                 )
 
                 Text(
-                    text = failedFile.cause?.localizedMessage ?: "Unknown error",
+                    text = failedFile.cause?.localizedMessage
+                        ?: stringResource(R.string.backup_restore_finished_unknown_error),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
@@ -228,30 +230,47 @@ private fun FailedItemCard(
     }
 }
 
+@Composable
 private fun failuresHeadline(failedCount: Int): String = when (failedCount) {
-    1 -> "Restored with 1 issue"
-    else -> "Restored with $failedCount issues"
+    1 -> stringResource(R.string.backup_restore_finished_headline_one_issue)
+    else -> stringResource(R.string.backup_restore_finished_headline_issues, failedCount)
 }
 
+@Composable
 private fun summary(uiState: RestoreBackupUiState.Finished): String {
     val duration = formatDuration(uiState.durationMillis)
 
     return if (uiState.albumsRestored > 0) {
-        "${uiState.filesRestored} of ${uiState.filesTotal} files and ${uiState.albumsRestored} " +
-            "albums were added to your vault in $duration."
+        stringResource(
+            R.string.backup_restore_finished_summary_with_albums,
+            uiState.filesRestored,
+            uiState.filesTotal,
+            uiState.albumsRestored,
+            duration,
+        )
     } else {
-        "${uiState.filesRestored} of ${uiState.filesTotal} files were added to your vault " +
-            "in $duration."
+        stringResource(
+            R.string.backup_restore_finished_summary,
+            uiState.filesRestored,
+            uiState.filesTotal,
+            duration,
+        )
     }
 }
 
+@Composable
 private fun formatDuration(millis: Long): String {
     val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
     val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60
 
     return when {
-        minutes > 0 -> "$minutes min $seconds s"
-        else -> "$seconds s"
+        minutes > 0 -> stringResource(
+            R.string.backup_restore_finished_duration_minutes,
+            minutes,
+            seconds,
+        )
+
+        else -> stringResource(R.string.backup_restore_finished_duration_seconds, seconds)
     }
 }
 

@@ -38,6 +38,8 @@
     <string name="common_try_again">Try again</string>
     <string name="common_continue">Continue</string>
     <string name="common_hold_to_confirm">Hold to confirm</string>
+    <string name="common_back">Back</string>
+    <string name="common_done">Done</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>
@@ -266,6 +268,71 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Creating backup…</string>
     <string name="backup_confirm_password">Confirm your password to create a backup.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Restore Backup</string>
+    <string name="backup_restore_validating">Validating…</string>
+    <string name="backup_restore_invalid">Invalid backup</string>
+
+    <string name="backup_restore_stats">Stats</string>
+    <string name="backup_restore_stats_photos">Photos</string>
+    <string name="backup_restore_stats_videos">Videos</string>
+    <string name="backup_restore_stats_albums">Albums</string>
+    <string name="backup_restore_stats_size">Size</string>
+
+    <string name="backup_restore_archive">Archive</string>
+    <string name="backup_restore_archive_created">Created</string>
+    <string name="backup_restore_archive_encryption">Encryption</string>
+    <string name="backup_restore_archive_compatibility">Compatibility</string>
+    <string name="backup_restore_compatibility_up_to_date">Up to date (V%1$d)</string>
+    <string name="backup_restore_compatibility_backwards">Backwards compatible (V%1$d)</string>
+    <string name="backup_restore_vault_not_empty">You already have files in your Vault. Restoring merges them with the files from this backup.</string>
+
+    <string name="backup_restore_unlock_title">Unlock Backup</string>
+    <string name="backup_restore_unlock_button">Unlock &amp; Restore</string>
+    <string name="backup_restore_unlock_headline">Enter Backup Password</string>
+    <string name="backup_restore_unlock_explanation">The backup is encrypted and needs to be unlocked with the password that was used to create it.</string>
+    <string name="backup_restore_unlock_password_notice">This password will only be used to unlock the backup and never be stored anywhere.</string>
+
+    <string name="backup_restore_restoring_title">Restoring Backup</string>
+    <string name="backup_restore_restoring_subtitle">Restoring…</string>
+    <string name="backup_restore_restoring_percent">%1$d%%</string>
+    <string name="backup_restore_restoring_bytes">%1$s of %2$s</string>
+    <string name="backup_restore_restoring_speed">%1$s/s</string>
+    <string name="backup_restore_restoring_files">%1$d / %2$d files</string>
+    <string name="backup_restore_restoring_estimating">Estimating…</string>
+    <string name="backup_restore_restoring_time_left_minutes">%1$d min %2$d s left</string>
+    <string name="backup_restore_restoring_time_left_seconds">%1$d s left</string>
+    <string name="backup_restore_restoring_keep_open">This can take a while. Please keep the app open.</string>
+    <string name="backup_restore_cancel">Cancel restore</string>
+    <string name="backup_restore_canceling">Canceling restore…</string>
+
+    <string name="backup_restore_indexing_title">Indexing…</string>
+    <string name="backup_restore_indexing_description">All files restored, indexing your photos and albums.</string>
+
+    <string name="backup_restore_canceled_title">Restore Canceled</string>
+    <string name="backup_restore_canceled_headline">Restore canceled</string>
+    <string name="backup_restore_canceled_description">Nothing from %1$s was added to your vault. All files that were already restored have been deleted again.</string>
+
+    <string name="backup_restore_finished_title">Restore Finished</string>
+    <string name="backup_restore_finished_headline">Restored successfully</string>
+    <string name="backup_restore_finished_headline_one_issue">Restored with 1 issue</string>
+    <string name="backup_restore_finished_headline_issues">Restored with %1$d issues</string>
+    <string name="backup_restore_finished_summary">%1$d of %2$d files were added to your vault in %3$s.</string>
+    <string name="backup_restore_finished_summary_with_albums">%1$d of %2$d files and %3$d albums were added to your vault in %4$s.</string>
+    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string>
+    <string name="backup_restore_finished_duration_seconds">%1$d s</string>
+    <string name="backup_restore_finished_failed_items">Failed items</string>
+    <string name="backup_restore_finished_unknown_error">Unknown error</string>
+
+    <string name="backup_restore_error_cannot_open_title">Backup can not be opened</string>
+    <string name="backup_restore_error_cannot_open_description">This file could not be opened. Make sure it is a Photok backup and still available on this device.</string>
+    <string name="backup_restore_error_no_files_title">No photos in this backup</string>
+    <string name="backup_restore_error_no_files_description">This archive does not contain any Photok files, so there is nothing to restore.</string>
+    <string name="backup_restore_error_no_metadata_title">Backup is incomplete</string>
+    <string name="backup_restore_error_no_metadata_description">This backup has no metadata, so Photok can not tell what is inside it.</string>
+    <string name="backup_restore_error_unknown_title">Backup can not be read</string>
+    <string name="backup_restore_error_unknown_description">Something went wrong while reading this backup.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

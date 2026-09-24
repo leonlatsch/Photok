@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -39,7 +40,7 @@ fun RestoreBackupOverviewLoading(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restore Backup")
+                    Text(stringResource(R.string.backup_restore_title))
                 },
                 navigationIcon = {
                     IconButton(
@@ -47,7 +48,7 @@ fun RestoreBackupOverviewLoading(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.common_back)
                         )
                     }
                 }
@@ -61,13 +62,13 @@ fun RestoreBackupOverviewLoading(
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
-                subtitle = "Validating...",
+                subtitle = stringResource(R.string.backup_restore_validating),
             )
 
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Stats",
+                text = stringResource(R.string.backup_restore_stats),
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 10.dp)
             )
@@ -109,7 +110,7 @@ fun RestoreBackupOverviewLoading(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Archive",
+                text = stringResource(R.string.backup_restore_archive),
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 10.dp)
             )

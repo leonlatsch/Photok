@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,7 @@ fun RestoreBackupCanceled(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restore Canceled")
+                    Text(stringResource(R.string.backup_restore_canceled_title))
                 },
             )
         },
@@ -53,7 +54,7 @@ fun RestoreBackupCanceled(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Done")
+                    Text(stringResource(R.string.common_done))
                 }
             }
         }
@@ -73,7 +74,7 @@ fun RestoreBackupCanceled(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Restore canceled",
+                text = stringResource(R.string.backup_restore_canceled_headline),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -82,8 +83,10 @@ fun RestoreBackupCanceled(
             Spacer(Modifier.height(10.dp))
 
             Text(
-                text = "Nothing from ${uiState.fileName} was added to your vault. " +
-                    "All files that were already restored have been deleted again.",
+                text = stringResource(
+                    R.string.backup_restore_canceled_description,
+                    uiState.fileName,
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,

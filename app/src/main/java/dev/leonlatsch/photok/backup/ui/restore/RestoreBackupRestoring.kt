@@ -25,10 +25,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.concurrent.TimeUnit
@@ -47,7 +49,7 @@ fun RestoreBackupRestoring(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restoring Backup")
+                    Text(stringResource(R.string.backup_restore_restoring_title))
                 },
             )
         },
@@ -83,7 +85,15 @@ fun RestoreBackupRestoring(
                         Spacer(Modifier.size(10.dp))
                     }
 
-                    Text(if (uiState.canceling) "Canceling restore…" else "Cancel restore")
+                    Text(
+                        stringResource(
+                            if (uiState.canceling) {
+                                R.string.backup_restore_canceling
+                            } else {
+                                R.string.backup_restore_cancel
+                            }
+                        )
+                    )
                 }
             }
         }
@@ -98,7 +108,7 @@ fun RestoreBackupRestoring(
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
-                subtitle = "Restoring…",
+                subtitle = stringResource(R.string.backup_restore_restoring_subtitle),
                 modifier = Modifier.fillMaxWidth(),
             )
 
@@ -110,7 +120,10 @@ fun RestoreBackupRestoring(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = "${(uiState.progress * 100).roundToInt()}%",
+                    text = stringResource(
+                        R.string.backup_restore_restoring_percent,
+                        (uiState.progress * 100).roundToInt(),
+                    ),
                     style = MaterialTheme.typography.displayMedium,
                     fontFamily = FontFamily.Monospace,
                 )
@@ -119,13 +132,20 @@ fun RestoreBackupRestoring(
                     horizontalAlignment = Alignment.End,
                 ) {
                     Text(
-                        text = "${formatBytes(uiState.bytesDone)} of ${formatBytes(uiState.bytesTotal)}",
+                        text = stringResource(
+                            R.string.backup_restore_restoring_bytes,
+                            formatBytes(uiState.bytesDone),
+                            formatBytes(uiState.bytesTotal),
+                        ),
                         style = MaterialTheme.typography.bodyLarge,
                         fontFamily = FontFamily.Monospace,
                     )
 
                     Text(
-                        text = "${formatBytes(uiState.bytesPerSecond)}/s",
+                        text = stringResource(
+                            R.string.backup_restore_restoring_speed,
+                            formatBytes(uiState.bytesPerSecond),
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.outline,
                     )
@@ -148,7 +168,11 @@ fun RestoreBackupRestoring(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = "${uiState.filesDone} / ${uiState.filesTotal} files",
+                    text = stringResource(
+                        R.string.backup_restore_restoring_files,
+                        uiState.filesDone,
+                        uiState.filesTotal,
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
@@ -163,7 +187,7 @@ fun RestoreBackupRestoring(
             Spacer(Modifier.height(50.dp))
 
             Text(
-                text = "This can take a while. Please keep the app open.",
+                text = stringResource(R.string.backup_restore_restoring_keep_open),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
@@ -175,15 +199,21 @@ fun RestoreBackupRestoring(
 
 private fun formatBytes(bytes: Long) = BindingConverters.formatByteSizeConverter(bytes)
 
+@Composable
 private fun formatTimeRemaining(millisRemaining: Long?): String {
-    millisRemaining ?: return "Estimating…"
+    millisRemaining ?: return stringResource(R.string.backup_restore_restoring_estimating)
 
     val minutes = TimeUnit.MILLISECONDS.toMinutes(millisRemaining)
     val seconds = TimeUnit.MILLISECONDS.toSeconds(millisRemaining) % 60
 
     return when {
-        minutes > 0 -> "$minutes min $seconds s left"
-        else -> "$seconds s left"
+        minutes > 0 -> stringResource(
+            R.string.backup_restore_restoring_time_left_minutes,
+            minutes,
+            seconds,
+        )
+
+        else -> stringResource(R.string.backup_restore_restoring_time_left_seconds, seconds)
     }
 }
 

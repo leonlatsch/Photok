@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -55,7 +56,7 @@ fun RestoreBackupValidationFailed(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restore Backup")
+                    Text(stringResource(R.string.backup_restore_title))
                 },
                 navigationIcon = {
                     IconButton(
@@ -63,7 +64,7 @@ fun RestoreBackupValidationFailed(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.common_back)
                         )
                     }
                 }
@@ -81,7 +82,7 @@ fun RestoreBackupValidationFailed(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Close")
+                    Text(stringResource(R.string.process_close))
                 }
             }
         }
@@ -94,7 +95,7 @@ fun RestoreBackupValidationFailed(
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
-                subtitle = "Invalid backup",
+                subtitle = stringResource(R.string.backup_restore_invalid),
             )
 
             Spacer(Modifier.height(40.dp))
@@ -128,26 +129,34 @@ fun RestoreBackupValidationFailed(
     }
 }
 
+@Composable
 private fun headline(error: BackupValidationError) = when (error) {
-    is BackupValidationError.CannotOpenFile -> "Backup can not be opened"
-    is BackupValidationError.NoBackupFiles -> "No photos in this backup"
-    is BackupValidationError.NoMetaData -> "Backup is incomplete"
-    is BackupValidationError.Unknown -> "Backup can not be read"
-}
-
-private fun description(error: BackupValidationError) = when (error) {
     is BackupValidationError.CannotOpenFile ->
-        "This file could not be opened. Make sure it is a Photok backup and still available on " +
-            "this device."
+        stringResource(R.string.backup_restore_error_cannot_open_title)
 
     is BackupValidationError.NoBackupFiles ->
-        "This archive does not contain any Photok files, so there is nothing to restore."
+        stringResource(R.string.backup_restore_error_no_files_title)
 
     is BackupValidationError.NoMetaData ->
-        "This backup has no metadata, so Photok can not tell what is inside it."
+        stringResource(R.string.backup_restore_error_no_metadata_title)
 
     is BackupValidationError.Unknown ->
-        "Something went wrong while reading this backup."
+        stringResource(R.string.backup_restore_error_unknown_title)
+}
+
+@Composable
+private fun description(error: BackupValidationError) = when (error) {
+    is BackupValidationError.CannotOpenFile ->
+        stringResource(R.string.backup_restore_error_cannot_open_description)
+
+    is BackupValidationError.NoBackupFiles ->
+        stringResource(R.string.backup_restore_error_no_files_description)
+
+    is BackupValidationError.NoMetaData ->
+        stringResource(R.string.backup_restore_error_no_metadata_description)
+
+    is BackupValidationError.Unknown ->
+        stringResource(R.string.backup_restore_error_unknown_description)
 }
 
 @PreviewLightDark

@@ -51,7 +51,7 @@ fun RestoreBackupUnlock(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Unlock Backup")
+                    Text(stringResource(R.string.backup_restore_unlock_title))
                 },
                 navigationIcon = {
                     IconButton(
@@ -59,7 +59,7 @@ fun RestoreBackupUnlock(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.common_back)
                         )
                     }
                 }
@@ -90,7 +90,7 @@ fun RestoreBackupUnlock(
                         }
 
                         Text(
-                            text = "Unlock & Restore",
+                            text = stringResource(R.string.backup_restore_unlock_button),
                         )
                     }
                 }
@@ -122,14 +122,14 @@ fun RestoreBackupUnlock(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Enter Backup Password",
+                text = stringResource(R.string.backup_restore_unlock_headline),
                 style = MaterialTheme.typography.headlineMedium
             )
 
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "The backup is encrypted and needs to be unlocked with the password that was used to create it.",
+                text = stringResource(R.string.backup_restore_unlock_explanation),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
             )
@@ -139,7 +139,7 @@ fun RestoreBackupUnlock(
             PasswordField(
                 value = uiState.password,
                 onValueChange = { handleUiEvent(RestoreBackupUiEvent.PasswordChanged(it)) },
-                label = "Password",
+                label = stringResource(R.string.common_password),
                 error = stringResource(R.string.unlock_wrong_password).takeIf { uiState.wrongPassword },
                 onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
                 modifier = Modifier.fillMaxWidth(),
@@ -148,7 +148,7 @@ fun RestoreBackupUnlock(
             Spacer(Modifier.height(10.dp))
 
             Text(
-                text = "This password will only be used to unlock the backup and never be stored anywhere.",
+                text = stringResource(R.string.backup_restore_unlock_password_notice),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier

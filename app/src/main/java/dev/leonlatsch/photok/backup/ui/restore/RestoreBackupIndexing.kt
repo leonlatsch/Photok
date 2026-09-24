@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,7 +41,7 @@ fun RestoreBackupIndexing(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Restoring Backup")
+                    Text(stringResource(R.string.backup_restore_restoring_title))
                 },
             )
         }
@@ -69,7 +70,7 @@ fun RestoreBackupIndexing(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "Indexing...",
+                text = stringResource(R.string.backup_restore_indexing_title),
                 style = MaterialTheme.typography.headlineMedium,
             )
 
@@ -87,7 +88,7 @@ fun RestoreBackupIndexing(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = "All files restored, indexing your photos and albums.",
+                text = stringResource(R.string.backup_restore_indexing_description),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.outline,
