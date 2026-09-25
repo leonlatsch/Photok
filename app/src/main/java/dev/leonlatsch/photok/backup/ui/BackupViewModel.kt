@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
+import dev.leonlatsch.photok.uicomponnets.base.processdialogs.ProcessState
 import timber.log.Timber
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -77,6 +78,15 @@ class BackupViewModel @Inject constructor(
         }
 
         strategy.preBackup()
+
+        strategy.createMetaFileInBackup(zipOutputStream)
+            .onFailure {
+                Timber.e(it, "Error writing meta file to backup")
+                failuresOccurred = true
+                cancel()
+                return
+            }
+
         super.preProcess()
     }
 
@@ -89,16 +99,14 @@ class BackupViewModel @Inject constructor(
     }
 
     override suspend fun postProcess() {
-        if (failuresOccurred.not()) {
-            strategy.createMetaFileInBackup(zipOutputStream)
-                .onFailure {
-                    Timber.e(it, "Error writing meta file to backup")
-                    failuresOccurred = true
-                }
-        }
-
         zipOutputStream.lazyClose()
         strategy.postBackup()
+
+        // meta.json already in zip file. Delete backup
+        if (failuresOccurred || processState == ProcessState.ABORTED) {
+            io.deleteFile(uri)
+        }
+
         super.postProcess()
     }
 }
