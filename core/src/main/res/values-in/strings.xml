@@ -38,6 +38,8 @@
     <string name="common_try_again">Coba lagi</string>
     <string name="common_continue">Lanjutkan</string>
     <string name="common_hold_to_confirm">Tahan untuk mengonfirmasi</string>
+    <string name="common_back">Kembali</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Selesai</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>
@@ -265,17 +267,83 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Membuat cadangan…</string>
-    <string name="backup_restore_title">Pulihkan Cadangan</string>
-    <string name="backup_restore_validating">Memvalidasi cadangan…</string>
-    <string name="backup_restore_details_created_at">Dibuat pada:</string>
-    <string name="backup_restore_details_photos_contained">Jumlah File:</string>
-    <string name="backup_restore_details_compatible">Kompatibel:</string>
-    <string name="backup_restore_details_size">Ukuran:</string>
-    <string name="backup_restore_button">Buka Kunci dan Pulihkan</string>
-    <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
-    <string name="backup_restore_processing">Memulihkan Cadangan…</string>
-    <string name="backup_unlock_title">Buka Kunci Cadangan</string>
     <string name="backup_confirm_password">Konfirmasi kata sandimu untuk membuat cadangan.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Pulihkan Cadangan</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Memvalidasi…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Cadangan tidak valid</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Statistik</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Foto</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Video</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Album</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Ukuran</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Arsip</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Dibuat</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Enkripsi</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Kompatibilitas</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Terbaru (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Kompatibel mundur (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Buka Kunci Cadangan</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Buka Kunci &amp; Pulihkan</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Masukkan Kata Sandi Cadangan</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">Cadangan ini terenkripsi dan perlu dibuka dengan kata sandi yang dipakai saat membuatnya.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Kata sandi ini hanya dipakai untuk membuka cadangan dan tidak disimpan di mana pun.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Memulihkan Cadangan</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Memulihkan…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s dari %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/dtk</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d file</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Memperkirakan…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">Sisa %1$d mnt %2$d dtk</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">Sisa %1$d dtk</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">Ini bisa memakan waktu. Biarkan aplikasi tetap terbuka.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Batalkan pemulihan</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">Membatalkan pemulihan…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">Mengindeks…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Semua file telah dipulihkan, sedang mengindeks foto dan albummu.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">Pemulihan Dibatalkan</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">Pemulihan dibatalkan</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">Tidak ada apa pun dari %1$s yang ditambahkan ke brankasmu. Semua file yang sudah dipulihkan telah dihapus lagi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">Pemulihan Selesai</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">Berhasil dipulihkan</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Dipulihkan dengan 1 masalah</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Dipulihkan dengan %1$d masalah</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">%1$d dari %2$d file ditambahkan ke brankasmu dalam %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">%1$d dari %2$d file dan %3$d album ditambahkan ke brankasmu dalam %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d mnt %2$d dtk</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d dtk</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">Item yang gagal</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Kesalahan tidak diketahui</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Cadangan tidak bisa dibuka</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">File ini tidak bisa dibuka. Pastikan ini cadangan Photok dan masih tersedia di perangkat ini.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Tidak ada foto di cadangan ini</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Arsip ini tidak berisi file Photok, jadi tidak ada yang bisa dipulihkan.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Cadangan tidak lengkap</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Cadangan ini tidak punya metadata, jadi Photok tidak bisa mengetahui isinya.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Cadangan tidak bisa dibaca</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Terjadi kesalahan saat membaca cadangan ini.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Foto yang sudah ada di brankasmu</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Lewati</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Pertahankan salinan yang sudah ada di brankasmu.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">Ganti</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">Timpa dengan salinan dari cadangan ini.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">Cadangan ini butuh %1$s, tapi hanya %2$s yang tersedia. Kosongkan ruang sebelum memulihkan.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">File cadangan tidak lengkap</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">File ini terpotong, kemungkinan besar karena unduhan atau penyalinan yang terputus. Coba transfer ulang.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Cadangan terlalu baru</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Cadangan ini dibuat dengan Photok versi lebih baru (format %1$d). Perbarui Photok untuk memulihkannya.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">1 foto sudah ada di brankasmu dan dilewati.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">%1$d foto sudah ada di brankasmu dan dilewati.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Baru di</string>

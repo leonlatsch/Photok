@@ -38,6 +38,8 @@
     <string name="common_try_again">Erneut versuchen</string>
     <string name="common_continue">Weiter</string>
     <string name="common_hold_to_confirm">Zum Bestätigen gedrückt halten</string>
+    <string name="common_back">Zurück</string>
+    <string name="common_done">Fertig</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
@@ -266,17 +268,83 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
-    <string name="backup_restore_title">Backup wiederherstellen</string>
-    <string name="backup_restore_validating">Überprüfe Backup…</string>
-    <string name="backup_restore_details_created_at">Erstellt am:</string>
-    <string name="backup_restore_details_photos_contained">Beinhaltet Fotos:</string>
-    <string name="backup_restore_details_compatible">Kompatibel:</string>
-    <string name="backup_restore_details_size">Größe:</string>
-    <string name="backup_restore_button">Entsperren und wiederherstellen</string>
-    <string name="backup_restore_invalid_file">\u26A0 Ungültige Datei</string>
-    <string name="backup_restore_processing">Backup wiederherstellen…</string>
-    <string name="backup_unlock_title">Backup Entsperren</string>
     <string name="backup_confirm_password">Bestätige dein Passwort um ein Backup zu erstellen.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Backup wiederherstellen</string>
+    <string name="backup_restore_validating">Wird geprüft…</string>
+    <string name="backup_restore_invalid">Ungültiges Backup</string>
+
+    <string name="backup_restore_stats">Statistiken</string>
+    <string name="backup_restore_stats_photos">Fotos</string>
+    <string name="backup_restore_stats_videos">Videos</string>
+    <string name="backup_restore_stats_albums">Alben</string>
+    <string name="backup_restore_stats_size">Größe</string>
+
+    <string name="backup_restore_archive">Archiv</string>
+    <string name="backup_restore_archive_created">Erstellt</string>
+    <string name="backup_restore_archive_encryption">Verschlüsselung</string>
+    <string name="backup_restore_archive_compatibility">Kompatibilität</string>
+    <string name="backup_restore_compatibility_up_to_date">Aktuell (V%1$d)</string>
+    <string name="backup_restore_compatibility_backwards">Abwärtskompatibel (V%1$d)</string>
+
+    <string name="backup_restore_unlock_title">Backup entsperren</string>
+    <string name="backup_restore_unlock_button">Entsperren &amp; wiederherstellen</string>
+    <string name="backup_restore_unlock_headline">Backup-Passwort eingeben</string>
+    <string name="backup_restore_unlock_explanation">Das Backup ist verschlüsselt und muss mit dem Passwort entsperrt werden, mit dem es erstellt wurde.</string>
+    <string name="backup_restore_unlock_password_notice">Dieses Passwort wird nur zum Entsperren des Backups verwendet und nirgendwo gespeichert.</string>
+
+    <string name="backup_restore_restoring_title">Backup wird wiederhergestellt</string>
+    <string name="backup_restore_restoring_subtitle">Wird wiederhergestellt…</string>
+    <string name="backup_restore_restoring_percent">%1$d%%</string>
+    <string name="backup_restore_restoring_bytes">%1$s von %2$s</string>
+    <string name="backup_restore_restoring_speed">%1$s/s</string>
+    <string name="backup_restore_restoring_files">%1$d / %2$d Dateien</string>
+    <string name="backup_restore_restoring_estimating">Wird berechnet…</string>
+    <string name="backup_restore_restoring_time_left_minutes">Noch %1$d min %2$d s</string>
+    <string name="backup_restore_restoring_time_left_seconds">Noch %1$d s</string>
+    <string name="backup_restore_restoring_keep_open">Das kann eine Weile dauern. Lass die App geöffnet.</string>
+    <string name="backup_restore_cancel">Wiederherstellung abbrechen</string>
+    <string name="backup_restore_canceling">Wiederherstellung wird abgebrochen…</string>
+
+    <string name="backup_restore_indexing_title">Indizieren…</string>
+    <string name="backup_restore_indexing_description">Alle Dateien wiederhergestellt, deine Fotos und Alben werden indiziert.</string>
+
+    <string name="backup_restore_canceled_title">Wiederherstellung abgebrochen</string>
+    <string name="backup_restore_canceled_headline">Wiederherstellung abgebrochen</string>
+    <string name="backup_restore_canceled_description">Nichts aus %1$s wurde zu deinem Safe hinzugefügt. Alle bereits wiederhergestellten Dateien wurden wieder gelöscht.</string>
+
+    <string name="backup_restore_finished_title">Wiederherstellung abgeschlossen</string>
+    <string name="backup_restore_finished_headline">Erfolgreich wiederhergestellt</string>
+    <string name="backup_restore_finished_headline_one_issue">Wiederhergestellt mit 1 Problem</string>
+    <string name="backup_restore_finished_headline_issues">Wiederhergestellt mit %1$d Problemen</string>
+    <string name="backup_restore_finished_summary">%1$d von %2$d Dateien wurden in %3$s zu deinem Safe hinzugefügt.</string>
+    <string name="backup_restore_finished_summary_with_albums">%1$d von %2$d Dateien und %3$d Alben wurden in %4$s zu deinem Safe hinzugefügt.</string>
+    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string>
+    <string name="backup_restore_finished_duration_seconds">%1$d s</string>
+    <string name="backup_restore_finished_failed_items">Fehlgeschlagene Elemente</string>
+    <string name="backup_restore_finished_unknown_error">Unbekannter Fehler</string>
+
+    <string name="backup_restore_error_cannot_open_title">Backup kann nicht geöffnet werden</string>
+    <string name="backup_restore_error_cannot_open_description">Diese Datei konnte nicht geöffnet werden. Stell sicher, dass es ein Photok Backup ist und noch auf diesem Gerät liegt.</string>
+    <string name="backup_restore_error_no_files_title">Keine Fotos in diesem Backup</string>
+    <string name="backup_restore_error_no_files_description">Dieses Archiv enthält keine Photok Dateien, es gibt also nichts wiederherzustellen.</string>
+    <string name="backup_restore_error_no_metadata_title">Backup ist unvollständig</string>
+    <string name="backup_restore_error_no_metadata_description">Dieses Backup hat keine Metadaten, Photok kann also nicht erkennen, was darin ist.</string>
+    <string name="backup_restore_error_unknown_title">Backup kann nicht gelesen werden</string>
+    <string name="backup_restore_error_unknown_description">Beim Lesen dieses Backups ist etwas schiefgelaufen.</string>
+    <string name="backup_restore_duplicates">Fotos, die schon in deinem Safe sind</string>
+    <string name="backup_restore_duplicates_skip">Überspringen</string>
+    <string name="backup_restore_duplicates_skip_description">Die Kopie behalten, die schon in deinem Safe ist.</string>
+    <string name="backup_restore_duplicates_replace">Ersetzen</string>
+    <string name="backup_restore_duplicates_replace_description">Mit der Kopie aus diesem Backup überschreiben.</string>
+    <string name="backup_restore_not_enough_space">Dieses Backup braucht %1$s, aber nur %2$s sind frei. Schaff Platz, bevor du wiederherstellst.</string>
+    <string name="backup_restore_error_incomplete_title">Backup-Datei ist unvollständig</string>
+    <string name="backup_restore_error_incomplete_description">Diese Datei wurde abgeschnitten, wahrscheinlich durch einen unterbrochenen Download oder Kopiervorgang. Übertrage sie noch mal.</string>
+    <string name="backup_restore_error_unsupported_version_title">Backup ist zu neu</string>
+    <string name="backup_restore_error_unsupported_version_description">Dieses Backup wurde mit einer neueren Version von Photok erstellt (Format %1$d). Aktualisiere Photok, um es wiederherzustellen.</string>
+    <string name="backup_restore_finished_skipped_one">1 Foto war schon in deinem Safe und wurde übersprungen.</string>
+    <string name="backup_restore_finished_skipped">%1$d Fotos waren schon in deinem Safe und wurden übersprungen.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Neu bei</string>

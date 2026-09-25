@@ -17,5 +17,16 @@
 package dev.leonlatsch.photok.backup.domain
 
 data class RestoreResult(
-    val errors: Int = 0,
+    val filesRestored: Int,
+    val filesTotal: Int,
+    val filesSkipped: Int,
+    val albumsRestored: Int,
+    val durationMillis: Long,
+    val failedFiles: List<FailedFile>,
+)
+
+/** [cause] is `null` when the restore step failed without throwing. */
+data class FailedFile(
+    val fileName: String,
+    val cause: Throwable?,
 )

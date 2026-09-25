@@ -21,8 +21,12 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dev.leonlatsch.photok.BR
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Abstract base for all processing view models.
@@ -86,13 +90,27 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
     var failuresOccurred = false
 
     /**
+     * The job doing the actual work. Kept so a subclass that wants to stop mid-item can cancel
+     * it. [cancel] does not touch it, so every subclass that does not opt in keeps the plain
+     * flag based behaviour.
+     */
+    protected var processingJob: Job? = null
+        private set
+
+    /**
      * Runs [preProcess], [processLoop] and [postProcess].
      * launched in [viewModelScope].
      */
     fun runProcessing() = viewModelScope.launch(Dispatchers.IO) {
-        preProcess()
-        processLoop()
-        postProcess()
+        val job = launch(start = CoroutineStart.LAZY) {
+            preProcess()
+            processLoop()
+        }
+        processingJob = job
+        job.start()
+        job.join()
+
+        withContext(NonCancellable) { postProcess() }
     }
 
     /**

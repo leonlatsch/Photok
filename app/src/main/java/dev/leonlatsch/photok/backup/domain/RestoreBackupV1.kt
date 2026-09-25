@@ -22,13 +22,20 @@ import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
 import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.Session
+import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Backup Format V1
@@ -61,13 +68,28 @@ class RestoreBackupV1 @Inject constructor(
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
-) : RestoreBackupStrategy<BackupMetaData.V1> {
-    override suspend fun restore(
+    private val io: IO,
+) {
+    private val writtenPhotos = mutableListOf<Photo>()
+
+    fun restore(
         metaData: BackupMetaData.V1,
         stream: ZipInputStream,
         session: Session,
-    ): RestoreResult {
-        var errors = 0
+        skipUuids: Set<String>,
+    ): Flow<RestoreProgress> = channelFlow {
+        val start = System.currentTimeMillis()
+
+        writtenPhotos.clear()
+
+        val photosToRestore = metaData.photos.filterNot { it.uuid in skipUuids }
+
+        val failedFiles = mutableListOf<FailedFile>()
+        val restoredUuids = mutableSetOf<String>()
+        val seenUuids = mutableSetOf<String>()
+        val tracker = RestoreProgressTracker(photosToRestore)
+
+        send(tracker.snapshot())
 
         var ze = stream.nextEntry
 
@@ -77,46 +99,112 @@ class RestoreBackupV1 @Inject constructor(
             }
 
             if (photoBackup == null) {
+                Timber.i("Skipping dead file in backup: ${ze.name}")
                 ze = stream.nextEntry
                 continue
             }
+
+            if (photoBackup.uuid in skipUuids) {
+                ze = stream.nextEntry
+                continue
+            }
+
+            seenUuids += photoBackup.uuid
 
             // Dummy. Used for method that need a photo object
             val dummyPhoto = photoBackup.toDomain()
 
+            tracker.startFile(photoBackup)
+
             val encryptedZipInput =
                 legacyGcmCryptoEngine.createDecryptStream(stream, session)
             if (encryptedZipInput == null) {
+                Timber.e("Could not open the decrypt stream for zip entry: ${ze.name}")
+                failedFiles += FailedFile(photoBackup.fileName, null)
+                send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
             }
 
-            val photoBytes = suspendCoroutine {
-                it.resume(encryptedZipInput.readBytes())
+            // V1 needs the whole photo in memory anyway, createThumbnails takes a ByteArray
+            val photoBytesOutput = ByteArrayOutputStream()
+            val copyResult = io.copy(encryptedZipInput, photoBytesOutput) { chunk ->
+                tracker.advance(chunk)?.let { trySend(it) }
             }
+
+            if (copyResult.isFailure) {
+                val cause = copyResult.exceptionOrNull()
+                Timber.e(cause, "Error restoring zip entry: ${ze.name}")
+                failedFiles += FailedFile(photoBackup.fileName, cause)
+                send(tracker.finishFile())
+                ze = stream.nextEntry
+                continue
+            }
+
+            val photoBytes = photoBytesOutput.toByteArray()
             val photoBytesInputStream = ByteArrayInputStream(photoBytes)
 
             val photoFileCreated =
                 photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
 
+            writtenPhotos += dummyPhoto
+
             if (!photoFileCreated) {
-                errors++
+                Timber.e("Could not create photo file for zip entry: ${ze.name}")
+                failedFiles += FailedFile(photoBackup.fileName, null)
+                send(tracker.finishFile())
                 ze = stream.nextEntry
                 continue
             }
 
             createThumbnails(dummyPhoto, photoBytes)
-                .onFailure { errors++ }
+                .onFailure {
+                    Timber.e(it, "Error creating thumbnails for zip entry: ${ze.name}")
+                    if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
+                        failedFiles += FailedFile(photoBackup.fileName, it)
+                    }
+                }
+
+            // The photo itself is on disk. A failed thumbnail is reported but does not cost it
+            // its database row.
+            restoredUuids += photoBackup.uuid
+
+            send(tracker.finishFile())
 
             ze = stream.nextEntry
         }
 
-        metaData
-            .getPhotosInOriginalOrder()
+        photosToRestore
+            .filter { it.uuid !in seenUuids }
             .forEach {
-                photoRepository.insert(it.toDomain().copy(importedAt = System.currentTimeMillis()))
+                Timber.e("Photo listed in meta.json but missing from the archive: ${it.fileName}")
+                failedFiles += FailedFile(it.fileName, MissingFromArchive(it.fileName))
             }
 
-        return RestoreResult(errors)
+        send(RestoreProgress.Indexing)
+
+        metaData
+            .getPhotosInOriginalOrder()
+            .filter { it.uuid in restoredUuids }
+            .map { it.toDomain() }
+            .let { photoRepository.insertAll(it) }
+
+        send(
+            RestoreProgress.Finished(
+                RestoreResult(
+                    filesRestored = restoredUuids.size,
+                    filesTotal = metaData.photos.size,
+                    filesSkipped = metaData.photos.count { it.uuid in skipUuids },
+                    albumsRestored = 0,
+                    durationMillis = System.currentTimeMillis() - start,
+                    failedFiles = failedFiles,
+                )
+            )
+        )
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun abort() = withContext(Dispatchers.IO) {
+        writtenPhotos.forEach { photoRepository.deleteInternalPhotoData(it) }
+        writtenPhotos.clear()
     }
 }

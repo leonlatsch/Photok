@@ -38,6 +38,8 @@
     <string name="common_try_again">Probeer opnieuw</string> <!-- TODO: machine translated | EN: Try again -->
     <string name="common_continue">Doorgaan</string>
     <string name="common_hold_to_confirm">Houd ingedrukt om te bevestigen</string>
+    <string name="common_back">Terug</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Klaar</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Bestand(en) importeren</string>
@@ -263,17 +265,83 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Back-up maken…</string>
-    <string name="backup_restore_title">Back-up herstellen</string>
-    <string name="backup_restore_validating">Back-up valideren…</string>
-    <string name="backup_restore_details_created_at">Gemaakt op:</string>
-    <string name="backup_restore_details_photos_contained">Bevatte bestanden:</string>
-    <string name="backup_restore_details_compatible">Compatibel:</string>
-    <string name="backup_restore_details_size">Grootte:</string>
-    <string name="backup_restore_button">Ontgrendelen en herstellen</string>
-    <string name="backup_restore_invalid_file">\u26A0 Ongeldig bestand</string>
-    <string name="backup_restore_processing">Back-up herstellen…</string>
-    <string name="backup_unlock_title">Ontgrendel back-up</string>
     <string name="backup_confirm_password">Bevestig je wachtwoord om een back-up te maken.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Back-up herstellen</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Controleren…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Ongeldige back-up</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Statistieken</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Foto\'s</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Video\'s</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Albums</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Grootte</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Archief</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Aangemaakt</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Versleuteling</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Compatibiliteit</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Up-to-date (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Achterwaarts compatibel (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Back-up ontgrendelen</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Ontgrendelen &amp; herstellen</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Voer het back-upwachtwoord in</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">De back-up is versleuteld en moet worden ontgrendeld met het wachtwoord waarmee hij is gemaakt.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Dit wachtwoord wordt alleen gebruikt om de back-up te ontgrendelen en wordt nergens opgeslagen.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Back-up herstellen</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Herstellen…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s van %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d bestanden</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Berekenen…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">Nog %1$d min %2$d s</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">Nog %1$d s</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">Dit kan even duren. Houd de app open.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Herstellen annuleren</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">Herstellen annuleren…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">Indexeren…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Alle bestanden hersteld, je foto\'s en albums worden geïndexeerd.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">Herstellen geannuleerd</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">Herstellen geannuleerd</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">Er is niets uit %1$s aan je kluis toegevoegd. Alle bestanden die al waren hersteld, zijn weer verwijderd.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">Herstellen voltooid</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">Succesvol hersteld</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Hersteld met 1 probleem</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Hersteld met %1$d problemen</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">%1$d van %2$d bestanden zijn in %3$s aan je kluis toegevoegd.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">%1$d van %2$d bestanden en %3$d albums zijn in %4$s aan je kluis toegevoegd.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d s</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">Mislukte items</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Onbekende fout</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Back-up kan niet worden geopend</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">Dit bestand kon niet worden geopend. Controleer of het een Photok-back-up is en nog op dit apparaat staat.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Geen foto\'s in deze back-up</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Dit archief bevat geen Photok-bestanden, dus er valt niets te herstellen.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Back-up is onvolledig</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Deze back-up heeft geen metadata, dus Photok kan niet zien wat erin zit.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Back-up kan niet worden gelezen</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Er is iets misgegaan bij het lezen van deze back-up.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Foto\'s die al in je kluis staan</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Overslaan</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Behoud de kopie die al in je kluis staat.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">Vervangen</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">Overschrijf ze met de kopie uit deze back-up.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">Deze back-up heeft %1$s nodig, maar er is maar %2$s vrij. Maak ruimte vrij voordat je herstelt.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">Back-upbestand is onvolledig</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Dit bestand is afgebroken, waarschijnlijk door een onderbroken download of kopie. Probeer het opnieuw over te zetten.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Back-up is te nieuw</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Deze back-up is gemaakt met een nieuwere versie van Photok (formaat %1$d). Werk Photok bij om hem te herstellen.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">1 foto stond al in je kluis en is overgeslagen.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">%1$d foto\'s stonden al in je kluis en zijn overgeslagen.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nieuw in</string>

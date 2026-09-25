@@ -38,6 +38,8 @@
     <string name="common_try_again">重试</string>
     <string name="common_continue">继续</string>
     <string name="common_hold_to_confirm">长按确认</string>
+    <string name="common_back">返回</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">完成</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
@@ -265,17 +267,83 @@
 
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
-    <string name="backup_restore_title">还原备份</string>
-    <string name="backup_restore_validating">验证备份中…</string>
-    <string name="backup_restore_details_created_at">创建于:</string>
-    <string name="backup_restore_details_photos_contained">包含的文件:</string>
-    <string name="backup_restore_details_compatible">兼容性:</string>
-    <string name="backup_restore_details_size">大小:</string>
-    <string name="backup_restore_button">解锁并还原</string>
-    <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
-    <string name="backup_restore_processing">还原备份中……</string>
-    <string name="backup_unlock_title">解锁备份</string>
     <string name="backup_confirm_password">确认密码来创建备份</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">恢复备份</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">正在验证…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">备份无效</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">统计</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">照片</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">视频</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">相簿</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">大小</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">归档文件</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">创建时间</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">加密方式</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">兼容性</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">最新版本 (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">向后兼容 (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">解锁备份</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">解锁并恢复</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">输入备份密码</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">此备份已加密，需要用创建时使用的密码解锁。</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">此密码只用于解锁备份，不会存储在任何地方。</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">正在恢复备份</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">恢复中…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s / %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d 个文件</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">正在估算…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">剩余 %1$d 分 %2$d 秒</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">剩余 %1$d 秒</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">这可能需要一些时间。保持应用开启。</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">取消恢复</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">正在取消恢复…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">正在建立索引…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">所有文件已恢复，正在为你的照片和相簿建立索引。</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">恢复已取消</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">恢复已取消</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s 中没有任何内容被添加到你的保险库。已经恢复的文件都已被删除。</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">恢复完成</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">恢复成功</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">恢复完成，有 1 个问题</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">恢复完成，有 %1$d 个问题</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">已在 %3$s 内将 %2$d 个文件中的 %1$d 个添加到你的保险库。</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">已在 %4$s 内将 %2$d 个文件中的 %1$d 个以及 %3$d 个相簿添加到你的保险库。</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d 分 %2$d 秒</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d 秒</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">失败的项目</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">未知错误</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">无法打开备份</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">无法打开此文件。确认它是 Photok 备份，并且仍在此设备上。</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">此备份中没有照片</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">此归档文件不包含任何 Photok 文件，没有可恢复的内容。</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">备份不完整</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">此备份没有元数据，Photok 无法得知其中的内容。</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">无法读取备份</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">读取此备份时出错。</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">保险库中已有的照片</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">跳过</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">保留保险库中已有的副本。</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">替换</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">用此备份中的副本覆盖它们。</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">此备份需要 %1$s，但只有 %2$s 可用空间。恢复前先释放一些空间。</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">备份文件不完整</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">此文件被截断了，很可能是下载或复制中断导致的。重新传输一次试试。</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">备份版本过新</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">此备份由更新版本的 Photok 创建（格式 %1$d）。更新 Photok 后才能恢复。</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">有 1 张照片已在你的保险库中，已跳过。</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">有 %1$d 张照片已在你的保险库中，已跳过。</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">新功能</string>

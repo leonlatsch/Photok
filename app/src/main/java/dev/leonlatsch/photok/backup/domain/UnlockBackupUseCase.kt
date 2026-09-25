@@ -66,7 +66,9 @@ class UnlockBackupUseCase @Inject constructor(
     private fun createSessionFromV4(uri: Uri, pwHash: String, password: String): Session {
         require(BCrypt.checkpw(password, pwHash))
 
-        val zipInputStream = io.zip.openZipInput(uri)
+        val zipInputStream = requireNotNull(io.zip.openZipInput(uri)) {
+            "Could not open backup at $uri"
+        }
 
         var ze = zipInputStream.nextEntry
 

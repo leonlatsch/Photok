@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.backup.data
 
-import com.google.gson.annotations.Expose
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
@@ -28,53 +27,55 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
  */
 sealed interface BackupMetaData {
     val photos: List<PhotoBackup>
+    val albums: List<AlbumBackup>
+    val albumPhotoRefs: List<AlbumPhotoRefBackup>
     val backupVersion: Int
     val createdAt: Long
 
     data class V1(
-        @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
-        @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
-        @Expose override val createdAt: Long = System.currentTimeMillis(),
-        @Expose override val backupVersion: Int,
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        val password: String,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V2(
-        @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
-        @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
-        @Expose override val createdAt: Long = System.currentTimeMillis(),
-        @Expose override val backupVersion: Int,
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        val password: String,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V3(
-        @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
-        @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
-        @Expose override val createdAt: Long = System.currentTimeMillis(),
-        @Expose override val backupVersion: Int,
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        val password: String,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V4(
-        @Expose override val photos: List<PhotoBackup>,
-        @Expose val password: String,
-        @Expose val albums: List<AlbumBackup>,
-        @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
-        @Expose override val createdAt: Long = System.currentTimeMillis(),
-        @Expose override val backupVersion: Int,
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        val password: String,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
     ) : BackupMetaData
 
     data class V5(
-        @Expose override val photos: List<PhotoBackup>,
-        @Expose val albums: List<AlbumBackup>,
-        @Expose val albumPhotoRefs: List<AlbumPhotoRefBackup>,
-        @Expose override val createdAt: Long = System.currentTimeMillis(),
-        @Expose override val backupVersion: Int,
-        @Expose val wrappedVMK: String,
-        @Expose val params: VaultProtectionParams,
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
+        val wrappedVMK: String,
+        val params: VaultProtectionParams,
     ) : BackupMetaData
 
     companion object {

@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
 import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningCaptureService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -146,7 +147,7 @@ class UnlockViewModel @Inject constructor(
         val password = _uiState.value.password
         _uiState.update { it.copy(loading = true, wrongPassword = false) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 vaultService.unlock(UnlockRequest.Password(password))
                     .onSuccess { session ->

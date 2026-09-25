@@ -32,7 +32,6 @@ import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
@@ -68,7 +67,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
         }
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
-        return SecretKeySpec(vmkBytes, "AES")
+        return toVaultMasterKey(vmkBytes)
     }
 
     override suspend fun create(request: CreateRequest.Password): VaultProtection {
