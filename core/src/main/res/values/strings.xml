@@ -286,7 +286,6 @@
     <string name="backup_restore_archive_compatibility">Compatibility</string>
     <string name="backup_restore_compatibility_up_to_date">Up to date (V%1$d)</string>
     <string name="backup_restore_compatibility_backwards">Backwards compatible (V%1$d)</string>
-    <string name="backup_restore_vault_not_empty">You already have files in your Vault. Restoring merges them with the files from this backup.</string>
 
     <string name="backup_restore_unlock_title">Unlock Backup</string>
     <string name="backup_restore_unlock_button">Unlock &amp; Restore</string>
@@ -333,6 +332,18 @@
     <string name="backup_restore_error_no_metadata_description">This backup has no metadata, so Photok can not tell what is inside it.</string>
     <string name="backup_restore_error_unknown_title">Backup can not be read</string>
     <string name="backup_restore_error_unknown_description">Something went wrong while reading this backup.</string>
+    <string name="backup_restore_duplicates">Photos already in your Vault</string>
+    <string name="backup_restore_duplicates_skip">Skip them</string>
+    <string name="backup_restore_duplicates_skip_description">Keep the copy that is already in your Vault.</string>
+    <string name="backup_restore_duplicates_replace">Replace them</string>
+    <string name="backup_restore_duplicates_replace_description">Overwrite them with the copy from this backup.</string>
+    <string name="backup_restore_not_enough_space">This backup needs %1$s but only %2$s is free. Free up some space before restoring.</string>
+    <string name="backup_restore_error_incomplete_title">Backup file is incomplete</string>
+    <string name="backup_restore_error_incomplete_description">This file was cut short, most likely by an interrupted download or copy. Try transferring it again.</string>
+    <string name="backup_restore_error_unsupported_version_title">Backup is too new</string>
+    <string name="backup_restore_error_unsupported_version_description">This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it.</string>
+    <string name="backup_restore_finished_skipped_one">1 photo was already in your Vault and was skipped.</string>
+    <string name="backup_restore_finished_skipped">%1$d photos were already in your Vault and were skipped.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

@@ -28,5 +28,13 @@ fun internalThumbnailFileName(uuid: String) = "${uuid}.$PHOTOK_FILE_EXTENSION$TH
 
 fun internalVideoPreviewFileName(uuid: String) = "${uuid}.$PHOTOK_FILE_EXTENSION$VIDEO_PREVIEW_SUFFIX"
 
+fun legacyInternalFileName(uuid: String) = "${uuid}.$LEGACY_PHOTOK_FILE_EXTENSION"
+
+fun legacyInternalThumbnailFileName(uuid: String) =
+    "${uuid}.$LEGACY_PHOTOK_FILE_EXTENSION$THUMBNAIL_SUFFIX"
+
+fun legacyInternalVideoPreviewFileName(uuid: String) =
+    "${uuid}.$LEGACY_PHOTOK_FILE_EXTENSION$VIDEO_PREVIEW_SUFFIX"
+
 fun isMainFileName(fileName: String) =
     !fileName.endsWith(THUMBNAIL_SUFFIX) && !fileName.endsWith(VIDEO_PREVIEW_SUFFIX)

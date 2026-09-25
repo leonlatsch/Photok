@@ -17,24 +17,11 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
-import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.Session
-import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.io.IO
-import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.database.entity.isMainFileName
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
-import timber.log.Timber
-import java.util.zip.ZipInputStream
+import java.io.InputStream
 import javax.inject.Inject
 
 /**
@@ -71,124 +58,14 @@ import javax.inject.Inject
  */
 class RestoreBackupV3 @Inject constructor(
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
-    private val photoRepository: PhotoRepository,
-    private val albumRepository: AlbumRepository,
-    private val io: IO,
-    private val vaultFileStorage: VaultFileStorage,
 ) : RestoreBackupStrategy<BackupMetaData.V3> {
-    private val writtenFiles = mutableListOf<String>()
 
-    override fun restore(
-        metaData: BackupMetaData.V3,
-        stream: ZipInputStream,
-        session: Session,
-    ): Flow<RestoreProgress> = channelFlow {
-        val start = System.currentTimeMillis()
+    override fun decrypt(input: InputStream, session: Session): InputStream? =
+        legacyGcmCryptoEngine.createDecryptStream(input, session)
 
-        writtenFiles.clear()
-
-        val failedFiles = mutableListOf<FailedFile>()
-        val tracker = RestoreProgressTracker(metaData.photos)
-
-        send(tracker.snapshot())
-
-        var ze = stream.nextEntry
-
-        while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            // Skip files that are not mentioned in the metadata
-            // These might be dead files from old versions of photok
-            val photoBackup = metaData.photos.find { ze.name.contains(it.uuid) }
-            if (photoBackup == null) {
-                ze = stream.nextEntry
-                Timber.i("Skipping dead file in backup: ${ze.name}")
-                continue
-            }
-
-            val isMainFile = isMainFileName(ze.name)
-            if (isMainFile) tracker.startFile(photoBackup)
-
-            val encryptedZipInput =
-                legacyGcmCryptoEngine.createDecryptStream(stream, session)
-            val internalFileName = ze.name.replace(
-                oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
-                newValue = PHOTOK_FILE_EXTENSION,
-            )
-            val internalOutputStream = vaultFileStorage.openEncryptedOutput(internalFileName)
-
-            if (encryptedZipInput == null || internalOutputStream == null) {
-                Timber.e("Could not open streams for zip entry: ${ze.name}")
-
-                if (isMainFile) {
-                    if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
-                        failedFiles += FailedFile(photoBackup.fileName, null)
-                    }
-                    send(tracker.finishFile())
-                }
-
-                ze = stream.nextEntry
-                continue
-            }
-
-            writtenFiles += internalFileName
-
-            io.copy(encryptedZipInput, internalOutputStream) { chunk ->
-                if (isMainFile) {
-                    tracker.advance(chunk)?.let { trySend(it) }
-                } else {
-                    tracker.advanceSidecar(chunk)
-                }
-            }.onFailure {
-                Timber.e(it, "Error restoring zip entry: ${ze.name}")
-                if (failedFiles.none { failed -> failed.fileName == photoBackup.fileName }) {
-                    failedFiles += FailedFile(photoBackup.fileName, it)
-                }
-            }
-
-            if (isMainFile) send(tracker.finishFile())
-
-            ze = stream.nextEntry
-        }
-
-        send(RestoreProgress.Indexing)
-
-        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
-            val newPhoto = photoBackup
-                .toDomain()
-                .copy(importedAt = System.currentTimeMillis())
-
-            photoRepository.insert(newPhoto)
-        }
-
-        metaData.albums.forEach { albumBackup ->
-            val album = albumBackup.toDomain()
-            albumRepository.createAlbum(album)
-        }
-
-        metaData.albumPhotoRefs.forEach { albumPhotoRefBackup ->
-            val albumPhotoRef = albumPhotoRefBackup.toDomain()
-            albumRepository.link(albumPhotoRef)
-        }
-
-        send(
-            RestoreProgress.Finished(
-                RestoreResult(
-                    filesRestored = metaData.photos.size - failedFiles.size,
-                    filesTotal = metaData.photos.size,
-                    albumsRestored = metaData.albums.size,
-                    durationMillis = System.currentTimeMillis() - start,
-                    failedFiles = failedFiles,
-                )
-            )
-        )
-    }.flowOn(Dispatchers.IO)
-
-    override suspend fun abort() = withContext(Dispatchers.IO) {
-        writtenFiles.forEach { vaultFileStorage.deleteEncryptedFile(it) }
-        writtenFiles.clear()
-    }
+    /** The vault stores `.crypt`, this format still carried the old `.photok` name. */
+    override fun internalFileName(entryName: String): String = entryName.replace(
+        oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+        newValue = PHOTOK_FILE_EXTENSION,
+    )
 }

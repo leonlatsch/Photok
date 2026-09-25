@@ -37,6 +37,7 @@ import io.mockk.coVerifyOrder
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,7 +49,11 @@ import java.util.zip.ZipOutputStream
 /**
  * The meta file holds the wrapped vault master key of a V5 backup. A backup that ends before it is
  * written can never be decrypted again, so these tests pin down that it is written first and that
- * an incomplete backup does not survive.
+ * a backup which lost that file does not survive.
+ *
+ * A single photo that failed is a different matter: the archive still holds the rest of the vault
+ * and meta.json still lists the photo, so restore reports it as missing. Throwing the whole file
+ * away over it would be worse, and these tests pin that down too.
  */
 @RunWith(RobolectricTestRunner::class)
 class BackupViewModelTest {
@@ -109,13 +114,14 @@ class BackupViewModelTest {
     }
 
     @Test
-    fun `deletes the backup when a photo fails`() = runTest {
+    fun `keeps the backup when a single photo fails`() = runTest {
         coEvery { mockStrategy.writePhotoToBackup(photos[1], any()) } returns
             Result.failure(IllegalStateException("Input stream missing for photo"))
 
         runBackup()
 
-        coVerify { mockIO.deleteFile(backupUri) }
+        coVerify(exactly = 0) { mockIO.deleteFile(any()) }
+        assertTrue("A failed photo must still raise the warning", viewModel.failuresOccurred)
     }
 
     @Test
@@ -127,6 +133,26 @@ class BackupViewModelTest {
 
         coVerify(exactly = 0) { mockStrategy.writePhotoToBackup(any(), any()) }
         coVerify { mockIO.deleteFile(backupUri) }
+    }
+
+    @Test
+    fun `deletes the backup when the vault has no password protection`() = runTest {
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns null
+
+        runBackup()
+
+        coVerify(exactly = 0) { mockStrategy.writePhotoToBackup(any(), any()) }
+        coVerify { mockIO.deleteFile(backupUri) }
+    }
+
+    @Test
+    fun `deletes nothing when the backup file can not be opened`() = runTest {
+        every { mockIO.zip.openZipOutput(backupUri) } returns null
+
+        runBackup()
+
+        coVerify(exactly = 0) { mockStrategy.createMetaFileInBackup(any()) }
+        coVerify(exactly = 0) { mockStrategy.writePhotoToBackup(any(), any()) }
     }
 
     @Test

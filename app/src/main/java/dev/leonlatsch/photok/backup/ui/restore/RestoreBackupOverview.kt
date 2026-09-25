@@ -1,3 +1,19 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package dev.leonlatsch.photok.backup.ui.restore
 
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -17,6 +34,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,8 +43,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -67,27 +87,54 @@ fun RestoreBackupOverview(
             )
         },
         bottomBar = {
-            Button(
-                onClick = { handleUiEvent(RestoreBackupUiEvent.UnlockBackupClicked) },
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .navigationBarsPadding()
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        5.dp,
-                        Alignment.CenterHorizontally
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Icon(
-                        painterResource(R.drawable.ic_lock),
-                        contentDescription = null,
-                    )
+                if (uiState.validation.notEnoughSpace) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = RoundedCornerShape(18.dp),
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.backup_restore_not_enough_space,
+                                BindingConverters.formatByteSizeConverter(
+                                    uiState.validation.requiredBytes
+                                ),
+                                BindingConverters.formatByteSizeConverter(
+                                    uiState.validation.usableBytes
+                                ),
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+                }
 
-                    Text(stringResource(R.string.backup_restore_unlock_title))
+                Button(
+                    onClick = { handleUiEvent(RestoreBackupUiEvent.UnlockBackupClicked) },
+                    enabled = !uiState.validation.notEnoughSpace,
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            5.dp,
+                            Alignment.CenterHorizontally
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_lock),
+                            contentDescription = null,
+                        )
+
+                        Text(stringResource(R.string.backup_restore_unlock_title))
+                    }
                 }
             }
         }
@@ -215,20 +262,71 @@ fun RestoreBackupOverview(
             )
 
             if (!uiState.emptyVault) {
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(30.dp))
 
-                Surface(
-                    color = MaterialTheme.colorScheme.surfaceContainerLow,
-                    shape = RoundedCornerShape(18.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.backup_restore_vault_not_empty),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.padding(10.dp)
-                    )
-                }
+                Text(
+                    text = stringResource(R.string.backup_restore_duplicates),
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
+
+                Spacer(Modifier.height(5.dp))
+
+                DuplicateHandlingOption(
+                    label = stringResource(R.string.backup_restore_duplicates_skip),
+                    description = stringResource(R.string.backup_restore_duplicates_skip_description),
+                    selected = uiState.duplicateHandling == DuplicateHandling.Skip,
+                    onClick = {
+                        handleUiEvent(
+                            RestoreBackupUiEvent.DuplicateHandlingChanged(DuplicateHandling.Skip)
+                        )
+                    },
+                )
+
+                DuplicateHandlingOption(
+                    label = stringResource(R.string.backup_restore_duplicates_replace),
+                    description = stringResource(R.string.backup_restore_duplicates_replace_description),
+                    selected = uiState.duplicateHandling == DuplicateHandling.Replace,
+                    onClick = {
+                        handleUiEvent(
+                            RestoreBackupUiEvent.DuplicateHandlingChanged(DuplicateHandling.Replace)
+                        )
+                    },
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun DuplicateHandlingOption(
+    label: String,
+    description: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .padding(10.dp),
+    ) {
+        RadioButton(selected = selected, onClick = null)
+
+        Column {
+            Text(
+                text = label,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline,
+            )
         }
     }
 }
@@ -290,8 +388,11 @@ private fun Preview() {
                     ),
                     fileName = "photok_backup_1234.zip",
                     fileSize = 123123123L,
+                    requiredBytes = 123123123L,
+                    usableBytes = 999999999L,
                 ),
                 emptyVault = false,
+                duplicateHandling = DuplicateHandling.Skip,
             ),
             handleUiEvent = {},
             onClose = {},

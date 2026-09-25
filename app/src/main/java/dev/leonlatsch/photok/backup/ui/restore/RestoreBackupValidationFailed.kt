@@ -140,6 +140,12 @@ private fun headline(error: BackupValidationError) = when (error) {
     is BackupValidationError.NoMetaData ->
         stringResource(R.string.backup_restore_error_no_metadata_title)
 
+    is BackupValidationError.IncompleteFile ->
+        stringResource(R.string.backup_restore_error_incomplete_title)
+
+    is BackupValidationError.UnsupportedVersion ->
+        stringResource(R.string.backup_restore_error_unsupported_version_title)
+
     is BackupValidationError.Unknown ->
         stringResource(R.string.backup_restore_error_unknown_title)
 }
@@ -154,6 +160,14 @@ private fun description(error: BackupValidationError) = when (error) {
 
     is BackupValidationError.NoMetaData ->
         stringResource(R.string.backup_restore_error_no_metadata_description)
+
+    is BackupValidationError.IncompleteFile ->
+        stringResource(R.string.backup_restore_error_incomplete_description)
+
+    is BackupValidationError.UnsupportedVersion -> stringResource(
+        R.string.backup_restore_error_unsupported_version_description,
+        error.version,
+    )
 
     is BackupValidationError.Unknown ->
         stringResource(R.string.backup_restore_error_unknown_description)

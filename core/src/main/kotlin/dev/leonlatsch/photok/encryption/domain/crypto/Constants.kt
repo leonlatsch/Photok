@@ -19,3 +19,5 @@ package dev.leonlatsch.photok.encryption.domain.crypto
 const val IV_SIZE = 16
 const val SALT_SIZE = 16
 const val BLOCK_SIZE = 16
+
+const val VAULT_MASTER_KEY_SIZE = 32

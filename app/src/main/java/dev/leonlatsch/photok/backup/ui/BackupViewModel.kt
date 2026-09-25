@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessViewModel
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.ProcessState
 import timber.log.Timber
+import java.util.zip.Deflater
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 
@@ -62,28 +63,38 @@ class BackupViewModel @Inject constructor(
         }
     }
 
-    private lateinit var zipOutputStream: ZipOutputStream
+    private var zipOutputStream: ZipOutputStream? = null
+
+    // Indicates a fatal unrecoverable error. Backup should be canceled and deleted
+    private var fatalFailure = false
 
     override suspend fun preProcess() {
         items = photoRepository.findAllPhotosByImportDateDesc()
         elementsToProcess = items.size
-        zipOutputStream = io.zip.openZipOutput(uri)
 
-        // Should not happen because of unlock before create backup
-        val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
-        if (protection == null) {
-            failuresOccurred = true
-            cancel()
+        val zip = io.zip.openZipOutput(uri)
+        if (zip == null) {
+            Timber.e("Could not open the backup file for writing")
+            fail()
             return
         }
 
-        strategy.preBackup()
+        // Compressing has no effect on encrypted files. This saves CPU
+        zip.setLevel(Deflater.NO_COMPRESSION)
+        zipOutputStream = zip
 
-        strategy.createMetaFileInBackup(zipOutputStream)
+        // Should not because password is confirmed by user before
+        val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
+        if (protection == null) {
+            Timber.e("No password protection found, cannot write a backup")
+            fail()
+            return
+        }
+
+        strategy.createMetaFileInBackup(zip)
             .onFailure {
                 Timber.e(it, "Error writing meta file to backup")
-                failuresOccurred = true
-                cancel()
+                fail()
                 return
             }
 
@@ -91,7 +102,9 @@ class BackupViewModel @Inject constructor(
     }
 
     override suspend fun processItem(item: Photo) {
-        strategy.writePhotoToBackup(item, zipOutputStream)
+        val zip = zipOutputStream ?: return
+
+        strategy.writePhotoToBackup(item, zip)
             .onFailure {
                 Timber.e(it, "Error writing photo to backup")
                 failuresOccurred = true
@@ -99,14 +112,24 @@ class BackupViewModel @Inject constructor(
     }
 
     override suspend fun postProcess() {
-        zipOutputStream.lazyClose()
-        strategy.postBackup()
+        zipOutputStream?.lazyClose()
 
         // meta.json already in zip file. Delete backup
-        if (failuresOccurred || processState == ProcessState.ABORTED) {
+        if (fatalFailure || processState == ProcessState.ABORTED) {
             io.deleteFile(uri)
         }
 
         super.postProcess()
+    }
+
+    override fun cancel() {
+        super.cancel()
+        processingJob?.cancel()
+    }
+
+    private fun fail() {
+        fatalFailure = true
+        failuresOccurred = true
+        cancel()
     }
 }

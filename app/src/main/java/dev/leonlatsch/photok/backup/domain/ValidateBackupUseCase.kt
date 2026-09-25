@@ -34,79 +34,109 @@ class ValidateBackupUseCase @Inject constructor(
 
     suspend operator fun invoke(uri: Uri): Result<BackupValidation> = withContext(Dispatchers.IO) {
         try {
-            val zipInputStream = io.zip.openZipInput(uri)
-                ?: return@withContext Result.failure(BackupValidationError.CannotOpenFile())
-
-            var cryptFiles = 0
-            var photokFiles = 0
-
-            var metaData: BackupMetaData? = null
-            var backupVersion: Int? = null
-
-            var ze = zipInputStream.nextEntry
-            while (ze != null) {
-                if (ze.name == BackupMetaData.FILE_NAME) {
-                    metaData = readBackupMetadata(zipInputStream)
-                    backupVersion = metaData.getBackupVersion()
-                } else if (ze.name.endsWith(PHOTOK_FILE_EXTENSION)) {
-                    cryptFiles++
-                } else if (ze.name.endsWith(LEGACY_PHOTOK_FILE_EXTENSION)) {
-                    photokFiles++
-                }
-
-                ze = zipInputStream.nextEntry
+            // Reading the archive can not tell a complete file from one whose tail is missing,
+            // so the zip directory at the end is checked first. Costs one seek.
+            if (!io.zip.hasEndOfCentralDirectory(uri)) {
+                return@withContext Result.failure(BackupValidationError.IncompleteFile())
             }
 
-            if ((cryptFiles == 0) && (photokFiles == 0)) {
+            val metaData = readMetaData(uri)
+                ?: return@withContext Result.failure(BackupValidationError.NoMetaData())
+
+            if (metaData.photos.isEmpty() && !containsBackupFiles(uri)) {
                 return@withContext Result.failure(BackupValidationError.NoBackupFiles())
             }
 
-            if (metaData == null || backupVersion == null) {
-                return@withContext Result.failure(BackupValidationError.NoMetaData())
-            }
-
-            val fileName = io.getFileName(uri)
-            val fileSize = io.getFileSize(uri)
-
             val backupValidation = BackupValidation(
                 metaData = metaData,
-                fileName = fileName.orEmpty(),
-                fileSize = fileSize,
+                fileName = io.getFileName(uri).orEmpty(),
+                fileSize = io.getFileSize(uri),
+                requiredBytes = metaData.photos.sumOf { it.size },
+                usableBytes = io.usableInternalBytes(),
             )
 
             return@withContext Result.success(backupValidation)
+        } catch (e: BackupValidationError) {
+            Timber.e(e)
+            return@withContext Result.failure(e)
         } catch (e: Exception) {
             Timber.e(e)
             return@withContext Result.failure(BackupValidationError.Unknown(e))
         }
     }
-}
 
-private fun BackupMetaData?.getBackupVersion(): Int? {
-    this?.let {
-        return if (it.backupVersion == 0) { // Treat legacy version 0 as 1
-            1
-        } else {
-            it.backupVersion
+    /**
+     * Backups written since meta.json became the first entry are read with a single entry;
+     * older ones put it last, which means walking the whole archive.
+     */
+    private suspend fun readMetaData(uri: Uri): BackupMetaData? {
+        val zipInputStream = io.zip.openZipInput(uri)
+            ?: throw BackupValidationError.CannotOpenFile()
+
+        zipInputStream.use { stream ->
+            var entry = stream.nextEntry
+
+            while (entry != null) {
+                if (entry.name == BackupMetaData.FILE_NAME) {
+                    return readBackupMetadata(stream)
+                }
+
+                entry = stream.nextEntry
+            }
         }
+
+        return null
     }
 
-    return null
+    /**
+     * Only needed for the odd case of a meta.json that declares no photos at all. A backup of an
+     * empty vault is valid, one whose metadata got truncated to an empty list is not.
+     */
+    private fun containsBackupFiles(uri: Uri): Boolean {
+        val zipInputStream = io.zip.openZipInput(uri)
+            ?: throw BackupValidationError.CannotOpenFile()
+
+        zipInputStream.use { stream ->
+            var entry = stream.nextEntry
+
+            while (entry != null) {
+                val name = entry.name
+                if (name.endsWith(PHOTOK_FILE_EXTENSION) ||
+                    name.endsWith(LEGACY_PHOTOK_FILE_EXTENSION)
+                ) {
+                    return true
+                }
+
+                entry = stream.nextEntry
+            }
+        }
+
+        return false
+    }
 }
 
 data class BackupValidation(
     val metaData: BackupMetaData,
     val fileName: String,
     val fileSize: Long,
-)
+    val requiredBytes: Long,
+    val usableBytes: Long,
+) {
+    val notEnoughSpace: Boolean = requiredBytes > usableBytes
+}
 
 sealed class BackupValidationError(message: String) : Exception(message) {
 
     class CannotOpenFile : BackupValidationError("Could not open backup")
 
+    class IncompleteFile : BackupValidationError("Backup file is incomplete")
+
     class NoBackupFiles : BackupValidationError("No crypt files or photok files found")
 
     class NoMetaData : BackupValidationError("No metadata found")
+
+    data class UnsupportedVersion(val version: Int) :
+        BackupValidationError("Backup version $version is newer than this app supports")
 
     data class Unknown(override val cause: Throwable) : BackupValidationError("Validation failed")
 }

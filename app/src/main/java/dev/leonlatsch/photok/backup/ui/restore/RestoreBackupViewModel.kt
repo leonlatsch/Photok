@@ -1,3 +1,19 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package dev.leonlatsch.photok.backup.ui.restore
 
 import android.app.Activity
@@ -12,6 +28,7 @@ import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.backup.domain.BackupValidation
 import dev.leonlatsch.photok.backup.domain.BackupValidationError
 import dev.leonlatsch.photok.backup.domain.FailedFile
+import dev.leonlatsch.photok.backup.domain.RestoreBackupRunner
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV1
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
@@ -23,6 +40,7 @@ import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.review.ReviewTrigger
@@ -53,6 +71,7 @@ sealed interface RestoreBackupUiState {
     data class Overview(
         val validation: BackupValidation,
         val emptyVault: Boolean,
+        val duplicateHandling: DuplicateHandling,
     ) : RestoreBackupUiState
 
     data class Unlock(
@@ -93,6 +112,7 @@ sealed interface RestoreBackupUiState {
         val fileName: String,
         val filesRestored: Int,
         val filesTotal: Int,
+        val filesSkipped: Int,
         val albumsRestored: Int,
         val durationMillis: Long,
         val failedFiles: List<FailedFile>,
@@ -121,6 +141,7 @@ sealed interface RestoreBackupUiState {
         val unlocking: Boolean = false,
         val wrongPassword: Boolean = false,
         val canceling: Boolean = false,
+        val duplicateHandling: DuplicateHandling = DuplicateHandling.Skip,
         val progress: RestoreProgress? = null,
         val log: List<RestoreLogEntry> = emptyList(),
         val restoreResult: RestoreResult? = null,
@@ -141,6 +162,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val photoRepository: PhotoRepository,
     private val io: IO,
     private val inAppReview: InAppReview,
+    private val cleanupDeadFiles: CleanupDeadFilesUseCase,
+    private val runner: RestoreBackupRunner,
     private val v1Strategy: RestoreBackupV1,
     private val v2Strategy: RestoreBackupV2,
     private val v3Strategy: RestoreBackupV3,
@@ -153,9 +176,6 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private var indexingStartedAt = 0L
 
     private var restoreJob: Job? = null
-
-    /** Aborting all of them is fine, only the one that ran has anything to clean up. */
-    private val strategies = listOf(v1Strategy, v2Strategy, v3Strategy, v4Strategy, v5Strategy)
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -171,6 +191,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
         emit(state)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ValidationState.Validating)
 
+    /** The archive validated, but could not be opened again when the restore started. */
+    private val reopenFailed = MutableStateFlow(false)
+
     private val emptyVault = flow {
         emit(photoRepository.countAll() == 0)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
@@ -181,7 +204,15 @@ class RestoreBackupViewModel @AssistedInject constructor(
         inputs,
         validation,
         emptyVault,
-    ) { inputs, validation, emptyVault ->
+        reopenFailed,
+    ) { inputs, validation, emptyVault, reopenFailed ->
+        if (reopenFailed) {
+            return@combine RestoreBackupUiState.ValidationFailed(
+                fileName = fileName,
+                error = BackupValidationError.CannotOpenFile(),
+            )
+        }
+
         val backup = when (validation) {
             is ValidationState.Validating -> return@combine validatingState
 
@@ -213,6 +244,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
             else -> RestoreBackupUiState.Overview(
                 validation = backup,
                 emptyVault = emptyVault,
+                duplicateHandling = inputs.duplicateHandling,
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), validatingState)
@@ -255,6 +287,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
         fileName = fileName,
         filesRestored = result.filesRestored,
         filesTotal = result.filesTotal,
+        filesSkipped = result.filesSkipped,
         albumsRestored = result.albumsRestored,
         durationMillis = result.durationMillis,
         failedFiles = result.failedFiles,
@@ -284,6 +317,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     inputs.update { it.copy(unlocking = true, wrongPassword = false) }
                     restoreJob = unlockAndRestore()
                 }
+            }
+
+            is RestoreBackupUiEvent.DuplicateHandlingChanged -> inputs.update {
+                it.copy(duplicateHandling = event.duplicateHandling)
             }
 
             is RestoreBackupUiEvent.CancelRestoreClicked -> cancelRestore()
@@ -336,7 +373,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
         restoreJob?.cancelAndJoin()
         restoreJob = null
 
-        strategies.forEach { it.abort() }
+        // Aborting both is fine, only the one that ran has anything to clean up.
+        v1Strategy.abort()
+        runner.abort()
 
         inputs.update {
             it.copy(step = RestoreBackupUiState.Step.Canceled, canceling = false)
@@ -344,20 +383,32 @@ class RestoreBackupViewModel @AssistedInject constructor(
     }
 
     private suspend fun restoreBackup(metaData: BackupMetaData, session: Session) {
-        // TODO: error state. Back to the overview for now, so the restore screen can not hang.
         val zipInputStream = io.zip.openZipInput(restoreBackupUri)
         if (zipInputStream == null) {
             Timber.e("Could not open backup for restoring: $restoreBackupUri")
-            inputs.update { it.copy(step = RestoreBackupUiState.Step.Overview) }
+            reopenFailed.value = true
             return
         }
 
+        val skipUuids = getUUIDsToSkip(metaData)
+
+        // V1 stands on its own: it has no thumbnails in the archive and regenerates them from
+        // the decoded image. Every later format goes through the runner.
         val progressFlow = when (metaData) {
-            is BackupMetaData.V1 -> v1Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V2 -> v2Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V3 -> v3Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V4 -> v4Strategy.restore(metaData, zipInputStream, session)
-            is BackupMetaData.V5 -> v5Strategy.restore(metaData, zipInputStream, session)
+            is BackupMetaData.V1 ->
+                v1Strategy.restore(metaData, zipInputStream, session, skipUuids)
+
+            is BackupMetaData.V2 ->
+                runner.run(v2Strategy, metaData, zipInputStream, session, skipUuids)
+
+            is BackupMetaData.V3 ->
+                runner.run(v3Strategy, metaData, zipInputStream, session, skipUuids)
+
+            is BackupMetaData.V4 ->
+                runner.run(v4Strategy, metaData, zipInputStream, session, skipUuids)
+
+            is BackupMetaData.V5 ->
+                runner.run(v5Strategy, metaData, zipInputStream, session, skipUuids)
         }
 
         zipInputStream.use { zipInputStream ->
@@ -373,6 +424,12 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     }
 
                     is RestoreProgress.Finished -> {
+                        // A failed file can leave a half written file behind with no row
+                        // pointing at it.
+                        if (progress.result.failedFiles.isNotEmpty()) {
+                            cleanupDeadFiles()
+                        }
+
                         awaitMinimumIndexingTime()
 
                         inputs.update {
@@ -385,6 +442,13 @@ class RestoreBackupViewModel @AssistedInject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun getUUIDsToSkip(metaData: BackupMetaData): Set<String> {
+        if (inputs.value.duplicateHandling == DuplicateHandling.Replace) return emptySet()
+
+        val vaultUuids = photoRepository.getAllUuids().toSet()
+        return metaData.photos.map { it.uuid }.filter { it in vaultUuids }.toSet()
     }
 
     private suspend fun awaitMinimumIndexingTime() {

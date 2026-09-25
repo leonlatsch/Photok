@@ -17,10 +17,12 @@
 package dev.leonlatsch.photok.backup.data
 
 import com.google.gson.Gson
+import dev.leonlatsch.photok.backup.domain.BackupValidationError
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.InputStreamReader
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 data class BackupHeader(
     val backupVersion: Int
@@ -30,25 +32,29 @@ class ReadBackupMetadataUseCase @Inject constructor(
     private val gson: Gson
 ) {
     suspend operator fun invoke(zipInputStream: ZipInputStream): BackupMetaData =
-        suspendCoroutine { continuation ->
-            val bytes = zipInputStream.readBytes()
-            val string = String(bytes)
+        withContext(Dispatchers.IO) {
+            val json = InputStreamReader(zipInputStream).readText()
 
-            val header = gson.fromJson(string, BackupHeader::class.java)
+            val header = gson.fromJson(json, BackupHeader::class.java)
+                ?: error("Empty meta json")
 
             val metaData = when (header.backupVersion) {
-                1 -> gson.fromJson(string, BackupMetaData.V1::class.java)?.withEmptyAlbums()
-                2 -> gson.fromJson(string, BackupMetaData.V2::class.java)?.withEmptyAlbums()
-                3 -> gson.fromJson(string, BackupMetaData.V3::class.java)
-                4 -> gson.fromJson(string, BackupMetaData.V4::class.java)
-                5 -> gson.fromJson(string, BackupMetaData.V5::class.java)
-                else -> error("Unknown backup version: ${header.backupVersion}")
-            }
-            metaData ?: error("Error reading meta json from $zipInputStream")
+                0, 1 -> gson.fromJson(json, BackupMetaData.V1::class.java)
+                    ?.withEmptyAlbums()
+                    ?.copy(backupVersion = 1)
+                2 -> gson.fromJson(json, BackupMetaData.V2::class.java)?.withEmptyAlbums()
+                3 -> gson.fromJson(json, BackupMetaData.V3::class.java)
+                4 -> gson.fromJson(json, BackupMetaData.V4::class.java)
+                5 -> gson.fromJson(json, BackupMetaData.V5::class.java)
 
-            continuation.resume(metaData)
+                else -> throw BackupValidationError.UnsupportedVersion(header.backupVersion)
+            }
+
+            metaData ?: error("Error reading meta json from $zipInputStream")
         }
 }
+
+// Albums added in V3. Fake the missing field as empty
 
 private fun BackupMetaData.V1.withEmptyAlbums(): BackupMetaData.V1 {
     val albums: List<AlbumBackup>? = albums
@@ -60,7 +66,6 @@ private fun BackupMetaData.V1.withEmptyAlbums(): BackupMetaData.V1 {
     )
 }
 
-/** Same as for V1, albums only arrived with V3. */
 private fun BackupMetaData.V2.withEmptyAlbums(): BackupMetaData.V2 {
     val albums: List<AlbumBackup>? = albums
     val albumPhotoRefs: List<AlbumPhotoRefBackup>? = albumPhotoRefs

@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.backup.domain
 data class RestoreResult(
     val filesRestored: Int,
     val filesTotal: Int,
+    val filesSkipped: Int,
     val albumsRestored: Int,
     val durationMillis: Long,
     val failedFiles: List<FailedFile>,

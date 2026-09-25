@@ -236,7 +236,7 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 ├─────────────────────────────────────────1
 │ meta.json                               │
 │   {                                     │
-│     "wrappedVmk": String,               │  ← the wrapped vault master key
+│     "wrappedVMK": String,               │  ← the wrapped vault master key
 │     "params": [VaultProtectionParams],  │  ← the vault protection parameters needed to decrypt the vmk
 │     "photos": [PhotoBackup],            │  ← list of photo uuids with file metadata
 │     "albums": [AlbumBackup],            │  ← list of albums with title, etc.
@@ -252,3 +252,30 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 │ ...                                     │
 └─────────────────────────────────────────┘
 ```
+
+### Notes on reading and writing V5
+
+* **`meta.json` is written first.** It carries the wrapped VMK, so an archive that ends before it
+  is written can never be opened again. Everything after it is optional in the sense that a photo
+  which failed is still listed in `meta.json` and is reported as missing when restoring.
+* **Media entries are stored without compression.** They are already ciphertext and do not
+  compress, so the deflate level is set to `NO_COMPRESSION`.
+* **Restoring re-encrypts.** Files are decrypted with the key derived from the backup password and
+  written back out with the *current* vault's VMK, so a restored vault is always sealed with the
+  password that is set on the device now.
+* **Restoring is additive.** Photos already in the vault are either skipped or replaced, whichever
+  the user chose on the restore overview. A restored photo keeps its original `importedAt`, so it
+  lands back in the position it had in the gallery.
+* **Only what landed is indexed.** Database rows are written for photos whose bytes made it onto
+  disk, inside a single transaction, and album-photo references pointing at a photo that did not
+  make it are dropped.
+* **`meta.json` is not encrypted.** File names, album names, sizes and dates are therefore readable
+  by anyone holding the backup file. Closing that gap requires a new archive format and is not part
+  of V5.
+
+### Reading a backup written by a newer Photok
+
+`backupVersion` is the first thing read. A value above the highest version this app knows is
+reported as its own error, so the user is told to update the app rather than being shown a generic
+"this backup is broken" message. A missing `backupVersion` is treated as version 1, which is what
+the very first backups wrote.

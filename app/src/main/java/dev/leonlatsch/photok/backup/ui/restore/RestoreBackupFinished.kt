@@ -1,3 +1,19 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package dev.leonlatsch.photok.backup.ui.restore
 
 import androidx.compose.foundation.layout.Arrangement
@@ -119,7 +135,29 @@ private fun RestoreBackupFinishedSuccess(
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.fillMaxWidth(),
         )
+
+        SkippedLine(uiState)
     }
+}
+
+@Composable
+private fun SkippedLine(uiState: RestoreBackupUiState.Finished) {
+    if (uiState.filesSkipped == 0) return
+
+    Spacer(Modifier.height(5.dp))
+
+    val text = when (uiState.filesSkipped) {
+        1 -> stringResource(R.string.backup_restore_finished_skipped_one)
+        else -> stringResource(R.string.backup_restore_finished_skipped, uiState.filesSkipped)
+    }
+
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.outline,
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
 
 @Composable
@@ -158,6 +196,8 @@ private fun RestoreBackupFinishedWithFailures(
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.fillMaxWidth(),
         )
+
+        SkippedLine(uiState)
 
         Spacer(Modifier.height(20.dp))
 
@@ -283,6 +323,7 @@ private fun Preview() {
                 fileName = "photok_backup_1234.zip",
                 filesRestored = 128,
                 filesTotal = 128,
+                filesSkipped = 0,
                 albumsRestored = 4,
                 durationMillis = 134_000L,
                 failedFiles = emptyList(),
@@ -301,6 +342,7 @@ private fun PreviewWithFailures() {
                 fileName = "photok_backup_1234.zip",
                 filesRestored = 125,
                 filesTotal = 128,
+                filesSkipped = 0,
                 albumsRestored = 4,
                 durationMillis = 134_000L,
                 failedFiles = listOf(
