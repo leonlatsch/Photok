@@ -41,16 +41,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.ui.animation.SlideTransitionDuration
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,6 +67,14 @@ fun RestoreBackupUnlock(
 ) {
     BackHandler {
         handleUiEvent(RestoreBackupUiEvent.BackToOverviewClicked)
+    }
+
+    val focusRequester = remember { FocusRequester() }
+
+    // Focusing right away would raise the keyboard while the screen is still sliding in.
+    LaunchedEffect(Unit) {
+        delay(SlideTransitionDuration.milliseconds)
+        focusRequester.requestFocus()
     }
 
     Scaffold(
@@ -158,7 +173,9 @@ fun RestoreBackupUnlock(
                 label = stringResource(R.string.common_password),
                 error = stringResource(R.string.unlock_wrong_password).takeIf { uiState.wrongPassword },
                 onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
             )
 
             Spacer(Modifier.height(10.dp))
