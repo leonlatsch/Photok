@@ -38,6 +38,8 @@
     <string name="common_try_again">دوبارہ کوشش کریں</string>
     <string name="common_continue">جاری رکھیں</string>
     <string name="common_hold_to_confirm">تصدیق کے لیے دبائے رکھیں</string>
+    <string name="common_back">واپس</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">ہو گیا</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>
@@ -104,6 +106,8 @@
     <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
     <string name="view_photo_detail_size_label">سائز:</string>
     <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
+    <string name="view_photo_loop_video_disabled">دہرانا بند ہے</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">دہرانا چالو ہے</string> <!-- TODO: machine translated | EN: Looping enabled -->
     <string name="view_photo_video_playback_speed">چلنے کی رفتار</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
@@ -264,6 +268,82 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">بیک اپ بن رہا ہے…</string>
     <string name="backup_confirm_password">بیک اپ بنانے کے لیے اپنے پاس ورڈ کی تصدیق کریں۔</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">بیک اپ واپس لائیں</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">جانچا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">بیک اپ درست نہیں</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">اعداد و شمار</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">تصاویر</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">ویڈیوز</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">البمز</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">سائز</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">آرکائیو</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">بنایا گیا</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">خفیہ کاری</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">مطابقت</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">تازہ ترین (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">پرانے ورژن سے مطابقت (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">بیک اپ کھولیں</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">کھولیں اور واپس لائیں</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">بیک اپ کا پاس ورڈ لکھیں</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">یہ بیک اپ لاک ہے اور اسے اسی پاس ورڈ سے کھولنا ہوگا جو اسے بناتے وقت استعمال ہوا تھا۔</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">یہ پاس ورڈ صرف بیک اپ کھولنے کے لیے استعمال ہوگا اور کہیں محفوظ نہیں کیا جائے گا۔</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">بیک اپ واپس لایا جا رہا ہے</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">واپس لایا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%2$s میں سے %1$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%2$d میں سے %1$d فائلیں</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">اندازہ لگایا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">%1$d منٹ %2$d سیکنڈ باقی</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">%1$d سیکنڈ باقی</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">اس میں کچھ وقت لگ سکتا ہے۔ ایپ کھلی رکھیں۔</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">واپس لانا روک دیں</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">واپس لانا روکا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">فہرست بنائی جا رہی ہے…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">تمام فائلیں واپس آ گئیں، اب آپ کی تصاویر اور البمز کی فہرست بنائی جا رہی ہے۔</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">واپس لانا روک دیا گیا</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">واپس لانا روک دیا گیا</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s سے کچھ بھی آپ کے سیف میں شامل نہیں ہوا۔ جو فائلیں پہلے واپس آ چکی تھیں وہ دوبارہ مٹا دی گئی ہیں۔</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">واپس لانا مکمل</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">کامیابی سے واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">۱ مسئلے کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">%1$d مسئلوں کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">%2$d میں سے %1$d فائلیں %3$s میں آپ کے سیف میں شامل ہو گئیں۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">%2$d میں سے %1$d فائلیں اور %3$d البمز %4$s میں آپ کے سیف میں شامل ہو گئے۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d منٹ %2$d سیکنڈ</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d سیکنڈ</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">ناکام چیزیں</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">نامعلوم مسئلہ</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">بیک اپ کھل نہیں سکا</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">یہ فائل نہیں کھل سکی۔ چیک کریں کہ یہ Photok کا بیک اپ ہے اور اب بھی اس فون میں موجود ہے۔</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">اس بیک اپ میں کوئی تصویر نہیں</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">اس آرکائیو میں Photok کی کوئی فائل نہیں ہے، اس لیے واپس لانے کو کچھ نہیں ہے۔</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">بیک اپ ادھورا ہے</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">اس بیک اپ میں کوئی میٹا ڈیٹا نہیں ہے، اس لیے Photok بتا نہیں سکتا کہ اس میں کیا ہے۔</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">بیک اپ پڑھا نہیں جا سکا</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">اس بیک اپ کو پڑھتے ہوئے کچھ غلط ہو گیا۔</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">وہ تصاویر جو پہلے سے آپ کے سیف میں ہیں</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">انہیں چھوڑ دیں</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">جو کاپی پہلے سے آپ کے سیف میں ہے وہی رکھیں۔</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">انہیں بدل دیں</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">انہیں اس بیک اپ والی کاپی سے بدل دیں۔</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">اس بیک اپ کے لیے %1$s چاہیے مگر صرف %2$s خالی ہے۔ واپس لانے سے پہلے کچھ جگہ خالی کریں۔</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">بیک اپ فائل ادھوری ہے</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">یہ فائل ادھوری رہ گئی، شاید ڈاؤن لوڈ یا کاپی بیچ میں رک گئی تھی۔ اسے دوبارہ منتقل کریں۔</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">بیک اپ بہت نیا ہے</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">یہ بیک اپ Photok کے نئے ورژن سے بنایا گیا ہے (فارمیٹ %1$d)۔ اسے واپس لانے کے لیے Photok اپ ڈیٹ کریں۔</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">۱ تصویر پہلے سے آپ کے سیف میں تھی، اس لیے چھوڑ دی گئی۔</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">%1$d تصاویر پہلے سے آپ کے سیف میں تھیں، اس لیے چھوڑ دی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>

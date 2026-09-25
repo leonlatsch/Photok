@@ -38,6 +38,8 @@
     <string name="common_try_again">حاول مرة أخرى</string> <!-- TODO: machine translated | EN: Try again -->
     <string name="common_continue">متابعة</string>
     <string name="common_hold_to_confirm">اضغط مطولاً للتأكيد</string>
+    <string name="common_back">رجوع</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">تم</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
@@ -265,6 +267,82 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">جارٍ إنشاء نسخة احتياطية ...</string>
     <string name="backup_confirm_password">أكد كلمة المرور الخاصة بك لإنشاء نسخة احتياطية.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">استعادة نسخة احتياطية</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">جارٍ التحقق…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">نسخة احتياطية غير صالحة</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">إحصائيات</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">الصور</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">مقاطع الفيديو</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">الألبومات</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">الحجم</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">الأرشيف</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">تاريخ الإنشاء</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">التشفير</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">التوافق</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">محدّثة (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">متوافقة مع الإصدارات السابقة (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">فتح النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">فتح واستعادة</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">أدخل كلمة مرور النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">النسخة الاحتياطية مشفّرة ويجب فتحها بكلمة المرور التي أُنشئت بها.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">تُستخدم كلمة المرور هذه لفتح النسخة الاحتياطية فقط، ولا تُحفظ في أي مكان.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">استعادة النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">جارٍ الاستعادة…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s من %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/ث</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d ملف</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">جارٍ التقدير…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">متبقٍ %1$d د %2$d ث</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">متبقٍ %1$d ث</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">قد يستغرق هذا بعض الوقت. أبقِ التطبيق مفتوحاً.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">جارٍ إلغاء الاستعادة…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">جارٍ الفهرسة…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">تمت استعادة كل الملفات، وجارٍ فهرسة صورك وألبوماتك.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">تم إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">تم إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">لم تتم إضافة أي شيء من %1$s إلى خزنتك. وتم حذف كل الملفات التي استُعيدت بالفعل.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">اكتملت الاستعادة</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">تمت الاستعادة بنجاح</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">تمت الاستعادة مع مشكلة واحدة</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">تمت الاستعادة مع %1$d مشكلات</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">تمت إضافة %1$d من أصل %2$d ملف إلى خزنتك خلال %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">تمت إضافة %1$d من أصل %2$d ملف و%3$d ألبوم إلى خزنتك خلال %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d د %2$d ث</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d ث</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">العناصر الفاشلة</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">خطأ غير معروف</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">تعذّر فتح النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">تعذّر فتح هذا الملف. تأكد من أنه نسخة احتياطية من Photok وأنه ما زال متوفراً على هذا الجهاز.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">لا توجد صور في هذه النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">لا يحتوي هذا الأرشيف على أي ملفات Photok، لذا لا يوجد ما يمكن استعادته.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">النسخة الاحتياطية غير مكتملة</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">لا تحتوي هذه النسخة الاحتياطية على بيانات وصفية، لذا لا يستطيع Photok معرفة محتواها.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">تعذّرت قراءة النسخة الاحتياطية</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">حدث خطأ ما أثناء قراءة هذه النسخة الاحتياطية.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">صور موجودة بالفعل في خزنتك</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">تخطّيها</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">الاحتفاظ بالنسخة الموجودة في خزنتك.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">استبدالها</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">الكتابة فوقها بالنسخة الموجودة في هذه النسخة الاحتياطية.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">تحتاج هذه النسخة الاحتياطية إلى %1$s لكن المتوفر %2$s فقط. أفرغ بعض المساحة قبل الاستعادة.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">ملف النسخة الاحتياطية غير مكتمل</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">هذا الملف مبتور، على الأرجح بسبب تنزيل أو نسخ متوقف. أعد نقله مرة أخرى.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">النسخة الاحتياطية أحدث من التطبيق</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">أُنشئت هذه النسخة الاحتياطية بإصدار أحدث من Photok (التنسيق %1$d). حدّث Photok لاستعادتها.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">كانت صورة واحدة موجودة بالفعل في خزنتك وتم تخطّيها.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">كانت %1$d صورة موجودة بالفعل في خزنتك وتم تخطّيها.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">الجديد في</string>

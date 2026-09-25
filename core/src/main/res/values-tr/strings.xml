@@ -38,6 +38,8 @@
     <string name="common_try_again">Tekrar deneyin</string>
     <string name="common_continue">Devam Et</string>
     <string name="common_hold_to_confirm">Onaylamak için basılı tutun</string>
+    <string name="common_back">Geri</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Bitti</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
@@ -265,6 +267,82 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Yedekleme oluşturuluyor…</string>
     <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Yedeklemeyi Geri Yükle</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Doğrulanıyor…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Geçersiz yedekleme</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">İstatistikler</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Fotoğraflar</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Videolar</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Albümler</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Boyut</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Arşiv</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Oluşturulma</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Şifreleme</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Uyumluluk</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Güncel (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Geriye dönük uyumlu (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Yedeklemenin Kilidini Aç</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Kilidi Aç &amp; Geri Yükle</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Yedekleme Şifresini Girin</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">Yedekleme şifrelenmiştir ve oluşturulurken kullanılan şifre ile açılması gerekir.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Bu şifre yalnızca yedeklemenin kilidini açmak için kullanılır ve hiçbir yerde saklanmaz.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Yedekleme Geri Yükleniyor</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Geri yükleniyor…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s / %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/sn</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d dosya</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Hesaplanıyor…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">%1$d dk %2$d sn kaldı</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">%1$d sn kaldı</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">Bu işlem biraz zaman alabilir. Uygulamayı açık tutun.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Geri yüklemeyi iptal et</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">Geri yükleme iptal ediliyor…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">Dizinleniyor…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Tüm dosyalar geri yüklendi, fotoğraflarınız ve albümleriniz dizinleniyor.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">Geri Yükleme İptal Edildi</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">Geri yükleme iptal edildi</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s içeriğinden kasanıza hiçbir şey eklenmedi. Daha önce geri yüklenen tüm dosyalar tekrar silindi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">Geri Yükleme Tamamlandı</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">Başarıyla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">1 sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">%1$d sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">%2$d dosyadan %1$d tanesi %3$s içinde kasanıza eklendi.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">%2$d dosyadan %1$d tanesi ve %3$d albüm %4$s içinde kasanıza eklendi.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d dk %2$d sn</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d sn</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">Başarısız öğeler</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Bilinmeyen hata</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Yedekleme açılamıyor</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">Bu dosya açılamadı. Bir Photok yedeklemesi olduğundan ve bu cihazda hâlâ mevcut olduğundan emin olun.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Bu yedeklemede fotoğraf yok</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Bu arşiv hiçbir Photok dosyası içermiyor, bu yüzden geri yüklenecek bir şey yok.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Yedekleme eksik</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Bu yedeklemede meta veri yok, bu yüzden Photok içinde ne olduğunu belirleyemiyor.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Yedekleme okunamıyor</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Bu yedekleme okunurken bir şeyler ters gitti.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Kasanızda zaten bulunan fotoğraflar</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Atla</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Kasanızda zaten bulunan kopyayı koru.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">Değiştir</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">Bu yedeklemedeki kopyayla üzerine yaz.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">Bu yedekleme %1$s alan gerektiriyor ancak yalnızca %2$s boş. Geri yüklemeden önce yer açın.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">Yedekleme dosyası eksik</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Bu dosya yarıda kesilmiş, büyük olasılıkla indirme veya kopyalama işlemi yarım kalmış. Dosyayı tekrar aktarmayı deneyin.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Yedekleme çok yeni</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Bu yedekleme Photok\'un daha yeni bir sürümüyle oluşturulmuş (format %1$d). Geri yüklemek için Photok\'u güncelleyin.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">1 fotoğraf zaten kasanızda olduğu için atlandı.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">%1$d fotoğraf zaten kasanızda olduğu için atlandı.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>

@@ -207,27 +207,25 @@ The supported locales are the `values-*/` directories under `core/src/main/res/`
 
 ### Rule: Always add strings to every locale file
 
-When you add a new string to `values/strings.xml`, you **must** also add a copy of it to every other `values-*/strings.xml` file. Use the English text as the placeholder and annotate with an XML comment `<!-- TODO -->` on the same line.
+When you add a new string to `values/strings.xml`, you **must** also add it to every other `values-*/strings.xml` file — **pre-translated** into that language, not as the English text.
+
+Translate it yourself (or delegate to a per-language agent) following the translation guidelines in `CONTRIBUTING.md`, and mark the result with a machine-translation comment on the same line that carries the original English value:
 
 ```xml
-<!-- values/strings.xml (English, no TODO) -->
+<!-- values/strings.xml (English source, no comment) -->
 <string name="my_new_string">My new string</string>
 
-<!-- values-de/strings.xml (and all other locales) -->
-<string name="my_new_string">My new string</string> <!-- TODO -->
-```
-
-The `<!-- TODO -->` annotation is required: the `updateTranslations` Gradle task (in `gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `<!-- TODO` to calculate each locale's translation percentage. Lines with `<!-- TODO` are intentionally excluded so the badge reflects real human translation coverage.
-
-#### Machine-translated placeholders
-
-Some locales carry a machine-translated placeholder instead of the raw English text, so the app is usable in that language before a human translator gets to it. These keep the `<!-- TODO` marker and additionally carry the original English value in the same comment:
-
-```xml
+<!-- values-de/strings.xml (and every other locale) -->
 <string name="my_new_string">Mein neuer Text</string> <!-- TODO: machine translated | EN: My new string -->
 ```
 
-This still counts as untranslated for the badge. A human translator replaces the value and deletes the whole comment. Keep the `EN:` part verbatim so reviewers can see what the machine translated from; never write `--` inside it, since it would terminate the XML comment.
+Rules for the comment:
+
+- Keep the `<!-- TODO` prefix. The `updateTranslations` Gradle task (`gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `<!-- TODO` to calculate each locale's translation percentage, so a machine translation correctly still counts as un-translated until a human reviews it.
+- Keep the `| EN: <original>` part verbatim so a human reviewer sees what was translated from. Never write `--` inside it — that terminates the XML comment.
+- A human translator replaces the value and deletes the whole comment.
+
+Keep the key, the section comment it belongs under, and its position in the file identical across all locales, and keep every format specifier (`%1$s`, `%1$d`, `%%`) intact.
 
 ---
 

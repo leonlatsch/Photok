@@ -38,6 +38,8 @@
     <string name="common_try_again">Tentar novamente</string>
     <string name="common_continue">Continuar</string>
     <string name="common_hold_to_confirm">Mantenha pressionado para confirmar</string>
+    <string name="common_back">Voltar</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Concluído</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando arquivo(s)</string>
@@ -264,6 +266,82 @@
     <!-- BACKUP -->
     <string name="backup_processing_title">Criando o Backup…</string>
     <string name="backup_confirm_password">Confirme sua senha para criar um backup.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Restaurar Backup</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Validando…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Backup inválido</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Estatísticas</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Fotos</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Vídeos</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Álbuns</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Tamanho</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Arquivo</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Criado em</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Criptografia</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Compatibilidade</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Atualizado (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Compatível com versões anteriores (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Desbloquear Backup</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Desbloquear &amp; Restaurar</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Digite a senha do backup</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">O backup é criptografado e precisa ser desbloqueado com a senha usada para criá-lo.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Esta senha será usada apenas para desbloquear o backup e nunca será armazenada em lugar algum.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Restaurando Backup</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Restaurando…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s de %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d arquivos</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Calculando…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left_minutes">%1$d min %2$d s restantes</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
+    <string name="backup_restore_restoring_time_left_seconds">%1$d s restantes</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_keep_open">Isso pode demorar um pouco. Mantenha o app aberto.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Cancelar restauração</string> <!-- TODO: machine translated | EN: Cancel restore -->
+    <string name="backup_restore_canceling">Cancelando restauração…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
+
+    <string name="backup_restore_indexing_title">Indexando…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Todos os arquivos foram restaurados, indexando suas fotos e álbuns.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_title">Restauração Cancelada</string> <!-- TODO: machine translated | EN: Restore Canceled -->
+    <string name="backup_restore_canceled_headline">Restauração cancelada</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">Nada de %1$s foi adicionado ao seu cofre. Todos os arquivos que já tinham sido restaurados foram excluídos novamente.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_title">Restauração Concluída</string> <!-- TODO: machine translated | EN: Restore Finished -->
+    <string name="backup_restore_finished_headline">Restaurado com sucesso</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Restaurado com 1 problema</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Restaurado com %1$d problemas</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_summary">%1$d de %2$d arquivos foram adicionados ao seu cofre em %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
+    <string name="backup_restore_finished_summary_with_albums">%1$d de %2$d arquivos e %3$d álbuns foram adicionados ao seu cofre em %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
+    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
+    <string name="backup_restore_finished_duration_seconds">%1$d s</string> <!-- TODO: machine translated | EN: %1$d s -->
+    <string name="backup_restore_finished_failed_items">Itens com falha</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Erro desconhecido</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Não foi possível abrir o backup</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">Não foi possível abrir este arquivo. Verifique se ele é um backup do Photok e se ainda está disponível neste dispositivo.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Nenhuma foto neste backup</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Este arquivo não contém nenhum arquivo do Photok, então não há nada para restaurar.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">O backup está incompleto</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Este backup não tem metadados, então o Photok não consegue saber o que há dentro dele.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Não foi possível ler o backup</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Algo deu errado ao ler este backup.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Fotos que já estão no seu cofre</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Ignorar</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Manter a cópia que já está no seu cofre.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_replace">Substituir</string> <!-- TODO: machine translated | EN: Replace them -->
+    <string name="backup_restore_duplicates_replace_description">Sobrescrever com a cópia deste backup.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_not_enough_space">Este backup precisa de %1$s, mas só há %2$s livres. Libere espaço antes de restaurar.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">O arquivo de backup está incompleto</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Este arquivo foi cortado, provavelmente por um download ou cópia interrompida. Tente transferi-lo novamente.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">O backup é muito novo</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Este backup foi criado com uma versão mais nova do Photok (formato %1$d). Atualize o Photok para restaurá-lo.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_skipped_one">1 foto já estava no seu cofre e foi ignorada.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
+    <string name="backup_restore_finished_skipped">%1$d fotos já estavam no seu cofre e foram ignoradas.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novo em</string>
