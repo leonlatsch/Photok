@@ -316,8 +316,6 @@
     <string name="backup_restore_finished_headline">Успешно восстановлено</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Восстановлено, ошибок: 1</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Восстановлено, ошибок: %1$d</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
-    <string name="backup_restore_finished_summary">%1$d из %2$d файлов добавлено в ваш сейф за %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
-    <string name="backup_restore_finished_summary_with_albums">%1$d из %2$d файлов добавлено в ваш сейф за %4$s. Альбомов: %3$d.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
     <string name="backup_restore_finished_failed_items">Файлы с ошибками</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">Неизвестная ошибка</string> <!-- TODO: machine translated | EN: Unknown error -->
 
@@ -339,8 +337,12 @@
     <string name="backup_restore_error_incomplete_description">Файл обрезан, скорее всего из-за прерванной загрузки или копирования. Попробуйте передать его ещё раз.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
     <string name="backup_restore_error_unsupported_version_title">Резервная копия слишком новая</string> <!-- TODO: machine translated | EN: Backup is too new -->
     <string name="backup_restore_error_unsupported_version_description">Эта резервная копия создана в более новой версии Photok (формат %1$d). Обновите Photok, чтобы восстановить её.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
-    <string name="backup_restore_finished_skipped_one">1 фото уже было в вашем сейфе и было пропущено.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
-    <string name="backup_restore_finished_skipped">%1$d фото уже были в вашем сейфе и были пропущены.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
+    <string name="backup_restore_finished_added_one">%1$d файл добавлен за %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d файлов добавлено за %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d альбом восстановлен.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d альбомов восстановлено.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d дубликат пропущен.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d дубликатов пропущено.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Нововведения в</string>

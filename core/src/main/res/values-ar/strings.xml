@@ -315,8 +315,6 @@
     <string name="backup_restore_finished_headline">تمت الاستعادة بنجاح</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">تمت الاستعادة مع مشكلة واحدة</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">تمت الاستعادة مع %1$d مشكلات</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
-    <string name="backup_restore_finished_summary">تمت إضافة %1$d من أصل %2$d ملف إلى خزنتك خلال %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
-    <string name="backup_restore_finished_summary_with_albums">تمت إضافة %1$d من أصل %2$d ملف و%3$d ألبوم إلى خزنتك خلال %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
     <string name="backup_restore_finished_failed_items">العناصر الفاشلة</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">خطأ غير معروف</string> <!-- TODO: machine translated | EN: Unknown error -->
 
@@ -338,8 +336,12 @@
     <string name="backup_restore_error_incomplete_description">هذا الملف مبتور، على الأرجح بسبب تنزيل أو نسخ متوقف. أعد نقله مرة أخرى.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
     <string name="backup_restore_error_unsupported_version_title">النسخة الاحتياطية أحدث من التطبيق</string> <!-- TODO: machine translated | EN: Backup is too new -->
     <string name="backup_restore_error_unsupported_version_description">أُنشئت هذه النسخة الاحتياطية بإصدار أحدث من Photok (التنسيق %1$d). حدّث Photok لاستعادتها.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
-    <string name="backup_restore_finished_skipped_one">كانت صورة واحدة موجودة بالفعل في خزنتك وتم تخطّيها.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
-    <string name="backup_restore_finished_skipped">كانت %1$d صورة موجودة بالفعل في خزنتك وتم تخطّيها.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
+    <string name="backup_restore_finished_added_one">تمت إضافة %1$d ملف في %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">تمت إضافة %1$d ملفات في %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">تمت استعادة %1$d ألبوم.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">تمت استعادة %1$d ألبومات.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">تم تخطّي %1$d نسخة مكررة.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">تم تخطّي %1$d نسخ مكررة.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">الجديد في</string>

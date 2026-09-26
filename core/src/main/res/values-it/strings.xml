@@ -316,8 +316,6 @@
     <string name="backup_restore_finished_headline">Ripristino riuscito</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Ripristinato con 1 problema</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Ripristinato con %1$d problemi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
-    <string name="backup_restore_finished_summary">%1$d file su %2$d sono stati aggiunti alla tua Safe in %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
-    <string name="backup_restore_finished_summary_with_albums">%1$d file su %2$d e %3$d album sono stati aggiunti alla tua Safe in %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
     <string name="backup_restore_finished_failed_items">Elementi non riusciti</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">Errore sconosciuto</string> <!-- TODO: machine translated | EN: Unknown error -->
 
@@ -339,8 +337,12 @@
     <string name="backup_restore_error_incomplete_description">Questo file è stato troncato, probabilmente a causa di un download o di una copia interrotti. Prova a trasferirlo di nuovo.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
     <string name="backup_restore_error_unsupported_version_title">Il backup è troppo recente</string> <!-- TODO: machine translated | EN: Backup is too new -->
     <string name="backup_restore_error_unsupported_version_description">Questo backup è stato creato con una versione più recente di Photok (formato %1$d). Aggiorna Photok per ripristinarlo.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
-    <string name="backup_restore_finished_skipped_one">1 foto era già presente nella tua Safe ed è stata saltata.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
-    <string name="backup_restore_finished_skipped">%1$d foto erano già presenti nella tua Safe e sono state saltate.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
+    <string name="backup_restore_finished_added_one">%1$d file aggiunto in %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d file aggiunti in %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d album ripristinato.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d album ripristinati.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d duplicato saltato.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d duplicati saltati.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novità in</string> 

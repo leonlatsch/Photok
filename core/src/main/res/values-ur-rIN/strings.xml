@@ -316,8 +316,6 @@
     <string name="backup_restore_finished_headline">کامیابی سے واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">۱ مسئلے کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">%1$d مسئلوں کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
-    <string name="backup_restore_finished_summary">%2$d میں سے %1$d فائلیں %3$s میں آپ کے سیف میں شامل ہو گئیں۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
-    <string name="backup_restore_finished_summary_with_albums">%2$d میں سے %1$d فائلیں اور %3$d البمز %4$s میں آپ کے سیف میں شامل ہو گئے۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
     <string name="backup_restore_finished_failed_items">ناکام چیزیں</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">نامعلوم مسئلہ</string> <!-- TODO: machine translated | EN: Unknown error -->
 
@@ -339,8 +337,12 @@
     <string name="backup_restore_error_incomplete_description">یہ فائل ادھوری رہ گئی، شاید ڈاؤن لوڈ یا کاپی بیچ میں رک گئی تھی۔ اسے دوبارہ منتقل کریں۔</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
     <string name="backup_restore_error_unsupported_version_title">بیک اپ بہت نیا ہے</string> <!-- TODO: machine translated | EN: Backup is too new -->
     <string name="backup_restore_error_unsupported_version_description">یہ بیک اپ Photok کے نئے ورژن سے بنایا گیا ہے (فارمیٹ %1$d)۔ اسے واپس لانے کے لیے Photok اپ ڈیٹ کریں۔</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
-    <string name="backup_restore_finished_skipped_one">۱ تصویر پہلے سے آپ کے سیف میں تھی، اس لیے چھوڑ دی گئی۔</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
-    <string name="backup_restore_finished_skipped">%1$d تصاویر پہلے سے آپ کے سیف میں تھیں، اس لیے چھوڑ دی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
+    <string name="backup_restore_finished_added_one">%1$d فائل %2$s میں شامل کی گئی۔</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d فائلیں %2$s میں شامل کی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d البم بحال ہوا۔</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d البمز بحال ہوئے۔</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d نقل چھوڑ دی گئی۔</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d نقول چھوڑ دی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>

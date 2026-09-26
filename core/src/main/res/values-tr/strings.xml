@@ -315,8 +315,6 @@
     <string name="backup_restore_finished_headline">Başarıyla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">1 sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">%1$d sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
-    <string name="backup_restore_finished_summary">%2$d dosyadan %1$d tanesi %3$s içinde kasanıza eklendi.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
-    <string name="backup_restore_finished_summary_with_albums">%2$d dosyadan %1$d tanesi ve %3$d albüm %4$s içinde kasanıza eklendi.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
     <string name="backup_restore_finished_failed_items">Başarısız öğeler</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">Bilinmeyen hata</string> <!-- TODO: machine translated | EN: Unknown error -->
 
@@ -338,8 +336,12 @@
     <string name="backup_restore_error_incomplete_description">Bu dosya yarıda kesilmiş, büyük olasılıkla indirme veya kopyalama işlemi yarım kalmış. Dosyayı tekrar aktarmayı deneyin.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
     <string name="backup_restore_error_unsupported_version_title">Yedekleme çok yeni</string> <!-- TODO: machine translated | EN: Backup is too new -->
     <string name="backup_restore_error_unsupported_version_description">Bu yedekleme Photok\'un daha yeni bir sürümüyle oluşturulmuş (format %1$d). Geri yüklemek için Photok\'u güncelleyin.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
-    <string name="backup_restore_finished_skipped_one">1 fotoğraf zaten kasanızda olduğu için atlandı.</string> <!-- TODO: machine translated | EN: 1 photo was already in your Vault and was skipped. -->
-    <string name="backup_restore_finished_skipped">%1$d fotoğraf zaten kasanızda olduğu için atlandı.</string> <!-- TODO: machine translated | EN: %1$d photos were already in your Vault and were skipped. -->
+    <string name="backup_restore_finished_added_one">%1$d dosya %2$s içinde eklendi.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d dosya %2$s içinde eklendi.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d albüm geri yüklendi.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d albüm geri yüklendi.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d kopya atlandı.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d kopya atlandı.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>

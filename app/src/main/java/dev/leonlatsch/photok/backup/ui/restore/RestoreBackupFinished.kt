@@ -38,11 +38,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -134,29 +139,7 @@ private fun RestoreBackupFinishedSuccess(
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.fillMaxWidth(),
         )
-
-        SkippedLine(uiState)
     }
-}
-
-@Composable
-private fun SkippedLine(uiState: RestoreBackupUiState.Finished) {
-    if (uiState.filesSkipped == 0) return
-
-    Spacer(Modifier.height(5.dp))
-
-    val text = when (uiState.filesSkipped) {
-        1 -> stringResource(R.string.backup_restore_finished_skipped_one)
-        else -> stringResource(R.string.backup_restore_finished_skipped, uiState.filesSkipped)
-    }
-
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.outline,
-        modifier = Modifier.fillMaxWidth(),
-    )
 }
 
 @Composable
@@ -195,8 +178,6 @@ private fun RestoreBackupFinishedWithFailures(
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.fillMaxWidth(),
         )
-
-        SkippedLine(uiState)
 
         Spacer(Modifier.height(20.dp))
 
@@ -275,25 +256,54 @@ private fun failuresHeadline(failedCount: Int): String = when (failedCount) {
     else -> stringResource(R.string.backup_restore_finished_headline_issues, failedCount)
 }
 
-@Composable
-private fun summary(uiState: RestoreBackupUiState.Finished): String {
-    val duration = formatDuration(uiState.durationMillis)
+private val NUMBERS = Regex("""\d+""")
 
-    return if (uiState.albumsRestored > 0) {
-        stringResource(
-            R.string.backup_restore_finished_summary_with_albums,
+@Composable
+private fun summary(uiState: RestoreBackupUiState.Finished): AnnotatedString {
+    val added = when (uiState.filesRestored) {
+        1 -> stringResource(
+            R.string.backup_restore_finished_added_one,
             uiState.filesRestored,
-            uiState.filesTotal,
-            uiState.albumsRestored,
-            duration,
+            formatDuration(uiState.durationMillis),
         )
-    } else {
-        stringResource(
-            R.string.backup_restore_finished_summary,
+
+        else -> stringResource(
+            R.string.backup_restore_finished_added,
             uiState.filesRestored,
-            uiState.filesTotal,
-            duration,
+            formatDuration(uiState.durationMillis),
         )
+    }
+
+    val albums = when (uiState.albumsRestored) {
+        0 -> null
+        1 -> stringResource(R.string.backup_restore_finished_albums_one, uiState.albumsRestored)
+        else -> stringResource(R.string.backup_restore_finished_albums, uiState.albumsRestored)
+    }
+
+    val duplicates = when (uiState.filesSkipped) {
+        0 -> null
+        1 -> stringResource(
+            R.string.backup_restore_finished_duplicates_one,
+            uiState.filesSkipped,
+        )
+
+        else -> stringResource(R.string.backup_restore_finished_duplicates, uiState.filesSkipped)
+    }
+
+    val text = listOfNotNull(added, albums, duplicates).joinToString(separator = " ")
+
+    return remember(text) {
+        buildAnnotatedString {
+            append(text)
+
+            NUMBERS.findAll(text).forEach {
+                addStyle(
+                    SpanStyle(fontWeight = FontWeight.Bold),
+                    it.range.first,
+                    it.range.last + 1,
+                )
+            }
+        }
     }
 }
 
@@ -304,9 +314,9 @@ private fun Preview() {
         RestoreBackupFinished(
             uiState = RestoreBackupUiState.Finished(
                 fileName = "photok_backup_1234.zip",
-                filesRestored = 128,
+                filesRestored = 116,
                 filesTotal = 128,
-                filesSkipped = 0,
+                filesSkipped = 12,
                 albumsRestored = 4,
                 durationMillis = 134_000L,
                 failedFiles = emptyList(),

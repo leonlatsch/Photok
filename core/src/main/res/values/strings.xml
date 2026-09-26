@@ -316,8 +316,6 @@
     <string name="backup_restore_finished_headline">Restored successfully</string>
     <string name="backup_restore_finished_headline_one_issue">Restored with 1 issue</string>
     <string name="backup_restore_finished_headline_issues">Restored with %1$d issues</string>
-    <string name="backup_restore_finished_summary">%1$d of %2$d files were added to your vault in %3$s.</string>
-    <string name="backup_restore_finished_summary_with_albums">%1$d of %2$d files and %3$d albums were added to your vault in %4$s.</string>
     <string name="backup_restore_finished_failed_items">Failed items</string>
     <string name="backup_restore_finished_unknown_error">Unknown error</string>
 
@@ -339,8 +337,12 @@
     <string name="backup_restore_error_incomplete_description">This file was cut short, most likely by an interrupted download or copy. Try transferring it again.</string>
     <string name="backup_restore_error_unsupported_version_title">Backup is too new</string>
     <string name="backup_restore_error_unsupported_version_description">This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it.</string>
-    <string name="backup_restore_finished_skipped_one">1 photo was already in your Vault and was skipped.</string>
-    <string name="backup_restore_finished_skipped">%1$d photos were already in your Vault and were skipped.</string>
+    <string name="backup_restore_finished_added_one">%1$d file added in %2$s.</string>
+    <string name="backup_restore_finished_added">%1$d files added in %2$s.</string>
+    <string name="backup_restore_finished_albums_one">%1$d album restored.</string>
+    <string name="backup_restore_finished_albums">%1$d albums restored.</string>
+    <string name="backup_restore_finished_duplicates_one">%1$d duplicate skipped.</string>
+    <string name="backup_restore_finished_duplicates">%1$d duplicates skipped.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">New in</string>

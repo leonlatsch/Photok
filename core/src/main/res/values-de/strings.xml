@@ -317,8 +317,6 @@
     <string name="backup_restore_finished_headline">Erfolgreich wiederhergestellt</string>
     <string name="backup_restore_finished_headline_one_issue">Wiederhergestellt mit 1 Problem</string>
     <string name="backup_restore_finished_headline_issues">Wiederhergestellt mit %1$d Problemen</string>
-    <string name="backup_restore_finished_summary">%1$d von %2$d Dateien wurden in %3$s zu deinem Safe hinzugefügt.</string>
-    <string name="backup_restore_finished_summary_with_albums">%1$d von %2$d Dateien und %3$d Alben wurden in %4$s zu deinem Safe hinzugefügt.</string>
     <string name="backup_restore_finished_failed_items">Fehlgeschlagene Elemente</string>
     <string name="backup_restore_finished_unknown_error">Unbekannter Fehler</string>
 
@@ -340,8 +338,12 @@
     <string name="backup_restore_error_incomplete_description">Diese Datei wurde abgeschnitten, wahrscheinlich durch einen unterbrochenen Download oder Kopiervorgang. Übertrage sie noch mal.</string>
     <string name="backup_restore_error_unsupported_version_title">Backup ist zu neu</string>
     <string name="backup_restore_error_unsupported_version_description">Dieses Backup wurde mit einer neueren Version von Photok erstellt (Format %1$d). Aktualisiere Photok, um es wiederherzustellen.</string>
-    <string name="backup_restore_finished_skipped_one">1 Foto war schon in deinem Safe und wurde übersprungen.</string>
-    <string name="backup_restore_finished_skipped">%1$d Fotos waren schon in deinem Safe und wurden übersprungen.</string>
+    <string name="backup_restore_finished_added_one">%1$d Datei in %2$s hinzugefügt.</string>
+    <string name="backup_restore_finished_added">%1$d Dateien in %2$s hinzugefügt.</string>
+    <string name="backup_restore_finished_albums_one">%1$d Album wiederhergestellt.</string>
+    <string name="backup_restore_finished_albums">%1$d Alben wiederhergestellt.</string>
+    <string name="backup_restore_finished_duplicates_one">%1$d Duplikat übersprungen.</string>
+    <string name="backup_restore_finished_duplicates">%1$d Duplikate übersprungen.</string>
 
     <!-- NEWS -->
     <string name="news_new_in_title">Neu bei</string>
