@@ -79,7 +79,7 @@ class RestoreBackupRunner @Inject constructor(
         val restoredUuids = mutableSetOf<String>()
         val seenUuids = mutableSetOf<String>()
 
-        val tracker = RestoreProgressTracker(photosToRestore)
+        val tracker = RestoreProgressTracker(metaData.photos)
         send(tracker.snapshot())
 
         fun recordFailure(photo: PhotoBackup, cause: Throwable?) {
@@ -108,6 +108,10 @@ class RestoreBackupRunner @Inject constructor(
             }
 
             if (photoBackup.uuid in skipUuids) {
+                if (isMainFileName(entryName)) {
+                    tracker.skipFile(photoBackup)?.let { trySend(it) }
+                }
+
                 ze = stream.nextEntry
                 continue
             }
@@ -164,6 +168,8 @@ class RestoreBackupRunner @Inject constructor(
                 Timber.e("Photo listed in meta.json but missing from the archive: ${it.fileName}")
                 recordFailure(it, MissingFromArchive(it.fileName))
             }
+
+        send(tracker.snapshot())
 
         send(RestoreProgress.Indexing)
 

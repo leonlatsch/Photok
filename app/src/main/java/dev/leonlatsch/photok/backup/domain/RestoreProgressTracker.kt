@@ -31,6 +31,10 @@ private const val MIN_ELAPSED_MILLIS = 500L
  * upfront and the progress lands exactly on 100%. The speed is measured on the bytes
  * actually copied instead, because the declared sizes are missing in old backups.
  *
+ * [photos] is everything the backup lists, skipped photos included. Skipping still has to
+ * walk the entry out of the archive, so a mostly skipped backup would otherwise sit at 0%
+ * for almost the whole restore and then jump to done.
+ *
  * Thumbnail and video preview entries belong to their photo and are not counted separately.
  */
 class RestoreProgressTracker(
@@ -71,6 +75,23 @@ class RestoreProgressTracker(
     fun advance(chunk: Long): RestoreProgress.Restoring? {
         copiedBytes += chunk
         currentFileBytes = (currentFileBytes + chunk).coerceAtMost(currentFileSize)
+
+        val now = now()
+        if (now - lastEmitAt < EMIT_INTERVAL_MILLIS) return null
+
+        lastEmitAt = now
+        return snapshot()
+    }
+
+    /**
+     * Counts a photo that is not restored. Its bytes are never copied, so they count towards
+     * the progress but not towards the speed.
+     *
+     * Returns `null` while throttled, same as [advance].
+     */
+    fun skipFile(photo: PhotoBackup): RestoreProgress.Restoring? {
+        filesDone++
+        completedBytes += photo.size
 
         val now = now()
         if (now - lastEmitAt < EMIT_INTERVAL_MILLIS) return null

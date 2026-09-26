@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.backup.domain
 import dev.leonlatsch.photok.backup.data.PhotoBackup
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 
@@ -139,6 +140,35 @@ class RestoreProgressTrackerTest {
 
         // 100 MB/s, allow for the chunk rounding
         assertEquals(100_000_000.0, progress.bytesPerSecond.toDouble(), 8_000_000.0)
+    }
+
+    @Test
+    fun `counts skipped photos towards the progress`() {
+        // A backup where almost everything is already in the vault, the case that used to
+        // sit at 0% until the restore was done
+        val photos = photos(count = 10)
+        val tracker = tracker(photos)
+
+        repeat(9) {
+            micros += 1000 * MILLIS_PER_PHOTO
+            tracker.skipFile(photos[it])
+        }
+
+        val progress = tracker.snapshot()
+
+        assertEquals(9, progress.filesDone)
+        assertEquals(9 * PHOTO_SIZE, progress.bytesDone)
+        assertEquals(10 * PHOTO_SIZE, progress.bytesTotal)
+    }
+
+    @Test
+    fun `throttles the emits while skipping`() {
+        val photos = photos(count = 10)
+        val tracker = tracker(photos)
+
+        micros += 1000 * MILLIS_PER_PHOTO
+        assertNotNull(tracker.skipFile(photos[0]))
+        assertNull(tracker.skipFile(photos[1]))
     }
 
     @Test
