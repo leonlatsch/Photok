@@ -300,8 +300,7 @@
     <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
     <string name="backup_restore_restoring_files">%2$d میں سے %1$d فائلیں</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
     <string name="backup_restore_restoring_estimating">اندازہ لگایا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Estimating… -->
-    <string name="backup_restore_restoring_time_left_minutes">%1$d منٹ %2$d سیکنڈ باقی</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
-    <string name="backup_restore_restoring_time_left_seconds">%1$d سیکنڈ باقی</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_time_left">%1$s باقی</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">اس میں کچھ وقت لگ سکتا ہے۔ ایپ کھلی رکھیں۔</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">واپس لانا روک دیں</string> <!-- TODO: machine translated | EN: Cancel restore -->
     <string name="backup_restore_canceling">واپس لانا روکا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
@@ -319,8 +318,6 @@
     <string name="backup_restore_finished_headline_issues">%1$d مسئلوں کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
     <string name="backup_restore_finished_summary">%2$d میں سے %1$d فائلیں %3$s میں آپ کے سیف میں شامل ہو گئیں۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
     <string name="backup_restore_finished_summary_with_albums">%2$d میں سے %1$d فائلیں اور %3$d البمز %4$s میں آپ کے سیف میں شامل ہو گئے۔</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
-    <string name="backup_restore_finished_duration_minutes">%1$d منٹ %2$d سیکنڈ</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
-    <string name="backup_restore_finished_duration_seconds">%1$d سیکنڈ</string> <!-- TODO: machine translated | EN: %1$d s -->
     <string name="backup_restore_finished_failed_items">ناکام چیزیں</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">نامعلوم مسئلہ</string> <!-- TODO: machine translated | EN: Unknown error -->
 

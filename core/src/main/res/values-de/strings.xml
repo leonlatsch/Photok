@@ -301,8 +301,7 @@
     <string name="backup_restore_restoring_speed">%1$s/s</string>
     <string name="backup_restore_restoring_files">%1$d / %2$d Dateien</string>
     <string name="backup_restore_restoring_estimating">Wird berechnet…</string>
-    <string name="backup_restore_restoring_time_left_minutes">Noch %1$d min %2$d s</string>
-    <string name="backup_restore_restoring_time_left_seconds">Noch %1$d s</string>
+    <string name="backup_restore_restoring_time_left">Noch %1$s</string>
     <string name="backup_restore_restoring_keep_open">Das kann eine Weile dauern. Lass die App geöffnet.</string>
     <string name="backup_restore_cancel">Wiederherstellung abbrechen</string>
     <string name="backup_restore_canceling">Wiederherstellung wird abgebrochen…</string>
@@ -320,8 +319,6 @@
     <string name="backup_restore_finished_headline_issues">Wiederhergestellt mit %1$d Problemen</string>
     <string name="backup_restore_finished_summary">%1$d von %2$d Dateien wurden in %3$s zu deinem Safe hinzugefügt.</string>
     <string name="backup_restore_finished_summary_with_albums">%1$d von %2$d Dateien und %3$d Alben wurden in %4$s zu deinem Safe hinzugefügt.</string>
-    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string>
-    <string name="backup_restore_finished_duration_seconds">%1$d s</string>
     <string name="backup_restore_finished_failed_items">Fehlgeschlagene Elemente</string>
     <string name="backup_restore_finished_unknown_error">Unbekannter Fehler</string>
 

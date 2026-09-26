@@ -300,8 +300,7 @@
     <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
     <string name="backup_restore_restoring_files">%1$d / %2$d 个文件</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
     <string name="backup_restore_restoring_estimating">正在估算…</string> <!-- TODO: machine translated | EN: Estimating… -->
-    <string name="backup_restore_restoring_time_left_minutes">剩余 %1$d 分 %2$d 秒</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
-    <string name="backup_restore_restoring_time_left_seconds">剩余 %1$d 秒</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_time_left">剩余 %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">这可能需要一些时间。保持应用开启。</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">取消恢复</string> <!-- TODO: machine translated | EN: Cancel restore -->
     <string name="backup_restore_canceling">正在取消恢复…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
@@ -319,8 +318,6 @@
     <string name="backup_restore_finished_headline_issues">恢复完成，有 %1$d 个问题</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
     <string name="backup_restore_finished_summary">已在 %3$s 内将 %2$d 个文件中的 %1$d 个添加到你的保险库。</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
     <string name="backup_restore_finished_summary_with_albums">已在 %4$s 内将 %2$d 个文件中的 %1$d 个以及 %3$d 个相簿添加到你的保险库。</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
-    <string name="backup_restore_finished_duration_minutes">%1$d 分 %2$d 秒</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
-    <string name="backup_restore_finished_duration_seconds">%1$d 秒</string> <!-- TODO: machine translated | EN: %1$d s -->
     <string name="backup_restore_finished_failed_items">失败的项目</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">未知错误</string> <!-- TODO: machine translated | EN: Unknown error -->
 

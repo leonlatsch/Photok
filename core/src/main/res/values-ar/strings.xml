@@ -299,8 +299,7 @@
     <string name="backup_restore_restoring_speed">%1$s/ث</string> <!-- TODO: machine translated | EN: %1$s/s -->
     <string name="backup_restore_restoring_files">%1$d / %2$d ملف</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
     <string name="backup_restore_restoring_estimating">جارٍ التقدير…</string> <!-- TODO: machine translated | EN: Estimating… -->
-    <string name="backup_restore_restoring_time_left_minutes">متبقٍ %1$d د %2$d ث</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
-    <string name="backup_restore_restoring_time_left_seconds">متبقٍ %1$d ث</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_time_left">متبقٍ %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">قد يستغرق هذا بعض الوقت. أبقِ التطبيق مفتوحاً.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Cancel restore -->
     <string name="backup_restore_canceling">جارٍ إلغاء الاستعادة…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
@@ -318,8 +317,6 @@
     <string name="backup_restore_finished_headline_issues">تمت الاستعادة مع %1$d مشكلات</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
     <string name="backup_restore_finished_summary">تمت إضافة %1$d من أصل %2$d ملف إلى خزنتك خلال %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
     <string name="backup_restore_finished_summary_with_albums">تمت إضافة %1$d من أصل %2$d ملف و%3$d ألبوم إلى خزنتك خلال %4$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
-    <string name="backup_restore_finished_duration_minutes">%1$d د %2$d ث</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
-    <string name="backup_restore_finished_duration_seconds">%1$d ث</string> <!-- TODO: machine translated | EN: %1$d s -->
     <string name="backup_restore_finished_failed_items">العناصر الفاشلة</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">خطأ غير معروف</string> <!-- TODO: machine translated | EN: Unknown error -->
 

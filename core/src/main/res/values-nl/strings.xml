@@ -298,8 +298,7 @@
     <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
     <string name="backup_restore_restoring_files">%1$d / %2$d bestanden</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
     <string name="backup_restore_restoring_estimating">Berekenen…</string> <!-- TODO: machine translated | EN: Estimating… -->
-    <string name="backup_restore_restoring_time_left_minutes">Nog %1$d min %2$d s</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
-    <string name="backup_restore_restoring_time_left_seconds">Nog %1$d s</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_time_left">Nog %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Dit kan even duren. Houd de app open.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Herstellen annuleren</string> <!-- TODO: machine translated | EN: Cancel restore -->
     <string name="backup_restore_canceling">Herstellen annuleren…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
@@ -317,8 +316,6 @@
     <string name="backup_restore_finished_headline_issues">Hersteld met %1$d problemen</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
     <string name="backup_restore_finished_summary">%1$d van %2$d bestanden zijn in %3$s aan je kluis toegevoegd.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
     <string name="backup_restore_finished_summary_with_albums">%1$d van %2$d bestanden en %3$d albums zijn in %4$s aan je kluis toegevoegd.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
-    <string name="backup_restore_finished_duration_minutes">%1$d min %2$d s</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
-    <string name="backup_restore_finished_duration_seconds">%1$d s</string> <!-- TODO: machine translated | EN: %1$d s -->
     <string name="backup_restore_finished_failed_items">Mislukte items</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">Onbekende fout</string> <!-- TODO: machine translated | EN: Unknown error -->
 

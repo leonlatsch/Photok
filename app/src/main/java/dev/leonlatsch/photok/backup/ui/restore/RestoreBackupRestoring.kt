@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -219,18 +218,10 @@ private fun formatBytes(bytes: Long) = BindingConverters.formatByteSizeConverter
 private fun formatTimeRemaining(millisRemaining: Long?): String {
     millisRemaining ?: return stringResource(R.string.backup_restore_restoring_estimating)
 
-    val minutes = TimeUnit.MILLISECONDS.toMinutes(millisRemaining)
-    val seconds = TimeUnit.MILLISECONDS.toSeconds(millisRemaining) % 60
-
-    return when {
-        minutes > 0 -> stringResource(
-            R.string.backup_restore_restoring_time_left_minutes,
-            minutes,
-            seconds,
-        )
-
-        else -> stringResource(R.string.backup_restore_restoring_time_left_seconds, seconds)
-    }
+    return stringResource(
+        R.string.backup_restore_restoring_time_left,
+        formatDuration(millisRemaining),
+    )
 }
 
 @PreviewLightDark

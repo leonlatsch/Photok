@@ -53,7 +53,6 @@ import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -295,22 +294,6 @@ private fun summary(uiState: RestoreBackupUiState.Finished): String {
             uiState.filesTotal,
             duration,
         )
-    }
-}
-
-@Composable
-private fun formatDuration(millis: Long): String {
-    val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
-    val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60
-
-    return when {
-        minutes > 0 -> stringResource(
-            R.string.backup_restore_finished_duration_minutes,
-            minutes,
-            seconds,
-        )
-
-        else -> stringResource(R.string.backup_restore_finished_duration_seconds, seconds)
     }
 }
 

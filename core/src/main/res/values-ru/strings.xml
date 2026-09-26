@@ -300,8 +300,7 @@
     <string name="backup_restore_restoring_speed">%1$s/с</string> <!-- TODO: machine translated | EN: %1$s/s -->
     <string name="backup_restore_restoring_files">%1$d / %2$d файлов</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
     <string name="backup_restore_restoring_estimating">Расчёт…</string> <!-- TODO: machine translated | EN: Estimating… -->
-    <string name="backup_restore_restoring_time_left_minutes">Осталось %1$d мин %2$d с</string> <!-- TODO: machine translated | EN: %1$d min %2$d s left -->
-    <string name="backup_restore_restoring_time_left_seconds">Осталось %1$d с</string> <!-- TODO: machine translated | EN: %1$d s left -->
+    <string name="backup_restore_restoring_time_left">Осталось %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Это может занять время. Не закрывайте приложение.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Отменить восстановление</string> <!-- TODO: machine translated | EN: Cancel restore -->
     <string name="backup_restore_canceling">Отмена восстановления…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
@@ -319,8 +318,6 @@
     <string name="backup_restore_finished_headline_issues">Восстановлено, ошибок: %1$d</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
     <string name="backup_restore_finished_summary">%1$d из %2$d файлов добавлено в ваш сейф за %3$s.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files were added to your vault in %3$s. -->
     <string name="backup_restore_finished_summary_with_albums">%1$d из %2$d файлов добавлено в ваш сейф за %4$s. Альбомов: %3$d.</string> <!-- TODO: machine translated | EN: %1$d of %2$d files and %3$d albums were added to your vault in %4$s. -->
-    <string name="backup_restore_finished_duration_minutes">%1$d мин %2$d с</string> <!-- TODO: machine translated | EN: %1$d min %2$d s -->
-    <string name="backup_restore_finished_duration_seconds">%1$d с</string> <!-- TODO: machine translated | EN: %1$d s -->
     <string name="backup_restore_finished_failed_items">Файлы с ошибками</string> <!-- TODO: machine translated | EN: Failed items -->
     <string name="backup_restore_finished_unknown_error">Неизвестная ошибка</string> <!-- TODO: machine translated | EN: Unknown error -->
 
