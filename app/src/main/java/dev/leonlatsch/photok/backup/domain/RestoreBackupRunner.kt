@@ -108,11 +108,13 @@ class RestoreBackupRunner @Inject constructor(
             }
 
             if (photoBackup.uuid in skipUuids) {
+                ze = stream.nextEntry
+
                 if (isMainFileName(entryName)) {
+                    // Track skip AFTER actually skipped
                     tracker.skipFile(photoBackup)?.let { trySend(it) }
                 }
 
-                ze = stream.nextEntry
                 continue
             }
 

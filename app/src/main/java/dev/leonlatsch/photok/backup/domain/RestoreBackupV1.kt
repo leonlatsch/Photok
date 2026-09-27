@@ -105,8 +105,8 @@ class RestoreBackupV1 @Inject constructor(
             }
 
             if (photoBackup.uuid in skipUuids) {
+                ze = stream.nextEntry // Track skip AFTER actually skipped
                 tracker.skipFile(photoBackup)?.let { trySend(it) }
-                ze = stream.nextEntry
                 continue
             }
 
