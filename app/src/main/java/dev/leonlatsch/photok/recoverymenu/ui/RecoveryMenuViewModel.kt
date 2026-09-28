@@ -14,28 +14,43 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.recoverymenu
 
+package dev.leonlatsch.photok.recoverymenu.ui
+
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.other.SingleLiveEvent
+import dev.leonlatsch.photok.main.ui.MainActivity
 import dev.leonlatsch.photok.settings.ui.hideapp.usecase.ToggleMainComponentUseCase
 import javax.inject.Inject
 
+sealed interface RecoveryMenuUiEvent {
+    data class OpenPhotok(val activity: Activity?) : RecoveryMenuUiEvent
+    data class ResetHideApp(val activity: Activity?) : RecoveryMenuUiEvent
+}
+
 @HiltViewModel
 class RecoveryMenuViewModel @Inject constructor(
-    private val toggleMainComponentUseCase: ToggleMainComponentUseCase
+    private val toggleMainComponentUseCase: ToggleMainComponentUseCase,
 ) : ViewModel() {
 
-    val navigationEvent = SingleLiveEvent<RecoveryMenuNavigator.NavigationEvent>()
-
-    fun openPhotok() {
-        navigationEvent.value = RecoveryMenuNavigator.NavigationEvent.OpenPhotok
+    fun handleUiEvent(event: RecoveryMenuUiEvent) {
+        when (event) {
+            is RecoveryMenuUiEvent.OpenPhotok -> openPhotok(event.activity)
+            is RecoveryMenuUiEvent.ResetHideApp -> resetHideApp(event.activity)
+        }
     }
 
-    fun resetHidePhotoSetting() {
-        toggleMainComponentUseCase()
+    private fun openPhotok(activity: Activity?) {
+        activity ?: return
 
-        navigationEvent.value = RecoveryMenuNavigator.NavigationEvent.AfterResetHideApp
+        activity.startActivity(Intent(activity, MainActivity::class.java))
+        activity.finish()
+    }
+
+    private fun resetHideApp(activity: Activity?) {
+        toggleMainComponentUseCase()
+        activity?.finish()
     }
 }

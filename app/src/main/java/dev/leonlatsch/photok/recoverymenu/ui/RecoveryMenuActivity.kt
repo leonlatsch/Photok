@@ -14,39 +14,35 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.recoverymenu
+
+package dev.leonlatsch.photok.recoverymenu.ui
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.ActivityRecoveryMenuBinding
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RecoveryMenuActivity :
-    BindableActivity<ActivityRecoveryMenuBinding>(R.layout.activity_recovery_menu) {
+class RecoveryMenuActivity : BaseActivity() {
 
     @Inject
     override lateinit var config: Config
 
-    @Inject
-    lateinit var navigator: RecoveryMenuNavigator
-
     private val viewModel: RecoveryMenuViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        viewModel.navigationEvent.observe(this) {
-            navigator.navigate(it, this)
+        setContent {
+            AppTheme {
+                RecoveryMenuScreen(viewModel = viewModel)
+            }
         }
-    }
-
-    override fun bind(binding: ActivityRecoveryMenuBinding) {
-        super.bind(binding)
-        binding.viewModel = viewModel
     }
 }
