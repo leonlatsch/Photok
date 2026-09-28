@@ -47,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalAutofillManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -65,8 +66,20 @@ fun RestoreBackupUnlock(
     uiState: RestoreBackupUiState.Unlock,
     handleUiEvent: (RestoreBackupUiEvent) -> Unit,
 ) {
-    BackHandler {
+    val autofillManager = LocalAutofillManager.current
+
+    fun confirmPassword() {
+        autofillManager?.cancel()
+        handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked)
+    }
+
+    fun backToOverview() {
+        autofillManager?.cancel()
         handleUiEvent(RestoreBackupUiEvent.BackToOverviewClicked)
+    }
+
+    BackHandler {
+        backToOverview()
     }
 
     val focusRequester = remember { FocusRequester() }
@@ -86,7 +99,7 @@ fun RestoreBackupUnlock(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { handleUiEvent(RestoreBackupUiEvent.BackToOverviewClicked) }
+                        onClick = { backToOverview() }
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
@@ -100,7 +113,7 @@ fun RestoreBackupUnlock(
             // Opaque, so the content scrolling underneath does not show through the bar
             Surface(color = MaterialTheme.colorScheme.background) {
                 Button(
-                    onClick = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
+                    onClick = { confirmPassword() },
                     enabled = uiState.password.isNotEmpty() && !uiState.unlocking,
                     modifier = Modifier
                         .navigationBarsPadding()
@@ -172,7 +185,7 @@ fun RestoreBackupUnlock(
                 onValueChange = { handleUiEvent(RestoreBackupUiEvent.PasswordChanged(it)) },
                 label = stringResource(R.string.common_password),
                 error = stringResource(R.string.unlock_wrong_password).takeIf { uiState.wrongPassword },
-                onDone = { handleUiEvent(RestoreBackupUiEvent.ConfirmPasswordClicked) },
+                onDone = { confirmPassword() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
