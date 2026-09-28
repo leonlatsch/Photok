@@ -347,6 +347,20 @@
     <string name="news_new_in_title">New in</string>
     <string name="news_view_changelog">View Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Highlight</string>
+    <string name="news_change_kind_new">New</string>
+    <string name="news_change_kind_improved">Improved</string>
+    <string name="news_change_kind_fixed">Fixed</string>
+    <string name="release_highlight_title">A Brand New Restore</string>
+    <string name="release_highlight_summary">Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever.</string>
+    <string name="release_highlight_point_1">Overview of your backup before anything happens</string>
+    <string name="release_highlight_point_2">Live progress, speed and time left</string>
+    <string name="release_highlight_point_3">Skip or replace files you already have</string>
+    <string name="release_highlight_point_4">Clear errors instead of a generic failure</string>
+    <string name="release_change_title_1">Grid or List View in Albums</string>
+    <string name="release_change_summary_1">Switch your albums between the classic grid and a new list view.</string>
+    <string name="release_change_title_2">Choose the App Language</string>
+    <string name="release_change_summary_2">Set the language of Photok directly in the settings, independent of your system language.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Recovery Menu</string>

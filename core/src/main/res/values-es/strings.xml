@@ -348,6 +348,20 @@
     <string name="news_new_in_title">Novedades en</string>
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Destacado</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">Nuevo</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Mejorado</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Corregido</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Una restauración totalmente nueva</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">Restaurar una copia de seguridad ahora es un proceso guiado a pantalla completa. Las copias y restauraciones son también más fiables que nunca.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Resumen de tu copia antes de empezar</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">Progreso en vivo, velocidad y tiempo restante</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">Omite o reemplaza los archivos que ya tienes</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">Errores claros en lugar de un fallo genérico</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">Vista de cuadrícula o lista en álbumes</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">Cambia tus álbumes entre la cuadrícula clásica y una nueva vista de lista.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">Elige el idioma de la app</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">Configura el idioma de Photok directamente en los ajustes, independientemente del idioma de tu sistema.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menú de Recuperación</string>

@@ -347,6 +347,20 @@
     <string name="news_new_in_title">نیا کیا ہے</string>
     <string name="news_view_changelog">تبدیلیوں کی لسٹ دیکھیں</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">نمایاں</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">نیا</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">بہتر</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">درست کیا گیا</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">بالکل نئی بحالی</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">بیک اپ بحال کرنا اب ایک رہنمائی والا فل اسکرین عمل ہے۔ بیک اپ اور بحالی پہلے سے کہیں زیادہ قابل اعتماد بھی ہیں۔</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">کچھ بھی شروع ہونے سے پہلے اپنے بیک اپ کا جائزہ</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">لائیو پیش رفت، رفتار اور باقی وقت</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">پہلے سے موجود فائلیں چھوڑیں یا بدلیں</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">عام ناکامی کے بجائے واضح خرابیاں</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">البمز میں گرڈ یا لسٹ ویو</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">اپنے البمز کو کلاسک گرڈ اور نئے لسٹ ویو کے درمیان بدلیں۔</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">ایپ کی زبان منتخب کریں</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">Photok کی زبان سیٹنگز میں براہ راست سیٹ کریں، اپنے سسٹم کی زبان سے الگ۔</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">واپسی کا مینو</string>

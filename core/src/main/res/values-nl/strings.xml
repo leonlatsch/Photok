@@ -345,6 +345,20 @@
     <string name="news_new_in_title">Nieuw in</string>
     <string name="news_view_changelog">Bekijk changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Uitgelicht</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">Nieuw</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Verbeterd</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Opgelost</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Een gloednieuw herstel</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">Een back-up herstellen is nu een begeleide flow op volledig scherm. Back-ups en herstel zijn ook betrouwbaarder dan ooit.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Overzicht van je back-up voordat er iets gebeurt</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">Live voortgang, snelheid en resterende tijd</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">Sla bestanden die je al hebt over of vervang ze</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">Duidelijke foutmeldingen in plaats van een algemene fout</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">Raster- of lijstweergave in albums</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">Wissel je albums tussen het klassieke raster en een nieuwe lijstweergave.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">Kies de app-taal</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">Stel de taal van Photok direct in via de instellingen, los van je systeemtaal.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Herstelmenu</string>

@@ -346,6 +346,20 @@
     <string name="news_new_in_title">الجديد في</string>
     <string name="news_view_changelog">مشاهدة ملف Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">أبرز الميزات</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">جديد</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">محسّن</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">تم الإصلاح</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">استعادة جديدة كليًا</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">أصبحت استعادة النسخة الاحتياطية الآن عملية موجّهة بملء الشاشة. كما أصبحت النسخ الاحتياطية والاستعادة أكثر موثوقية من أي وقت مضى.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">نظرة عامة على نسختك الاحتياطية قبل أي شيء</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">تقدّم مباشر مع السرعة والوقت المتبقي</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">تخطَّ أو استبدل الملفات الموجودة لديك</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">أخطاء واضحة بدلًا من فشل عام</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">عرض شبكي أو قائمة في الألبومات</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">بدّل ألبوماتك بين العرض الشبكي الكلاسيكي وعرض القائمة الجديد.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">اختر لغة التطبيق</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">اضبط لغة Photok مباشرة من الإعدادات، بشكل مستقل عن لغة نظامك.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">قائمة الاسترداد</string>

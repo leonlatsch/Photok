@@ -347,6 +347,20 @@
     <string name="news_new_in_title">新功能</string>
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">亮点</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">新增</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">改进</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">修复</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">全新的恢复体验</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">恢复备份现在是一个全屏引导流程。备份和恢复也比以往更加可靠。</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">开始之前先查看备份概览</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">实时进度、速度和剩余时间</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">相册网格或列表视图</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">在经典网格和全新列表视图之间切换相册。</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">选择应用语言</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">直接在设置中设置 Photok 的语言，不受系统语言影响。</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>

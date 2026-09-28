@@ -348,6 +348,20 @@
     <string name="news_new_in_title">Neu bei</string>
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Highlight</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">Neu</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Verbessert</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Behoben</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Eine ganz neue Wiederherstellung</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">Ein Backup wiederherzustellen ist jetzt ein geführter Vollbild-Ablauf. Backups und Wiederherstellungen sind außerdem zuverlässiger als je zuvor.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Überblick über dein Backup, bevor etwas passiert</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">Live-Fortschritt, Geschwindigkeit und Restzeit</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">Überspringe oder ersetze Dateien, die du schon hast</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">Raster- oder Listenansicht in Alben</string>
+    <string name="release_change_summary_1">Wechsle in deinen Alben zwischen dem klassischen Raster und einer neuen Listenansicht.</string>
+    <string name="release_change_title_2">App-Sprache auswählen</string>
+    <string name="release_change_summary_2">Stelle die Sprache von Photok direkt in den Einstellungen ein, unabhängig von deiner Systemsprache.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>

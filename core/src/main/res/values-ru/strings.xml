@@ -347,6 +347,20 @@
     <string name="news_new_in_title">Нововведения в</string>
     <string name="news_view_changelog">Посмотреть список изменений</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Главное</string> <!-- TODO: machine translated | EN: Highlight -->
+    <string name="news_change_kind_new">Новое</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Улучшено</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Исправлено</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Совершенно новое восстановление</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_summary">Восстановление резервной копии теперь проходит в пошаговом полноэкранном режиме. Резервное копирование и восстановление стали надёжнее, чем когда-либо.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Обзор резервной копии до начала восстановления</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
+    <string name="release_highlight_point_2">Прогресс в реальном времени, скорость и оставшееся время</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_3">Пропускай или заменяй уже имеющиеся файлы</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_4">Понятные ошибки вместо общего сбоя</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_change_title_1">Сетка или список в альбомах</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
+    <string name="release_change_summary_1">Переключай альбомы между классической сеткой и новым списком.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
+    <string name="release_change_title_2">Выбери язык приложения</string> <!-- TODO: machine translated | EN: Choose the App Language -->
+    <string name="release_change_summary_2">Устанавливай язык Photok прямо в настройках, независимо от языка системы.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Меню восстановления</string>
