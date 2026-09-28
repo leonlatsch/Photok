@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Plus</string>
     <string name="common_cancel">Annuler</string>
+    <string name="common_canceling">Annulation…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Créer</string>
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
@@ -304,7 +305,6 @@
     <string name="backup_restore_restoring_time_left">Il reste %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Cela peut prendre un moment. Gardez l\'application ouverte.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Annuler la restauration</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">Annulation de la restauration…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">Indexation…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Tous les fichiers ont été restaurés, indexation de vos photos et albums.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

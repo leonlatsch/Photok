@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Meer</string> <!-- TODO: machine translated | EN: More -->
     <string name="common_cancel">Annuleren</string> <!-- TODO: machine translated | EN: Cancel -->
+    <string name="common_canceling">Annuleren…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Aanmaken</string> <!-- TODO: machine translated | EN: Create -->
     <string name="common_empty">Leeg</string> <!-- TODO: machine translated | EN: Empty -->
     <string name="common_rename">Hernoemen</string> <!-- TODO: machine translated | EN: Rename -->
@@ -301,7 +302,6 @@
     <string name="backup_restore_restoring_time_left">Nog %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Dit kan even duren. Houd de app open.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Herstellen annuleren</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">Herstellen annuleren…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">Indexeren…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Alle bestanden hersteld, je foto\'s en albums worden geïndexeerd.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

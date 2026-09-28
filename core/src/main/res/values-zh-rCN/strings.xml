@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">更多</string>
     <string name="common_cancel">取消</string>
+    <string name="common_canceling">正在取消…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">创建</string>
     <string name="common_empty">空</string>
     <string name="common_rename">重命名</string>
@@ -303,7 +304,6 @@
     <string name="backup_restore_restoring_time_left">剩余 %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">这可能需要一些时间。保持应用开启。</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">取消恢复</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">正在取消恢复…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">正在建立索引…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">所有文件已恢复，正在为你的照片和相簿建立索引。</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

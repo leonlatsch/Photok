@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">المزيد</string> <!-- TODO: machine translated | EN: More -->
     <string name="common_cancel">إلغاء</string> <!-- TODO: machine translated | EN: Cancel -->
+    <string name="common_canceling">جارٍ الإلغاء…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">إنشاء</string> <!-- TODO: machine translated | EN: Create -->
     <string name="common_empty">فارغ</string> <!-- TODO: machine translated | EN: Empty -->
     <string name="common_rename">إعادة تسمية</string> <!-- TODO: machine translated | EN: Rename -->
@@ -302,7 +303,6 @@
     <string name="backup_restore_restoring_time_left">متبقٍ %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">قد يستغرق هذا بعض الوقت. أبقِ التطبيق مفتوحاً.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">جارٍ إلغاء الاستعادة…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">جارٍ الفهرسة…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">تمت استعادة كل الملفات، وجارٍ فهرسة صورك وألبوماتك.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

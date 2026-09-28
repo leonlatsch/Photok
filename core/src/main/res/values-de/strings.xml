@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Mehr</string>
     <string name="common_cancel">Abbrechen</string>
+    <string name="common_canceling">Wird abgebrochen…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Erstellen</string>
     <string name="common_empty">Leer</string>
     <string name="common_rename">Umbenennen</string>
@@ -304,7 +305,6 @@
     <string name="backup_restore_restoring_time_left">Noch %1$s</string>
     <string name="backup_restore_restoring_keep_open">Das kann eine Weile dauern. Lass die App geöffnet.</string>
     <string name="backup_restore_cancel">Wiederherstellung abbrechen</string>
-    <string name="backup_restore_canceling">Wiederherstellung wird abgebrochen…</string>
 
     <string name="backup_restore_indexing_title">Indizieren…</string>
     <string name="backup_restore_indexing_description">Alle Dateien wiederhergestellt, deine Fotos und Alben werden indiziert.</string>

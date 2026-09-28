@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">More</string>
     <string name="common_cancel">Cancel</string>
+    <string name="common_canceling">Canceling…</string>
     <string name="common_create">Create</string>
     <string name="common_empty">Empty</string>
     <string name="common_rename">Rename</string>
@@ -303,7 +304,6 @@
     <string name="backup_restore_restoring_time_left">%1$s left</string>
     <string name="backup_restore_restoring_keep_open">This can take a while. Please keep the app open.</string>
     <string name="backup_restore_cancel">Cancel restore</string>
-    <string name="backup_restore_canceling">Canceling restore…</string>
 
     <string name="backup_restore_indexing_title">Indexing…</string>
     <string name="backup_restore_indexing_description">All files restored, indexing your photos and albums.</string>

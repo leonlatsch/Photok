@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Daha Fazla</string>
     <string name="common_cancel">İptal</string>
+    <string name="common_canceling">İptal ediliyor…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Oluştur</string>
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
@@ -302,7 +303,6 @@
     <string name="backup_restore_restoring_time_left">%1$s kaldı</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Bu işlem biraz zaman alabilir. Uygulamayı açık tutun.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Geri yüklemeyi iptal et</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">Geri yükleme iptal ediliyor…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">Dizinleniyor…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Tüm dosyalar geri yüklendi, fotoğraflarınız ve albümleriniz dizinleniyor.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

@@ -32,6 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Lainnya</string>
     <string name="common_cancel">Batal</string>
+    <string name="common_canceling">Membatalkan…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Buat</string>
     <string name="common_empty">Kosong</string>
     <string name="common_rename">Ganti nama</string>
@@ -303,7 +304,6 @@
     <string name="backup_restore_restoring_time_left">Sisa %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
     <string name="backup_restore_restoring_keep_open">Ini bisa memakan waktu. Biarkan aplikasi tetap terbuka.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
     <string name="backup_restore_cancel">Batalkan pemulihan</string> <!-- TODO: machine translated | EN: Cancel restore -->
-    <string name="backup_restore_canceling">Membatalkan pemulihan…</string> <!-- TODO: machine translated | EN: Canceling restore… -->
 
     <string name="backup_restore_indexing_title">Mengindeks…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Semua file telah dipulihkan, sedang mengindeks foto dan albummu.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->

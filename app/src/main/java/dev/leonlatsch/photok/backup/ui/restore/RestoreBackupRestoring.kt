@@ -104,7 +104,7 @@ fun RestoreBackupRestoring(
                     Text(
                         text = stringResource(
                             if (uiState.canceling) {
-                                R.string.backup_restore_canceling
+                                R.string.common_canceling
                             } else {
                                 R.string.backup_restore_cancel
                             }
