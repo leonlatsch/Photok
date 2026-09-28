@@ -106,7 +106,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".recoverymenu.RecoveryMenuActivity"
+            android:name=".recoverymenu.ui.RecoveryMenuActivity"
             android:theme="@style/AppTheme" />
 
         <receiver

@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.forwarddialer
 
 import android.content.Intent
-import dev.leonlatsch.photok.recoverymenu.RecoveryMenuActivity
+import dev.leonlatsch.photok.recoverymenu.ui.RecoveryMenuActivity
 import timber.log.Timber
 import javax.inject.Inject
 
