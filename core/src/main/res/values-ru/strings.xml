@@ -308,7 +308,6 @@
     <string name="backup_restore_indexing_title">Индексация…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Все файлы восстановлены, идёт индексация ваших фото и альбомов.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">Восстановление отменено</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">Восстановление отменено</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Ничего из %1$s не добавлено в ваш сейф. Все уже восстановленные файлы удалены.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

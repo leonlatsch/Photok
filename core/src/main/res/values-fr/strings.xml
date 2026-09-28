@@ -309,7 +309,6 @@
     <string name="backup_restore_indexing_title">Indexation…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Tous les fichiers ont été restaurés, indexation de vos photos et albums.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">Restauration annulée</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">Restauration annulée</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Aucun élément de %1$s n\'a été ajouté à votre coffre-fort. Tous les fichiers déjà restaurés ont été supprimés.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

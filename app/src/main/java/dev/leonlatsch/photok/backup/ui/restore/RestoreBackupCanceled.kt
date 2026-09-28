@@ -54,7 +54,7 @@ fun RestoreBackupCanceled(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(stringResource(R.string.backup_restore_canceled_title))
+                    Text(stringResource(R.string.backup_restore_title))
                 },
             )
         },
@@ -83,7 +83,7 @@ fun RestoreBackupCanceled(
             Icon(
                 painter = painterResource(R.drawable.ic_close),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.outline,
+                tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(72.dp)
             )
 

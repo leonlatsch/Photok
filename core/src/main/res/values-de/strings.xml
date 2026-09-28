@@ -309,7 +309,6 @@
     <string name="backup_restore_indexing_title">Indizieren…</string>
     <string name="backup_restore_indexing_description">Alle Dateien wiederhergestellt, deine Fotos und Alben werden indiziert.</string>
 
-    <string name="backup_restore_canceled_title">Wiederherstellung abgebrochen</string>
     <string name="backup_restore_canceled_headline">Wiederherstellung abgebrochen</string>
     <string name="backup_restore_canceled_description">Nichts aus %1$s wurde zu deinem Safe hinzugefügt. Alle bereits wiederhergestellten Dateien wurden wieder gelöscht.</string>
 

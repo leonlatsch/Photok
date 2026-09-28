@@ -307,7 +307,6 @@
     <string name="backup_restore_indexing_title">Dizinleniyor…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Tüm dosyalar geri yüklendi, fotoğraflarınız ve albümleriniz dizinleniyor.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">Geri Yükleme İptal Edildi</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">Geri yükleme iptal edildi</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">%1$s içeriğinden kasanıza hiçbir şey eklenmedi. Daha önce geri yüklenen tüm dosyalar tekrar silindi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

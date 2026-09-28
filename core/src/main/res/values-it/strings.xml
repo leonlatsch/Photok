@@ -308,7 +308,6 @@
     <string name="backup_restore_indexing_title">Indicizzazione in corso…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Tutti i file sono stati ripristinati, indicizzazione di foto e album in corso.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">Ripristino annullato</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">Ripristino annullato</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Nessun elemento di %1$s è stato aggiunto alla tua Safe. Tutti i file già ripristinati sono stati eliminati.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

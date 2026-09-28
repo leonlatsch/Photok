@@ -306,7 +306,6 @@
     <string name="backup_restore_indexing_title">Indexeren…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">Alle bestanden hersteld, je foto\'s en albums worden geïndexeerd.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">Herstellen geannuleerd</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">Herstellen geannuleerd</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Er is niets uit %1$s aan je kluis toegevoegd. Alle bestanden die al waren hersteld, zijn weer verwijderd.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

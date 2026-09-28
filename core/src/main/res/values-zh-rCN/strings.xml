@@ -308,7 +308,6 @@
     <string name="backup_restore_indexing_title">正在建立索引…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">所有文件已恢复，正在为你的照片和相簿建立索引。</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">恢复已取消</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">恢复已取消</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">%1$s 中没有任何内容被添加到你的保险库。已经恢复的文件都已被删除。</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 

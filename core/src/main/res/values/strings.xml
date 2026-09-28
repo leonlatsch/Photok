@@ -308,7 +308,6 @@
     <string name="backup_restore_indexing_title">Indexing…</string>
     <string name="backup_restore_indexing_description">All files restored, indexing your photos and albums.</string>
 
-    <string name="backup_restore_canceled_title">Restore Canceled</string>
     <string name="backup_restore_canceled_headline">Restore canceled</string>
     <string name="backup_restore_canceled_description">Nothing from %1$s was added to your vault. All files that were already restored have been deleted again.</string>
 

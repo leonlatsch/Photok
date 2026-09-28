@@ -307,7 +307,6 @@
     <string name="backup_restore_indexing_title">جارٍ الفهرسة…</string> <!-- TODO: machine translated | EN: Indexing… -->
     <string name="backup_restore_indexing_description">تمت استعادة كل الملفات، وجارٍ فهرسة صورك وألبوماتك.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
 
-    <string name="backup_restore_canceled_title">تم إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Restore Canceled -->
     <string name="backup_restore_canceled_headline">تم إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">لم تتم إضافة أي شيء من %1$s إلى خزنتك. وتم حذف كل الملفات التي استُعيدت بالفعل.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
