@@ -165,6 +165,20 @@ class BackupViewModelTest {
         coVerify { mockIO.deleteFile(backupUri) }
     }
 
+    /**
+     * Leaving the screen cancels the view model scope without [BackupViewModel.cancel], and
+     * postProcess still closes the zip. It must not survive as a valid looking backup.
+     */
+    @Test
+    fun `deletes the backup when it stops halfway without a cancel`() = runTest {
+        viewModel.preProcess()
+        viewModel.processItem(photos[0])
+        viewModel.current++
+        viewModel.postProcess()
+
+        coVerify { mockIO.deleteFile(backupUri) }
+    }
+
     /** Mirrors what [BackupViewModel.runProcessing] does, the process loop is private. */
     private suspend fun runBackup() {
         viewModel.preProcess()
@@ -172,6 +186,7 @@ class BackupViewModelTest {
         for (item in viewModel.items) {
             if (viewModel.processState == ProcessState.ABORTED) break
             viewModel.processItem(item)
+            viewModel.current++
         }
 
         viewModel.postProcess()

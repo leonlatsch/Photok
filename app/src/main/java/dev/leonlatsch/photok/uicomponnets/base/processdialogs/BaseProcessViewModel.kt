@@ -100,6 +100,9 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
     /**
      * Runs [preProcess], [processLoop] and [postProcess].
      * launched in [viewModelScope].
+     *
+     * [postProcess] also runs when [viewModelScope] is canceled, so a subclass can always release
+     * what [preProcess] opened.
      */
     fun runProcessing() = viewModelScope.launch(Dispatchers.IO) {
         val job = launch(start = CoroutineStart.LAZY) {
@@ -107,10 +110,13 @@ abstract class BaseProcessViewModel<T>(app: Application) : ObservableViewModel(a
             processLoop()
         }
         processingJob = job
-        job.start()
-        job.join()
 
-        withContext(NonCancellable) { postProcess() }
+        try {
+            job.start()
+            job.join()
+        } finally {
+            withContext(NonCancellable) { postProcess() }
+        }
     }
 
     /**

@@ -45,6 +45,7 @@ import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.review.ReviewTrigger
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -171,6 +172,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val v3Strategy: RestoreBackupV3,
     private val v4Strategy: RestoreBackupV4,
     private val v5Strategy: RestoreBackupV5,
+    private val appScope: CoroutineScope,
 ) : ViewModel() {
 
     private val fileName = io.getFileName(restoreBackupUri).orEmpty()
@@ -178,6 +180,10 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private var indexingStartedAt = 0L
 
     private var restoreJob: Job? = null
+
+    /** Set while a restore writes files, so a cancel knows what to clean up. */
+    private var restoringMetaData: BackupMetaData? = null
+    private var restoringDuplicates: RestoreDuplicates? = null
 
     private val inputs = MutableStateFlow(RestoreBackupUiState.Inputs())
 
@@ -375,9 +381,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
         restoreJob?.cancelAndJoin()
         restoreJob = null
 
-        // Aborting both is fine, only the one that ran has anything to clean up.
-        v1Strategy.abort()
-        runner.abort()
+        abortRestore()
 
         inputs.update {
             it.copy(step = RestoreBackupUiState.Step.Canceled, canceling = false)
@@ -393,6 +397,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
         }
 
         val duplicates = getRestoreDuplicates(metaData)
+
+        restoringMetaData = metaData
+        restoringDuplicates = duplicates
 
         // V1 stands on its own: it has no thumbnails in the archive and regenerates them from
         // the decoded image. Every later format goes through the runner.
@@ -426,6 +433,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     }
 
                     is RestoreProgress.Finished -> {
+                        restoringMetaData = null
+                        restoringDuplicates = null
+
                         // A failed file can leave a half written file behind with no row
                         // pointing at it.
                         if (progress.result.failedFiles.isNotEmpty()) {
@@ -443,6 +453,28 @@ class RestoreBackupViewModel @AssistedInject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun abortRestore() {
+        val metaData = restoringMetaData ?: return
+        val duplicates = restoringDuplicates ?: return
+
+        when (metaData) {
+            is BackupMetaData.V1 -> v1Strategy.abort(metaData, duplicates)
+            else -> runner.abort(metaData, duplicates)
+        }
+
+        restoringMetaData = null
+        restoringDuplicates = null
+    }
+
+    override fun onCleared() {
+        val job = restoreJob
+
+        appScope.launch {
+            job?.join()
+            abortRestore()
         }
     }
 

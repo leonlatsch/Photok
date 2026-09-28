@@ -114,8 +114,10 @@ class BackupViewModel @Inject constructor(
     override suspend fun postProcess() {
         zipOutputStream?.lazyClose()
 
-        // meta.json already in zip file. Delete backup
-        if (fatalFailure || processState == ProcessState.ABORTED) {
+        // meta.json is written first and lists every photo. A backup that stopped early would
+        // still close into a valid looking zip, so delete it
+        val incomplete = current < elementsToProcess
+        if (fatalFailure || processState == ProcessState.ABORTED || incomplete) {
             io.deleteFile(uri)
         }
 

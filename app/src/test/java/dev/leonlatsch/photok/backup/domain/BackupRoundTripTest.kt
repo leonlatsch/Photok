@@ -45,6 +45,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -210,6 +212,41 @@ class BackupRoundTripTest {
         assertEquals(listOf(photos[1].uuid), insertedPhotos.map { it.uuid })
     }
 
+    /** A fresh runner, so abort can only work off the metadata and not off state from the run. */
+    @Test
+    fun `abort deletes the files of a restore that was not indexed`() = runTest {
+        val archive = createBackup()
+        val newUuid = "uuid-copy"
+        val duplicates = RestoreDuplicates.ImportAgain(mapOf(photos[0].uuid to newUuid))
+
+        restoreBackup(archive, duplicates)
+        insertedPhotos.clear()
+
+        runner().abort(metaData(), duplicates)
+
+        val targetStorage = vaultFileStorage(targetSession)
+        for (uuid in listOf(newUuid, photos[1].uuid)) {
+            assertFalse(targetStorage.encryptedFileExists(internalFileName(uuid)))
+            assertFalse(targetStorage.encryptedFileExists(internalThumbnailFileName(uuid)))
+        }
+    }
+
+    @Test
+    fun `abort keeps the files of indexed and skipped photos`() = runTest {
+        val archive = createBackup()
+        val duplicates = RestoreDuplicates.Skip(setOf(photos[0].uuid))
+
+        restoreBackup(archive, duplicates)
+
+        runner().abort(metaData(), duplicates)
+
+        val targetStorage = vaultFileStorage(targetSession)
+        for (photo in photos) {
+            assertTrue(targetStorage.encryptedFileExists(photo.internalFileName))
+            assertTrue(targetStorage.encryptedFileExists(photo.internalThumbnailFileName))
+        }
+    }
+
     @Test
     fun `only the files of the photo are written, no stray vault files`() = runTest {
         context.openFileOutput("leftover.photok", Context.MODE_PRIVATE)
@@ -251,21 +288,21 @@ class BackupRoundTripTest {
             ReadBackupMetadataUseCase(gson)(zip)
         } as BackupMetaData.V5
 
-        val runner = RestoreBackupRunner(
-            io = io,
-            vaultFileStorage = vaultFileStorage(targetSession),
-            photoRepository = photoRepository(),
-            albumRepository = mockk<AlbumRepository>(relaxed = true),
-            database = database,
-        )
-
         val progress = ZipInputStream(ByteArrayInputStream(archive)).use { zip ->
-            runner.run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, duplicates)
+            runner().run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, duplicates)
                 .toList()
         }
 
         return (progress.last() as RestoreProgress.Finished).result
     }
+
+    private fun runner() = RestoreBackupRunner(
+        io = io,
+        vaultFileStorage = vaultFileStorage(targetSession),
+        photoRepository = photoRepository(),
+        albumRepository = mockk<AlbumRepository>(relaxed = true),
+        database = database,
+    )
 
     private fun vaultFileStorage(session: VaultSession) = VaultFileStorage(
         sessionRepository = mockk { every { get() } returns session },
@@ -281,6 +318,7 @@ class BackupRoundTripTest {
         coEvery { insertAll(any()) } answers {
             insertedPhotos += firstArg<List<Photo>>()
         }
+        coEvery { getAllUuids() } answers { insertedPhotos.map { it.uuid } }
     }
 
     private fun photo(fileName: String, type: PhotoType) = Photo(

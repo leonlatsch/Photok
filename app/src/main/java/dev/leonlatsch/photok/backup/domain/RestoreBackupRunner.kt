@@ -26,6 +26,9 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.PhotokDatabase
+import dev.leonlatsch.photok.model.database.entity.internalFileName
+import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+import dev.leonlatsch.photok.model.database.entity.internalVideoPreviewFileName
 import dev.leonlatsch.photok.model.database.entity.isMainFileName
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.Dispatchers
@@ -60,8 +63,6 @@ class RestoreBackupRunner @Inject constructor(
     private val database: PhotokDatabase,
 ) {
 
-    private val writtenFiles = mutableListOf<String>()
-
     fun <T : BackupMetaData> run(
         strategy: RestoreBackupStrategy<T>,
         metaData: T,
@@ -70,8 +71,6 @@ class RestoreBackupRunner @Inject constructor(
         duplicates: RestoreDuplicates,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
-
-        writtenFiles.clear()
 
         val photosToRestore = metaData.photos.filterNot { duplicates.isSkipped(it.uuid) }
 
@@ -126,11 +125,10 @@ class RestoreBackupRunner @Inject constructor(
 
             val internalFileName = strategy.internalFileName(entryName)
                 .replace(photoBackup.uuid, duplicates.vaultUuid(photoBackup.uuid))
-            val decryptedInput = strategy.decrypt(stream, session)
-            val internalOutput = vaultFileStorage.openEncryptedOutput(internalFileName)
 
-            if (decryptedInput == null || internalOutput == null) {
-                Timber.e("Could not open streams for zip entry: $entryName")
+            val decryptedInput = strategy.decrypt(stream, session)
+            if (decryptedInput == null) {
+                Timber.e("Could not open the decrypt stream for zip entry: $entryName")
 
                 if (isMainFile) {
                     recordFailure(photoBackup, null)
@@ -141,7 +139,18 @@ class RestoreBackupRunner @Inject constructor(
                 continue
             }
 
-            writtenFiles += internalFileName
+            val internalOutput = vaultFileStorage.openEncryptedOutput(internalFileName)
+            if (internalOutput == null) {
+                Timber.e("Could not open the vault output for zip entry: $entryName")
+
+                if (isMainFile) {
+                    recordFailure(photoBackup, null)
+                    send(tracker.finishFile())
+                }
+
+                ze = stream.nextEntry
+                continue
+            }
 
             io.copy(decryptedInput, internalOutput) { chunk ->
                 if (isMainFile) {
@@ -208,8 +217,33 @@ class RestoreBackupRunner @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    suspend fun abort() = withContext(Dispatchers.IO) {
-        writtenFiles.forEach { vaultFileStorage.deleteEncryptedFile(it) }
-        writtenFiles.clear()
+    /**
+     * Deletes the files a canceled [run] of the same [metaData] and [duplicates] left behind.
+     *
+     * Derived from the metadata instead of tracked during [run], so it also works when the run
+     * was never observed to the end. Photos that already have a database row are left alone,
+     * the indexing transaction committed for them.
+     */
+    suspend fun abort(
+        metaData: BackupMetaData,
+        duplicates: RestoreDuplicates,
+    ) = withContext(Dispatchers.IO) {
+        val indexedUuids = photoRepository.getAllUuids().toSet()
+
+        metaData.photos
+            .asSequence()
+            .filterNot { duplicates.isSkipped(it.uuid) }
+            .map { duplicates.vaultUuid(it.uuid) }
+            .filterNot { it in indexedUuids }
+            .flatMap {
+                listOf(
+                    internalFileName(it),
+                    internalThumbnailFileName(it),
+                    internalVideoPreviewFileName(it),
+                )
+            }
+            .filter { vaultFileStorage.encryptedFileExists(it) }
+            .toList()
+            .forEach { vaultFileStorage.deleteEncryptedFile(it) }
     }
 }

@@ -23,7 +23,7 @@ import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
-import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.Dispatchers
@@ -69,8 +69,8 @@ class RestoreBackupV1 @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val createThumbnails: CreateThumbnailsUseCase,
     private val io: IO,
+    private val vaultFileStorage: VaultFileStorage,
 ) {
-    private val writtenPhotos = mutableListOf<Photo>()
 
     fun restore(
         metaData: BackupMetaData.V1,
@@ -79,8 +79,6 @@ class RestoreBackupV1 @Inject constructor(
         duplicates: RestoreDuplicates,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
-
-        writtenPhotos.clear()
 
         val photosToRestore = metaData.photos.filterNot { duplicates.isSkipped(it.uuid) }
 
@@ -149,8 +147,6 @@ class RestoreBackupV1 @Inject constructor(
             val photoFileCreated =
                 photoRepository.createPhotoFile(dummyPhoto, photoBytesInputStream) != -1L
 
-            writtenPhotos += dummyPhoto
-
             if (!photoFileCreated) {
                 Timber.e("Could not create photo file for zip entry: ${ze.name}")
                 failedFiles += FailedFile(photoBackup.fileName, null)
@@ -207,8 +203,32 @@ class RestoreBackupV1 @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    suspend fun abort() = withContext(Dispatchers.IO) {
-        writtenPhotos.forEach { photoRepository.deleteInternalPhotoData(it) }
-        writtenPhotos.clear()
+    /**
+     * Deletes the files a canceled [restore] of the same [metaData] and [duplicates] left behind.
+     *
+     * Derived from the metadata instead of tracked during [restore], so it also works when the
+     * restore was never observed to the end. Photos that already have a database row are left
+     * alone, the index insert committed for them.
+     */
+    suspend fun abort(
+        metaData: BackupMetaData.V1,
+        duplicates: RestoreDuplicates,
+    ) = withContext(Dispatchers.IO) {
+        val indexedUuids = photoRepository.getAllUuids().toSet()
+
+        metaData.photos
+            .asSequence()
+            .filterNot { duplicates.isSkipped(it.uuid) }
+            .map { it.toDomain().copy(uuid = duplicates.vaultUuid(it.uuid)) }
+            .filterNot { it.uuid in indexedUuids }
+            .flatMap {
+                listOf(
+                    it.internalFileName,
+                    it.internalThumbnailFileName,
+                    it.internalVideoPreviewFileName,
+                )
+            }
+            .filter { vaultFileStorage.encryptedFileExists(it) }
+            .forEach { vaultFileStorage.deleteEncryptedFile(it) }
     }
 }
