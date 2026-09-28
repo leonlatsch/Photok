@@ -32,7 +32,7 @@
     <string name="common_bullet">•</string>
     <string name="common_more">Mehr</string>
     <string name="common_cancel">Abbrechen</string>
-    <string name="common_canceling">Wird abgebrochen…</string> <!-- TODO: machine translated | EN: Canceling… -->
+    <string name="common_canceling">Wird abgebrochen…</string>
     <string name="common_create">Erstellen</string>
     <string name="common_empty">Leer</string>
     <string name="common_rename">Umbenennen</string>
@@ -330,8 +330,8 @@
     <string name="backup_restore_duplicates">Fotos, die schon in deinem Safe sind</string>
     <string name="backup_restore_duplicates_skip">Überspringen</string>
     <string name="backup_restore_duplicates_skip_description">Die Kopie behalten, die schon in deinem Safe ist.</string>
-    <string name="backup_restore_duplicates_import_again">Erneut importieren</string> <!-- TODO: machine translated | EN: Import them again -->
-    <string name="backup_restore_duplicates_import_again_description">Die Kopie aus diesem Backup zusätzlich zu der in deinem Safe hinzufügen.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">Erneut importieren</string>
+    <string name="backup_restore_duplicates_import_again_description">Die Kopie aus diesem Backup zusätzlich zu der in deinem Safe hinzufügen.</string>
     <string name="backup_restore_not_enough_space">Dieses Backup braucht %1$s, aber nur %2$s sind frei. Schaff Platz, bevor du wiederherstellst.</string>
     <string name="backup_restore_error_incomplete_title">Backup-Datei ist unvollständig</string>
     <string name="backup_restore_error_incomplete_description">Diese Datei wurde abgeschnitten, wahrscheinlich durch einen unterbrochenen Download oder Kopiervorgang. Übertrage sie noch mal.</string>
@@ -348,20 +348,20 @@
     <string name="news_new_in_title">Neu bei</string>
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">Highlight</string> <!-- TODO: machine translated | EN: Highlight -->
-    <string name="news_change_kind_new">Neu</string> <!-- TODO: machine translated | EN: New -->
-    <string name="news_change_kind_improved">Verbessert</string> <!-- TODO: machine translated | EN: Improved -->
-    <string name="news_change_kind_fixed">Behoben</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="news_highlight_label">Highlight</string>
+    <string name="news_change_kind_new">Neu</string>
+    <string name="news_change_kind_improved">Verbessert</string>
+    <string name="news_change_kind_fixed">Behoben</string>
     <string name="release_highlight_title">Ganz neue Backups</string>
-    <string name="release_highlight_summary">Ein Backup wiederherzustellen ist jetzt ein geführter Vollbild-Ablauf. Backups und Wiederherstellungen sind außerdem zuverlässiger als je zuvor.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
-    <string name="release_highlight_point_1">Live-Fortschritt, Geschwindigkeit und Restzeit</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
-    <string name="release_highlight_point_2">Überspringe oder ersetze Dateien, die du schon hast</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
-    <string name="release_highlight_point_3">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_highlight_point_4" formatted="false">100% kompatibel mit all deinen alten Backups</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">Falsche Passwörter werden immer abgelehnt</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">Ein seltener Fehler wurde behoben, bei dem ein falsches Passwort den Tresor scheinbar entsperrte und alle Dateien unlesbar waren.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
-    <string name="release_change_title_2">Diverse Fehlerbehebungen und Verbesserungen</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
-    <string name="release_change_summary_2">Flüssigeres Entsperren und Einrichten, Tastaturen lernen dein Passwort nicht mehr und die App sperrt sich im Hintergrund zuverlässig.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
+    <string name="release_highlight_summary">Ein Backup wiederherzustellen ist jetzt ein geführter Vollbild-Ablauf. Backups und Wiederherstellungen sind außerdem zuverlässiger als je zuvor.</string>
+    <string name="release_highlight_point_1">Live-Fortschritt, Geschwindigkeit und Restzeit</string>
+    <string name="release_highlight_point_2">Überspringe oder ersetze Dateien, die du schon hast</string>
+    <string name="release_highlight_point_3">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string>
+    <string name="release_highlight_point_4" formatted="false">100% kompatibel mit all deinen alten Backups</string>
+    <string name="release_change_title_1">Falsche Passwörter werden immer abgelehnt</string>
+    <string name="release_change_summary_1">Ein seltener Fehler wurde behoben, bei dem ein falsches Passwort den Tresor scheinbar entsperrte und alle Dateien unlesbar waren.</string>
+    <string name="release_change_title_2">Diverse Fehlerbehebungen und Verbesserungen</string>
+    <string name="release_change_summary_2">Flüssigeres Entsperren und Einrichten, Tastaturen lernen dein Passwort nicht mehr und die App sperrt sich im Hintergrund zuverlässig.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>
