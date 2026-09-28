@@ -84,6 +84,13 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
             Timber.plant(Timber.DebugTree())
         }
 
+        if (config.systemInstallDate == null) {
+            config.systemInstallDate = System.currentTimeMillis()
+        }
+        if (config.systemInstallVersionCode == null) {
+            config.systemInstallVersionCode = BuildConfig.VERSION_CODE
+        }
+
         setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
 

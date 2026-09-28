@@ -72,6 +72,20 @@ class Config(context: Context) {
         get() = getInt(SYSTEM_LAST_FEATURE_VERSION_CODE, SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT)
         set(value) = putInt(SYSTEM_LAST_FEATURE_VERSION_CODE, value)
 
+    /**
+     * Timestamp of the first app start. Null if not set yet.
+     */
+    var systemInstallDate: Long?
+        get() = getLongOrNull(SYSTEM_INSTALL_DATE)
+        set(value) = putLongOrNull(SYSTEM_INSTALL_DATE, value)
+
+    /**
+     * Version code of the app at the first app start. Null if not set yet.
+     */
+    var systemInstallVersionCode: Int?
+        get() = getIntOrNull(SYSTEM_INSTALL_VERSION_CODE)
+        set(value) = putIntOrNull(SYSTEM_INSTALL_VERSION_CODE, value)
+
     /*
      * Sets the app design to "light", "dark" or "system"
      */
@@ -200,7 +214,13 @@ class Config(context: Context) {
         return stringValue?.toInt() ?: default
     }
 
+    fun getIntOrNull(key: String): Int? =
+        if (preferences.contains(key)) preferences.getInt(key, 0) else null
+
     fun getLong(key: String, default: Long): Long = preferences.getLong(key, default)
+
+    fun getLongOrNull(key: String): Long? =
+        if (preferences.contains(key)) preferences.getLong(key, 0L) else null
 
     fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
@@ -218,6 +238,12 @@ class Config(context: Context) {
         }
     }
 
+    fun putIntOrNull(key: String, value: Int?) {
+        preferences.edit {
+            if (value == null) remove(key) else putInt(key, value)
+        }
+    }
+
     fun putBoolean(key: String, value: Boolean) {
         preferences.edit {
             putBoolean(key, value)
@@ -227,6 +253,12 @@ class Config(context: Context) {
     fun putLong(key: String, value: Long) {
         preferences.edit {
             putLong(key, value)
+        }
+    }
+
+    fun putLongOrNull(key: String, value: Long?) {
+        preferences.edit {
+            if (value == null) remove(key) else putLong(key, value)
         }
     }
 
@@ -253,6 +285,10 @@ class Config(context: Context) {
 
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
+
+        const val SYSTEM_INSTALL_DATE = "system^installDate"
+
+        const val SYSTEM_INSTALL_VERSION_CODE = "system^installVersionCode"
 
         const val SYSTEM_DESIGN = "system^design"
         const val SYSTEM_DESIGN_DEFAULT = "system"
