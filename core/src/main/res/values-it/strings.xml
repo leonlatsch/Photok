@@ -357,10 +357,10 @@
     <string name="release_highlight_point_2">Avanzamento in tempo reale, velocità e tempo rimanente</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Salta o sostituisci i file che hai già</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Errori chiari invece di un errore generico</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Vista a griglia o elenco negli album</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">Passa tra la classica griglia e una nuova vista a elenco nei tuoi album.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">Scegli la lingua dell\'app</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Imposta la lingua di Photok direttamente nelle impostazioni, indipendentemente dalla lingua del sistema.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">Le password errate vengono sempre rifiutate</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Corretto un raro bug per cui una password errata sembrava sbloccare la cassaforte, rendendo illeggibili tutti i file.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Varie correzioni e miglioramenti</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Sblocco e configurazione più fluidi, le tastiere non imparano più la tua password e l\'app si blocca in modo affidabile in background.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu di ripristino</string>

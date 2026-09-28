@@ -357,10 +357,10 @@
     <string name="release_highlight_point_2">Прогресс в реальном времени, скорость и оставшееся время</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Пропускай или заменяй уже имеющиеся файлы</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Понятные ошибки вместо общего сбоя</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Сетка или список в альбомах</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">Переключай альбомы между классической сеткой и новым списком.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">Выбери язык приложения</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Устанавливай язык Photok прямо в настройках, независимо от языка системы.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">Неверные пароли всегда отклоняются</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Исправлена редкая ошибка, при которой неверный пароль словно открывал хранилище, а все файлы оказывались нечитаемыми.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Различные исправления и улучшения</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Более плавная разблокировка и настройка, клавиатуры больше не запоминают твой пароль, а приложение надёжно блокируется в фоне.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Меню восстановления</string>

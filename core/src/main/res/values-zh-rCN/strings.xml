@@ -357,10 +357,10 @@
     <string name="release_highlight_point_2">实时进度、速度和剩余时间</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">相册网格或列表视图</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">在经典网格和全新列表视图之间切换相册。</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">选择应用语言</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">直接在设置中设置 Photok 的语言，不受系统语言影响。</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">错误密码总会被拒绝</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">修复了一个罕见的错误：错误的密码看似解锁了保险库，但所有文件都无法读取。</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">多项修复与改进</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">解锁和设置更加流畅，键盘不再学习你的密码，应用在后台也能可靠地锁定。</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">恢复菜单</string>

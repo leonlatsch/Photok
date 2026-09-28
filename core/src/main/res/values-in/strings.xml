@@ -357,10 +357,10 @@
     <string name="release_highlight_point_2">Progres langsung, kecepatan, dan sisa waktu</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Lewati atau ganti file yang sudah kamu miliki</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Pesan kesalahan yang jelas, bukan kegagalan umum</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Tampilan Kisi atau Daftar di Album</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">Ganti tampilan album antara kisi klasik dan tampilan daftar baru.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">Pilih Bahasa Aplikasi</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Atur bahasa Photok langsung di pengaturan, terlepas dari bahasa sistem kamu.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">Kata Sandi Salah Selalu Ditolak</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Memperbaiki bug langka saat kata sandi yang salah tampak membuka brankas, sehingga semua file tidak dapat dibaca.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Berbagai Perbaikan dan Peningkatan</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Buka kunci dan penyiapan lebih lancar, keyboard tidak lagi mempelajari kata sandimu, dan aplikasi terkunci dengan andal di latar belakang.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Menu Pemulihan</string>

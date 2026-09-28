@@ -112,16 +112,16 @@ enum class ReleaseChange(
     val isPro: Boolean = false,
 ) {
     Change1(
-        icon = R.drawable.ic_list_view,
+        icon = R.drawable.ic_password,
         title = R.string.release_change_title_1,
         summary = R.string.release_change_summary_1,
-        kind = ChangeKind.New,
+        kind = ChangeKind.Fixed,
     ),
     Change2(
-        icon = R.drawable.ic_globe,
+        icon = R.drawable.ic_check_circle_outline,
         title = R.string.release_change_title_2,
         summary = R.string.release_change_summary_2,
-        kind = ChangeKind.New,
+        kind = ChangeKind.Improved,
     ),
 }
 
@@ -214,6 +214,8 @@ private fun NewFeaturesContent(
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 100.dp)
             ) {
+                Spacer(modifier = Modifier.height(20.dp))
+
                 NewFeaturesHeader(
                     modifier = Modifier.padding(horizontal = 20.dp)
                 )

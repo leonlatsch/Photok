@@ -358,10 +358,10 @@
     <string name="release_highlight_point_2">Live-Fortschritt, Geschwindigkeit und Restzeit</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Überspringe oder ersetze Dateien, die du schon hast</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Raster- oder Listenansicht in Alben</string>
-    <string name="release_change_summary_1">Wechsle in deinen Alben zwischen dem klassischen Raster und einer neuen Listenansicht.</string>
-    <string name="release_change_title_2">App-Sprache auswählen</string>
-    <string name="release_change_summary_2">Stelle die Sprache von Photok direkt in den Einstellungen ein, unabhängig von deiner Systemsprache.</string>
+    <string name="release_change_title_1">Falsche Passwörter werden immer abgelehnt</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Ein seltener Fehler wurde behoben, bei dem ein falsches Passwort den Tresor scheinbar entsperrte und alle Dateien unlesbar waren.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Diverse Fehlerbehebungen und Verbesserungen</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Flüssigeres Entsperren und Einrichten, Tastaturen lernen dein Passwort nicht mehr und die App sperrt sich im Hintergrund zuverlässig.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Wiederherstellungs Menu</string>

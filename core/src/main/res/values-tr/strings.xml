@@ -356,10 +356,10 @@
     <string name="release_highlight_point_2">Canlı ilerleme, hız ve kalan süre</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Zaten sahip olduğun dosyaları atla veya değiştir</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Genel bir hata yerine anlaşılır hatalar</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Albümlerde Izgara veya Liste Görünümü</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">Albümlerini klasik ızgara ile yeni liste görünümü arasında değiştir.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">Uygulama Dilini Seç</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Photok\'un dilini sistem dilinden bağımsız olarak doğrudan ayarlardan belirle.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">Yanlış Şifreler Her Zaman Reddedilir</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Yanlış bir şifrenin kasayı açıyormuş gibi görünüp tüm dosyaları okunamaz hale getirdiği nadir bir hata düzeltildi.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Çeşitli Düzeltmeler ve İyileştirmeler</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Daha akıcı kilit açma ve kurulum, klavyeler artık şifreni öğrenmiyor ve uygulama arka planda güvenilir şekilde kilitleniyor.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Kurtarma Menüsü</string>

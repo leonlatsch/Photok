@@ -357,10 +357,10 @@
     <string name="release_highlight_point_2">لائیو پیش رفت، رفتار اور باقی وقت</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">پہلے سے موجود فائلیں چھوڑیں یا بدلیں</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">عام ناکامی کے بجائے واضح خرابیاں</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">البمز میں گرڈ یا لسٹ ویو</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">اپنے البمز کو کلاسک گرڈ اور نئے لسٹ ویو کے درمیان بدلیں۔</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">ایپ کی زبان منتخب کریں</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Photok کی زبان سیٹنگز میں براہ راست سیٹ کریں، اپنے سسٹم کی زبان سے الگ۔</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">غلط پاس ورڈ ہمیشہ مسترد ہوتے ہیں</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">ایک نایاب خرابی درست کی گئی جس میں غلط پاس ورڈ والٹ کو کھولتا ہوا لگتا تھا اور تمام فائلیں ناقابل پڑھ ہو جاتی تھیں۔</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">مختلف اصلاحات اور بہتریاں</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">زیادہ ہموار ان لاک اور سیٹ اپ، کی بورڈ اب آپ کا پاس ورڈ نہیں سیکھتے اور ایپ پس منظر میں قابل اعتماد طریقے سے لاک ہو جاتی ہے۔</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">واپسی کا مینو</string>

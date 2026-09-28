@@ -355,10 +355,10 @@
     <string name="release_highlight_point_2">Live voortgang, snelheid en resterende tijd</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
     <string name="release_highlight_point_3">Sla bestanden die je al hebt over of vervang ze</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_4">Duidelijke foutmeldingen in plaats van een algemene fout</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
-    <string name="release_change_title_1">Raster- of lijstweergave in albums</string> <!-- TODO: machine translated | EN: Grid or List View in Albums -->
-    <string name="release_change_summary_1">Wissel je albums tussen het klassieke raster en een nieuwe lijstweergave.</string> <!-- TODO: machine translated | EN: Switch your albums between the classic grid and a new list view. -->
-    <string name="release_change_title_2">Kies de app-taal</string> <!-- TODO: machine translated | EN: Choose the App Language -->
-    <string name="release_change_summary_2">Stel de taal van Photok direct in via de instellingen, los van je systeemtaal.</string> <!-- TODO: machine translated | EN: Set the language of Photok directly in the settings, independent of your system language. -->
+    <string name="release_change_title_1">Verkeerde wachtwoorden worden altijd geweigerd</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
+    <string name="release_change_summary_1">Een zeldzame bug opgelost waarbij een verkeerd wachtwoord de kluis leek te ontgrendelen, waardoor alle bestanden onleesbaar waren.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
+    <string name="release_change_title_2">Diverse verbeteringen en oplossingen</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Soepeler ontgrendelen en instellen, toetsenborden leren je wachtwoord niet meer en de app vergrendelt betrouwbaar op de achtergrond.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Herstelmenu</string>
