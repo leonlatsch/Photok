@@ -330,8 +330,8 @@
     <string name="backup_restore_duplicates">保险库中已有的照片</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">跳过</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">保留保险库中已有的副本。</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">替换</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">用此备份中的副本覆盖它们。</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">再次导入</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">将此备份中的副本添加到保险库中已有副本的旁边。</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">此备份需要 %1$s，但只有 %2$s 可用空间。恢复前先释放一些空间。</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">备份文件不完整</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">此文件被截断了，很可能是下载或复制中断导致的。重新传输一次试试。</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

@@ -34,6 +34,8 @@ import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.database.entity.internalFileName
+import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import io.mockk.coEvery
 import io.mockk.every
@@ -118,7 +120,7 @@ class BackupRoundTripTest {
     fun `a backup restores the files it was created from`() = runTest {
         val archive = createBackup()
 
-        val result = restoreBackup(archive, skipUuids = emptySet())
+        val result = restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))
 
         assertEquals(2, result.filesRestored)
         assertEquals(0, result.filesSkipped)
@@ -142,7 +144,7 @@ class BackupRoundTripTest {
     fun `the restore keeps the original import dates`() = runTest {
         val archive = createBackup()
 
-        restoreBackup(archive, skipUuids = emptySet())
+        restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))
 
         assertEquals(
             photos.associate { it.uuid to it.importedAt },
@@ -155,7 +157,7 @@ class BackupRoundTripTest {
         val archive = createBackup()
         val skipped = photos.first()
 
-        val result = restoreBackup(archive, skipUuids = setOf(skipped.uuid))
+        val result = restoreBackup(archive, RestoreDuplicates.Skip(setOf(skipped.uuid)))
 
         assertEquals(1, result.filesRestored)
         assertEquals(1, result.filesSkipped)
@@ -164,10 +166,44 @@ class BackupRoundTripTest {
     }
 
     @Test
+    fun `a photo imported again gets its own uuid and files next to the original`() = runTest {
+        val archive = createBackup()
+        val duplicate = photos.first()
+        val newUuid = "uuid-copy"
+
+        val sourceStorage = vaultFileStorage(sourceSession)
+        val originalBytes = sourceStorage.openEncryptedInput(duplicate.internalFileName)!!
+            .use { it.readBytes() }
+
+        val result = restoreBackup(
+            archive,
+            RestoreDuplicates.ImportAgain(mapOf(duplicate.uuid to newUuid)),
+        )
+
+        assertEquals(2, result.filesRestored)
+        assertEquals(0, result.filesSkipped)
+        assertEquals(emptyList<FailedFile>(), result.failedFiles)
+        assertEquals(setOf(newUuid, photos[1].uuid), insertedPhotos.map { it.uuid }.toSet())
+
+        val targetStorage = vaultFileStorage(targetSession)
+        val copyBytes = targetStorage.openEncryptedInput(internalFileName(newUuid))!!
+            .use { it.readBytes() }
+        assertArrayEquals(plaintext.getValue(duplicate.uuid), copyBytes)
+
+        val copyThumbnail = targetStorage.openEncryptedInput(internalThumbnailFileName(newUuid))!!
+            .use { it.readBytes() }
+        assertArrayEquals("thumb of ${duplicate.fileName}".toByteArray(), copyThumbnail)
+
+        val untouchedBytes = sourceStorage.openEncryptedInput(duplicate.internalFileName)!!
+            .use { it.readBytes() }
+        assertArrayEquals(originalBytes, untouchedBytes)
+    }
+
+    @Test
     fun `a photo missing from the archive is reported instead of dropped`() = runTest {
         val archive = createBackup().withoutEntry(photos.first().internalFileName)
 
-        val result = restoreBackup(archive, skipUuids = emptySet())
+        val result = restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))
 
         assertEquals(1, result.filesRestored)
         assertEquals(listOf(photos.first().fileName), result.failedFiles.map { it.fileName })
@@ -206,7 +242,10 @@ class BackupRoundTripTest {
         return out.toByteArray()
     }
 
-    private suspend fun restoreBackup(archive: ByteArray, skipUuids: Set<String>): RestoreResult {
+    private suspend fun restoreBackup(
+        archive: ByteArray,
+        duplicates: RestoreDuplicates,
+    ): RestoreResult {
         val metaData = ZipInputStream(ByteArrayInputStream(archive)).use { zip ->
             zip.nextEntry
             ReadBackupMetadataUseCase(gson)(zip)
@@ -221,7 +260,7 @@ class BackupRoundTripTest {
         )
 
         val progress = ZipInputStream(ByteArrayInputStream(archive)).use { zip ->
-            runner.run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, skipUuids)
+            runner.run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, duplicates)
                 .toList()
         }
 

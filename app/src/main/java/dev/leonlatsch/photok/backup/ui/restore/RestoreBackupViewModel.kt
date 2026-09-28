@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.RestoreDuplicates
 import dev.leonlatsch.photok.backup.domain.RestoreProgress
 import dev.leonlatsch.photok.backup.domain.RestoreResult
 import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
@@ -55,6 +56,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -390,25 +392,25 @@ class RestoreBackupViewModel @AssistedInject constructor(
             return
         }
 
-        val skipUuids = getUUIDsToSkip(metaData)
+        val duplicates = getRestoreDuplicates(metaData)
 
         // V1 stands on its own: it has no thumbnails in the archive and regenerates them from
         // the decoded image. Every later format goes through the runner.
         val progressFlow = when (metaData) {
             is BackupMetaData.V1 ->
-                v1Strategy.restore(metaData, zipInputStream, session, skipUuids)
+                v1Strategy.restore(metaData, zipInputStream, session, duplicates)
 
             is BackupMetaData.V2 ->
-                runner.run(v2Strategy, metaData, zipInputStream, session, skipUuids)
+                runner.run(v2Strategy, metaData, zipInputStream, session, duplicates)
 
             is BackupMetaData.V3 ->
-                runner.run(v3Strategy, metaData, zipInputStream, session, skipUuids)
+                runner.run(v3Strategy, metaData, zipInputStream, session, duplicates)
 
             is BackupMetaData.V4 ->
-                runner.run(v4Strategy, metaData, zipInputStream, session, skipUuids)
+                runner.run(v4Strategy, metaData, zipInputStream, session, duplicates)
 
             is BackupMetaData.V5 ->
-                runner.run(v5Strategy, metaData, zipInputStream, session, skipUuids)
+                runner.run(v5Strategy, metaData, zipInputStream, session, duplicates)
         }
 
         zipInputStream.use { zipInputStream ->
@@ -444,11 +446,17 @@ class RestoreBackupViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun getUUIDsToSkip(metaData: BackupMetaData): Set<String> {
-        if (inputs.value.duplicateHandling == DuplicateHandling.Replace) return emptySet()
-
+    private suspend fun getRestoreDuplicates(metaData: BackupMetaData): RestoreDuplicates {
         val vaultUuids = photoRepository.getAllUuids().toSet()
-        return metaData.photos.map { it.uuid }.filter { it in vaultUuids }.toSet()
+        val existingUuids = metaData.photos.map { it.uuid }.filter { it in vaultUuids }.toSet()
+
+        return when (inputs.value.duplicateHandling) {
+            DuplicateHandling.Skip -> RestoreDuplicates.Skip(existingUuids)
+
+            DuplicateHandling.ImportAgain -> RestoreDuplicates.ImportAgain(
+                newUuids = existingUuids.associateWith { UUID.randomUUID().toString() }
+            )
+        }
     }
 
     private suspend fun awaitMinimumIndexingTime() {

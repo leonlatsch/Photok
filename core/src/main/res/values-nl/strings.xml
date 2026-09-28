@@ -328,8 +328,8 @@
     <string name="backup_restore_duplicates">Foto\'s die al in je kluis staan</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">Overslaan</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">Behoud de kopie die al in je kluis staat.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">Vervangen</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">Overschrijf ze met de kopie uit deze back-up.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">Opnieuw importeren</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Voeg de kopie uit deze back-up toe naast de kopie die al in je kluis staat.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">Deze back-up heeft %1$s nodig, maar er is maar %2$s vrij. Maak ruimte vrij voordat je herstelt.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">Back-upbestand is onvolledig</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">Dit bestand is afgebroken, waarschijnlijk door een onderbroken download of kopie. Probeer het opnieuw over te zetten.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

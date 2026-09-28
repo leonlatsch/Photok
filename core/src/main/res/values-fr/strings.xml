@@ -331,8 +331,8 @@
     <string name="backup_restore_duplicates">Photos déjà dans votre coffre-fort</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">Les ignorer</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">Conserver la copie déjà présente dans votre coffre-fort.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">Les remplacer</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">Les écraser avec la copie de cette sauvegarde.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">Les importer à nouveau</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Ajouter la copie de cette sauvegarde à côté de celle déjà présente dans votre coffre-fort.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">Cette sauvegarde nécessite %1$s, mais il ne reste que %2$s d\'espace libre. Libérez de l\'espace avant de restaurer.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">Fichier de sauvegarde incomplet</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">Ce fichier est tronqué, probablement à cause d\'un téléchargement ou d\'une copie interrompue. Transférez-le à nouveau.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

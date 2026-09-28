@@ -329,8 +329,8 @@
     <string name="backup_restore_duplicates">صور موجودة بالفعل في خزنتك</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">تخطّيها</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">الاحتفاظ بالنسخة الموجودة في خزنتك.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">استبدالها</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">الكتابة فوقها بالنسخة الموجودة في هذه النسخة الاحتياطية.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">استيرادها مرة أخرى</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">أضف النسخة من هذه النسخة الاحتياطية بجانب النسخة الموجودة بالفعل في خزنتك.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">تحتاج هذه النسخة الاحتياطية إلى %1$s لكن المتوفر %2$s فقط. أفرغ بعض المساحة قبل الاستعادة.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">ملف النسخة الاحتياطية غير مكتمل</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">هذا الملف مبتور، على الأرجح بسبب تنزيل أو نسخ متوقف. أعد نقله مرة أخرى.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

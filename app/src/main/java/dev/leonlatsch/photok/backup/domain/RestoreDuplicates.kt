@@ -14,9 +14,19 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.backup.ui.restore
+package dev.leonlatsch.photok.backup.domain
 
-enum class DuplicateHandling {
-    Skip,
-    ImportAgain,
+sealed interface RestoreDuplicates {
+    data class Skip(val uuids: Set<String>) : RestoreDuplicates
+    data class ImportAgain(val newUuids: Map<String, String>) : RestoreDuplicates
+}
+
+fun RestoreDuplicates.isSkipped(uuid: String): Boolean = when (this) {
+    is RestoreDuplicates.Skip -> uuid in uuids
+    is RestoreDuplicates.ImportAgain -> false
+}
+
+fun RestoreDuplicates.vaultUuid(uuid: String): String = when (this) {
+    is RestoreDuplicates.Skip -> uuid
+    is RestoreDuplicates.ImportAgain -> newUuids[uuid] ?: uuid
 }

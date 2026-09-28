@@ -331,8 +331,8 @@
     <string name="backup_restore_duplicates">Fotos que ya están en tu baúl</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">Omitirlas</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">Conserva la copia que ya está en tu baúl.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">Reemplazarlas</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">Sobrescríbelas con la versión de esta copia de seguridad.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">Importarlas de nuevo</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Añade la versión de esta copia de seguridad junto a la que ya está en tu baúl.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">Esta copia de seguridad necesita %1$s pero solo hay %2$s libres. Libera espacio antes de restaurar.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">El archivo de copia de seguridad está incompleto</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">Este archivo se ha quedado cortado, seguramente por una descarga o copia interrumpida. Vuelve a transferirlo.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

@@ -76,13 +76,13 @@ class RestoreBackupV1 @Inject constructor(
         metaData: BackupMetaData.V1,
         stream: ZipInputStream,
         session: Session,
-        skipUuids: Set<String>,
+        duplicates: RestoreDuplicates,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
 
         writtenPhotos.clear()
 
-        val photosToRestore = metaData.photos.filterNot { it.uuid in skipUuids }
+        val photosToRestore = metaData.photos.filterNot { duplicates.isSkipped(it.uuid) }
 
         val failedFiles = mutableListOf<FailedFile>()
         val restoredUuids = mutableSetOf<String>()
@@ -104,7 +104,7 @@ class RestoreBackupV1 @Inject constructor(
                 continue
             }
 
-            if (photoBackup.uuid in skipUuids) {
+            if (duplicates.isSkipped(photoBackup.uuid)) {
                 ze = stream.nextEntry // Track skip AFTER actually skipped
                 tracker.skipFile(photoBackup)?.let { trySend(it) }
                 continue
@@ -114,6 +114,7 @@ class RestoreBackupV1 @Inject constructor(
 
             // Dummy. Used for method that need a photo object
             val dummyPhoto = photoBackup.toDomain()
+                .copy(uuid = duplicates.vaultUuid(photoBackup.uuid))
 
             tracker.startFile(photoBackup)
 
@@ -189,7 +190,7 @@ class RestoreBackupV1 @Inject constructor(
         metaData
             .getPhotosInOriginalOrder()
             .filter { it.uuid in restoredUuids }
-            .map { it.toDomain() }
+            .map { it.toDomain().copy(uuid = duplicates.vaultUuid(it.uuid)) }
             .let { photoRepository.insertAll(it) }
 
         send(
@@ -197,7 +198,7 @@ class RestoreBackupV1 @Inject constructor(
                 RestoreResult(
                     filesRestored = restoredUuids.size,
                     filesTotal = metaData.photos.size,
-                    filesSkipped = metaData.photos.count { it.uuid in skipUuids },
+                    filesSkipped = metaData.photos.count { duplicates.isSkipped(it.uuid) },
                     albumsRestored = 0,
                     durationMillis = System.currentTimeMillis() - start,
                     failedFiles = failedFiles,

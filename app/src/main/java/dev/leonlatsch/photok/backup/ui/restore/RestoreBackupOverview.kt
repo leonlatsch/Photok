@@ -284,12 +284,12 @@ fun RestoreBackupOverview(
                 )
 
                 DuplicateHandlingOption(
-                    label = stringResource(R.string.backup_restore_duplicates_replace),
-                    description = stringResource(R.string.backup_restore_duplicates_replace_description),
-                    selected = uiState.duplicateHandling == DuplicateHandling.Replace,
+                    label = stringResource(R.string.backup_restore_duplicates_import_again),
+                    description = stringResource(R.string.backup_restore_duplicates_import_again_description),
+                    selected = uiState.duplicateHandling == DuplicateHandling.ImportAgain,
                     onClick = {
                         handleUiEvent(
-                            RestoreBackupUiEvent.DuplicateHandlingChanged(DuplicateHandling.Replace)
+                            RestoreBackupUiEvent.DuplicateHandlingChanged(DuplicateHandling.ImportAgain)
                         )
                     },
                 )

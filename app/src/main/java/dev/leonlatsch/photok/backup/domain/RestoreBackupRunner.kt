@@ -67,13 +67,13 @@ class RestoreBackupRunner @Inject constructor(
         metaData: T,
         stream: ZipInputStream,
         session: Session,
-        skipUuids: Set<String>,
+        duplicates: RestoreDuplicates,
     ): Flow<RestoreProgress> = channelFlow {
         val start = System.currentTimeMillis()
 
         writtenFiles.clear()
 
-        val photosToRestore = metaData.photos.filterNot { it.uuid in skipUuids }
+        val photosToRestore = metaData.photos.filterNot { duplicates.isSkipped(it.uuid) }
 
         val failedFiles = mutableListOf<FailedFile>()
         val restoredUuids = mutableSetOf<String>()
@@ -107,7 +107,7 @@ class RestoreBackupRunner @Inject constructor(
                 continue
             }
 
-            if (photoBackup.uuid in skipUuids) {
+            if (duplicates.isSkipped(photoBackup.uuid)) {
                 ze = stream.nextEntry
 
                 if (isMainFileName(entryName)) {
@@ -125,6 +125,7 @@ class RestoreBackupRunner @Inject constructor(
             }
 
             val internalFileName = strategy.internalFileName(entryName)
+                .replace(photoBackup.uuid, duplicates.vaultUuid(photoBackup.uuid))
             val decryptedInput = strategy.decrypt(stream, session)
             val internalOutput = vaultFileStorage.openEncryptedOutput(internalFileName)
 
@@ -180,14 +181,15 @@ class RestoreBackupRunner @Inject constructor(
         database.withTransaction {
             metaData.getPhotosInOriginalOrder()
                 .filter { it.uuid in restoredUuids }
-                .map { it.toDomain() }
+                .map { it.toDomain().copy(uuid = duplicates.vaultUuid(it.uuid)) }
                 .let { photoRepository.insertAll(it) }
 
             metaData.albums.forEach { albumRepository.createAlbum(it.toDomain()) }
 
             metaData.albumPhotoRefs
                 .filter { it.photoUUID in restoredUuids }
-                .forEach { albumRepository.link(it.toDomain()) }
+                .map { it.toDomain().copy(photoUUID = duplicates.vaultUuid(it.photoUUID)) }
+                .forEach { albumRepository.link(it) }
         }
 
         Timber.d("PERFORMANCE: Restore backup took ${System.currentTimeMillis() - start}ms")
@@ -197,7 +199,7 @@ class RestoreBackupRunner @Inject constructor(
                 RestoreResult(
                     filesRestored = restoredUuids.size,
                     filesTotal = metaData.photos.size,
-                    filesSkipped = metaData.photos.count { it.uuid in skipUuids },
+                    filesSkipped = metaData.photos.count { duplicates.isSkipped(it.uuid) },
                     albumsRestored = metaData.albums.size,
                     durationMillis = System.currentTimeMillis() - start,
                     failedFiles = failedFiles,

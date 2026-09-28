@@ -330,8 +330,8 @@
     <string name="backup_restore_duplicates">Foto yang sudah ada di brankasmu</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">Lewati</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">Pertahankan salinan yang sudah ada di brankasmu.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">Ganti</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">Timpa dengan salinan dari cadangan ini.</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">Impor lagi</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Tambahkan salinan dari cadangan ini di samping yang sudah ada di brankasmu.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">Cadangan ini butuh %1$s, tapi hanya %2$s yang tersedia. Kosongkan ruang sebelum memulihkan.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">File cadangan tidak lengkap</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">File ini terpotong, kemungkinan besar karena unduhan atau penyalinan yang terputus. Coba transfer ulang.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->

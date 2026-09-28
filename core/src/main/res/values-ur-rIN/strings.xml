@@ -330,8 +330,8 @@
     <string name="backup_restore_duplicates">وہ تصاویر جو پہلے سے آپ کے سیف میں ہیں</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
     <string name="backup_restore_duplicates_skip">انہیں چھوڑ دیں</string> <!-- TODO: machine translated | EN: Skip them -->
     <string name="backup_restore_duplicates_skip_description">جو کاپی پہلے سے آپ کے سیف میں ہے وہی رکھیں۔</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
-    <string name="backup_restore_duplicates_replace">انہیں بدل دیں</string> <!-- TODO: machine translated | EN: Replace them -->
-    <string name="backup_restore_duplicates_replace_description">انہیں اس بیک اپ والی کاپی سے بدل دیں۔</string> <!-- TODO: machine translated | EN: Overwrite them with the copy from this backup. -->
+    <string name="backup_restore_duplicates_import_again">انہیں دوبارہ امپورٹ کریں</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">اس بیک اپ والی کاپی کو اپنے سیف میں پہلے سے موجود کاپی کے ساتھ شامل کریں۔</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
     <string name="backup_restore_not_enough_space">اس بیک اپ کے لیے %1$s چاہیے مگر صرف %2$s خالی ہے۔ واپس لانے سے پہلے کچھ جگہ خالی کریں۔</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
     <string name="backup_restore_error_incomplete_title">بیک اپ فائل ادھوری ہے</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
     <string name="backup_restore_error_incomplete_description">یہ فائل ادھوری رہ گئی، شاید ڈاؤن لوڈ یا کاپی بیچ میں رک گئی تھی۔ اسے دوبارہ منتقل کریں۔</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
