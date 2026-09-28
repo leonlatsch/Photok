@@ -113,6 +113,7 @@ import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
@@ -382,7 +383,7 @@ private fun SettingsPreferenceSections(
     val intruderWarningCount = rememberIntruderWarningCount()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .verticalScroll(rememberScrollState())
@@ -390,7 +391,7 @@ private fun SettingsPreferenceSections(
     ) {
         if (!proFeaturesActive) {
             ProSettingsBanner(
-                modifier = Modifier.padding(horizontal = 15.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingMedium)
             )
         }
 
@@ -411,7 +412,7 @@ private fun SettingsPreferenceSections(
                         Surface(
                             shape = shape,
                             color = MaterialTheme.colorScheme.surfaceContainerLow,
-                            modifier = Modifier.padding(bottom = 2.dp),
+                            modifier = Modifier.padding(bottom = Dimens.spacingXxSmall),
                         ) {
                             when (preference) {
                                 is Preference.Simple -> {
@@ -478,7 +479,7 @@ fun PreferenceSectionView(
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(
-                    horizontal = 30.dp
+                    horizontal = Dimens.spacingXxLarge
                 )
         )
 
@@ -489,15 +490,15 @@ fun PreferenceSectionView(
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
                     .padding(
-                        horizontal = 30.dp
+                        horizontal = Dimens.spacingXxLarge
                     )
             )
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(Dimens.spacingSmall))
 
         Column(
-            modifier = Modifier.padding(horizontal = 15.dp)
+            modifier = Modifier.padding(horizontal = Dimens.spacingMedium)
         ) {
             content()
         }
@@ -636,7 +637,7 @@ fun PreferenceView(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         modifier = modifier
             .clickable(enabled = onClick != null) {
                 if (paywallSource != null && !proFeaturesActive) {
@@ -647,7 +648,7 @@ fun PreferenceView(
             }
             .fillMaxWidth()
             .padding(
-                horizontal = 15.dp,
+                horizontal = Dimens.spacingMedium,
                 vertical = 12.dp,
             )
     ) {

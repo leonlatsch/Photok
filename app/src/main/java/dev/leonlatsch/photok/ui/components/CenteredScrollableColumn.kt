@@ -28,7 +28,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun CenteredScrollableColumn(
@@ -40,7 +40,7 @@ fun CenteredScrollableColumn(
             modifier = Modifier
                 .heightIn(min = maxHeight)
                 .verticalScroll(rememberScrollState())
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

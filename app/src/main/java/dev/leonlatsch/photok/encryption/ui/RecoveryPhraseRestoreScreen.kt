@@ -85,6 +85,7 @@ import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.components.NoKeyboardLearning
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
@@ -147,7 +148,7 @@ private fun RecoveryPhraseRestoreContent(
                 },
                 enabled = uiState.phraseValid && !uiState.loading,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .navigationBarsPadding()
                     .fillMaxWidth()
                     .alpha(animatedAlpha)
@@ -186,7 +187,7 @@ private fun RecoveryPhraseRestoreContent(
                 textAlign = TextAlign.Center,
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             AnimatedVisibility(uiState.selectedRestoreMethod == null) {
                 Text(
@@ -281,7 +282,7 @@ private fun RecoveryPhraseRestoreContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier.padding(top = Dimens.spacingLarge)
                 )
             }
 
@@ -325,7 +326,7 @@ private fun RecoveryPhraseRestoreContent(
                                 modifier = Modifier
                                     .height(200.dp)
                                     .focusRequester(focusRequester)
-                                    .padding(vertical = 20.dp)
+                                    .padding(vertical = Dimens.spacingLarge)
                             )
                         }
                     }
@@ -345,7 +346,7 @@ private fun RecoveryPhraseRestoreContent(
                                 modifier = Modifier
                                     .height(200.dp)
                                     .fillMaxWidth()
-                                    .padding(vertical = 20.dp)
+                                    .padding(vertical = Dimens.spacingLarge)
                             )
                         }
                     }

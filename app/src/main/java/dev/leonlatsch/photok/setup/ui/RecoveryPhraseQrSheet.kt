@@ -45,6 +45,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
 
@@ -90,8 +91,8 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 20.dp)
+                .padding(horizontal = Dimens.spacingLarge)
+                .padding(top = Dimens.spacingLarge)
                 .navigationBarsPadding()
         ) {
             AppName()
@@ -112,10 +113,10 @@ private fun Content(
                 text = phrase.toMnemonicString().breakableAtDashes(),
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 30.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingXxLarge)
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Button(
                 onClick = { saveQrLauncher.launch("photok-recovery-phrase.jpg") },

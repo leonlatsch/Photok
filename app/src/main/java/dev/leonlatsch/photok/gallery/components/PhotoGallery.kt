@@ -83,6 +83,7 @@ import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
@@ -294,7 +295,7 @@ private fun PhotoGrid(
 }
 
 private val VideoIconSize = 20.dp
-private val SelectedPadding = 15.dp
+private val SelectedPadding = Dimens.spacingMedium
 private val CheckmarkPadding = SelectedPadding - 9.dp
 
 @Composable
@@ -361,7 +362,7 @@ private fun GalleryPhotoTile(
             enter = scaleIn(),
             exit = scaleOut(),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(Dimens.spacingXxSmall)
                 .size(VideoIconSize)
                 .align(Alignment.BottomStart)
         ) {
@@ -385,7 +386,7 @@ private fun GalleryPhotoTile(
             enter = scaleIn(),
             exit = scaleOut(),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(Dimens.spacingXxSmall)
                 .size(VideoIconSize)
                 .align(Alignment.TopEnd)
         ) {

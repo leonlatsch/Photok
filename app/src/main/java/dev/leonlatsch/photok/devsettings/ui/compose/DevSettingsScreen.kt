@@ -48,6 +48,7 @@ import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiEvent
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiState
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
@@ -92,7 +93,7 @@ private fun DevSettingsContent(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 10.dp)
+                        .padding(vertical = Dimens.spacingSmall)
                 ) {
                     AppName()
                     Text(
@@ -100,7 +101,7 @@ private fun DevSettingsContent(
                         fontFamily = FontFamily.Monospace
                     )
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXxSmall)
                     ) {
                         Text(
                             text = BuildConfig.VERSION_NAME,

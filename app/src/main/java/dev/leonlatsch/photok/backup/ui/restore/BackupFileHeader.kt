@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun BackupFileHeader(
@@ -49,8 +50,8 @@ fun BackupFileHeader(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            modifier = Modifier.padding(Dimens.spacingSmall)
         ) {
             Surface(
                 shape = RoundedCornerShape(8.dp),
@@ -59,14 +60,14 @@ fun BackupFileHeader(
                 Icon(
                     painter = painterResource(R.drawable.ic_zip),
                     contentDescription = null,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(Dimens.spacingSmall)
                 )
             }
 
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(5.dp)
+                    .padding(Dimens.spacingXSmall)
             ) {
                 Text(
                     text = fileName,

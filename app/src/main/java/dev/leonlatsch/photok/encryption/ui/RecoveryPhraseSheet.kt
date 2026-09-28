@@ -78,6 +78,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.setup.ui.RecoveryPhraseQrSheet
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
+import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -164,7 +165,7 @@ fun RecoveryPhraseSheet(
 
             if (uiState.phrase == null || uiState.phrase!!.words.isEmpty()) {
                 CircularProgressIndicator(
-                    modifier = Modifier.padding(20.dp)
+                    modifier = Modifier.padding(Dimens.spacingLarge)
                 )
             } else {
                 RecoveryPhraseFlowRow(
@@ -227,7 +228,7 @@ fun RecoveryPhraseSheet(
                 enabled = !uiState.inputs.loading,
                 modifier = Modifier
                     .navigationBarsPadding()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .fillMaxWidth(),
             ) {
                 Text(text = stringResource(R.string.recovery_phrase_create_new))
@@ -243,7 +244,7 @@ fun RecoveryPhraseSheet(
 fun RecoveryPhraseFlowRow(
     phrase: RecoveryPhrase?,
     animated: Boolean,
-    verticalPadding: Dp = 20.dp,
+    verticalPadding: Dp = Dimens.spacingLarge,
     modifier: Modifier = Modifier,
 ) {
     val isPreview = LocalInspectionMode.current

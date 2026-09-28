@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,7 +79,7 @@ private fun SheetContent(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             Text(
                 text = stringResource(R.string.telemetry_sheet_title),

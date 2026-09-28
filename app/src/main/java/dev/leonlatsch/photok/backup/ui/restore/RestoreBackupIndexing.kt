@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,14 +84,14 @@ fun RestoreBackupIndexing(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_indexing_title),
                 style = MaterialTheme.typography.headlineMedium,
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             Text(
                 text = uiState.fileName,
@@ -101,7 +102,7 @@ fun RestoreBackupIndexing(
                 overflow = TextOverflow.MiddleEllipsis,
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_indexing_description),

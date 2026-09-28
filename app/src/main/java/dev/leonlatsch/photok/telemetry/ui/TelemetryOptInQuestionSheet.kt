@@ -50,6 +50,7 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -108,7 +109,7 @@ private fun SheetContent(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             Text(
                 text = stringResource(R.string.telemetry_sheet_title),

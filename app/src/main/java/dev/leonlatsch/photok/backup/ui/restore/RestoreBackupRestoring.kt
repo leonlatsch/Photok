@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,10 +78,10 @@ fun RestoreBackupRestoring(
                     entries = uiState.log,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                        .padding(horizontal = Dimens.spacingLarge)
                 )
 
-                Spacer(Modifier.height(10.dp))
+                Spacer(Modifier.height(Dimens.spacingSmall))
 
                 OutlinedButton(
                     onClick = { handleUiEvent(RestoreBackupUiEvent.CancelRestoreClicked) },
@@ -90,7 +91,7 @@ fun RestoreBackupRestoring(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                        .padding(horizontal = Dimens.spacingLarge)
                 ) {
                     if (uiState.canceling) {
                         CircularProgressIndicator(
@@ -98,7 +99,7 @@ fun RestoreBackupRestoring(
                             modifier = Modifier.size(18.dp),
                         )
 
-                        Spacer(Modifier.size(10.dp))
+                        Spacer(Modifier.size(Dimens.spacingSmall))
                     }
 
                     Text(
@@ -122,7 +123,7 @@ fun RestoreBackupRestoring(
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(contentPadding)
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
@@ -170,7 +171,7 @@ fun RestoreBackupRestoring(
                 }
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             LinearProgressIndicator(
                 progress = { uiState.progress },
@@ -179,7 +180,7 @@ fun RestoreBackupRestoring(
                     .fillMaxWidth()
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

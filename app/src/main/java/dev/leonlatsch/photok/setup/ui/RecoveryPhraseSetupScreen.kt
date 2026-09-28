@@ -67,6 +67,7 @@ import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiState
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseViewModel
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -177,7 +178,7 @@ private fun Content(
                     enabled = uiState.inputs.phraseWasSaved,
                     modifier = modifier
                         .navigationBarsPadding()
-                        .padding(horizontal = 20.dp)
+                        .padding(horizontal = Dimens.spacingLarge)
                         .fillMaxWidth()
                 ) {
                     Text(

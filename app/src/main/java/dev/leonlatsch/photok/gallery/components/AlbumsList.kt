@@ -35,6 +35,7 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun AlbumsList(
@@ -43,10 +44,10 @@ fun AlbumsList(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = Dimens.spacingLarge)
 
     ) {
         items(albums, key = { it.id }) { album ->
@@ -66,7 +67,7 @@ private fun AlbumListItem(
     modifier: Modifier = Modifier,
 ) {
     val cornerRadius = 18.dp
-    val contentPadding = 10.dp
+    val contentPadding = Dimens.spacingSmall
     val imageCornerRadius = cornerRadius - contentPadding // Keep image concentric to the surface
 
     val shape = RoundedCornerShape(cornerRadius)

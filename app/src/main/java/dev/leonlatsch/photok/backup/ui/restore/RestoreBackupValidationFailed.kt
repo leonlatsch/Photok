@@ -45,6 +45,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupValidationError
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +75,7 @@ fun RestoreBackupValidationFailed(
             Button(
                 onClick = onClose,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .navigationBarsPadding()
             ) {
                 Row(
@@ -91,7 +92,7 @@ fun RestoreBackupValidationFailed(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
@@ -107,7 +108,7 @@ fun RestoreBackupValidationFailed(
                 modifier = Modifier.size(72.dp)
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = headline(uiState.error),
@@ -116,7 +117,7 @@ fun RestoreBackupValidationFailed(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             Text(
                 text = description(uiState.error),

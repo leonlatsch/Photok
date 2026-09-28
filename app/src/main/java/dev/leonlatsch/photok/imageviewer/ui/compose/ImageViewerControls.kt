@@ -76,6 +76,7 @@ import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -534,7 +535,7 @@ fun BottomActionItem(
             modifier = modifier
                 .clip(CircleShape)
                 .clickable(role = Role.Button, onClick = action)
-                .padding(10.dp)
+                .padding(Dimens.spacingSmall)
         ) {
             Icon(
                 painter = painterResource(icon),

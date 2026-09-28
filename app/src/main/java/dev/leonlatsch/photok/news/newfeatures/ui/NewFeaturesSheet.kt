@@ -77,6 +77,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 import kotlinx.coroutines.delay
@@ -210,31 +211,31 @@ private fun NewFeaturesContent(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 100.dp)
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(Dimens.spacingLarge))
 
                 NewFeaturesHeader(
-                    modifier = Modifier.padding(horizontal = 20.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.spacingLarge)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(Dimens.spacingLarge))
 
                 HighlightCard(
                     highlight = releaseHighlight,
                     modifier = Modifier.entrance(index = 0),
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(Dimens.spacingLarge))
 
                 ReleaseChange.entries.forEachIndexed { index, change ->
                     ReleaseChangeRow(
                         change = change,
                         modifier = Modifier.entrance(index = index + 1),
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(Dimens.spacingLarge))
                 }
             }
 
@@ -243,7 +244,7 @@ private fun NewFeaturesContent(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .background(BottomSheetDefaults.ContainerColor)
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
             ) {
                 val context = LocalContext.current
                 val changelogUrl = stringResource(R.string.news_changelog_url)
@@ -317,7 +318,7 @@ private fun HighlightCard(
         )
 
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(Dimens.spacingLarge),
         ) {
             Text(
                 text = stringResource(highlight.title),
@@ -389,12 +390,12 @@ private fun ReleaseChangeRow(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
-                    .padding(10.dp)
+                    .padding(Dimens.spacingSmall)
                     .size(24.dp)
             )
         }
 
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(Dimens.spacingLarge))
 
         Column {
             Row(
@@ -461,7 +462,7 @@ private fun Pill(
         modifier = Modifier
             .clip(CircleShape)
             .background(containerColor)
-            .padding(horizontal = 10.dp, vertical = 4.dp)
+            .padding(horizontal = Dimens.spacingSmall, vertical = 4.dp)
     )
 }
 

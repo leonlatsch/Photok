@@ -57,6 +57,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.animation.SlideTransitionDuration
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -117,7 +118,7 @@ fun RestoreBackupUnlock(
                     enabled = uiState.password.isNotEmpty() && !uiState.unlocking,
                     modifier = Modifier
                         .navigationBarsPadding()
-                        .padding(horizontal = 20.dp, vertical = 10.dp)
+                        .padding(horizontal = Dimens.spacingLarge, vertical = Dimens.spacingSmall)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -130,7 +131,7 @@ fun RestoreBackupUnlock(
                                 modifier = Modifier.size(18.dp),
                             )
 
-                            Spacer(Modifier.size(10.dp))
+                            Spacer(Modifier.size(Dimens.spacingSmall))
                         }
 
                         Text(
@@ -146,9 +147,9 @@ fun RestoreBackupUnlock(
             modifier = Modifier
                 .padding(contentPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Surface(
                 shape = RoundedCornerShape(18.dp),
@@ -158,19 +159,19 @@ fun RestoreBackupUnlock(
                     painter = painterResource(R.drawable.ic_lock),
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(15.dp)
+                        .padding(Dimens.spacingMedium)
                         .size(32.dp)
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_unlock_headline),
                 style = MaterialTheme.typography.headlineMedium
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_unlock_explanation),
@@ -178,7 +179,7 @@ fun RestoreBackupUnlock(
                 color = MaterialTheme.colorScheme.outline,
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             PasswordField(
                 value = uiState.password,
@@ -191,7 +192,7 @@ fun RestoreBackupUnlock(
                     .focusRequester(focusRequester),
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             Text(
                 text = stringResource(R.string.backup_restore_unlock_password_notice),
@@ -199,7 +200,7 @@ fun RestoreBackupUnlock(
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
             )
         }
     }

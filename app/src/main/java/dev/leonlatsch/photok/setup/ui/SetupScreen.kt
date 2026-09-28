@@ -51,6 +51,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
@@ -85,13 +86,13 @@ private fun SetupScreenContent(
                 .padding(contentPadding)
                 .imePadding()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = Dimens.spacingLarge)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp, bottom = 40.dp)
+                    .padding(top = Dimens.spacingLarge, bottom = 40.dp)
             ) {
                 AppName(fontSize = 62.sp)
 
@@ -107,7 +108,7 @@ private fun SetupScreenContent(
                 modifier = Modifier.width(280.dp)
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             PasswordField(
                 value = uiState.password,
@@ -125,19 +126,19 @@ private fun SetupScreenContent(
                     label = stringResource(R.string.setup_confirm_password),
                     error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
                     onDone = { setup() },
-                    modifier = Modifier.padding(top = 10.dp)
+                    modifier = Modifier.padding(top = Dimens.spacingSmall)
                 )
             }
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             AnimatedVisibility(
                 visible = uiState.passwordStrength != null,
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier.padding(horizontal = 15.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    modifier = Modifier.padding(horizontal = Dimens.spacingMedium)
                 ) {
                     Text(
                         text = stringResource(R.string.setup_password_strength_label),
@@ -157,7 +158,7 @@ private fun SetupScreenContent(
                 modifier = Modifier
                     .width(200.dp)
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 20.dp)
+                    .padding(top = Dimens.spacingLarge)
             ) {
                 if (uiState.loading) {
                     CircularProgressIndicator(
@@ -170,7 +171,7 @@ private fun SetupScreenContent(
                 }
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
         }
     }
 }

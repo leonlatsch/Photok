@@ -80,6 +80,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.ui.theme.Dimens
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
@@ -361,7 +362,7 @@ fun BoxScope.ImageViewerVideoPage(
                 enabled = exoPlayerState.availableCommands.contains(ExoPlayer.COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
             )
         }
 

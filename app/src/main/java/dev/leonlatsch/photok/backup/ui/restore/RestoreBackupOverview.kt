@@ -58,6 +58,7 @@ import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import java.text.DateFormat
 import java.util.Date
 
@@ -88,9 +89,9 @@ fun RestoreBackupOverview(
         },
         bottomBar = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .navigationBarsPadding()
             ) {
                 if (uiState.validation.notEnoughSpace) {
@@ -110,7 +111,7 @@ fun RestoreBackupOverview(
                             ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer,
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier.padding(Dimens.spacingSmall)
                         )
                     }
                 }
@@ -122,7 +123,7 @@ fun RestoreBackupOverview(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(
-                            5.dp,
+                            Dimens.spacingXSmall,
                             Alignment.CenterHorizontally
                         ),
                         modifier = Modifier
@@ -155,7 +156,7 @@ fun RestoreBackupOverview(
         Column(
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
                 .verticalScroll(rememberScrollState())
         ) {
             BackupFileHeader(
@@ -163,18 +164,18 @@ fun RestoreBackupOverview(
                 subtitle = "$formattedCreatedAt • $formattedFileSize",
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_stats),
                 color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingSmall)
             )
 
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(Dimens.spacingXSmall))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
             ) {
                 val photos = uiState.validation.metaData.photos
 
@@ -195,10 +196,10 @@ fun RestoreBackupOverview(
                 )
             }
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(Dimens.spacingMedium))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
             ) {
                 StatCard(
                     label = stringResource(R.string.backup_restore_stats_albums),
@@ -214,15 +215,15 @@ fun RestoreBackupOverview(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_archive),
                 color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingSmall)
             )
 
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(Dimens.spacingXSmall))
 
             ArchiveInfoItem(
                 icon = R.drawable.ic_schedule,
@@ -230,7 +231,7 @@ fun RestoreBackupOverview(
                 value = formattedCreatedAt
             )
             HorizontalDivider(
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(Dimens.spacingSmall)
             )
             ArchiveInfoItem(
                 icon = R.drawable.ic_lock,
@@ -244,7 +245,7 @@ fun RestoreBackupOverview(
                 }.value
             )
             HorizontalDivider(
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(Dimens.spacingSmall)
             )
 
             val backupVersion = uiState.validation.metaData.backupVersion
@@ -262,15 +263,15 @@ fun RestoreBackupOverview(
             )
 
             if (!uiState.emptyVault) {
-                Spacer(Modifier.height(30.dp))
+                Spacer(Modifier.height(Dimens.spacingXxLarge))
 
                 Text(
                     text = stringResource(R.string.backup_restore_duplicates),
                     color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = Dimens.spacingSmall)
                 )
 
-                Spacer(Modifier.height(5.dp))
+                Spacer(Modifier.height(Dimens.spacingXSmall))
 
                 DuplicateHandlingOption(
                     label = stringResource(R.string.backup_restore_duplicates_skip),
@@ -308,12 +309,12 @@ private fun DuplicateHandlingOption(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
             .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-            .padding(10.dp),
+            .padding(Dimens.spacingSmall),
     ) {
         RadioButton(selected = selected, onClick = null)
 
@@ -340,8 +341,8 @@ fun ArchiveInfoItem(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier.padding(horizontal = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        modifier = modifier.padding(horizontal = Dimens.spacingSmall),
     ) {
         Icon(
             painter = painterResource(icon),

@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
@@ -84,7 +85,7 @@ private fun RecoveryMenuContent(
             modifier = Modifier
                 .fillMaxSize()
                 .safeDrawingPadding()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = Dimens.spacingLarge)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -105,7 +106,7 @@ private fun RecoveryMenuContent(
                 text = stringResource(R.string.common_copyright_notice),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(vertical = 10.dp)
+                modifier = Modifier.padding(vertical = Dimens.spacingSmall)
             )
         }
     }
@@ -118,7 +119,7 @@ private fun RecoveryMenuHeader() {
     ) {
         AppName(fontSize = 50.sp)
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(Dimens.spacingSmall))
 
         Surface(
             shape = CircleShape,
@@ -129,7 +130,7 @@ private fun RecoveryMenuHeader() {
                 text = stringResource(R.string.recovery_subtitle).uppercase(),
                 style = MaterialTheme.typography.labelLarge,
                 letterSpacing = 2.sp,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingLarge, vertical = Dimens.spacingSmall)
             )
         }
     }
@@ -142,7 +143,7 @@ private fun RecoveryMenuActions(
     val activity = LocalActivity.current
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = Modifier.fillMaxWidth()
     ) {
         RecoveryMenuActionCard(
@@ -173,7 +174,7 @@ private fun RecoveryMenuActionCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(Dimens.spacingLarge)
         ) {
             Surface(
                 shape = RoundedCornerShape(10.dp),
@@ -190,7 +191,7 @@ private fun RecoveryMenuActionCard(
                 }
             }
 
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(Dimens.spacingLarge))
 
             Text(
                 text = title,
@@ -199,7 +200,7 @@ private fun RecoveryMenuActionCard(
                 modifier = Modifier.weight(1f)
             )
 
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(Dimens.spacingSmall))
 
             Icon(
                 painter = painterResource(R.drawable.ic_chevron_right),

@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +63,7 @@ fun RestoreBackupCanceled(
             Button(
                 onClick = onDone,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .navigationBarsPadding()
             ) {
                 Row(
@@ -87,7 +88,7 @@ fun RestoreBackupCanceled(
                 modifier = Modifier.size(72.dp)
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_canceled_headline),
@@ -96,7 +97,7 @@ fun RestoreBackupCanceled(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(Dimens.spacingSmall))
 
             Text(
                 text = stringResource(

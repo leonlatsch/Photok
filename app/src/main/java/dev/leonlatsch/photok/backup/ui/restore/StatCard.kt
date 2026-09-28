@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun StatCard(
@@ -52,11 +53,11 @@ fun StatCard(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(10.dp)
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            modifier = Modifier.padding(Dimens.spacingSmall)
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -93,8 +94,8 @@ private fun Preview() {
     AppTheme {
         Surface {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(15.dp),
-                modifier = Modifier.padding(20.dp)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                modifier = Modifier.padding(Dimens.spacingLarge)
             ) {
                 StatCard(
                     label = "Photos",

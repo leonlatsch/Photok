@@ -52,6 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 /** [index] is the 1-based position of the file in the restore, used as a stable key. */
 data class RestoreLogEntry(
@@ -88,7 +89,7 @@ fun RestoreLog(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(ROW_HEIGHT * RESTORE_LOG_ROWS + VERTICAL_PADDING * 2)
-                .padding(horizontal = 15.dp, vertical = VERTICAL_PADDING)
+                .padding(horizontal = Dimens.spacingMedium, vertical = VERTICAL_PADDING)
                 .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
                 .drawWithContent {
                     drawContent()
@@ -171,7 +172,7 @@ private fun Preview() {
                     RestoreLogEntry(41, "IMG_20240418_102907.jpg"),
                     RestoreLogEntry(42, "IMG_20240418_112238.jpg"),
                 ),
-                modifier = Modifier.padding(20.dp),
+                modifier = Modifier.padding(Dimens.spacingLarge),
             )
         }
     }

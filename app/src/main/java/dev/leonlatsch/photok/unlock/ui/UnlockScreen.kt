@@ -60,6 +60,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
@@ -140,7 +141,7 @@ private fun UnlockScreenContent(
                     .fillMaxSize()
                     .padding(contentPadding)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -149,7 +150,7 @@ private fun UnlockScreenContent(
                     AppName(
                         fontSize = 62.sp,
                         modifier = Modifier
-                            .padding(top = 20.dp, bottom = 40.dp)
+                            .padding(top = Dimens.spacingLarge, bottom = 40.dp)
                     )
                 }
 
@@ -159,7 +160,7 @@ private fun UnlockScreenContent(
                     modifier = Modifier.width(280.dp)
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
 
                 PasswordField(
                     value = uiState.password,
@@ -169,7 +170,7 @@ private fun UnlockScreenContent(
                     onDone = { unlockWithPassword() },
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
 
                 Button(
                     onClick = { unlockWithPassword() },
@@ -202,7 +203,7 @@ private fun UnlockScreenContent(
                     }
                 }
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
             }
 
             if (uiState.lockedUntil != null) {

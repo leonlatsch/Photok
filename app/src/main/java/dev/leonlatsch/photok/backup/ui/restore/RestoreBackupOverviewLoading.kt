@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.SkeletonBox
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 private val STAT_CARD_HEIGHT = 92.dp
 private val ARCHIVE_SECTION_HEIGHT = 170.dp
@@ -71,25 +72,25 @@ fun RestoreBackupOverviewLoading(
         Column(
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(20.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,
                 subtitle = stringResource(R.string.backup_restore_validating),
             )
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_stats),
                 color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingSmall)
             )
 
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(Dimens.spacingXSmall))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
             ) {
                 SkeletonBox(
                     modifier = Modifier
@@ -103,10 +104,10 @@ fun RestoreBackupOverviewLoading(
                 )
             }
 
-            Spacer(Modifier.height(15.dp))
+            Spacer(Modifier.height(Dimens.spacingMedium))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
             ) {
                 SkeletonBox(
                     modifier = Modifier
@@ -120,15 +121,15 @@ fun RestoreBackupOverviewLoading(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(Dimens.spacingLarge))
 
             Text(
                 text = stringResource(R.string.backup_restore_archive),
                 color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingSmall)
             )
 
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(Dimens.spacingXSmall))
 
             SkeletonBox(
                 modifier = Modifier

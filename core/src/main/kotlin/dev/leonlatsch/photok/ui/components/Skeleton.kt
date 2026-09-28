@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 private const val SHIMMER_DURATION_MILLIS = 1400
 private const val SHIMMER_BAND_FRACTION = 0.7f
@@ -98,10 +99,10 @@ private fun Preview() {
     AppTheme {
         Surface {
             Column(
-                verticalArrangement = Arrangement.spacedBy(15.dp),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
+                    .padding(Dimens.spacingLarge)
             ) {
                 SkeletonBox(
                     modifier = Modifier

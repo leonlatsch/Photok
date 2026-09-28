@@ -57,6 +57,7 @@ import dev.leonlatsch.photok.backup.domain.FailedFile
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Colors
+import dev.leonlatsch.photok.ui.theme.Dimens
 import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +78,7 @@ fun RestoreBackupFinished(
             Button(
                 onClick = onDone,
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .navigationBarsPadding()
             ) {
                 Row(
@@ -121,7 +122,7 @@ private fun RestoreBackupFinishedSuccess(
             modifier = Modifier.size(72.dp)
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.spacingLarge))
 
         Text(
             text = stringResource(R.string.backup_restore_finished_headline),
@@ -130,7 +131,7 @@ private fun RestoreBackupFinishedSuccess(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.spacingSmall))
 
         Text(
             text = summary(uiState),
@@ -149,9 +150,9 @@ private fun RestoreBackupFinishedWithFailures(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(20.dp)
+        modifier = modifier.padding(Dimens.spacingLarge)
     ) {
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(Dimens.spacingXxLarge))
 
         Icon(
             painter = painterResource(R.drawable.ic_warning),
@@ -160,7 +161,7 @@ private fun RestoreBackupFinishedWithFailures(
             modifier = Modifier.size(72.dp)
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.spacingLarge))
 
         Text(
             text = failuresHeadline(uiState.failedFiles.size),
@@ -169,7 +170,7 @@ private fun RestoreBackupFinishedWithFailures(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(Dimens.spacingSmall))
 
         Text(
             text = summary(uiState),
@@ -179,20 +180,20 @@ private fun RestoreBackupFinishedWithFailures(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(Dimens.spacingLarge))
 
         Text(
             text = stringResource(R.string.backup_restore_finished_failed_items),
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = Dimens.spacingSmall)
         )
 
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(Dimens.spacingXSmall))
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
@@ -219,8 +220,8 @@ private fun FailedItemCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+            modifier = Modifier.padding(Dimens.spacingSmall)
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_warning),
