@@ -547,38 +547,8 @@
             column="5"/>
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.bg_bottom_sheet` appears to be unused"
-        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/bg_bottom_sheet.xml"
-            line="17"
-            column="1"/>
-    </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.bg_bottom_sheet_dark` appears to be unused"
-        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/bg_bottom_sheet_dark.xml"
-            line="18"
-            column="1"/>
-    </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.bg_dark_toolbar` appears to be unused"
-        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/bg_dark_toolbar.xml"
-            line="18"
-            column="1"/>
-    </issue>
 
     <issue
         id="UnusedResources"
@@ -657,38 +627,8 @@
             column="1"/>
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_logo_white` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/ic_logo_white.xml"
-            line="17"
-            column="1"/>
-    </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_play_circle` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/ic_play_circle.xml"
-            line="17"
-            column="1"/>
-    </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_video_library` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/ic_video_library.xml"
-            line="17"
-            column="1"/>
-    </issue>
 
     <issue
         id="UnusedResources"
