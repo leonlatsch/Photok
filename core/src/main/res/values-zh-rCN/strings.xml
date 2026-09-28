@@ -351,12 +351,12 @@
     <string name="news_change_kind_new">新增</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">改进</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">修复</string> <!-- TODO: machine translated | EN: Fixed -->
-    <string name="release_highlight_title">全新的恢复体验</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_title">全新的备份</string> <!-- TODO: machine translated | EN: All New Backups -->
     <string name="release_highlight_summary">恢复备份现在是一个全屏引导流程。备份和恢复也比以往更加可靠。</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
-    <string name="release_highlight_point_1">开始之前先查看备份概览</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
-    <string name="release_highlight_point_2">实时进度、速度和剩余时间</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
-    <string name="release_highlight_point_3">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
-    <string name="release_highlight_point_4">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_1">实时进度、速度和剩余时间</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% 兼容你所有的旧备份</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_1">错误密码总会被拒绝</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
     <string name="release_change_summary_1">修复了一个罕见的错误：错误的密码看似解锁了保险库，但所有文件都无法读取。</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">多项修复与改进</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->

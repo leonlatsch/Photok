@@ -351,12 +351,12 @@
     <string name="news_change_kind_new">Nuovo</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">Migliorato</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">Corretto</string> <!-- TODO: machine translated | EN: Fixed -->
-    <string name="release_highlight_title">Un ripristino tutto nuovo</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_title">Backup completamente nuovi</string> <!-- TODO: machine translated | EN: All New Backups -->
     <string name="release_highlight_summary">Ripristinare un backup ora è un percorso guidato a schermo intero. Backup e ripristini sono anche più affidabili che mai.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
-    <string name="release_highlight_point_1">Panoramica del tuo backup prima di iniziare</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
-    <string name="release_highlight_point_2">Avanzamento in tempo reale, velocità e tempo rimanente</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
-    <string name="release_highlight_point_3">Salta o sostituisci i file che hai già</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
-    <string name="release_highlight_point_4">Errori chiari invece di un errore generico</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_1">Avanzamento in tempo reale, velocità e tempo rimanente</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Salta o sostituisci i file che hai già</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Errori chiari invece di un errore generico</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% compatibile con tutti i tuoi vecchi backup</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_1">Le password errate vengono sempre rifiutate</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
     <string name="release_change_summary_1">Corretto un raro bug per cui una password errata sembrava sbloccare la cassaforte, rendendo illeggibili tutti i file.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Varie correzioni e miglioramenti</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->

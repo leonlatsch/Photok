@@ -220,14 +220,14 @@ private fun NewFeaturesContent(
                     modifier = Modifier.padding(horizontal = 20.dp)
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 HighlightCard(
                     highlight = releaseHighlight,
                     modifier = Modifier.entrance(index = 0),
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 ReleaseChange.entries.forEachIndexed { index, change ->
                     ReleaseChangeRow(

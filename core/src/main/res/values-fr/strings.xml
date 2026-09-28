@@ -352,12 +352,12 @@
     <string name="news_change_kind_new">Nouveau</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">Amélioré</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">Corrigé</string> <!-- TODO: machine translated | EN: Fixed -->
-    <string name="release_highlight_title">Une restauration entièrement nouvelle</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_title">Des sauvegardes entièrement nouvelles</string> <!-- TODO: machine translated | EN: All New Backups -->
     <string name="release_highlight_summary">Restaurer une sauvegarde est désormais un parcours guidé en plein écran. Les sauvegardes et restaurations sont aussi plus fiables que jamais.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
-    <string name="release_highlight_point_1">Aperçu de ta sauvegarde avant toute action</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
-    <string name="release_highlight_point_2">Progression en direct, vitesse et temps restant</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
-    <string name="release_highlight_point_3">Ignore ou remplace les fichiers que tu as déjà</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
-    <string name="release_highlight_point_4">Des erreurs claires au lieu d\'un échec générique</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_1">Progression en direct, vitesse et temps restant</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Ignore ou remplace les fichiers que tu as déjà</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Des erreurs claires au lieu d\'un échec générique</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% compatible avec toutes tes anciennes sauvegardes</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_1">Les mots de passe incorrects sont toujours refusés</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
     <string name="release_change_summary_1">Correction d\'un bug rare où un mauvais mot de passe semblait déverrouiller le coffre, rendant tous les fichiers illisibles.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Diverses corrections et améliorations</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->

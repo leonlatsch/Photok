@@ -351,12 +351,12 @@
     <string name="news_change_kind_new">Новое</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">Улучшено</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">Исправлено</string> <!-- TODO: machine translated | EN: Fixed -->
-    <string name="release_highlight_title">Совершенно новое восстановление</string> <!-- TODO: machine translated | EN: A Brand New Restore -->
+    <string name="release_highlight_title">Совершенно новые резервные копии</string> <!-- TODO: machine translated | EN: All New Backups -->
     <string name="release_highlight_summary">Восстановление резервной копии теперь проходит в пошаговом полноэкранном режиме. Резервное копирование и восстановление стали надёжнее, чем когда-либо.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
-    <string name="release_highlight_point_1">Обзор резервной копии до начала восстановления</string> <!-- TODO: machine translated | EN: Overview of your backup before anything happens -->
-    <string name="release_highlight_point_2">Прогресс в реальном времени, скорость и оставшееся время</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
-    <string name="release_highlight_point_3">Пропускай или заменяй уже имеющиеся файлы</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
-    <string name="release_highlight_point_4">Понятные ошибки вместо общего сбоя</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_1">Прогресс в реальном времени, скорость и оставшееся время</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Пропускай или заменяй уже имеющиеся файлы</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Понятные ошибки вместо общего сбоя</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% совместимость со всеми твоими старыми резервными копиями</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_1">Неверные пароли всегда отклоняются</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
     <string name="release_change_summary_1">Исправлена редкая ошибка, при которой неверный пароль словно открывал хранилище, а все файлы оказывались нечитаемыми.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Различные исправления и улучшения</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
