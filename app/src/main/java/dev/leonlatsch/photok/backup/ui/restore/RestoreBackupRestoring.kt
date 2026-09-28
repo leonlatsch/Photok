@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -101,13 +102,15 @@ fun RestoreBackupRestoring(
                     }
 
                     Text(
-                        stringResource(
+                        text = stringResource(
                             if (uiState.canceling) {
                                 R.string.backup_restore_canceling
                             } else {
                                 R.string.backup_restore_cancel
                             }
-                        )
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
