@@ -17,17 +17,11 @@
 package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
-import dev.leonlatsch.photok.backup.data.getPhotosInOriginalOrder
-import dev.leonlatsch.photok.backup.data.toDomain
 import dev.leonlatsch.photok.encryption.domain.crypto.LegacyGcmCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.models.Session
-import dev.leonlatsch.photok.io.IO
-import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
-import timber.log.Timber
-import java.util.zip.ZipInputStream
+import java.io.InputStream
 import javax.inject.Inject
 
 /**
@@ -61,65 +55,14 @@ import javax.inject.Inject
  */
 class RestoreBackupV2 @Inject constructor(
     private val legacyGcmCryptoEngine: LegacyGcmCryptoEngine,
-    private val photoRepository: PhotoRepository,
-    private val io: IO,
-    private val vaultFileStorage: VaultFileStorage,
 ) : RestoreBackupStrategy<BackupMetaData.V2> {
 
-    override suspend fun restore(
-        metaData: BackupMetaData.V2,
-        stream: ZipInputStream,
-        session: Session,
-    ): RestoreResult {
-        var errors = 0
+    override fun decrypt(input: InputStream, session: Session): InputStream? =
+        legacyGcmCryptoEngine.createDecryptStream(input, session)
 
-        var ze = stream.nextEntry
-
-        while (ze != null) {
-            if (ze.name == BackupMetaData.FILE_NAME) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            // Skip files that are not mentioned in the metadata
-            // These might be dead files from old versions of photok
-            if (metaData.photos.none { ze.name.contains(it.uuid) }) {
-                ze = stream.nextEntry
-                Timber.i("Skipping dead file in backup: ${ze.name}")
-                continue
-            }
-
-            val encryptedZipInput =
-                legacyGcmCryptoEngine.createDecryptStream(stream, session)
-            val internalOutputStream = vaultFileStorage.openEncryptedOutput(
-                ze.name.replace(
-                    oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
-                    newValue = PHOTOK_FILE_EXTENSION,
-                )
-            )
-
-            if (encryptedZipInput == null || internalOutputStream == null) {
-                ze = stream.nextEntry
-                continue
-            }
-
-            io.copy(encryptedZipInput, internalOutputStream)
-                .onFailure {
-                    Timber.e(it, "Error restoring zip entry: ${ze.name}")
-                    errors++
-                }
-
-            ze = stream.nextEntry
-        }
-
-        metaData.getPhotosInOriginalOrder().forEach { photoBackup ->
-            val newPhoto = photoBackup
-                .toDomain()
-                .copy(importedAt = System.currentTimeMillis())
-
-            photoRepository.insert(newPhoto)
-        }
-
-        return RestoreResult(errors)
-    }
+    /** The vault stores `.crypt`, this format still carried the old `.photok` name. */
+    override fun internalFileName(entryName: String): String = entryName.replace(
+        oldValue = LEGACY_PHOTOK_FILE_EXTENSION,
+        newValue = PHOTOK_FILE_EXTENSION,
+    )
 }

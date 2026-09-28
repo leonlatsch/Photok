@@ -22,6 +22,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.model.database.entity.Photo
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -37,36 +38,41 @@ class BackupStrategyImpl @Inject constructor(
         photo: Photo,
         zipOutputStream: ZipOutputStream
     ): Result<Unit> {
-        context.fileList()
-            .filter { it.contains(photo.uuid) }
-            .map { it to context.openFileInput(it) }
-            .forEach { (filename, inputStream) ->
-                inputStream ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
+        val fileNames = listOf(
+            photo.internalFileName,
+            photo.internalThumbnailFileName,
+            photo.internalVideoPreviewFileName,
+        )
 
-                io.zip.writeZipEntry(filename, inputStream, zipOutputStream)
-                    .onFailure {
-                        return Result.failure(it)
-                    }
+        for (fileName in fileNames) {
+            if (!context.getFileStreamPath(fileName).exists()) continue
+
+            val inputStream = try {
+                context.openFileInput(fileName)
+            } catch (e: Exception) {
+                Timber.e(e, "Could not open internal file $fileName")
+                return Result.failure(e)
             }
+
+            io.zip.writeZipEntry(fileName, inputStream, zipOutputStream)
+                .onFailure { return Result.failure(it) }
+        }
 
         return Result.success(Unit)
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-
-        try {
+        return try {
             val backupMetaData = dumpDatabaseUseCase(BackupMetaData.CURRENT_BACKUP_VERSION)
             val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-            return io.zip.writeZipEntry(
+            io.zip.writeZipEntry(
                 BackupMetaData.FILE_NAME,
                 ByteArrayInputStream(metaBytes),
                 zipOutputStream,
             )
         } catch (e: Exception) {
-            return Result.failure(e)
+            Result.failure(e)
         }
-
-
     }
 }

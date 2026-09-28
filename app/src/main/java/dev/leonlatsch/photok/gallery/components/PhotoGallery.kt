@@ -366,7 +366,7 @@ private fun GalleryPhotoTile(
                 .align(Alignment.BottomStart)
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_videocam),
+                painter = painterResource(R.drawable.ic_videocam_filled),
                 contentDescription = null,
                 tint = Color.White,
                 modifier = Modifier

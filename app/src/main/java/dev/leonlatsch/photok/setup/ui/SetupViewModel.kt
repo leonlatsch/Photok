@@ -29,6 +29,7 @@ import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -110,7 +111,7 @@ class SetupViewModel @Inject constructor(
         val password = inputs.value.password
         if (!PasswordUtils.validatePasswords(password, inputs.value.confirmPassword)) return
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 vaultService.create(CreateRequest.Password(password))
                 vaultService.unlock(UnlockRequest.Password(password))

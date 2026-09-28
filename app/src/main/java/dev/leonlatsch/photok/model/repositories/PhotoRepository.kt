@@ -67,6 +67,8 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun insert(photo: Photo) = photoDao.insert(photo)
 
+    suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(photos)
+
     /**
      * @see PhotoDao.delete
      */
@@ -100,6 +102,8 @@ class PhotoRepository @Inject constructor(
      * @see PhotoDao.countAll
      */
     suspend fun countAll() = photoDao.countAll()
+
+    suspend fun getAllUuids() = photoDao.getAllUuids()
 
     // endregion
 

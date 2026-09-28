@@ -103,6 +103,7 @@ private fun UnlockScreenContent(
     }
 
     Scaffold(
+        modifier = Modifier.imePadding(),
         bottomBar = {
             Box(
                 contentAlignment = Alignment.Center,
@@ -138,7 +139,6 @@ private fun UnlockScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(contentPadding)
-                    .imePadding()
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 20.dp)
             ) {

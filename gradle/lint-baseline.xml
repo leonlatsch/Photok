@@ -868,17 +868,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.string.backup_restore_details_compatible` appears to be unused"
-        errorLine1="    &lt;string name=&quot;backup_restore_details_compatible&quot;>Compatible:&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="257"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.style.LightDetailTextViewStyle` appears to be unused"
         errorLine1="    &lt;style name=&quot;LightDetailTextViewStyle&quot; parent=&quot;TextViewStyle&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -1018,28 +1007,6 @@
             file="src/main/res/values-ar/strings.xml"
             line="252"
             column="44"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="    &lt;string name=&quot;backup_restore_validating&quot;>التحقق من صحة النسخ الاحتياطي ...&lt;/string>"
-        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-ar/strings.xml"
-            line="254"
-            column="46"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="    &lt;string name=&quot;backup_restore_processing&quot;>استعادة النسخة الاحتياطية ...&lt;/string>"
-        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-ar/strings.xml"
-            line="261"
-            column="46"/>
     </issue>
 
     <issue
@@ -1238,17 +1205,6 @@
             file="src/main/res/layout/dialog_news.xml"
             line="70"
             column="14"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_restore_backup.xml"
-            line="46"
-            column="10"/>
     </issue>
 
     <issue

@@ -41,7 +41,7 @@ enum class PhotoType(
         }
 
     companion object {
-        fun fromValue(value: Int) = entries.first { it.value == value }
+        fun fromValue(value: Int) = entries.firstOrNull { it.value == value } ?: UNDEFINED
 
         fun fromMimeType(mimeType: String?): PhotoType = when (mimeType) {
             PNG.mimeType -> PNG

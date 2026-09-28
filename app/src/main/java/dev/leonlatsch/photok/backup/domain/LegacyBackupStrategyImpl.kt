@@ -21,9 +21,11 @@ import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.io.IO
-import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.model.database.entity.legacyInternalFileName
+import dev.leonlatsch.photok.model.database.entity.legacyInternalThumbnailFileName
+import dev.leonlatsch.photok.model.database.entity.legacyInternalVideoPreviewFileName
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -31,7 +33,6 @@ import javax.inject.Inject
 class LegacyBackupStrategyImpl @Inject constructor(
     private val dumpDatabaseUseCase: DumpDatabaseUseCase,
     private val io: IO,
-    private val config: Config,
     private val gson: Gson,
     @ApplicationContext private val context: Context,
 ) : BackupStrategy {
@@ -40,33 +41,41 @@ class LegacyBackupStrategyImpl @Inject constructor(
         photo: Photo,
         zipOutputStream: ZipOutputStream
     ): Result<Unit> {
-        context.fileList()
-            .filter { it.contains(photo.uuid) && it.contains(LEGACY_PHOTOK_FILE_EXTENSION) }
-            .map { it to context.openFileInput(it) }
-            .forEach { (filename, inputStream) ->
-                inputStream ?: return Result.failure(IllegalStateException("Input stream missing for photo"))
+        val fileNames = listOf(
+            legacyInternalFileName(photo.uuid),
+            legacyInternalThumbnailFileName(photo.uuid),
+            legacyInternalVideoPreviewFileName(photo.uuid),
+        )
 
-                io.zip.writeZipEntry(filename, inputStream, zipOutputStream)
-                    .onFailure {
-                        return Result.failure(it)
-                    }
+        for (fileName in fileNames) {
+            if (!context.getFileStreamPath(fileName).exists()) continue
+
+            val inputStream = try {
+                context.openFileInput(fileName)
+            } catch (e: Exception) {
+                Timber.e(e, "Could not open internal file $fileName")
+                return Result.failure(e)
             }
+
+            io.zip.writeZipEntry(fileName, inputStream, zipOutputStream)
+                .onFailure { return Result.failure(it) }
+        }
 
         return Result.success(Unit)
     }
 
     override suspend fun createMetaFileInBackup(zipOutputStream: ZipOutputStream): Result<Unit> {
-        try {
-            val backupMetaData = dumpDatabaseUseCase(BackupMetaData.Companion.LEGACY_BACKUP_VERSION)
+        return try {
+            val backupMetaData = dumpDatabaseUseCase(BackupMetaData.LEGACY_BACKUP_VERSION)
             val metaBytes = gson.toJson(backupMetaData).toByteArray()
 
-            return io.zip.writeZipEntry(
-                BackupMetaData.Companion.FILE_NAME,
+            io.zip.writeZipEntry(
+                BackupMetaData.FILE_NAME,
                 ByteArrayInputStream(metaBytes),
                 zipOutputStream,
             )
         } catch (e: Exception) {
-            return Result.failure(e)
+            Result.failure(e)
         }
     }
 }

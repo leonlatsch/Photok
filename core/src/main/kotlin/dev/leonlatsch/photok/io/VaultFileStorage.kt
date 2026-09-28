@@ -57,6 +57,9 @@ class VaultFileStorage @Inject constructor(
         return success
     }
 
+    fun encryptedFileExists(fileName: String): Boolean =
+        app.getFileStreamPath(fileName).exists()
+
     fun renameEncryptedFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
