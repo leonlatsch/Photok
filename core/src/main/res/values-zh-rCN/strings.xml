@@ -166,7 +166,7 @@
 
     <string name="settings_category_security">安全</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
-    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。</string>
     <string name="settings_security_change_password_title">更改密码</string>
     <string name="settings_security_change_password_summary">更改你的密码</string>
     <string name="settings_security_biometric_title">生物特征解锁</string>

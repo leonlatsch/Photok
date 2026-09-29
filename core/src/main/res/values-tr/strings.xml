@@ -165,7 +165,7 @@
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>
-    <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver. Yeniden başlatma gerektirir.</string>
+    <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver.</string>
     <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
     <string name="settings_security_biometric_title">Biyometrik Kilit Açma</string>

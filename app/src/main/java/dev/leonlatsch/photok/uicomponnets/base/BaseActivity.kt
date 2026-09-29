@@ -22,8 +22,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 /**
  * Base for all activities.
@@ -32,12 +36,20 @@ import dev.leonlatsch.photok.settings.data.Config
  * @author Leon Latsch
  */
 abstract class BaseActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!config.securityAllowScreenshots) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        lifecycleScope.launch {
+            config.valuesFlow
+                .map { config.securityAllowScreenshots }
+                .distinctUntilChanged()
+                .collect { allowScreenshots ->
+                    if (allowScreenshots) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
         }
     }
 

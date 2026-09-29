@@ -166,7 +166,7 @@
 
     <string name="settings_category_security">Keamanan</string>
     <string name="settings_security_allow_screenshots_title">Izinkan Tangkapan Layar</string>
-    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar. Perlu memulai ulang aplikasi.</string>
+    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar.</string>
     <string name="settings_security_change_password_title">Ubah Kata Sandi</string>
     <string name="settings_security_change_password_summary">Ubah kata sandimu</string>
     <string name="settings_security_biometric_title">Buka Kunci Biometrik</string>
