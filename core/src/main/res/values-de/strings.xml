@@ -353,7 +353,7 @@
     <string name="news_change_kind_improved">Verbessert</string>
     <string name="news_change_kind_fixed">Behoben</string>
     <string name="release_highlight_title">Ganz neue Backups</string>
-    <string name="release_highlight_summary">Ein Backup wiederherzustellen ist jetzt ein geführter Vollbild-Ablauf. Backups und Wiederherstellungen sind außerdem zuverlässiger als je zuvor.</string>
+    <string name="release_highlight_summary">Ein Backup wiederherzustellen ist jetzt ein geführter Ablauf. Backups und Wiederherstellungen sind außerdem zuverlässiger als je zuvor.</string>
     <string name="release_highlight_point_1">Live-Fortschritt, Geschwindigkeit und Restzeit</string>
     <string name="release_highlight_point_2">Überspringe oder ersetze Dateien, die du schon hast</string>
     <string name="release_highlight_point_3">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string>
