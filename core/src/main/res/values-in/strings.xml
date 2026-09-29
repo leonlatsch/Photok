@@ -357,8 +357,6 @@
     <string name="release_highlight_point_2">Lewati atau ganti file yang sudah kamu miliki</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_3">Pesan kesalahan yang jelas, bukan kegagalan umum</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
     <string name="release_highlight_point_4" formatted="false">100% kompatibel dengan semua cadangan lamamu</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">Kata Sandi Salah Selalu Ditolak</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">Memperbaiki bug langka saat kata sandi yang salah tampak membuka brankas, sehingga semua file tidak dapat dibaca.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Berbagai Perbaikan dan Peningkatan</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">Buka kunci dan penyiapan lebih lancar, keyboard tidak lagi mempelajari kata sandimu, dan aplikasi terkunci dengan andal di latar belakang.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 

@@ -357,8 +357,6 @@
     <string name="release_highlight_point_2">پہلے سے موجود فائلیں چھوڑیں یا بدلیں</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_3">عام ناکامی کے بجائے واضح خرابیاں</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
     <string name="release_highlight_point_4" formatted="false">آپ کے تمام پرانے بیک اپ کے ساتھ 100% مطابقت</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">غلط پاس ورڈ ہمیشہ مسترد ہوتے ہیں</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">ایک نایاب خرابی درست کی گئی جس میں غلط پاس ورڈ والٹ کو کھولتا ہوا لگتا تھا اور تمام فائلیں ناقابل پڑھ ہو جاتی تھیں۔</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">مختلف اصلاحات اور بہتریاں</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">زیادہ ہموار ان لاک اور سیٹ اپ، کی بورڈ اب آپ کا پاس ورڈ نہیں سیکھتے اور ایپ پس منظر میں قابل اعتماد طریقے سے لاک ہو جاتی ہے۔</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 

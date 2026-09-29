@@ -355,8 +355,6 @@
     <string name="release_highlight_point_2">Sla bestanden die je al hebt over of vervang ze</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_3">Duidelijke foutmeldingen in plaats van een algemene fout</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
     <string name="release_highlight_point_4" formatted="false">100% compatibel met al je oude back-ups</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">Verkeerde wachtwoorden worden altijd geweigerd</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">Een zeldzame bug opgelost waarbij een verkeerd wachtwoord de kluis leek te ontgrendelen, waardoor alle bestanden onleesbaar waren.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Diverse verbeteringen en oplossingen</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">Soepeler ontgrendelen en instellen, toetsenborden leren je wachtwoord niet meer en de app vergrendelt betrouwbaar op de achtergrond.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 

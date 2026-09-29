@@ -355,8 +355,6 @@
     <string name="release_highlight_point_2">Pule ou substitua arquivos que você já tem</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_3">Erros claros em vez de uma falha genérica</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
     <string name="release_highlight_point_4" formatted="false">100% compatível com todos os seus backups antigos</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">Senhas erradas são sempre rejeitadas</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">Corrigido um bug raro em que uma senha errada parecia desbloquear o cofre, deixando todos os arquivos ilegíveis.</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">Várias correções e melhorias</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">Desbloqueio e configuração mais fluidos, os teclados não aprendem mais sua senha e o app bloqueia de forma confiável em segundo plano.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 

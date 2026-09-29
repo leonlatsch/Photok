@@ -357,8 +357,6 @@
     <string name="release_highlight_point_2">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
     <string name="release_highlight_point_3">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
     <string name="release_highlight_point_4" formatted="false">100% 兼容你所有的旧备份</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
-    <string name="release_change_title_1">错误密码总会被拒绝</string> <!-- TODO: machine translated | EN: Wrong Passwords Are Always Rejected -->
-    <string name="release_change_summary_1">修复了一个罕见的错误：错误的密码看似解锁了保险库，但所有文件都无法读取。</string> <!-- TODO: machine translated | EN: Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable. -->
     <string name="release_change_title_2">多项修复与改进</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">解锁和设置更加流畅，键盘不再学习你的密码，应用在后台也能可靠地锁定。</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 

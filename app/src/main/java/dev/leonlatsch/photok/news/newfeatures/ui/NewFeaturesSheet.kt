@@ -112,12 +112,6 @@ enum class ReleaseChange(
     val kind: ChangeKind,
     val isPro: Boolean = false,
 ) {
-    Change1(
-        icon = R.drawable.ic_password,
-        title = R.string.release_change_title_1,
-        summary = R.string.release_change_summary_1,
-        kind = ChangeKind.Fixed,
-    ),
     Change2(
         icon = R.drawable.ic_check_circle_outline,
         title = R.string.release_change_title_2,

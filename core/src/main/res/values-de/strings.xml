@@ -358,8 +358,6 @@
     <string name="release_highlight_point_2">Überspringe oder ersetze Dateien, die du schon hast</string>
     <string name="release_highlight_point_3">Klare Fehlermeldungen statt eines allgemeinen Fehlers</string>
     <string name="release_highlight_point_4" formatted="false">100% kompatibel mit all deinen alten Backups</string>
-    <string name="release_change_title_1">Falsche Passwörter werden immer abgelehnt</string>
-    <string name="release_change_summary_1">Ein seltener Fehler wurde behoben, bei dem ein falsches Passwort den Tresor scheinbar entsperrte und alle Dateien unlesbar waren.</string>
     <string name="release_change_title_2">Diverse Fehlerbehebungen und Verbesserungen</string>
     <string name="release_change_summary_2">Flüssigeres Entsperren und Einrichten, Tastaturen lernen dein Passwort nicht mehr und die App sperrt sich im Hintergrund zuverlässig.</string>
 

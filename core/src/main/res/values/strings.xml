@@ -357,8 +357,6 @@
     <string name="release_highlight_point_2">Skip or replace files you already have</string>
     <string name="release_highlight_point_3">Clear errors instead of a generic failure</string>
     <string name="release_highlight_point_4" formatted="false">100% backwards compatible with all your old backups</string>
-    <string name="release_change_title_1">Wrong Passwords Are Always Rejected</string>
-    <string name="release_change_summary_1">Fixed a rare bug where a wrong password could seem to unlock the vault, leaving every file unreadable.</string>
     <string name="release_change_title_2">Various Fixes and Improvements</string>
     <string name="release_change_summary_2">Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background.</string>
 
