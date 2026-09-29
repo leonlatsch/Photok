@@ -166,7 +166,7 @@
 
     <string name="settings_category_security">حفاظت</string>
     <string name="settings_security_allow_screenshots_title">اسکرین شاٹ کی اجازت</string>
-    <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔ ایپ بند کر کے دوبارہ کھولنی پڑے گی۔</string>
+    <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔</string>
     <string name="settings_security_change_password_title">پاس ورڈ بدلیں</string>
     <string name="settings_security_change_password_summary">اپنا نیا پاس ورڈ سیٹ کریں</string>
     <string name="settings_security_biometric_title">فنگر پرنٹ یا چہرہ</string>

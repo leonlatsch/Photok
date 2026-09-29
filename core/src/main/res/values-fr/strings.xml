@@ -167,7 +167,7 @@
 
     <string name="settings_category_security">Sécurité</string>
     <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
-    <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran. Nécessite un redémarrage.</string>
+    <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran.</string>
     <string name="settings_security_change_password_title">Changer le mot de passe</string>
     <string name="settings_security_change_password_summary">Changer votre mot de passe</string>
     <string name="settings_security_biometric_title">Déverrouillage biométrique</string>

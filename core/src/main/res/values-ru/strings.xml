@@ -166,7 +166,7 @@
 
     <string name="settings_category_security">Безопасность</string>
     <string name="settings_security_allow_screenshots_title">Разрешить скриншоты</string>
-    <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов. Требует перезагрузки.</string>
+    <string name="settings_security_allow_screenshots_summary">Разрешить делать снимки экранов.</string>
     <string name="settings_security_change_password_title">Изменить пароль</string>
     <string name="settings_security_change_password_summary">Изменить ваш пароль</string>
     <string name="settings_security_biometric_title">Биометрическая разблокировка</string> <!-- TODO: machine translated | EN: Biometric Unlock -->
