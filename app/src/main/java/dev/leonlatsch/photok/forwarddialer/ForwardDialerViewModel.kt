@@ -41,7 +41,7 @@ class ForwardDialerViewModel @Inject constructor(
         val millisSinceLastRecoveryStart = now - lastRecoveryStart
 
         if (millisSinceLastRecoveryStart < RECOVERY_MENU_MILLIS_THRESHOLD) {
-            navigationEvent.value = ForwardDialerNavigator.NavigationEvent.OpenRecoveryMenu
+            navigationEvent.value = ForwardDialerNavigator.NavigationEvent.ForwardToApp
             config.timestampLastRecoveryStart = TIMESTAMP_LAST_RECOVERY_START_DEFAULT
         } else {
             config.timestampLastRecoveryStart = now

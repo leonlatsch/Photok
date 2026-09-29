@@ -17,8 +17,7 @@
 package dev.leonlatsch.photok.forwarddialer
 
 import android.content.Intent
-import dev.leonlatsch.photok.recoverymenu.ui.RecoveryMenuActivity
-import timber.log.Timber
+import dev.leonlatsch.photok.main.ui.MainActivity
 import javax.inject.Inject
 
 class ForwardDialerNavigator @Inject constructor() {
@@ -26,17 +25,14 @@ class ForwardDialerNavigator @Inject constructor() {
     fun navigate(navigationEvent: NavigationEvent, activity: ForwardDialerActivity) {
         when (navigationEvent) {
             NavigationEvent.ForwardToDialer -> navigateForwardToDialer(activity)
-            NavigationEvent.OpenRecoveryMenu -> navigateOpenRecoveryMenu(activity)
+            NavigationEvent.ForwardToApp -> navigateToApp(activity)
         }
     }
 
-    private fun navigateOpenRecoveryMenu(activity: ForwardDialerActivity) {
-        Timber.d("opening recovery menu")
-        val intent = Intent(activity, RecoveryMenuActivity::class.java)
-        activity.apply {
-            startActivity(intent)
-            finish()
-        }
+    private fun navigateToApp(activity: ForwardDialerActivity) {
+        val launchIntent = Intent(activity, MainActivity::class.java)
+        launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        activity.startActivity(launchIntent)
     }
 
     private fun navigateForwardToDialer(activity: ForwardDialerActivity) {
@@ -50,7 +46,7 @@ class ForwardDialerNavigator @Inject constructor() {
     }
 
     sealed class NavigationEvent {
-        object OpenRecoveryMenu : NavigationEvent()
+        object ForwardToApp : NavigationEvent()
         object ForwardToDialer : NavigationEvent()
     }
 }
