@@ -310,7 +310,6 @@
     <string name="backup_restore_canceled_headline">تم إلغاء الاستعادة</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">لم تتم إضافة أي شيء من %1$s إلى خزنتك. وتم حذف كل الملفات التي استُعيدت بالفعل.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">اكتملت الاستعادة</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">تمت الاستعادة بنجاح</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">تمت الاستعادة مع مشكلة واحدة</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">تمت الاستعادة مع %1$d مشكلات</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

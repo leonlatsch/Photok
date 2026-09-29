@@ -311,7 +311,6 @@
     <string name="backup_restore_canceled_headline">恢复已取消</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">%1$s 中没有任何内容被添加到你的保险库。已经恢复的文件都已被删除。</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">恢复完成</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">恢复成功</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">恢复完成，有 1 个问题</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">恢复完成，有 %1$d 个问题</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

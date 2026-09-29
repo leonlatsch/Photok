@@ -312,7 +312,6 @@
     <string name="backup_restore_canceled_headline">Restauration annulée</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Aucun élément de %1$s n\'a été ajouté à votre coffre-fort. Tous les fichiers déjà restaurés ont été supprimés.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Restauration terminée</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Restauration réussie</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Restauration terminée avec 1 problème</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Restauration terminée avec %1$d problèmes</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

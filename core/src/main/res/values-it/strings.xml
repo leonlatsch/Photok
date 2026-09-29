@@ -311,7 +311,6 @@
     <string name="backup_restore_canceled_headline">Ripristino annullato</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Nessun elemento di %1$s è stato aggiunto alla tua Safe. Tutti i file già ripristinati sono stati eliminati.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Ripristino completato</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Ripristino riuscito</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Ripristinato con 1 problema</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Ripristinato con %1$d problemi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

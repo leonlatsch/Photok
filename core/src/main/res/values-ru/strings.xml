@@ -311,7 +311,6 @@
     <string name="backup_restore_canceled_headline">Восстановление отменено</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Ничего из %1$s не добавлено в ваш сейф. Все уже восстановленные файлы удалены.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Восстановление завершено</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Успешно восстановлено</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Восстановлено, ошибок: 1</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Восстановлено, ошибок: %1$d</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
