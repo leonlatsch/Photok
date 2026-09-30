@@ -309,7 +309,6 @@
     <string name="backup_restore_canceled_headline">Herstellen geannuleerd</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Er is niets uit %1$s aan je kluis toegevoegd. Alle bestanden die al waren hersteld, zijn weer verwijderd.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Herstellen voltooid</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Succesvol hersteld</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Hersteld met 1 probleem</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Hersteld met %1$d problemen</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

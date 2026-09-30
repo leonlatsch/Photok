@@ -311,7 +311,6 @@
     <string name="backup_restore_canceled_headline">Restore canceled</string>
     <string name="backup_restore_canceled_description">Nothing from %1$s was added to your vault. All files that were already restored have been deleted again.</string>
 
-    <string name="backup_restore_finished_title">Restore Finished</string>
     <string name="backup_restore_finished_headline">Restored successfully</string>
     <string name="backup_restore_finished_headline_one_issue">Restored with 1 issue</string>
     <string name="backup_restore_finished_headline_issues">Restored with %1$d issues</string>

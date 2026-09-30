@@ -41,6 +41,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -124,6 +125,7 @@ fun RestoreBackupRestoring(
                 .fillMaxSize()
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
+                .keepScreenOn()
         ) {
             BackupFileHeader(
                 fileName = uiState.fileName,

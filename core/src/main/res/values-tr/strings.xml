@@ -310,7 +310,6 @@
     <string name="backup_restore_canceled_headline">Geri yükleme iptal edildi</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">%1$s içeriğinden kasanıza hiçbir şey eklenmedi. Daha önce geri yüklenen tüm dosyalar tekrar silindi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Geri Yükleme Tamamlandı</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Başarıyla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">1 sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">%1$d sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->

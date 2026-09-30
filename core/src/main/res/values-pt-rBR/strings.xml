@@ -309,7 +309,6 @@
     <string name="backup_restore_canceled_headline">Restauração cancelada</string> <!-- TODO: machine translated | EN: Restore canceled -->
     <string name="backup_restore_canceled_description">Nada de %1$s foi adicionado ao seu cofre. Todos os arquivos que já tinham sido restaurados foram excluídos novamente.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
 
-    <string name="backup_restore_finished_title">Restauração Concluída</string> <!-- TODO: machine translated | EN: Restore Finished -->
     <string name="backup_restore_finished_headline">Restaurado com sucesso</string> <!-- TODO: machine translated | EN: Restored successfully -->
     <string name="backup_restore_finished_headline_one_issue">Restaurado com 1 problema</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
     <string name="backup_restore_finished_headline_issues">Restaurado com %1$d problemas</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
