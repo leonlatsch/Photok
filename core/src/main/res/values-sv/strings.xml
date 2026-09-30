@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+~   Copyright 2020–2026 Leon Latsch
+~
+~   Licensed under the Apache License, Version 2.0 (the "License");
+~   you may not use this file except in compliance with the License.
+~   You may obtain a copy of the License at
+~
+~        http://www.apache.org/licenses/LICENSE-2.0
+~
+~   Unless required by applicable law or agreed to in writing, software
+~   distributed under the License is distributed on an "AS IS" BASIS,
+~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~   See the License for the specific language governing permissions and
+~   limitations under the License.
+-->
+
+<resources>
+    <!-- COMMON -->
+    <string name="common_copyright_notice">Copyright \u00A9 2020–2026 Leon Latsch</string>
+    <string name="common_slash">/</string>
+    <string name="common_percent">%</string>
+    <string name="common_pipe">|</string>
+    <string name="common_loading">Laddar …</string>
+    <string name="common_password">Lösenord</string>
+    <string name="common_delete">Radera</string>
+    <string name="common_export">Exportera</string>
+    <string name="common_error">Ett fel uppstod. Försök igen.</string>
+    <string name="common_yes">Ja</string>
+    <string name="common_no">Nej</string>
+    <string name="common_ok">OK</string>
+    <string name="common_are_you_sure">Är du säker?</string>
+    <string name="common_bullet">•</string>
+    <string name="common_more">Mer</string>
+    <string name="common_cancel">Avbryt</string>
+    <string name="common_canceling">Avbryter…</string>
+    <string name="common_create">Skapa</string>
+    <string name="common_empty">Tom</string>
+    <string name="common_rename">Byt namn</string>
+    <string name="common_try_again">Försök igen</string>
+    <string name="common_continue">Fortsätt</string>
+    <string name="common_hold_to_confirm">Håll in för att bekräfta</string>
+    <string name="common_back">Tillbaka</string>
+    <string name="common_done">Klar</string>
+
+    <!-- IMPORT -->
+    <string name="import_importing">Importerar fil(er)</string>
+    <string name="import_permission_rationale">Photok behöver åtkomst till lagringen för att importera filer.</string>
+    <string name="import_sharted_question">Vill du importera %1$d fil(er)?</string>
+
+    <!-- SETUP -->
+    <string name="setup_create_your_password">Skapa ditt lösenord</string>
+    <string name="setup_enter_password">Ange ditt lösenord</string>
+    <string name="setup_confirm_password">Bekräfta ditt lösenord</string>
+    <string name="setup_password_strength_label">Lösenordsstyrka:</string>
+    <string name="setup_button">Skapa</string>
+    <string name="setup_password_strength_very_weak">Mycket svagt</string>
+    <string name="setup_password_strength_weak">Svagt</string>
+    <string name="setup_password_strength_moderate">Medel</string>
+    <string name="setup_password_strength_strong">Stark</string>
+    <string name="setup_password_strength_very_strong">Mycket starkt</string>
+    <string name="setup_password_match_warning">\u26A0 Lösenorden matchar inte</string>
+    <string name="setupSetup">Installation</string>
+
+    <!-- UNLOCK -->
+    <string name="unlock_title">Lås upp ditt valv</string>
+    <string name="unlock_enter_password">Ange lösenord</string>
+    <string name="unlock_button">Lås upp</string>
+    <string name="unlock_wrong_password">\u26A0 Fel lösenord</string>
+
+    <!-- GALLERY -->
+    <string name="gallery_placeholder">Det finns inga filer i ditt valv</string>
+    <string name="gallery_all_photos_label">Alla filer</string>
+    <string name="gallery_albums_label">Album</string>
+    <string name="gallery_albums_placeholder">Skapa ditt första album</string>
+    <string name="gallery_albums_create_title">Skapa album</string>
+    <string name="gallery_albums_rename_title">Byt namn på album</string>
+    <string name="gallery_albums_create_placeholder">Läxor ;)</string>
+    <string name="gallery_albums_select_title">Välj ett album</string>
+    <string name="gallery_albums_deleted">Album raderat</string>
+    <string name="gallery_albums_photos_added">%1$d objekt tillagda</string>
+    <string name="gallery_albums_show_as_grid">Visa album som rutnät</string>
+    <string name="gallery_albums_show_as_list">Visa album som lista</string>
+    <string name="gallery_albums_empty_album">Tomt album</string>
+    <string name="magic_fab_new_album_label">Nytt album</string>
+
+    <!-- IMPORT MENU -->
+    <string name="import_menu_fab_label">Importera</string>
+    <string name="import_menu_new_files_title">Importera nya filer</string>
+    <string name="import_menu_new_files_description">Importera foton och videor från ditt galleri.</string>
+    <string name="import_menu_restore_title">Återställ en säkerhetskopia</string>
+    <string name="import_menu_restore_description">Återställ en Photok-säkerhetskopia. Filer läggs till bland dina nuvarande filer.</string>
+    <string name="import_menu_delete_warning">Importerade filer kommer att raderas</string>
+    <string name="import_menu_album_tooltip">Filer läggs till i \"%s\" efter import</string>
+
+    <!-- PROCESS -->
+    <string name="process_close">Stäng</string>
+    <string name="process_abort">Avbryt</string>
+    <string name="process_finished">Klar</string>
+    <string name="process_initialize">Förbereder…</string>
+    <string name="process_aborted">Avbruten</string>
+    <string name="process_failures_occurred">\u26A0 Vissa element kunde inte behandlas</string>
+
+    <!-- VIEW PHOTO -->
+    <string name="view_photo_detail_title">Detaljer</string>
+    <string name="view_photo_detail_file_name_label">Filnamn</string>
+    <string name="view_photo_detail_import_at_label">Importerad</string>
+    <string name="view_photo_detail_file_type_label">Filtyp</string>
+    <string name="view_photo_detail_size_label">Filstorlek</string>
+    <string name="view_photo_detail_last_modified">Senast ändrad</string>
+    <string name="view_photo_loop_video_disabled">Loop avstängd</string>
+    <string name="view_photo_loop_video_enabled">Loop påslagen</string>
+    <string name="view_photo_video_playback_speed">Uppspelningshastighet</string>
+
+    <!-- MAIN MENU -->
+    <string name="menu_main_lock">Lås</string>
+    <string name="menu_main_settings">Inställningar</string>
+
+    <!-- MULTI SELECT MENU -->
+    <string name="menu_ms_select_all">Markera alla</string>
+    <string name="menu_ms_delete">Radera</string>
+    <string name="menu_ms_export">Exportera</string>
+    <string name="menu_ms_info">%1$d objekt markerade</string>
+    <string name="menu_ms_add_to_album">Lägg till i album</string>
+    <string name="menu_ms_remove_from_album">Ta bort från album</string>
+    <string name="menu_ms_pin">Fäst överst</string>
+    <string name="menu_ms_unpin">Lossa</string>
+    <string name="viewer_pin_confirmation">Fäst överst</string>
+    <string name="viewer_unpin_confirmation">Borttagen från fästa</string>
+
+    <!-- DELETE -->
+    <string name="delete_are_you_sure">Är du säker på att du vill <b>radera</b> %1$d fil(er)?</string>
+    <string name="delete_are_you_sure_this">Är du säker på att du vill <b>radera</b> den här filen?</string>
+    <string name="delete_deleting">Raderar fil(er)…</string>
+
+    <!-- EXPORT -->
+    <string name="export_are_you_sure">Är du säker på att du vill <b>exportera</b> %1$d fil(er) tillbaka till ditt galleri?</string>
+    <string name="export_and_delete_are_you_sure">Är du säker på att du vill <b>exportera</b> %1$d fil(er) tillbaka till ditt galleri och radera dem?</string>
+    <string name="export_are_you_sure_this">Är du säker på att du vill <b>exportera</b> den här filen till ditt galleri?</string>
+    <string name="export_and_delete_are_you_sure_this">Är du säker på att du vill <b>exportera</b> den här filen till ditt galleri och radera den?</string>
+    <string name="export_exporting">Exporterar fil(er)…</string>
+    <string name="export_permission_rationale">Photok behöver åtkomst till lagringen för att exportera filer.</string>
+    <string name="export_finished">Exporterad</string>
+    <string name="export_and_delete_finished">Exporterad och raderad</string>
+
+    <!-- ABOUT -->
+    <string name="about_version">Version:</string>
+    <string name="about_developed_by">Utvecklad av:</string>
+    <string name="about_website_label">leonlatsch.dev</string>
+    <string name="about_website_url">https://leonlatsch.dev</string>
+    <string name="about_third_party">Tredjepartsprogramvara</string>
+    <string name="about_privacy_policy">Integritetspolicy</string>
+    <string name="about_privacy_policy_url">https://photok.app/privacy</string>
+    <string name="about_menu_news">Nyheter</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Inställningar</string>
+
+    <string name="settings_category_app">App</string>
+    <string name="settings_app_design_title">Design</string>
+    <string name="settings_app_design_system_default">Systemstandard</string>
+    <string name="settings_app_design_system_light">Ljust</string>
+    <string name="settings_app_design_system_dark">Mörkt</string>
+    <string name="settings_gallery_start_page_title">Startsida</string>
+    <string name="settings_app_language_title">Språk</string>
+    <string name="settings_app_language_summary">Byt språk i appen</string>
+
+    <string name="settings_category_security">Säkerhet</string>
+    <string name="settings_security_allow_screenshots_title">Tillåt skärmdumpar</string>
+    <string name="settings_security_allow_screenshots_summary">Tillåt att ta skärmdumpar.</string>
+    <string name="settings_security_change_password_title">Byt lösenord</string>
+    <string name="settings_security_change_password_summary">Byt ditt lösenord</string>
+    <string name="settings_security_biometric_title">Biometrisk upplåsning</string>
+    <string name="settings_security_biometric_summary">Lås upp Photok med biometrisk autentisering.</string>
+    <string name="settings_security_biometric_not_available">Biometrisk upplåsning är inte tillgänglig</string>
+    <string name="settings_security_recovery_phrase_title">Återställningsfras</string>
+    <string name="settings_security_recovery_phrase_summary">Hantera din återställningsfras.</string>
+    <string name="settings_security_timeout_title">Automatisk låsning</string>
+    <string name="settings_security_timeout_summary">Lås automatiskt efter angiven tid i bakgrunden</string>
+    <string name="settings_security_timeout_immediately">Omedelbart</string>
+    <string name="settings_security_timeout_one_minute">1 minut</string>
+    <string name="settings_security_timeout_two_minute">2 minuter</string>
+    <string name="settings_security_timeout_five_minute">5 minuter</string>
+    <string name="settings_security_timeout_ten_minute">10 minuter</string>
+    <string name="settings_security_timeout_never">Aldrig</string>
+    <string name="settings_security_launch_code_title">Hemlig startkod</string>
+    <string name="settings_security_launch_code_summary">Hemlig kod för att starta Photok från telefonens knappsats.</string>
+    <string name="settings_security_launch_code_message">Ange *#*#[din kod]#*#* i telefonens knappsats för att starta Photok.</string>
+    <string name="settings_security_launch_code_prefix">*#*#</string>
+    <string name="settings_security_launch_code_suffix">#*#*</string>
+    <string name="settings_security_hide_app_title">Dölj app</string>
+    <string name="settings_security_hide_app_summary">Dölj appikonen från applådan.</string>
+
+    <string name="settings_category_advanced">Avancerat</string>
+    <string name="settings_category_advanced_summary">Använd med försiktighet</string>
+    <string name="settings_advanced_reset_title">Återställ valv</string>
+    <string name="settings_advanced_reset_summary">Radera data och återställ lösenord</string>
+    <string name="settings_advanced_reset_confirmation">Vill du VERKLIGEN återställa ditt valv? All data går förlorad!</string>
+    <string name="settings_advanced_backup_title">Säkerhetskopia</string>
+    <string name="settings_advanced_backup_summary">Skapa en säkerhetskopia av ditt valv</string>
+    <string name="settings_advanced_delete_imported_title">Radera importerade filer</string>
+    <string name="settings_advanced_delete_imported_summary">Radera filer efter att de importerats</string>
+    <string name="settings_advanced_delete_exported_title">Radera exporterade filer</string>
+    <string name="settings_advanced_delete_exported_summary">Radera filer efter att de exporterats</string>
+
+    <string name="settings_other_title">Övrigt</string>
+    <string name="settings_other_feedback_title">Feedback</string>
+    <string name="settings_other_feedback_summary">Skicka ett mejl med feedback</string>
+    <string name="settings_other_feedback_mail_subject">Feedback till Photok</string>
+    <string name="settings_other_feedback_mail_body">Skriv feedback om Photok :)</string>
+    <string name="settings_other_feedback_mail_emailaddress">support@photok.app</string>
+
+
+
+    <string name="settings_other_sourcecode_title">Källkod</string>
+    <string name="settings_other_sourcecode_summary">Bidra till Photok</string>
+    <string name="settings_other_sourcecode_url">https://github.com/leonlatsch/Photok</string>
+    <string name="settings_other_credits_title">Tack</string>
+    <string name="settings_other_credits_summary">Bidragsgivare och erkännanden</string>
+    <string name="settings_other_telemetry_title">Datainsamling</string>
+    <string name="settings_other_telemetry_summary">Hantera insamling av användningsdata</string>
+    <string name="settings_other_about_title">Om</string>
+    <string name="settings_other_about_summary">Information om Photok</string>
+
+    <!-- CREDITS -->
+    <string name="credits_contributors_title">Bidragsgivare</string>
+    <string name="credits_contributors_hint">Besök Photok på GitHub för att se alla bidragsgivare</string>
+    <string name="credits_icons_title">Ikoner</string>
+
+    <!-- CHANGE PASSWORD -->
+    <string name="change_password_title">Byt ditt lösenord</string>
+    <string name="change_password_old_password">Gammalt lösenord</string>
+    <string name="change_password_new_password">Nytt lösenord</string>
+    <string name="change_password_check">Kontrollera</string>
+    <string name="change_password_enter_new_password">Ange ditt nya lösenord</string>
+    <string name="change_password_confirm_new_password">Bekräfta ditt nya lösenord</string>
+    <string name="change_password_button">Byt lösenord</string>
+    <string name="change_password_confirm_message">Säkerhetskopia rekommenderas!<br /> Att byta lösenord kräver att alla dina filer krypteras om! Vill du fortsätta?</string>
+    <string name="change_password_reencrypting">Krypterar om fil(er)…</string>
+    <string name="change_password_done">Lösenordet har bytts</string>
+    <string name="change_password_recovery_phrase_used">Återställningsfras användes — kontroll av gammalt lösenord behövs inte</string>
+
+    <!-- CHECK PASSWORD -->
+    <string name="settings_security_check_password_title">Verifiera lösenord</string>
+
+    <!-- HIDE APP -->
+    <string name="hide_app_title_hide">Dölj Photok</string>
+    <string name="hide_app_title_show">Visa Photok</string>
+    <string name="hide_app_status_label">Photok är just nu:</string>
+    <string name="hide_app_status_visible">SYNLIG</string>
+    <string name="hide_app_status_hidden">DOLD</string>
+    <string name="hide_app_app_name_stealth">Telefon</string>
+    <string name="hide_app_confirm_hide">Vill du verkligen dölja Photok?</string>
+    <string name="hide_app_confirm_show">Vill du visa Photok igen?</string>
+    <string name="hide_app_hint">När den är dold kan Photok bara startas från telefonens knappsats med din hemliga startkod.</string>
+    <string name="hide_app_hint_current_code">Nuvarande startkod:</string>
+
+    <!-- ON BOARDING -->
+    <string name="onboarding_next">Nästa</string>
+    <string name="onboarding_finish">Slutför</string>
+    <string name="onboarding_skip"><u>Hoppa över</u></string>
+
+    <string name="onboarding_slide1_title">Välkommen till</string>
+    <string name="onboarding_slide1_description">En säker plats för dina foton.</string>
+    <string name="onboarding_slide2_title">Skapa ett lösenord</string>
+    <string name="onboarding_slide2_description">Skapa ett säkert lösenord. Ditt lösenord används för att kryptera dina foton direkt på telefonen.</string>
+    <string name="onboarding_slide3_title">Börja importera</string>
+    <string name="onboarding_slide3_description">Börja importera dina foton och håll dem säkra från andra.\nEfteråt kan du radera dem i ditt galleri.</string>
+
+    <!-- BACKUP -->
+    <string name="backup_processing_title">Skapar säkerhetskopia…</string>
+    <string name="backup_confirm_password">Bekräfta ditt lösenord för att skapa en säkerhetskopia.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Återställ säkerhetskopia</string>
+    <string name="backup_restore_validating">Validerar…</string>
+    <string name="backup_restore_invalid">Ogiltig säkerhetskopia</string>
+
+    <string name="backup_restore_stats">Statistik</string>
+    <string name="backup_restore_stats_photos">Foton</string>
+    <string name="backup_restore_stats_videos">Videor</string>
+    <string name="backup_restore_stats_albums">Album</string>
+    <string name="backup_restore_stats_size">Storlek</string>
+
+    <string name="backup_restore_archive">Arkiv</string>
+    <string name="backup_restore_archive_created">Skapad</string>
+    <string name="backup_restore_archive_encryption">Kryptering</string>
+    <string name="backup_restore_archive_compatibility">Kompatibilitet</string>
+    <string name="backup_restore_compatibility_up_to_date">Aktuell (V%1$d)</string>
+    <string name="backup_restore_compatibility_backwards">Bakåtkompatibel (V%1$d)</string>
+
+    <string name="backup_restore_unlock_title">Lås upp säkerhetskopia</string>
+    <string name="backup_restore_unlock_button">Lås upp &amp; återställ</string>
+    <string name="backup_restore_unlock_headline">Ange lösenord för säkerhetskopia</string>
+    <string name="backup_restore_unlock_explanation">Säkerhetskopian är krypterad och måste låsas upp med det lösenord som användes när den skapades.</string>
+    <string name="backup_restore_unlock_password_notice">Detta lösenord används bara för att låsa upp säkerhetskopian och lagras aldrig någonstans.</string>
+
+    <string name="backup_restore_restoring_title">Återställer säkerhetskopia</string>
+    <string name="backup_restore_restoring_subtitle">Återställer…</string>
+    <string name="backup_restore_restoring_percent">%1$d%%</string>
+    <string name="backup_restore_restoring_bytes">%1$s av %2$s</string>
+    <string name="backup_restore_restoring_speed">%1$s/s</string>
+    <string name="backup_restore_restoring_files">%1$d / %2$d filer</string>
+    <string name="backup_restore_restoring_estimating">Beräknar…</string>
+    <string name="backup_restore_restoring_time_left">%1$s kvar</string>
+    <string name="backup_restore_restoring_keep_open">Detta kan ta en stund. Håll appen öppen.</string>
+    <string name="backup_restore_cancel">Avbryt återställning</string>
+
+    <string name="backup_restore_indexing_title">Indexerar…</string>
+    <string name="backup_restore_indexing_description">Alla filer återställda, indexerar dina foton och album.</string>
+
+    <string name="backup_restore_canceled_headline">Återställning avbruten</string>
+    <string name="backup_restore_canceled_description">Inget från %1$s lades till i ditt valv. Alla filer som redan återställts har raderats igen.</string>
+
+    <string name="backup_restore_finished_headline">Återställd</string>
+    <string name="backup_restore_finished_headline_one_issue">Återställd med 1 problem</string>
+    <string name="backup_restore_finished_headline_issues">Återställd med %1$d problem</string>
+    <string name="backup_restore_finished_failed_items">Misslyckade objekt</string>
+    <string name="backup_restore_finished_unknown_error">Okänt fel</string>
+
+    <string name="backup_restore_error_cannot_open_title">Säkerhetskopian kan inte öppnas</string>
+    <string name="backup_restore_error_cannot_open_description">Filen kunde inte öppnas. Kontrollera att det är en Photok-säkerhetskopia och att den fortfarande finns på enheten.</string>
+    <string name="backup_restore_error_no_files_title">Inga foton i den här säkerhetskopian</string>
+    <string name="backup_restore_error_no_files_description">Det här arkivet innehåller inga Photok-filer, så det finns inget att återställa.</string>
+    <string name="backup_restore_error_no_metadata_title">Säkerhetskopian är ofullständig</string>
+    <string name="backup_restore_error_no_metadata_description">Den här säkerhetskopian saknar metadata, så Photok kan inte se vad som finns i den.</string>
+    <string name="backup_restore_error_unknown_title">Säkerhetskopian kan inte läsas</string>
+    <string name="backup_restore_error_unknown_description">Något gick fel när säkerhetskopian lästes.</string>
+    <string name="backup_restore_duplicates">Foton som redan finns i ditt valv</string>
+    <string name="backup_restore_duplicates_skip">Hoppa över dem</string>
+    <string name="backup_restore_duplicates_skip_description">Behåll kopian som redan finns i ditt valv.</string>
+    <string name="backup_restore_duplicates_import_again">Importera dem igen</string>
+    <string name="backup_restore_duplicates_import_again_description">Lägg till kopian från den här säkerhetskopian bredvid den som redan finns i ditt valv.</string>
+    <string name="backup_restore_not_enough_space">Den här säkerhetskopian behöver %1$s men bara %2$s är ledigt. Frigör utrymme innan du återställer.</string>
+    <string name="backup_restore_error_incomplete_title">Säkerhetskopian är ofullständig</string>
+    <string name="backup_restore_error_incomplete_description">Filen är avbruten, troligen på grund av en avbruten nedladdning eller kopiering. Försök överföra den igen.</string>
+    <string name="backup_restore_error_unsupported_version_title">Säkerhetskopian är för ny</string>
+    <string name="backup_restore_error_unsupported_version_description">Den här säkerhetskopian skapades med en nyare version av Photok (format %1$d). Uppdatera Photok för att återställa den.</string>
+    <string name="backup_restore_finished_added_one">%1$d fil tillagd på %2$s.</string>
+    <string name="backup_restore_finished_added">%1$d filer tillagda på %2$s.</string>
+    <string name="backup_restore_finished_albums_one">%1$d album återställt.</string>
+    <string name="backup_restore_finished_albums">%1$d album återställda.</string>
+    <string name="backup_restore_finished_duplicates_one">%1$d dubblett hoppades över.</string>
+    <string name="backup_restore_finished_duplicates">%1$d dubbletter hoppades över.</string>
+
+    <!-- NEWS -->
+    <string name="news_new_in_title">Nytt i</string>
+    <string name="news_view_changelog">Visa ändringslogg</string>
+    <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
+    <string name="news_highlight_label">Höjdpunkt</string>
+    <string name="news_change_kind_new">Nytt</string>
+    <string name="news_change_kind_improved">Förbättrat</string>
+    <string name="news_change_kind_fixed">Åtgärdat</string>
+    <string name="release_highlight_title">Helt nya säkerhetskopior</string>
+    <string name="release_highlight_summary">Att återställa en säkerhetskopia är nu ett guidat flöde i helskärm. Säkerhetskopior och återställningar är också mer tillförlitliga än någonsin.</string>
+    <string name="release_highlight_point_1">Liveprogress, hastighet och tid kvar</string>
+    <string name="release_highlight_point_2">Hoppa över eller ersätt filer du redan har</string>
+    <string name="release_highlight_point_3">Tydliga fel i stället för ett generellt misslyckande</string>
+    <string name="release_highlight_point_4" formatted="false">100 % bakåtkompatibel med alla dina gamla säkerhetskopior</string>
+    <string name="release_change_title_2">Olika åtgärder och förbättringar</string>
+    <string name="release_change_summary_2">Smöligare upplåsning och installation, tangentbord lär sig inte längre ditt lösenord och appen låser pålitligt i bakgrunden.</string>
+
+    <!-- Recovery Menu -->
+    <string name="recovery_subtitle">Återställningsmeny</string>
+    <string name="recovery_menu_item_open_photok">Öppna Photok</string>
+    <string name="recovery_subtitle_reset_hide_app">Återställ inställning för dölj app</string>
+
+    <!-- Migration -->
+    <string name="migration_initial_title_welcome">Välkommen till</string>
+    <string name="migration_initial_explaination">Den här versionen av Photok introducerar en ny krypteringsmetod. För att fortsätta till ditt galleri krävs en migrering.</string>
+    <string name="migration_initial_button">Kom igång</string>
+
+    <string name="migration_initial_stage_backup_checklist">Säkerhetskopiera dina data</string>
+    <string name="migration_initial_stage_backup_explanation">Skapa en säkerhetskopia av dina data innan du fortsätter</string>
+    <string name="migration_initial_stage_backup_button">Skapa säkerhetskopia</string>
+
+    <string name="migration_initial_stage_permission_checklist">Ge behörighet</string>
+    <string name="migration_initial_stage_permission_explanation">Ge behörighet för aviseringar så att migreringen kan köras tillförlitligt i bakgrunden.</string>
+    <string name="migration_initial_stage_permission_button">Ge behörighet</string>
+
+    <string name="migration_initial_stage_ready_explanation">Allt är klart</string>
+    <string name="migration_initial_stage_ready_button">Starta migrering</string>
+
+    <string name="migration_running_title">Migrerar ditt galleri</string>
+    <string name="migration_running_progress">%d av %d filer behandlade</string>
+    <string name="migration_running_advice">Om den här skärmen hålls öppen går migreringen snabbare.</string>
+
+    <string name="migration_done_title">Galleri-migrering klar</string>
+    <string name="migration_done_progress">Alla filer migrerade</string>
+
+    <string name="migration_error_title">Fel vid migrering av ditt galleri</string>
+    <string name="migration_error_button">Skicka felrapport</string>
+
+    <string name="notification_channel_background_tasks">Bakgrundsaktiviteter</string>
+    <string name="migration_error_extract_data">Extrahera data</string>
+    <string name="migration_error_extract_confirmation_text">Är du säker på att du vill extrahera alla dina filer OKRYPTERADE i en ZIP-fil?</string>
+    <string name="migration_error_extracting_title">Dekrypterar till ZIP…</string>
+
+
+    <!-- Biometric -->
+    <string name="biometric_unlock_title">Lås upp Photok</string>
+    <string name="biometric_unlock_subtitle">Verifiera din identitet för att låsa upp</string>
+    <string name="biometric_unlock_cancel">Använd Photok-lösenord</string>
+
+    <string name="biometric_unlock_setup_title">Aktivera biometrisk upplåsning</string>
+    <string name="biometric_unlock_setup_subtitle">För att aktivera biometrisk upplåsning, bekräfta din identitet</string>
+
+    <string name="biometric_unlock_error">Biometrisk upplåsning misslyckades. Använd ditt Photok-lösenord.</string>
+    <string name="biometric_unlock_hint_button">Lås upp med biometri</string>
+
+    <!-- Sorting -->
+    <string name="sorting_sort">Sortera</string>
+
+    <string name="sorting_order_asc_label">Stigande</string>
+    <string name="sorting_order_desc_label">Fallande</string>
+
+    <string name="sorting_field_import_date_label">Importdatum</string>
+    <string name="sorting_field_filename_label">Filnamn</string>
+    <string name="sorting_field_size_label">Filstorlek</string>
+    <string name="sorting_field_added_to_album_label">Tillagd i album</string>
+    <string name="sorting_field_last_modified">Senast ändrad</string>
+
+    <string name="sorting_restore_default">Återställ standard</string>
+
+    <!-- Video Player -->
+    <string name="video_player_play">Spela</string>
+    <string name="video_player_pause">Pausa</string>
+    <string name="video_player_mute">Ljud av</string>
+    <string name="video_player_unmute">Ljud på</string>
+    
+    <!-- Telemetry -->
+    <string name="telemetry_sheet_title">Hjälp till att förbättra Photok</string>
+    <string name="telemetry_sheet_paragraph_1">Photok kan valfritt skicka anonyma användningsstatistik för att hjälpa till att förbättra appen.</string>
+    <string name="telemetry_sheet_paragraph_2">Den behandlade datan är helt anonymiserad och tillåter inga slutsatser om personlig information.</string>
+    <string name="telemetry_sheet_paragraph_3">Att skicka anonym användningsdata är valfritt och kan stängas av när som helst i inställningarna.</string>
+    <string name="telemetry_learn_more">Läs mer</string>
+    <string name="telemetry_choice_no">Nej tack</string>
+    <string name="telemetry_choice_yes">Dela anonym användningsdata</string>
+    <string name="telemetry_toggle">Tillåt insamling av användningsdata</string>
+
+    <!-- Recovery Phrase — General -->
+    <string name="recovery_phrase_label">Återställningsfras</string>
+    <string name="recovery_phrase_title">Din återställningsfras</string>
+    <string name="recovery_phrase_description">Skriv ner de här orden i ordning och förvara dem på ett säkert ställe. Du kan använda frasen för att återfå åtkomst till ditt valv.</string>
+    <string name="recovery_phrase_confirm">Fras sparad</string>
+    <string name="recovery_phrase_save_warning">Spara din återställningsfras</string>
+    <string name="recovery_phrase_create_new">Skapa ny fras</string>
+    <string name="recovery_phrase_create_new_confirm">Att skapa en ny fras ersätter permanent din nuvarande. Din befintliga fras fungerar inte längre för att återställa ditt valv.</string>
+    <string name="recovery_phrase_saved_to_file">Sparad till %1$s</string>
+
+    <!-- Recovery Phrase — Setup -->
+    <string name="recovery_phrase_select_word_count">Antal ord</string>
+
+    <!-- Recovery Phrase — QR Code -->
+    <string name="recovery_phrase_qr_save_as_image">Spara som bild</string>
+
+    <!-- Recovery Phrase — Restore -->
+    <string name="recovery_phrase_forgot_password">Glömt lösenord</string>
+    <string name="recovery_phrase_restore_button">Återställ</string>
+    <string name="recovery_phrase_restore_word_placeholder">Ord %1$d</string>
+    <string name="recovery_phrase_restore_enter_title">Ange återställningsfras</string>
+    <string name="recovery_phrase_restore_choose_option">Välj hur du vill ange din fras.</string>
+    <string name="recovery_phrase_restore_option_type">Skriv för hand</string>
+    <string name="recovery_phrase_restore_option_open_file">Ladda från fil</string>
+    <string name="recovery_phrase_restore_option_scan_qr">Skanna QR-kod</string>
+    <string name="recovery_phrase_restore_option_paste">Klistra in från urklipp</string>
+    <string name="recovery_phrase_restore_input_placeholder">Skriv din återställningsfras ord för ord</string>
+    <string name="recovery_phrase_restore_unlocked">Upplåst</string>
+    <string name="recovery_phrase_restore_unlocking">Låser upp…</string>
+    <string name="recovery_phrase_restore_error_generic">Kunde inte återställa valvet. Kontrollera din fras och försök igen.</string>
+    <string name="recovery_phrase_restore_error_invalid">Ogiltig återställningsfras. Dubbelkolla orden.</string>
+    <string name="recovery_phrase_restore_error_invalid_qr">QR-koden innehåller ingen giltig återställningsfras.</string>
+    <string name="recovery_phrase_restore_source_qr">Inskannad från QR-kod</string>
+    <string name="recovery_phrase_restore_source_file">Laddad från %1$s</string>
+    <string name="recovery_phrase_restore_source_clipboard">Inklistrad från urklipp</string>
+    <string name="recovery_phrase_restore_camera_permission_button">Begär kamerabehörighet</string>
+    <string name="recovery_phrase_restore_camera_permission_rationale">Kamerabehörighet krävs för att skanna QR-koder.</string>
+    <string name="permission_gate_change_in_settings">Ändra i Inställningar</string>
+</resources>
