@@ -78,7 +78,7 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // SharedPreferences edit extension
-    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.core:core-ktx:1.19.1")
 
     // AppCompat (drawables in res/drawable reference ?attr/colorControlNormal)
     implementation("androidx.appcompat:appcompat:1.8.0")

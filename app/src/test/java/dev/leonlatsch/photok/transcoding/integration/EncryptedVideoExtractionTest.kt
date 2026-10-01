@@ -126,16 +126,13 @@ class EncryptedVideoExtractionTest {
     /**
      * `-c:v mpeg2video -pix_fmt yuv420p -f vob`, an MPEG-2 program stream. `-f mpeg` would
      * write an MPEG-1 system stream, which Media3's PsExtractor does not sniff.
-     *
-     * A program stream carries no sample table: the reader emits a picture only once the
-     * next start code delimits it, so the last frame of the fixture never arrives.
      */
     @Test
     fun `encrypted mpeg is extracted`() {
         val result = extract(encrypt(readFixture("sample_video.mpeg"), "mpeg.enc"))
 
         assertVideoTrack(result, MimeTypes.VIDEO_MPEG2)
-        assertEquals(FIXTURE_SAMPLE_COUNT - 1, result.sampleCount)
+        assertEquals(FIXTURE_SAMPLE_COUNT, result.sampleCount)
     }
 
     /** Guards that [PhotoType] gained no video type without a fixture to cover it. */

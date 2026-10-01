@@ -156,7 +156,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
 
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.10.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.10.2")
 
     // Navigation 3
     implementation("androidx.navigation3:navigation3-ui:1.2.0")
@@ -215,16 +215,16 @@ dependencies {
     implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.9.2")
-    implementation("androidx.media3:media3-ui:1.9.2")
-    implementation("androidx.media3:media3-ui-compose:1.9.2")
-    implementation("androidx.media3:media3-ui-compose-material3:1.9.2")
+    implementation("androidx.media3:media3-exoplayer:1.11.1")
+    implementation("androidx.media3:media3-ui:1.11.1")
+    implementation("androidx.media3:media3-ui-compose:1.11.1")
+    implementation("androidx.media3:media3-ui-compose-material3:1.11.1")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.19.0")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-ktx:1.19.1")
+    implementation("androidx.core:core-splashscreen:1.2.0")
     implementation("androidx.appcompat:appcompat:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.2")
     implementation("androidx.activity:activity:1.12.4")
@@ -235,7 +235,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // 4.15.1+ required: it ships ASM 9.8, which can read the Java 25 bytecode of the JBR
     // that Android Studio runs the test JVM on. 4.14.1 fails with "class file major version 69".
-    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("org.robolectric:robolectric:4.17")
     testImplementation("io.mockk:mockk:1.14.11")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
     testImplementation("com.google.dagger:hilt-android-testing:2.60.1")
