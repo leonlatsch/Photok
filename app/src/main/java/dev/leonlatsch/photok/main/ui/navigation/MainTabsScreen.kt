@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -131,14 +132,16 @@ fun MainTabsScreen(homeTab: MainTab) {
         LocalMainMenuPadding provides PaddingValues(bottom = mainMenuHeight),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            NavDisplay(
-                entries = selectedEntries,
-                onBack = tabNavigator::goBack,
-                modifier = Modifier.fillMaxSize(),
-                transitionSpec = { slideForward() },
-                popTransitionSpec = { slideBackward() },
-                predictivePopTransitionSpec = { slideBackward() },
-            )
+            key(selectedTab) {
+                NavDisplay(
+                    entries = selectedEntries,
+                    onBack = tabNavigator::goBack,
+                    modifier = Modifier.fillMaxSize(),
+                    transitionSpec = { slideForward() },
+                    popTransitionSpec = { slideBackward() },
+                    predictivePopTransitionSpec = { slideBackward() },
+                )
+            }
 
             if (currentRoute in RoutesWithMenu || currentRoute is AppRoute.AlbumDetail) {
                 MainMenu(
