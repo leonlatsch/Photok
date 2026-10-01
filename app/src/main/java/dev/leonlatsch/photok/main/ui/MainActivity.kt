@@ -18,8 +18,11 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -50,7 +53,12 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         val hasSession = getBaseApplication().sessionRepository.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
