@@ -147,6 +147,12 @@ dependencies {
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
+    // Material Components (legacy BottomSheetDialogFragment + XML themes)
+    implementation("com.google.android.material:material:1.14.0")
+
+    // DocumentFile
+    implementation("androidx.documentfile:documentfile:1.1.0")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
