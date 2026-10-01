@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -52,32 +53,34 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
-import dev.leonlatsch.photok.main.ui.navigation.AppRoute
-import dev.leonlatsch.photok.main.ui.navigation.LocalAppNavigator
-import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
+import dev.leonlatsch.photok.main.ui.navigation.RootRoute
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.ObserveAsEvents
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
+import dev.leonlatsch.photok.uicomponnets.Dialogs
+import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 
 @Composable
 fun SetupScreen(viewModel: SetupViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
+
     val activity = LocalActivity.current
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
             SetupNavigationEvent.ShowRecoveryPhraseSetup -> {
                 activity?.hideKeyboard()
-                navigator.replaceAll(AppRoute.RecoveryPhraseSetup)
+                navigator.replaceAll(RootRoute.RecoveryPhraseSetup)
             }
 
             SetupNavigationEvent.ShowError -> {
-                Dialogs.showLongToast(context, context.getString(R.string.common_error))
+                Dialogs.showLongToast(context, resources.getString(R.string.common_error))
             }
         }
     }

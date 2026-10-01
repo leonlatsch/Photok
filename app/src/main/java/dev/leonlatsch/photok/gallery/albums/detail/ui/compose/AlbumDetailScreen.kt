@@ -20,8 +20,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.DropdownMenuItem
@@ -51,7 +51,8 @@ import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
-import dev.leonlatsch.photok.main.ui.navigation.LocalAppNavigator
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
@@ -59,15 +60,13 @@ import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
-import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
-import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun AlbumDetailScreen(albumUuid: String) {
     val viewModel = hiltViewModel<AlbumDetailViewModel, AlbumDetailViewModel.Factory>(
         creationCallback = { factory -> factory.create(albumUuid) }
     )
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
     val fragment = LocalFragment.current
 
     ObserveAsEvents(viewModel.photoActions) { action ->

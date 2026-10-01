@@ -14,18 +14,28 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.navigation
+package dev.leonlatsch.photok.main.ui.navigation
 
-import dev.leonlatsch.photok.main.ui.navigation.MainTab
-import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.models.StartPage
-import javax.inject.Inject
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.navigation.Navigator
 
-class GetStartTab @Inject constructor(
-    private val config: Config,
-) {
-    operator fun invoke(): MainTab = when (StartPage.fromValue(config.galleryStartPage)) {
-        StartPage.AllFiles -> MainTab.Gallery
-        StartPage.Albums -> MainTab.Albums
+class RootNavigator(
+    private val backStack: NavBackStack<NavKey>,
+) : Navigator {
+
+    override fun navigate(route: NavKey) {
+        backStack.add(route)
+    }
+
+    override fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
+        }
+    }
+
+    override fun replaceAll(route: NavKey) {
+        backStack.clear()
+        backStack.add(route)
     }
 }

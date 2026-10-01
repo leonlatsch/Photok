@@ -16,14 +16,14 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.navigation
 
-import dev.leonlatsch.photok.main.ui.navigation.AppNavigator
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.navigation.Navigator
 
 object AlbumsNavigator {
 
     fun navigate(
         event: AlbumsNavigationEvent,
-        navigator: AppNavigator,
+        navigator: Navigator,
     ) {
         when (event) {
             is AlbumsNavigationEvent.OpenAlbumDetail -> navigator.navigate(AppRoute.AlbumDetail(albumUuid = event.uuid))

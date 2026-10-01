@@ -91,12 +91,13 @@ The installable `:app` module has a single `MainActivity` (with `DataBinding`). 
 
 ### Navigation
 
-- **Navigation 3.** `AppNavHost` (`main/ui/navigation/`) owns the back stack (`rememberNavBackStack`) and the `NavDisplay` with one `entry<...>` per route.
-- **Routes are typed objects, never strings.** App routes are `@Serializable` cases of `sealed interface AppRoute : NavKey`. Routes with arguments are data classes, for example `AppRoute.AlbumDetail(albumUuid)`. Non-serializable args such as `Uri` are stored as `String`.
-- **Navigating.** App code uses `LocalAppNavigator.current` (`AppNavigator`: `navigate`, `goBack`, `replaceAll`, `openStartTab`, `selectTab`). The `Navigator` interface and `LocalNavigator` in `core/.../navigation/` are the module-neutral contract for `:pro`.
-- **Bottom tabs.** `MainMenu` lives inside `AppNavHost` and is driven by the current route. A tab click resets the stack to `[startTab, tab]`.
-- **Transitions.** The default is the core `slideForward()` / `slideBackward()`. Entries tagged as top-level tabs switch without animation.
-- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `AppNavigator`, plus the host fragment for showing `DialogFragment`s.
+- **Root stack.** `AppNavHost` (`main/ui/navigation/`) owns the root back stack and `NavDisplay`. It holds the pre-unlock flow (`Setup`, `Unlock`, `RecoveryPhraseSetup`, `RecoveryPhraseRestore`, `EncryptionMigration`) and `Main`. These are the cases of `sealed interface RootRoute : NavKey`. Once the vault is unlocked, call `replaceAll(RootRoute.Main)`.
+- **Tabs, one stack each (iOS style).** `RootRoute.Main` renders `MainTabsScreen`, which owns one back stack per `MainTab` (Gallery, Albums, Settings; each starts at `MainTab.rootRoute`) and registers every in-app route in `tabEntryProvider`. Each stack is decorated with `rememberDecoratedNavEntries` on every composition, so hidden tabs keep their entries, ViewModels and scroll state. Only the selected tab's entries go into the `NavDisplay`. Tapping the selected tab pops it to its root. Back at the root of a non-home tab goes to the home tab (the start page from `GetStartTab`).
+- **Routes are typed objects, never strings.** In-app routes are `@Serializable` cases of `sealed interface AppRoute : NavKey`, shared by all tabs, so any tab can push any of them. Routes with arguments are data classes, for example `AppRoute.AlbumDetail(albumUuid)`. Non-serializable args such as `Uri` are stored as `String`. New in-app screens go into `AppRoute` and `tabEntryProvider`; only pre-unlock screens go into `RootRoute` and `AppNavHost`. Tab selection (`MainMenu`, `GetStartTab`) uses the `MainTab` enum, never routes.
+- **Navigating.** Always use `LocalNavigator.current` (the `Navigator` interface in `core/.../navigation/`: `navigate`, `goBack`, `replaceAll`). In the root stack it is a `RootNavigator`. Inside a tab it is a `TabNavigator`, which pushes and pops on that tab's stack; its `replaceAll` replaces the whole root stack.
+- **Bottom menu.** `MainMenu` is drawn by `MainTabsScreen` on tab roots, `AlbumDetail` and `DevSettings`; it is hidden on every other route. Screens under it read `LocalMainMenuPadding`.
+- **Transitions.** The default is the core `slideForward()` / `slideBackward()`. Switching tabs swaps the stack without animation.
+- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `Navigator`, plus the host fragment for showing `DialogFragment`s.
 
 ### Pro-only screens
 
@@ -126,7 +127,7 @@ Every screen follows a **simple, flat MVI**. There is no dedicated MVI framework
 | `XyzUiEvent.kt` | `sealed interface XyzUiEvent`. One `data class`/`data object` per user action. |
 | `XyzScreen.kt` | Top-level `@Composable`, registered as an `entry<AppRoute.Xyz>` in `AppNavHost`. It gets the `ViewModel` via `hiltViewModel()`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
 
-Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalAppNavigator.current`. Do not pass a plain back action down from `AppNavHost` as `onClose`/`onBack`; the screen calls `LocalNavigator.current.goBack()` itself. Callbacks from the host are only for actions that differ per route (for example `RecoveryPhraseSetupScreen(onContinue)`). Private `*Content` composables may still take lambdas so previews work without a navigator.
+Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalNavigator.current`. Do not pass a plain back action down from `AppNavHost` as `onClose`/`onBack`; the screen calls `LocalNavigator.current.goBack()` itself. Callbacks from the host are only for actions that differ per route (for example `RecoveryPhraseSetupScreen(onContinue)`). Private `*Content` composables may still take lambdas so previews work without a navigator.
 
 **Canonical example** — `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
 
@@ -144,7 +145,7 @@ Still used by onboarding and some dialogs. They extend `BindableFragment<ViewDat
 
 Shared objects are injected into the Compose tree via `CompositionLocal`. Check the relevant module's UI package and feature-specific files (for example, `app/.../transcoding/compose/LocalEncryptedImageLoader.kt`) for the current set.
 
-They are provided once in `AppNavFragment` (`LocalFragment`, `LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` (`LocalAppNavigator`, `LocalNavigator`). `LocalFragment` is the wrapper fragment. Use its `childFragmentManager` to show `DialogFragment`s from Compose, and use it for APIs that still need a `Fragment`, such as `BiometricPrompt`.
+They are provided once in `AppNavFragment` (`LocalFragment`, `LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` / `MainTabsScreen` (`LocalNavigator`, `LocalMainMenuPadding`). `LocalFragment` is the wrapper fragment. Use its `childFragmentManager` to show `DialogFragment`s from Compose, and use it for APIs that still need a `Fragment`, such as `BiometricPrompt`.
 
 ### Compose Components
 

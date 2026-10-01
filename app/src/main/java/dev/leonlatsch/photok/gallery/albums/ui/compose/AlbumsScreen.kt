@@ -32,19 +32,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
+import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
-import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
-import dev.leonlatsch.photok.main.ui.navigation.LocalAppNavigator
 import dev.leonlatsch.photok.ui.ObserveAsEvents
-import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumsScreen(viewModel: AlbumsViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
 
     ObserveAsEvents(viewModel.navEvent) { event ->
         AlbumsNavigator.navigate(event, navigator)

@@ -21,13 +21,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.ui.navigation.AppNavigator
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.navigation.Navigator
 import dev.leonlatsch.photok.other.extensions.show
 
 object PhotoActionsNavigator {
-    fun navigate(action: PhotoAction, fragment: Fragment, navigator: AppNavigator) {
+    fun navigate(action: PhotoAction, fragment: Fragment, navigator: Navigator) {
         when (action) {
             is PhotoAction.DeletePhotos -> confirmAndDelete(
                 action.photos,
@@ -59,7 +59,7 @@ object PhotoActionsNavigator {
         DeleteBottomSheetDialogFragment.newInstance(photos).show(fragmentManager)
     }
 
-    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navigator: AppNavigator) {
+    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navigator: Navigator) {
         navigator.navigate(AppRoute.ImageViewer(photoUuid = photoUUID, albumUuid = albumUUID.takeIf { it.isNotEmpty() }))
     }
 }

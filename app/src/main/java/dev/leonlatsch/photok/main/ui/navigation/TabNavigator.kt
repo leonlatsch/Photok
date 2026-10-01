@@ -16,14 +16,13 @@
 
 package dev.leonlatsch.photok.main.ui.navigation
 
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.navigation.Navigator
 
-class AppNavigator(
+class TabNavigator(
     private val backStack: NavBackStack<NavKey>,
-    private val startTab: () -> AppRoute,
+    private val rootNavigator: Navigator,
 ) : Navigator {
 
     override fun navigate(route: NavKey) {
@@ -37,26 +36,6 @@ class AppNavigator(
     }
 
     override fun replaceAll(route: NavKey) {
-        backStack.clear()
-        backStack.add(route)
+        rootNavigator.replaceAll(route)
     }
-
-    fun openStartTab() {
-        replaceAll(startTab())
-    }
-
-    fun selectTab(tab: AppRoute) {
-        if (backStack.lastOrNull() == tab) return
-
-        val startTab = startTab()
-        backStack.clear()
-        backStack.add(startTab)
-        if (tab != startTab) {
-            backStack.add(tab)
-        }
-    }
-}
-
-val LocalAppNavigator = staticCompositionLocalOf<AppNavigator> {
-    error("No AppNavigator provided")
 }

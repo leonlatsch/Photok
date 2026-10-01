@@ -21,14 +21,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.ui.navigation.AppNavigator
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.repositories.ImportSource
+import dev.leonlatsch.photok.navigation.Navigator
 import dev.leonlatsch.photok.other.extensions.show
 
 object AlbumDetailNavigator {
 
-    fun navigate(event: NavigationEvent, fragment: Fragment, navigator: AppNavigator) {
+    fun navigate(event: NavigationEvent, fragment: Fragment, navigator: Navigator) {
         when (event) {
             NavigationEvent.Close -> navigator.goBack()
             is NavigationEvent.ShowToast -> showToast(event, fragment)
@@ -37,7 +37,7 @@ object AlbumDetailNavigator {
         }
     }
 
-    private fun startRestoreBackup(backupUri: Uri, navigator: AppNavigator) {
+    private fun startRestoreBackup(backupUri: Uri, navigator: Navigator) {
         navigator.navigate(AppRoute.RestoreBackup(backupUri.toString()))
     }
 

@@ -61,23 +61,23 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.main.ui.navigation.AppRoute
-import dev.leonlatsch.photok.main.ui.navigation.LocalAppNavigator
+import dev.leonlatsch.photok.main.ui.navigation.RootRoute
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.ObserveAsEvents
-import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
+import dev.leonlatsch.photok.uicomponnets.Dialogs
+import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
     val activity = LocalActivity.current
     val context = LocalContext.current
     val resources = LocalResources.current
@@ -91,10 +91,10 @@ fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
         activity?.hideKeyboard()
 
         when (event) {
-            UnlockNavigationEvent.Unlocked -> navigator.openStartTab()
-            UnlockNavigationEvent.StartLegacyMigration -> navigator.replaceAll(AppRoute.EncryptionMigration)
-            UnlockNavigationEvent.ShowRecoveryPhraseSetup -> navigator.replaceAll(AppRoute.RecoveryPhraseSetup)
-            UnlockNavigationEvent.ShowRecoveryPhraseRestore -> navigator.navigate(AppRoute.RecoveryPhraseRestore)
+            UnlockNavigationEvent.Unlocked -> navigator.replaceAll(RootRoute.Main)
+            UnlockNavigationEvent.StartLegacyMigration -> navigator.replaceAll(RootRoute.EncryptionMigration)
+            UnlockNavigationEvent.ShowRecoveryPhraseSetup -> navigator.replaceAll(RootRoute.RecoveryPhraseSetup)
+            UnlockNavigationEvent.ShowRecoveryPhraseRestore -> navigator.navigate(RootRoute.RecoveryPhraseRestore)
             UnlockNavigationEvent.ShowError -> Unit
         }
     }

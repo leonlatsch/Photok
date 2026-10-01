@@ -31,15 +31,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun MainMenu(
-    currentRoute: NavKey?,
-    onTabClicked: (AppRoute) -> Unit,
+    selectedTab: MainTab,
+    onTabClicked: (MainTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavigationBar(
@@ -47,24 +46,24 @@ fun MainMenu(
         modifier = modifier,
     ) {
         MainNavItem(
-            selected = currentRoute == AppRoute.Gallery,
+            selected = selectedTab == MainTab.Gallery,
             iconRes = R.drawable.ic_image,
             label = stringResource(R.string.gallery_all_photos_label),
-            onClick = { onTabClicked(AppRoute.Gallery) },
+            onClick = { onTabClicked(MainTab.Gallery) },
         )
 
         MainNavItem(
-            selected = currentRoute == AppRoute.Albums || currentRoute is AppRoute.AlbumDetail,
+            selected = selectedTab == MainTab.Albums,
             iconRes = R.drawable.ic_folder,
             label = stringResource(R.string.gallery_albums_label),
-            onClick = { onTabClicked(AppRoute.Albums) },
+            onClick = { onTabClicked(MainTab.Albums) },
         )
 
         MainNavItem(
-            selected = currentRoute == AppRoute.Settings,
+            selected = selectedTab == MainTab.Settings,
             iconRes = R.drawable.ic_settings,
             label = stringResource(R.string.menu_main_settings),
-            onClick = { onTabClicked(AppRoute.Settings) },
+            onClick = { onTabClicked(MainTab.Settings) },
             badgeCount = rememberIntruderWarningCount()
         )
     }
@@ -75,7 +74,7 @@ fun MainMenu(
 private fun MainMenuPreview() {
     AppTheme {
         MainMenu(
-            currentRoute = AppRoute.Gallery,
+            selectedTab = MainTab.Gallery,
             onTabClicked = {}
         )
     }

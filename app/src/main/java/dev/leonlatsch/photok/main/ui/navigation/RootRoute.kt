@@ -14,18 +14,29 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.navigation
+package dev.leonlatsch.photok.main.ui.navigation
 
-import dev.leonlatsch.photok.main.ui.navigation.MainTab
-import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.models.StartPage
-import javax.inject.Inject
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
-class GetStartTab @Inject constructor(
-    private val config: Config,
-) {
-    operator fun invoke(): MainTab = when (StartPage.fromValue(config.galleryStartPage)) {
-        StartPage.AllFiles -> MainTab.Gallery
-        StartPage.Albums -> MainTab.Albums
-    }
+@Serializable
+sealed interface RootRoute : NavKey {
+
+    @Serializable
+    data object Setup : RootRoute
+
+    @Serializable
+    data object Unlock : RootRoute
+
+    @Serializable
+    data object RecoveryPhraseSetup : RootRoute
+
+    @Serializable
+    data object RecoveryPhraseRestore : RootRoute
+
+    @Serializable
+    data object EncryptionMigration : RootRoute
+
+    @Serializable
+    data object Main : RootRoute
 }

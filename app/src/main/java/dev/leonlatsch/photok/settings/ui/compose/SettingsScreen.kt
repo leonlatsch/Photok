@@ -84,11 +84,12 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
-import dev.leonlatsch.photok.main.ui.navigation.AppRoute
-import dev.leonlatsch.photok.main.ui.navigation.LocalAppNavigator
 import dev.leonlatsch.photok.backup.ui.ConfirmPasswordDialog
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.startActivityAndIgnoreTimer
@@ -116,7 +117,6 @@ import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
-import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 
 val LocalPreferencesValues: ProvidableCompositionLocal<Map<String, *>> =
     compositionLocalOf { emptyMap<String, String>() }
@@ -131,7 +131,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val fragment = LocalFragment.current
     val context = LocalContext.current
     val activity = LocalActivity.current
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
 
     val backupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
@@ -318,7 +318,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navigator = LocalAppNavigator.current
+    val navigator = LocalNavigator.current
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues

@@ -14,18 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.ui.navigation
+package dev.leonlatsch.photok.main.ui.navigation
 
-import dev.leonlatsch.photok.main.ui.navigation.MainTab
-import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.settings.domain.models.StartPage
-import javax.inject.Inject
-
-class GetStartTab @Inject constructor(
-    private val config: Config,
-) {
-    operator fun invoke(): MainTab = when (StartPage.fromValue(config.galleryStartPage)) {
-        StartPage.AllFiles -> MainTab.Gallery
-        StartPage.Albums -> MainTab.Albums
-    }
+enum class MainTab(val rootRoute: AppRoute) {
+    Gallery(AppRoute.Gallery),
+    Albums(AppRoute.Albums),
+    Settings(AppRoute.Settings),
 }
