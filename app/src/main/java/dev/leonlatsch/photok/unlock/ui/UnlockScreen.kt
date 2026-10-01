@@ -83,19 +83,30 @@ fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
     val resources = LocalResources.current
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
-        if (event == UnlockNavigationEvent.ShowError) {
-            Dialogs.showLongToast(context, resources.getString(R.string.common_error))
-            return@ObserveAsEvents
-        }
-
-        activity?.hideKeyboard()
-
         when (event) {
-            UnlockNavigationEvent.Unlocked -> navigator.replaceAll(RootRoute.Main)
-            UnlockNavigationEvent.StartLegacyMigration -> navigator.replaceAll(RootRoute.EncryptionMigration)
-            UnlockNavigationEvent.ShowRecoveryPhraseSetup -> navigator.replaceAll(RootRoute.RecoveryPhraseSetup)
-            UnlockNavigationEvent.ShowRecoveryPhraseRestore -> navigator.navigate(RootRoute.RecoveryPhraseRestore)
-            UnlockNavigationEvent.ShowError -> Unit
+            UnlockNavigationEvent.Unlocked -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.Main)
+            }
+
+            UnlockNavigationEvent.StartLegacyMigration -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.EncryptionMigration)
+            }
+
+            UnlockNavigationEvent.ShowRecoveryPhraseSetup -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.RecoveryPhraseSetup)
+            }
+
+            UnlockNavigationEvent.ShowRecoveryPhraseRestore -> {
+                activity?.hideKeyboard()
+                navigator.navigate(RootRoute.RecoveryPhraseRestore)
+            }
+
+            UnlockNavigationEvent.ShowError -> {
+                Dialogs.showLongToast(context, resources.getString(R.string.common_error))
+            }
         }
     }
 

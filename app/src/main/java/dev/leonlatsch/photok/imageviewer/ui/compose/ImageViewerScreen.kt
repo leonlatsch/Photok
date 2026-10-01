@@ -54,11 +54,11 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @OptIn(UnstableApi::class)
 @Composable

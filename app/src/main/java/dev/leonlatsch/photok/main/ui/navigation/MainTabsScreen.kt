@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
@@ -84,7 +85,7 @@ fun MainTabsScreen(homeTab: MainTab) {
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
-        entryProvider = tabEntryProvider,
+        entryProvider = { key -> tabEntry(MainTab.Gallery, key) },
     )
     val albumsEntries = rememberDecoratedNavEntries(
         backStack = albumsBackStack,
@@ -92,7 +93,7 @@ fun MainTabsScreen(homeTab: MainTab) {
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
-        entryProvider = tabEntryProvider,
+        entryProvider = { key -> tabEntry(MainTab.Albums, key) },
     )
     val settingsEntries = rememberDecoratedNavEntries(
         backStack = settingsBackStack,
@@ -100,7 +101,7 @@ fun MainTabsScreen(homeTab: MainTab) {
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
-        entryProvider = tabEntryProvider,
+        entryProvider = { key -> tabEntry(MainTab.Settings, key) },
     )
 
     val selectedBackStack = when (selectedTab) {
@@ -168,6 +169,16 @@ private fun popToRoot(backStack: NavBackStack<NavKey>) {
     while (backStack.size > 1) {
         backStack.removeAt(backStack.lastIndex)
     }
+}
+
+private fun tabEntry(tab: MainTab, key: NavKey): NavEntry<NavKey> {
+    val entry = tabEntryProvider(key)
+    return NavEntry(
+        key = key,
+        contentKey = "${tab.name}:${entry.contentKey}",
+        metadata = entry.metadata,
+        content = { entry.Content() },
+    )
 }
 
 private val tabEntryProvider = entryProvider<NavKey> {

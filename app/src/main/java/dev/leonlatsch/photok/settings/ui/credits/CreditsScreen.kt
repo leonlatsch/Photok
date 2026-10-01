@@ -61,10 +61,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun CreditsScreen(

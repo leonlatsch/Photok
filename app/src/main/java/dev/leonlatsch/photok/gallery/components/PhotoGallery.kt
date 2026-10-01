@@ -34,6 +34,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -84,7 +85,6 @@ import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import androidx.compose.foundation.layout.PaddingValues
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6

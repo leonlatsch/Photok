@@ -18,8 +18,10 @@ package dev.leonlatsch.photok.gallery.albums.ui.compose
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,8 +31,6 @@ import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.components.AlbumsGrid
 import dev.leonlatsch.photok.gallery.components.AlbumsList
 import dev.leonlatsch.photok.ui.components.MagicFab
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 
 @Composable
 fun AlbumsContent(

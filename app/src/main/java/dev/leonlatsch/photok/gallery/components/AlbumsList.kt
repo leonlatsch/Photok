@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +37,6 @@ import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun AlbumsList(

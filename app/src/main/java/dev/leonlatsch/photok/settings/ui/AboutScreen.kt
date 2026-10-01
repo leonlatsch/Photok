@@ -51,12 +51,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.other.openUrl
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.uicomponents.AppName
-import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 
 sealed interface AboutUiEvent {
     data object Close : AboutUiEvent
@@ -83,7 +82,6 @@ private fun AboutContent(
     handleUiEvent: (AboutUiEvent) -> Unit,
 ) {
     val context = LocalContext.current
-    val fragment = LocalFragment.current
 
     var showNewsDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -107,11 +105,7 @@ private fun AboutContent(
                 },
                 actions = {
                     IconButton(
-                        onClick = {
-                            fragment?.let {
-                                showNewsDialog = true
-                            }
-                        }
+                        onClick = { showNewsDialog = true }
                     ) {
                         Icon(
                             painterResource(R.drawable.ic_outline_campaign),

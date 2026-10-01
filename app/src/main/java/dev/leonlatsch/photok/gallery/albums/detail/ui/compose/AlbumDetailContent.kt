@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,13 +34,12 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiState
 import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
-import dev.leonlatsch.photok.gallery.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.components.MultiSelectionState
+import dev.leonlatsch.photok.gallery.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun AlbumDetailContent(

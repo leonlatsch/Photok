@@ -83,6 +83,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.components.NoKeyboardLearning
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -91,7 +92,6 @@ import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

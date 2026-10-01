@@ -25,9 +25,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
-import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun RestoreBackupScreen(
