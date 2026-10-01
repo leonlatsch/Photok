@@ -53,11 +53,11 @@
     <string name="setup_confirm_password">Bekräfta ditt lösenord</string>
     <string name="setup_password_strength_label">Lösenordsstyrka:</string>
     <string name="setup_button">Skapa</string>
-    <string name="setup_password_strength_very_weak">Mycket svagt</string>
-    <string name="setup_password_strength_weak">Svagt</string>
+    <string name="setup_password_strength_very_weak">Mycket svag</string>
+    <string name="setup_password_strength_weak">Svag</string>
     <string name="setup_password_strength_moderate">Medel</string>
     <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_strength_very_strong">Mycket starkt</string>
+    <string name="setup_password_strength_very_strong">Mycket stark</string>
     <string name="setup_password_match_warning">\u26A0 Lösenorden matchar inte</string>
     <string name="setupSetup">Installation</string>
 
@@ -306,7 +306,7 @@
     <string name="backup_restore_cancel">Avbryt återställning</string>
 
     <string name="backup_restore_indexing_title">Indexerar…</string>
-    <string name="backup_restore_indexing_description">Alla filer återställda, indexerar dina foton och album.</string>
+    <string name="backup_restore_indexing_description">Alla filer har återställts. Dina foton och album indexeras.</string>
 
     <string name="backup_restore_canceled_headline">Återställning avbruten</string>
     <string name="backup_restore_canceled_description">Inget från %1$s lades till i ditt valv. Alla filer som redan återställts har raderats igen.</string>
@@ -357,7 +357,7 @@
     <string name="release_highlight_point_3">Tydliga fel i stället för ett generellt misslyckande</string>
     <string name="release_highlight_point_4" formatted="false">100 % bakåtkompatibel med alla dina gamla säkerhetskopior</string>
     <string name="release_change_title_2">Olika åtgärder och förbättringar</string>
-    <string name="release_change_summary_2">Smöligare upplåsning och installation, tangentbord lär sig inte längre ditt lösenord och appen låser pålitligt i bakgrunden.</string>
+    <string name="release_change_summary_2">Smidigare upplåsning och konfiguration, tangentbordet lär sig inte längre ditt lösenord och appen låses tillförlitligt i bakgrunden.</string>
 
     <!-- Recovery Menu -->
     <string name="recovery_subtitle">Återställningsmeny</string>
@@ -429,7 +429,7 @@
     
     <!-- Telemetry -->
     <string name="telemetry_sheet_title">Hjälp till att förbättra Photok</string>
-    <string name="telemetry_sheet_paragraph_1">Photok kan valfritt skicka anonyma användningsstatistik för att hjälpa till att förbättra appen.</string>
+    <string name="telemetry_sheet_paragraph_1">Om du vill kan Photok skicka anonym användningsstatistik för att förbättra appen.</string>
     <string name="telemetry_sheet_paragraph_2">Den behandlade datan är helt anonymiserad och tillåter inga slutsatser om personlig information.</string>
     <string name="telemetry_sheet_paragraph_3">Att skicka anonym användningsdata är valfritt och kan stängas av när som helst i inställningarna.</string>
     <string name="telemetry_learn_more">Läs mer</string>
