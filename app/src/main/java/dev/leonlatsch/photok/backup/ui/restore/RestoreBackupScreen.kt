@@ -27,76 +27,75 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
-import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun RestoreBackupScreen(
     backupUri: Uri,
-    onClose: () -> Unit,
 ) {
-    AppTheme {
-        val viewModel: RestoreBackupViewModel =
-            hiltViewModel<RestoreBackupViewModel, RestoreBackupViewModel.Factory>(
-                creationCallback = { factory ->
-                    factory.create(backupUri)
-                }
-            )
+    val navigator = LocalNavigator.current
 
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val activity = LocalActivity.current
-
-        // Keying on the step position keeps a fast updating screen like restoring from restarting
-        // the animation on every progress update, and leaves the screen sliding out rendering the
-        // last state that belonged to it instead of the state of the screen sliding in.
-        AnimatedContent(
-            targetState = uiState,
-            contentKey = { it.stepPosition },
-            transitionSpec = {
-                if (targetState.stepPosition > initialState.stepPosition) {
-                    slideForward()
-                } else {
-                    slideBackward()
-                }
-            },
-            modifier = Modifier.fillMaxSize(),
-        ) { state ->
-            when (state) {
-                is RestoreBackupUiState.Validating -> RestoreBackupOverviewLoading(
-                    uiState = state,
-                    onClose = onClose,
-                )
-                is RestoreBackupUiState.Overview -> RestoreBackupOverview(
-                    uiState = state,
-                    handleUiEvent = viewModel::handleUiEvent,
-                    onClose = onClose,
-                )
-                is RestoreBackupUiState.Unlock -> RestoreBackupUnlock(
-                    uiState = state,
-                    handleUiEvent = viewModel::handleUiEvent,
-                )
-                is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
-                    uiState = state,
-                    handleUiEvent = viewModel::handleUiEvent,
-                )
-                is RestoreBackupUiState.Indexing -> RestoreBackupIndexing(
-                    uiState = state,
-                )
-                is RestoreBackupUiState.Finished -> RestoreBackupFinished(
-                    uiState = state,
-                    onDone = {
-                        viewModel.handleUiEvent(RestoreBackupUiEvent.DoneClicked(activity))
-                        onClose()
-                    },
-                )
-                is RestoreBackupUiState.Canceled -> RestoreBackupCanceled(
-                    uiState = state,
-                    onDone = onClose,
-                )
-                is RestoreBackupUiState.ValidationFailed -> RestoreBackupValidationFailed(
-                    uiState = state,
-                    onClose = onClose,
-                )
+    val viewModel: RestoreBackupViewModel =
+        hiltViewModel<RestoreBackupViewModel, RestoreBackupViewModel.Factory>(
+            creationCallback = { factory ->
+                factory.create(backupUri)
             }
+        )
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val activity = LocalActivity.current
+
+    // Keying on the step position keeps a fast updating screen like restoring from restarting
+    // the animation on every progress update, and leaves the screen sliding out rendering the
+    // last state that belonged to it instead of the state of the screen sliding in.
+    AnimatedContent(
+        targetState = uiState,
+        contentKey = { it.stepPosition },
+        transitionSpec = {
+            if (targetState.stepPosition > initialState.stepPosition) {
+                slideForward()
+            } else {
+                slideBackward()
+            }
+        },
+        modifier = Modifier.fillMaxSize(),
+    ) { state ->
+        when (state) {
+            is RestoreBackupUiState.Validating -> RestoreBackupOverviewLoading(
+                uiState = state,
+                onClose = navigator::goBack,
+            )
+            is RestoreBackupUiState.Overview -> RestoreBackupOverview(
+                uiState = state,
+                handleUiEvent = viewModel::handleUiEvent,
+                onClose = navigator::goBack,
+            )
+            is RestoreBackupUiState.Unlock -> RestoreBackupUnlock(
+                uiState = state,
+                handleUiEvent = viewModel::handleUiEvent,
+            )
+            is RestoreBackupUiState.Restoring -> RestoreBackupRestoring(
+                uiState = state,
+                handleUiEvent = viewModel::handleUiEvent,
+            )
+            is RestoreBackupUiState.Indexing -> RestoreBackupIndexing(
+                uiState = state,
+            )
+            is RestoreBackupUiState.Finished -> RestoreBackupFinished(
+                uiState = state,
+                onDone = {
+                    viewModel.handleUiEvent(RestoreBackupUiEvent.DoneClicked(activity))
+                    navigator.goBack()
+                },
+            )
+            is RestoreBackupUiState.Canceled -> RestoreBackupCanceled(
+                uiState = state,
+                onDone = navigator::goBack,
+            )
+            is RestoreBackupUiState.ValidationFailed -> RestoreBackupValidationFailed(
+                uiState = state,
+                onClose = navigator::goBack,
+            )
         }
     }
 }

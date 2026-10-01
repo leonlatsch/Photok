@@ -45,8 +45,7 @@ class InitialFragment : Fragment() {
         viewModel.checkApplicationState {
             when (it) {
                 AppStartState.FIRST_START -> navigate(R.id.action_initialFragment_to_onBoardingFragment)
-                AppStartState.SETUP -> navigate(R.id.action_initialFragment_to_setupFragment)
-                AppStartState.LOCKED -> navigate(R.id.action_initialFragment_to_unlockFragment)
+                AppStartState.STARTED -> navigate(R.id.action_initialFragment_to_appNavFragment)
             }
         }
 

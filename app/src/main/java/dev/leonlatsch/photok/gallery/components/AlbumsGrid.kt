@@ -52,16 +52,19 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun AlbumsGrid(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = contentPadding,
     ) {
         items(albums, key = { it.id }) { album ->
             AlbumTile(

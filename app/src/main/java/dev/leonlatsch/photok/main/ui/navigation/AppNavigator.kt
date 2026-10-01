@@ -1,0 +1,62 @@
+/*
+ *   Copyright 2020-2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package dev.leonlatsch.photok.main.ui.navigation
+
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.navigation.Navigator
+
+class AppNavigator(
+    private val backStack: NavBackStack<NavKey>,
+    private val startTab: () -> AppRoute,
+) : Navigator {
+
+    override fun navigate(route: NavKey) {
+        backStack.add(route)
+    }
+
+    override fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
+        }
+    }
+
+    override fun replaceAll(route: NavKey) {
+        backStack.clear()
+        backStack.add(route)
+    }
+
+    fun openStartTab() {
+        replaceAll(startTab())
+    }
+
+    fun selectTab(tab: AppRoute) {
+        if (backStack.lastOrNull() == tab) return
+
+        val startTab = startTab()
+        backStack.clear()
+        backStack.add(startTab)
+        if (tab != startTab) {
+            backStack.add(tab)
+        }
+    }
+}
+
+val LocalAppNavigator = staticCompositionLocalOf<AppNavigator> {
+    error("No AppNavigator provided")
+}

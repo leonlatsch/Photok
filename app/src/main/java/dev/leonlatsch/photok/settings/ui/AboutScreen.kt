@@ -54,17 +54,32 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.LocalFragment
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.uicomponents.AppName
+import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 
 sealed interface AboutUiEvent {
     data object Close : AboutUiEvent
     data object OpenThirdParty : AboutUiEvent
 }
 
+@Composable
+fun AboutScreen() {
+    val navigator = LocalNavigator.current
+
+    AboutContent(
+        handleUiEvent = { event ->
+            when (event) {
+                AboutUiEvent.Close -> navigator.goBack()
+                AboutUiEvent.OpenThirdParty -> navigator.navigate(AppRoute.OssLicenses)
+            }
+        }
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(
+private fun AboutContent(
     handleUiEvent: (AboutUiEvent) -> Unit,
 ) {
     val context = LocalContext.current
@@ -72,133 +87,131 @@ fun AboutScreen(
 
     var showNewsDialog by rememberSaveable { mutableStateOf(false) }
 
-    AppTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.settings_other_about_title))
-                    },
-                    navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                handleUiEvent(AboutUiEvent.Close)
-                            },
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_back),
-                                contentDescription = stringResource(R.string.process_close),
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = {
-                                fragment?.let {
-                                    showNewsDialog = true
-                                }
-                            }
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.ic_outline_campaign),
-                                contentDescription = stringResource(R.string.news_new_in_title),
-                            )
-                        }
-                    }
-                )
-            },
-            bottomBar = {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding()
-                ) {
-                    Text(
-                        text = stringResource(R.string.common_copyright_notice),
-                        color = MaterialTheme.colorScheme.outline,
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(stringResource(R.string.settings_other_about_title))
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            handleUiEvent(AboutUiEvent.Close)
+                        },
                     ) {
-                        val privacyUrl = stringResource(R.string.about_privacy_policy_url)
-
-                        Text(
-                            text = stringResource(R.string.about_third_party),
-                            color = MaterialTheme.colorScheme.primary,
-                            maxLines = 1,
-                            overflow = TextOverflow.MiddleEllipsis,
-                            modifier = Modifier.clickable(role = Role.Button) {
-                                handleUiEvent(AboutUiEvent.OpenThirdParty)
-                            }
+                        Icon(
+                            painter = painterResource(R.drawable.ic_back),
+                            contentDescription = stringResource(R.string.process_close),
                         )
-                        Text(text = "|")
-                        Text(
-                            text = stringResource(R.string.about_privacy_policy),
-                            color = MaterialTheme.colorScheme.primary,
-                            maxLines = 1,
-                            overflow = TextOverflow.MiddleEllipsis,
-                            modifier = Modifier.clickable(role = Role.Button) {
-                                context.openUrl(privacyUrl)
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            fragment?.let {
+                                showNewsDialog = true
                             }
+                        }
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_outline_campaign),
+                            contentDescription = stringResource(R.string.news_new_in_title),
                         )
                     }
                 }
-            }
-        ) { contentPadding ->
+            )
+        },
+        bottomBar = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(contentPadding)
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
             ) {
-                AppName(
-                    fontSize = 62.sp,
-                    modifier = Modifier
-                        .padding(top = 80.dp)
-                )
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Text(text = stringResource(R.string.about_version))
-                    Text(BuildConfig.VERSION_NAME)
-                }
-
                 Text(
-                    text = stringResource(R.string.about_developed_by),
-                    modifier = Modifier
-                        .padding(top = 80.dp)
+                    text = stringResource(R.string.common_copyright_notice),
+                    color = MaterialTheme.colorScheme.outline,
                 )
-
-                val websiteUrl = stringResource(R.string.about_website_url)
-
-                TextButton(
-                    onClick = {
-                        context.openUrl(websiteUrl)
-                    },
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
+                    val privacyUrl = stringResource(R.string.about_privacy_policy_url)
+
                     Text(
-                        text = stringResource(R.string.about_website_label),
-                        fontSize = 36.sp,
+                        text = stringResource(R.string.about_third_party),
+                        color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.MiddleEllipsis,
+                        modifier = Modifier.clickable(role = Role.Button) {
+                            handleUiEvent(AboutUiEvent.OpenThirdParty)
+                        }
+                    )
+                    Text(text = "|")
+                    Text(
+                        text = stringResource(R.string.about_privacy_policy),
+                        color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.MiddleEllipsis,
+                        modifier = Modifier.clickable(role = Role.Button) {
+                            context.openUrl(privacyUrl)
+                        }
                     )
                 }
             }
         }
+    ) { contentPadding ->
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(contentPadding)
+                .fillMaxSize()
+        ) {
+            AppName(
+                fontSize = 62.sp,
+                modifier = Modifier
+                    .padding(top = 80.dp)
+            )
 
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(text = stringResource(R.string.about_version))
+                Text(BuildConfig.VERSION_NAME)
+            }
 
-        NewFeaturesSheet(
-            overrideShow = showNewsDialog,
-            onDismissOverride = { showNewsDialog = false},
-        )
+            Text(
+                text = stringResource(R.string.about_developed_by),
+                modifier = Modifier
+                    .padding(top = 80.dp)
+            )
+
+            val websiteUrl = stringResource(R.string.about_website_url)
+
+            TextButton(
+                onClick = {
+                    context.openUrl(websiteUrl)
+                },
+            ) {
+                Text(
+                    text = stringResource(R.string.about_website_label),
+                    fontSize = 36.sp,
+                )
+            }
+        }
     }
+
+
+    NewFeaturesSheet(
+        overrideShow = showNewsDialog,
+        onDismissOverride = { showNewsDialog = false},
+    )
 }
 
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    AboutScreen(
+    AboutContent(
         handleUiEvent = {},
     )
 }

@@ -37,6 +37,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
+import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun GalleryContent(
@@ -44,8 +45,10 @@ fun GalleryContent(
     handleUiEvent: (GalleryUiEvent) -> Unit,
     multiSelectionState: MultiSelectionState,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     PhotoGallery(
+        contentPadding = contentPadding,
         modifier = modifier.fillMaxSize(),
         photos = uiState.photos,
         albumName = null,

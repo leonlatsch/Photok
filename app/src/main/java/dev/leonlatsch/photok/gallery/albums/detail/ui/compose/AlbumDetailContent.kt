@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun AlbumDetailContent(
@@ -46,12 +47,14 @@ fun AlbumDetailContent(
     handleUiEvent: (AlbumDetailUiEvent) -> Unit,
     multiSelectionState: MultiSelectionState,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     var showAlbumSelection by rememberSaveable(multiSelectionState.selectedItems.value) {
         mutableStateOf(false)
     }
 
     PhotoGallery(
+        contentPadding = contentPadding,
         photos = uiState.photos,
         albumName = uiState.albumName,
         multiSelectionState = multiSelectionState,

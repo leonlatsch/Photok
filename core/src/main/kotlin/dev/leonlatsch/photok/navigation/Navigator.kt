@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,16 +14,17 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.appstart.ui
+package dev.leonlatsch.photok.navigation
 
-/**
- * Enum class to indicate application state.
- * Used in Splash Screen.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class AppStartState {
-    FIRST_START,
-    STARTED,
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.navigation3.runtime.NavKey
+
+interface Navigator {
+    fun navigate(route: NavKey)
+    fun goBack()
+    fun replaceAll(route: NavKey)
+}
+
+val LocalNavigator = staticCompositionLocalOf<Navigator> {
+    error("No Navigator provided")
 }

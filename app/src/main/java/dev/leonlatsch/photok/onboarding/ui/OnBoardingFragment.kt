@@ -126,7 +126,7 @@ class OnBoardingFragment :
      * Navigate to setup and set first start to false.
      */
     fun finish() {
-        findNavController().navigate(R.id.action_onBoardingFragment_to_setupFragment)
+        findNavController().navigate(R.id.action_onBoardingFragment_to_appNavFragment)
         config.systemFirstStart = false
     }
 

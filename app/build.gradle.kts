@@ -5,6 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.20"
 }
 
 val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
@@ -13,7 +14,6 @@ val appVersionName: String by project
 val appVersionCode: String by project
 
 apply(plugin = "com.android.legacy-kapt")
-apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
@@ -157,7 +157,11 @@ dependencies {
 
     // Navigation Components
     implementation("androidx.navigation:navigation-fragment-ktx:2.10.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.10.1")
+
+    // Navigation 3
+    implementation("androidx.navigation3:navigation3-ui:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3:2.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")

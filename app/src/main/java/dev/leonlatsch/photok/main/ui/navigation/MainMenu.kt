@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.main.ui.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -24,45 +25,46 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
 fun MainMenu(
-    uiState: MainMenuUiState,
-    onNavigationItemClicked: (Int) -> Unit
+    currentRoute: NavKey?,
+    onTabClicked: (AppRoute) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     NavigationBar(
-        containerColor = colorResource(R.color.background)
+        containerColor = colorResource(R.color.background),
+        modifier = modifier,
     ) {
         MainNavItem(
-            fragmentsId = R.id.galleryFragment,
-            currentSelectedFragmentId = uiState.currentFragmentId,
+            selected = currentRoute == AppRoute.Gallery,
             iconRes = R.drawable.ic_image,
             label = stringResource(R.string.gallery_all_photos_label),
-            onNavigationItemClicked = onNavigationItemClicked
+            onClick = { onTabClicked(AppRoute.Gallery) },
         )
 
         MainNavItem(
-            fragmentsId = R.id.albumsFragment,
-            additionalFragmentsId = listOf(R.id.albumDetailFragment),
-            currentSelectedFragmentId = uiState.currentFragmentId,
+            selected = currentRoute == AppRoute.Albums || currentRoute is AppRoute.AlbumDetail,
             iconRes = R.drawable.ic_folder,
             label = stringResource(R.string.gallery_albums_label),
-            onNavigationItemClicked = onNavigationItemClicked
+            onClick = { onTabClicked(AppRoute.Albums) },
         )
 
         MainNavItem(
-            fragmentsId = R.id.settingsFragment,
-            currentSelectedFragmentId = uiState.currentFragmentId,
+            selected = currentRoute == AppRoute.Settings,
             iconRes = R.drawable.ic_settings,
             label = stringResource(R.string.menu_main_settings),
-            onNavigationItemClicked = onNavigationItemClicked,
+            onClick = { onTabClicked(AppRoute.Settings) },
             badgeCount = rememberIntruderWarningCount()
         )
     }
@@ -73,8 +75,8 @@ fun MainMenu(
 private fun MainMenuPreview() {
     AppTheme {
         MainMenu(
-            uiState = MainMenuUiState(R.id.galleryFragment),
-            onNavigationItemClicked = {}
+            currentRoute = AppRoute.Gallery,
+            onTabClicked = {}
         )
     }
 }
@@ -82,20 +84,16 @@ private fun MainMenuPreview() {
 
 @Composable
 private fun RowScope.MainNavItem(
-    fragmentsId: Int,
-    currentSelectedFragmentId: Int,
+    selected: Boolean,
     iconRes: Int,
     label: String,
-    onNavigationItemClicked: (Int) -> Unit,
-    additionalFragmentsId: List<Int> = emptyList(),
+    onClick: () -> Unit,
     badgeCount: Int = 0,
 ) {
 
     NavigationBarItem(
-        selected = currentSelectedFragmentId == fragmentsId || additionalFragmentsId.contains(
-            currentSelectedFragmentId
-        ),
-        onClick = { onNavigationItemClicked(fragmentsId) },
+        selected = selected,
+        onClick = onClick,
         icon = {
             BadgedBox(
                 badge = {
@@ -115,3 +113,5 @@ private fun RowScope.MainNavItem(
         alwaysShowLabel = true
     )
 }
+
+val LocalMainMenuPadding = compositionLocalOf { PaddingValues() }

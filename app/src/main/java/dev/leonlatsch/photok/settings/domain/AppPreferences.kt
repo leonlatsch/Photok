@@ -26,7 +26,7 @@ import dev.leonlatsch.photok.settings.data.Config.Companion.SECURITY_BIOMETRIC_A
 import dev.leonlatsch.photok.settings.data.Config.Companion.SYSTEM_DESIGN
 import dev.leonlatsch.photok.settings.domain.models.StartPage
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
-import dev.leonlatsch.photok.settings.ui.SettingsFragment
+import dev.leonlatsch.photok.settings.ui.SettingsActionKeys
 import dev.leonlatsch.photok.settings.domain.models.LockTimeout as LockTimeoutEnum
 
 object AppPreferences {
@@ -47,7 +47,7 @@ object AppPreferences {
         possibleValues = StartPage.entries,
     )
     val Language = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_LANGUAGE,
+        key = SettingsActionKeys.KEY_ACTION_LANGUAGE,
         icon = R.drawable.ic_globe,
         title = R.string.settings_app_language_title,
         summary = R.string.settings_app_language_summary,
@@ -60,7 +60,7 @@ object AppPreferences {
         default = SECURITY_ALLOW_SCREENSHOTS_DEFAULT,
     )
     val HideApp = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_HIDE_APP,
+        key = SettingsActionKeys.KEY_ACTION_HIDE_APP,
         icon = R.drawable.ic_app_blocking,
         title = R.string.settings_security_hide_app_title,
         summary = R.string.settings_security_hide_app_summary,
@@ -74,13 +74,13 @@ object AppPreferences {
 
     // Security section
     val ChangePassword = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_CHANGE_PASSWORD,
+        key = SettingsActionKeys.KEY_ACTION_CHANGE_PASSWORD,
         icon = R.drawable.ic_password,
         title = R.string.change_password_title,
         summary = R.string.settings_security_change_password_summary,
     )
     val RecoveryPhrase = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_RECOVERY_PHRASE,
+        key = SettingsActionKeys.KEY_ACTION_RECOVERY_PHRASE,
         icon = R.drawable.ic_key,
         title = R.string.settings_security_recovery_phrase_title,
         summary = R.string.settings_security_recovery_phrase_summary,
@@ -102,7 +102,7 @@ object AppPreferences {
 
     // Advanced section
     val Backup = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_BACKUP,
+        key = SettingsActionKeys.KEY_ACTION_BACKUP,
         icon = R.drawable.ic_save_as,
         title = R.string.settings_advanced_backup_title,
         summary = R.string.settings_advanced_backup_summary,
@@ -122,7 +122,7 @@ object AppPreferences {
         default = Config.ADVANCED_DELETE_EXPORTED_FILES_DEFAULT,
     )
     val Reset = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_RESET,
+        key = SettingsActionKeys.KEY_ACTION_RESET,
         icon = R.drawable.ic_warning,
         title = R.string.settings_advanced_reset_title,
         summary = R.string.settings_advanced_reset_summary,
@@ -130,31 +130,31 @@ object AppPreferences {
 
     // Other section
     val Feedback = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_FEEDBACK,
+        key = SettingsActionKeys.KEY_ACTION_FEEDBACK,
         icon = R.drawable.ic_feedback,
         title = R.string.settings_other_feedback_title,
         summary = R.string.settings_other_feedback_summary,
     )
     val SourceCode = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_SOURCECODE,
+        key = SettingsActionKeys.KEY_ACTION_SOURCECODE,
         icon = R.drawable.ic_code,
         title = R.string.settings_other_sourcecode_title,
         summary = R.string.settings_other_sourcecode_summary,
     )
     val Credits = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_CREDITS,
+        key = SettingsActionKeys.KEY_ACTION_CREDITS,
         icon = R.drawable.ic_book,
         title = R.string.settings_other_credits_title,
         summary = R.string.settings_other_credits_summary,
     )
     val Telemetry = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_TELEMETRY,
+        key = SettingsActionKeys.KEY_ACTION_TELEMETRY,
         icon = R.drawable.ic_data_object,
         title = R.string.settings_other_telemetry_title,
         summary = R.string.settings_other_telemetry_summary,
     )
     val About = Preference.Simple(
-        key = SettingsFragment.KEY_ACTION_ABOUT,
+        key = SettingsActionKeys.KEY_ACTION_ABOUT,
         icon = R.drawable.ic_info,
         title = R.string.settings_other_about_title,
         summary = R.string.settings_other_about_summary,

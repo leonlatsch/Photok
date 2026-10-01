@@ -14,10 +14,14 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderwarnings
+package dev.leonlatsch.photok.pro.navigation
 
-import android.app.Activity
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
-fun Activity.showIntruderWarningsActivity() {
-    // No impl
+@Serializable
+sealed interface ProRoute : NavKey {
+
+    @Serializable
+    data object IntruderWarnings : ProRoute
 }

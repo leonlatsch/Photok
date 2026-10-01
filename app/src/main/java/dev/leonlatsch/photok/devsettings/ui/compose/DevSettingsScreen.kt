@@ -50,18 +50,23 @@ import dev.leonlatsch.photok.devsettings.ui.DevSettingsViewModel
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.fillMaxSize
+import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun DevSettingsScreen(
-    onClose: () -> Unit,
     viewModel: DevSettingsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
 
     DevSettingsContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onClose = onClose,
+        onClose = navigator::goBack,
     )
 }
 
@@ -115,7 +120,13 @@ private fun DevSettingsContent(
         }
     ) { contentPadding ->
         Column(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    top = contentPadding.calculateTopPadding(),
+                    bottom = LocalMainMenuPadding.current.calculateBottomPadding(),
+                ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

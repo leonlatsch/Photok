@@ -72,127 +72,125 @@ fun SecretLaunchCodeDialog(
 ) {
     val config = LocalConfig.current ?: error("SecretLaunchCodeDialog needs LocalConfig. Not provided")
 
-    AppTheme {
-        if (show) {
-            var code by remember {
-                val initial = config.securityDialLaunchCode.orEmpty()
+    if (show) {
+        var code by remember {
+            val initial = config.securityDialLaunchCode.orEmpty()
 
-                mutableStateOf(
-                    TextFieldValue(
-                        text = initial,
-                        selection = TextRange(index = initial.length),
-                    )
+            mutableStateOf(
+                TextFieldValue(
+                    text = initial,
+                    selection = TextRange(index = initial.length),
                 )
-            }
-            val focusRequester = remember { FocusRequester() }
-
-            LaunchedEffect(Unit) {
-                delay(100)
-                focusRequester.requestFocus()
-            }
-
-            AlertDialog(
-                onDismissRequest = onDismissRequest,
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            if (code.text.isEmpty()) {
-                                config.securityDialLaunchCode = LAUNCH_CODE_DEFAULT
-                            } else {
-                                config.securityDialLaunchCode = code.text
-                            }
-
-                            onDismissRequest()
-                        }
-                    ) {
-                        Text(stringResource(R.string.common_ok))
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = onDismissRequest) {
-                        Text(stringResource(R.string.common_cancel))
-                    }
-                },
-                title = {
-                    Text(
-                        text = stringResource(R.string.settings_security_launch_code_title)
-                    )
-                },
-                text = {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.settings_security_launch_code_message)
-                        )
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        ) {
-
-                            Text(
-                                text = stringResource(R.string.settings_security_launch_code_prefix),
-                            )
-                            BasicTextField(
-                                value = code,
-                                onValueChange = {
-                                    if (it.text.isEmpty() || it.text.length <= 10 && it.text.toIntOrNull() != null) {
-                                        code = it
-                                    }
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.NumberPassword,
-                                ),
-                                maxLines = 1,
-                                textStyle = LocalTextStyle.current.copy(
-                                    textAlign = TextAlign.Center,
-                                    color = LocalContentColor.current,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp
-                                ),
-                                cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
-                                decorationBox = { innerTextField ->
-                                    val borderColor = MaterialTheme.colorScheme.primary
-
-                                    Box(
-                                        contentAlignment = Alignment.Center,
-                                        modifier = Modifier
-                                            .drawWithContent {
-                                                drawContent()
-                                                drawLine(
-                                                    color = borderColor,
-                                                    start = Offset(0f, size.height),
-                                                    end = Offset(this.size.width, size.height),
-                                                    strokeWidth = Stroke.DefaultMiter,
-                                                )
-                                            }
-                                    ) {
-                                        if (code.text.isEmpty()) {
-                                            Text(
-                                                text = LAUNCH_CODE_DEFAULT,
-                                                textAlign = TextAlign.Center,
-                                                color = LocalContentColor.current.copy(alpha = 0.3f),
-                                                fontWeight = FontWeight.SemiBold,
-                                                fontSize = 16.sp
-                                            )
-                                        }
-                                        innerTextField()
-                                    }
-                                },
-                                modifier = Modifier
-                                    .focusRequester(focusRequester)
-                                    .widthIn(min = 80.dp)
-                            )
-                            Text(
-                                text = stringResource(R.string.settings_security_launch_code_suffix)
-                            )
-                        }
-                    }
-                }
             )
         }
+        val focusRequester = remember { FocusRequester() }
+
+        LaunchedEffect(Unit) {
+            delay(100)
+            focusRequester.requestFocus()
+        }
+
+        AlertDialog(
+            onDismissRequest = onDismissRequest,
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code.text.isEmpty()) {
+                            config.securityDialLaunchCode = LAUNCH_CODE_DEFAULT
+                        } else {
+                            config.securityDialLaunchCode = code.text
+                        }
+
+                        onDismissRequest()
+                    }
+                ) {
+                    Text(stringResource(R.string.common_ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismissRequest) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.settings_security_launch_code_title)
+                )
+            },
+            text = {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = stringResource(R.string.settings_security_launch_code_message)
+                    )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+
+                        Text(
+                            text = stringResource(R.string.settings_security_launch_code_prefix),
+                        )
+                        BasicTextField(
+                            value = code,
+                            onValueChange = {
+                                if (it.text.isEmpty() || it.text.length <= 10 && it.text.toIntOrNull() != null) {
+                                    code = it
+                                }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.NumberPassword,
+                            ),
+                            maxLines = 1,
+                            textStyle = LocalTextStyle.current.copy(
+                                textAlign = TextAlign.Center,
+                                color = LocalContentColor.current,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp
+                            ),
+                            cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
+                            decorationBox = { innerTextField ->
+                                val borderColor = MaterialTheme.colorScheme.primary
+
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier
+                                        .drawWithContent {
+                                            drawContent()
+                                            drawLine(
+                                                color = borderColor,
+                                                start = Offset(0f, size.height),
+                                                end = Offset(this.size.width, size.height),
+                                                strokeWidth = Stroke.DefaultMiter,
+                                            )
+                                        }
+                                ) {
+                                    if (code.text.isEmpty()) {
+                                        Text(
+                                            text = LAUNCH_CODE_DEFAULT,
+                                            textAlign = TextAlign.Center,
+                                            color = LocalContentColor.current.copy(alpha = 0.3f),
+                                            fontWeight = FontWeight.SemiBold,
+                                            fontSize = 16.sp
+                                        )
+                                    }
+                                    innerTextField()
+                                }
+                            },
+                            modifier = Modifier
+                                .focusRequester(focusRequester)
+                                .widthIn(min = 80.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.settings_security_launch_code_suffix)
+                        )
+                    }
+                }
+            }
+        )
     }
 }
 

@@ -19,16 +19,15 @@ package dev.leonlatsch.photok.gallery.ui.navigation
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
-import dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragmentDirections
+import dev.leonlatsch.photok.main.ui.navigation.AppNavigator
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.other.extensions.show
-import javax.inject.Inject
 
-class PhotoActionsNavigator @Inject constructor() {
-    fun navigate(action: PhotoAction, navController: NavController, fragment: Fragment) {
+object PhotoActionsNavigator {
+    fun navigate(action: PhotoAction, fragment: Fragment, navigator: AppNavigator) {
         when (action) {
             is PhotoAction.DeletePhotos -> confirmAndDelete(
                 action.photos,
@@ -41,7 +40,7 @@ class PhotoActionsNavigator @Inject constructor() {
                 fragment.childFragmentManager
             )
 
-            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navController)
+            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navigator)
         }
     }
 
@@ -60,9 +59,8 @@ class PhotoActionsNavigator @Inject constructor() {
         DeleteBottomSheetDialogFragment.newInstance(photos).show(fragmentManager)
     }
 
-    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navController: NavController) {
-        val direction = ImageViewerFragmentDirections.actionGlobalImageViewerFragment(photoUuid = photoUUID, albumUuid = albumUUID)
-        navController.navigate(direction)
+    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navigator: AppNavigator) {
+        navigator.navigate(AppRoute.ImageViewer(photoUuid = photoUUID, albumUuid = albumUUID.takeIf { it.isNotEmpty() }))
     }
 }
 

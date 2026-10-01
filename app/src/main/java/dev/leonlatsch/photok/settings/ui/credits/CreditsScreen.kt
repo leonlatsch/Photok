@@ -64,26 +64,25 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @Composable
 fun CreditsScreen(
-    onClose: () -> Unit,
     viewModel: CreditsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
 
-    AppTheme {
-        CreditsContent(
-            uiState = uiState,
-            handleUiEvent = { event ->
-                when (event) {
-                    CreditsUiEvent.Close -> onClose()
-                    is CreditsUiEvent.OpenWebsite -> context.openUrl(event.url)
-                }
-            },
-        )
-    }
+    CreditsContent(
+        uiState = uiState,
+        handleUiEvent = { event ->
+            when (event) {
+                CreditsUiEvent.Close -> navigator.goBack()
+                is CreditsUiEvent.OpenWebsite -> context.openUrl(event.url)
+            }
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

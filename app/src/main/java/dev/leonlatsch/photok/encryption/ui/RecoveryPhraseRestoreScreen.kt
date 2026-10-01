@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.encryption.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
@@ -90,20 +91,23 @@ import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+import dev.leonlatsch.photok.navigation.LocalNavigator
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseRestoreScreen(
     onUnlocked: () -> Unit,
-    onBack: () -> Unit,
 ) {
     val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
+    val navigator = LocalNavigator.current
+    val activity = LocalActivity.current
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.unlocked) {
         if (uiState.unlocked) {
             delay(3.seconds)
+            activity?.let(viewModel::requestInAppReview)
             onUnlocked()
         }
     }
@@ -111,7 +115,7 @@ fun RecoveryPhraseRestoreScreen(
     RecoveryPhraseRestoreContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onBack = onBack,
+        onBack = navigator::goBack,
     )
 }
 

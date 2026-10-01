@@ -20,28 +20,25 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.findNavController
-import dev.leonlatsch.photok.NavGraphDirections
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.main.ui.navigation.AppNavigator
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.show
-import javax.inject.Inject
 
-class AlbumDetailNavigator @Inject constructor() {
+object AlbumDetailNavigator {
 
-    fun navigate(event: NavigationEvent, fragment: Fragment) {
+    fun navigate(event: NavigationEvent, fragment: Fragment, navigator: AppNavigator) {
         when (event) {
-            NavigationEvent.Close -> fragment.findNavController().navigateUp()
+            NavigationEvent.Close -> navigator.goBack()
             is NavigationEvent.ShowToast -> showToast(event, fragment)
             is NavigationEvent.StartImport -> startImport(event, fragment.childFragmentManager)
-            is NavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, fragment)
+            is NavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, navigator)
         }
     }
 
-    private fun startRestoreBackup(backupUri: Uri, fragment: Fragment) {
-        fragment.findNavController().navigate(
-            NavGraphDirections.actionGlobalRestoreBackupFragment(backupUri = backupUri)
-        )
+    private fun startRestoreBackup(backupUri: Uri, navigator: AppNavigator) {
+        navigator.navigate(AppRoute.RestoreBackup(backupUri.toString()))
     }
 
     private fun startImport(

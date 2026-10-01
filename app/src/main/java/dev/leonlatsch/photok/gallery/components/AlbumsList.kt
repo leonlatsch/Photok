@@ -36,14 +36,17 @@ import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import androidx.compose.foundation.layout.PaddingValues
 
 @Composable
 fun AlbumsList(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     LazyColumn(
+        contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier
             .fillMaxWidth()
