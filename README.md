@@ -78,6 +78,7 @@ Indicates how much of a language was translated by a human. The rest in machine 
 ![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-77%25-yellow)
 ![Russian](https://img.shields.io/badge/Russian-47%25-red)
 ![Spanish](https://img.shields.io/badge/Spanish-77%25-yellow)
+![Swedish](https://img.shields.io/badge/Swedish-100%25-brightgreen)
 ![Turkish](https://img.shields.io/badge/Turkish-79%25-yellow)
 ![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-61%25-orange)
 <!-- END-TRANSLATIONS -->
