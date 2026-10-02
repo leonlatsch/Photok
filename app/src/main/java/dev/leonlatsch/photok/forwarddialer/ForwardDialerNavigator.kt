@@ -35,7 +35,7 @@ class ForwardDialerNavigator @Inject constructor() {
         activity.startActivity(launchIntent)
     }
 
-    private fun navigateForwardToDialer(activity: ForwardDialerActivity) {
+    private fun navigateForwardToDialer(activity: ForwardDialerActivity) = runCatching {
         val dialIntent = Intent(Intent.ACTION_DIAL).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
