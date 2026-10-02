@@ -34,6 +34,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -99,6 +100,7 @@ fun PhotoGallery(
     onImportChoice: (ImportChoice) -> Unit,
     additionalMultiSelectionActions: @Composable (ColumnScope.() -> Unit),
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     val activity = LocalActivity.current
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
@@ -116,6 +118,7 @@ fun PhotoGallery(
             photos = photos,
             multiSelectionState = multiSelectionState,
             openPhoto = onOpenPhoto,
+            contentPadding = contentPadding,
         )
 
         AnimatedVisibility(
@@ -124,6 +127,7 @@ fun PhotoGallery(
             exit = slideOutVertically { it },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
+                .padding(bottom = contentPadding.calculateBottomPadding())
         ) {
             MagicFab(
                 label = stringResource(R.string.import_menu_fab_label),
@@ -190,7 +194,9 @@ fun PhotoGallery(
         )
 
         MultiSelectionMenu(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = contentPadding.calculateBottomPadding()),
             multiSelectionState = multiSelectionState,
         ) {
             DropdownMenuItem(
@@ -246,6 +252,7 @@ private fun PhotoGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
+    contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
     val gridState: LazyGridState = rememberLazyGridState()
@@ -261,7 +268,8 @@ private fun PhotoGrid(
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
-        state = gridState
+        state = gridState,
+        contentPadding = contentPadding,
     ) {
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(

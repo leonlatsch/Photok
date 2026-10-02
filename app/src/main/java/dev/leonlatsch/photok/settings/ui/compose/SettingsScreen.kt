@@ -80,7 +80,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.fragment.findNavController
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.domain.BackupStrategy
@@ -88,6 +87,9 @@ import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.backup.ui.ConfirmPasswordDialog
 import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.other.extensions.startActivityAndIgnoreTimer
@@ -95,7 +97,7 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.other.sendEmail
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.intruderwarnings.rememberIntruderWarningCount
-import dev.leonlatsch.photok.pro.intruderwarnings.showIntruderWarningsActivity
+import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import dev.leonlatsch.photok.pro.paywall.ProSettingsBanner
@@ -106,7 +108,7 @@ import dev.leonlatsch.photok.settings.domain.PreferenceSection
 import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
-import dev.leonlatsch.photok.settings.ui.SettingsFragment
+import dev.leonlatsch.photok.settings.ui.SettingsActionKeys
 import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordSheet
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
@@ -129,6 +131,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val fragment = LocalFragment.current
     val context = LocalContext.current
     val activity = LocalActivity.current
+    val navigator = LocalNavigator.current
 
     val backupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
@@ -137,7 +140,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             BackupBottomSheetDialogFragment.newInstance(
                 uri,
                 BackupStrategy.Name.Default
-            ).show(fragment.parentFragmentManager)
+            ).show(fragment.childFragmentManager)
         }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
@@ -157,7 +160,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             true
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CHANGE_PASSWORD) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_CHANGE_PASSWORD) {
             showChangePasswordSheet = true
             false
         }
@@ -171,22 +174,22 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RECOVERY_PHRASE) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_RECOVERY_PHRASE) {
             showRecoveryPhraseSheet = true
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BRUTEFORCE_PROTECTION) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_BRUTEFORCE_PROTECTION) {
             showBruteforceProtectionSheet = true
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
-            activity?.showIntruderWarningsActivity()
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_INTRUDER_WARNINGS) {
+            navigator.navigate(ProRoute.IntruderWarnings)
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_LANGUAGE) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_LANGUAGE) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
                 val intent = Intent(
                     Settings.ACTION_APP_LOCALE_SETTINGS,
@@ -197,22 +200,22 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_HIDE_APP) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_HIDE_APP) {
             ToggleAppVisibilityDialog().show(fragment.childFragmentManager)
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_RESET) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_RESET) {
             showConfirmPasswordDialogForReset = true
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_BACKUP) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_BACKUP) {
             showConfirmPasswordDialogForBackup = true
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_FEEDBACK) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_FEEDBACK) {
             val email = context.getString(R.string.settings_other_feedback_mail_emailaddress)
             val subject =
                 "${context.getString(R.string.settings_other_feedback_mail_subject)} (App ${BuildConfig.VERSION_NAME} / Android ${Build.VERSION.RELEASE})"
@@ -227,23 +230,23 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_SOURCECODE) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_SOURCECODE) {
             fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_CREDITS) {
-            fragment.findNavController().navigate(R.id.action_settingsFragment_to_creditsFragment)
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_CREDITS) {
+            navigator.navigate(AppRoute.Credits)
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_TELEMETRY) {
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_TELEMETRY) {
             showUsageDataSheet = true
             false
         }
 
-        viewModel.registerPreferenceCallback(SettingsFragment.KEY_ACTION_ABOUT) {
-            fragment.findNavController().navigate(R.id.action_settingsFragment_to_aboutFragment)
+        viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_ABOUT) {
+            navigator.navigate(AppRoute.About)
             false
         }
 
@@ -293,8 +296,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
             onDismissRequest = { showRecoveryPhraseSheet = false },
             onNavigateToSetup = {
                 showRecoveryPhraseSheet = false
-                fragment?.findNavController()
-                    ?.navigate(R.id.action_global_recoveryPhraseSetupFragment)
+                navigator.navigate(AppRoute.RecoveryPhraseSetupFromSettings)
             },
         )
     }
@@ -316,7 +318,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
 fun SettingsScreen() {
     val viewModel = hiltViewModel<SettingsViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val fragment = LocalFragment.current
+    val navigator = LocalNavigator.current
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
@@ -324,10 +326,7 @@ fun SettingsScreen() {
         SettingsContent(
             uiState = uiState,
             handleUiEvent = viewModel::handleUiEvent,
-            onOpenDevSettings = {
-                fragment?.findNavController()
-                    ?.navigate(R.id.action_settingsFragment_to_devSettingsFragment)
-            },
+            onOpenDevSettings = { navigator.navigate(AppRoute.DevSettings) },
         )
         SettingsCallbacks(viewModel)
     }
@@ -365,7 +364,10 @@ fun SettingsContent(
             proFeaturesActive = uiState.proFeaturesActive,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
-            contentPadding = contentPadding,
+            contentPadding = PaddingValues(
+                top = contentPadding.calculateTopPadding(),
+                bottom = LocalMainMenuPadding.current.calculateBottomPadding(),
+            ),
         )
     }
 }
@@ -422,7 +424,7 @@ private fun SettingsPreferenceSections(
                                         summary = stringResource(preference.summary),
                                         paywallSource = preference.paywallSource,
                                         showProBadge = preference.showProBadge,
-                                        badgeCount = if (preference.key == SettingsFragment.KEY_ACTION_INTRUDER_WARNINGS) {
+                                        badgeCount = if (preference.key == SettingsActionKeys.KEY_ACTION_INTRUDER_WARNINGS) {
                                             intruderWarningCount
                                         } else {
                                             0

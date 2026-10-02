@@ -16,26 +16,16 @@
 
 package dev.leonlatsch.photok.gallery.ui.navigation
 
-import androidx.navigation.NavController
-import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.main.ui.navigation.MainTab
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.StartPage
-import timber.log.Timber
 import javax.inject.Inject
 
-class NavigateToGallery @Inject constructor(
+class GetStartTab @Inject constructor(
     private val config: Config,
 ) {
-    operator fun invoke(navController: NavController) {
-        val dest = when (StartPage.fromValue(config.galleryStartPage)) {
-            StartPage.AllFiles -> R.id.action_global_galleryFragment
-            StartPage.Albums -> R.id.action_global_albumsFragment
-        }
-
-        try {
-            navController.navigate(dest)
-        } catch (e: Exception) {
-            Timber.e(e)
-        }
+    operator fun invoke(): MainTab = when (StartPage.fromValue(config.galleryStartPage)) {
+        StartPage.AllFiles -> MainTab.Gallery
+        StartPage.Albums -> MainTab.Albums
     }
 }

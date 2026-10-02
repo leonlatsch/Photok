@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,23 +14,28 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.albums.ui.navigation
+package dev.leonlatsch.photok.main.ui.navigation
 
-import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.navigation.Navigator
 
-object AlbumsNavigator {
+class RootNavigator(
+    private val backStack: NavBackStack<NavKey>,
+) : Navigator {
 
-    fun navigate(
-        event: AlbumsNavigationEvent,
-        navigator: Navigator,
-    ) {
-        when (event) {
-            is AlbumsNavigationEvent.OpenAlbumDetail -> navigator.navigate(AppRoute.AlbumDetail(albumUuid = event.uuid))
+    override fun navigate(route: NavKey) {
+        backStack.add(route)
+    }
+
+    override fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
         }
     }
-}
 
-sealed interface AlbumsNavigationEvent {
-    data class OpenAlbumDetail(val uuid: String) : AlbumsNavigationEvent
+    override fun replaceAll(route: NavKey) {
+        backStack.clear()
+        backStack.add(route)
+    }
 }

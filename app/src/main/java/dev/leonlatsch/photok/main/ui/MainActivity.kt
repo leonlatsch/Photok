@@ -18,35 +18,20 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
-import androidx.core.view.isVisible
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.databinding.ActivityMainBinding
-import dev.leonlatsch.photok.main.ui.navigation.MainMenu
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
 import javax.inject.Inject
-
-val FragmentsWithMenu = listOf(
-    R.id.galleryFragment,
-    R.id.albumsFragment,
-    R.id.settingsFragment,
-    R.id.albumDetailFragment,
-    R.id.devSettingsFragment.takeIf { BuildConfig.DEBUG },
-)
 
 /**
  * The main Activity.
@@ -67,7 +52,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+        )
 
         val hasSession = getBaseApplication().sessionRepository.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
@@ -76,20 +63,6 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
-
-        findNavController(R.id.mainNavHostFragment).let { navController ->
-            navController.addOnDestinationChangedListener { controller, destination, arguments ->
-                val showMenu = FragmentsWithMenu.contains(destination.id)
-                binding.mainMenuComposeContainer.isVisible = showMenu
-
-                WindowCompat.getInsetsController(
-                    window, window.decorView
-                ).isAppearanceLightStatusBars = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
-
-                viewModel.onDestinationChanged(destination.id)
-            }
-
-        }
     }
 
     private fun dispatchIntent() {
@@ -109,31 +82,5 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onConfigurationChanged(newConfig)
 
         onOrientationChanged(newConfig.orientation)
-    }
-
-    override fun bind(binding: ActivityMainBinding) {
-        super.bind(binding)
-        binding.context = this
-
-        binding.mainMenuComposeContainer.setContent {
-            val uiState by viewModel.mainMenuUiState.collectAsStateWithLifecycle()
-
-            AppTheme {
-                MainMenu(uiState) {
-                    val navController = findNavController(R.id.mainNavHostFragment)
-                    if (navController.currentDestination?.id != it) {
-                        navController.navigate(
-                            resId = it,
-                            args = null,
-                            navOptions = NavOptions.Builder()
-                                .setLaunchSingleTop(true)
-                                .setRestoreState(true)
-                                .setPopUpTo(R.id.galleryFragment, inclusive = false, saveState = true)
-                                .build()
-                        )
-                    }
-                }
-            }
-        }
     }
 }

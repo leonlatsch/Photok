@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.encryption.ui
 
+import android.app.Activity
 import android.content.res.Resources
 import android.net.Uri
 import androidx.compose.ui.platform.Clipboard
@@ -28,6 +29,8 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.review.InAppReview
+import dev.leonlatsch.photok.review.ReviewTrigger
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -88,7 +91,12 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val vaultService: VaultService,
     private val io: IO,
+    private val inAppReview: InAppReview,
 ) : ViewModel() {
+
+    fun requestInAppReview(activity: Activity) {
+        inAppReview.requestInAppReview(activity, ReviewTrigger.RecoveryPhraseUsed)
+    }
 
     private val inputs = MutableStateFlow(RecoveryPhraseRestoreUiState.Inputs())
 

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,16 +14,10 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.appstart.ui
+package dev.leonlatsch.photok.main.ui.navigation
 
-/**
- * Enum class to indicate application state.
- * Used in Splash Screen.
- *
- * @since 1.0.0
- * @author Leon Latsch
- */
-enum class AppStartState {
-    FIRST_START,
-    STARTED,
+enum class MainTab(val rootRoute: AppRoute) {
+    Gallery(AppRoute.Gallery),
+    Albums(AppRoute.Albums),
+    Settings(AppRoute.Settings),
 }

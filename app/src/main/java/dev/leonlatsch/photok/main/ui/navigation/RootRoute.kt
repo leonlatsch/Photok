@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,17 +14,29 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.other.extensions
+package dev.leonlatsch.photok.main.ui.navigation
 
-import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
+@Serializable
+sealed interface RootRoute : NavKey {
 
-fun Fragment.finishOnBackWhileStarted(enabled: Boolean = true) {
-    activity?.onBackPressedDispatcher?.addCallback(
-        owner = viewLifecycleOwner,
-        enabled = enabled,
-    ) {
-        activity?.finish()
-    }
+    @Serializable
+    data object Setup : RootRoute
+
+    @Serializable
+    data object Unlock : RootRoute
+
+    @Serializable
+    data object RecoveryPhraseSetup : RootRoute
+
+    @Serializable
+    data object RecoveryPhraseRestore : RootRoute
+
+    @Serializable
+    data object EncryptionMigration : RootRoute
+
+    @Serializable
+    data object Main : RootRoute
 }

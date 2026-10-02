@@ -20,78 +20,19 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/initialFragment">
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="dev.leonlatsch.photok.settings.ui.SettingsFragment"
-        android:label="SettingsFragment">
+        android:id="@+id/initialFragment"
+        android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
+        android:label="InitialFragment">
         <action
-            android:id="@+id/action_settingsFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-        <action
-            android:id="@+id/action_settingsFragment_to_creditsFragment"
-            app:destination="@id/creditsFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-        <action
-            android:id="@+id/action_settingsFragment_to_devSettingsFragment"
-            app:destination="@id/devSettingsFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="dev.leonlatsch.photok.settings.ui.AboutFragment"
-        android:label="AboutFragment">
-        <action
-            android:id="@+id/action_aboutFragment_to_ossLicensesFragment"
-            app:destination="@id/ossLicensesFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/setupFragment"
-        android:name="dev.leonlatsch.photok.setup.ui.SetupFragment"
-        android:label="fragment_setup">
-        <action
-            android:id="@+id/action_setupFragment_to_encryptionMigrationFragment"
-            app:destination="@id/encryptionMigrationFragment"
-            app:popUpTo="@id/settingsFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/recoveryPhraseSetupFragment"
-        android:name="dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupFragment"
-        android:label="RecoveryPhraseSetupFragment">
-    </fragment>
-    <fragment
-        android:id="@+id/unlockFragment"
-        android:name="dev.leonlatsch.photok.unlock.ui.UnlockFragment"
-        android:label="fragment_unlock">
-        <action
-            android:id="@+id/action_unlockFragment_to_encryptionMigrationFragment"
-            app:destination="@id/encryptionMigrationFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right"
-            app:popUpTo="@id/unlockFragment"
+            android:id="@+id/action_initialFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment"
+            app:popUpTo="@id/initialFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_unlockFragment_to_recoveryPhraseRestoreFragment"
-            app:destination="@id/recoveryPhraseRestoreFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
+            android:id="@+id/action_initialFragment_to_appNavFragment"
+            app:destination="@id/appNavFragment"
+            app:popUpTo="@id/initialFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -99,8 +40,8 @@
         android:label="fragment_intro"
         tools:layout="@layout/fragment_onboarding">
         <action
-            android:id="@+id/action_onBoardingFragment_to_setupFragment"
-            app:destination="@id/setupFragment"
+            android:id="@+id/action_onBoardingFragment_to_appNavFragment"
+            app:destination="@id/appNavFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
@@ -109,136 +50,7 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/initialFragment"
-        android:name="dev.leonlatsch.photok.appstart.ui.InitialFragment"
-        android:label="InitialFragment">
-        <action
-            android:id="@+id/action_initialFragment_to_unlockFragment"
-            app:destination="@id/unlockFragment"
-            app:popUpTo="@id/initialFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_initialFragment_to_onBoardingFragment"
-            app:destination="@id/onBoardingFragment"
-            app:popUpTo="@id/initialFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_initialFragment_to_setupFragment"
-            app:destination="@id/setupFragment"
-            app:popUpTo="@id/initialFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/creditsFragment"
-        android:name="dev.leonlatsch.photok.settings.ui.credits.CreditsFragment"
-        android:label="CreditsFragment" />
-    <fragment
-        android:id="@+id/ossLicensesFragment"
-        android:name="dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesFragment"
-        android:label="OssLicensesFragment" />
-    <fragment
-        android:id="@+id/imageViewerFragment"
-        android:name="dev.leonlatsch.photok.imageviewer.ui.ImageViewerFragment"
-        android:label="ImageViewerFragment">
-        <argument
-            android:name="photo_uuid"
-            android:defaultValue=""
-            app:argType="string" />
-        <argument
-            android:name="album_uuid"
-            android:defaultValue=""
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/galleryFragment"
-        android:name="dev.leonlatsch.photok.gallery.ui.GalleryFragment"
-        android:label="GalleryFragment" />
-    <fragment
-        android:id="@+id/albumsFragment"
-        android:name="dev.leonlatsch.photok.gallery.albums.ui.AlbumsFragment"
-        android:label="GalleryFragment">
-    </fragment>
-    <fragment
-        android:id="@+id/albumDetailFragment"
-        android:name="dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailFragment"
-        android:label="AlbumDetailFragment">
-        <argument
-            android:name="album_uuid"
-            android:defaultValue=""
-            app:argType="string" />
-    </fragment>
-    <action
-        android:id="@+id/action_global_galleryFragment"
-        app:destination="@id/galleryFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right"
-        />
-    <action
-        android:id="@+id/action_global_albumsFragment"
-        app:destination="@id/albumsFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right"
-        />
-    <action
-        android:id="@+id/action_global_recoveryPhraseSetupFragment"
-        app:destination="@id/recoveryPhraseSetupFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right"
-        />
-    <action
-        android:id="@+id/action_global_imageViewerFragment"
-        app:destination="@id/imageViewerFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right"
-        />
-    <action
-        android:id="@+id/action_global_albumDetailFragment"
-        app:destination="@id/albumDetailFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right"
-        />
-    <fragment
-        android:id="@+id/encryptionMigrationFragment"
-        android:name="dev.leonlatsch.photok.encryption.migration.ui.EncryptionMigrationFragment"
-        android:label="EncryptionMigrationFragment" >
-        <action
-            android:id="@+id/action_encryptionMigrationFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:popUpTo="@id/encryptionMigrationFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/recoveryPhraseRestoreFragment"
-        android:name="dev.leonlatsch.photok.encryption.ui.RecoveryPhraseRestoreFragment"
-        android:label="RecoveryPhraseRestoreFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/devSettingsFragment"
-        android:name="dev.leonlatsch.photok.devsettings.ui.DevSettingsFragment"
-        android:label="DevSettingsFragment" />
-    <fragment
-        android:id="@+id/restoreBackupFragment"
-        android:name="dev.leonlatsch.photok.backup.ui.restore.RestoreBackupFragment"
-        android:label="RestoreBackupFragment">
-        <argument
-            android:name="backup_uri"
-            app:argType="android.net.Uri" />
-    </fragment>
-    <action
-        android:id="@+id/action_global_restoreBackupFragment"
-        app:destination="@id/restoreBackupFragment"
-        app:enterAnim="@anim/slide_in_from_right"
-        app:exitAnim="@anim/slide_out_to_left"
-        app:popEnterAnim="@anim/slide_in_from_left"
-        app:popExitAnim="@anim/slide_out_to_right" />
+        android:id="@+id/appNavFragment"
+        android:name="dev.leonlatsch.photok.main.ui.AppNavFragment"
+        android:label="AppNavFragment" />
 </navigation>

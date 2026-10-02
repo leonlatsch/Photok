@@ -44,7 +44,7 @@ Each feature follows the same internal structure:
 - **`data/`** — Room DAOs, table entities, repository implementations.
 - **`domain/`** — pure Kotlin interfaces, models, use cases. No Android imports.
 - **`di/`** — Hilt modules that bind `data` implementations to `domain` interfaces.
-- **`ui/`** — ViewModels, Fragments, Compose screens, navigator classes.
+- **`ui/`** — ViewModels, Compose screens, navigator classes.
   - **`ui/compose/`** — screen-level and sub-composables.
 
 Shared UI components, the theme, core models, encryption, persistence, and shared interfaces belong in `core/`. App-specific UI and Android entry points belong in `app/`. Legacy base classes (`Bindable*`, `Base*`) live in `app/.../uicomponnets/`. Extensions and misc utilities live in the owning module's `other/` package.
@@ -83,17 +83,28 @@ The codebase follows a **feature-first layered architecture** within the module 
 - **`domain`** — pure Kotlin. Interfaces, models, use cases. No Android imports.
 - **`data`** — Room tables, DAOs, repository implementations. Implements `domain` interfaces.
 - **`di`** — Hilt modules that bind `data` implementations to `domain` interfaces.
-- **`ui`** — ViewModels + Compose screens + Fragments + Navigator classes. App entry points and navigation remain in `:app`.
+- **`ui`** — ViewModels + Compose screens + Navigator classes. App entry points and navigation remain in `:app`.
 
 ### Single Activity
 
-The installable `:app` module has a single `MainActivity` (with `DataBinding`). All screens are **Fragments** navigated via `app/src/main/res/navigation/main_nav_graph.xml`. Fragments host Compose UIs via `ComposeView`.
+The installable `:app` module has a single `MainActivity` (with `DataBinding`). It hosts a small fragment graph (`app/src/main/res/navigation/main_nav_graph.xml`) with only `InitialFragment`, the legacy `OnBoardingFragment`, and `AppNavFragment`. `AppNavFragment` is a transitional wrapper that hosts all Compose screens through Navigation 3. Once onboarding is migrated, it becomes a route and the `NavDisplay` moves into `MainActivity`.
 
 ### Navigation
 
-- Declared in `main_nav_graph.xml` with Safe Args.
-- Bottom-tab navigation (`MainMenu`, a Compose component) connects to top-level destinations: Gallery, Albums, Settings.
-- Fragment-level navigation uses typed `Navigator` classes injected via Hilt.
+- **Root stack.** `AppNavHost` (`main/ui/navigation/`) owns the root back stack and `NavDisplay`. It holds the pre-unlock flow (`Setup`, `Unlock`, `RecoveryPhraseSetup`, `RecoveryPhraseRestore`, `EncryptionMigration`) and `Main`. These are the cases of `sealed interface RootRoute : NavKey`. Once the vault is unlocked, call `replaceAll(RootRoute.Main)`.
+- **Tabs, one stack each (iOS style).** `RootRoute.Main` renders `MainTabsScreen`, which owns one back stack per `MainTab` (Gallery, Albums, Settings; each starts at `MainTab.rootRoute`) and registers every in-app route in `tabEntryProvider`. Each stack is decorated with `rememberDecoratedNavEntries` on every composition, so hidden tabs keep their entries, ViewModels and scroll state. Only the selected tab's entries go into the `NavDisplay`. Tapping the selected tab pops it to its root. Back at the root of a non-home tab goes to the home tab (the start page from `GetStartTab`).
+- **Routes are typed objects, never strings.** In-app routes are `@Serializable` cases of `sealed interface AppRoute : NavKey`, shared by all tabs, so any tab can push any of them. Routes with arguments are data classes, for example `AppRoute.AlbumDetail(albumUuid)`. Non-serializable args such as `Uri` are stored as `String`. New in-app screens go into `AppRoute` and `tabEntryProvider`; only pre-unlock screens go into `RootRoute` and `AppNavHost`. Tab selection (`MainMenu`, `GetStartTab`) uses the `MainTab` enum, never routes.
+- **Navigating.** Always use `LocalNavigator.current` (the `Navigator` interface in `core/.../navigation/`: `navigate`, `goBack`, `replaceAll`). In the root stack it is a `RootNavigator`. Inside a tab it is a `TabNavigator`, which pushes and pops on that tab's stack; its `replaceAll` replaces the whole root stack.
+- **Bottom menu.** `MainMenu` is drawn by `MainTabsScreen` on tab roots, `AlbumDetail` and `DevSettings`; it is hidden on every other route. Screens under it read `LocalMainMenuPadding`.
+- **Transitions.** The default is the core `slideForward()` / `slideBackward()`. Switching tabs swaps the stack without animation.
+- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `Navigator`, plus the host fragment for showing `DialogFragment`s.
+
+### Pro-only screens
+
+- Pro routes are cases of `sealed interface ProRoute : NavKey` in `core/.../pro/navigation/`, because `:app` `src/main` cannot see `:pro` types.
+- `:pro` registers their entries in `fun EntryProviderScope<NavKey>.proEntries()` (`pro/.../pro/navigation/ProEntries.kt`). `app/src/foss` has an empty stub with the same package and name.
+- Navigate with `LocalNavigator.current.navigate(ProRoute.X)`, and close a pro screen with `goBack()` rather than `activity.finish()`.
+- The paywall is still a standalone `PaywallActivity` opened through `Activity.showPaywall(source)`.
 
 ---
 
@@ -111,29 +122,30 @@ Every screen follows a **simple, flat MVI**. There is no dedicated MVI framework
 
 | File | Role |
 |------|------|
-| `XyzFragment.kt` | `@AndroidEntryPoint Fragment`. Creates a `ComposeView`, provides `CompositionLocal`s, collects navigation event flows. |
 | `XyzViewModel.kt` | `@HiltViewModel`. Exposes `val uiState: StateFlow<XyzUiState>`. Accepts events via `fun handleUiEvent(event: XyzUiEvent)`. |
 | `XyzUiState.kt` | `sealed interface XyzUiState`. Common states: `Empty`, `Loading`, `Content(...)`. |
 | `XyzUiEvent.kt` | `sealed interface XyzUiEvent`. One `data class`/`data object` per user action. |
-| `XyzScreen.kt` | Top-level `@Composable` that takes the `ViewModel`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
+| `XyzScreen.kt` | Top-level `@Composable`, registered as an `entry<AppRoute.Xyz>` in `AppNavHost`. It gets the `ViewModel` via `hiltViewModel()`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
 
-Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>` and collected in the Fragment.
+Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalNavigator.current`. Do not pass a plain back action down from `AppNavHost` as `onClose`/`onBack`; the screen calls `LocalNavigator.current.goBack()` itself. Callbacks from the host are only for actions that differ per route (for example `RecoveryPhraseSetupScreen(onContinue)`). Private `*Content` composables may still take lambdas so previews work without a navigator.
 
-**Canonical example** — `GalleryFragment` / `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
+**Canonical example** — `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
 
 ### Legacy DataBinding Screens
 
-Still used in `unlock` and a few others. They extend `BindableFragment<ViewDataBinding>` / `BindableActivity<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
+Still used by onboarding and some dialogs. They extend `BindableFragment<ViewDataBinding>` / `BindableActivity<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
 
 ### Theme
 
-`AppTheme` (in `core/.../ui/theme/Theme.kt`) wraps every Compose entry point. It respects the system dark/light setting. Always call `AppTheme { ... }` at the root of a Fragment's `ComposeView.setContent { }`.
+`AppTheme` (in `core/.../ui/theme/Theme.kt`) respects the system dark/light setting.
+- `AppNavFragment` applies it once for all Navigation 3 screens, so do not wrap screens or in-tree sheets/dialogs in `AppTheme` again.
+- Only standalone roots apply it themselves: activities such as `PaywallActivity`, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
 
 ### CompositionLocals
 
 Shared objects are injected into the Compose tree via `CompositionLocal`. Check the relevant module's UI package and feature-specific files (for example, `app/.../transcoding/compose/LocalEncryptedImageLoader.kt`) for the current set.
 
-Provide them in the Fragment's `setContent { }` block using `CompositionLocalProvider`.
+They are provided once in `AppNavFragment` (`LocalFragment`, `LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` / `MainTabsScreen` (`LocalNavigator`, `LocalMainMenuPadding`). `LocalFragment` is the wrapper fragment. Use its `childFragmentManager` to show `DialogFragment`s from Compose, and use it for APIs that still need a `Fragment`, such as `BiometricPrompt`.
 
 ### Compose Components
 
@@ -173,7 +185,8 @@ Check the owning module's build file for the current library list. Key areas to 
 - **Jetpack Compose + Material3** — all new UI.
 - **Hilt / Dagger** — DI throughout.
 - **Room** — SQLite ORM with auto-migrations.
-- **Navigation Component** — single-activity fragment navigation, with Safe Args.
+- **Navigation 3** — Compose navigation for all screens. **Navigation Component** remains only for the initial/onboarding → `AppNavFragment` hand-off.
+- **kotlinx-serialization** — `@Serializable` navigation routes.
 - **Coil** — image loading; there is a custom `EncryptedImageFetcher` in `transcoding/` that decrypts on-the-fly.
 - **ExoPlayer / Media3** — video playback.
 - **jBCrypt** — legacy password hashing, used for migration only.
@@ -275,7 +288,7 @@ Flavor-specific code belongs in the owning module's `src/play/` or `src/foss/` s
 | ViewModel | `<Feature>ViewModel` | `GalleryViewModel` |
 | UiState | `<Feature>UiState` (sealed interface) | `GalleryUiState` |
 | UiEvent | `<Feature>UiEvent` (sealed interface) | `GalleryUiEvent` |
-| Fragment | `<Feature>Fragment` | `GalleryFragment` |
+| Route | `AppRoute.<Feature>` / `ProRoute.<Feature>` | `AppRoute.Gallery` |
 | Composable screen | `<Feature>Screen` | `GalleryScreen` |
 | Sub-composable | `<Feature>Content`, `<Feature>Placeholder`, etc. | `GalleryContent` |
 | Navigator | `<Feature>Navigator` | `GalleryNavigator` |
@@ -298,7 +311,7 @@ Timber.w("Warning")
 
 - All database and I/O work runs on `Dispatchers.IO` inside `withContext` or repository/use-case `suspend` functions.
 - ViewModels use `viewModelScope`. App-level coroutines use the `CoroutineScope(Dispatchers.Default)` provided via Hilt.
-- Collect flows in the Fragment with `launchLifecycleAwareJob` (from `other/extensions`), never in a raw `lifecycleScope.launch` without `repeatOnLifecycle`.
+- Collect one-off event flows in Compose with `ObserveAsEvents`. In Activities, use `launchLifecycleAwareJob` (from `other/extensions`). Never use a raw `lifecycleScope.launch` without `repeatOnLifecycle`.
 
 ### Result Handling
 

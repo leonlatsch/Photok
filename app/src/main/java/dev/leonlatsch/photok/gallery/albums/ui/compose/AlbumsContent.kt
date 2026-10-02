@@ -18,8 +18,10 @@ package dev.leonlatsch.photok.gallery.albums.ui.compose
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,6 +37,7 @@ fun AlbumsContent(
     content: AlbumsUiState.Content,
     handleUiEvent: (AlbumsUiEvent) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -43,13 +46,15 @@ fun AlbumsContent(
             albums = content.albums,
             onAlbumClicked = { handleUiEvent(AlbumsUiEvent.OpenAlbum(it)) },
             displayMode = content.displayMode,
+            contentPadding = contentPadding,
         )
 
         MagicFab(
             label = stringResource(R.string.magic_fab_new_album_label),
             onClick = {
                 handleUiEvent(AlbumsUiEvent.ShowCreateDialog)
-            }
+            },
+            modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding()),
         )
     }
 }
@@ -59,6 +64,7 @@ fun AlbumsGridOrList(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     displayMode: DisplayMode,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     Crossfade(displayMode) {
         when (it) {
@@ -66,6 +72,7 @@ fun AlbumsGridOrList(
                 AlbumsGrid(
                     albums = albums,
                     onAlbumClicked = onAlbumClicked,
+                    contentPadding = contentPadding,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -74,6 +81,7 @@ fun AlbumsGridOrList(
                 AlbumsList(
                     albums = albums,
                     onAlbumClicked = onAlbumClicked,
+                    contentPadding = contentPadding,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

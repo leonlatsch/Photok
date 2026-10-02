@@ -47,8 +47,6 @@ import androidx.media3.common.Player
 import androidx.media3.common.Player.COMMAND_SET_SPEED_AND_PITCH
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsController
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
@@ -56,6 +54,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
@@ -64,11 +63,11 @@ import kotlinx.coroutines.isActive
 @OptIn(UnstableApi::class)
 @Composable
 fun ImageViewerScreen(
-    navController: NavController,
     photoUuid: String,
     albumUuid: String?,
 ) {
     val window = findWindow()
+    val navigator = LocalNavigator.current
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White
@@ -296,7 +295,7 @@ fun ImageViewerScreen(
             currentItem = currentItem,
             handleUiEvent = handleUiEvent,
             uiState = uiState,
-            navController = navController,
+            onBack = navigator::goBack,
         )
 
         ImageViewerSystemBarsController(visible = uiState.inputs.showControls)
@@ -325,7 +324,7 @@ private fun ControlsPreview() {
                 ),
                 uiState = ImageViewerUiState(),
                 handleUiEvent = {},
-                navController = rememberNavController(),
+                onBack = {},
             )
         }
     }

@@ -14,10 +14,28 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.intruderwarnings
+package dev.leonlatsch.photok.main.ui.navigation
 
-import android.app.Activity
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.navigation.Navigator
 
-fun Activity.showIntruderWarningsActivity() {
-    // No impl
+class TabNavigator(
+    private val backStack: NavBackStack<NavKey>,
+    private val rootNavigator: Navigator,
+) : Navigator {
+
+    override fun navigate(route: NavKey) {
+        backStack.add(route)
+    }
+
+    override fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
+        }
+    }
+
+    override fun replaceAll(route: NavKey) {
+        rootNavigator.replaceAll(route)
+    }
 }

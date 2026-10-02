@@ -20,9 +20,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,21 +50,23 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiEvent
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiState
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsViewModel
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
 fun DevSettingsScreen(
-    onClose: () -> Unit,
     viewModel: DevSettingsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
 
     DevSettingsContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onClose = onClose,
+        onClose = navigator::goBack,
     )
 }
 
@@ -115,7 +120,13 @@ private fun DevSettingsContent(
         }
     ) { contentPadding ->
         Column(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    top = contentPadding.calculateTopPadding(),
+                    bottom = LocalMainMenuPadding.current.calculateBottomPadding(),
+                ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
