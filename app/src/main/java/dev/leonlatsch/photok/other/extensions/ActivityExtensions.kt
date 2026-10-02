@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 /**
  * Get the "application" as [BaseApplication] from any activity.
  */
-fun Activity.getBaseApplication(): BaseApplication = application as BaseApplication
+fun Activity.getBaseApplication(): BaseApplication? = application as? BaseApplication
 
 /**
  * Compat method to hide the system ui.
