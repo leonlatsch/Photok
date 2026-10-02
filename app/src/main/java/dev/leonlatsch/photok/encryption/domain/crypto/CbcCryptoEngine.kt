@@ -76,7 +76,7 @@ class CbcCryptoEngine @Inject constructor(): CryptoEngine {
                 init(Cipher.DECRYPT_MODE, session.vmk, IvParameterSpec(iv))
             }
 
-            return CipherInputStream(input, cipher)
+            return ChunkedCipherInputStream(input, cipher)
         } catch (e: Exception) {
             Timber.e("Error creating CipherInputStream: $e")
             return null

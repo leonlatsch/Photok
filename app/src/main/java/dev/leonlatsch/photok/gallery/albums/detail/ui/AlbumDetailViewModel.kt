@@ -26,9 +26,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator.NavigationEvent.ShowToast
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
-import dev.leonlatsch.photok.gallery.albums.domain.model.Album
 import dev.leonlatsch.photok.gallery.components.ImportChoice
 import dev.leonlatsch.photok.gallery.components.PhotoTile
+import dev.leonlatsch.photok.gallery.domain.PhotoListCache
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.DeletePhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.ExportPhotos
@@ -36,11 +36,9 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.OpenPhoto
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -51,16 +49,14 @@ const val ALBUM_DETAIL_UUID = "album_uuid"
 class AlbumDetailViewModel @AssistedInject constructor(
     @Assisted(ALBUM_DETAIL_UUID) private val albumUUID: String,
     private val albumsRepository: AlbumRepository,
+    photoListCache: PhotoListCache,
     private val sortRepository: SortRepository,
     private val resources: Resources,
 ) : ViewModel() {
 
     private val sortFlow = sortRepository.observeSortFor(albumUuid = albumUUID, default = SortConfig.Album.default)
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val albumFlow = sortFlow.flatMapLatest { sort ->
-        albumsRepository.observeAlbumWithPhotos(albumUUID, sort)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Album.Placeholder)
+    private val albumFlow = photoListCache.album(albumUUID)
 
     private val pinnedPhotoIdsFlow = albumsRepository.observePinnedPhotoUUIDs(albumUUID)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())

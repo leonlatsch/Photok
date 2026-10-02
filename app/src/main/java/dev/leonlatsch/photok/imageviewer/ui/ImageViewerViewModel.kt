@@ -31,23 +31,22 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
+import dev.leonlatsch.photok.gallery.domain.PhotoListCache
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.sort.domain.SortConfig
-import dev.leonlatsch.photok.sort.domain.SortRepository
 import dev.leonlatsch.photok.transcoding.data.AesCbcRandomAccessDataSource
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 sealed interface ImageViewerUiEvent {
     data class ConfirmDelete(val item: ImageViewerItem) : ImageViewerUiEvent
@@ -99,32 +98,29 @@ class ImageViewerViewModel @AssistedInject constructor(
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val sortRepository: SortRepository,
+    private val photoListCache: PhotoListCache,
     private val config: Config,
     private val sessionRepository: SessionRepository,
 ) : ObservableViewModel(app) {
 
     private val inputs = MutableStateFlow(ImageViewerUiState.Inputs())
 
+    private val photosFlow: StateFlow<List<Photo>> = if (albumUuid == null) {
+        photoListCache.galleryPhotos
+    } else {
+        photoListCache.album(albumUuid)
+            .map { it.files }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), photoListCache.album(albumUuid).value.files)
+    }
+
     val uiState = combine(
-        createPhotosFlow(),
+        photosFlow,
         createPinnedPhotoIdsFlow(),
         config.valuesFlow,
         inputs,
     ) { photos, pinnedPhotoIds, configValues, inputs ->
         ImageViewerUiState(
-            items = photos.map { photo ->
-                if (photo.type.isVideo) {
-                    ImageViewerItem.Video(
-                        photo = photo,
-                        mediaItem = createMediaItem(photo)
-                    )
-                } else {
-                    ImageViewerItem.Image(
-                        photo = photo
-                    )
-                }
-            },
+            items = photos.map(::createItem),
             albumUuid = albumUuid,
             pinnedPhotoIds = pinnedPhotoIds,
             loopVideos = configValues.getOrDefault(Config.IMAGE_VIEWER_LOOP_VIDEO, false) as Boolean,
@@ -132,7 +128,17 @@ class ImageViewerViewModel @AssistedInject constructor(
             videoPlaybackSpeed = configValues.getOrDefault(Config.IMAGE_VIEWER_PLAYBACK_SPEED, 1f) as Float,
             inputs = inputs,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ImageViewerUiState())
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        ImageViewerUiState(
+            items = photosFlow.value.map(::createItem),
+            albumUuid = albumUuid,
+            loopVideos = config.imageViewerLoopVideos,
+            muteVideoPlayer = config.imageViewerMuteVideoPlayer,
+            videoPlaybackSpeed = config.imageViewerPlaybackSpeed,
+        ),
+    )
 
     fun handleUiEvent(event: ImageViewerUiEvent) {
         when (event) {
@@ -179,6 +185,17 @@ class ImageViewerViewModel @AssistedInject constructor(
         }
     }
 
+    private fun createItem(photo: Photo): ImageViewerItem = if (photo.type.isVideo) {
+        ImageViewerItem.Video(
+            photo = photo,
+            mediaItem = createMediaItem(photo)
+        )
+    } else {
+        ImageViewerItem.Image(
+            photo = photo
+        )
+    }
+
     private fun createMediaItem(photo: Photo): MediaItem {
         val uri = Uri.fromFile(app.getFileStreamPath(photo.internalFileName).canonicalFile)
 
@@ -196,21 +213,6 @@ class ImageViewerViewModel @AssistedInject constructor(
         }
 
         ProgressiveMediaSource.Factory(factory)
-    }
-
-    private fun createPhotosFlow(): Flow<List<Photo>> {
-        val sort = runBlocking {
-            sortRepository.getSortForAlbum(albumUuid) ?: SortConfig.defaultFor(albumUuid)
-        }
-
-        return if (albumUuid == null) {
-            photoRepository.observeAll(sort)
-        } else {
-            albumRepository.observeAlbumWithPhotos(
-                uuid = albumUuid,
-                sort = sort
-            ).map { it.files }
-        }
     }
 
     private fun createPinnedPhotoIdsFlow(): Flow<Set<String>> =

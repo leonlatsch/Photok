@@ -25,20 +25,18 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.gallery.components.ImportChoice
 import dev.leonlatsch.photok.gallery.components.PhotoTile
+import dev.leonlatsch.photok.gallery.domain.PhotoListCache
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.model.repositories.ImportSource
-import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -46,17 +44,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    photoRepository: PhotoRepository,
+    photoListCache: PhotoListCache,
     private val galleryUiStateFactory: GalleryUiStateFactory,
     private val sortRepository: SortRepository,
 ) : ViewModel() {
 
     private val sortFlow = sortRepository.observeSortFor(albumUuid = null, default = SortConfig.Gallery.default)
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val photosFlow = sortFlow.flatMapLatest { sort ->
-        photoRepository.observeAll(sort)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), listOf())
+    private val photosFlow = photoListCache.galleryPhotos
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 

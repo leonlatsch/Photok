@@ -106,7 +106,11 @@ fun ImageViewerScreen(
             }
         }
 
-        val pagerState = rememberPagerState { uiState.items.size }
+        val pagerState = rememberPagerState(
+            initialPage = uiState.items.indexOfFirst { it.photo.uuid == photoUuid }.coerceAtLeast(0),
+            pageCount = { uiState.items.size }
+        )
+
         var anchoredPhotoUuid by rememberSaveable(photoUuid) { mutableStateOf(photoUuid) }
         var pagerInitialized by rememberSaveable(photoUuid) { mutableStateOf(false) }
 

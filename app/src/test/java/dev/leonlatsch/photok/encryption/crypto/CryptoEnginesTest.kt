@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.LegacySession
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -155,6 +156,43 @@ class CryptoEnginesTest {
         val session = VaultSession(keyGen.generateVaultMasterKey())
         val result = cbcEngine.createDecryptStream(ByteArrayInputStream(byteArrayOf(0x09)), session)
         assertNull("Unrecognized version byte must return null, not throw", result)
+    }
+
+    @Test
+    fun `CBC engine decrypts across chunk and block boundaries with any read pattern`() {
+        val session = VaultSession(keyGen.generateVaultMasterKey())
+        val chunk = 64 * 1024
+
+        for (size in listOf(0, 1, 15, 16, 17, chunk - 1, chunk, chunk + 1, 3 * chunk + 7)) {
+            val plaintext = ByteArray(size) { (it * 31 % 251).toByte() }
+            val ciphertext = cbcEncrypt(plaintext, session)
+
+            assertArrayEquals(plaintext, cbcDecrypt(ciphertext, session))
+
+            val singleBytes = cbcEngine.createDecryptStream(ByteArrayInputStream(ciphertext), session)!!.use { stream ->
+                generateSequence { stream.read().takeIf { it != -1 }?.toByte() }.toList().toByteArray()
+            }
+            assertArrayEquals(plaintext, singleBytes)
+
+            val oddReads = cbcEngine.createDecryptStream(ByteArrayInputStream(ciphertext), session)!!.use { stream ->
+                val out = ByteArrayOutputStream()
+                val buffer = ByteArray(997)
+                while (true) {
+                    val read = stream.read(buffer, 3, 500)
+                    if (read == -1) break
+                    out.write(buffer, 3, read)
+                }
+                out.toByteArray()
+            }
+            assertArrayEquals(plaintext, oddReads)
+
+            val skipped = cbcEngine.createDecryptStream(ByteArrayInputStream(ciphertext), session)!!.use { stream ->
+                val skippedCount = stream.skip(size / 2L)
+                assertEquals(size / 2L, skippedCount)
+                stream.readBytes()
+            }
+            assertArrayEquals(plaintext.copyOfRange(size / 2, size), skipped)
+        }
     }
 
     // --- helpers ---
