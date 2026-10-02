@@ -56,7 +56,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
         )
 
-        val hasSession = getBaseApplication().sessionRepository.get() != null
+        val hasSession = getBaseApplication()?.sessionRepository?.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
     }
 
