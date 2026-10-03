@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.combine
 
 const val SELECT_ALL_ALBUMS_QUERY = """
     SELECT * FROM album
-    ORDER BY modified_at DESC
+    ORDER BY name COLLATE NOCASE ASC
 """
 
 @Dao
