@@ -44,6 +44,9 @@ data class Photo(
     @PrimaryKey
     @ColumnInfo(name = "photo_uuid")
     val uuid: String = UUID.randomUUID().toString(),
+
+    @ColumnInfo(name = COL_THUMBNAIL_VERSION, defaultValue = "$LEGACY_THUMBNAIL_VERSION")
+    val thumbnailVersion: Int = CURRENT_THUMBNAIL_VERSION,
 ) {
 
     val internalFileName: String
@@ -61,6 +64,13 @@ data class Photo(
         const val COL_LAST_MODIFIED = "lastModified"
         const val DATE_TAKEN = "dateTaken"
         const val COL_SIZE = "size"
+        const val COL_THUMBNAIL_VERSION = "thumbnailVersion"
         const val TABLE_NAME = "photo"
+
+        /** Square 512 px thumbnails. */
+        const val LEGACY_THUMBNAIL_VERSION = 1
+
+        /** Thumbnails with the original aspect ratio, used as preview in the image viewer. */
+        const val CURRENT_THUMBNAIL_VERSION = 2
     }
 }

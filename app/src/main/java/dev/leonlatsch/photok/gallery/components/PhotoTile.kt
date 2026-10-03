@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.components
 
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
 
@@ -24,6 +25,7 @@ data class PhotoTile(
     val type: PhotoType,
     val uuid: String,
     val pinned: Boolean = false,
+    val thumbnailVersion: Int = Photo.CURRENT_THUMBNAIL_VERSION,
 ) {
     val internalThumbnailFileName = internalThumbnailFileName(uuid)
 }

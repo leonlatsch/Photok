@@ -33,12 +33,14 @@ import dev.leonlatsch.photok.transcoding.data.EncryptedImageFetcherFactory
 import dev.leonlatsch.photok.transcoding.data.EncryptedImageKeyer
 import dev.leonlatsch.photok.transcoding.data.ImageStorageImpl
 import dev.leonlatsch.photok.transcoding.domain.ImageStorage
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ImageLoadingModule {
 
     @Provides
+    @Singleton
     @EncryptedImageLoader
     fun provideEncryptedImageLoader(
         @ApplicationContext context: Context,

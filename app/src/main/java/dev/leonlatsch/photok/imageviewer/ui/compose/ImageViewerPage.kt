@@ -78,6 +78,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
+import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -111,10 +112,15 @@ fun BoxScope.ImageViewerImagePage(
     }
 
     val thumbnailMemoryCacheKey = remember(photo) {
-        EncryptedImageRequestData(
-            internalFileName = photo.internalThumbnailFileName,
-            mimeType = photo.type.mimeType,
-        ).memoryCacheKey
+        if (photo.thumbnailVersion >= Photo.CURRENT_THUMBNAIL_VERSION) {
+            EncryptedImageRequestData(
+                internalFileName = photo.internalThumbnailFileName,
+                mimeType = photo.type.mimeType,
+                thumbnailVersion = photo.thumbnailVersion,
+            ).memoryCacheKey
+        } else {
+            null
+        }
     }
 
     Image(

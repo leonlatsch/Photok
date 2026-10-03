@@ -61,12 +61,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -355,7 +355,8 @@ private fun GalleryPhotoTile(
             val requestData = remember(photoTile) {
                 EncryptedImageRequestData(
                     internalFileName = photoTile.internalThumbnailFileName,
-                    mimeType = photoTile.type.mimeType
+                    mimeType = photoTile.type.mimeType,
+                    thumbnailVersion = photoTile.thumbnailVersion,
                 )
             }
 

@@ -34,7 +34,9 @@ import javax.inject.Inject
  *
  * Thumbnails keep the original aspect ratio, so the image viewer can show them as preview while the full image loads.
  */
-private const val THUMBNAIL_SIZE = 1080
+const val THUMBNAIL_SIZE = 1080
+
+const val THUMBNAIL_QUALITY = 80
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -67,7 +69,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
                 outputStream = vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName),
-                compressionPercent = 80,
+                compressionPercent = THUMBNAIL_QUALITY,
             )
 
             // Video Preview

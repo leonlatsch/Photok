@@ -109,7 +109,8 @@ fun AlbumTile(
                 val requestData = remember(album) {
                     EncryptedImageRequestData(
                         internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
+                        mimeType = album.albumCover.mimeType,
+                        thumbnailVersion = album.albumCover.thumbnailVersion,
                     )
                 }
 

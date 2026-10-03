@@ -20,7 +20,8 @@ data class EncryptedImageRequestData(
     val internalFileName: String,
     val mimeType: String,
     val playAnimation: Boolean = false,
+    val thumbnailVersion: Int? = null,
 ) {
     val memoryCacheKey: String
-        get() = "$internalFileName#$playAnimation"
+        get() = "$internalFileName#$playAnimation#$thumbnailVersion"
 }

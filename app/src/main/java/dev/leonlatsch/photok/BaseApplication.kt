@@ -24,6 +24,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.model.io.ThumbnailMigration
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
@@ -63,6 +64,9 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
 
     @Inject
+    lateinit var thumbnailMigration: ThumbnailMigration
+
+    @Inject
     lateinit var telemetryService: TelemetryService
 
     @Inject
@@ -93,6 +97,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
         setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
+        thumbnailMigration.start()
 
         appScope.launch {
             var session = sessionRepository.get()
