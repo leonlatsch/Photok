@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.transcoding.compose.model
+package dev.leonlatsch.photok.transcoding.data
 
-data class EncryptedImageRequestData(
-    val internalFileName: String,
-    val mimeType: String,
-    val playAnimation: Boolean = false,
-) {
-    val memoryCacheKey: String
-        get() = "$internalFileName#$playAnimation"
+import coil.key.Keyer
+import coil.request.Options
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import javax.inject.Inject
+
+class EncryptedImageKeyer @Inject constructor() : Keyer<EncryptedImageRequestData> {
+    override fun key(data: EncryptedImageRequestData, options: Options): String = data.memoryCacheKey
 }

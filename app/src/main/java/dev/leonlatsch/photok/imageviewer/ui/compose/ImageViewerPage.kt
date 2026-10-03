@@ -110,10 +110,18 @@ fun BoxScope.ImageViewerImagePage(
         )
     }
 
+    val thumbnailMemoryCacheKey = remember(photo) {
+        EncryptedImageRequestData(
+            internalFileName = photo.internalThumbnailFileName,
+            mimeType = photo.type.mimeType,
+        ).memoryCacheKey
+    }
+
     Image(
         painter = rememberEncryptedImagePainter(
             data = requestData,
             placeholder = android.R.color.black,
+            placeholderMemoryCacheKey = thumbnailMemoryCacheKey,
         ),
         contentDescription = photo.fileName,
         modifier = modifier
