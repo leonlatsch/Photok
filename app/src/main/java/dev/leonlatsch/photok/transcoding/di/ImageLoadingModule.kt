@@ -30,25 +30,30 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.transcoding.data.EncryptedImageFetcherFactory
+import dev.leonlatsch.photok.transcoding.data.EncryptedImageKeyer
 import dev.leonlatsch.photok.transcoding.data.ImageStorageImpl
 import dev.leonlatsch.photok.transcoding.domain.ImageStorage
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ImageLoadingModule {
 
     @Provides
+    @Singleton
     @EncryptedImageLoader
     fun provideEncryptedImageLoader(
         @ApplicationContext context: Context,
-        encryptedImageFetcherFactory: EncryptedImageFetcherFactory
+        encryptedImageFetcherFactory: EncryptedImageFetcherFactory,
+        encryptedImageKeyer: EncryptedImageKeyer,
     ): ImageLoader = ImageLoader.Builder(context)
         .components {
             add(encryptedImageFetcherFactory)
+            add(encryptedImageKeyer)
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
-        .memoryCachePolicy(CachePolicy.READ_ONLY)
+        .memoryCachePolicy(CachePolicy.ENABLED)
         .memoryCache {
             MemoryCache.Builder(context)
                 .maxSizePercent(0.25)

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,18 +14,13 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.gallery.components
+package dev.leonlatsch.photok.transcoding.data
 
-import dev.leonlatsch.photok.model.database.entity.Photo
-import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+import coil.key.Keyer
+import coil.request.Options
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import javax.inject.Inject
 
-data class PhotoTile(
-    val fileName: String,
-    val type: PhotoType,
-    val uuid: String,
-    val pinned: Boolean = false,
-    val thumbnailVersion: Int = Photo.CURRENT_THUMBNAIL_VERSION,
-) {
-    val internalThumbnailFileName = internalThumbnailFileName(uuid)
+class EncryptedImageKeyer @Inject constructor() : Keyer<EncryptedImageRequestData> {
+    override fun key(data: EncryptedImageRequestData, options: Options): String = data.memoryCacheKey
 }

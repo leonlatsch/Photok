@@ -41,5 +41,6 @@ data class AlbumItem(
 data class AlbumCover(
     val filename: String,
     val mimeType: String,
+    val thumbnailVersion: Int,
 )
 

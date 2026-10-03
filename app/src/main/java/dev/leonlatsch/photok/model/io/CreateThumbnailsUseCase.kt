@@ -17,11 +17,9 @@
 package dev.leonlatsch.photok.model.io
 
 import android.content.Context
-import android.graphics.Bitmap
 import coil.request.ImageRequest
 import coil.request.videoFramePercent
-import coil.size.Size
-import coil.transform.Transformation
+import coil.size.Scale
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -32,13 +30,13 @@ import javax.inject.Inject
 
 
 /**
- * Maximum size of the thumbnail in pixels
+ * Maximum size of the longest side of the thumbnail in pixels.
  *
- * Don't increase this any further. High impact on gallery scroll performance.
- * This should be more than fine. We have 3 thumbnails each row.
- * On a 1080p screen, this means each thumbnail will be around 360px. So 512px is more than enough.
+ * Thumbnails keep the original aspect ratio, so the image viewer can show them as preview while the full image loads.
  */
-private const val THUMBNAIL_SIZE = 512
+const val THUMBNAIL_SIZE = 1080
+
+const val THUMBNAIL_QUALITY = 80
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -63,7 +61,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             val thumbnailRequest = ImageRequest.Builder(context)
                 .data(data)
                 .size(THUMBNAIL_SIZE)
-                .transformations(CenterCropTransformation)
+                .scale(Scale.FIT)
                 .allowHardware(false)
                 .apply { if (photo.type.isVideo) videoFramePercent(0.5) }
                 .build()
@@ -71,7 +69,7 @@ class CreateThumbnailsUseCase @Inject constructor(
             val thumbnailResult = imageStorage.execAndWrite(
                 imageRequest = thumbnailRequest,
                 outputStream = vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName),
-                compressionPercent = 40,
+                compressionPercent = THUMBNAIL_QUALITY,
             )
 
             // Video Preview
@@ -100,17 +98,4 @@ class CreateThumbnailsUseCase @Inject constructor(
                 )
             }
         }
-}
-
-object CenterCropTransformation : Transformation {
-
-    override val cacheKey: String = javaClass.name
-
-    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
-        val minDim = minOf(input.width, input.height)
-        val startX = (input.width - minDim) / 2
-        val startY = (input.height - minDim) / 2
-
-        return Bitmap.createBitmap(input, startX, startY, minDim, minDim)
-    }
 }

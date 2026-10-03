@@ -105,6 +105,12 @@ class PhotoRepository @Inject constructor(
 
     suspend fun getAllUuids() = photoDao.getAllUuids()
 
+    fun observeWithOutdatedThumbnail() =
+        photoDao.observeWithThumbnailVersionBelow(Photo.CURRENT_THUMBNAIL_VERSION)
+
+    suspend fun markThumbnailUpToDate(photo: Photo) =
+        photoDao.updateThumbnailVersion(photo.uuid, Photo.CURRENT_THUMBNAIL_VERSION)
+
     // endregion
 
     // region IO
