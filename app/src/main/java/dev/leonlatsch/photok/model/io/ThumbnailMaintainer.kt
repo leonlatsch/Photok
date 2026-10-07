@@ -18,7 +18,6 @@ package dev.leonlatsch.photok.model.io
 
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.io.VaultCacheStorage
-import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +43,6 @@ private val StartDelay = 3.seconds
 class ThumbnailMaintainer @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val photoRepository: PhotoRepository,
-    private val vaultFileStorage: VaultFileStorage,
     private val vaultCacheStorage: VaultCacheStorage,
     private val thumbnailGenerator: ThumbnailGenerator,
 ) {
@@ -95,19 +93,10 @@ class ThumbnailMaintainer @Inject constructor(
             }
     }
 
-    /**
-     * A legacy thumbnail in the vault files is only deleted once its replacement exists.
-     */
     private suspend fun createMissingThumbnails(photos: List<Photo>) {
         for (photo in photos) {
-            val result = thumbnailGenerator.createFromVault(photo.uuid, photo.type)
-            if (result.isFailure) {
-                Timber.w(result.exceptionOrNull(), "Could not create thumbnail for ${photo.uuid}")
-                continue
-            }
-
-            if (vaultFileStorage.encryptedFileExists(photo.internalThumbnailFileName)) {
-                vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
+            thumbnailGenerator.createFromVault(photo.uuid, photo.type).onFailure {
+                Timber.w(it, "Could not create thumbnail for ${photo.uuid}")
             }
         }
     }

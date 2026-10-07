@@ -258,7 +258,7 @@ class PhotoRepository @Inject constructor(
     }
 
     /**
-     * Delete a photos bytes, video preview and thumbnails on the filesystem.
+     * Delete a photos bytes, video preview and thumbnail on the filesystem.
      *
      * @param photo the photo to delete
      *
@@ -266,9 +266,6 @@ class PhotoRepository @Inject constructor(
      */
     fun deleteInternalPhotoData(photo: Photo): Boolean {
         vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.path(photo.uuid))
-        if (vaultFileStorage.encryptedFileExists(photo.internalThumbnailFileName)) {
-            vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
-        }
 
         return vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
                 && (!photo.type.isVideo || vaultFileStorage.deleteEncryptedFile(photo.internalVideoPreviewFileName))

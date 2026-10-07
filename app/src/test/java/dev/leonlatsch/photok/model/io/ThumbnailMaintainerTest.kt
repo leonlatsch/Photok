@@ -17,12 +17,10 @@
 package dev.leonlatsch.photok.model.io
 
 import android.app.Application
-import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.io.VaultCacheStorage
-import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -44,18 +42,8 @@ class ThumbnailMaintainerTest {
 
     private val app: Application = RuntimeEnvironment.getApplication()
 
-    private val sessionRepository = mockk<SessionRepository> {
-        every { get() } returns VaultSession(KeyGen().generateVaultMasterKey())
-    }
-
-    private val vaultFileStorage = VaultFileStorage(
-        sessionRepository = sessionRepository,
-        cryptoEngine = CbcCryptoEngine(),
-        app = app,
-    )
-
     private val vaultCacheStorage = VaultCacheStorage(
-        sessionRepository = sessionRepository,
+        sessionRepository = mockk { every { get() } returns VaultSession(KeyGen().generateVaultMasterKey()) },
         cryptoEngine = CbcCryptoEngine(),
         app = app,
     )
@@ -76,7 +64,6 @@ class ThumbnailMaintainerTest {
     private val maintenance = ThumbnailMaintainer(
         sessionRepository = mockk(),
         photoRepository = photoRepository,
-        vaultFileStorage = vaultFileStorage,
         vaultCacheStorage = vaultCacheStorage,
         thumbnailGenerator = thumbnailGenerator,
     )
@@ -84,7 +71,6 @@ class ThumbnailMaintainerTest {
     @After
     fun tearDown() {
         File(app.cacheDir, ThumbnailFiles.DIR).deleteRecursively()
-        app.fileList().forEach { app.deleteFile(it) }
     }
 
     @Test
@@ -112,25 +98,17 @@ class ThumbnailMaintainerTest {
     }
 
     @Test
-    fun `legacy thumbnails are only deleted once their replacement exists`() = runTest {
-        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(created, failing)
-        writeLegacyThumbnail(created)
-        writeLegacyThumbnail(failing)
+    fun `a failing thumbnail does not stop the others`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(failing, created)
 
         maintenance.run()
 
         assertTrue(vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(created.uuid)))
-        assertFalse(vaultFileStorage.encryptedFileExists(created.internalThumbnailFileName))
-        assertTrue(vaultFileStorage.encryptedFileExists(failing.internalThumbnailFileName))
     }
 
     private fun writeCacheFile(path: String): File {
         vaultCacheStorage.openEncryptedOutput(path)!!.use { it.write(byteArrayOf(1)) }
         return File(app.cacheDir, path)
-    }
-
-    private fun writeLegacyThumbnail(photo: Photo) {
-        vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName)!!.use { it.write(byteArrayOf(1)) }
     }
 
     private fun photo(uuid: String) = Photo(

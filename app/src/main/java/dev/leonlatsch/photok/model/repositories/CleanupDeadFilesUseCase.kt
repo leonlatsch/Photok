@@ -55,6 +55,15 @@ class CleanupDeadFilesUseCase @Inject constructor(
                     vaultFileStorage.deleteEncryptedFile(file)
                 }
             }
+
+            val oldThumbnails = context.fileList().filter {
+                it.endsWith("$PHOTOK_FILE_EXTENSION$THUMBNAIL_SUFFIX")
+            }
+
+            for (file in oldThumbnails) {
+                Timber.i("Deleting old thumbnail: $file")
+                vaultFileStorage.deleteEncryptedFile(file)
+            }
         }
     }
 }

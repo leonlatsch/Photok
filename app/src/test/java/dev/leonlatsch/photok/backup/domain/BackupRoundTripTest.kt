@@ -269,7 +269,7 @@ class BackupRoundTripTest {
 
     @Test
     fun `thumbnails of old backups are skipped instead of written into the vault`() = runTest {
-        val thumbnails = photos.map { it.internalThumbnailFileName }
+        val thumbnails = photos.map { "${it.uuid}.crypt.tn" }
         val archive = createBackup().withEncryptedEntries(thumbnails)
 
         val result = restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))

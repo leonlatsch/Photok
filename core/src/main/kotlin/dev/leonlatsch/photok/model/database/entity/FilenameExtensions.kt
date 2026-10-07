@@ -24,8 +24,6 @@ const val VIDEO_PREVIEW_SUFFIX = ".vp"
 
 fun internalFileName(uuid: String) = "${uuid}.$PHOTOK_FILE_EXTENSION"
 
-fun internalThumbnailFileName(uuid: String) = "${uuid}.$PHOTOK_FILE_EXTENSION$THUMBNAIL_SUFFIX"
-
 fun internalVideoPreviewFileName(uuid: String) = "${uuid}.$PHOTOK_FILE_EXTENSION$VIDEO_PREVIEW_SUFFIX"
 
 fun legacyInternalFileName(uuid: String) = "${uuid}.$LEGACY_PHOTOK_FILE_EXTENSION"

@@ -78,7 +78,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
             albumName = album.name,
             photos = album.files.map {
                 PhotoTile(
-                    it.internalThumbnailFileName,
+                    it.fileName,
                     it.type,
                     it.uuid,
                     pinned = it.uuid in pinnedIds,
