@@ -26,7 +26,7 @@ import coil.request.SuccessResult
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
-import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -50,7 +50,7 @@ class ThumbnailGeneratorTest {
 
     private val app: Application = RuntimeEnvironment.getApplication()
 
-    private val vaultFileStorage = VaultFileStorage(
+    private val vaultCacheStorage = VaultCacheStorage(
         sessionRepository = mockk { every { get() } returns VaultSession(KeyGen().generateVaultMasterKey()) },
         cryptoEngine = CbcCryptoEngine(),
         app = app,
@@ -71,7 +71,7 @@ class ThumbnailGeneratorTest {
         context = app,
         encryptedImageLoader = { encryptedImageLoader },
         imageLoader = mockk(),
-        vaultFileStorage = vaultFileStorage,
+        vaultCacheStorage = vaultCacheStorage,
     )
 
     @After
@@ -88,12 +88,12 @@ class ThumbnailGeneratorTest {
         coVerify(exactly = 1) { encryptedImageLoader.execute(any()) }
         assertEquals(1, results.count { it is CreatedThumbnail.New })
         assertEquals(2, results.count { it == CreatedThumbnail.Existing })
-        assertTrue(vaultFileStorage.cacheFileExists(ThumbnailFiles.path("uuid")))
+        assertTrue(vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path("uuid")))
     }
 
     @Test
     fun `an existing thumbnail is not created again`() = runTest {
-        vaultFileStorage.openEncryptedCacheOutput(ThumbnailFiles.path("uuid"))!!.use { it.write(byteArrayOf(1)) }
+        vaultCacheStorage.openEncryptedOutput(ThumbnailFiles.path("uuid"))!!.use { it.write(byteArrayOf(1)) }
 
         val result = generator.createFromVault("uuid", PhotoType.JPEG).getOrThrow()
 

@@ -24,7 +24,7 @@ import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
 import coil.fetch.SourceResult
-import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.model.io.CreatedThumbnail
 import dev.leonlatsch.photok.model.io.ThumbnailFiles
 import dev.leonlatsch.photok.model.io.ThumbnailGenerator
@@ -42,7 +42,7 @@ private const val THUMBNAIL_MIME_TYPE = "image/jpeg"
  * Loads a thumbnail from the cache dir. A missing thumbnail is created right away and returned without reading it back.
  */
 class ThumbnailFetcher(
-    private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
     private val thumbnailGenerator: ThumbnailGenerator,
     private val requestData: EncryptedImageRequestData.Thumbnail,
     private val context: Context,
@@ -51,7 +51,7 @@ class ThumbnailFetcher(
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
         val path = ThumbnailFiles.path(requestData.uuid)
 
-        if (!vaultFileStorage.cacheFileExists(path)) {
+        if (!vaultCacheStorage.encryptedFileExists(path)) {
             val created = thumbnailGenerator.createFromVault(requestData.uuid, requestData.type)
                 .getOrElse {
                     Timber.w(it, "Could not create thumbnail for ${requestData.uuid}")
@@ -67,7 +67,7 @@ class ThumbnailFetcher(
             }
         }
 
-        val inputStream = vaultFileStorage.openEncryptedCacheInput(path)
+        val inputStream = vaultCacheStorage.openEncryptedInput(path)
         inputStream ?: return@withContext null
 
         val bytes = inputStream.use { it.readBytesSuspending() }

@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.model.repositories
 import android.app.Application
 import android.net.Uri
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
@@ -55,6 +56,7 @@ class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val albumDao: AlbumDao,
     private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
     private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
     private val config: Config,
@@ -263,7 +265,7 @@ class PhotoRepository @Inject constructor(
      * @return true, if photo and video preview could be deleted
      */
     fun deleteInternalPhotoData(photo: Photo): Boolean {
-        vaultFileStorage.deleteCacheFile(ThumbnailFiles.path(photo.uuid))
+        vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.path(photo.uuid))
         if (vaultFileStorage.encryptedFileExists(photo.internalThumbnailFileName)) {
             vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
         }

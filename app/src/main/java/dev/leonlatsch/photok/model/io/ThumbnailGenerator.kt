@@ -29,7 +29,7 @@ import coil.size.Precision
 import coil.size.Scale
 import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.database.entity.internalFileName
 import dev.leonlatsch.photok.model.database.entity.internalVideoPreviewFileName
@@ -70,7 +70,7 @@ class ThumbnailGenerator @Inject constructor(
     @ApplicationContext private val context: Context,
     @EncryptedImageLoader private val encryptedImageLoader: Lazy<ImageLoader>,
     private val imageLoader: ImageLoader,
-    private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
 ) {
 
     private val locks = ConcurrentHashMap<String, Mutex>()
@@ -81,7 +81,7 @@ class ThumbnailGenerator @Inject constructor(
      */
     suspend fun createFromVault(uuid: String, type: PhotoType): Result<CreatedThumbnail> =
         locks.getOrPut(uuid) { Mutex() }.withLock {
-            if (vaultFileStorage.cacheFileExists(ThumbnailFiles.path(uuid))) {
+            if (vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(uuid))) {
                 return@withLock Result.success(CreatedThumbnail.Existing)
             }
 
@@ -143,18 +143,18 @@ class ThumbnailGenerator @Inject constructor(
 
     private suspend fun write(uuid: String, bitmap: Bitmap) = withContext(Dispatchers.IO) {
         val tmpPath = ThumbnailFiles.tmpPath(uuid)
-        val output = vaultFileStorage.openEncryptedCacheOutput(tmpPath)
+        val output = vaultCacheStorage.openEncryptedOutput(tmpPath)
             ?: error("Could not open $tmpPath")
 
         try {
             output.use { bitmap.compress(Bitmap.CompressFormat.JPEG, THUMBNAIL_QUALITY, it) }
         } catch (e: Exception) {
-            vaultFileStorage.deleteCacheFile(tmpPath)
+            vaultCacheStorage.deleteEncryptedFile(tmpPath)
             throw e
         }
 
-        if (!vaultFileStorage.renameCacheFile(tmpPath, ThumbnailFiles.path(uuid))) {
-            vaultFileStorage.deleteCacheFile(tmpPath)
+        if (!vaultCacheStorage.renameEncryptedFile(tmpPath, ThumbnailFiles.path(uuid))) {
+            vaultCacheStorage.deleteEncryptedFile(tmpPath)
             error("Could not rename $tmpPath")
         }
     }

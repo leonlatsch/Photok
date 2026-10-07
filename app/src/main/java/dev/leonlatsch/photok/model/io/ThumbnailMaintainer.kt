@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.model.io
 
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -44,6 +45,7 @@ class ThumbnailMaintainer @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val photoRepository: PhotoRepository,
     private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
     private val thumbnailGenerator: ThumbnailGenerator,
 ) {
 
@@ -71,11 +73,11 @@ class ThumbnailMaintainer @Inject constructor(
     }
 
     private fun deleteOutdatedVersions() {
-        vaultFileStorage.listCacheFiles(ThumbnailFiles.DIR)
+        vaultCacheStorage.listFiles(ThumbnailFiles.DIR)
             .filter { "${ThumbnailFiles.DIR}/${it.name}" != ThumbnailFiles.CURRENT_DIR }
             .forEach {
                 Timber.i("Deleting outdated thumbnails: ${it.name}")
-                vaultFileStorage.deleteCacheDir("${ThumbnailFiles.DIR}/${it.name}")
+                vaultCacheStorage.deleteDir("${ThumbnailFiles.DIR}/${it.name}")
             }
     }
 
@@ -85,11 +87,11 @@ class ThumbnailMaintainer @Inject constructor(
     private fun deleteDeadThumbnails(photos: List<Photo>, runStart: Long) {
         val uuids = photos.map { it.uuid }.toSet()
 
-        vaultFileStorage.listCacheFiles(ThumbnailFiles.CURRENT_DIR)
+        vaultCacheStorage.listFiles(ThumbnailFiles.CURRENT_DIR)
             .filter { ThumbnailFiles.uuidOf(it) !in uuids && it.lastModified() < runStart }
             .forEach {
                 Timber.i("Deleting dead thumbnail: ${it.name}")
-                vaultFileStorage.deleteCacheFile(ThumbnailFiles.pathInCurrentDir(it))
+                vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.pathInCurrentDir(it))
             }
     }
 

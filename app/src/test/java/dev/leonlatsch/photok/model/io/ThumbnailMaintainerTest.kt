@@ -17,9 +17,11 @@
 package dev.leonlatsch.photok.model.io
 
 import android.app.Application
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
@@ -42,8 +44,18 @@ class ThumbnailMaintainerTest {
 
     private val app: Application = RuntimeEnvironment.getApplication()
 
+    private val sessionRepository = mockk<SessionRepository> {
+        every { get() } returns VaultSession(KeyGen().generateVaultMasterKey())
+    }
+
     private val vaultFileStorage = VaultFileStorage(
-        sessionRepository = mockk { every { get() } returns VaultSession(KeyGen().generateVaultMasterKey()) },
+        sessionRepository = sessionRepository,
+        cryptoEngine = CbcCryptoEngine(),
+        app = app,
+    )
+
+    private val vaultCacheStorage = VaultCacheStorage(
+        sessionRepository = sessionRepository,
         cryptoEngine = CbcCryptoEngine(),
         app = app,
     )
@@ -65,6 +77,7 @@ class ThumbnailMaintainerTest {
         sessionRepository = mockk(),
         photoRepository = photoRepository,
         vaultFileStorage = vaultFileStorage,
+        vaultCacheStorage = vaultCacheStorage,
         thumbnailGenerator = thumbnailGenerator,
     )
 
@@ -81,7 +94,7 @@ class ThumbnailMaintainerTest {
 
         maintenance.run()
 
-        assertFalse(vaultFileStorage.cacheFileExists("${ThumbnailFiles.DIR}/v0"))
+        assertFalse(vaultCacheStorage.encryptedFileExists("${ThumbnailFiles.DIR}/v0"))
     }
 
     @Test
@@ -106,13 +119,13 @@ class ThumbnailMaintainerTest {
 
         maintenance.run()
 
-        assertTrue(vaultFileStorage.cacheFileExists(ThumbnailFiles.path(created.uuid)))
+        assertTrue(vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(created.uuid)))
         assertFalse(vaultFileStorage.encryptedFileExists(created.internalThumbnailFileName))
         assertTrue(vaultFileStorage.encryptedFileExists(failing.internalThumbnailFileName))
     }
 
     private fun writeCacheFile(path: String): File {
-        vaultFileStorage.openEncryptedCacheOutput(path)!!.use { it.write(byteArrayOf(1)) }
+        vaultCacheStorage.openEncryptedOutput(path)!!.use { it.write(byteArrayOf(1)) }
         return File(app.cacheDir, path)
     }
 

@@ -34,11 +34,11 @@ import org.robolectric.RuntimeEnvironment
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-class VaultFileStorageCacheTest {
+class VaultCacheStorageTest {
 
     private val app: Application = RuntimeEnvironment.getApplication()
 
-    private val storage = VaultFileStorage(
+    private val storage = VaultCacheStorage(
         sessionRepository = mockk { every { get() } returns VaultSession(KeyGen().generateVaultMasterKey()) },
         cryptoEngine = CbcCryptoEngine(),
         app = app,
@@ -53,36 +53,36 @@ class VaultFileStorageCacheTest {
     fun `cache files are encrypted and read back`() {
         val content = "content".toByteArray()
 
-        storage.openEncryptedCacheOutput("dir/a")!!.use { it.write(content) }
+        storage.openEncryptedOutput("dir/a")!!.use { it.write(content) }
 
         assertFalse(File(app.cacheDir, "dir/a").readBytes().contentEquals(content))
-        assertArrayEquals(content, storage.openEncryptedCacheInput("dir/a")!!.use { it.readBytes() })
+        assertArrayEquals(content, storage.openEncryptedInput("dir/a")!!.use { it.readBytes() })
     }
 
     @Test
     fun `cache files are not stored in the vault files`() {
-        storage.openEncryptedCacheOutput("dir/a")!!.use { it.write(byteArrayOf(1)) }
+        storage.openEncryptedOutput("dir/a")!!.use { it.write(byteArrayOf(1)) }
 
-        assertTrue(storage.cacheFileExists("dir/a"))
+        assertTrue(storage.encryptedFileExists("dir/a"))
         assertFalse(app.getFileStreamPath("a").exists())
     }
 
     @Test
     fun `renamed cache file replaces the temporary one`() {
-        storage.openEncryptedCacheOutput("dir/a.tmp")!!.use { it.write(byteArrayOf(1)) }
+        storage.openEncryptedOutput("dir/a.tmp")!!.use { it.write(byteArrayOf(1)) }
 
-        assertTrue(storage.renameCacheFile("dir/a.tmp", "dir/a"))
+        assertTrue(storage.renameEncryptedFile("dir/a.tmp", "dir/a"))
 
-        assertEquals(listOf("a"), storage.listCacheFiles("dir").map { it.name })
+        assertEquals(listOf("a"), storage.listFiles("dir").map { it.name })
     }
 
     @Test
     fun `deleting a cache dir deletes everything in it`() {
-        storage.openEncryptedCacheOutput("dir/sub/a")!!.use { it.write(byteArrayOf(1)) }
+        storage.openEncryptedOutput("dir/sub/a")!!.use { it.write(byteArrayOf(1)) }
 
-        assertTrue(storage.deleteCacheDir("dir"))
+        assertTrue(storage.deleteDir("dir"))
 
-        assertFalse(storage.cacheFileExists("dir/sub/a"))
-        assertEquals(emptyList<File>(), storage.listCacheFiles("dir"))
+        assertFalse(storage.encryptedFileExists("dir/sub/a"))
+        assertEquals(emptyList<File>(), storage.listFiles("dir"))
     }
 }

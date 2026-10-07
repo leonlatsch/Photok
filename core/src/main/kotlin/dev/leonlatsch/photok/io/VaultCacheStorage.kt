@@ -17,25 +17,27 @@
 package dev.leonlatsch.photok.io
 
 import android.app.Application
-import android.content.Context
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import timber.log.Timber
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
 
 /**
- * Encrypted files in the app's files dir. This is the vault itself.
+ * Encrypted files in the app's cache dir. Only for data that can be recreated from the vault.
  */
-class VaultFileStorage @Inject constructor(
+class VaultCacheStorage @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val cryptoEngine: CryptoEngine,
     private val app: Application,
 ) : EncryptedStorage {
     override fun openEncryptedInput(fileName: String): CipherInputStream? = try {
         val session = requireNotNull(sessionRepository.get())
-        val input = app.openFileInput(fileName)
+        val input = FileInputStream(cacheFile(fileName))
         cryptoEngine.createDecryptStream(input, session)
     } catch (e: Exception) {
         Timber.e(e)
@@ -44,29 +46,28 @@ class VaultFileStorage @Inject constructor(
 
     override fun openEncryptedOutput(fileName: String): CipherOutputStream? = try {
         val session = requireNotNull(sessionRepository.get())
-        val output = app.openFileOutput(fileName, Context.MODE_PRIVATE)
-        cryptoEngine.createEncryptStream(output, session)
+        val file = cacheFile(fileName)
+        file.parentFile?.mkdirs()
+        cryptoEngine.createEncryptStream(FileOutputStream(file), session)
     } catch (e: Exception) {
         Timber.e(e)
         null
     }
 
-    override fun deleteEncryptedFile(fileName: String): Boolean {
-        val success = app.deleteFile(fileName)
-        if (!success) {
-            Timber.e("Error deleting internal file: $fileName")
-        }
-
-        return success
-    }
+    override fun deleteEncryptedFile(fileName: String): Boolean =
+        cacheFile(fileName).delete()
 
     override fun encryptedFileExists(fileName: String): Boolean =
-        app.getFileStreamPath(fileName).exists()
+        cacheFile(fileName).exists()
 
-    override fun renameEncryptedFile(currentFileName: String, newFileName: String): Boolean {
-        val currentFile = app.getFileStreamPath(currentFileName)
-        val newFile = app.getFileStreamPath(newFileName)
-        return currentFile.renameTo(newFile)
-    }
+    override fun renameEncryptedFile(currentFileName: String, newFileName: String): Boolean =
+        cacheFile(currentFileName).renameTo(cacheFile(newFileName))
 
+    fun listFiles(dir: String): List<File> =
+        cacheFile(dir).listFiles()?.toList().orEmpty()
+
+    fun deleteDir(dir: String): Boolean =
+        cacheFile(dir).deleteRecursively()
+
+    private fun cacheFile(fileName: String): File = File(app.cacheDir, fileName)
 }
