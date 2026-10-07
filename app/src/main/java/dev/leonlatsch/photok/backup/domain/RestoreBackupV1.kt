@@ -224,7 +224,6 @@ class RestoreBackupV1 @Inject constructor(
             .flatMap {
                 listOf(
                     it.internalFileName,
-                    it.internalThumbnailFileName,
                     it.internalVideoPreviewFileName,
                 )
             }

@@ -21,6 +21,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
+import dev.leonlatsch.photok.model.database.entity.THUMBNAIL_SUFFIX
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +40,11 @@ class CleanupDeadFilesUseCase @Inject constructor(
             val allExisting = photoRepository.findAllPhotosByImportDateDesc()
 
             val allFiles = context.fileList().filter {
-                it.contains(LEGACY_PHOTOK_FILE_EXTENSION) || it.contains(PHOTOK_FILE_EXTENSION)
+                val isLegacyVaultFile = it.contains(LEGACY_PHOTOK_FILE_EXTENSION)
+                val isVaultFile = it.contains(PHOTOK_FILE_EXTENSION)
+                val isThumbnail = it.endsWith(THUMBNAIL_SUFFIX)
+
+                (isLegacyVaultFile || isVaultFile) && isThumbnail.not()
             }
 
             for (file in allFiles) {

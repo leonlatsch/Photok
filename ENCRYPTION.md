@@ -72,6 +72,11 @@ The table below provides a high-level comparison of the architectural and crypto
 
 **Extensions:** `.crypt`, `.crypt.tn`, `.crypt.vp`
 
+**Thumbnails:** Thumbnails are not vault files. They live in `cacheDir/thumbnails/v<N>/<uuid>.jpg`,
+encrypted with the VMK like every other file, and are not part of backups. A missing thumbnail is
+created again from the original (or the `.crypt.vp` of a video). `.crypt.tn` files in the vault and
+in backups of older app versions are replaced or skipped.
+
 Version 3.x.x decouples file encryption keys from user passwords using a **Vault Master Key (VMK)** pattern.
 
 **Architecture:**
@@ -247,7 +252,7 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 │   }                                     │
 │                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
 │ <uuid>.crypt                            │  ← Encrypted original file
-│ <uuid>.crypt.tn                         │  ← Encrypted thumbnail
+│ <uuid>.crypt.tn                         │  ← Encrypted thumbnail (older app versions only)
 │ <uuid>.crypt.vp                         │  ← Encrypted video preview
 │ ...                                     │
 └─────────────────────────────────────────┘

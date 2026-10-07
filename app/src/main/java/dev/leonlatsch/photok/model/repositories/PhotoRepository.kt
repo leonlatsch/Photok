@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
+import dev.leonlatsch.photok.model.io.ThumbnailFiles
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getMetadataFor
@@ -104,12 +105,6 @@ class PhotoRepository @Inject constructor(
     suspend fun countAll() = photoDao.countAll()
 
     suspend fun getAllUuids() = photoDao.getAllUuids()
-
-    fun observeWithOutdatedThumbnail() =
-        photoDao.observeWithThumbnailVersionBelow(Photo.CURRENT_THUMBNAIL_VERSION)
-
-    suspend fun markThumbnailUpToDate(photo: Photo) =
-        photoDao.updateThumbnailVersion(photo.uuid, Photo.CURRENT_THUMBNAIL_VERSION)
 
     // endregion
 
@@ -261,16 +256,21 @@ class PhotoRepository @Inject constructor(
     }
 
     /**
-     * Delete a photos bytes and thumbnail bytes on the filesystem.
+     * Delete a photos bytes, video preview and thumbnails on the filesystem.
      *
      * @param photo the photo to delete
      *
-     * @return true, if photo and thumbnail could be deleted
+     * @return true, if photo and video preview could be deleted
      */
-    fun deleteInternalPhotoData(photo: Photo): Boolean =
-        vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
-                && vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
+    fun deleteInternalPhotoData(photo: Photo): Boolean {
+        vaultFileStorage.deleteCacheFile(ThumbnailFiles.path(photo.uuid))
+        if (vaultFileStorage.encryptedFileExists(photo.internalThumbnailFileName)) {
+            vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
+        }
+
+        return vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
                 && (!photo.type.isVideo || vaultFileStorage.deleteEncryptedFile(photo.internalVideoPreviewFileName))
+    }
 
 
     // endregion

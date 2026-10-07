@@ -21,6 +21,9 @@ import android.content.Context
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.crypto.CryptoEngine
 import timber.log.Timber
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
@@ -65,4 +68,40 @@ class VaultFileStorage @Inject constructor(
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
     }
+
+    fun openEncryptedCacheInput(path: String): CipherInputStream? = try {
+        val session = requireNotNull(sessionRepository.get())
+        val input = FileInputStream(cacheFile(path))
+        cryptoEngine.createDecryptStream(input, session)
+    } catch (e: Exception) {
+        Timber.e(e)
+        null
+    }
+
+    fun openEncryptedCacheOutput(path: String): CipherOutputStream? = try {
+        val session = requireNotNull(sessionRepository.get())
+        val file = cacheFile(path)
+        file.parentFile?.mkdirs()
+        cryptoEngine.createEncryptStream(FileOutputStream(file), session)
+    } catch (e: Exception) {
+        Timber.e(e)
+        null
+    }
+
+    fun cacheFileExists(path: String): Boolean =
+        cacheFile(path).exists()
+
+    fun renameCacheFile(currentPath: String, newPath: String): Boolean =
+        cacheFile(currentPath).renameTo(cacheFile(newPath))
+
+    fun deleteCacheFile(path: String): Boolean =
+        cacheFile(path).delete()
+
+    fun listCacheFiles(dir: String): List<File> =
+        cacheFile(dir).listFiles()?.toList().orEmpty()
+
+    fun deleteCacheDir(dir: String): Boolean =
+        cacheFile(dir).deleteRecursively()
+
+    private fun cacheFile(path: String): File = File(app.cacheDir, path)
 }

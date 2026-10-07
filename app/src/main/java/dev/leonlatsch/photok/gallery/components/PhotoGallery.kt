@@ -353,10 +353,9 @@ private fun GalleryPhotoTile(
             )
         } else {
             val requestData = remember(photoTile) {
-                EncryptedImageRequestData(
-                    internalFileName = photoTile.internalThumbnailFileName,
-                    mimeType = photoTile.type.mimeType,
-                    thumbnailVersion = photoTile.thumbnailVersion,
+                EncryptedImageRequestData.Thumbnail(
+                    uuid = photoTile.uuid,
+                    type = photoTile.type,
                 )
             }
 

@@ -36,7 +36,6 @@ class GalleryUiStateFactory @Inject constructor() {
                         fileName = it.fileName,
                         type = it.type,
                         uuid = it.uuid,
-                        thumbnailVersion = it.thumbnailVersion,
                     )
                 },
                 showAlbumSelectionDialog = showAlbumSelectionDialog,

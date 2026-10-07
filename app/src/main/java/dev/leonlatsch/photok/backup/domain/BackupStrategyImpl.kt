@@ -40,7 +40,6 @@ class BackupStrategyImpl @Inject constructor(
     ): Result<Unit> {
         val fileNames = listOf(
             photo.internalFileName,
-            photo.internalThumbnailFileName,
             photo.internalVideoPreviewFileName,
         )
 

@@ -61,12 +61,6 @@ interface PhotoDao {
     @Query("SELECT photo_uuid FROM photo")
     suspend fun getAllUuids(): List<String>
 
-    @Query("SELECT * FROM photo WHERE thumbnailVersion < :version ORDER BY importedAt DESC")
-    fun observeWithThumbnailVersionBelow(version: Int): Flow<List<Photo>>
-
-    @Query("UPDATE photo SET thumbnailVersion = :version WHERE photo_uuid = :uuid")
-    suspend fun updateThumbnailVersion(uuid: String, version: Int)
-
     fun observeAllSorted(sort: Sort): Flow<List<Photo>> {
         val query = SimpleSQLiteQuery("SELECT * FROM photo ORDER BY ${sort.field.columnName} ${sort.order.sql}")
 

@@ -35,7 +35,7 @@ import dev.leonlatsch.photok.model.database.PhotokDatabase
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.database.entity.internalFileName
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
+import dev.leonlatsch.photok.model.database.entity.internalVideoPreviewFileName
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import io.mockk.coEvery
 import io.mockk.every
@@ -84,6 +84,8 @@ class BackupRoundTripTest {
         photo("clip.mp4", PhotoType.MP4),
     )
 
+    private val video = photos[1]
+
     private val plaintext =
         photos.associate { it.uuid to "content of ${it.fileName}".toByteArray() }
 
@@ -98,14 +100,14 @@ class BackupRoundTripTest {
             .allowMainThreadQueries()
             .build()
 
-        // Fill the source vault: a main file and a thumbnail per photo.
+        // Fill the source vault: a main file per photo and a video preview for the video.
         val sourceStorage = vaultFileStorage(sourceSession)
         for (photo in photos) {
             sourceStorage.openEncryptedOutput(photo.internalFileName)!!
                 .use { it.write(plaintext.getValue(photo.uuid)) }
-            sourceStorage.openEncryptedOutput(photo.internalThumbnailFileName)!!
-                .use { it.write("thumb of ${photo.fileName}".toByteArray()) }
         }
+        sourceStorage.openEncryptedOutput(video.internalVideoPreviewFileName)!!
+            .use { it.write("preview of ${video.fileName}".toByteArray()) }
 
         val dumpDatabase = mockk<DumpDatabaseUseCase>()
         coEvery { dumpDatabase(BackupMetaData.CURRENT_BACKUP_VERSION) } returns metaData()
@@ -170,7 +172,7 @@ class BackupRoundTripTest {
     @Test
     fun `a photo imported again gets its own uuid and files next to the original`() = runTest {
         val archive = createBackup()
-        val duplicate = photos.first()
+        val duplicate = video
         val newUuid = "uuid-copy"
 
         val sourceStorage = vaultFileStorage(sourceSession)
@@ -185,16 +187,16 @@ class BackupRoundTripTest {
         assertEquals(2, result.filesRestored)
         assertEquals(0, result.filesSkipped)
         assertEquals(emptyList<FailedFile>(), result.failedFiles)
-        assertEquals(setOf(newUuid, photos[1].uuid), insertedPhotos.map { it.uuid }.toSet())
+        assertEquals(setOf(newUuid, photos[0].uuid), insertedPhotos.map { it.uuid }.toSet())
 
         val targetStorage = vaultFileStorage(targetSession)
         val copyBytes = targetStorage.openEncryptedInput(internalFileName(newUuid))!!
             .use { it.readBytes() }
         assertArrayEquals(plaintext.getValue(duplicate.uuid), copyBytes)
 
-        val copyThumbnail = targetStorage.openEncryptedInput(internalThumbnailFileName(newUuid))!!
+        val copyPreview = targetStorage.openEncryptedInput(internalVideoPreviewFileName(newUuid))!!
             .use { it.readBytes() }
-        assertArrayEquals("thumb of ${duplicate.fileName}".toByteArray(), copyThumbnail)
+        assertArrayEquals("preview of ${duplicate.fileName}".toByteArray(), copyPreview)
 
         val untouchedBytes = sourceStorage.openEncryptedInput(duplicate.internalFileName)!!
             .use { it.readBytes() }
@@ -217,7 +219,7 @@ class BackupRoundTripTest {
     fun `abort deletes the files of a restore that was not indexed`() = runTest {
         val archive = createBackup()
         val newUuid = "uuid-copy"
-        val duplicates = RestoreDuplicates.ImportAgain(mapOf(photos[0].uuid to newUuid))
+        val duplicates = RestoreDuplicates.ImportAgain(mapOf(video.uuid to newUuid))
 
         restoreBackup(archive, duplicates)
         insertedPhotos.clear()
@@ -225,10 +227,10 @@ class BackupRoundTripTest {
         runner().abort(metaData(), duplicates)
 
         val targetStorage = vaultFileStorage(targetSession)
-        for (uuid in listOf(newUuid, photos[1].uuid)) {
+        for (uuid in listOf(photos[0].uuid, newUuid)) {
             assertFalse(targetStorage.encryptedFileExists(internalFileName(uuid)))
-            assertFalse(targetStorage.encryptedFileExists(internalThumbnailFileName(uuid)))
         }
+        assertFalse(targetStorage.encryptedFileExists(internalVideoPreviewFileName(newUuid)))
     }
 
     @Test
@@ -243,8 +245,8 @@ class BackupRoundTripTest {
         val targetStorage = vaultFileStorage(targetSession)
         for (photo in photos) {
             assertTrue(targetStorage.encryptedFileExists(photo.internalFileName))
-            assertTrue(targetStorage.encryptedFileExists(photo.internalThumbnailFileName))
         }
+        assertTrue(targetStorage.encryptedFileExists(video.internalVideoPreviewFileName))
     }
 
     @Test
@@ -258,12 +260,25 @@ class BackupRoundTripTest {
             listOf(
                 BackupMetaData.FILE_NAME,
                 photos[0].internalFileName,
-                photos[0].internalThumbnailFileName,
                 photos[1].internalFileName,
-                photos[1].internalThumbnailFileName,
+                photos[1].internalVideoPreviewFileName,
             ),
             entries,
         )
+    }
+
+    @Test
+    fun `thumbnails of old backups are skipped instead of written into the vault`() = runTest {
+        val thumbnails = photos.map { it.internalThumbnailFileName }
+        val archive = createBackup().withEncryptedEntries(thumbnails)
+
+        val result = restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))
+
+        assertEquals(2, result.filesRestored)
+        assertEquals(emptyList<FailedFile>(), result.failedFiles)
+        for (thumbnail in thumbnails) {
+            assertFalse(context.getFileStreamPath(thumbnail).exists())
+        }
     }
 
     private suspend fun createBackup(): ByteArray {
@@ -359,6 +374,39 @@ class BackupRoundTripTest {
         }
 
         return names
+    }
+
+    /** Adds entries encrypted with the source vault, the way backups of older versions had them. */
+    private fun ByteArray.withEncryptedEntries(names: List<String>): ByteArray {
+        val sourceStorage = vaultFileStorage(sourceSession)
+        val encryptedEntries = names.associateWith { name ->
+            sourceStorage.openEncryptedOutput(name)!!.use { it.write("content of $name".toByteArray()) }
+            val encrypted = context.openFileInput(name).use { it.readBytes() }
+            context.deleteFile(name)
+            encrypted
+        }
+
+        val out = ByteArrayOutputStream()
+
+        ZipOutputStream(out).use { zipOut ->
+            ZipInputStream(ByteArrayInputStream(this)).use { zipIn ->
+                var entry = zipIn.nextEntry
+                while (entry != null) {
+                    zipOut.putNextEntry(ZipEntry(entry.name))
+                    zipIn.copyTo(zipOut)
+                    zipOut.closeEntry()
+                    entry = zipIn.nextEntry
+                }
+            }
+
+            for ((name, encrypted) in encryptedEntries) {
+                zipOut.putNextEntry(ZipEntry(name))
+                zipOut.write(encrypted)
+                zipOut.closeEntry()
+            }
+        }
+
+        return out.toByteArray()
     }
 
     /** Drops one entry, the way a damaged or hand edited archive would. */

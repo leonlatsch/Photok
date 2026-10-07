@@ -26,8 +26,8 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.PhotokDatabase
+import dev.leonlatsch.photok.model.database.entity.THUMBNAIL_SUFFIX
 import dev.leonlatsch.photok.model.database.entity.internalFileName
-import dev.leonlatsch.photok.model.database.entity.internalThumbnailFileName
 import dev.leonlatsch.photok.model.database.entity.internalVideoPreviewFileName
 import dev.leonlatsch.photok.model.database.entity.isMainFileName
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
@@ -51,6 +51,8 @@ class MissingFromArchive(fileName: String) :
  * the backup's key, write it back out with the vault's key, then index what landed. The only
  * things that differ are which cipher opens an entry and what the file is called inside the
  * vault, and those come from the [RestoreBackupStrategy].
+ *
+ * Thumbnails in the archive are skipped. They are created in the cache dir when needed.
  *
  * V1 is not restored through here. It has no thumbnails in the archive and has to regenerate
  * them from the decoded image, which is a different shape of work.
@@ -102,6 +104,12 @@ class RestoreBackupRunner @Inject constructor(
             val photoBackup = metaData.photos.find { entryName.contains(it.uuid) }
             if (photoBackup == null) {
                 Timber.i("Skipping dead file in backup: $entryName")
+                ze = stream.nextEntry
+                continue
+            }
+
+            // Thumbnails are skipped. They are generated on demand.
+            if (entryName.endsWith(THUMBNAIL_SUFFIX)) {
                 ze = stream.nextEntry
                 continue
             }
@@ -238,7 +246,6 @@ class RestoreBackupRunner @Inject constructor(
             .flatMap {
                 listOf(
                     internalFileName(it),
-                    internalThumbnailFileName(it),
                     internalVideoPreviewFileName(it),
                 )
             }

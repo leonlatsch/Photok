@@ -32,6 +32,7 @@ import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.transcoding.data.EncryptedImageFetcherFactory
 import dev.leonlatsch.photok.transcoding.data.EncryptedImageKeyer
 import dev.leonlatsch.photok.transcoding.data.ImageStorageImpl
+import dev.leonlatsch.photok.transcoding.data.ThumbnailFetcherFactory
 import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import javax.inject.Singleton
 
@@ -46,10 +47,12 @@ object ImageLoadingModule {
         @ApplicationContext context: Context,
         encryptedImageFetcherFactory: EncryptedImageFetcherFactory,
         encryptedImageKeyer: EncryptedImageKeyer,
+        thumbnailFetcherFactory: ThumbnailFetcherFactory,
     ): ImageLoader = ImageLoader.Builder(context)
         .components {
             add(encryptedImageFetcherFactory)
             add(encryptedImageKeyer)
+            add(thumbnailFetcherFactory)
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)

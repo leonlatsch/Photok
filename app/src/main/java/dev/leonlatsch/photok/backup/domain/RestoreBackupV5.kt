@@ -43,7 +43,7 @@ import javax.inject.Inject
  *  │   }                                    │
  *  │                                        │
  *  │ <uuid>.crypt                           │  ← Encrypted photo/video
- *  │ <uuid>.crypt.tn                        │  ← Encrypted thumbnail
+ *  │ <uuid>.crypt.tn                        │  ← Encrypted thumbnail (older app versions only)
  *  │ <uuid>.crypt.vp                        │  ← Encrypted video preview
  *  │ ...                                    │
  *  └─────────────────────────────────────────┘
@@ -53,6 +53,7 @@ import javax.inject.Inject
  *  - `params` is the vault protection parameters needed to decrypt the vmk.
  *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
  *  - Each media file is identified by a UUID and encrypted.
+ *  - Thumbnails are skipped on restore, they are created in the cache dir.
  *  - `createdAt` is the timestamp of backup creation.
  *  - `backupVersion` must equal 5 for this format.
  */

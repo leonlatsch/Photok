@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.model.io
 import android.content.Context
 import coil.request.ImageRequest
 import coil.request.videoFramePercent
-import coil.size.Scale
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -27,16 +26,6 @@ import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-
-/**
- * Maximum size of the longest side of the thumbnail in pixels.
- *
- * Thumbnails keep the original aspect ratio, so the image viewer can show them as preview while the full image loads.
- */
-const val THUMBNAIL_SIZE = 1080
-
-const val THUMBNAIL_QUALITY = 80
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -48,6 +37,7 @@ class CreateThumbnailsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageStorage: ImageStorage,
     private val vaultFileStorage: VaultFileStorage,
+    private val thumbnailGenerator: ThumbnailGenerator,
 ) {
 
     /**
@@ -57,19 +47,10 @@ class CreateThumbnailsUseCase @Inject constructor(
     suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> =
         withContext(Dispatchers.IO) {
 
-            // Thumbnail
-            val thumbnailRequest = ImageRequest.Builder(context)
-                .data(data)
-                .size(THUMBNAIL_SIZE)
-                .scale(Scale.FIT)
-                .allowHardware(false)
-                .apply { if (photo.type.isVideo) videoFramePercent(0.5) }
-                .build()
-
-            val thumbnailResult = imageStorage.execAndWrite(
-                imageRequest = thumbnailRequest,
-                outputStream = vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName),
-                compressionPercent = THUMBNAIL_QUALITY,
+            val thumbnailResult = thumbnailGenerator.createFromImport(
+                uuid = photo.uuid,
+                data = data,
+                isVideo = photo.type.isVideo,
             )
 
             // Video Preview
