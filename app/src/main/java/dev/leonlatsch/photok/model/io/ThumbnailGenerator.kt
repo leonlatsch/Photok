@@ -41,6 +41,7 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,6 +58,8 @@ sealed interface CreatedThumbnail {
 
 /**
  * Creates thumbnails in the cache dir. Never creates the same thumbnail twice at the same time.
+ *
+ * A thumbnail that could not be created from the vault is not tried again until [forgetFailures].
  */
 @Singleton
 class ThumbnailGenerator @Inject constructor(
@@ -68,6 +71,7 @@ class ThumbnailGenerator @Inject constructor(
 
     private val locks = List(LOCK_STRIPES) { Mutex() }
     private val creationsFromVault = Semaphore(MAX_PARALLEL_CREATIONS_FROM_VAULT)
+    private val failedUuids = ConcurrentHashMap.newKeySet<String>()
 
     /**
      * Creates the thumbnail of an imported photo from its encrypted original. Videos use their video preview.
@@ -76,6 +80,10 @@ class ThumbnailGenerator @Inject constructor(
         lockFor(uuid).withLock {
             if (vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(uuid))) {
                 return@withLock Result.success(CreatedThumbnail.Existing)
+            }
+
+            if (uuid in failedUuids) {
+                return@withLock Result.failure(IllegalStateException("Creating the thumbnail of $uuid failed before"))
             }
 
             creationsFromVault.withPermit {
@@ -99,9 +107,15 @@ class ThumbnailGenerator @Inject constructor(
                 decode(encryptedImageLoader.get(), request).mapCatching { bitmap ->
                     write(uuid, bitmap)
                     CreatedThumbnail.New(bitmap)
+                }.onFailure {
+                    failedUuids += uuid
                 }
             }
         }
+
+    fun forgetFailures() {
+        failedUuids.clear()
+    }
 
     /**
      * Creates the thumbnail of a photo while importing it.

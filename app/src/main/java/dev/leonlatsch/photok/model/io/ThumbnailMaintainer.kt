@@ -63,6 +63,7 @@ class ThumbnailMaintainer @Inject constructor(
     fun start() {
         scope.launch {
             sessionRepository.observe().collectLatest { session ->
+                thumbnailGenerator.forgetFailures()
                 if (session == null) return@collectLatest
 
                 delay(StartDelay)

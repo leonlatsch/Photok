@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.transcoding.data
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.core.graphics.drawable.toDrawable
 import coil.decode.DataSource
 import coil.decode.ImageSource
@@ -35,11 +36,14 @@ import okio.buffer
 import okio.source
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.io.InputStream
 
 private const val THUMBNAIL_MIME_TYPE = "image/jpeg"
 
 /**
  * Loads a thumbnail from the cache dir. A missing thumbnail is created right away and returned without reading it back.
+ * An unreadable thumbnail is deleted and created again.
  */
 class ThumbnailFetcher(
     private val vaultCacheStorage: VaultCacheStorage,
@@ -51,34 +55,61 @@ class ThumbnailFetcher(
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
         val path = ThumbnailFiles.path(requestData.uuid)
 
-        if (!vaultCacheStorage.encryptedFileExists(path)) {
-            val created = thumbnailGenerator.createFromVault(requestData.uuid, requestData.type)
-                .getOrElse {
-                    Timber.w(it, "Could not create thumbnail for ${requestData.uuid}")
-                    return@withContext null
-                }
+        if (vaultCacheStorage.encryptedFileExists(path)) {
+            val inputStream = vaultCacheStorage.openEncryptedInput(path)
+            inputStream ?: return@withContext null
 
-            if (created is CreatedThumbnail.New) {
-                return@withContext DrawableResult(
-                    drawable = created.bitmap.toDrawable(context.resources),
-                    isSampled = true,
-                    dataSource = DataSource.DISK,
-                )
+            val bytes = readDecodableBytes(inputStream)
+            if (bytes != null) {
+                return@withContext sourceResult(bytes)
             }
+
+            Timber.w("Deleting unreadable thumbnail of ${requestData.uuid}")
+            vaultCacheStorage.deleteEncryptedFile(path)
         }
 
-        val inputStream = vaultCacheStorage.openEncryptedInput(path)
-        inputStream ?: return@withContext null
+        val created = thumbnailGenerator.createFromVault(requestData.uuid, requestData.type)
+            .getOrElse {
+                Timber.w(it, "Could not create thumbnail for ${requestData.uuid}")
+                return@withContext null
+            }
 
-        val bytes = inputStream.use { it.readBytesSuspending() }
+        when (created) {
+            is CreatedThumbnail.New -> DrawableResult(
+                drawable = created.bitmap.toDrawable(context.resources),
+                isSampled = true,
+                dataSource = DataSource.DISK,
+            )
 
-        SourceResult(
-            source = ImageSource(
-                source = ByteArrayInputStream(bytes).source().buffer(),
-                context = context,
-            ),
-            mimeType = THUMBNAIL_MIME_TYPE,
-            dataSource = DataSource.DISK,
-        )
+            is CreatedThumbnail.Existing -> {
+                val inputStream = vaultCacheStorage.openEncryptedInput(path)
+                inputStream ?: return@withContext null
+
+                readDecodableBytes(inputStream)?.let { sourceResult(it) }
+            }
+        }
     }
+
+    private suspend fun readDecodableBytes(inputStream: InputStream): ByteArray? {
+        val bytes = try {
+            inputStream.use { it.readBytesSuspending() }
+        } catch (e: IOException) {
+            Timber.w(e, "Could not read thumbnail of ${requestData.uuid}")
+            return null
+        }
+
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+
+        return bytes.takeIf { bounds.outWidth > 0 && bounds.outHeight > 0 }
+    }
+
+    private fun sourceResult(bytes: ByteArray) = SourceResult(
+        source = ImageSource(
+            source = ByteArrayInputStream(bytes).source().buffer(),
+            context = context,
+        ),
+        mimeType = THUMBNAIL_MIME_TYPE,
+        dataSource = DataSource.DISK,
+    )
 }

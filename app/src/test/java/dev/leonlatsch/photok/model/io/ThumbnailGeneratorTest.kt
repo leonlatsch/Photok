@@ -21,6 +21,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import coil.ImageLoader
 import coil.decode.DataSource
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
@@ -99,5 +100,23 @@ class ThumbnailGeneratorTest {
 
         assertEquals(CreatedThumbnail.Existing, result)
         coVerify(exactly = 0) { encryptedImageLoader.execute(any()) }
+    }
+
+    @Test
+    fun `a failed thumbnail is not tried again until failures are forgotten`() = runTest {
+        coEvery { encryptedImageLoader.execute(any()) } coAnswers {
+            ErrorResult(drawable = null, request = firstArg(), throwable = IllegalStateException())
+        }
+
+        generator.createFromVault("uuid", PhotoType.JPEG)
+        val second = generator.createFromVault("uuid", PhotoType.JPEG)
+
+        assertTrue(second.isFailure)
+        coVerify(exactly = 1) { encryptedImageLoader.execute(any()) }
+
+        generator.forgetFailures()
+        generator.createFromVault("uuid", PhotoType.JPEG)
+
+        coVerify(exactly = 2) { encryptedImageLoader.execute(any()) }
     }
 }
