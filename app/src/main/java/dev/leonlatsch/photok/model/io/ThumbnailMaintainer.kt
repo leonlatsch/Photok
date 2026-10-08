@@ -17,9 +17,14 @@
 package dev.leonlatsch.photok.model.io
 
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.io.VaultCacheStorage
+import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.THUMBNAIL_SUFFIX
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -44,7 +49,10 @@ class ThumbnailMaintainer @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val photoRepository: PhotoRepository,
     private val vaultCacheStorage: VaultCacheStorage,
+    private val vaultFileStorage: VaultFileStorage,
     private val thumbnailGenerator: ThumbnailGenerator,
+    private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
+    private val config: Config,
 ) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -64,6 +72,7 @@ class ThumbnailMaintainer @Inject constructor(
         val start = System.currentTimeMillis()
 
         deleteOutdatedVersions()
+        deleteFilesDirThumbnails()
 
         val photos = photoRepository.findAllPhotosByImportDateDesc()
         deleteDeadThumbnails(photos, start)
@@ -76,6 +85,17 @@ class ThumbnailMaintainer @Inject constructor(
             .forEach {
                 Timber.i("Deleting outdated thumbnails: ${it.name}")
                 vaultCacheStorage.deleteDir("${ThumbnailFiles.DIR}/${it.name}")
+            }
+    }
+
+    private fun deleteFilesDirThumbnails() {
+        if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) return
+
+        vaultFileStorage.listFiles()
+            .filter { it.endsWith("$PHOTOK_FILE_EXTENSION$THUMBNAIL_SUFFIX") }
+            .forEach {
+                Timber.i("Deleting files dir thumbnail: $it")
+                vaultFileStorage.deleteEncryptedFile(it)
             }
     }
 

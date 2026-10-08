@@ -20,10 +20,13 @@ import android.app.Application
 import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.io.VaultCacheStorage
+import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.settings.data.Config
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -48,6 +51,20 @@ class ThumbnailMaintainerTest {
         app = app,
     )
 
+    private val vaultFileStorage = VaultFileStorage(
+        sessionRepository = mockk(),
+        cryptoEngine = CbcCryptoEngine(),
+        app = app,
+    )
+
+    private val legacyEncryptionMigrator = mockk<LegacyEncryptionMigrator> {
+        every { migrationNeeded() } returns false
+    }
+
+    private val config = mockk<Config> {
+        every { legacyCurrentlyMigrating } returns false
+    }
+
     private val created = photo("created")
     private val failing = photo("failing")
 
@@ -65,12 +82,52 @@ class ThumbnailMaintainerTest {
         sessionRepository = mockk(),
         photoRepository = photoRepository,
         vaultCacheStorage = vaultCacheStorage,
+        vaultFileStorage = vaultFileStorage,
         thumbnailGenerator = thumbnailGenerator,
+        legacyEncryptionMigrator = legacyEncryptionMigrator,
+        config = config,
     )
 
     @After
     fun tearDown() {
         File(app.cacheDir, ThumbnailFiles.DIR).deleteRecursively()
+        app.fileList().forEach { app.deleteFile(it) }
+    }
+
+    @Test
+    fun `files dir thumbnails are deleted, other vault files are kept`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+        val original = writeFilesDirFile("photo.crypt")
+        val videoPreview = writeFilesDirFile("photo.crypt.vp")
+
+        maintenance.run()
+
+        assertFalse(thumbnail.exists())
+        assertTrue(original.exists())
+        assertTrue(videoPreview.exists())
+    }
+
+    @Test
+    fun `files dir thumbnails are kept while a legacy migration is needed`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        every { legacyEncryptionMigrator.migrationNeeded() } returns true
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+
+        maintenance.run()
+
+        assertTrue(thumbnail.exists())
+    }
+
+    @Test
+    fun `files dir thumbnails are kept while a legacy migration is running`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        every { config.legacyCurrentlyMigrating } returns true
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+
+        maintenance.run()
+
+        assertTrue(thumbnail.exists())
     }
 
     @Test
@@ -109,6 +166,11 @@ class ThumbnailMaintainerTest {
     private fun writeCacheFile(path: String): File {
         vaultCacheStorage.openEncryptedOutput(path)!!.use { it.write(byteArrayOf(1)) }
         return File(app.cacheDir, path)
+    }
+
+    private fun writeFilesDirFile(name: String): File {
+        app.openFileOutput(name, 0).use { it.write(byteArrayOf(1)) }
+        return app.getFileStreamPath(name)
     }
 
     private fun photo(uuid: String) = Photo(

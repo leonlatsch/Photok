@@ -21,7 +21,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
-import dev.leonlatsch.photok.model.database.entity.THUMBNAIL_SUFFIX
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,9 +41,8 @@ class CleanupDeadFilesUseCase @Inject constructor(
             val allFiles = context.fileList().filter {
                 val isLegacyVaultFile = it.contains(LEGACY_PHOTOK_FILE_EXTENSION)
                 val isVaultFile = it.contains(PHOTOK_FILE_EXTENSION)
-                val isThumbnail = it.endsWith(THUMBNAIL_SUFFIX)
 
-                (isLegacyVaultFile || isVaultFile) && isThumbnail.not()
+                isLegacyVaultFile || isVaultFile
             }
 
             for (file in allFiles) {
@@ -54,15 +52,6 @@ class CleanupDeadFilesUseCase @Inject constructor(
                     Timber.i("Deleting dead file: $file")
                     vaultFileStorage.deleteEncryptedFile(file)
                 }
-            }
-
-            val oldThumbnails = context.fileList().filter {
-                it.endsWith("$PHOTOK_FILE_EXTENSION$THUMBNAIL_SUFFIX")
-            }
-
-            for (file in oldThumbnails) {
-                Timber.i("Deleting old thumbnail: $file")
-                vaultFileStorage.deleteEncryptedFile(file)
             }
         }
     }

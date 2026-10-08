@@ -69,4 +69,7 @@ class VaultFileStorage @Inject constructor(
         return currentFile.renameTo(newFile)
     }
 
+    fun listFiles(): List<String> =
+        app.fileList().toList()
+
 }
