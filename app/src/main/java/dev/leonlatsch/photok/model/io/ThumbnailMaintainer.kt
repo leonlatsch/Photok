@@ -115,9 +115,15 @@ class ThumbnailMaintainer @Inject constructor(
 
     private suspend fun createMissingThumbnails(photos: List<Photo>) {
         for (photo in photos) {
-            thumbnailGenerator.createFromVault(photo.uuid, photo.type).onFailure {
-                Timber.w(it, "Could not create thumbnail for ${photo.uuid}")
-            }
+            thumbnailGenerator.createFromVault(photo.uuid, photo.type)
+                .onSuccess { created ->
+                    if (created is CreatedThumbnail.New) {
+                        created.bitmap.recycle()
+                    }
+                }
+                .onFailure {
+                    Timber.w(it, "Could not create thumbnail for ${photo.uuid}")
+                }
         }
     }
 }
