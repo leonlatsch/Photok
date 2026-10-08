@@ -83,7 +83,8 @@ Photok is available in the following languages.
 ![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-blue)
 <!-- END-TRANSLATIONS -->
 
-Initially texts are machine translated. Contributors from the community then review and fix these machine translations on demand.
+Initial texts are hand picked for English and German. The rest is machine translated.
+Contributors from the community then review and fix these machine translations on demand.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
