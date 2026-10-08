@@ -32,9 +32,6 @@ interface VaultProtectionDao {
     @Query("DELETE FROM vault_protection WHERE type = :type")
     suspend fun delete(type: VaultProtectionType)
 
-    @Query("DELETE FROM vault_protection")
-    suspend fun deleteAll()
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(protection: VaultProtectionTable)
 
