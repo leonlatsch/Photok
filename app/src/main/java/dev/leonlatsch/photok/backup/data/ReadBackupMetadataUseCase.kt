@@ -46,6 +46,7 @@ class ReadBackupMetadataUseCase @Inject constructor(
                 3 -> gson.fromJson(json, BackupMetaData.V3::class.java)
                 4 -> gson.fromJson(json, BackupMetaData.V4::class.java)
                 5 -> gson.fromJson(json, BackupMetaData.V5::class.java)
+                6 -> gson.fromJson(json, BackupMetaData.V6::class.java)
 
                 else -> throw BackupValidationError.UnsupportedVersion(header.backupVersion)
             }

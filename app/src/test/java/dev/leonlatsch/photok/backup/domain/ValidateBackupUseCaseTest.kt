@@ -57,7 +57,7 @@ class ValidateBackupUseCaseTest {
 
         val validation = validateBackup(uri).getOrThrow()
 
-        assertEquals(5, validation.metaData.backupVersion)
+        assertEquals(6, validation.metaData.backupVersion)
         assertEquals(2, validation.metaData.photos.size)
         assertEquals(2_000L, validation.requiredBytes)
         assertEquals(false, validation.notEnoughSpace)
@@ -176,7 +176,7 @@ class ValidateBackupUseCaseTest {
 
         val meta = """
             {
-              "backupVersion": 5,
+              "backupVersion": 6,
               "createdAt": 1700000000000,
               "wrappedVMK": "dmtr",
               "photos": [$photos],

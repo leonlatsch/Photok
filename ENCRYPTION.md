@@ -74,8 +74,7 @@ The table below provides a high-level comparison of the architectural and crypto
 
 **Thumbnails:** Thumbnails are not vault files. They live in `cacheDir/thumbnails/v<N>/<uuid>.jpg`,
 encrypted with the VMK like every other file, and are not part of backups. A missing thumbnail is
-created again from the original (or the `.crypt.vp` of a video). `.crypt.tn` files in the vault and
-in backups of older app versions are replaced or skipped.
+created again from the original (or the `.crypt.vp` of a video).
 
 Version 3.x.x decouples file encryption keys from user passwords using a **Vault Master Key (VMK)** pattern.
 
@@ -252,13 +251,41 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 │   }                                     │
 │                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
 │ <uuid>.crypt                            │  ← Encrypted original file
-│ <uuid>.crypt.tn                         │  ← Encrypted thumbnail (older app versions only)
+│ <uuid>.crypt.tn                         │  ← Encrypted thumbnail
 │ <uuid>.crypt.vp                         │  ← Encrypted video preview
 │ ...                                     │
 └─────────────────────────────────────────┘
 ```
 
-### Notes on reading and writing V5
+## Backup Format V6
+Same `meta.json` as V5, but thumbnails are no longer part of the archive. They are derived data and
+are created in the cache dir when needed. The version is bumped so app versions that expect a
+`.crypt.tn` for every photo request an app update instead of restoring it without thumbnails.
+
+### Archive Structure
+```
+┌─────────────────────────────────────────┐
+│               backup.zip                │
+├─────────────────────────────────────────1
+│ meta.json                               │
+│   {                                     │
+│     "wrappedVMK": String,               │  ← the wrapped vault master key
+│     "params": [VaultProtectionParams],  │  ← the vault protection parameters needed to decrypt the vmk
+│     "photos": [PhotoBackup],            │  ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],            │  ← list of albums with title, etc.
+│     "albumPhotoRefs":                   │  ← list of album-photo references. uuid to uuid.
+│        [AlbumPhotoRefBackup],           │
+│     "createdAt": Long,                  │  ← timestamp of backup creation
+│     "backupVersion": Int                │  ← backup version (6)
+│   }                                     │
+│                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
+│ <uuid>.crypt                            │  ← Encrypted original file
+│ <uuid>.crypt.vp                         │  ← Encrypted video preview
+│ ...                                     │
+└─────────────────────────────────────────┘
+```
+
+### Notes on reading and writing V5+
 
 * **`meta.json` is written first.** It carries the wrapped VMK, so an archive that ends before it
   is written can never be opened again. Everything after it is optional in the sense that a photo
@@ -275,8 +302,7 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
   disk, inside a single transaction, and album-photo references pointing at a photo that did not
   make it are dropped.
 * **`meta.json` is not encrypted.** File names, album names, sizes and dates are therefore readable
-  by anyone holding the backup file. Closing that gap requires a new archive format and is not part
-  of V5.
+  by anyone holding the backup file. Closing that gap requires a new archive format.
 
 ### Reading a backup written by a newer Photok
 

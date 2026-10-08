@@ -42,6 +42,25 @@ class ReadBackupMetadataUseCaseTest {
         val metaData = read(
             """
             {
+              "backupVersion": 6,
+              "createdAt": 1700000000000,
+              "wrappedVMK": "dmtr",
+              "photos": [],
+              "albums": [],
+              "albumPhotoRefs": []
+            }
+            """
+        )
+
+        assertTrue(metaData is BackupMetaData.V6)
+        assertEquals(6, metaData.backupVersion)
+    }
+
+    @Test
+    fun `reads a V5 backup`() = runTest {
+        val metaData = read(
+            """
+            {
               "backupVersion": 5,
               "createdAt": 1700000000000,
               "wrappedVMK": "dmtr",
@@ -75,14 +94,14 @@ class ReadBackupMetadataUseCaseTest {
     @Test
     fun `reports a backup from a newer app as unsupported`() = runTest {
         val error = runCatching {
-            read("""{ "backupVersion": 6, "photos": [] }""")
+            read("""{ "backupVersion": 7, "photos": [] }""")
         }.exceptionOrNull()
 
         assertTrue(
             "Expected UnsupportedVersion, got $error",
             error is BackupValidationError.UnsupportedVersion,
         )
-        assertEquals(6, (error as BackupValidationError.UnsupportedVersion).version)
+        assertEquals(7, (error as BackupValidationError.UnsupportedVersion).version)
     }
 
     private suspend fun read(json: String): BackupMetaData {

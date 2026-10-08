@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV6
 import dev.leonlatsch.photok.backup.domain.RestoreDuplicates
 import dev.leonlatsch.photok.backup.domain.RestoreProgress
 import dev.leonlatsch.photok.backup.domain.RestoreResult
@@ -172,6 +173,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val v3Strategy: RestoreBackupV3,
     private val v4Strategy: RestoreBackupV4,
     private val v5Strategy: RestoreBackupV5,
+    private val v6Strategy: RestoreBackupV6,
     private val appScope: CoroutineScope,
 ) : ViewModel() {
 
@@ -418,6 +420,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
             is BackupMetaData.V5 ->
                 runner.run(v5Strategy, metaData, zipInputStream, session, duplicates)
+
+            is BackupMetaData.V6 ->
+                runner.run(v6Strategy, metaData, zipInputStream, session, duplicates)
         }
 
         zipInputStream.use { zipInputStream ->

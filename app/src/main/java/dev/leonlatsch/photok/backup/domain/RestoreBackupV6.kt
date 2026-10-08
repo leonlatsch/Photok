@@ -23,7 +23,7 @@ import java.io.InputStream
 import javax.inject.Inject
 
 /**
- * Backup Format V5
+ * Backup Format V6
  *
  *  A ZIP archive with the following structure:
  *
@@ -43,7 +43,6 @@ import javax.inject.Inject
  *  │   }                                    │
  *  │                                        │
  *  │ <uuid>.crypt                           │  ← Encrypted photo/video
- *  │ <uuid>.crypt.tn                        │  ← Encrypted thumbnail
  *  │ <uuid>.crypt.vp                        │  ← Encrypted video preview
  *  │ ...                                    │
  *  └─────────────────────────────────────────┘
@@ -53,13 +52,13 @@ import javax.inject.Inject
  *  - `params` is the vault protection parameters needed to decrypt the vmk.
  *  - `photos`, `albums`, and `albumPhotoRefs` define the logical structure.
  *  - Each media file is identified by a UUID and encrypted.
- *  - Thumbnails are skipped on restore, they are created in the cache dir.
+ *  - Thumbnails are not part of the archive, they are created in the cache dir.
  *  - `createdAt` is the timestamp of backup creation.
- *  - `backupVersion` must equal 5 for this format.
+ *  - `backupVersion` must equal 6 for this format.
  */
-class RestoreBackupV5 @Inject constructor(
+class RestoreBackupV6 @Inject constructor(
     private val cryptoEngine: CryptoEngine,
-) : RestoreBackupStrategy<BackupMetaData.V5> {
+) : RestoreBackupStrategy<BackupMetaData.V6> {
 
     override fun decrypt(input: InputStream, session: Session): InputStream? =
         cryptoEngine.createDecryptStream(input, session)

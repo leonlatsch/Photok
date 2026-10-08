@@ -78,6 +78,16 @@ sealed interface BackupMetaData {
         val params: VaultProtectionParams,
     ) : BackupMetaData
 
+    data class V6(
+        override val photos: List<PhotoBackup>,
+        override val albums: List<AlbumBackup>,
+        override val albumPhotoRefs: List<AlbumPhotoRefBackup>,
+        override val createdAt: Long = System.currentTimeMillis(),
+        override val backupVersion: Int,
+        val wrappedVMK: String,
+        val params: VaultProtectionParams,
+    ) : BackupMetaData
+
     companion object {
         const val FILE_NAME = "meta.json"
 
@@ -85,7 +95,7 @@ sealed interface BackupMetaData {
          * Backup version used before switching the encryption. Used for creating a backup before migrating.
          */
         const val LEGACY_BACKUP_VERSION = 3
-        const val CURRENT_BACKUP_VERSION = 5
+        const val CURRENT_BACKUP_VERSION = 6
     }
 }
 

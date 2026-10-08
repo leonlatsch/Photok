@@ -91,6 +91,7 @@ class BackupRoundTripTest {
 
     private lateinit var database: PhotokDatabase
     private lateinit var insertedPhotos: MutableList<Photo>
+    private lateinit var dumpDatabase: DumpDatabaseUseCase
     private lateinit var backupStrategy: BackupStrategyImpl
 
     @Before
@@ -109,7 +110,7 @@ class BackupRoundTripTest {
         sourceStorage.openEncryptedOutput(video.internalVideoPreviewFileName)!!
             .use { it.write("preview of ${video.fileName}".toByteArray()) }
 
-        val dumpDatabase = mockk<DumpDatabaseUseCase>()
+        dumpDatabase = mockk()
         coEvery { dumpDatabase(BackupMetaData.CURRENT_BACKUP_VERSION) } returns metaData()
 
         backupStrategy = BackupStrategyImpl(dumpDatabase, io, gson, context)
@@ -252,7 +253,7 @@ class BackupRoundTripTest {
     @Test
     fun `only the files of the photo are written, no stray vault files`() = runTest {
         context.openFileOutput("leftover.photok", Context.MODE_PRIVATE)
-            .use { it.write("not part of a V5 backup".toByteArray()) }
+            .use { it.write("not part of a V6 backup".toByteArray()) }
 
         val entries = createBackup().entryNames()
 
@@ -268,7 +269,8 @@ class BackupRoundTripTest {
     }
 
     @Test
-    fun `thumbnails of old backups are skipped instead of written into the vault`() = runTest {
+    fun `thumbnails of V5 backups are skipped instead of written into the vault`() = runTest {
+        coEvery { dumpDatabase(BackupMetaData.CURRENT_BACKUP_VERSION) } returns metaDataV5()
         val thumbnails = photos.map { "${it.uuid}.crypt.tn" }
         val archive = createBackup().withEncryptedEntries(thumbnails)
 
@@ -301,11 +303,18 @@ class BackupRoundTripTest {
         val metaData = ZipInputStream(ByteArrayInputStream(archive)).use { zip ->
             zip.nextEntry
             ReadBackupMetadataUseCase(gson)(zip)
-        } as BackupMetaData.V5
+        }
 
         val progress = ZipInputStream(ByteArrayInputStream(archive)).use { zip ->
-            runner().run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, duplicates)
-                .toList()
+            when (metaData) {
+                is BackupMetaData.V5 ->
+                    runner().run(RestoreBackupV5(cryptoEngine), metaData, zip, sourceSession, duplicates)
+
+                is BackupMetaData.V6 ->
+                    runner().run(RestoreBackupV6(cryptoEngine), metaData, zip, sourceSession, duplicates)
+
+                else -> error("Unexpected backup version ${metaData.backupVersion}")
+            }.toList()
         }
 
         return (progress.last() as RestoreProgress.Finished).result
@@ -345,12 +354,29 @@ class BackupRoundTripTest {
         uuid = "uuid-${fileName.substringBefore('.')}",
     )
 
-    private fun metaData() = BackupMetaData.V5(
+    private fun metaData() = BackupMetaData.V6(
         photos = photos.map { it.toBackup() },
         albums = emptyList(),
         albumPhotoRefs = emptyList(),
         createdAt = 1_700_000_000_000L,
         backupVersion = BackupMetaData.CURRENT_BACKUP_VERSION,
+        wrappedVMK = "",
+        params = VaultProtectionParams(
+            salt = "salt",
+            iv = "iv",
+            kdf = Kdf.PBKDF2WithHmacSHA256,
+            kdfIterations = 100_000,
+            algorithm = Algorithm.AesCbcPkcs7Padding,
+            keySize = 256,
+        ),
+    )
+
+    private fun metaDataV5() = BackupMetaData.V5(
+        photos = photos.map { it.toBackup() },
+        albums = emptyList(),
+        albumPhotoRefs = emptyList(),
+        createdAt = 1_700_000_000_000L,
+        backupVersion = 5,
         wrappedVMK = "",
         params = VaultProtectionParams(
             salt = "salt",
