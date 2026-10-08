@@ -41,21 +41,14 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
-import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Length of the short side of a thumbnail in pixels. Covers grid tiles and is sharp enough as preview in the image viewer.
- */
 private const val THUMBNAIL_SIZE = 720
-
 private const val THUMBNAIL_QUALITY = 80
 
-/**
- * Each creation from the vault holds the whole decrypted original in memory.
- */
 private const val MAX_PARALLEL_CREATIONS_FROM_VAULT = 2
+private const val LOCK_STRIPES = 64
 
 sealed interface CreatedThumbnail {
     data class New(val bitmap: Bitmap) : CreatedThumbnail
@@ -73,14 +66,14 @@ class ThumbnailGenerator @Inject constructor(
     private val vaultCacheStorage: VaultCacheStorage,
 ) {
 
-    private val locks = ConcurrentHashMap<String, Mutex>()
+    private val locks = List(LOCK_STRIPES) { Mutex() }
     private val creationsFromVault = Semaphore(MAX_PARALLEL_CREATIONS_FROM_VAULT)
 
     /**
      * Creates the thumbnail of an imported photo from its encrypted original. Videos use their video preview.
      */
     suspend fun createFromVault(uuid: String, type: PhotoType): Result<CreatedThumbnail> =
-        locks.getOrPut(uuid) { Mutex() }.withLock {
+        lockFor(uuid).withLock {
             if (vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(uuid))) {
                 return@withLock Result.success(CreatedThumbnail.Existing)
             }
@@ -116,7 +109,7 @@ class ThumbnailGenerator @Inject constructor(
      * @param data The data for the photo. May be ByteArray or system Uri
      */
     suspend fun createFromImport(uuid: String, data: Any?, isVideo: Boolean): Result<Unit> =
-        locks.getOrPut(uuid) { Mutex() }.withLock {
+        lockFor(uuid).withLock {
             val request = ImageRequest.Builder(context)
                 .data(data)
                 .thumbnailSize()
@@ -128,6 +121,9 @@ class ThumbnailGenerator @Inject constructor(
                 bitmap.recycle()
             }
         }
+
+    private fun lockFor(uuid: String): Mutex =
+        locks[uuid.hashCode().mod(LOCK_STRIPES)]
 
     private fun ImageRequest.Builder.thumbnailSize() =
         size(THUMBNAIL_SIZE)
