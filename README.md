@@ -65,23 +65,25 @@ Photok can use minimal privacy-friendly analytics to improve stability and user 
 These analytics are never used for advertising or cross-app tracking.
 
 ## Translations
-Indicates how much of a language was translated by a human. The rest in machine translated.
+Photok is available in the following languages.
 <!-- BEGIN-TRANSLATIONS -->
-![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-41%25-red)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-77%25-yellow)
-![Dutch](https://img.shields.io/badge/Dutch-41%25-red)
-![French](https://img.shields.io/badge/French-77%25-yellow)
-![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-77%25-yellow)
-![Italian](https://img.shields.io/badge/Italian-58%25-orange)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-77%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-47%25-red)
-![Spanish](https://img.shields.io/badge/Spanish-77%25-yellow)
-![Swedish](https://img.shields.io/badge/Swedish-100%25-brightgreen)
-![Turkish](https://img.shields.io/badge/Turkish-79%25-yellow)
-![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-61%25-orange)
+![English](https://img.shields.io/badge/English-blue)
+![Arabic](https://img.shields.io/badge/Arabic-blue)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-blue)
+![Dutch](https://img.shields.io/badge/Dutch-blue)
+![French](https://img.shields.io/badge/French-blue)
+![German](https://img.shields.io/badge/German-blue)
+![Indonesian](https://img.shields.io/badge/Indonesian-blue)
+![Italian](https://img.shields.io/badge/Italian-blue)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-blue)
+![Russian](https://img.shields.io/badge/Russian-blue)
+![Spanish](https://img.shields.io/badge/Spanish-blue)
+![Swedish](https://img.shields.io/badge/Swedish-blue)
+![Turkish](https://img.shields.io/badge/Turkish-blue)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-blue)
 <!-- END-TRANSLATIONS -->
+
+Initially texts are machine translated. Contributors from the community then review and fix these machine translations on demand.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 
