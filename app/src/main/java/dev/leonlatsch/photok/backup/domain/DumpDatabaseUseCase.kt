@@ -58,7 +58,7 @@ class DumpDatabaseUseCase @Inject constructor(
                 val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
                 requireNotNull(protection)
 
-                BackupMetaData.V5(
+                BackupMetaData.V6(
                     wrappedVMK = Base64.encode(protection.wrappedVMK),
                     params = protection.params,
                     photos = photos,

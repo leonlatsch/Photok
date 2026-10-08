@@ -107,15 +107,15 @@ fun AlbumTile(
                 }
             } else {
                 val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
+                    EncryptedImageRequestData.Thumbnail(
+                        uuid = album.albumCover.uuid,
+                        type = album.albumCover.type,
                     )
                 }
 
                 Image(
                     painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
+                    contentDescription = album.name,
                     modifier = contentModifier,
                     contentScale = ContentScale.Crop,
                 )

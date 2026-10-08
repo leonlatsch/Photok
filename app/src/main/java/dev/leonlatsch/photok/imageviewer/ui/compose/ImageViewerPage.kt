@@ -74,6 +74,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
+import coil.compose.AsyncImagePainter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
@@ -97,25 +98,21 @@ fun BoxScope.ImageViewerImagePage(
     val photo = item.photo
 
     val requestData = remember(photo) {
-        val fileName = if (photo.type.isVideo) {
-            photo.internalVideoPreviewFileName
-        } else {
-            photo.internalFileName
-        }
-
-        EncryptedImageRequestData(
-            internalFileName = fileName,
+        EncryptedImageRequestData.VaultFile(
+            internalFileName = photo.internalFileName,
             mimeType = photo.type.mimeType,
             playAnimation = true,
         )
     }
 
-    Image(
-        painter = rememberEncryptedImagePainter(
-            data = requestData,
-            placeholder = android.R.color.black,
-        ),
-        contentDescription = photo.fileName,
+    val thumbnailRequestData = remember(photo) {
+        EncryptedImageRequestData.Thumbnail(
+            uuid = photo.uuid,
+            type = photo.type,
+        )
+    }
+
+    Box(
         modifier = modifier
             .fillMaxSize()
             .zoomable(
@@ -127,7 +124,30 @@ fun BoxScope.ImageViewerImagePage(
                 state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
-    )
+    ) {
+        val painter = rememberEncryptedImagePainter(
+            data = requestData,
+            placeholder = android.R.color.transparent,
+        )
+
+        if (painter.state !is AsyncImagePainter.State.Success) {
+            Image(
+                painter = rememberEncryptedImagePainter(
+                    data = thumbnailRequestData,
+                    placeholder = android.R.color.black,
+                    placeholderMemoryCacheKey = thumbnailRequestData.memoryCacheKey,
+                ),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+
+        Image(
+            painter = painter,
+            contentDescription = photo.fileName,
+            modifier = Modifier.fillMaxSize(),
+        )
+    }
 
     TopGradient(visible = uiState.inputs.showControls)
     BottomGradient(visible = uiState.inputs.showControls)
@@ -158,7 +178,7 @@ fun BoxScope.ImageViewerVideoPage(
 
                 val requestData = remember(photo) {
 
-                    EncryptedImageRequestData(
+                    EncryptedImageRequestData.VaultFile(
                         internalFileName = photo.internalVideoPreviewFileName,
                         mimeType = photo.type.mimeType,
                         playAnimation = false,

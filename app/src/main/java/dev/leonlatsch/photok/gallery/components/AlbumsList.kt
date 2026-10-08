@@ -107,15 +107,15 @@ private fun AlbumListItem(
                 }
             } else {
                 val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
+                    EncryptedImageRequestData.Thumbnail(
+                        uuid = album.albumCover.uuid,
+                        type = album.albumCover.type,
                     )
                 }
 
                 Image(
                     painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
+                    contentDescription = album.name,
                     modifier = contentModifier,
                     contentScale = ContentScale.Crop,
                 )
@@ -143,88 +143,6 @@ private fun AlbumListItem(
         }
     }
 }
-
-/*
-fun AlbumTile(
-    album: AlbumItem,
-    onAlbumClicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier
-            .padding(12.dp)
-            .clickable { onAlbumClicked(album.id) }
-    ) {
-        Box {
-            val contentModifier = Modifier
-                .fillMaxSize()
-                .aspectRatio(1f)
-
-            if (album.albumCover == null || LocalInspectionMode.current) {
-                Box(
-                    modifier = contentModifier.background(MaterialTheme.colorScheme.outline)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_folder),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(48.dp)
-                    )
-                }
-            } else {
-                val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
-                    )
-                }
-
-                Image(
-                    painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
-                    modifier = contentModifier,
-                    contentScale = ContentScale.Crop,
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(32.dp)
-                    .align(Alignment.BottomCenter)
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(Color.Transparent, colorResource(R.color.black_semi_transparent))
-                        )
-                    )
-            )
-
-            Text(
-                text = album.name,
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(8.dp)
-            )
-
-            val itemCountText = album.itemCount.toString().ifEmpty { stringResource(R.string.common_empty) }
-
-            Text(
-                text = itemCountText,
-                color = Color.White,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-            )
-        }
-    }
-}
- */
 
 @Preview(showBackground = true)
 @Composable

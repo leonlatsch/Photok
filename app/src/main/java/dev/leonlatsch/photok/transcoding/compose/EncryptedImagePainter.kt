@@ -33,6 +33,7 @@ import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 fun rememberEncryptedImagePainter(
     data: EncryptedImageRequestData,
     @DrawableRes placeholder: Int = R.color.lightGray,
+    placeholderMemoryCacheKey: String? = null,
 ): AsyncImagePainter {
     val context = LocalContext.current
 
@@ -40,6 +41,7 @@ fun rememberEncryptedImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
             .placeholder(placeholder)
+            .placeholderMemoryCacheKey(placeholderMemoryCacheKey)
             .fallback(R.color.design_default_color_error)
             .error(R.color.design_default_color_error)
             .build(),

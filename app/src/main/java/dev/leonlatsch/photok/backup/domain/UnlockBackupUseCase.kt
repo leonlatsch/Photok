@@ -54,6 +54,7 @@ class UnlockBackupUseCase @Inject constructor(
             is BackupMetaData.V3 -> createSessionFromV1toV3(metaData.password, password)
             is BackupMetaData.V4 -> createSessionFromV4(uri, metaData.password, password)
             is BackupMetaData.V5 -> createSessionFromV5(password, metaData)
+            is BackupMetaData.V6 -> createSessionFromV6(password, metaData)
         }
     }
 
@@ -102,6 +103,27 @@ class UnlockBackupUseCase @Inject constructor(
     private suspend fun createSessionFromV5(
         password: String,
         metaData: BackupMetaData.V5
+    ): Session {
+        val wrappedVmk = Base64.decode(metaData.wrappedVMK)
+
+        val vmk = passwordVaultProtectionHandler.unlock(
+            UnlockRequest.Password(password),
+            VaultProtection(
+                id = "",
+                type = VaultProtectionType.Password,
+                wrappedVMK = wrappedVmk,
+                params = metaData.params,
+            )
+        )
+
+        return VaultSession(
+            vmk = vmk,
+        )
+    }
+
+    private suspend fun createSessionFromV6(
+        password: String,
+        metaData: BackupMetaData.V6
     ): Session {
         val wrappedVmk = Base64.decode(metaData.wrappedVMK)
 

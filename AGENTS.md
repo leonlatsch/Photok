@@ -167,14 +167,14 @@ Reusable composables belong in `core/.../ui/components/` when they are module-ne
 
 ### Key Classes
 
-Encryption classes live in `core/src/main/kotlin/dev/leonlatsch/photok/encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (in `core/.../io/`) is the only place that opens encrypted file streams. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
+Encryption classes live in `core/src/main/kotlin/dev/leonlatsch/photok/encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (files dir, the vault itself) and `VaultCacheStorage` (cache dir, only data that can be recreated from the vault, such as thumbnails) in `core/.../io/` are the only places that open encrypted file streams. Both implement `EncryptedStorage`. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
 
 ### Rules for Encryption Code
 
 - **Never** store the raw VMK to disk or shared preferences.
 - **Never** delete `legacyPasswordHash` or `legacyUserSalt` from shared preferences (migration fail-safe — see `ENCRYPTION.md`).
 - Use `CryptoEngine` interface — do not instantiate `CbcCryptoEngine` directly in UI or repository code.
-- All file I/O goes through `VaultFileStorage`.
+- All encrypted file I/O goes through `VaultFileStorage` or `VaultCacheStorage`. Never put anything in `VaultCacheStorage` that can't be recreated from the vault; the OS may clear the cache dir at any time.
 
 ---
 

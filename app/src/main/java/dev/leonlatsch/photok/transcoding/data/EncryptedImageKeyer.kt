@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020–2026 Leon Latsch
+ *   Copyright 2020-2026 Leon Latsch
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,22 +14,16 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.transcoding.compose.model
+package dev.leonlatsch.photok.transcoding.data
 
-import dev.leonlatsch.photok.model.database.entity.PhotoType
+import coil.key.Keyer
+import coil.request.Options
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import javax.inject.Inject
 
-sealed interface EncryptedImageRequestData {
-    data class VaultFile(
-        val internalFileName: String,
-        val mimeType: String,
-        val playAnimation: Boolean = false,
-    ) : EncryptedImageRequestData
-
-    data class Thumbnail(
-        val uuid: String,
-        val type: PhotoType,
-    ) : EncryptedImageRequestData {
-        val memoryCacheKey: String
-            get() = "thumbnail#$uuid"
+class EncryptedImageKeyer @Inject constructor() : Keyer<EncryptedImageRequestData> {
+    override fun key(data: EncryptedImageRequestData, options: Options): String? = when (data) {
+        is EncryptedImageRequestData.VaultFile -> null
+        is EncryptedImageRequestData.Thumbnail -> data.memoryCacheKey
     }
 }

@@ -34,6 +34,7 @@ import dev.leonlatsch.photok.backup.domain.RestoreBackupV2
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV3
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV4
 import dev.leonlatsch.photok.backup.domain.RestoreBackupV5
+import dev.leonlatsch.photok.backup.domain.RestoreBackupV6
 import dev.leonlatsch.photok.backup.domain.RestoreDuplicates
 import dev.leonlatsch.photok.backup.domain.RestoreProgress
 import dev.leonlatsch.photok.backup.domain.RestoreResult
@@ -41,6 +42,7 @@ import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.model.io.ThumbnailMaintainer
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
@@ -166,12 +168,14 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val io: IO,
     private val inAppReview: InAppReview,
     private val cleanupDeadFiles: CleanupDeadFilesUseCase,
+    private val thumbnailMaintainer: ThumbnailMaintainer,
     private val runner: RestoreBackupRunner,
     private val v1Strategy: RestoreBackupV1,
     private val v2Strategy: RestoreBackupV2,
     private val v3Strategy: RestoreBackupV3,
     private val v4Strategy: RestoreBackupV4,
     private val v5Strategy: RestoreBackupV5,
+    private val v6Strategy: RestoreBackupV6,
     private val appScope: CoroutineScope,
 ) : ViewModel() {
 
@@ -418,6 +422,9 @@ class RestoreBackupViewModel @AssistedInject constructor(
 
             is BackupMetaData.V5 ->
                 runner.run(v5Strategy, metaData, zipInputStream, session, duplicates)
+
+            is BackupMetaData.V6 ->
+                runner.run(v6Strategy, metaData, zipInputStream, session, duplicates)
         }
 
         zipInputStream.use { zipInputStream ->
@@ -441,6 +448,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
                         if (progress.result.failedFiles.isNotEmpty()) {
                             cleanupDeadFiles()
                         }
+
+                        thumbnailMaintainer.requestRun()
 
                         awaitMinimumIndexingTime()
 

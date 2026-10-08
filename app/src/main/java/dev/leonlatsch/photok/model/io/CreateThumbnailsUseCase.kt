@@ -17,11 +17,8 @@
 package dev.leonlatsch.photok.model.io
 
 import android.content.Context
-import android.graphics.Bitmap
 import coil.request.ImageRequest
 import coil.request.videoFramePercent
-import coil.size.Size
-import coil.transform.Transformation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.Photo
@@ -29,16 +26,6 @@ import dev.leonlatsch.photok.transcoding.domain.ImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-
-/**
- * Maximum size of the thumbnail in pixels
- *
- * Don't increase this any further. High impact on gallery scroll performance.
- * This should be more than fine. We have 3 thumbnails each row.
- * On a 1080p screen, this means each thumbnail will be around 360px. So 512px is more than enough.
- */
-private const val THUMBNAIL_SIZE = 512
 
 /**
  * Use case to create all thumbnails for a photo or video.
@@ -50,6 +37,7 @@ class CreateThumbnailsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageStorage: ImageStorage,
     private val vaultFileStorage: VaultFileStorage,
+    private val thumbnailGenerator: ThumbnailGenerator,
 ) {
 
     /**
@@ -59,19 +47,10 @@ class CreateThumbnailsUseCase @Inject constructor(
     suspend operator fun invoke(photo: Photo, data: Any?): Result<Unit> =
         withContext(Dispatchers.IO) {
 
-            // Thumbnail
-            val thumbnailRequest = ImageRequest.Builder(context)
-                .data(data)
-                .size(THUMBNAIL_SIZE)
-                .transformations(CenterCropTransformation)
-                .allowHardware(false)
-                .apply { if (photo.type.isVideo) videoFramePercent(0.5) }
-                .build()
-
-            val thumbnailResult = imageStorage.execAndWrite(
-                imageRequest = thumbnailRequest,
-                outputStream = vaultFileStorage.openEncryptedOutput(photo.internalThumbnailFileName),
-                compressionPercent = 40,
+            val thumbnailResult = thumbnailGenerator.createFromImport(
+                uuid = photo.uuid,
+                data = data,
+                isVideo = photo.type.isVideo,
             )
 
             // Video Preview
@@ -100,17 +79,4 @@ class CreateThumbnailsUseCase @Inject constructor(
                 )
             }
         }
-}
-
-object CenterCropTransformation : Transformation {
-
-    override val cacheKey: String = javaClass.name
-
-    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
-        val minDim = minOf(input.width, input.height)
-        val startX = (input.width - minDim) / 2
-        val startY = (input.height - minDim) / 2
-
-        return Bitmap.createBitmap(input, startX, startY, minDim, minDim)
-    }
 }

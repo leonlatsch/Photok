@@ -49,9 +49,6 @@ data class Photo(
     val internalFileName: String
         get() = internalFileName(uuid)
 
-    val internalThumbnailFileName: String
-        get() = internalThumbnailFileName(uuid)
-
     val internalVideoPreviewFileName: String
         get() = internalVideoPreviewFileName(uuid)
 

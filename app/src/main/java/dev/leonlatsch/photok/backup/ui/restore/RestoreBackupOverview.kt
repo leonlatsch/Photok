@@ -242,6 +242,7 @@ fun RestoreBackupOverview(
                     is BackupMetaData.V3 -> Algorithm.AesGcmNoPadding
                     is BackupMetaData.V4 -> Algorithm.AesCbcPkcs7Padding
                     is BackupMetaData.V5 -> metadate.params.algorithm
+                    is BackupMetaData.V6 -> metadate.params.algorithm
                 }.value
             )
             HorizontalDivider(
@@ -371,12 +372,12 @@ private fun Preview() {
         RestoreBackupOverview(
             uiState = RestoreBackupUiState.Overview(
                 validation = BackupValidation(
-                    metaData = BackupMetaData.V5(
+                    metaData = BackupMetaData.V6(
                         photos = emptyList(),
                         albums = emptyList(),
                         albumPhotoRefs = emptyList(),
                         createdAt = Date().time,
-                        backupVersion = 5,
+                        backupVersion = 6,
                         wrappedVMK = "",
                         params = VaultProtectionParams(
                             salt = null,
