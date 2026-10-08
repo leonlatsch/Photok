@@ -23,5 +23,6 @@ interface VaultProtectionRepository {
     suspend fun getProtection(type: VaultProtectionType): VaultProtection?
     suspend fun createProtection(protection: VaultProtection)
     suspend fun removeProtection(type: VaultProtectionType)
+    suspend fun removeAllProtections()
     suspend fun updateProtection(protection: VaultProtection)
 }

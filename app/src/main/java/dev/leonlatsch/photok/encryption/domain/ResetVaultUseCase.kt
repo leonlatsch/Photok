@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.model.io.ThumbnailFiles
@@ -27,10 +26,10 @@ import javax.inject.Inject
 class ResetVaultUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
-    private val vaultService: VaultService,
     private val config: Config,
     private val sessionRepository: SessionRepository,
     private val vaultCacheStorage: VaultCacheStorage,
+    private val vaultProtectionRepository: VaultProtectionRepository,
 ) {
     suspend operator fun invoke() {
         val allPhotos = photoRepository.findAllPhotosByImportDateDesc()
@@ -42,8 +41,7 @@ class ResetVaultUseCase @Inject constructor(
         albumRepository.deleteAll()
         albumRepository.unlinkAll()
 
-        vaultService.reset(VaultProtectionType.Password)
-        vaultService.reset(VaultProtectionType.Biometric)
+        vaultProtectionRepository.removeAllProtections()
 
         config.legacyPasswordHash = null
         config.legacyUserSalt = null
