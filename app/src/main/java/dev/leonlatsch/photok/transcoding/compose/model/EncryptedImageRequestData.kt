@@ -19,22 +19,17 @@ package dev.leonlatsch.photok.transcoding.compose.model
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 
 sealed interface EncryptedImageRequestData {
-    val memoryCacheKey: String
-
     data class VaultFile(
         val internalFileName: String,
         val mimeType: String,
         val playAnimation: Boolean = false,
-    ) : EncryptedImageRequestData {
-        override val memoryCacheKey: String
-            get() = "$internalFileName#$playAnimation"
-    }
+    ) : EncryptedImageRequestData
 
     data class Thumbnail(
         val uuid: String,
         val type: PhotoType,
     ) : EncryptedImageRequestData {
-        override val memoryCacheKey: String
+        val memoryCacheKey: String
             get() = "thumbnail#$uuid"
     }
 }

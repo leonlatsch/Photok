@@ -22,5 +22,8 @@ import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import javax.inject.Inject
 
 class EncryptedImageKeyer @Inject constructor() : Keyer<EncryptedImageRequestData> {
-    override fun key(data: EncryptedImageRequestData, options: Options): String = data.memoryCacheKey
+    override fun key(data: EncryptedImageRequestData, options: Options): String? = when (data) {
+        is EncryptedImageRequestData.VaultFile -> null
+        is EncryptedImageRequestData.Thumbnail -> data.memoryCacheKey
+    }
 }
