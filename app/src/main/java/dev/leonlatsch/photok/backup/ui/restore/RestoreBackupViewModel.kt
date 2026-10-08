@@ -42,6 +42,7 @@ import dev.leonlatsch.photok.backup.domain.UnlockBackupUseCase
 import dev.leonlatsch.photok.backup.domain.ValidateBackupUseCase
 import dev.leonlatsch.photok.encryption.domain.models.Session
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.model.io.ThumbnailMaintainer
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.review.InAppReview
@@ -167,6 +168,7 @@ class RestoreBackupViewModel @AssistedInject constructor(
     private val io: IO,
     private val inAppReview: InAppReview,
     private val cleanupDeadFiles: CleanupDeadFilesUseCase,
+    private val thumbnailMaintainer: ThumbnailMaintainer,
     private val runner: RestoreBackupRunner,
     private val v1Strategy: RestoreBackupV1,
     private val v2Strategy: RestoreBackupV2,
@@ -446,6 +448,8 @@ class RestoreBackupViewModel @AssistedInject constructor(
                         if (progress.result.failedFiles.isNotEmpty()) {
                             cleanupDeadFiles()
                         }
+
+                        thumbnailMaintainer.requestRun()
 
                         awaitMinimumIndexingTime()
 

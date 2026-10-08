@@ -28,6 +28,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -42,7 +43,7 @@ import kotlin.time.Duration.Companion.seconds
 private val StartDelay = 3.seconds
 
 /**
- * Brings the thumbnails in the cache dir in line with the vault, once per unlock.
+ * Brings the thumbnails in the cache dir in line with the vault, once per unlock and on every [requestRun].
  */
 @Singleton
 class ThumbnailMaintainer @Inject constructor(
@@ -57,15 +58,26 @@ class ThumbnailMaintainer @Inject constructor(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    private val runRequests = Channel<Unit>(Channel.CONFLATED)
+
     fun start() {
         scope.launch {
             sessionRepository.observe().collectLatest { session ->
                 if (session == null) return@collectLatest
 
                 delay(StartDelay)
+                runRequests.tryReceive()
                 run()
+
+                for (request in runRequests) {
+                    run()
+                }
             }
         }
+    }
+
+    fun requestRun() {
+        runRequests.trySend(Unit)
     }
 
     internal suspend fun run() {
