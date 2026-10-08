@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.imageLoader
-import coil.request.CachePolicy
 import coil.request.ImageRequest
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
@@ -38,17 +37,11 @@ fun rememberEncryptedImagePainter(
 ): AsyncImagePainter {
     val context = LocalContext.current
 
-    val memoryCachePolicy = when (data) {
-        is EncryptedImageRequestData.VaultFile -> CachePolicy.DISABLED
-        is EncryptedImageRequestData.Thumbnail -> CachePolicy.ENABLED
-    }
-
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(data)
             .placeholder(placeholder)
             .placeholderMemoryCacheKey(placeholderMemoryCacheKey)
-            .memoryCachePolicy(memoryCachePolicy)
             .fallback(R.color.design_default_color_error)
             .error(R.color.design_default_color_error)
             .build(),

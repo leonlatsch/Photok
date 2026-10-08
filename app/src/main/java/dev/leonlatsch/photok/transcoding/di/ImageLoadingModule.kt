@@ -54,7 +54,6 @@ object ImageLoadingModule {
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
         .memoryCache {
-            // Memory cache is disabled/enabled at usage level
             MemoryCache.Builder(context)
                 .maxSizePercent(0.25)
                 .build()

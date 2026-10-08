@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.model.repositories
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
@@ -29,7 +27,6 @@ import javax.inject.Inject
 
 class CleanupDeadFilesUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
-    @ApplicationContext private val context: Context,
     private val vaultFileStorage: VaultFileStorage,
 ) {
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -38,7 +35,7 @@ class CleanupDeadFilesUseCase @Inject constructor(
         scope.launch {
             val allExisting = photoRepository.findAllPhotosByImportDateDesc()
 
-            val allFiles = context.fileList().filter {
+            val allFiles = vaultFileStorage.listFiles().filter {
                 val isLegacyVaultFile = it.contains(LEGACY_PHOTOK_FILE_EXTENSION)
                 val isVaultFile = it.contains(PHOTOK_FILE_EXTENSION)
 
