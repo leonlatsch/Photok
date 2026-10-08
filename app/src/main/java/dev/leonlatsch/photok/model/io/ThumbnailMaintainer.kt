@@ -76,6 +76,7 @@ class ThumbnailMaintainer @Inject constructor(
 
         val photos = photoRepository.findAllPhotosByImportDateDesc()
         deleteDeadThumbnails(photos, start)
+        deleteStaleTmpFiles(start)
         createMissingThumbnails(photos)
     }
 
@@ -109,6 +110,18 @@ class ThumbnailMaintainer @Inject constructor(
             .filter { ThumbnailFiles.uuidOf(it) !in uuids && it.lastModified() < runStart }
             .forEach {
                 Timber.i("Deleting dead thumbnail: ${it.name}")
+                vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.pathInCurrentDir(it))
+            }
+    }
+
+    /**
+     * Files created after [runStart] are kept, because they may still be written.
+     */
+    private fun deleteStaleTmpFiles(runStart: Long) {
+        vaultCacheStorage.listFiles(ThumbnailFiles.CURRENT_DIR)
+            .filter { ThumbnailFiles.isTmp(it) && it.lastModified() < runStart }
+            .forEach {
+                Timber.i("Deleting stale tmp thumbnail: ${it.name}")
                 vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.pathInCurrentDir(it))
             }
     }

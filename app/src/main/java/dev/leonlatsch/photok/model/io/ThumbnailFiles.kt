@@ -39,4 +39,6 @@ object ThumbnailFiles {
     fun pathInCurrentDir(file: File) = "$CURRENT_DIR/${file.name}"
 
     fun uuidOf(file: File) = file.name.substringBefore(".")
+
+    fun isTmp(file: File) = file.name.endsWith(TMP_SUFFIX)
 }

@@ -155,6 +155,20 @@ class ThumbnailMaintainerTest {
     }
 
     @Test
+    fun `stale tmp files of existing photos are deleted, unless they are newer than the pass`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(created)
+        val stale = writeCacheFile(ThumbnailFiles.tmpPath(created.uuid))
+        stale.setLastModified(System.currentTimeMillis() - 60_000)
+        val writing = writeCacheFile(ThumbnailFiles.tmpPath("writing"))
+        writing.setLastModified(System.currentTimeMillis() + 60_000)
+
+        maintenance.run()
+
+        assertFalse(stale.exists())
+        assertTrue(writing.exists())
+    }
+
+    @Test
     fun `a failing thumbnail does not stop the others`() = runTest {
         coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(failing, created)
 
