@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import coil.ImageLoader
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
@@ -32,12 +33,15 @@ import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Base Application class.
@@ -71,6 +75,10 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var proFeaturesLifecycle: ProFeaturesLifecycle
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
 
 
     private var wentToBackgroundAt = 0L
@@ -108,6 +116,12 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
                 }
 
                 session = newSession
+
+                if (newSession == null) {
+                    encryptedImageLoader.memoryCache?.clear()
+                    delay(2.seconds)
+                    encryptedImageLoader.memoryCache?.clear()
+                }
             }
         }
     }
