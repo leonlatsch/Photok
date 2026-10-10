@@ -16,13 +16,10 @@
 
 package dev.leonlatsch.photok.gallery.components
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
@@ -34,7 +31,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 sealed interface ProGalleryBannerUiEvent {
-    data class OnDismiss(val context: Context) : ProGalleryBannerUiEvent
+    data object OnDismiss : ProGalleryBannerUiEvent
 }
 
 @HiltViewModel
@@ -64,9 +61,6 @@ class ProGalleryBannerViewModel @Inject constructor(
         when (event) {
             is ProGalleryBannerUiEvent.OnDismiss -> {
                 config.proBannerDismissed = true
-
-                val dismissedString = event.context.getString(R.string.gallery_pro_banner_dismissed)
-                Toast.makeText(event.context, dismissedString, Toast.LENGTH_LONG).show()
             }
         }
     }

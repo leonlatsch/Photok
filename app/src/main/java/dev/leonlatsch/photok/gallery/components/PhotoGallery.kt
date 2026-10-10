@@ -69,7 +69,6 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -262,8 +261,6 @@ private fun PhotoGrid(
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
     val gridState: LazyGridState = rememberLazyGridState()
     val isPreview = LocalInspectionMode.current
 
@@ -302,7 +299,7 @@ private fun PhotoGrid(
             ) {
                 ProGalleryBanner(
                     onDismiss = {
-                        proBannerViewModel?.handleUiEvent(ProGalleryBannerUiEvent.OnDismiss(context))
+                        proBannerViewModel?.handleUiEvent(ProGalleryBannerUiEvent.OnDismiss)
                     },
                     modifier = Modifier
                         .padding(10.dp)
