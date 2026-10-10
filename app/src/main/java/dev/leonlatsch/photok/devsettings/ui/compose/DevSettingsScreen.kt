@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.devsettings.ui.compose
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +51,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiEvent
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiState
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsViewModel
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -67,6 +69,7 @@ fun DevSettingsScreen(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
         onClose = navigator::goBack,
+        onOpenPreferencesEditor = { navigator.navigate(AppRoute.PreferencesEditor) },
     )
 }
 
@@ -76,6 +79,7 @@ private fun DevSettingsContent(
     uiState: DevSettingsUiState,
     handleUiEvent: (DevSettingsUiEvent) -> Unit,
     onClose: () -> Unit,
+    onOpenPreferencesEditor: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -150,6 +154,23 @@ private fun DevSettingsContent(
                     onCheckedChange = { handleUiEvent(DevSettingsUiEvent.ToggleOverrideHasPro(it)) },
                 )
             }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenPreferencesEditor)
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Shared preferences",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    text = "View and edit all shared preferences files.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                )
+            }
         }
     }
 }
@@ -162,6 +183,7 @@ private fun DevSettingsScreenPreview() {
             uiState = DevSettingsUiState(overrideHasPro = true),
             handleUiEvent = {},
             onClose = {},
+            onOpenPreferencesEditor = {},
         )
     }
 }

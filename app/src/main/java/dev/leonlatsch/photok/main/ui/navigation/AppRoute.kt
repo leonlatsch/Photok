@@ -53,5 +53,8 @@ sealed interface AppRoute : NavKey {
     data object DevSettings : AppRoute
 
     @Serializable
+    data object PreferencesEditor : AppRoute
+
+    @Serializable
     data class RestoreBackup(val backupUri: String) : AppRoute
 }

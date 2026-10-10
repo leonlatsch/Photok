@@ -49,6 +49,7 @@ import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.backup.ui.restore.RestoreBackupScreen
 import dev.leonlatsch.photok.devsettings.ui.compose.DevSettingsScreen
+import dev.leonlatsch.photok.devsettings.ui.compose.PreferencesEditorScreen
 import dev.leonlatsch.photok.gallery.albums.detail.ui.compose.AlbumDetailScreen
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumsScreen
 import dev.leonlatsch.photok.gallery.ui.compose.GalleryScreen
@@ -223,6 +224,11 @@ private val tabEntryProvider = entryProvider<NavKey> {
     }
     entry<AppRoute.DevSettings> {
         DevSettingsScreen()
+    }
+    if (BuildConfig.DEBUG) {
+        entry<AppRoute.PreferencesEditor> {
+            PreferencesEditorScreen()
+        }
     }
     entry<AppRoute.RestoreBackup> { route ->
         RestoreBackupScreen(backupUri = route.backupUri.toUri())
