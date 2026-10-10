@@ -255,18 +255,6 @@
     <string name="hide_app_hint">Una volta nascosto, Photok può essere avviato solo dal tastierino numerico del telefono, utilizzando il codice di avvio segreto.</string>
     <string name="hide_app_hint_current_code">Codice di lancio attuale:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Avanti</string>
-    <string name="onboarding_finish">Fine</string>
-    <string name="onboarding_skip"><u>Salta</u></string>
-
-    <string name="onboarding_slide1_title">Benvenuto su</string>
-    <string name="onboarding_slide1_description">Un luogo sicuro per le tue foto.</string>
-    <string name="onboarding_slide2_title">Crea una password</string>
-    <string name="onboarding_slide2_description">Crea una password sicura. La tua password viene utilizzata per crittografare le tue foto direttamente sul tuo telefono.</string>
-    <string name="onboarding_slide3_title">Inizia a importare</string>
-    <string name="onboarding_slide3_description">Inizia a importare le tue foto e tienile al sicuro dagli altri.\nSuccessivamente potrai eliminarle dalla tua galleria.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Creazione backup…</string>
     <string name="backup_confirm_password">Conferma la tua password per creare un backup.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->

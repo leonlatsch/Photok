@@ -255,18 +255,6 @@
     <string name="hide_app_hint">چھپانے کے بعد ایپ صرف ڈائلر سے خفیہ کوڈ کے ذریعے کھلے گی۔</string>
     <string name="hide_app_hint_current_code">موجودہ خفیہ کوڈ:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">اگلا</string>
-    <string name="onboarding_finish">شروع کریں</string>
-    <string name="onboarding_skip"><u>چھوڑ دیں</u></string>
-
-    <string name="onboarding_slide1_title">خوش آمدید</string>
-    <string name="onboarding_slide1_description">آپ کی تصاویر کے لیے محفوظ جگہ۔</string>
-    <string name="onboarding_slide2_title">پاس ورڈ بنائیں</string>
-    <string name="onboarding_slide2_description">ایک اچھا پاس ورڈ بنائیں جو آپ کی تصاویر کو فون میں لاک کر دے گا۔</string>
-    <string name="onboarding_slide3_title">فائلیں لانا شروع کریں</string>
-    <string name="onboarding_slide3_description">تصویریں یہاں لائیں اور دوسروں سے محفوظ رکھیں۔\nاس کے بعد آپ انہیں گیلری سے مٹا سکتے ہیں۔</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">بیک اپ بن رہا ہے…</string>
     <string name="backup_confirm_password">بیک اپ بنانے کے لیے اپنے پاس ورڈ کی تصدیق کریں۔</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->

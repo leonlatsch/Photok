@@ -48,6 +48,7 @@ import dev.leonlatsch.photok.encryption.migration.ui.EncryptionMigrationScreen
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseRestoreScreen
 import dev.leonlatsch.photok.main.ui.AppNavViewModel
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingScreen
 import dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.setup.ui.SetupScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
@@ -93,6 +94,9 @@ private fun AppNavDisplay(
             popTransitionSpec = { slideBackward() },
             predictivePopTransitionSpec = { slideBackward() },
             entryProvider = entryProvider {
+                entry<RootRoute.Onboarding> {
+                    OnboardingScreen()
+                }
                 entry<RootRoute.Setup> {
                     SetupScreen()
                 }

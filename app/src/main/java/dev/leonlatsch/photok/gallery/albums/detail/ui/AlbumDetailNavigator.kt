@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import android.net.Uri
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
@@ -28,11 +28,11 @@ import dev.leonlatsch.photok.other.extensions.show
 
 object AlbumDetailNavigator {
 
-    fun navigate(event: NavigationEvent, fragment: Fragment, navigator: Navigator) {
+    fun navigate(event: NavigationEvent, activity: FragmentActivity, navigator: Navigator) {
         when (event) {
             NavigationEvent.Close -> navigator.goBack()
-            is NavigationEvent.ShowToast -> showToast(event, fragment)
-            is NavigationEvent.StartImport -> startImport(event, fragment.childFragmentManager)
+            is NavigationEvent.ShowToast -> showToast(event, activity)
+            is NavigationEvent.StartImport -> startImport(event, activity.supportFragmentManager)
             is NavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, navigator)
         }
     }
@@ -52,10 +52,8 @@ object AlbumDetailNavigator {
        ).show(fragmentManager)
     }
 
-    private fun showToast(event: NavigationEvent.ShowToast, fragment: Fragment) {
-        fragment.context?.let { context ->
-            Toast.makeText(context, event.text, Toast.LENGTH_LONG).show()
-        }
+    private fun showToast(event: NavigationEvent.ShowToast, activity: FragmentActivity) {
+        Toast.makeText(activity, event.text, Toast.LENGTH_LONG).show()
     }
 
     sealed interface NavigationEvent {

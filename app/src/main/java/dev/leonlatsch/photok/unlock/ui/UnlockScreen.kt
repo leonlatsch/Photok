@@ -58,12 +58,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -121,7 +121,7 @@ private fun UnlockScreenContent(
     uiState: UnlockUiState,
     handleUiEvent: (UnlockUiEvent) -> Unit,
 ) {
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
     val focusManager = LocalFocusManager.current
 
     fun unlockWithPassword() {
@@ -135,11 +135,11 @@ private fun UnlockScreenContent(
         if (biometricPromptShown || !uiState.biometricAvailable || uiState.lockedUntil != null) {
             return@LaunchedEffect
         }
-        fragment ?: return@LaunchedEffect
+        fragmentActivity ?: return@LaunchedEffect
 
         biometricPromptShown = true
         delay(0.5.seconds)
-        handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragment))
+        handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragmentActivity))
     }
 
     Scaffold(
@@ -154,8 +154,8 @@ private fun UnlockScreenContent(
                 AnimatedVisibility(uiState.biometricAvailable) {
                     TextButton(
                         onClick = {
-                            fragment ?: return@TextButton
-                            handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragment))
+                            fragmentActivity ?: return@TextButton
+                            handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragmentActivity))
                         },
                     ) {
                         Row(

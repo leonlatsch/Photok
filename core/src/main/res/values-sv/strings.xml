@@ -255,18 +255,6 @@
     <string name="hide_app_hint">När den är dold kan Photok bara startas från telefonens knappsats med din hemliga startkod.</string>
     <string name="hide_app_hint_current_code">Nuvarande startkod:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Nästa</string>
-    <string name="onboarding_finish">Slutför</string>
-    <string name="onboarding_skip"><u>Hoppa över</u></string>
-
-    <string name="onboarding_slide1_title">Välkommen till</string>
-    <string name="onboarding_slide1_description">En säker plats för dina foton.</string>
-    <string name="onboarding_slide2_title">Skapa ett lösenord</string>
-    <string name="onboarding_slide2_description">Skapa ett säkert lösenord. Ditt lösenord används för att kryptera dina foton direkt på telefonen.</string>
-    <string name="onboarding_slide3_title">Börja importera</string>
-    <string name="onboarding_slide3_description">Börja importera dina foton och håll dem säkra från andra.\nEfteråt kan du radera dem i ditt galleri.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Skapar säkerhetskopia…</string>
     <string name="backup_confirm_password">Bekräfta ditt lösenord för att skapa en säkerhetskopia.</string>

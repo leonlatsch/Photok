@@ -255,18 +255,6 @@
     <string name="hide_app_hint">Setelah disembunyikan, Photok hanya bisa dijalankan dari dial pad di aplikasi dialer pada ponselmu, dengan kode rahasia peluncuranmu.</string>
     <string name="hide_app_hint_current_code">Kode peluncuran saat ini:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Berikutnya</string>
-    <string name="onboarding_finish">Selesai</string>
-    <string name="onboarding_skip"><u>Lewati</u></string>
-
-    <string name="onboarding_slide1_title">Selamat datang di</string>
-    <string name="onboarding_slide1_description">Tempat aman untuk foto dan video kamu.</string>
-    <string name="onboarding_slide2_title">Buat kata sandi</string>
-    <string name="onboarding_slide2_description">Buat kata sandi yang aman. Kata sandimu dipakai untuk mengenkripsi foto dan video kamu secara langsung di ponselmu.</string>
-    <string name="onboarding_slide3_title">Mulai Mengimpor</string>
-    <string name="onboarding_slide3_description">Mulai impor foto dan video kamu untuk menjaga keamanannya dari orang lain.\nSetelah itu kamu bisa menghapusnya dari galerimu.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Membuat cadangan…</string>
     <string name="backup_confirm_password">Konfirmasi kata sandimu untuk membuat cadangan.</string>

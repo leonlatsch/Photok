@@ -254,18 +254,6 @@
     <string name="hide_app_hint">بمجرد إخفائه ، لا يمكن تشغيل Photok إلا من لوحة الاتصال الهاتفي ، مع رمز التشغيل السري الخاص بك. </string>
     <string name="hide_app_hint_current_code">رمز الإطلاق الحالي:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">التالي</string>
-    <string name="onboarding_finish">إنهاء</string>
-    <string name="onboarding_skip"><u>تخطي</u></string>
-
-    <string name="onboarding_slide1_title">مرحبا بك في</string>
-    <string name="onboarding_slide1_description">مكان آمن لصورك.</string>
-    <string name="onboarding_slide2_title">أنشئ كلمة مرور</string>
-    <string name="onboarding_slide2_description">أنشئ كلمة مرور آمنة. تُستخدم كلمة مرورك لتشفير صورك مباشرة على هاتفك. </string>
-    <string name="onboarding_slide3_title">ابدأ الاستيراد</string>
-    <string name="onboarding_slide3_description">ابدأ في استيراد صورك واحتفظ بها في مأمن من الآخرين. \nبعد ذلك يمكنك حذفها في معرض الصور الخاص بك. </string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">جارٍ إنشاء نسخة احتياطية ...</string>
     <string name="backup_confirm_password">أكد كلمة المرور الخاصة بك لإنشاء نسخة احتياطية.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->

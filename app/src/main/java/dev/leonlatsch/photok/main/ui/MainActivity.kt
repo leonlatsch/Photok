@@ -22,31 +22,45 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.gallery.ui.navigation.GetStartTab
+import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
 import javax.inject.Inject
 
 /**
  * The main Activity.
- * Holds all fragments and initializes toolbar, menu, etc.
+ * Hosts the Compose navigation.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
     @Inject
     override lateinit var config: Config
+
+    @Inject
+    lateinit var getStartTab: GetStartTab
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
 
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
@@ -58,6 +72,17 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
 
         val hasSession = getBaseApplication()?.sessionRepository?.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
+
+        setContent {
+            AppTheme {
+                CompositionLocalProvider(
+                    LocalConfig provides config,
+                    LocalEncryptedImageLoader provides encryptedImageLoader,
+                ) {
+                    AppNavHost(startTab = getStartTab::invoke)
+                }
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

@@ -256,18 +256,6 @@
     <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Suivant</string>
-    <string name="onboarding_finish">Terminer</string>
-    <string name="onboarding_skip"><u>Passer</u></string>
-
-    <string name="onboarding_slide1_title">Bienvenue dans</string>
-    <string name="onboarding_slide1_description">Un endroit sûr pour vos photos.</string>
-    <string name="onboarding_slide2_title">Créez un mot de passe</string>
-    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe est utilisé pour chiffrer vos photos directement sur votre téléphone.</string>
-    <string name="onboarding_slide3_title">Commencez l\'importation</string>
-    <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des regards indiscrets.\nVous pourrez ensuite les supprimer de votre galerie.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Création d\'une sauvegarde…</string>
     <string name="backup_confirm_password">Confirmez votre mot de passe pour créer une sauvegarde.</string>

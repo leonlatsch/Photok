@@ -23,6 +23,9 @@ import kotlinx.serialization.Serializable
 sealed interface RootRoute : NavKey {
 
     @Serializable
+    data object Onboarding : RootRoute
+
+    @Serializable
     data object Setup : RootRoute
 
     @Serializable

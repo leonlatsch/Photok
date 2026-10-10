@@ -22,6 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
+import dev.leonlatsch.photok.settings.data.Config
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppNavViewModel @Inject constructor(
+    private val config: Config,
     private val vaultService: VaultService,
     private val legacyEncryptionMigrator: LegacyEncryptionMigrator,
 ) : ViewModel() {
@@ -38,7 +40,9 @@ class AppNavViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _startRoute.value = if (vaultService.canUnlock() || legacyEncryptionMigrator.migrationNeeded()) {
+            _startRoute.value = if (config.systemFirstStart) {
+                RootRoute.Onboarding
+            } else if (vaultService.canUnlock() || legacyEncryptionMigrator.migrationNeeded()) {
                 RootRoute.Unlock
             } else {
                 RootRoute.Setup

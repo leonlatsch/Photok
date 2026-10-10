@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.gallery.ui.navigation
 
 import android.net.Uri
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
@@ -30,12 +30,12 @@ object GalleryNavigator {
 
     fun navigate(
         event: GalleryNavigationEvent,
-        fragment: Fragment,
+        activity: FragmentActivity,
         navigator: Navigator,
     ) {
         when (event) {
-            is GalleryNavigationEvent.ShowToast -> showToast(event, fragment)
-            is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, fragment.childFragmentManager, event.importSource)
+            is GalleryNavigationEvent.ShowToast -> showToast(event, activity)
+            is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, activity.supportFragmentManager, event.importSource)
             is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, navigator)
         }
     }
@@ -52,9 +52,7 @@ object GalleryNavigator {
         ).show(fragmentManager)
     }
 
-    private fun showToast(event: GalleryNavigationEvent.ShowToast, fragment: Fragment) {
-        fragment.context?.let { context ->
-            Toast.makeText(context, event.text, Toast.LENGTH_LONG).show()
-        }
+    private fun showToast(event: GalleryNavigationEvent.ShowToast, activity: FragmentActivity) {
+        Toast.makeText(activity, event.text, Toast.LENGTH_LONG).show()
     }
 }

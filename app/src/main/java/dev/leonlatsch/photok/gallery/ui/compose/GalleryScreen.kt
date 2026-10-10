@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
@@ -30,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
@@ -47,7 +49,6 @@ import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
@@ -58,16 +59,16 @@ fun GalleryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val navigator = LocalNavigator.current
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
 
     ObserveAsEvents(viewModel.eventsFlow) { event ->
-        fragment ?: return@ObserveAsEvents
-        GalleryNavigator.navigate(event, fragment, navigator)
+        fragmentActivity ?: return@ObserveAsEvents
+        GalleryNavigator.navigate(event, fragmentActivity, navigator)
     }
 
     ObserveAsEvents(viewModel.photoActions) { action ->
-        fragment ?: return@ObserveAsEvents
-        PhotoActionsNavigator.navigate(action, fragment, navigator)
+        fragmentActivity ?: return@ObserveAsEvents
+        PhotoActionsNavigator.navigate(action, fragmentActivity, navigator)
     }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()

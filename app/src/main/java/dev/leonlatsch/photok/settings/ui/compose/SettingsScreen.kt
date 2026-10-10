@@ -78,6 +78,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.BuildConfig
@@ -113,7 +114,6 @@ import dev.leonlatsch.photok.settings.ui.changepassword.ChangePasswordSheet
 import dev.leonlatsch.photok.settings.ui.hideapp.SecretLaunchCodeDialog
 import dev.leonlatsch.photok.settings.ui.hideapp.ToggleAppVisibilityDialog
 import dev.leonlatsch.photok.telemetry.ui.TelemetryExplanationSheet
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
@@ -128,7 +128,7 @@ fun createBackupFilename(): String {
 @SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun SettingsCallbacks(viewModel: SettingsViewModel) {
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
     val context = LocalContext.current
     val activity = LocalActivity.current
     val navigator = LocalNavigator.current
@@ -136,11 +136,11 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     val backupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
             uri ?: return@rememberLauncherForActivityResult
-            fragment ?: return@rememberLauncherForActivityResult
+            fragmentActivity ?: return@rememberLauncherForActivityResult
             BackupBottomSheetDialogFragment.newInstance(
                 uri,
                 BackupStrategy.Name.Default
-            ).show(fragment.childFragmentManager)
+            ).show(fragmentActivity.supportFragmentManager)
         }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
@@ -152,7 +152,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     var showBruteforceProtectionSheet by rememberSaveable {mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        fragment ?: return@LaunchedEffect
+        fragmentActivity ?: return@LaunchedEffect
 
         viewModel.registerPreferenceCallback(Config.SYSTEM_DESIGN) {
             it as SystemDesignEnum
@@ -166,7 +166,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED) {
-            viewModel.onBiometricUnlockChanged(it, fragment)
+            viewModel.onBiometricUnlockChanged(it, fragmentActivity)
         }
 
         viewModel.registerPreferenceCallback(Config.SECURITY_DIAL_LAUNCH_CODE) {
@@ -201,7 +201,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_HIDE_APP) {
-            ToggleAppVisibilityDialog().show(fragment.childFragmentManager)
+            ToggleAppVisibilityDialog().show(fragmentActivity.supportFragmentManager)
             false
         }
 
@@ -231,7 +231,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_SOURCECODE) {
-            fragment.openUrl(context.getString(R.string.settings_other_sourcecode_url))
+            context.openUrl(context.getString(R.string.settings_other_sourcecode_url))
             false
         }
 
@@ -381,7 +381,6 @@ private fun SettingsPreferenceSections(
     scrollBehavior: TopAppBarScrollBehavior,
     contentPadding: PaddingValues,
 ) {
-    val fragment = LocalFragment.current
     val intruderWarningCount = rememberIntruderWarningCount()
 
     Column(
@@ -430,7 +429,6 @@ private fun SettingsPreferenceSections(
                                             0
                                         },
                                         onClick = {
-                                            fragment ?: return@PreferenceView
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, null))
                                         },
                                         proFeaturesActive = proFeaturesActive,
@@ -441,7 +439,6 @@ private fun SettingsPreferenceSections(
                                     PreferenceSwitchView(
                                         preference = preference,
                                         onSwitchChange = { value ->
-                                            fragment ?: return@PreferenceSwitchView
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
                                         proFeaturesActive = proFeaturesActive,
@@ -452,7 +449,6 @@ private fun SettingsPreferenceSections(
                                     PreferenceEnumView(
                                         preference = preference,
                                         onItemSelected = { value ->
-                                            fragment ?: return@PreferenceEnumView
                                             handleUiEvent(SettingsUiEvent.OnPreferenceClick(preference, value))
                                         },
                                         proFeaturesActive = proFeaturesActive,

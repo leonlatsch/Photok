@@ -253,18 +253,6 @@
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="hide_app_hint_current_code">Código de iniciação atual:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Próximo</string>
-    <string name="onboarding_finish">Concluir</string>
-    <string name="onboarding_skip"><u>Pular</u></string>
-
-    <string name="onboarding_slide1_title">Bem-vindo ao</string>
-    <string name="onboarding_slide1_description">Um lugar seguro para suas fotos.</string>
-    <string name="onboarding_slide2_title">Criar uma senha</string>
-    <string name="onboarding_slide2_description">Criar uma senha segura. Sua senha é usada para criptografar suas fotos diretamente no seu celular.</string>
-    <string name="onboarding_slide3_title">Comece a importar</string>
-    <string name="onboarding_slide3_description">Comece a importar suas fotos e mantenha-as longe de pessoas não autorizadas.\nDepois disso, você pode apagá-las da sua galeria.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Criando o Backup…</string>
     <string name="backup_confirm_password">Confirme sua senha para criar um backup.</string>

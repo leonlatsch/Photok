@@ -254,18 +254,6 @@
     <string name="hide_app_hint">Gizlendikten sonra, Photok yalnızca telefon çeviricisinden gizli başlatma kodunuz ile açılabilir.</string>
     <string name="hide_app_hint_current_code">Mevcut başlatma kodu:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">İleri</string>
-    <string name="onboarding_finish">Bitir</string>
-    <string name="onboarding_skip"><u>Atla</u></string>
-
-    <string name="onboarding_slide1_title">Hoş geldiniz</string>
-    <string name="onboarding_slide1_description">Fotoğraflarınız için güvenli bir alan.</string>
-    <string name="onboarding_slide2_title">Bir şifre oluşturun</string>
-    <string name="onboarding_slide2_description">Güvenli bir şifre oluşturun. Şifreniz, fotoğraflarınızı doğrudan telefonunuzda şifrelemek için kullanılır.</string>
-    <string name="onboarding_slide3_title">İçe Aktarmaya Başlayın</string>
-    <string name="onboarding_slide3_description">Fotoğraflarınızı içe aktarmaya başlayın ve başkalarından koruyun.\nDaha sonra bunları galerinizden silebilirsiniz.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Yedekleme oluşturuluyor…</string>
     <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>

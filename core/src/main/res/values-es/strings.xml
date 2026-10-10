@@ -256,18 +256,6 @@
     <string name="hide_app_hint">Una vez oculto, Photok solo podrá ser lanzado desde el teclado de la app de teléfono, con tu pin secreto.</string>
     <string name="hide_app_hint_current_code">Código de lanzamiento actual:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Siguiente</string>
-    <string name="onboarding_finish">Terminar</string>
-    <string name="onboarding_skip"><u>Saltar</u></string>
-
-    <string name="onboarding_slide1_title">Bienvenido a</string>
-    <string name="onboarding_slide1_description">Un lugar seguro para guardar tus fotos.</string>
-    <string name="onboarding_slide2_title">Crea una contraseña</string>
-    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña se usa para cifrar las fotos directamente en tu teléfono.</string>
-    <string name="onboarding_slide3_title">Empieza a importar</string>
-    <string name="onboarding_slide3_description">Comienza a importar tus fotos y mantenlas a salvo de los demás.\nPodrás eliminarlas después en tu galería.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
     <string name="backup_confirm_password">Introduce tu contraseña para crear una copia de seguridad.</string>

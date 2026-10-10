@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.settings.ui.compose
 
 import android.app.Application
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -115,7 +115,7 @@ class SettingsViewModel @Inject constructor(
 
     private val callbacks: MutableMap<String, (value: Any?) -> Boolean> = mutableMapOf()
 
-    fun onBiometricUnlockChanged(value: Any?, fragment: Fragment): Boolean {
+    fun onBiometricUnlockChanged(value: Any?, activity: FragmentActivity): Boolean {
         value as Boolean
 
         if (!value) {
@@ -126,12 +126,10 @@ class SettingsViewModel @Inject constructor(
             return false
         }
 
-        val context = fragment.context ?: return false
-
-        if (!context.areBiometricsAvailable()) {
+        if (!activity.areBiometricsAvailable()) {
             Dialogs.showLongToast(
-                context,
-                context.getString(R.string.settings_security_biometric_not_available),
+                activity,
+                activity.getString(R.string.settings_security_biometric_not_available),
             )
             return false
         }
@@ -140,14 +138,14 @@ class SettingsViewModel @Inject constructor(
 
             val result = runCatching {
                 val session = requireNotNull(sessionRepository.get())
-                vaultService.create(CreateRequest.Biometric(session, fragment))
+                vaultService.create(CreateRequest.Biometric(session, activity))
             }
 
             result.onFailure {
                 if (it !is UserCanceledBiometricsException) {
                     Dialogs.showLongToast(
-                        context,
-                        it.localizedMessage ?: context.getString(R.string.common_error),
+                        activity,
+                        it.localizedMessage ?: activity.getString(R.string.common_error),
                     )
                 }
             }

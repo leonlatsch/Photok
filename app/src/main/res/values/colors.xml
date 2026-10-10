@@ -25,10 +25,7 @@
     <color name="componentBackground">#F2F2F2</color>
     <color name="textColor">@android:color/black</color>
     <color name="secondaryTextColor">#737373</color>
-    <color name="appTitleColor">@android:color/black</color>
     <color name="disabledColor">@color/gray</color>
-    <color name="dotSelectedColor">@color/darkGray</color>
-    <color name="dotUnselectedColor">@color/lightGray</color>
 
     <!-- Explicit -->
     <color name="darkRedStrong">#B00020</color>

@@ -253,18 +253,6 @@
     <string name="hide_app_hint">Eenmaal verborgen, kan Photok alleen worden gestart vanaf het toetsenblok van de telefoon, met je geheime startcode.</string>
     <string name="hide_app_hint_current_code">Huidige startcode:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Volgende</string>
-    <string name="onboarding_finish">Klaar</string>
-    <string name="onboarding_skip"><u>Overslaan</u></string>
-
-    <string name="onboarding_slide1_title">Welkom bij</string>
-    <string name="onboarding_slide1_description">Een veilige plek voor je foto\'s.</string>
-    <string name="onboarding_slide2_title">Maak een wachtwoord</string>
-    <string name="onboarding_slide2_description">Maak een veilig wachtwoord aan. Je wachtwoord wordt gebruikt om je foto\'s rechtstreeks op je telefoon te versleutelen.</string>
-    <string name="onboarding_slide3_title">Begin met importeren</string>
-    <string name="onboarding_slide3_description">Begin met het importeren van je foto\'s en bewaar ze veilig voor anderen. Daarna kun je ze verwijderen in uw galerij.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Back-up maken…</string>
     <string name="backup_confirm_password">Bevestig je wachtwoord om een back-up te maken.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->

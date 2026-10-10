@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui.navigation
 
 import android.net.Uri
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import dev.leonlatsch.photok.gallery.ui.menu.DeleteBottomSheetDialogFragment
 import dev.leonlatsch.photok.gallery.ui.menu.ExportBottomSheetDialogFragment
@@ -27,17 +27,17 @@ import dev.leonlatsch.photok.navigation.Navigator
 import dev.leonlatsch.photok.other.extensions.show
 
 object PhotoActionsNavigator {
-    fun navigate(action: PhotoAction, fragment: Fragment, navigator: Navigator) {
+    fun navigate(action: PhotoAction, activity: FragmentActivity, navigator: Navigator) {
         when (action) {
             is PhotoAction.DeletePhotos -> confirmAndDelete(
                 action.photos,
-                fragment.childFragmentManager
+                activity.supportFragmentManager
             )
 
             is PhotoAction.ExportPhotos -> confirmAndExport(
                 action.photos,
                 action.target,
-                fragment.childFragmentManager
+                activity.supportFragmentManager
             )
 
             is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navigator)

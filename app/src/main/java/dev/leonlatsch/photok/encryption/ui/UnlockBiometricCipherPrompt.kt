@@ -18,7 +18,7 @@ package dev.leonlatsch.photok.encryption.ui
 
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import javax.crypto.Cipher
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -30,7 +30,7 @@ class BiometricAuthenticationFailedException : Exception()
 /**
  * Unlocks a [Cipher] that is protected by biometric authentication.
  *
- * Shows a [BiometricPrompt] on a [Fragment] and returns the unlocked cipher
+ * Shows a [BiometricPrompt] on a [FragmentActivity] and returns the unlocked cipher
  * if authentication succeeds, or an error if it fails or is canceled.
  *
  * Main tasks:
@@ -39,7 +39,7 @@ class BiometricAuthenticationFailedException : Exception()
  */
 class UnlockBiometricCipherPrompt @Inject constructor() {
     suspend operator fun invoke(
-        fragment: Fragment,
+        activity: FragmentActivity,
         cipher: Cipher,
         title: String,
         subtitle: String,
@@ -57,8 +57,8 @@ class UnlockBiometricCipherPrompt @Inject constructor() {
 
         lateinit var biometricPrompt: BiometricPrompt
         biometricPrompt = BiometricPrompt(
-            fragment,
-            ContextCompat.getMainExecutor(fragment.requireContext()),
+            activity,
+            ContextCompat.getMainExecutor(activity),
             object : BiometricPrompt.AuthenticationCallback() {
 
                 override fun onAuthenticationFailed() {

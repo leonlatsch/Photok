@@ -255,18 +255,6 @@
     <string name="hide_app_hint">После скрытия, Photok можно будет запустить только с панели набора номера, введя секретный код запуска.</string>
     <string name="hide_app_hint_current_code">Текущий код запуска:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Далее</string>
-    <string name="onboarding_finish">Завершить</string>
-    <string name="onboarding_skip"><u>Пропустить</u></string>
-
-    <string name="onboarding_slide1_title">Добро пожаловать в</string>
-    <string name="onboarding_slide1_description">Безопасное место для ваших фотографий.</string>
-    <string name="onboarding_slide2_title">Создайте пароль</string>
-    <string name="onboarding_slide2_description">Создайте безопасный пароль. Ваш пароль будет использован для шифрования ваших фото на данном устройстве.</string>
-    <string name="onboarding_slide3_title">Начните импортировать</string>
-    <string name="onboarding_slide3_description">Начните импортировать ваши фото и держите их в безопасности от других.\nПосле этого вы сможете удалить их из своей галереи.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Создание резервной копии…</string>
     <string name="backup_confirm_password">Подтвердите пароль, чтобы создать резервную копию.</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->

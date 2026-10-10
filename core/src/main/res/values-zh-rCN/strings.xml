@@ -255,18 +255,6 @@
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="hide_app_hint_current_code">当前启动代码：</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">下一步</string>
-    <string name="onboarding_finish">完成</string>
-    <string name="onboarding_skip"><u>跳过</u></string>
-
-    <string name="onboarding_slide1_title">欢迎来到</string>
-    <string name="onboarding_slide1_description">一个安全存放照片的地方</string>
-    <string name="onboarding_slide2_title">创建一个密码</string>
-    <string name="onboarding_slide2_description">创建一个安全密码。你的密码用来直接在你的手机上加密你的照片。</string>
-    <string name="onboarding_slide3_title">开始导入</string>
-    <string name="onboarding_slide3_description">开始导入你的照片，并保护它们不被其他人窥视。\n你可以在导入后从系统图库中删除它们。</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
     <string name="backup_confirm_password">确认密码来创建备份</string>
