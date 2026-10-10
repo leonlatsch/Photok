@@ -64,13 +64,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 import dev.leonlatsch.photok.uicomponnets.Dialogs
-import dev.leonlatsch.photok.uicomponnets.base.hideKeyboard
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 

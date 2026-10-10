@@ -21,10 +21,12 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import coil.ImageLoader
@@ -32,12 +34,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.gallery.ui.navigation.GetStartTab
 import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.base.BaseActivity
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -48,12 +52,12 @@ import javax.inject.Inject
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
     @Inject
-    override lateinit var config: Config
+    lateinit var config: Config
 
     @Inject
     lateinit var getStartTab: GetStartTab
@@ -72,6 +76,19 @@ class MainActivity : BaseActivity() {
 
         val hasSession = getBaseApplication()?.sessionRepository?.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
+
+        launchLifecycleAwareJob {
+            config.valuesFlow
+                .map { config.securityAllowScreenshots }
+                .distinctUntilChanged()
+                .collect { allowScreenshots ->
+                    if (allowScreenshots) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
+        }
 
         setContent {
             AppTheme {
