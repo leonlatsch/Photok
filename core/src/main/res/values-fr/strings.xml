@@ -81,7 +81,6 @@
     <string name="gallery_albums_show_as_grid">Afficher les albums en grille</string> <!-- TODO: machine translated | EN: Show albums as grid -->
     <string name="gallery_albums_show_as_list">Afficher les albums en liste</string> <!-- TODO: machine translated | EN: Show albums as list -->
     <string name="gallery_albums_empty_album">Album vide</string> <!-- TODO: machine translated | EN: Empty album -->
-    <string name="gallery_pro_banner_dismissed">Ne sera plus affiché</string> <!-- TODO: machine translated | EN: Never showing again -->
     <string name="magic_fab_new_album_label">Nouvel album</string>
 
     <!-- IMPORT MENU -->
