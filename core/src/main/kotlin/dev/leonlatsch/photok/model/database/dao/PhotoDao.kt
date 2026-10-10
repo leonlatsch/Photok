@@ -58,6 +58,9 @@ interface PhotoDao {
     @Query("SELECT COUNT(*) FROM photo")
     suspend fun countAll(): Int
 
+    @Query("SELECT COUNT(*) FROM photo")
+    fun observeCount(): Flow<Int>
+
     @Query("SELECT photo_uuid FROM photo")
     suspend fun getAllUuids(): List<String>
 

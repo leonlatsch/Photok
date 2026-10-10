@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -68,6 +69,7 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -75,9 +77,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.pro.paywall.ui.components.ProGalleryBanner
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
@@ -89,6 +94,7 @@ import dev.leonlatsch.photok.ui.theme.Dimens
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
+private const val PRO_BANNER_KEY = "pro_banner"
 
 @Composable
 fun PhotoGallery(
@@ -256,7 +262,10 @@ private fun PhotoGrid(
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     val gridState: LazyGridState = rememberLazyGridState()
+    val isPreview = LocalInspectionMode.current
 
     val columnCount = when (LocalConfiguration.current.orientation) {
         Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
@@ -266,12 +275,42 @@ private fun PhotoGrid(
 
     val haptic = LocalHapticFeedback.current
 
+    val proBannerViewModel: ProGalleryBannerViewModel? = if (isPreview) null else hiltViewModel()
+    val showProBanner = proBannerViewModel?.uiState?.collectAsStateWithLifecycle()?.value == true
+
+    LaunchedEffect(showProBanner) {
+        val wasAtTop = gridState.firstVisibleItemIndex <= 1 &&
+                gridState.firstVisibleItemScrollOffset == 0
+
+        if (showProBanner && wasAtTop) {
+            gridState.requestScrollToItem(0)
+        }
+    }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
         state = gridState,
         contentPadding = contentPadding,
     ) {
+        if (isPreview || showProBanner) {
+            item(
+                key = PRO_BANNER_KEY,
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                ProGalleryBanner(
+                    onDismiss = {
+                        proBannerViewModel?.handleUiEvent(ProGalleryBannerUiEvent.OnDismiss(context))
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .animateItem()
+                )
+            }
+        }
+
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(
                 photoTile = it,

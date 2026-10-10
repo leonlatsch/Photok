@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">Visa album som rutnät</string>
     <string name="gallery_albums_show_as_list">Visa album som lista</string>
     <string name="gallery_albums_empty_album">Tomt album</string>
+    <string name="gallery_pro_banner_dismissed">Visas aldrig igen</string> <!-- TODO: machine translated | EN: Never showing again -->
     <string name="magic_fab_new_album_label">Nytt album</string>
 
     <!-- IMPORT MENU -->

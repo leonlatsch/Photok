@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">البمز کو گرڈ میں دکھائیں</string> <!-- TODO: machine translated | EN: Show albums as grid -->
     <string name="gallery_albums_show_as_list">البمز کو فہرست میں دکھائیں</string> <!-- TODO: machine translated | EN: Show albums as list -->
     <string name="gallery_albums_empty_album">خالی البم</string> <!-- TODO: machine translated | EN: Empty album -->
+    <string name="gallery_pro_banner_dismissed">دوبارہ کبھی نہیں دکھایا جائے گا</string> <!-- TODO: machine translated | EN: Never showing again -->
     <string name="magic_fab_new_album_label">نیا البم</string>
 
     <!-- IMPORT MENU -->

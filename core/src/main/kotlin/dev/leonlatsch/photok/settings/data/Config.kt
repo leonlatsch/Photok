@@ -178,6 +178,10 @@ class Config(context: Context) {
         get() = getBoolean(IN_APP_REVIEW_REQUESTED, false)
         set(value) = putBoolean(IN_APP_REVIEW_REQUESTED, value)
 
+    var proBannerDismissed: Boolean
+        get() = getBoolean(PRO_BANNER_DISMISSED, PRO_BANNER_DISMISSED_DEFAULT)
+        set(value) = putBoolean(PRO_BANNER_DISMISSED, value)
+
     // In memory flags
     var justFinishedSetup: Boolean = false
     var lastUsedUnlockMethod: VaultProtectionType? = null
@@ -342,5 +346,8 @@ class Config(context: Context) {
         const val TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT = false
 
         const val IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
+
+        const val PRO_BANNER_DISMISSED = "internal^proBannerDismissed"
+        const val PRO_BANNER_DISMISSED_DEFAULT = false
     }
 }

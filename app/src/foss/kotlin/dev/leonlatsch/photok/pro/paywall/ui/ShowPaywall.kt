@@ -14,12 +14,11 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.paywall
+package dev.leonlatsch.photok.pro.paywall.ui
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import android.app.Activity
+import dev.leonlatsch.photok.pro.paywall.PaywallSource
 
-@Composable
-fun ProSettingsBanner(modifier: Modifier = Modifier) {
+fun Activity.showPaywall(source: PaywallSource) {
     // Impl in pro module
 }

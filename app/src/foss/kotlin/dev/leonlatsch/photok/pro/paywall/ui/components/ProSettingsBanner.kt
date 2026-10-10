@@ -14,16 +14,12 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.pro.paywall
+package dev.leonlatsch.photok.pro.paywall.ui.components
 
-/**
- * Where the paywall was opened from. Reported as the "source" param on every paywall
- * telemetry signal so the purchase funnel can be broken down by entry point.
- */
-enum class PaywallSource {
-    GalleryHeader,
-    SettingsHeader,
-    PanicLock,
-    BruteforceProtection,
-    IntruderWarnings,
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+@Composable
+fun ProSettingsBanner(modifier: Modifier = Modifier) {
+    // Impl in pro module
 }

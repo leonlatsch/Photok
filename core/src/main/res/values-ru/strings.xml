@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">Показать альбомы сеткой</string> <!-- TODO: machine translated | EN: Show albums as grid -->
     <string name="gallery_albums_show_as_list">Показать альбомы списком</string> <!-- TODO: machine translated | EN: Show albums as list -->
     <string name="gallery_albums_empty_album">Пустой альбом</string> <!-- TODO: machine translated | EN: Empty album -->
+    <string name="gallery_pro_banner_dismissed">Больше не будет показано</string> <!-- TODO: machine translated | EN: Never showing again -->
     <string name="magic_fab_new_album_label">Новый альбом</string> <!-- TODO: machine translated | EN: New Album -->
 
     <!-- IMPORT MENU -->

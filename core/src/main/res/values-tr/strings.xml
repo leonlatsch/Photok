@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">Albümleri ızgara olarak göster</string>
     <string name="gallery_albums_show_as_list">Albümleri liste olarak göster</string>
     <string name="gallery_albums_empty_album">Boş albüm</string>
+    <string name="gallery_pro_banner_dismissed">Bir daha gösterilmeyecek</string> <!-- TODO: machine translated | EN: Never showing again -->
     <string name="magic_fab_new_album_label">Yeni Albüm</string>
 
     <!-- IMPORT MENU -->

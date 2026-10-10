@@ -106,6 +106,8 @@ class PhotoRepository @Inject constructor(
      */
     suspend fun countAll() = photoDao.countAll()
 
+    fun observeCount() = photoDao.observeCount()
+
     suspend fun getAllUuids() = photoDao.getAllUuids()
 
     // endregion

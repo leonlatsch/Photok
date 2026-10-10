@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">Alben als Raster anzeigen</string>
     <string name="gallery_albums_show_as_list">Alben als Liste anzeigen</string>
     <string name="gallery_albums_empty_album">Leeres Album</string>
+    <string name="gallery_pro_banner_dismissed">Wird nie wieder angezeigt</string>
     <string name="magic_fab_new_album_label">Neues Album</string>
 
     <!-- IMPORT MENU -->

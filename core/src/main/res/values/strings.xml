@@ -81,6 +81,7 @@
     <string name="gallery_albums_show_as_grid">Show albums as grid</string>
     <string name="gallery_albums_show_as_list">Show albums as list</string>
     <string name="gallery_albums_empty_album">Empty album</string>
+    <string name="gallery_pro_banner_dismissed">Never showing again</string>
     <string name="magic_fab_new_album_label">New Album</string>
 
     <!-- IMPORT MENU -->
