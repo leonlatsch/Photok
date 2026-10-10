@@ -14,31 +14,25 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.onboarding.ui
+package dev.leonlatsch.photok.onboarding.ui.screens
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -58,40 +52,26 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-
-private const val STEP_COUNT = 6
 
 private enum class StartOption { Fresh, Restore }
 
 @Composable
 fun OnboardingSelectStartScreen() {
+    val navigator = LocalNavigator.current
     var selectedOption by rememberSaveable { mutableStateOf(StartOption.Fresh) }
 
     Scaffold(
         topBar = {
-            OnboardingTopBar(
-                step = 1,
-                modifier = Modifier.statusBarsPadding()
-            )
+            OnboardingTopBarSpacer()
         },
         bottomBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-            ) {
-                Button(
-                    onClick = {
-                        // TODO
-                    },
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(horizontal = Dimens.spacingLarge)
-                ) {
-                    Text(text = "Next")
-                }
+            OnboardingNexButtonBar {
+                navigator.navigate(OnboardingRoute.SetupPassword)
             }
         }
     ) { contentPadding ->
@@ -135,38 +115,6 @@ fun OnboardingSelectStartScreen() {
         }
     }
 
-}
-
-@Composable
-private fun OnboardingTopBar(
-    step: Int,
-    modifier: Modifier = Modifier,
-) {
-    val navigator = LocalNavigator.current
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(end = Dimens.spacingLarge),
-    ) {
-        IconButton(onClick = navigator::goBack) {
-            Icon(
-                painter = painterResource(R.drawable.ic_back),
-                contentDescription = null,
-            )
-        }
-        LinearProgressIndicator(
-            progress = { step.toFloat() / STEP_COUNT },
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = "$step of $STEP_COUNT",
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
 }
 
 @Composable

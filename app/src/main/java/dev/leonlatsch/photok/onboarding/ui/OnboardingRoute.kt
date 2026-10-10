@@ -27,4 +27,7 @@ sealed interface OnboardingRoute : NavKey {
 
     @Serializable
     data object SelectStart : OnboardingRoute
+
+    @Serializable
+    data object SetupPassword : OnboardingRoute
 }

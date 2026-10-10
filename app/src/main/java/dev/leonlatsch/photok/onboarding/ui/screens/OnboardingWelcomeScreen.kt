@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.onboarding.ui
+package dev.leonlatsch.photok.onboarding.ui.screens
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.AnimationSpec
@@ -88,6 +88,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName

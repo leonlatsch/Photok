@@ -18,9 +18,17 @@ package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
@@ -30,6 +38,11 @@ import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
 import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBar
+import dev.leonlatsch.photok.onboarding.ui.components.step
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
@@ -52,25 +65,44 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
         activity?.finish()
     }
 
+    val step = (backStack.lastOrNull() as? OnboardingRoute)?.step()
+    var lastStep by remember { mutableIntStateOf(1) }
+    LaunchedEffect(step) {
+        if (step != null) lastStep = step
+    }
+
     CompositionLocalProvider(LocalNavigator provides navigator) {
-        NavDisplay(
-            backStack = backStack,
-            onBack = navigator::goBack,
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator(),
-            ),
-            transitionSpec = { slideForward() },
-            popTransitionSpec = { slideBackward() },
-            predictivePopTransitionSpec = { slideBackward() },
-            entryProvider = entryProvider {
-                entry<OnboardingRoute.Welcome> {
-                    OnboardingWelcomeScreen()
-                }
-                entry<OnboardingRoute.SelectStart> {
-                    OnboardingSelectStartScreen()
-                }
-            },
-        )
+        Box {
+            NavDisplay(
+                backStack = backStack,
+                onBack = navigator::goBack,
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator(),
+                ),
+                transitionSpec = { slideForward() },
+                popTransitionSpec = { slideBackward() },
+                predictivePopTransitionSpec = { slideBackward() },
+                entryProvider = entryProvider {
+                    entry<OnboardingRoute.Welcome> {
+                        OnboardingWelcomeScreen()
+                    }
+                    entry<OnboardingRoute.SelectStart> {
+                        OnboardingSelectStartScreen()
+                    }
+                    entry<OnboardingRoute.SetupPassword> {
+                        OnboardingSetupPasswordScreen()
+                    }
+                },
+            )
+
+            AnimatedVisibility(
+                visible = step != null,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                OnboardingTopBar(step = step ?: lastStep)
+            }
+        }
     }
 }
