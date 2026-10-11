@@ -19,6 +19,7 @@ import dev.leonlatsch.photok.ui.theme.Dimens
 @Composable
 fun OnboardingNexButtonBar(
     modifier: Modifier = Modifier,
+    text: String = "Continue",
     enabled: Boolean = true,
     loading: Boolean = false,
     onNext: () -> Unit,
@@ -32,12 +33,13 @@ fun OnboardingNexButtonBar(
             onClick = onNext,
             enabled = enabled && !loading,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
+                .fillMaxWidth()
+//                .align(Alignment.CenterEnd)
                 .padding(horizontal = Dimens.spacingLarge)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Text(
-                    text = "Next",
+                    text = text,
                     modifier = Modifier.alpha(if (loading) 0f else 1f),
                 )
                 if (loading) {

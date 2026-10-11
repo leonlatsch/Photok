@@ -22,6 +22,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,7 +33,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +55,8 @@ import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun OnboardingBiometricUnlockScreen() {
@@ -62,28 +67,51 @@ fun OnboardingBiometricUnlockScreen() {
 
     OnboardingBiometricUnlockContent(
         enabled = enabled,
-        enable = {
-            activity?.let { viewModel.enableBiometricUnlock(it) }
+        onEnabledChanged = { newEnabled ->
+            if (newEnabled) {
+                activity?.let { viewModel.enableBiometricUnlock(it) }
+            } else {
+                viewModel.disableBiometricUnlock()
+            }
         },
-        disable = viewModel::disableBiometricUnlock,
+
     )
 }
 
 @Composable
 private fun OnboardingBiometricUnlockContent(
     enabled: Boolean,
-    enable: () -> Unit,
-    disable: () -> Unit,
+    onEnabledChanged: (Boolean) -> Unit,
 ) {
     val navigator = LocalNavigator.current
+
+    LaunchedEffect(enabled) {
+        if (enabled) {
+            delay(1.seconds)
+            navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+        }
+    }
 
     Scaffold(
         topBar = {
             OnboardingTopBarSpacer()
         },
         bottomBar = {
-            OnboardingNexButtonBar {
-                navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.navigationBarsPadding()
+            ) {
+                TextButton(
+                    onClick = {
+                        navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+                    }
+                ) {
+                    Text("Not now")
+                }
+
+                OnboardingNexButtonBar(text = "Enable biometric unlock") {
+                    onEnabledChanged(true)
+                }
             }
         }
     ) { contentPadding ->
@@ -109,11 +137,7 @@ private fun OnboardingBiometricUnlockContent(
                 Column(
                     modifier = Modifier
                         .clickable {
-                            if (enabled) {
-                                disable()
-                            } else {
-                                enable()
-                            }
+                            onEnabledChanged(!enabled)
                         }
                         .padding(Dimens.spacingMedium)
                 ) {
@@ -151,11 +175,7 @@ private fun OnboardingBiometricUnlockContent(
                         Switch(
                             checked = enabled,
                             onCheckedChange = {
-                                if (it) {
-                                    enable()
-                                } else {
-                                    disable()
-                                }
+                                onEnabledChanged(it)
                             },
                         )
                     }
@@ -171,8 +191,7 @@ private fun OnboardingBiometricUnlockScreenPreview() {
     AppTheme {
         OnboardingBiometricUnlockContent(
             enabled = false,
-            enable = {},
-            disable = {},
+            onEnabledChanged = {},
         )
     }
 }
