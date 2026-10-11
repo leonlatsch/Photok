@@ -17,25 +17,16 @@
 package dev.leonlatsch.photok.settings.ui.compose
 
 import android.app.Application
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.ResetVaultUseCase
-import dev.leonlatsch.photok.encryption.domain.SessionRepository
-import dev.leonlatsch.photok.encryption.domain.VaultService
-import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
-import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
-import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceScreenConfig
 import dev.leonlatsch.photok.settings.domain.PrefsScreenConfig
 import dev.leonlatsch.photok.settings.domain.models.SettingsEnum
-import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -57,8 +48,6 @@ sealed interface SettingsUiEvent {
 class SettingsViewModel @Inject constructor(
     private val config: Config,
     private val app: Application,
-    private val vaultService: VaultService,
-    private val sessionRepository: SessionRepository,
     private val resetVaultUseCase: ResetVaultUseCase,
     private val proFeaturesActive: PurchaseService,
 ) : ViewModel() {
@@ -114,47 +103,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     private val callbacks: MutableMap<String, (value: Any?) -> Boolean> = mutableMapOf()
-
-    fun onBiometricUnlockChanged(value: Any?, activity: FragmentActivity): Boolean {
-        value as Boolean
-
-        if (!value) {
-            viewModelScope.launch {
-                vaultService.reset(VaultProtectionType.Biometric)
-            }
-            config.biometricAuthenticationEnabled = false
-            return false
-        }
-
-        if (!activity.areBiometricsAvailable()) {
-            Dialogs.showLongToast(
-                activity,
-                activity.getString(R.string.settings_security_biometric_not_available),
-            )
-            return false
-        }
-
-        viewModelScope.launch {
-
-            val result = runCatching {
-                val session = requireNotNull(sessionRepository.get())
-                vaultService.create(CreateRequest.Biometric(session, activity))
-            }
-
-            result.onFailure {
-                if (it !is UserCanceledBiometricsException) {
-                    Dialogs.showLongToast(
-                        activity,
-                        it.localizedMessage ?: activity.getString(R.string.common_error),
-                    )
-                }
-            }
-
-            config.biometricAuthenticationEnabled = result.isSuccess
-        }
-
-        return false
-    }
 
     fun resetApp() = viewModelScope.launch {
         resetVaultUseCase()

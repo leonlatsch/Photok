@@ -16,26 +16,65 @@
 
 package dev.leonlatsch.photok.onboarding.ui.screens
 
+import androidx.activity.compose.LocalActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.core.R
+import dev.leonlatsch.photok.encryption.ui.BiometricUnlockViewModel
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun OnboardingBiometricUnlockScreen() {
+    val activity = LocalActivity.current as? AppCompatActivity
+
+    val viewModel: BiometricUnlockViewModel = hiltViewModel()
+    val enabled by viewModel.enabled.collectAsStateWithLifecycle()
+
+    OnboardingBiometricUnlockContent(
+        enabled = enabled,
+        enable = {
+            activity?.let { viewModel.enableBiometricUnlock(it) }
+        },
+        disable = viewModel::disableBiometricUnlock,
+    )
+}
+
+@Composable
+private fun OnboardingBiometricUnlockContent(
+    enabled: Boolean,
+    enable: () -> Unit,
+    disable: () -> Unit,
+) {
     val navigator = LocalNavigator.current
 
     Scaffold(
@@ -55,10 +94,73 @@ fun OnboardingBiometricUnlockScreen() {
                 .padding(horizontal = Dimens.spacingLarge)
                 .padding(top = 100.dp)
         ) {
-            Text(
-                text = "Unlock with a touch",
-                style = MaterialTheme.typography.headlineMedium,
+            OnboardingPageTitle(
+                text = "Unlock with a touch"
             )
+
+            OnboardingPageSubtitle(
+                text = "Use your fingerprint or face instead of typing your password every time."
+            )
+
+            Surface(
+                shape = RoundedCornerShape(18.dp),
+                tonalElevation = 2.dp,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .clickable {
+                            if (enabled) {
+                                disable()
+                            } else {
+                                enable()
+                            }
+                        }
+                        .padding(Dimens.spacingMedium)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
+                    ) {
+                        Surface(
+                            shape = CircleShape,
+                            color = colorScheme.primary,
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_fingerprint),
+                                contentDescription = null,
+                                modifier = Modifier.padding(Dimens.spacingSmall)
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = "Biometric Unlock",
+                                style = typography.bodyLarge,
+                                fontWeight = FontWeight.Bold,
+                            )
+
+                            Text(
+                                text = "You can change this in the settings later",
+                                color = colorScheme.outline,
+                                style = typography.labelLarge
+                            )
+                        }
+
+                        Switch(
+                            checked = enabled,
+                            onCheckedChange = {
+                                if (it) {
+                                    enable()
+                                } else {
+                                    disable()
+                                }
+                            },
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -67,6 +169,10 @@ fun OnboardingBiometricUnlockScreen() {
 @Composable
 private fun OnboardingBiometricUnlockScreenPreview() {
     AppTheme {
-        OnboardingBiometricUnlockScreen()
+        OnboardingBiometricUnlockContent(
+            enabled = false,
+            enable = {},
+            disable = {},
+        )
     }
 }

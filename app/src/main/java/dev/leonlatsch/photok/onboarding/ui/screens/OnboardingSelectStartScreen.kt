@@ -54,6 +54,8 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -83,15 +85,12 @@ fun OnboardingSelectStartScreen() {
                 .padding(horizontal = Dimens.spacingLarge)
                 .padding(top = 100.dp),
         ) {
-            Text(
-                text = "How do you want to start?",
-                style = MaterialTheme.typography.headlineMedium,
+            OnboardingPageTitle(
+                text = "How do you want to start?"
             )
 
-            Text(
-                text = "You can always import a backup later.",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            OnboardingPageSubtitle(
+                text = "You can always import a backup later."
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))

@@ -24,6 +24,7 @@ import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -78,7 +79,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.BuildConfig
@@ -87,7 +87,7 @@ import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.backup.ui.ConfirmPasswordDialog
 import dev.leonlatsch.photok.databinding.BindingConverters
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSheet
+import dev.leonlatsch.photok.encryption.ui.BiometricUnlockViewModel
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.navigation.LocalNavigator
@@ -103,6 +103,7 @@ import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import dev.leonlatsch.photok.pro.paywall.ui.components.ProSettingsBanner
 import dev.leonlatsch.photok.pro.paywall.ui.showPaywall
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
 import dev.leonlatsch.photok.settings.domain.PreferenceSection
@@ -127,20 +128,23 @@ fun createBackupFilename(): String {
 
 @SuppressLint("LocalContextGetResourceValueCall")
 @Composable
-fun SettingsCallbacks(viewModel: SettingsViewModel) {
-    val fragmentActivity = LocalActivity.current as? FragmentActivity
+fun SettingsCallbacks(
+    viewModel: SettingsViewModel,
+    biometricUnlockViewModel: BiometricUnlockViewModel,
+) {
     val context = LocalContext.current
-    val activity = LocalActivity.current
+    val activity = LocalActivity.current as? AppCompatActivity
     val navigator = LocalNavigator.current
 
     val backupLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
             uri ?: return@rememberLauncherForActivityResult
-            fragmentActivity ?: return@rememberLauncherForActivityResult
+            activity ?: return@rememberLauncherForActivityResult
+
             BackupBottomSheetDialogFragment.newInstance(
                 uri,
                 BackupStrategy.Name.Default
-            ).show(fragmentActivity.supportFragmentManager)
+            ).show(activity.supportFragmentManager)
         }
 
     var showSecretLaunchCodeDialog by remember { mutableStateOf(false) }
@@ -152,7 +156,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
     var showBruteforceProtectionSheet by rememberSaveable {mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        fragmentActivity ?: return@LaunchedEffect
+        activity ?: return@LaunchedEffect
 
         viewModel.registerPreferenceCallback(Config.SYSTEM_DESIGN) {
             it as SystemDesignEnum
@@ -166,7 +170,12 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(Config.SECURITY_BIOMETRIC_AUTHENTICATION_ENABLED) {
-            viewModel.onBiometricUnlockChanged(it, fragmentActivity)
+            if (it as Boolean) {
+                biometricUnlockViewModel.enableBiometricUnlock(activity)
+            } else {
+                biometricUnlockViewModel.disableBiometricUnlock()
+            }
+            false
         }
 
         viewModel.registerPreferenceCallback(Config.SECURITY_DIAL_LAUNCH_CODE) {
@@ -201,7 +210,7 @@ fun SettingsCallbacks(viewModel: SettingsViewModel) {
         }
 
         viewModel.registerPreferenceCallback(SettingsActionKeys.KEY_ACTION_HIDE_APP) {
-            ToggleAppVisibilityDialog().show(fragmentActivity.supportFragmentManager)
+            ToggleAppVisibilityDialog().show(activity.supportFragmentManager)
             false
         }
 
@@ -320,6 +329,8 @@ fun SettingsScreen() {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val navigator = LocalNavigator.current
 
+    val biometricUnlockViewModel = hiltViewModel<BiometricUnlockViewModel>()
+
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
@@ -328,7 +339,7 @@ fun SettingsScreen() {
             handleUiEvent = viewModel::handleUiEvent,
             onOpenDevSettings = { navigator.navigate(AppRoute.DevSettings) },
         )
-        SettingsCallbacks(viewModel)
+        SettingsCallbacks(viewModel, biometricUnlockViewModel)
     }
 }
 

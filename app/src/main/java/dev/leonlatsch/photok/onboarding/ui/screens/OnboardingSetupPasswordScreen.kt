@@ -26,9 +26,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,7 +38,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -52,6 +49,8 @@ import dev.leonlatsch.photok.onboarding.ui.SetupUiEvent
 import dev.leonlatsch.photok.onboarding.ui.SetupUiState
 import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
@@ -124,15 +123,12 @@ private fun OnboardingSetupPasswordContent(
                 .padding(horizontal = Dimens.spacingLarge)
                 .padding(top = 100.dp)
         ) {
-            Text(
-                text = "Choose a password",
-                style = MaterialTheme.typography.headlineMedium,
+            OnboardingPageTitle(
+                text = "Choose a password"
             )
 
-            Text(
-                text = "You will need this to unlock Photok. Choose wisely and remember it.",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            OnboardingPageSubtitle(
+                text = "You will need this to unlock Photok. Choose wisely and remember it."
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))

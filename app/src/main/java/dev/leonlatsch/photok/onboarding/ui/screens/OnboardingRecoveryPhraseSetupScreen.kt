@@ -19,15 +19,13 @@ package dev.leonlatsch.photok.onboarding.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -49,9 +47,8 @@ fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
                 .padding(horizontal = Dimens.spacingLarge)
                 .padding(top = 100.dp)
         ) {
-            Text(
-                text = "Recovery phrase",
-                style = MaterialTheme.typography.headlineMedium,
+            OnboardingPageTitle(
+                text = "Recovery phrase"
             )
         }
     }
