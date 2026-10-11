@@ -56,7 +56,6 @@ import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
@@ -68,9 +67,7 @@ fun OnboardingSelectStartScreen() {
     var selectedOption by rememberSaveable { mutableStateOf(StartOption.Fresh) }
 
     Scaffold(
-        topBar = {
-            OnboardingTopBarSpacer()
-        },
+        containerColor = Color.Transparent,
         bottomBar = {
             OnboardingNexButtonBar {
                 navigator.navigate(OnboardingRoute.SetupPassword)
@@ -82,8 +79,7 @@ fun OnboardingSelectStartScreen() {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(horizontal = Dimens.spacingLarge)
-                .padding(top = 100.dp),
+                .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
                 text = "How do you want to start?"

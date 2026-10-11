@@ -18,17 +18,30 @@ package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
@@ -38,7 +51,7 @@ import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
 import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingBrandHeader
 import dev.leonlatsch.photok.onboarding.ui.components.step
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingBiometricUnlockScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingRecoveryPhraseSetupScreen
@@ -81,49 +94,75 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
     }
 
     CompositionLocalProvider(LocalNavigator provides navigator) {
+        val density = LocalDensity.current
+        var brandHeaderHeight by remember { mutableStateOf(0.dp) }
+
         Box {
-            NavDisplay(
-                backStack = backStack,
-                onBack = navigator::goBack,
-                entryDecorators = listOf(
-                    rememberSaveableStateHolderNavEntryDecorator(),
-                    rememberViewModelStoreNavEntryDecorator(),
-                ),
-                transitionSpec = { slideForward() },
-                popTransitionSpec = { slideBackward() },
-                predictivePopTransitionSpec = { slideBackward() },
-                entryProvider = entryProvider {
-                    entry<OnboardingRoute.Welcome> {
-                        OnboardingWelcomeScreen()
-                    }
-                    entry<OnboardingRoute.SelectStart> {
-                        OnboardingSelectStartScreen()
-                    }
-                    entry<OnboardingRoute.SetupPassword> {
-                        OnboardingSetupPasswordScreen(
-                            onVaultCreated = {
-                                backStack.add(OnboardingRoute.BiometricUnlock)
-                                backStack.removeAll { it != OnboardingRoute.BiometricUnlock }
-                            },
-                        )
-                    }
-                    entry<OnboardingRoute.BiometricUnlock> {
-                        OnboardingBiometricUnlockScreen()
-                    }
-                    entry<OnboardingRoute.RecoveryPhraseSetup> {
-                        OnboardingRecoveryPhraseSetupScreen(
-                            onFinish = { viewModel.handleUiEvent(OnboardingUiEvent.Finish) },
-                        )
-                    }
-                },
+            Surface(
+                color = colorScheme.primary,
+                contentColor = colorScheme.surface,
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    OnboardingBrandHeader(
+                        step = step ?: lastStep,
+                        modifier = Modifier
+                            .onSizeChanged { brandHeaderHeight = with(density) { it.height.toDp() } }
+                            .statusBarsPadding()
+                    )
+                }
+            }
+
+            val topPadding by animateDpAsState(
+                if (step == null) {
+                    0.dp
+                } else {
+                    brandHeaderHeight
+                }
             )
 
-            AnimatedVisibility(
-                visible = step != null,
-                enter = fadeIn(),
-                exit = fadeOut(),
+            Surface(
+                shape = RoundedCornerShape(28.dp),
+                modifier = Modifier
+                    .padding(top = topPadding)
+                    .consumeWindowInsets(WindowInsets.statusBars)
             ) {
-                OnboardingTopBar(step = step ?: lastStep)
+                NavDisplay(
+                    backStack = backStack,
+                    onBack = navigator::goBack,
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator(),
+                    ),
+                    transitionSpec = { slideForward() },
+                    popTransitionSpec = { slideBackward() },
+                    predictivePopTransitionSpec = { slideBackward() },
+                    entryProvider = entryProvider {
+                        entry<OnboardingRoute.Welcome> {
+                            OnboardingWelcomeScreen()
+                        }
+                        entry<OnboardingRoute.SelectStart> {
+                            OnboardingSelectStartScreen()
+                        }
+                        entry<OnboardingRoute.SetupPassword> {
+                            OnboardingSetupPasswordScreen(
+                                onVaultCreated = {
+                                    backStack.add(OnboardingRoute.BiometricUnlock)
+                                    backStack.removeAll { it != OnboardingRoute.BiometricUnlock }
+                                },
+                            )
+                        }
+                        entry<OnboardingRoute.BiometricUnlock> {
+                            OnboardingBiometricUnlockScreen()
+                        }
+                        entry<OnboardingRoute.RecoveryPhraseSetup> {
+                            OnboardingRecoveryPhraseSetupScreen(
+                                onFinish = { viewModel.handleUiEvent(OnboardingUiEvent.Finish) },
+                            )
+                        }
+                    },
+                )
             }
         }
     }

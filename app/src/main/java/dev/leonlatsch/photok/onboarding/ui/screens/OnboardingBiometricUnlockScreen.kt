@@ -52,7 +52,6 @@ import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
@@ -93,9 +92,6 @@ private fun OnboardingBiometricUnlockContent(
     }
 
     Scaffold(
-        topBar = {
-            OnboardingTopBarSpacer()
-        },
         bottomBar = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -119,8 +115,7 @@ private fun OnboardingBiometricUnlockContent(
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(horizontal = Dimens.spacingLarge)
-                .padding(top = 100.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
                 text = "Unlock with a touch"

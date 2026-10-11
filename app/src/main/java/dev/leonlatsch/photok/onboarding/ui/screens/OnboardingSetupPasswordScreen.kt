@@ -51,7 +51,6 @@ import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
@@ -95,16 +94,8 @@ private fun OnboardingSetupPasswordContent(
     handleUiEvent: (SetupUiEvent) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
 
     Scaffold(
-        topBar = {
-            OnboardingTopBarSpacer()
-        },
         bottomBar = {
             OnboardingNexButtonBar(
                 enabled = uiState.canSetup,
@@ -120,8 +111,7 @@ private fun OnboardingSetupPasswordContent(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(horizontal = Dimens.spacingLarge)
-                .padding(top = 100.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
                 text = "Choose a password"
@@ -138,7 +128,6 @@ private fun OnboardingSetupPasswordContent(
                 onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
                 label = "Password",
                 imeAction = ImeAction.Next,
-                modifier = Modifier.focusRequester(focusRequester)
             )
 
             AnimatedVisibility(

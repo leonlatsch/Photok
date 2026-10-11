@@ -26,16 +26,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
     Scaffold(
-        topBar = {
-            OnboardingTopBarSpacer()
-        },
         bottomBar = {
             OnboardingNexButtonBar(onNext = onFinish)
         }
@@ -44,8 +40,7 @@ fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .padding(contentPadding)
-                .padding(horizontal = Dimens.spacingLarge)
-                .padding(top = 100.dp)
+                .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
                 text = "Recovery phrase"
