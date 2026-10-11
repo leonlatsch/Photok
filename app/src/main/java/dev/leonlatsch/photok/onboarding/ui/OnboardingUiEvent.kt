@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.onboarding.ui
 
 sealed interface OnboardingUiEvent {
+    data class StepChanged(val route: OnboardingRoute) : OnboardingUiEvent
     data object Finish : OnboardingUiEvent
 }
 

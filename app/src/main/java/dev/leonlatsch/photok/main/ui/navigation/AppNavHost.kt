@@ -45,12 +45,11 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.encryption.migration.ui.EncryptionMigrationScreen
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseRestoreScreen
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseRestoreScreen
 import dev.leonlatsch.photok.main.ui.AppNavViewModel
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingScreen
-import dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupScreen
-import dev.leonlatsch.photok.setup.ui.SetupScreen
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
 import dev.leonlatsch.photok.unlock.ui.UnlockScreen
@@ -96,9 +95,6 @@ private fun AppNavDisplay(
             entryProvider = entryProvider {
                 entry<RootRoute.Onboarding> {
                     OnboardingScreen()
-                }
-                entry<RootRoute.Setup> {
-                    SetupScreen()
                 }
                 entry<RootRoute.Unlock> {
                     UnlockScreen()

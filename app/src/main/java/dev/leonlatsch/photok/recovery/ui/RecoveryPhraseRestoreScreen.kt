@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.ui
+package dev.leonlatsch.photok.recovery.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity

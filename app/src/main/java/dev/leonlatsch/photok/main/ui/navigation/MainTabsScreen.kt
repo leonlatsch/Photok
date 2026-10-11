@@ -60,7 +60,7 @@ import dev.leonlatsch.photok.settings.ui.AboutScreen
 import dev.leonlatsch.photok.settings.ui.compose.SettingsScreen
 import dev.leonlatsch.photok.settings.ui.credits.CreditsScreen
 import dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesScreen
-import dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupScreen
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
 

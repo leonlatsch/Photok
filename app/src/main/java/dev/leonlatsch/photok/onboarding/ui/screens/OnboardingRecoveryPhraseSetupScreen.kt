@@ -33,13 +33,13 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
-fun OnboardingRecoveryPhraseSetupScreen() {
+fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
     Scaffold(
         topBar = {
             OnboardingTopBarSpacer()
         },
         bottomBar = {
-            OnboardingNexButtonBar(enabled = false) {}
+            OnboardingNexButtonBar(onNext = onFinish)
         }
     ) { contentPadding ->
         Column(
@@ -61,6 +61,6 @@ fun OnboardingRecoveryPhraseSetupScreen() {
 @Composable
 private fun OnboardingRecoveryPhraseSetupScreenPreview() {
     AppTheme {
-        OnboardingRecoveryPhraseSetupScreen()
+        OnboardingRecoveryPhraseSetupScreen(onFinish = {})
     }
 }

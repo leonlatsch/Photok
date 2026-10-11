@@ -87,7 +87,7 @@ import dev.leonlatsch.photok.backup.domain.BackupStrategy
 import dev.leonlatsch.photok.backup.ui.BackupBottomSheetDialogFragment
 import dev.leonlatsch.photok.backup.ui.ConfirmPasswordDialog
 import dev.leonlatsch.photok.databinding.BindingConverters
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.navigation.LocalNavigator

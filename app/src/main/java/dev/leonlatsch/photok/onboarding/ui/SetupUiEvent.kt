@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.onboarding.ui
 
 sealed interface SetupUiEvent {
     data class PasswordChanged(val password: String) : SetupUiEvent

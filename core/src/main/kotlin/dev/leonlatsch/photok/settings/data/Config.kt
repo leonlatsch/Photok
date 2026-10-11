@@ -65,6 +65,13 @@ class Config(context: Context) {
         set(value) = putBoolean(SYSTEM_FIRST_START, value)
 
     /**
+     * The onboarding step to resume at. Null if no onboarding is in progress.
+     */
+    var systemOnboardingStep: String?
+        get() = getString(SYSTEM_ONBOARDING_STEP, null)
+        set(value) = putString(SYSTEM_ONBOARDING_STEP, value)
+
+    /**
      * The version code of the last app version.
      * Updates after showing new features.
      */
@@ -286,6 +293,8 @@ class Config(context: Context) {
 
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT = true
+
+        const val SYSTEM_ONBOARDING_STEP = "system^onboardingStep"
 
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0

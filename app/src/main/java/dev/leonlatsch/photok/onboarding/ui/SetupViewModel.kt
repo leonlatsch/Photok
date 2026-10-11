@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -119,6 +119,7 @@ class SetupViewModel @Inject constructor(
                         sessionRepository.set(session)
                         vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
 
+                        config.systemOnboardingStep = OnboardingRoute.RecoveryPhraseSetup.stepKey()
                         config.justFinishedSetup = true
                         telemetryService.signal(Signal.SetupCompleted)
 

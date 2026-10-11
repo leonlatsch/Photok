@@ -47,15 +47,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.SetupNavigationEvent
+import dev.leonlatsch.photok.onboarding.ui.SetupUiEvent
+import dev.leonlatsch.photok.onboarding.ui.SetupUiState
+import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
-import dev.leonlatsch.photok.setup.ui.SetupNavigationEvent
-import dev.leonlatsch.photok.setup.ui.SetupUiEvent
-import dev.leonlatsch.photok.setup.ui.SetupUiState
-import dev.leonlatsch.photok.setup.ui.SetupViewModel
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -63,9 +61,11 @@ import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @Composable
-fun OnboardingSetupPasswordScreen(viewModel: SetupViewModel = hiltViewModel()) {
+fun OnboardingSetupPasswordScreen(
+    onVaultCreated: () -> Unit,
+    viewModel: SetupViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val navigator = LocalNavigator.current
 
     val activity = LocalActivity.current
     val context = LocalContext.current
@@ -75,7 +75,7 @@ fun OnboardingSetupPasswordScreen(viewModel: SetupViewModel = hiltViewModel()) {
         when (event) {
             SetupNavigationEvent.ShowRecoveryPhraseSetup -> {
                 activity?.hideKeyboard()
-                navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+                onVaultCreated()
             }
 
             SetupNavigationEvent.ShowError -> {

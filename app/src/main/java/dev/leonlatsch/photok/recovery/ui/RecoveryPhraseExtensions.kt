@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.ui
+package dev.leonlatsch.photok.recovery.ui
 
 fun String.cleanupRawInput(): String {
     return this

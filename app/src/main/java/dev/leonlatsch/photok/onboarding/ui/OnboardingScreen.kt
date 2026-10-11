@@ -53,12 +53,12 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
     val rootNavigator = LocalNavigator.current
     val activity = LocalActivity.current
 
-    val backStack = rememberNavBackStack(OnboardingRoute.Welcome)
+    val backStack = rememberNavBackStack(*viewModel.initialBackStack.toTypedArray())
     val navigator = remember(backStack, rootNavigator) { TabNavigator(backStack, rootNavigator) }
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
-            OnboardingNavigationEvent.Finished -> rootNavigator.replaceAll(RootRoute.Setup)
+            OnboardingNavigationEvent.Finished -> rootNavigator.replaceAll(RootRoute.Main)
         }
     }
 
@@ -66,7 +66,14 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
         activity?.finish()
     }
 
-    val step = (backStack.lastOrNull() as? OnboardingRoute)?.step()
+    val currentRoute = backStack.lastOrNull() as? OnboardingRoute
+    LaunchedEffect(currentRoute) {
+        if (currentRoute != null) {
+            viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(currentRoute))
+        }
+    }
+
+    val step = currentRoute?.step()
     var lastStep by remember { mutableIntStateOf(1) }
     LaunchedEffect(step) {
         if (step != null) lastStep = step
@@ -92,10 +99,17 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                         OnboardingSelectStartScreen()
                     }
                     entry<OnboardingRoute.SetupPassword> {
-                        OnboardingSetupPasswordScreen()
+                        OnboardingSetupPasswordScreen(
+                            onVaultCreated = {
+                                backStack.add(OnboardingRoute.RecoveryPhraseSetup)
+                                backStack.removeAll { it != OnboardingRoute.RecoveryPhraseSetup }
+                            },
+                        )
                     }
                     entry<OnboardingRoute.RecoveryPhraseSetup> {
-                        OnboardingRecoveryPhraseSetupScreen()
+                        OnboardingRecoveryPhraseSetupScreen(
+                            onFinish = { viewModel.handleUiEvent(OnboardingUiEvent.Finish) },
+                        )
                     }
                 },
             )

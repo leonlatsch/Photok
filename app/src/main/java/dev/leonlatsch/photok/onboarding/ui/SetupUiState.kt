@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.onboarding.ui
 
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 

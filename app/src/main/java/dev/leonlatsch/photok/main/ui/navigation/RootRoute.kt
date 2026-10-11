@@ -26,9 +26,6 @@ sealed interface RootRoute : NavKey {
     data object Onboarding : RootRoute
 
     @Serializable
-    data object Setup : RootRoute
-
-    @Serializable
     data object Unlock : RootRoute
 
     @Serializable

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.recovery.ui
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -61,10 +61,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseFlowRow
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiEvent
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseUiState
-import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseViewModel
 import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens

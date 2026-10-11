@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.encryption.ui
+package dev.leonlatsch.photok.recovery.ui
 
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -76,7 +76,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
-import dev.leonlatsch.photok.setup.ui.RecoveryPhraseQrSheet
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay

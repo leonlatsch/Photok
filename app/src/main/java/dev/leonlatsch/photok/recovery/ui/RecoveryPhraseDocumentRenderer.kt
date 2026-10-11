@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package dev.leonlatsch.photok.setup.ui
+package dev.leonlatsch.photok.recovery.ui
 
 import android.content.Context
 import android.graphics.Bitmap

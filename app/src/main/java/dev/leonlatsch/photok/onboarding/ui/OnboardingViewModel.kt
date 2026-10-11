@@ -31,11 +31,31 @@ class OnboardingViewModel @Inject constructor(
     private val telemetryService: TelemetryService,
 ) : ViewModel() {
 
+    val initialBackStack: List<OnboardingRoute> = when (config.systemOnboardingStep) {
+        OnboardingRoute.SelectStart.stepKey() -> listOf(
+            OnboardingRoute.Welcome,
+            OnboardingRoute.SelectStart,
+        )
+
+        OnboardingRoute.SetupPassword.stepKey() -> listOf(
+            OnboardingRoute.Welcome,
+            OnboardingRoute.SelectStart,
+            OnboardingRoute.SetupPassword,
+        )
+
+        OnboardingRoute.RecoveryPhraseSetup.stepKey() -> listOf(
+            OnboardingRoute.RecoveryPhraseSetup,
+        )
+
+        else -> listOf(OnboardingRoute.Welcome)
+    }
+
     private val navigationEventsChannel = Channel<OnboardingNavigationEvent>()
     val navigationEvents = navigationEventsChannel.receiveAsFlow()
 
     fun handleUiEvent(event: OnboardingUiEvent) {
         when (event) {
+            is OnboardingUiEvent.StepChanged -> config.systemOnboardingStep = event.route.stepKey()
             OnboardingUiEvent.Finish -> finish()
         }
     }
@@ -43,6 +63,7 @@ class OnboardingViewModel @Inject constructor(
     private fun finish() {
         telemetryService.signal(Signal.OnboardingFinished)
         config.systemFirstStart = false
+        config.systemOnboardingStep = null
         navigationEventsChannel.trySend(OnboardingNavigationEvent.Finished)
     }
 }
