@@ -30,4 +30,7 @@ sealed interface OnboardingRoute : NavKey {
 
     @Serializable
     data object SetupPassword : OnboardingRoute
+
+    @Serializable
+    data object RecoveryPhraseSetup : OnboardingRoute
 }

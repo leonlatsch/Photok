@@ -86,7 +86,6 @@ fun OnboardingSelectStartScreen() {
             Text(
                 text = "How do you want to start?",
                 style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Medium,
             )
 
             Text(

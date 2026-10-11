@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBar
 import dev.leonlatsch.photok.onboarding.ui.components.step
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingRecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
@@ -92,6 +93,9 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                     }
                     entry<OnboardingRoute.SetupPassword> {
                         OnboardingSetupPasswordScreen()
+                    }
+                    entry<OnboardingRoute.RecoveryPhraseSetup> {
+                        OnboardingRecoveryPhraseSetupScreen()
                     }
                 },
             )

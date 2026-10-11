@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.onboarding.ui.screens
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,28 +32,70 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBarSpacer
+import dev.leonlatsch.photok.other.extensions.hideKeyboard
+import dev.leonlatsch.photok.setup.ui.SetupNavigationEvent
+import dev.leonlatsch.photok.setup.ui.SetupUiEvent
+import dev.leonlatsch.photok.setup.ui.SetupUiState
+import dev.leonlatsch.photok.setup.ui.SetupViewModel
+import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @Composable
-fun OnboardingSetupPasswordScreen() {
-    var password by rememberSaveable { mutableStateOf("") }
-    var passwordConfirm by rememberSaveable { mutableStateOf("") }
+fun OnboardingSetupPasswordScreen(viewModel: SetupViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
 
+    val activity = LocalActivity.current
+    val context = LocalContext.current
+    val resources = LocalResources.current
+
+    ObserveAsEvents(viewModel.navigationEvents) { event ->
+        when (event) {
+            SetupNavigationEvent.ShowRecoveryPhraseSetup -> {
+                activity?.hideKeyboard()
+                navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+            }
+
+            SetupNavigationEvent.ShowError -> {
+                Dialogs.showLongToast(context, resources.getString(R.string.common_error))
+            }
+        }
+    }
+
+    OnboardingSetupPasswordContent(
+        uiState = uiState,
+        handleUiEvent = viewModel::handleUiEvent,
+    )
+}
+
+@Composable
+private fun OnboardingSetupPasswordContent(
+    uiState: SetupUiState,
+    handleUiEvent: (SetupUiEvent) -> Unit,
+) {
+    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
@@ -60,13 +103,16 @@ fun OnboardingSetupPasswordScreen() {
     }
 
     Scaffold(
-        modifier = Modifier.imePadding(),
         topBar = {
             OnboardingTopBarSpacer()
         },
         bottomBar = {
-            OnboardingNexButtonBar(enabled = password.isNotEmpty() && passwordConfirm.isNotEmpty()) {
-                // TODO
+            OnboardingNexButtonBar(
+                enabled = uiState.canSetup,
+                loading = uiState.loading,
+            ) {
+                focusManager.clearFocus()
+                handleUiEvent(SetupUiEvent.Setup)
             }
         }
     ) { contentPadding ->
@@ -81,7 +127,6 @@ fun OnboardingSetupPasswordScreen() {
             Text(
                 text = "Choose a password",
                 style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Medium,
             )
 
             Text(
@@ -93,22 +138,23 @@ fun OnboardingSetupPasswordScreen() {
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
             PasswordField(
-                value = password,
-                onValueChange = { password = it },
+                value = uiState.password,
+                onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
                 label = "Password",
                 imeAction = ImeAction.Next,
                 modifier = Modifier.focusRequester(focusRequester)
             )
 
             AnimatedVisibility(
-                visible = password.isNotEmpty(),
+                visible = uiState.showConfirmPassword,
             ) {
                 PasswordField(
-                    value = passwordConfirm,
-                    onValueChange = { passwordConfirm = it },
+                    value = uiState.confirmPassword,
+                    onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
                     label = "Confirm password",
-                    error = null,
-                    onDone = {  },
+                    error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
+                    onDone = { focusManager.clearFocus() },
+                    modifier = Modifier.imePadding()
                 )
             }
         }
@@ -119,6 +165,14 @@ fun OnboardingSetupPasswordScreen() {
 @Composable
 private fun OnboardingSetupPasswordScreenPreview() {
     AppTheme {
-        OnboardingSetupPasswordScreen()
+        OnboardingSetupPasswordContent(
+            uiState = SetupUiState(
+                password = "secret",
+                confirmPassword = "secret",
+                showConfirmPassword = true,
+                canSetup = true,
+            ),
+            handleUiEvent = {},
+        )
     }
 }
