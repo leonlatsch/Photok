@@ -47,7 +47,8 @@ fun OnboardingRoute.step(): Int? = when (this) {
     OnboardingRoute.Welcome -> null
     OnboardingRoute.SelectStart -> 1
     OnboardingRoute.SetupPassword -> 2
-    OnboardingRoute.RecoveryPhraseSetup -> 3
+    OnboardingRoute.BiometricUnlock -> 3
+    OnboardingRoute.RecoveryPhraseSetup -> 4
 }
 
 @Composable

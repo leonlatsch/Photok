@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingTopBar
 import dev.leonlatsch.photok.onboarding.ui.components.step
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingBiometricUnlockScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingRecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
@@ -101,10 +102,13 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                     entry<OnboardingRoute.SetupPassword> {
                         OnboardingSetupPasswordScreen(
                             onVaultCreated = {
-                                backStack.add(OnboardingRoute.RecoveryPhraseSetup)
-                                backStack.removeAll { it != OnboardingRoute.RecoveryPhraseSetup }
+                                backStack.add(OnboardingRoute.BiometricUnlock)
+                                backStack.removeAll { it != OnboardingRoute.BiometricUnlock }
                             },
                         )
+                    }
+                    entry<OnboardingRoute.BiometricUnlock> {
+                        OnboardingBiometricUnlockScreen()
                     }
                     entry<OnboardingRoute.RecoveryPhraseSetup> {
                         OnboardingRecoveryPhraseSetupScreen(
