@@ -43,6 +43,10 @@ class OnboardingViewModel @Inject constructor(
             OnboardingRoute.SetupPassword,
         )
 
+        OnboardingRoute.BiometricUnlock.stepKey() -> listOf(
+            OnboardingRoute.BiometricUnlock,
+        )
+
         OnboardingRoute.RecoveryPhraseSetup.stepKey() -> listOf(
             OnboardingRoute.RecoveryPhraseSetup,
         )
