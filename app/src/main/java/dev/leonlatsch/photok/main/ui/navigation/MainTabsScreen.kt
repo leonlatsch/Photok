@@ -63,6 +63,7 @@ import dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesScreen
 import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 private val RoutesWithMenu = listOfNotNull(
     AppRoute.Gallery,
@@ -134,10 +135,12 @@ fun MainTabsScreen(homeTab: MainTab) {
 
     val density = LocalDensity.current
     var mainMenuHeight by remember { mutableStateOf(0.dp) }
+    val scrollToTopRequests = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     CompositionLocalProvider(
         LocalNavigator provides tabNavigator,
         LocalMainMenuPadding provides PaddingValues(bottom = mainMenuHeight),
+        LocalScrollToTopRequests provides scrollToTopRequests,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             key(selectedTab) {
@@ -155,8 +158,10 @@ fun MainTabsScreen(homeTab: MainTab) {
                 MainMenu(
                     selectedTab = selectedTab,
                     onTabClicked = { tab ->
-                        if (tab == selectedTab) {
+                        if (tab == selectedTab && selectedBackStack.size > 1) {
                             popToRoot(selectedBackStack)
+                        } else if (tab == selectedTab) {
+                            scrollToTopRequests.tryEmit(Unit)
                         } else {
                             selectedTab = tab
                         }

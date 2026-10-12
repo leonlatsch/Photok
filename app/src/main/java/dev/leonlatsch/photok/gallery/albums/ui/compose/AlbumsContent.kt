@@ -22,6 +22,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,6 +42,8 @@ fun AlbumsContent(
     handleUiEvent: (AlbumsUiEvent) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
+    listState: LazyListState = rememberLazyListState(),
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -47,6 +53,8 @@ fun AlbumsContent(
             onAlbumClicked = { handleUiEvent(AlbumsUiEvent.OpenAlbum(it)) },
             displayMode = content.displayMode,
             contentPadding = contentPadding,
+            gridState = gridState,
+            listState = listState,
         )
 
         MagicFab(
@@ -65,6 +73,8 @@ fun AlbumsGridOrList(
     onAlbumClicked: (String) -> Unit,
     displayMode: DisplayMode,
     contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
+    listState: LazyListState = rememberLazyListState(),
 ) {
     Crossfade(displayMode) {
         when (it) {
@@ -73,6 +83,7 @@ fun AlbumsGridOrList(
                     albums = albums,
                     onAlbumClicked = onAlbumClicked,
                     contentPadding = contentPadding,
+                    gridState = gridState,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -82,6 +93,7 @@ fun AlbumsGridOrList(
                     albums = albums,
                     onAlbumClicked = onAlbumClicked,
                     contentPadding = contentPadding,
+                    listState = listState,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

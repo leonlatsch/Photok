@@ -20,6 +20,7 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
@@ -43,6 +44,7 @@ import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.sort.domain.SortConfig
@@ -72,6 +74,11 @@ fun GalleryScreen(
     }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val gridState = rememberLazyGridState()
+
+    ScrollToTopEffect(scrollBehavior.state) {
+        gridState.animateScrollToItem(0)
+    }
 
     Scaffold(
         topBar = {
@@ -127,6 +134,7 @@ fun GalleryScreen(
                     multiSelectionState = multiSelectionState,
                     modifier = modifier,
                     contentPadding = mainMenuPadding,
+                    gridState = gridState,
                 )
 
                 AlbumPickerDialog(

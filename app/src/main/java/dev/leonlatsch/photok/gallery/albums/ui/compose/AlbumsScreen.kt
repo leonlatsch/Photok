@@ -17,6 +17,8 @@
 package dev.leonlatsch.photok.gallery.albums.ui.compose
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
@@ -32,9 +34,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
@@ -50,6 +54,16 @@ fun AlbumsScreen(viewModel: AlbumsViewModel = hiltViewModel()) {
         AlbumsNavigator.navigate(event, navigator)
     }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val gridState = rememberLazyGridState()
+    val listState = rememberLazyListState()
+
+    ScrollToTopEffect(scrollBehavior.state) {
+        when ((uiState as? AlbumsUiState.Content)?.displayMode) {
+            DisplayMode.Grid -> gridState.animateScrollToItem(0)
+            DisplayMode.List -> listState.animateScrollToItem(0)
+            null -> Unit
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -86,6 +100,8 @@ fun AlbumsScreen(viewModel: AlbumsViewModel = hiltViewModel()) {
                 handleUiEvent = { viewModel.handleUiEvent(it) },
                 modifier = modifier,
                 contentPadding = mainMenuPadding,
+                gridState = gridState,
+                listState = listState,
             )
         }
 
