@@ -21,7 +21,6 @@ import com.telemetrydeck.sdk.TelemetryDeck
 import com.telemetrydeck.sdk.providers.DefaultParameterProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.core.BuildConfig
-import dev.leonlatsch.photok.pro.purchases.PurchaseService
 import dev.leonlatsch.photok.settings.data.Config
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,6 +36,7 @@ enum class Signal {
     PaywallOpened,
     PaywallPurchaseStarted,
     PaywallPurchaseSucceeded,
+    PaywallPurchasePending,
     PaywallPurchaseCancelled,
     PaywallPurchaseFailed,
     PaywallDismissed,
@@ -45,7 +45,6 @@ enum class Signal {
 @Singleton
 class TelemetryService @Inject constructor(
     private val config: Config,
-    private val purchaseService: PurchaseService,
     @ApplicationContext private val context: Context,
 ) {
     fun setup() {
@@ -59,7 +58,6 @@ class TelemetryService @Inject constructor(
                         mapOf(
                             "flavor" to BuildConfig.FLAVOR,
                             "usesBiometricAuthentication" to config.biometricAuthenticationEnabled.toString(),
-                            "pro" to purchaseService.get().toString(),
                         )
                     )
                 )
