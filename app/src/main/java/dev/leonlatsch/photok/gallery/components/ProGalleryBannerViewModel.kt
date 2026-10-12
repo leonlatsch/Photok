@@ -48,7 +48,7 @@ class ProGalleryBannerViewModel @Inject constructor(
     ) { _, proActive, photoCount ->
         val installDate = config.systemInstallDate
         val hasInstalledForAWeek = installDate != null &&
-                System.currentTimeMillis() - installDate >= TimeUnit.DAYS.toMillis(7)
+                System.currentTimeMillis() - installDate >= TimeUnit.DAYS.toMillis(3)
 
         BuildConfig.PLAY &&
                 !proActive &&
