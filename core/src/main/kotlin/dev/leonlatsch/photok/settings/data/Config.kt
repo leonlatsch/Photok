@@ -27,6 +27,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.days
 
 
 /**
@@ -174,9 +175,19 @@ class Config(context: Context) {
         get() = getBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT)
         set(value) = putBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, value)
 
-    var inAppReviewRequested: Boolean
-        get() = getBoolean(IN_APP_REVIEW_REQUESTED, false)
-        set(value) = putBoolean(IN_APP_REVIEW_REQUESTED, value)
+    var inAppReviewLastRequestedAt: Long?
+        get() {
+            val lastRequestedAt = getLongOrNull(IN_APP_REVIEW_LAST_REQUESTED_AT)
+            if (lastRequestedAt != null || !getBoolean(LEGACY_IN_APP_REVIEW_REQUESTED, false)) {
+                return lastRequestedAt
+            }
+
+            val migratedLastRequestedAt = System.currentTimeMillis() -
+                (IN_APP_REVIEW_COOLDOWN - 30.days).inWholeMilliseconds
+            putLong(IN_APP_REVIEW_LAST_REQUESTED_AT, migratedLastRequestedAt)
+            return migratedLastRequestedAt
+        }
+        set(value) = putLongOrNull(IN_APP_REVIEW_LAST_REQUESTED_AT, value)
 
     var proBannerDismissed: Boolean
         get() = getBoolean(PRO_BANNER_DISMISSED, PRO_BANNER_DISMISSED_DEFAULT)
@@ -345,7 +356,9 @@ class Config(context: Context) {
         const val TELEMETRY_ASSSKED_FOR_OPT_IN = "telemetry^askedForOptIn"
         const val TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT = false
 
-        const val IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
+        const val LEGACY_IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
+        const val IN_APP_REVIEW_LAST_REQUESTED_AT = "internal^inAppReviewLastRequestedAt"
+        val IN_APP_REVIEW_COOLDOWN = 90.days
 
         const val PRO_BANNER_DISMISSED = "internal^proBannerDismissed"
         const val PRO_BANNER_DISMISSED_DEFAULT = false
