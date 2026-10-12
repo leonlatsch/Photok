@@ -18,6 +18,8 @@ package dev.leonlatsch.photok.gallery.ui.compose
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -46,9 +48,11 @@ fun GalleryContent(
     multiSelectionState: MultiSelectionState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
 ) {
     PhotoGallery(
         contentPadding = contentPadding,
+        gridState = gridState,
         modifier = modifier.fillMaxSize(),
         photos = uiState.photos,
         albumName = null,

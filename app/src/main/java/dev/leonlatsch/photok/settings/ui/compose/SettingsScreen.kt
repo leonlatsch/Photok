@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -89,6 +90,7 @@ import dev.leonlatsch.photok.databinding.BindingConverters
 import dev.leonlatsch.photok.encryption.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
@@ -341,6 +343,12 @@ fun SettingsContent(
     onOpenDevSettings: () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollState = rememberScrollState()
+
+    ScrollToTopEffect(scrollBehavior.state) {
+        scrollState.animateScrollTo(0)
+    }
+
     Scaffold(
         topBar = {
             LargeTopAppBar(
@@ -364,6 +372,7 @@ fun SettingsContent(
             proFeaturesActive = uiState.proFeaturesActive,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
+            scrollState = scrollState,
             contentPadding = PaddingValues(
                 top = contentPadding.calculateTopPadding(),
                 bottom = LocalMainMenuPadding.current.calculateBottomPadding(),
@@ -379,6 +388,7 @@ private fun SettingsPreferenceSections(
     proFeaturesActive: Boolean,
     handleUiEvent: (SettingsUiEvent) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
+    scrollState: ScrollState,
     contentPadding: PaddingValues,
 ) {
     val fragment = LocalFragment.current
@@ -388,7 +398,7 @@ private fun SettingsPreferenceSections(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(contentPadding)
     ) {
         if (!proFeaturesActive) {

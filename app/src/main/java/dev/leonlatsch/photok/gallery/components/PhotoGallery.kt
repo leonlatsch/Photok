@@ -107,6 +107,7 @@ fun PhotoGallery(
     additionalMultiSelectionActions: @Composable (ColumnScope.() -> Unit),
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
 ) {
     val activity = LocalActivity.current
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
@@ -125,6 +126,7 @@ fun PhotoGallery(
             multiSelectionState = multiSelectionState,
             openPhoto = onOpenPhoto,
             contentPadding = contentPadding,
+            gridState = gridState,
         )
 
         AnimatedVisibility(
@@ -259,9 +261,9 @@ private fun PhotoGrid(
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
     contentPadding: PaddingValues,
+    gridState: LazyGridState,
     modifier: Modifier = Modifier,
 ) {
-    val gridState: LazyGridState = rememberLazyGridState()
     val isPreview = LocalInspectionMode.current
 
     val columnCount = when (LocalConfiguration.current.orientation) {
