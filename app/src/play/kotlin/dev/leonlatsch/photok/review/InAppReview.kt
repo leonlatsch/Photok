@@ -31,6 +31,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.seconds
 
 class InAppReviewImpl @Inject constructor(
@@ -45,7 +46,12 @@ class InAppReviewImpl @Inject constructor(
         trigger: ReviewTrigger,
         onFinished: () -> Unit,
     ) {
-        if (config.inAppReviewRequested) {
+        if (config.inAppReviewLastRequestedAt == null && config.legacyInAppReviewRequested) {
+            config.inAppReviewLastRequestedAt = System.currentTimeMillis()
+        }
+
+        val lastRequestedAt = config.inAppReviewLastRequestedAt
+        if (lastRequestedAt != null && System.currentTimeMillis() - lastRequestedAt < REQUEST_COOLDOWN.inWholeMilliseconds) {
             onFinished()
             return
         }
@@ -60,7 +66,7 @@ class InAppReviewImpl @Inject constructor(
             withContext(Dispatchers.Main) {
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(activity, "DEBUG Review Request", Toast.LENGTH_LONG).show()
-                    config.inAppReviewRequested = true
+                    config.inAppReviewLastRequestedAt = System.currentTimeMillis()
                     onFinished()
                     return@withContext
                 }
@@ -75,7 +81,7 @@ class InAppReviewImpl @Inject constructor(
                     )
 
                     if (task.isSuccessful) {
-                        config.inAppReviewRequested = true
+                        config.inAppReviewLastRequestedAt = System.currentTimeMillis()
                         manager.launchReviewFlow(activity, task.result)
                             .addOnCompleteListener { onFinished() }
                     } else {
@@ -86,4 +92,7 @@ class InAppReviewImpl @Inject constructor(
         }
     }
 
+    companion object {
+        private val REQUEST_COOLDOWN = 90.days
+    }
 }
