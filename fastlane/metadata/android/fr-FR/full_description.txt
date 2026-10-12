@@ -1,0 +1,31 @@
+<b>Photok – Coffre-fort photo privé, cacher photos et vidéos (open source)</b>
+
+Photok est un coffre-fort photo sécurisé qui vous permet de cacher vos photos et vidéos grâce à un chiffrement AES-256 robuste. Protégez vos médias sensibles, créez une galerie chiffrée et conservez vos souvenirs privés en sécurité sur votre propre appareil.
+
+Tous les fichiers sont chiffrés localement et uniquement déchiffrés en mémoire pendant que vous utilisez l'application. Aucun envoi vers le cloud n'est nécessaire.
+
+Photok est open source, sans publicité et conçu avec la confidentialité comme priorité. L'application utilise des statistiques minimales et respectueuses de la vie privée pour améliorer la stabilité et l'expérience utilisateur.
+
+<b>Pourquoi choisir Photok ?</b>
+• Cachez vos photos et vidéos en toute sécurité
+• Galerie privée chiffrée avec protection AES-256
+• Coffre hors ligne : vos fichiers restent sur votre appareil
+• Open source et sécurité transparente
+• Sans publicité
+• Développé par un développeur indépendant
+
+<b>Fonctionnalités du coffre-fort</b>
+• Importez photos et vidéos depuis votre galerie
+• Organisez vos médias privés en albums
+• Exportez vos fichiers à tout moment
+• Créez et restaurez des sauvegardes chiffrées
+• Déverrouillez le coffre avec votre empreinte digitale
+• Partagez des médias directement vers le coffre
+• Option pour masquer l'icône de l'application
+• Suppression automatique des originaux après l'import
+
+<b>Conçu pour votre vie privée</b>
+Photok est conçu pour celles et ceux qui veulent un vrai contrôle sur leurs photos et vidéos privées.
+Le chiffrement a lieu sur votre appareil. Les statistiques d'utilisation respectueuses de la vie privée servent uniquement à améliorer l'application et ne sont jamais utilisées pour la publicité ni pour le suivi entre applications.
+
+<a href="https://github.com/leonlatsch/Photok">Voir le projet open source sur GitHub.</a>

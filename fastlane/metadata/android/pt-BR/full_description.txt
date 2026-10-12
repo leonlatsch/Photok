@@ -1,0 +1,31 @@
+<b>Photok – Cofre de fotos privado, esconda fotos e vídeos (código aberto)</b>
+
+Photok é um cofre de fotos seguro que permite esconder fotos e vídeos com criptografia forte AES-256. Proteja suas mídias privadas, crie uma galeria criptografada e guarde suas memórias pessoais com segurança no seu próprio aparelho.
+
+Todos os arquivos são criptografados localmente e só são descriptografados na memória enquanto você usa o app. Nenhum upload para a nuvem é necessário.
+
+Photok é de código aberto, sem anúncios e criado com foco total em privacidade. O app usa análises mínimas e respeitosas à privacidade para melhorar a estabilidade e a experiência de uso.
+
+<b>Por que escolher o Photok?</b>
+• Esconda fotos e vídeos com segurança
+• Galeria privada criptografada com proteção AES-256
+• Cofre offline: seus arquivos ficam no seu aparelho
+• Código aberto e segurança transparente
+• Sem anúncios
+• Criado por um desenvolvedor independente
+
+<b>Recursos do cofre</b>
+• Importe fotos e vídeos da sua galeria
+• Organize suas mídias privadas em álbuns
+• Exporte arquivos quando quiser
+• Crie e restaure backups criptografados
+• Desbloqueie o cofre com sua impressão digital
+• Compartilhe mídias direto para o cofre
+• Opção de ocultar o ícone do app
+• Apague os arquivos originais automaticamente após a importação
+
+<b>Feito para a sua privacidade</b>
+Photok foi criado para quem quer ter controle real sobre suas fotos e vídeos privados.
+A criptografia acontece no seu aparelho. As análises de uso respeitosas à privacidade servem apenas para melhorar o app e nunca são usadas para publicidade ou rastreamento entre apps.
+
+<a href="https://github.com/leonlatsch/Photok">Veja o projeto de código aberto no GitHub.</a>
