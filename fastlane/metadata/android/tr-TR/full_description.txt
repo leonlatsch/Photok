@@ -1,0 +1,31 @@
+<b>Photok – Fotoğraf kilidi ve gizli kasa, fotoğraf ve video gizleme (açık kaynak)</b>
+
+Photok, fotoğraf ve videolarını güçlü AES-256 şifrelemesiyle gizlemeni sağlayan güvenli bir fotoğraf kasasıdır. Özel medyanı koru, şifreli bir galeri oluştur ve kişisel anılarını kendi cihazında güvenle sakla.
+
+Tüm dosyalar cihazında yerel olarak şifrelenir ve yalnızca uygulamayı kullanırken bellekte çözülür. Buluta yükleme gerekmez.
+
+Photok açık kaynaklıdır, reklamsızdır ve gizlilik öncelikli olarak tasarlanmıştır. Uygulama, kararlılığı ve kullanıcı deneyimini iyileştirmek için gizlilik dostu, minimum düzeyde analiz kullanır.
+
+<b>Neden Photok?</b>
+• Fotoğraf ve videoları güvenle gizle
+• AES-256 korumalı, şifreli gizli galeri
+• Çevrimdışı kasa: dosyaların cihazında kalır
+• Açık kaynak ve şeffaf güvenlik
+• Reklamsız kullanım
+• Bağımsız bir geliştirici tarafından geliştirildi
+
+<b>Kasa özellikleri</b>
+• Galerinden fotoğraf ve video içe aktar
+• Özel medyanı albümlerde düzenle
+• Dosyaları istediğin zaman dışa aktar
+• Şifreli yedekler oluştur ve geri yükle
+• Kasayı parmak iziyle aç
+• Medyayı doğrudan kasaya paylaş
+• Uygulama simgesini gizleme seçeneği
+• İçe aktarmadan sonra orijinal dosyaları otomatik sil
+
+<b>Gizlilik odaklı tasarım</b>
+Photok, özel fotoğraf ve videoları üzerinde gerçek kontrol isteyenler için tasarlandı.
+Şifreleme tamamen cihazında gerçekleşir. Gizlilik dostu kullanım analizleri yalnızca uygulamayı iyileştirmek için kullanılır; asla reklam veya uygulamalar arası izleme için kullanılmaz.
+
+<a href="https://github.com/leonlatsch/Photok">GitHub'daki açık kaynak projeyi incele.</a>

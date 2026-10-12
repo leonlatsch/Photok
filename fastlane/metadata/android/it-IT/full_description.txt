@@ -1,0 +1,31 @@
+<b>Photok – Cassaforte per foto privata, nascondi foto e video (open source)</b>
+
+Photok è una cassaforte per foto sicura che ti permette di nascondere foto e video con una potente crittografia AES-256. Proteggi i tuoi contenuti privati, crea una galleria crittografata e conserva i tuoi ricordi personali al sicuro sul tuo dispositivo.
+
+Tutti i file vengono crittografati localmente e decrittografati solo in memoria mentre usi l'app. Non serve alcun caricamento sul cloud.
+
+Photok è open source, senza pubblicità e progettato mettendo la privacy al primo posto. L'app usa analisi minime e rispettose della privacy per migliorare stabilità ed esperienza d'uso.
+
+<b>Perché scegliere Photok?</b>
+• Nascondi foto e video in modo sicuro
+• Galleria privata crittografata con protezione AES-256
+• Cassaforte offline: i tuoi file restano sul tuo dispositivo
+• Open source e sicurezza trasparente
+• Nessuna pubblicità
+• Creata da uno sviluppatore indipendente
+
+<b>Funzioni della cassaforte</b>
+• Importa foto e video dalla tua galleria
+• Organizza i contenuti privati in album
+• Esporta i file in qualsiasi momento
+• Crea e ripristina backup crittografati
+• Sblocca la cassaforte con l'impronta digitale
+• Condividi contenuti direttamente nella cassaforte
+• Opzione per nascondere l'icona dell'app
+• Elimina automaticamente i file originali dopo l'importazione
+
+<b>Pensata per la tua privacy</b>
+Photok è pensata per chi vuole un vero controllo sulle proprie foto e video privati.
+La crittografia avviene sul tuo dispositivo. Le analisi d'uso rispettose della privacy servono solo a migliorare l'app e non vengono mai usate per pubblicità o tracciamento tra app.
+
+<a href="https://github.com/leonlatsch/Photok">Scopri il progetto open source su GitHub.</a>

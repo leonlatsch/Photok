@@ -1,0 +1,31 @@
+<b>Photok – Bóveda de fotos privada, oculta fotos y videos (código abierto)</b>
+
+Photok es una bóveda de fotos segura que te permite ocultar fotos y videos con un potente cifrado AES-256. Protege tus archivos privados, crea una galería cifrada y guarda tus recuerdos personales de forma segura en tu propio dispositivo.
+
+Todos los archivos se cifran localmente y solo se descifran en memoria mientras usas la app. No necesitas subir nada a la nube.
+
+Photok es de código abierto, sin anuncios y está diseñado con la privacidad como prioridad. La app utiliza análisis mínimos y respetuosos con la privacidad para mejorar la estabilidad y la experiencia de uso.
+
+<b>¿Por qué elegir Photok?</b>
+• Oculta fotos y videos de forma segura
+• Galería privada cifrada con protección AES-256
+• Bóveda sin conexión: tus archivos se quedan en tu dispositivo
+• Código abierto y seguridad transparente
+• Sin anuncios
+• Creado por un desarrollador independiente
+
+<b>Funciones de la bóveda</b>
+• Importa fotos y videos desde tu galería
+• Organiza tus archivos privados en álbumes
+• Exporta archivos cuando quieras
+• Crea y restaura copias de seguridad cifradas
+• Desbloquea la bóveda con tu huella dactilar
+• Comparte archivos directamente a la bóveda
+• Opción para ocultar el icono de la app
+• Elimina automáticamente los originales tras importarlos
+
+<b>Diseñado para tu privacidad</b>
+Photok está pensado para quienes quieren tener control real sobre sus fotos y videos privados.
+El cifrado se realiza en tu dispositivo. Los análisis de uso respetuosos con la privacidad solo sirven para mejorar la app y nunca se usan para publicidad ni para seguimiento entre apps.
+
+<a href="https://github.com/leonlatsch/Photok">Ver el proyecto de código abierto en GitHub.</a>
