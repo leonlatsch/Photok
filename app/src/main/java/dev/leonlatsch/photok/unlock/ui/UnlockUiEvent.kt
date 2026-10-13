@@ -30,7 +30,6 @@ sealed interface UnlockUiEvent {
 sealed interface UnlockNavigationEvent {
     data object Unlocked : UnlockNavigationEvent
     data object StartLegacyMigration : UnlockNavigationEvent
-    data object ShowRecoveryPhraseSetup : UnlockNavigationEvent
     data object ShowRecoveryPhraseRestore : UnlockNavigationEvent
     data object ShowError : UnlockNavigationEvent
 }

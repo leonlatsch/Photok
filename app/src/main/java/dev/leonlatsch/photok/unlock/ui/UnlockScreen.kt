@@ -94,11 +94,6 @@ fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
                 navigator.replaceAll(RootRoute.EncryptionMigration)
             }
 
-            UnlockNavigationEvent.ShowRecoveryPhraseSetup -> {
-                activity?.hideKeyboard()
-                navigator.replaceAll(RootRoute.RecoveryPhraseSetup)
-            }
-
             UnlockNavigationEvent.ShowRecoveryPhraseRestore -> {
                 activity?.hideKeyboard()
                 navigator.navigate(RootRoute.RecoveryPhraseRestore)

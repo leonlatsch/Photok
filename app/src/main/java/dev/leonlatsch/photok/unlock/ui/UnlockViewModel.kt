@@ -160,12 +160,11 @@ class UnlockViewModel @Inject constructor(
 
                             _uiState.update { it.copy(loading = false) }
                             navigationEventsChannel.trySend(UnlockNavigationEvent.StartLegacyMigration)
-                        } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
-                            vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
-
-                            _uiState.update { it.copy(loading = false) }
-                            navigationEventsChannel.trySend(UnlockNavigationEvent.ShowRecoveryPhraseSetup)
                         } else {
+                            if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                                vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                            }
+
                             _uiState.update { it.copy(loading = false) }
                             navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
                         }

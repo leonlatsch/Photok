@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.recovery.ui
 
+import android.widget.Toast
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -49,6 +50,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -57,6 +59,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,15 +88,25 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecoveryPhraseSheet(
     onDismissRequest: () -> Unit,
-    onNavigateToSetup: () -> Unit,
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val scope = rememberCoroutineScope()
-
     val viewModel: RecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
+
+    val canDismiss by rememberUpdatedState(!uiState.inputs.regenerated || uiState.inputs.phraseWasSaved)
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { value ->
+            if (value == SheetValue.Hidden && !canDismiss) {
+                Toast.makeText(context, R.string.recovery_phrase_save_warning, Toast.LENGTH_SHORT).show()
+                false
+            } else {
+                true
+            }
+        },
+    )
+
     val activity = LocalActivity.current
     val clipboard = LocalClipboard.current
 
@@ -105,19 +118,6 @@ fun RecoveryPhraseSheet(
         text = stringResource(R.string.recovery_phrase_create_new_confirm),
         onConfirm = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.CreateNewPhrase) },
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.navEvents.collect { event ->
-            when (event) {
-                RecoveryPhraseNavEvent.NavigateToSetup -> {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        onDismissRequest()
-                        onNavigateToSetup()
-                    }
-                }
-            }
-        }
-    }
 
     val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
         it ?: return@rememberLauncherForActivityResult
@@ -224,7 +224,7 @@ fun RecoveryPhraseSheet(
 
             Button(
                 onClick = { showConfirmDialog = true },
-                enabled = !uiState.inputs.loading,
+                enabled = !uiState.inputs.loading && canDismiss,
                 modifier = Modifier
                     .navigationBarsPadding()
                     .padding(horizontal = Dimens.spacingLarge)

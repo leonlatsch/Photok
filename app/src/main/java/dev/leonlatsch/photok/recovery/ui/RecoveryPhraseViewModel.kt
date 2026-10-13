@@ -38,13 +38,11 @@ import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -60,6 +58,7 @@ data class RecoveryPhraseUiState(
         val loading: Boolean = false,
         val phraseWasSaved: Boolean = false,
         val qrSheetVisible: Boolean = false,
+        val regenerated: Boolean = false,
     )
 }
 
@@ -78,10 +77,6 @@ sealed interface RecoveryPhraseUiEvent {
     data object CreateNewPhrase : RecoveryPhraseUiEvent
 }
 
-sealed interface RecoveryPhraseNavEvent {
-    data object NavigateToSetup : RecoveryPhraseNavEvent
-}
-
 @HiltViewModel
 class RecoveryPhraseViewModel @Inject constructor(
     private val resources: Resources,
@@ -92,9 +87,6 @@ class RecoveryPhraseViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(RecoveryPhraseUiState.Inputs())
-
-    private val _navEvents = Channel<RecoveryPhraseNavEvent>(Channel.UNLIMITED)
-    val navEvents = _navEvents.receiveAsFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val phrase = sessionRepository.observe().flatMapLatest { session ->
@@ -228,13 +220,25 @@ class RecoveryPhraseViewModel @Inject constructor(
                 val session = sessionRepository.get()
                 session ?: return // This event cannot be used if not logged in
 
-                viewModelScope.launch(Dispatchers.IO) {
-                    inputs.update { it.copy(loading = true, phraseWasSaved = false) }
+                recoveryPhraseStore.clear()
 
-                    vaultService.reset(VaultProtectionType.RecoveryPhrase)
+                inputs.update {
+                    it.copy(
+                        loading = true,
+                        phraseWasSaved = false,
+                        regenerated = true,
+                    )
+                }
+
+                viewModelScope.launch(Dispatchers.IO) {
+                    vaultService.create(
+                        CreateRequest.RecoveryPhrase(
+                            session,
+                            inputs.value.wordCount,
+                        )
+                    )
 
                     inputs.update { it.copy(loading = false) }
-                    _navEvents.trySend(RecoveryPhraseNavEvent.NavigateToSetup)
                 }
             }
         }
