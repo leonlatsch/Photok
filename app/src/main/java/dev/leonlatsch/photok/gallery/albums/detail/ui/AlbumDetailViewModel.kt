@@ -65,7 +65,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     private val pinnedPhotoIdsFlow = albumsRepository.observePinnedPhotoUUIDs(albumUUID)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
-    private val photoActionsChannel = Channel<PhotoAction>()
+    private val photoActionsChannel = Channel<PhotoAction>(Channel.UNLIMITED)
     val photoActions = photoActionsChannel.receiveAsFlow()
 
     val uiState = combine(
@@ -90,7 +90,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumDetailUiState())
 
 
-    private val navEventsChannel = Channel<AlbumDetailNavigator.NavigationEvent>()
+    private val navEventsChannel = Channel<AlbumDetailNavigator.NavigationEvent>(Channel.UNLIMITED)
     val navEvents = navEventsChannel.receiveAsFlow()
 
     fun handleUiEvent(event: AlbumDetailUiEvent) {
