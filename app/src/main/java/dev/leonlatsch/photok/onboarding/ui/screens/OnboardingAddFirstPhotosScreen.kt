@@ -16,18 +16,25 @@
 
 package dev.leonlatsch.photok.onboarding.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.core.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
@@ -68,13 +75,53 @@ fun OnboardingAddFirstPhotosScreen() {
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
+            val images = listOf(
+                R.drawable.onboarding_placeholder_photo_1,
+                R.drawable.onboarding_placeholder_photo_2,
+                R.drawable.onboarding_placeholder_photo_3,
+                R.drawable.onboarding_placeholder_photo_4,
+                R.drawable.onboarding_placeholder_photo_5,
+                R.drawable.onboarding_placeholder_photo_6,
+                R.drawable.onboarding_placeholder_photo_7,
+                R.drawable.onboarding_placeholder_photo_8,
+            )
+
+            ImagesRows(images)
+
             OnboardingPageTitle(
-                text = "Fill your vault"
+                text = "Add your first photos"
             )
 
             OnboardingPageSubtitle(
-                text = "Import your first photos and videos. They are encrypted right away."
+                text = "They are encrypted as they come in. You can always add more later."
             )
+        }
+    }
+}
+
+@Composable
+private fun ImagesRows(
+    images: List<Int>,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall)
+    ) {
+        images.chunked(4).forEach { chunk ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
+                modifier = modifier,
+            ) {
+                for (image in chunk) {
+                    Image(
+                        painter = painterResource(image),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .weight(1f)
+                    )
+                }
+            }
         }
     }
 }
