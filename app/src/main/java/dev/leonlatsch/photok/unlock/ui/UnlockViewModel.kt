@@ -78,7 +78,7 @@ class UnlockViewModel @Inject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
-    private val navigationEventsChannel = Channel<UnlockNavigationEvent>()
+    private val navigationEventsChannel = Channel<UnlockNavigationEvent>(Channel.UNLIMITED)
     val navigationEvents = navigationEventsChannel.receiveAsFlow()
 
     private var lockoutJob: Job? = null

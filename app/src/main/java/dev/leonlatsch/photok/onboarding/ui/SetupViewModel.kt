@@ -79,7 +79,7 @@ class SetupViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SetupUiState())
 
-    private val navigationEventsChannel = Channel<SetupNavigationEvent>()
+    private val navigationEventsChannel = Channel<SetupNavigationEvent>(Channel.UNLIMITED)
     val navigationEvents = navigationEventsChannel.receiveAsFlow()
 
     fun handleUiEvent(event: SetupUiEvent) {
