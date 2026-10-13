@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
+import dev.leonlatsch.photok.ui.systembars.ProvideSystemBarsController
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -92,11 +93,13 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             AppTheme {
-                CompositionLocalProvider(
-                    LocalConfig provides config,
-                    LocalEncryptedImageLoader provides encryptedImageLoader,
-                ) {
-                    AppNavHost(startTab = getStartTab::invoke)
+                ProvideSystemBarsController(window) {
+                    CompositionLocalProvider(
+                        LocalConfig provides config,
+                        LocalEncryptedImageLoader provides encryptedImageLoader,
+                    ) {
+                        AppNavHost(startTab = getStartTab::invoke)
+                    }
                 }
             }
         }

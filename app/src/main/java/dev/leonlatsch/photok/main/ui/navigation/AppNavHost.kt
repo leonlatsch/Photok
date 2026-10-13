@@ -16,8 +16,6 @@
 
 package dev.leonlatsch.photok.main.ui.navigation
 
-import android.content.res.Configuration
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
@@ -26,12 +24,9 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.core.view.WindowCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -77,8 +72,6 @@ private fun AppNavDisplay(
     val backStack = rememberNavBackStack(startRoute)
     val navigator = remember(backStack) { RootNavigator(backStack) }
 
-    LightStatusBarsEffect(backStack.lastOrNull())
-
     CompositionLocalProvider(LocalNavigator provides navigator) {
         NavDisplay(
             backStack = backStack,
@@ -111,17 +104,6 @@ private fun AppNavDisplay(
                 }
             },
         )
-    }
-}
-
-@Composable
-fun LightStatusBarsEffect(currentRoute: NavKey?) {
-    val activity = LocalActivity.current
-    val isNightMode = LocalConfiguration.current.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-
-    LaunchedEffect(currentRoute, isNightMode) {
-        val window = activity?.window ?: return@LaunchedEffect
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !isNightMode
     }
 }
 

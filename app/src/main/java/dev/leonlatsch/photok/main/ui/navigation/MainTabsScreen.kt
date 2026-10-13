@@ -122,8 +122,6 @@ fun MainTabsScreen(homeTab: MainTab) {
     }
     val currentRoute = selectedBackStack.lastOrNull()
 
-    LightStatusBarsEffect(currentRoute)
-
     BackHandler(enabled = selectedTab != homeTab && selectedBackStack.size == 1) {
         selectedTab = homeTab
     }

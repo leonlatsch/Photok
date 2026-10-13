@@ -64,6 +64,7 @@ import dev.leonlatsch.photok.pro.navigation.proOnboardingEntries
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
+import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
 
 @Composable
 fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
@@ -94,6 +95,10 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
     var lastStep by remember { mutableIntStateOf(1) }
     LaunchedEffect(step) {
         if (step != null) lastStep = step
+    }
+
+    if (step != null) {
+        StatusBarBackground(colorScheme.primary)
     }
 
     CompositionLocalProvider(LocalNavigator provides navigator) {
