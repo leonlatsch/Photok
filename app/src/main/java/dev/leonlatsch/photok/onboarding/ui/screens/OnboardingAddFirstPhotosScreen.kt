@@ -1,0 +1,88 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package dev.leonlatsch.photok.onboarding.ui.screens
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
+import dev.leonlatsch.photok.pro.navigation.ProRoute
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
+
+@Composable
+fun OnboardingAddFirstPhotosScreen() {
+    val navigator = LocalNavigator.current
+    val nextRoute = if (BuildConfig.PLAY) ProRoute.OnboardingOffer else OnboardingRoute.Done
+
+    Scaffold(
+        bottomBar = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.navigationBarsPadding()
+            ) {
+                TextButton(
+                    onClick = {
+                        navigator.navigate(nextRoute)
+                    }
+                ) {
+                    Text("Skip")
+                }
+
+                OnboardingNexButtonBar(text = "Import photos") {
+                    navigator.navigate(nextRoute)
+                }
+            }
+        }
+    ) { contentPadding ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            modifier = Modifier
+                .padding(contentPadding)
+                .padding(Dimens.spacingLarge)
+        ) {
+            OnboardingPageTitle(
+                text = "Fill your vault"
+            )
+
+            OnboardingPageSubtitle(
+                text = "Import your first photos and videos. They are encrypted right away."
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun OnboardingAddFirstPhotosScreenPreview() {
+    AppTheme {
+        OnboardingAddFirstPhotosScreen()
+    }
+}

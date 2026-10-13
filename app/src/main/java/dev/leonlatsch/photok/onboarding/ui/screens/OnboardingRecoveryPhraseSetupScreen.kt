@@ -54,6 +54,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
@@ -66,14 +68,13 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
-fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
+fun OnboardingRecoveryPhraseSetupScreen() {
     val viewModel: RecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     OnboardingRecoveryPhraseSetupContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onFinish = onFinish,
     )
 }
 
@@ -81,8 +82,9 @@ fun OnboardingRecoveryPhraseSetupScreen(onFinish: () -> Unit) {
 private fun OnboardingRecoveryPhraseSetupContent(
     uiState: RecoveryPhraseUiState,
     handleUiEvent: (RecoveryPhraseUiEvent) -> Unit,
-    onFinish: () -> Unit,
 ) {
+    val navigator = LocalNavigator.current
+
     val phrase = uiState.phrase
     if (uiState.inputs.qrSheetVisible && phrase != null) {
         RecoveryPhraseQrSheet(
@@ -104,7 +106,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
                     text = stringResource(R.string.recovery_phrase_confirm),
                     enabled = uiState.inputs.phraseWasSaved,
                     loading = uiState.inputs.loading,
-                    onNext = onFinish,
+                    onNext = { navigator.navigate(OnboardingRoute.AddFirstPhotos) },
                 )
             }
         }
@@ -277,7 +279,6 @@ private fun OnboardingRecoveryPhraseSetupScreenPreview() {
                 ),
             ),
             handleUiEvent = {},
-            onFinish = {},
         )
     }
 }

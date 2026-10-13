@@ -53,11 +53,14 @@ import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingBrandHeader
 import dev.leonlatsch.photok.onboarding.ui.components.step
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingAddFirstPhotosScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingBiometricUnlockScreen
+import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingDoneScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingRecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
+import dev.leonlatsch.photok.pro.navigation.proOnboardingEntries
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
@@ -80,9 +83,9 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
         activity?.finish()
     }
 
-    val currentRoute = backStack.lastOrNull() as? OnboardingRoute
+    val currentRoute = backStack.lastOrNull()
     LaunchedEffect(currentRoute) {
-        if (currentRoute != null) {
+        if (currentRoute is OnboardingRoute) {
             viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(currentRoute))
         }
     }
@@ -157,10 +160,19 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                             OnboardingBiometricUnlockScreen()
                         }
                         entry<OnboardingRoute.RecoveryPhraseSetup> {
-                            OnboardingRecoveryPhraseSetupScreen(
+                            OnboardingRecoveryPhraseSetupScreen()
+                        }
+                        entry<OnboardingRoute.AddFirstPhotos> {
+                            OnboardingAddFirstPhotosScreen()
+                        }
+                        entry<OnboardingRoute.Done> {
+                            OnboardingDoneScreen(
                                 onFinish = { viewModel.handleUiEvent(OnboardingUiEvent.Finish) },
                             )
                         }
+                        proOnboardingEntries(
+                            onContinue = { navigator.navigate(OnboardingRoute.Done) },
+                        )
                     },
                 )
             }

@@ -37,20 +37,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
-private const val STEP_COUNT = 6
+private val STEP_COUNT = if (BuildConfig.PLAY) 6 else 5
 
-fun OnboardingRoute.step(): Int? = when (this) {
+fun NavKey.step(): Int? = when (this) {
     OnboardingRoute.Welcome -> null
     OnboardingRoute.SelectStart -> 1
     OnboardingRoute.SetupPassword -> 2
     OnboardingRoute.BiometricUnlock -> 3
     OnboardingRoute.RecoveryPhraseSetup -> 4
+    OnboardingRoute.AddFirstPhotos -> 5
+    OnboardingRoute.Done -> null
+    ProRoute.OnboardingOffer -> 6
+    else -> null
 }
 
 @Composable

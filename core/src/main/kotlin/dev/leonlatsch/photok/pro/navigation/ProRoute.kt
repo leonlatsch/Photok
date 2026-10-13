@@ -24,4 +24,7 @@ sealed interface ProRoute : NavKey {
 
     @Serializable
     data object IntruderWarnings : ProRoute
+
+    @Serializable
+    data object OnboardingOffer : ProRoute
 }

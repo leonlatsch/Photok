@@ -51,6 +51,14 @@ class OnboardingViewModel @Inject constructor(
             OnboardingRoute.RecoveryPhraseSetup,
         )
 
+        OnboardingRoute.AddFirstPhotos.stepKey() -> listOf(
+            OnboardingRoute.AddFirstPhotos,
+        )
+
+        OnboardingRoute.Done.stepKey() -> listOf(
+            OnboardingRoute.Done,
+        )
+
         else -> listOf(OnboardingRoute.Welcome)
     }
 
