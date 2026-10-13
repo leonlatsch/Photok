@@ -16,9 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.ui.importing
 
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +29,7 @@ import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.review.InAppReview
 import dev.leonlatsch.photok.review.ReviewTrigger
 import dev.leonlatsch.photok.uicomponnets.base.processdialogs.BaseProcessBottomSheetDialogFragment
+import dev.leonlatsch.photok.uicomponnets.base.processdialogs.ProcessState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,6 +65,13 @@ class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment<Uri
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if (viewModel.processState == ProcessState.FINISHED && activity?.isChangingConfigurations != true) {
+            setFragmentResult(REQUEST_KEY_IMPORT_FINISHED, Bundle())
+        }
+    }
+
     override fun prepareViewModel(items: List<Uri>?) {
         viewModel.albumUUID = requireArguments().getString(ARG_ALBUM_UUID)
         viewModel.importSource = ImportSource.valueOf(requireArguments().getString(ARG_IMPORT_SOURCE)!!)
@@ -69,6 +79,8 @@ class ImportBottomSheetDialogFragment : BaseProcessBottomSheetDialogFragment<Uri
     }
 
     companion object {
+        const val REQUEST_KEY_IMPORT_FINISHED = "import_finished"
+
         private const val ARG_URIS = "uris"
         private const val ARG_ALBUM_UUID = "album_uuid"
         private const val ARG_IMPORT_SOURCE = "import_source"

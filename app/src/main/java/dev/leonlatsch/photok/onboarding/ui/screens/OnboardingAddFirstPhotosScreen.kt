@@ -16,6 +16,9 @@
 
 package dev.leonlatsch.photok.onboarding.ui.screens
 
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,19 +30,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.core.R
+import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
+import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -48,6 +59,33 @@ import dev.leonlatsch.photok.ui.theme.Dimens
 fun OnboardingAddFirstPhotosScreen() {
     val navigator = LocalNavigator.current
     val nextRoute = if (BuildConfig.PLAY) ProRoute.OnboardingOffer else OnboardingRoute.Done
+    val activity = LocalActivity.current as? FragmentActivity
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val pickFilesLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenMultipleDocuments()
+    ) { uris ->
+        if (uris.isEmpty() || activity == null) return@rememberLauncherForActivityResult
+
+        ImportBottomSheetDialogFragment.newInstance(
+            uris = uris,
+            importSource = ImportSource.InApp,
+        ).show(activity.supportFragmentManager)
+    }
+
+    DisposableEffect(activity, lifecycleOwner) {
+        val fragmentManager = activity?.supportFragmentManager
+        fragmentManager?.setFragmentResultListener(
+            ImportBottomSheetDialogFragment.REQUEST_KEY_IMPORT_FINISHED,
+            lifecycleOwner,
+        ) { _, _ ->
+            navigator.navigate(nextRoute)
+        }
+
+        onDispose {
+            fragmentManager?.clearFragmentResultListener(ImportBottomSheetDialogFragment.REQUEST_KEY_IMPORT_FINISHED)
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -64,7 +102,10 @@ fun OnboardingAddFirstPhotosScreen() {
                 }
 
                 OnboardingNexButtonBar(text = "Import photos") {
-                    navigator.navigate(nextRoute)
+                    pickFilesLauncher.launchAndIgnoreTimer(
+                        input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
+                        activity = activity,
+                    )
                 }
             }
         }
