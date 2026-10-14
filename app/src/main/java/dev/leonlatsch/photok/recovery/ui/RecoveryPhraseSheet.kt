@@ -63,6 +63,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
@@ -327,15 +328,7 @@ internal fun WordChip(
                     rotation.animateTo(0f, spring(dampingRatio = 0.3f, stiffness = 500f))
                 }
             }
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(8.dp),
-            )
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                shape = RoundedCornerShape(8.dp),
-            )
+            .recoveryPhraseChip(RoundedCornerShape(8.dp))
             .padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -352,3 +345,15 @@ internal fun WordChip(
         }
     }
 }
+
+@Composable
+fun Modifier.recoveryPhraseChip(shape: Shape): Modifier = this
+    .background(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = shape,
+    )
+    .border(
+        width = 1.dp,
+        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+        shape = shape,
+    )

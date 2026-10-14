@@ -128,7 +128,7 @@ private fun Content(
     }
 }
 
-private fun String.breakableAtDashes() = replace("-", "-\u200B")
+internal fun String.breakableAtDashes() = replace("-", "-\u200B")
 
 @PreviewLightDark
 @Composable

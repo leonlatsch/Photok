@@ -36,11 +36,13 @@ import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
 import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.ScreenshotOverride
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
 import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
 import dev.leonlatsch.photok.ui.systembars.ProvideSystemBarsController
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -63,6 +65,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var getStartTab: GetStartTab
 
+    @Inject
+    lateinit var screenshotOverride: ScreenshotOverride
+
     @EncryptedImageLoader
     @Inject
     lateinit var encryptedImageLoader: ImageLoader
@@ -79,8 +84,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState.takeIf { hasSession })
 
         launchLifecycleAwareJob {
-            config.valuesFlow
-                .map { config.securityAllowScreenshots }
+            combine(
+                config.valuesFlow.map { config.securityAllowScreenshots },
+                screenshotOverride.allowed,
+            ) { allowedInSettings, allowedByOverride ->
+                allowedInSettings || allowedByOverride
+            }
                 .distinctUntilChanged()
                 .collect { allowScreenshots ->
                     if (allowScreenshots) {

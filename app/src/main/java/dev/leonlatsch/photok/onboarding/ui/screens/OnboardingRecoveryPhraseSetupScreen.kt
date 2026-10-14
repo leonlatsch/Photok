@@ -16,40 +16,46 @@
 
 package dev.leonlatsch.photok.onboarding.ui.screens
 
+import android.app.Activity
+import android.os.Build
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
@@ -59,18 +65,54 @@ import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseFlowRow
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseQrSheet
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseUiEvent
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseUiState
-import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseViewModel
+import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseNavigationEvent
+import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiEvent
+import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiState
+import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseViewModel
+import dev.leonlatsch.photok.recovery.ui.breakableAtDashes
+import dev.leonlatsch.photok.recovery.ui.recoveryPhraseChip
+import dev.leonlatsch.photok.ui.ObserveAsEvents
+import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
+
+@ChecksSdkIntAtLeast(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+fun canCaptureScreenshots(): Boolean {
+   return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+}
 
 @Composable
 fun OnboardingRecoveryPhraseSetupScreen() {
-    val viewModel: RecoveryPhraseViewModel = hiltViewModel()
+    val viewModel: OnboardingRecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
+
+    ObserveAsEvents(viewModel.navigationEvents) { event ->
+        when (event) {
+            OnboardingRecoveryPhraseNavigationEvent.Continue -> navigator.navigate(OnboardingRoute.AddFirstPhotos)
+        }
+    }
+
+    LifecycleResumeEffect(Unit) {
+        if (canCaptureScreenshots()) {
+            viewModel.handleUiEvent(OnboardingRecoveryPhraseUiEvent.AllowScreenshots)
+        }
+        onPauseOrDispose { viewModel.handleUiEvent(OnboardingRecoveryPhraseUiEvent.RevokeScreenshots) }
+    }
+
+    val activity = LocalActivity.current
+    DisposableEffect(activity) {
+        if (activity == null || !canCaptureScreenshots()) {
+            return@DisposableEffect onDispose { }
+        }
+
+        val callback = Activity.ScreenCaptureCallback {
+            viewModel.handleUiEvent(OnboardingRecoveryPhraseUiEvent.ScreenshotTaken)
+        }
+        activity.registerScreenCaptureCallback(activity.mainExecutor, callback)
+        onDispose { activity.unregisterScreenCaptureCallback(callback) }
+    }
 
     OnboardingRecoveryPhraseSetupContent(
         uiState = uiState,
@@ -80,35 +122,27 @@ fun OnboardingRecoveryPhraseSetupScreen() {
 
 @Composable
 private fun OnboardingRecoveryPhraseSetupContent(
-    uiState: RecoveryPhraseUiState,
-    handleUiEvent: (RecoveryPhraseUiEvent) -> Unit,
+    uiState: OnboardingRecoveryPhraseUiState,
+    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
 ) {
-    val navigator = LocalNavigator.current
-
+    val context = LocalContext.current
     val phrase = uiState.phrase
-    if (uiState.inputs.qrSheetVisible && phrase != null) {
-        RecoveryPhraseQrSheet(
-            phrase = phrase,
-            onDismiss = { handleUiEvent(RecoveryPhraseUiEvent.DismissQrSheet) },
-            onSaved = { handleUiEvent(RecoveryPhraseUiEvent.MarkPhraseSaved) },
-        )
-    }
 
     Scaffold(
         bottomBar = {
-            Column {
-                RecoveryPhraseActions(
-                    phrase = phrase,
-                    handleUiEvent = handleUiEvent,
-                )
-
-                OnboardingNexButtonBar(
-                    text = stringResource(R.string.recovery_phrase_confirm),
-                    enabled = uiState.inputs.phraseWasSaved,
-                    loading = uiState.inputs.loading,
-                    onNext = { navigator.navigate(OnboardingRoute.AddFirstPhotos) },
-                )
-            }
+            OnboardingNexButtonBar(
+                text = if (uiState.phraseWasSaved) "Continue" else "Save QR code",
+                enabled = phrase != null,
+                loading = uiState.loading,
+                onNext = {
+                    if (uiState.phraseWasSaved) {
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.Continue)
+                    } else {
+                        phrase ?: return@OnboardingNexButtonBar
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShareQrImage(context, phrase))
+                    }
+                },
+            )
         }
     ) { contentPadding ->
         Column(
@@ -119,137 +153,163 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
-                text = stringResource(R.string.recovery_phrase_title)
+                text = "Save your recovery phrase"
             )
 
             OnboardingPageSubtitle(
-                text = stringResource(R.string.recovery_phrase_description)
+                text = "If you ever forget your password, this is the only way back into your vault. Keep it somewhere safe, outside this phone."
             )
 
-            RecoveryPhraseFlowRow(
+            RecoveryPhraseCard(
                 phrase = phrase,
-                animated = true,
+                wordCount = uiState.wordCount,
+                handleUiEvent = handleUiEvent,
             )
 
-            RecoveryPhraseWordCountSelection(
-                wordCount = uiState.inputs.wordCount,
-                handleUiEvent = handleUiEvent,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
+            if (canCaptureScreenshots()) {
+                Text(
+                    text = "Or just take a screenshot.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun RecoveryPhraseActions(
+private fun RecoveryPhraseCard(
     phrase: RecoveryPhrase?,
-    handleUiEvent: (RecoveryPhraseUiEvent) -> Unit,
+    wordCount: Bip39WordCount,
+    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .recoveryPhraseChip(RoundedCornerShape(18.dp))
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimens.spacingLarge)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.size(200.dp)
+            ) {
+                if (phrase != null) {
+                    QRCodeImage(
+                        text = phrase.toMnemonicString(),
+                        foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+                        modifier = Modifier.size(200.dp)
+                    )
+                } else {
+                    CircularProgressIndicator()
+                }
+            }
+
+            if (phrase != null) {
+                Text(
+                    text = phrase.toMnemonicString().breakableAtDashes(),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
+
+        OtherWaysToSaveMenu(
+            phrase = phrase,
+            wordCount = wordCount,
+            handleUiEvent = handleUiEvent,
+            modifier = Modifier.align(Alignment.TopEnd),
+        )
+    }
+}
+
+@Composable
+private fun OtherWaysToSaveMenu(
+    phrase: RecoveryPhrase?,
+    wordCount: Bip39WordCount,
+    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val clipboard = LocalClipboard.current
 
-    val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
+    var expanded by remember { mutableStateOf(false) }
+
+    val saveTextFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
         it ?: return@rememberLauncherForActivityResult
         phrase ?: return@rememberLauncherForActivityResult
-
-        handleUiEvent(RecoveryPhraseUiEvent.SaveToFile(context, it, phrase))
+        handleUiEvent(OnboardingRecoveryPhraseUiEvent.SaveTextFile(context, it, phrase))
     }
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Box(modifier = modifier) {
         IconButton(
-            onClick = { selectFileLauncher.launch("photok-recovery-phrase.txt") },
+            onClick = { expanded = true },
+            enabled = phrase != null,
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_download),
-                contentDescription = null,
+                painter = painterResource(R.drawable.ic_more_vert),
+                contentDescription = "Other ways to save",
             )
         }
-        IconButton(
-            onClick = {
-                phrase ?: return@IconButton
-                handleUiEvent(RecoveryPhraseUiEvent.Share(context, phrase))
-            },
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_share),
-                contentDescription = null,
-            )
-        }
-        IconButton(
-            onClick = {
-                phrase ?: return@IconButton
-                handleUiEvent(RecoveryPhraseUiEvent.ShowQrCode)
-            },
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_qr_code),
-                contentDescription = null,
-            )
-        }
-        IconButton(
-            onClick = {
-                phrase ?: return@IconButton
-                handleUiEvent(RecoveryPhraseUiEvent.CopyToClipboard(clipboard, phrase))
-            },
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_content_copy),
-                contentDescription = null,
-            )
-        }
-    }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun RecoveryPhraseWordCountSelection(
-    wordCount: Bip39WordCount,
-    handleUiEvent: (RecoveryPhraseUiEvent) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val hapticFeedback = LocalHapticFeedback.current
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        modifier = modifier,
-    ) {
-        Text(
-            text = stringResource(R.string.recovery_phrase_select_word_count)
-        )
-
-        SingleChoiceSegmentedButtonRow {
-            SegmentedButton(
-                selected = wordCount == Bip39WordCount.Twelve,
+        RoundedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            DropdownMenuItem(
+                text = { Text("Save as text file") },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_download), contentDescription = null) },
                 onClick = {
-                    handleUiEvent(RecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                    expanded = false
+                    saveTextFileLauncher.launch("photok-recovery-phrase.txt")
                 },
-                shape = RoundedCornerShape(24.dp, 6.dp, 6.dp, 24.dp),
-                colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-                ),
-            ) {
-                Text(Bip39WordCount.Twelve.words.toString())
-            }
-            Spacer(Modifier.width(6.dp))
-            SegmentedButton(
-                selected = wordCount == Bip39WordCount.TwentyFour,
+            )
+            DropdownMenuItem(
+                text = { Text("Share as text") },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_share), contentDescription = null) },
                 onClick = {
-                    handleUiEvent(RecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                    expanded = false
+                    phrase ?: return@DropdownMenuItem
+                    handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShareText(context, phrase))
                 },
-                shape = RoundedCornerShape(6.dp, 24.dp, 24.dp, 6.dp),
-                colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    activeBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-                ),
-            ) {
-                Text(Bip39WordCount.TwentyFour.words.toString())
+            )
+            DropdownMenuItem(
+                text = { Text("Copy to clipboard") },
+                leadingIcon = { Icon(painterResource(R.drawable.ic_content_copy), contentDescription = null) },
+                onClick = {
+                    expanded = false
+                    phrase ?: return@DropdownMenuItem
+                    handleUiEvent(OnboardingRecoveryPhraseUiEvent.CopyToClipboard(clipboard, phrase))
+                },
+            )
+
+            HorizontalDivider()
+
+            if (wordCount == Bip39WordCount.Twelve) {
+                DropdownMenuItem(
+                    text = { Text("Use 24 words instead") },
+                    onClick = {
+                        expanded = false
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
+                    },
+                )
+            } else {
+                DropdownMenuItem(
+                    text = { Text("Use 12 words instead") },
+                    onClick = {
+                        expanded = false
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
+                    },
+                )
             }
         }
     }
@@ -260,7 +320,7 @@ private fun RecoveryPhraseWordCountSelection(
 private fun OnboardingRecoveryPhraseSetupScreenPreview() {
     AppTheme {
         OnboardingRecoveryPhraseSetupContent(
-            uiState = RecoveryPhraseUiState(
+            uiState = OnboardingRecoveryPhraseUiState(
                 phrase = RecoveryPhrase(
                     listOf(
                         "this",
