@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.onboarding.ui
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -123,11 +124,12 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
             }
 
             val topPadding by animateDpAsState(
-                if (step == null) {
+                targetValue = if (step == null) {
                     0.dp
                 } else {
                     brandHeaderHeight
-                }
+                },
+                animationSpec = tween(delayMillis = 300)
             )
 
             Surface(
