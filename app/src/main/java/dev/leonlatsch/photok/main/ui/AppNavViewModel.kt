@@ -40,13 +40,13 @@ class AppNavViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _startRoute.value = if (config.systemOnboardingStep != null) {
-                RootRoute.Onboarding
-            } else if (vaultService.canUnlock() || legacyEncryptionMigrator.migrationNeeded()) {
+            _startRoute.value = if (vaultService.canUnlock() || legacyEncryptionMigrator.migrationNeeded()) {
                 RootRoute.Unlock
             } else {
                 RootRoute.Onboarding
             }
         }
     }
+
+    fun isOnboardingPending(): Boolean = config.systemOnboardingStep != null
 }

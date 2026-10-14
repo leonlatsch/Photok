@@ -166,7 +166,7 @@ class UnlockViewModel @Inject constructor(
                             }
 
                             _uiState.update { it.copy(loading = false) }
-                            navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
+                            sendUnlockedEvent()
                         }
                     }
                     .onFailure {
@@ -208,7 +208,7 @@ class UnlockViewModel @Inject constructor(
                 .onSuccess { session ->
                     passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
-                    navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
+                    sendUnlockedEvent()
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
@@ -224,6 +224,14 @@ class UnlockViewModel @Inject constructor(
                         )
                     }
                 }
+        }
+    }
+
+    private fun sendUnlockedEvent() {
+        if (config.systemOnboardingStep != null) {
+            navigationEventsChannel.trySend(UnlockNavigationEvent.ContinueOnboarding)
+        } else {
+            navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
         }
     }
 }

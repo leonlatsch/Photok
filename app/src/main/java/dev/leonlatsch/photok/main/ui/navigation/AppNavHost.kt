@@ -61,6 +61,7 @@ fun AppNavHost(
     AppNavDisplay(
         startRoute = startRoute ?: return,
         startTab = startTab,
+        isOnboardingPending = viewModel::isOnboardingPending,
     )
 }
 
@@ -68,6 +69,7 @@ fun AppNavHost(
 private fun AppNavDisplay(
     startRoute: RootRoute,
     startTab: () -> MainTab,
+    isOnboardingPending: () -> Boolean,
 ) {
     val backStack = rememberNavBackStack(startRoute)
     val navigator = remember(backStack) { RootNavigator(backStack) }
@@ -92,7 +94,15 @@ private fun AppNavDisplay(
                     UnlockScreen()
                 }
                 entry<RootRoute.RecoveryPhraseRestore> {
-                    RecoveryPhraseRestoreScreen(onUnlocked = { navigator.replaceAll(RootRoute.Main) })
+                    RecoveryPhraseRestoreScreen(
+                        onUnlocked = {
+                            if (isOnboardingPending()) {
+                                navigator.replaceAll(RootRoute.Onboarding)
+                            } else {
+                                navigator.replaceAll(RootRoute.Main)
+                            }
+                        },
+                    )
                 }
                 entry<RootRoute.EncryptionMigration>(metadata = NoTransitionWhenLeaving) {
                     EncryptionMigrationScreen(

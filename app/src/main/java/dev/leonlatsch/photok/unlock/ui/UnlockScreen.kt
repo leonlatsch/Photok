@@ -89,6 +89,11 @@ fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
                 navigator.replaceAll(RootRoute.Main)
             }
 
+            UnlockNavigationEvent.ContinueOnboarding -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.Onboarding)
+            }
+
             UnlockNavigationEvent.StartLegacyMigration -> {
                 activity?.hideKeyboard()
                 navigator.replaceAll(RootRoute.EncryptionMigration)
