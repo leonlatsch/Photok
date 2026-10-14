@@ -16,9 +16,8 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,7 +49,6 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.main.ui.navigation.RootRoute
-import dev.leonlatsch.photok.main.ui.navigation.TabNavigator
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingBrandHeader
 import dev.leonlatsch.photok.onboarding.ui.components.step
@@ -63,7 +61,6 @@ import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
 import dev.leonlatsch.photok.pro.navigation.proOnboardingEntries
 import dev.leonlatsch.photok.ui.ObserveAsEvents
-import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
 
@@ -73,16 +70,12 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
     val activity = LocalActivity.current
 
     val backStack = rememberNavBackStack(*viewModel.initialBackStack.toTypedArray())
-    val navigator = remember(backStack, rootNavigator) { TabNavigator(backStack, rootNavigator) }
+    val navigator = remember(backStack, rootNavigator) { OnboardingNavigator(backStack, rootNavigator) }
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
             OnboardingNavigationEvent.Finished -> rootNavigator.replaceAll(RootRoute.Main)
         }
-    }
-
-    BackHandler(enabled = backStack.size == 1) {
-        activity?.finish()
     }
 
     val currentRoute = backStack.lastOrNull()
@@ -123,19 +116,15 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                 }
             }
 
-            val topPadding by animateDpAsState(
-                targetValue = if (step == null) {
-                    0.dp
-                } else {
-                    brandHeaderHeight
-                },
+            val brandHeaderFraction by animateFloatAsState(
+                targetValue = if (step == null) 0f else 1f,
                 animationSpec = tween(delayMillis = 300)
             )
 
             Surface(
                 shape = RoundedCornerShape(28.dp),
                 modifier = Modifier
-                    .padding(top = topPadding)
+                    .padding(top = brandHeaderHeight * brandHeaderFraction)
                     .consumeWindowInsets(WindowInsets.statusBars)
             ) {
                 NavDisplay(
@@ -146,8 +135,6 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                         rememberViewModelStoreNavEntryDecorator(),
                     ),
                     transitionSpec = { slideForward() },
-                    popTransitionSpec = { slideBackward() },
-                    predictivePopTransitionSpec = { slideBackward() },
                     entryProvider = entryProvider {
                         entry<OnboardingRoute.Welcome> {
                             OnboardingWelcomeScreen()
@@ -156,12 +143,7 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                             OnboardingSelectStartScreen()
                         }
                         entry<OnboardingRoute.SetupPassword> {
-                            OnboardingSetupPasswordScreen(
-                                onVaultCreated = {
-                                    backStack.add(OnboardingRoute.BiometricUnlock)
-                                    backStack.removeAll { it != OnboardingRoute.BiometricUnlock }
-                                },
-                            )
+                            OnboardingSetupPasswordScreen()
                         }
                         entry<OnboardingRoute.BiometricUnlock> {
                             OnboardingBiometricUnlockScreen()

@@ -17,30 +17,22 @@
 package dev.leonlatsch.photok.onboarding.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -62,7 +54,6 @@ fun NavKey.step(): Int? = when (this) {
 
 @Composable
 fun OnboardingBrandHeader(step: Int, modifier: Modifier = Modifier) {
-    val navigator = LocalNavigator.current
     val progress by animateFloatAsState(step.toFloat() / STEP_COUNT)
 
     Column(
@@ -73,30 +64,18 @@ fun OnboardingBrandHeader(step: Int, modifier: Modifier = Modifier) {
             fontSize = 48.sp,
             color = LocalContentColor.current
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .padding(end = Dimens.spacingLarge),
+                .padding(horizontal = Dimens.spacingLarge),
         ) {
-            IconButton(onClick = navigator::goBack) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_back),
-                    contentDescription = null,
-                )
-            }
             LinearProgressIndicator(
                 progress = { progress },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.fillMaxWidth(),
                 color = colorScheme.surface,
                 trackColor = colorScheme.surface.copy(alpha = 0.3f),
-            )
-            Text(
-                text = "$step of $STEP_COUNT",
-                style = typography.labelLarge,
-                color = colorScheme.surface,
             )
         }
     }
