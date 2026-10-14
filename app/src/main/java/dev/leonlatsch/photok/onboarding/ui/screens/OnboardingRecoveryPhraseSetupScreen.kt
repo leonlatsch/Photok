@@ -25,7 +25,10 @@ import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -153,49 +156,48 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageTitle(
-                text = "Save your recovery phrase"
+                text = "Your recovery phrase"
             )
 
             OnboardingPageSubtitle(
-                text = "If you ever forget your password, this is the only way back into your vault. Keep it somewhere safe, outside this phone."
+                text = "The only way back into your vault if you forget your password. Save it somewhere outside this phone."
             )
 
-            RecoveryPhraseCard(
+            Spacer(Modifier.height(Dimens.spacingXSmall))
+
+            RecoveryPhraseSheet(
                 phrase = phrase,
                 wordCount = uiState.wordCount,
                 handleUiEvent = handleUiEvent,
             )
-
-            if (canCaptureScreenshots()) {
-                Text(
-                    text = "Or just take a screenshot.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
         }
     }
 }
 
 @Composable
-private fun RecoveryPhraseCard(
+private fun RecoveryPhraseSheet(
     phrase: RecoveryPhrase?,
     wordCount: Bip39WordCount,
     handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .recoveryPhraseChip(RoundedCornerShape(18.dp))
     ) {
+        RecoveryPhraseSheetHeader(
+            phrase = phrase,
+            wordCount = wordCount,
+            handleUiEvent = handleUiEvent,
+        )
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Dimens.spacingLarge)
+                .padding(horizontal = Dimens.spacingLarge)
+                .padding(bottom = Dimens.spacingLarge)
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -213,21 +215,61 @@ private fun RecoveryPhraseCard(
                 }
             }
 
-            if (phrase != null) {
-                Text(
-                    text = phrase.toMnemonicString().breakableAtDashes(),
-                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
+            Text(
+                text = phrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                textAlign = TextAlign.Center,
+                minLines = 3,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+
+        if (canCaptureScreenshots()) {
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+            )
+
+            Text(
+                text = "Tip: a screenshot of this card works too.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.spacingMedium),
+            )
+        }
+    }
+}
+
+@Composable
+private fun RecoveryPhraseSheetHeader(
+    phrase: RecoveryPhrase?,
+    wordCount: Bip39WordCount,
+    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = Dimens.spacingLarge, end = Dimens.spacingXSmall, top = Dimens.spacingXSmall)
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = "Recovery phrase",
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = "${wordCount.words} words",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
 
         OtherWaysToSaveMenu(
             phrase = phrase,
             wordCount = wordCount,
             handleUiEvent = handleUiEvent,
-            modifier = Modifier.align(Alignment.TopEnd),
         )
     }
 }
