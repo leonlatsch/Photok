@@ -17,11 +17,13 @@
 package dev.leonlatsch.photok.onboarding.ui.screens
 
 import android.app.Activity
-import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +52,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -72,6 +75,8 @@ import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhra
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiEvent
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiState
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseViewModel
+import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.RecoveryPhraseSavedTo
+import dev.leonlatsch.photok.other.AndroidFeatures
 import dev.leonlatsch.photok.recovery.ui.breakableAtDashes
 import dev.leonlatsch.photok.recovery.ui.recoveryPhraseChip
 import dev.leonlatsch.photok.ui.ObserveAsEvents
@@ -80,25 +85,40 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
 
-@ChecksSdkIntAtLeast(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-fun canCaptureScreenshots(): Boolean {
-   return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-}
+private const val IMAGE_FILE_NAME = "photok-recovery-phrase.jpg"
+
 
 @Composable
 fun OnboardingRecoveryPhraseSetupScreen() {
     val viewModel: OnboardingRecoveryPhraseViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val navigator = LocalNavigator.current
+    val context = LocalContext.current
+
+    val saveImageFileLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("image/jpeg")) {
+            it ?: return@rememberLauncherForActivityResult
+            val phrase = uiState.phrase ?: return@rememberLauncherForActivityResult
+            viewModel.handleUiEvent(
+                OnboardingRecoveryPhraseUiEvent.SaveImageFile(
+                    context,
+                    it,
+                    phrase
+                )
+            )
+        }
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
             OnboardingRecoveryPhraseNavigationEvent.Continue -> navigator.navigate(OnboardingRoute.AddFirstPhotos)
+            OnboardingRecoveryPhraseNavigationEvent.PickImageFileLocation -> saveImageFileLauncher.launch(
+                IMAGE_FILE_NAME
+            )
         }
     }
 
     LifecycleResumeEffect(Unit) {
-        if (canCaptureScreenshots()) {
+        if (AndroidFeatures.detectScreenRecording()) {
             viewModel.handleUiEvent(OnboardingRecoveryPhraseUiEvent.AllowScreenshots)
         }
         onPauseOrDispose { viewModel.handleUiEvent(OnboardingRecoveryPhraseUiEvent.RevokeScreenshots) }
@@ -106,7 +126,7 @@ fun OnboardingRecoveryPhraseSetupScreen() {
 
     val activity = LocalActivity.current
     DisposableEffect(activity) {
-        if (activity == null || !canCaptureScreenshots()) {
+        if (activity == null || !AndroidFeatures.detectScreenRecording()) {
             return@DisposableEffect onDispose { }
         }
 
@@ -120,6 +140,7 @@ fun OnboardingRecoveryPhraseSetupScreen() {
     OnboardingRecoveryPhraseSetupContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
+        onSaveImageAsFile = { saveImageFileLauncher.launch(IMAGE_FILE_NAME) },
     )
 }
 
@@ -127,25 +148,58 @@ fun OnboardingRecoveryPhraseSetupScreen() {
 private fun OnboardingRecoveryPhraseSetupContent(
     uiState: OnboardingRecoveryPhraseUiState,
     handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
+    onSaveImageAsFile: () -> Unit,
 ) {
     val context = LocalContext.current
     val phrase = uiState.phrase
 
     Scaffold(
         bottomBar = {
-            OnboardingNexButtonBar(
-                text = if (uiState.phraseWasSaved) "Continue" else "Save QR code",
-                enabled = phrase != null,
-                loading = uiState.loading,
-                onNext = {
-                    if (uiState.phraseWasSaved) {
-                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.Continue)
-                    } else {
-                        phrase ?: return@OnboardingNexButtonBar
-                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShareQrImage(context, phrase))
+            Column {
+                RecoveryPhraseSavedIndicator(
+                    savedTo = uiState.savedTo,
+                    modifier = Modifier
+                        .padding(horizontal = Dimens.spacingLarge)
+                        .padding(bottom = Dimens.spacingMedium)
+                )
+
+                when {
+                    uiState.savedTo != null -> {
+                        OnboardingNexButtonBar(
+                            text = "Continue",
+                            enabled = phrase != null,
+                            loading = uiState.loading,
+                            onNext = { handleUiEvent(OnboardingRecoveryPhraseUiEvent.Continue) },
+                        )
                     }
-                },
-            )
+
+                    AndroidFeatures.mediaStore() -> {
+                        OnboardingNexButtonBar(
+                            text = "Save to Photos",
+                            enabled = phrase != null,
+                            loading = uiState.loading,
+                            onNext = {
+                                phrase ?: return@OnboardingNexButtonBar
+                                handleUiEvent(
+                                    OnboardingRecoveryPhraseUiEvent.SaveImageToPhotos(
+                                        context,
+                                        phrase
+                                    )
+                                )
+                            },
+                        )
+                    }
+
+                    else -> {
+                        OnboardingNexButtonBar(
+                            text = "Save as image",
+                            enabled = phrase != null,
+                            loading = uiState.loading,
+                            onNext = onSaveImageAsFile,
+                        )
+                    }
+                }
+            }
         }
     ) { contentPadding ->
         Column(
@@ -224,7 +278,7 @@ private fun RecoveryPhraseSheet(
             )
         }
 
-        if (canCaptureScreenshots()) {
+        if (AndroidFeatures.detectScreenRecording()) {
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
             )
@@ -252,7 +306,11 @@ private fun RecoveryPhraseSheetHeader(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = Dimens.spacingLarge, end = Dimens.spacingXSmall, top = Dimens.spacingXSmall)
+            .padding(
+                start = Dimens.spacingLarge,
+                end = Dimens.spacingXSmall,
+                top = Dimens.spacingXSmall
+            )
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
@@ -286,11 +344,12 @@ private fun OtherWaysToSaveMenu(
 
     var expanded by remember { mutableStateOf(false) }
 
-    val saveTextFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
-        it ?: return@rememberLauncherForActivityResult
-        phrase ?: return@rememberLauncherForActivityResult
-        handleUiEvent(OnboardingRecoveryPhraseUiEvent.SaveTextFile(context, it, phrase))
-    }
+    val saveTextFileLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
+            it ?: return@rememberLauncherForActivityResult
+            phrase ?: return@rememberLauncherForActivityResult
+            handleUiEvent(OnboardingRecoveryPhraseUiEvent.SaveTextFile(context, it, phrase))
+        }
 
     Box(modifier = modifier) {
         IconButton(
@@ -308,8 +367,27 @@ private fun OtherWaysToSaveMenu(
             onDismissRequest = { expanded = false },
         ) {
             DropdownMenuItem(
+                text = { Text("Share as image") },
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.ic_share),
+                        contentDescription = null
+                    )
+                },
+                onClick = {
+                    expanded = false
+                    phrase ?: return@DropdownMenuItem
+                    handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShareImage(context, phrase))
+                },
+            )
+            DropdownMenuItem(
                 text = { Text("Save as text file") },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_download), contentDescription = null) },
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.ic_download),
+                        contentDescription = null
+                    )
+                },
                 onClick = {
                     expanded = false
                     saveTextFileLauncher.launch("photok-recovery-phrase.txt")
@@ -317,7 +395,12 @@ private fun OtherWaysToSaveMenu(
             )
             DropdownMenuItem(
                 text = { Text("Share as text") },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_share), contentDescription = null) },
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.ic_share),
+                        contentDescription = null
+                    )
+                },
                 onClick = {
                     expanded = false
                     phrase ?: return@DropdownMenuItem
@@ -326,11 +409,21 @@ private fun OtherWaysToSaveMenu(
             )
             DropdownMenuItem(
                 text = { Text("Copy to clipboard") },
-                leadingIcon = { Icon(painterResource(R.drawable.ic_content_copy), contentDescription = null) },
+                leadingIcon = {
+                    Icon(
+                        painterResource(R.drawable.ic_content_copy),
+                        contentDescription = null
+                    )
+                },
                 onClick = {
                     expanded = false
                     phrase ?: return@DropdownMenuItem
-                    handleUiEvent(OnboardingRecoveryPhraseUiEvent.CopyToClipboard(clipboard, phrase))
+                    handleUiEvent(
+                        OnboardingRecoveryPhraseUiEvent.CopyToClipboard(
+                            clipboard,
+                            phrase
+                        )
+                    )
                 },
             )
 
@@ -353,6 +446,85 @@ private fun OtherWaysToSaveMenu(
                     },
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun RecoveryPhraseSavedIndicator(
+    savedTo: RecoveryPhraseSavedTo?,
+    modifier: Modifier = Modifier,
+) {
+    var lastSavedTo by remember { mutableStateOf(savedTo) }
+    if (savedTo != null) lastSavedTo = savedTo
+
+    AnimatedVisibility(
+        visible = savedTo != null,
+        enter = slideInVertically { it },
+        exit = slideOutVertically { it },
+        modifier = modifier,
+    ) {
+        when (val shown = lastSavedTo) {
+            RecoveryPhraseSavedTo.Photos -> SavedIndicatorRow(
+                title = "Saved to Photos",
+                description = "Look for it in the Photok album (Pictures/Photok)",
+            )
+
+            is RecoveryPhraseSavedTo.File -> SavedIndicatorRow(
+                title = if (shown.fileName != null) "Saved to ${shown.fileName}" else "Saved as file",
+                description = "Find it in the folder you picked",
+            )
+
+            is RecoveryPhraseSavedTo.Shared -> SavedIndicatorRow(
+                title = if (shown.appName != null) "Shared with ${shown.appName}" else "Shared",
+                description = "Make sure it arrived where you sent it",
+            )
+
+            RecoveryPhraseSavedTo.Clipboard -> SavedIndicatorRow(
+                title = "Copied to clipboard",
+                description = "Paste it somewhere safe outside this phone",
+            )
+
+            RecoveryPhraseSavedTo.Screenshot -> SavedIndicatorRow(
+                title = "Screenshot taken",
+                description = "Look for it in your Screenshots album",
+            )
+
+            null -> Unit
+        }
+    }
+}
+
+@Composable
+private fun SavedIndicatorRow(
+    title: String,
+    description: String,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .padding(Dimens.spacingMedium),
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_check_circle),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+        Column {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
         }
     }
 }
@@ -381,6 +553,22 @@ private fun OnboardingRecoveryPhraseSetupScreenPreview() {
                 ),
             ),
             handleUiEvent = {},
+            onSaveImageAsFile = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun OnboardingRecoveryPhraseSetupScreenSavedPreview() {
+    AppTheme {
+        OnboardingRecoveryPhraseSetupContent(
+            uiState = OnboardingRecoveryPhraseUiState(
+                phrase = RecoveryPhrase(List(12) { "word" }),
+                savedTo = RecoveryPhraseSavedTo.Photos,
+            ),
+            handleUiEvent = {},
+            onSaveImageAsFile = {},
         )
     }
 }

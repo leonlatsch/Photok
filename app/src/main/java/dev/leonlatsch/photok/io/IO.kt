@@ -17,9 +17,13 @@
 package dev.leonlatsch.photok.io
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
@@ -259,6 +263,44 @@ class IO @Inject constructor(
             }
         } catch (e: IOException) {
             Timber.e("Error opening external file at $destinationUri: $e")
+            null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun saveImageToPictures(
+        fileName: String,
+        mimeType: String,
+        subDir: String,
+        write: (OutputStream) -> Unit,
+    ): Uri? {
+        val resolver = context.contentResolver
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/$subDir")
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+
+        var uri: Uri? = null
+        return try {
+            uri = resolver.insert(MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
+                ?: throw IOException("MediaStore insert returned null")
+
+            resolver.openOutputStream(uri)?.use(write)
+                ?: throw IOException("Could not open output stream for $uri")
+
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+            uri
+        } catch (e: Exception) {
+            Timber.e(e, "Error saving image to pictures")
+            uri?.let {
+                try {
+                    resolver.delete(it, null, null)
+                } catch (deleteError: Exception) {
+                    Timber.e(deleteError, "Error deleting pending image $it")
+                }
+            }
             null
         }
     }

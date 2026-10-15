@@ -23,9 +23,18 @@ data class OnboardingRecoveryPhraseUiState(
     val phrase: RecoveryPhrase? = null,
     val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
     val loading: Boolean = false,
-    val phraseWasSaved: Boolean = false,
+    val savedTo: RecoveryPhraseSavedTo? = null,
 )
+
+sealed interface RecoveryPhraseSavedTo {
+    data object Photos : RecoveryPhraseSavedTo
+    data class File(val fileName: String?) : RecoveryPhraseSavedTo
+    data class Shared(val appName: String?) : RecoveryPhraseSavedTo
+    data object Clipboard : RecoveryPhraseSavedTo
+    data object Screenshot : RecoveryPhraseSavedTo
+}
 
 sealed interface OnboardingRecoveryPhraseNavigationEvent {
     data object Continue : OnboardingRecoveryPhraseNavigationEvent
+    data object PickImageFileLocation : OnboardingRecoveryPhraseNavigationEvent
 }

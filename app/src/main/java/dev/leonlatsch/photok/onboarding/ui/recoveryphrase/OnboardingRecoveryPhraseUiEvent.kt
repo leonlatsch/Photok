@@ -23,7 +23,9 @@ import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 
 sealed interface OnboardingRecoveryPhraseUiEvent {
-    data class ShareQrImage(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
+    data class SaveImageToPhotos(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
+    data class SaveImageFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
+    data class ShareImage(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class SaveTextFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class ShareText(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
