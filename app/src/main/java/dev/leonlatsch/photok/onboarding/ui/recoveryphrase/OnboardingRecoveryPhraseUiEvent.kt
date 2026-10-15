@@ -27,7 +27,6 @@ sealed interface OnboardingRecoveryPhraseUiEvent {
     data class SaveImageFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class ShareImage(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class SaveTextFile(val context: Context, val uri: Uri, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
-    data class ShareText(val context: Context, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class CopyToClipboard(val clipboard: Clipboard, val phrase: RecoveryPhrase) : OnboardingRecoveryPhraseUiEvent
     data class UpdateWordCount(val wordCount: Bip39WordCount) : OnboardingRecoveryPhraseUiEvent
     data object AllowScreenshots : OnboardingRecoveryPhraseUiEvent

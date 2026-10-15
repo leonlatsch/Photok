@@ -209,9 +209,18 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(
-                text = "Your recovery phrase"
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                OnboardingPageTitle(
+                    text = "Your recovery phrase",
+                    modifier = Modifier.weight(1f),
+                )
+
+                OtherWaysToSaveMenu(
+                    phrase = phrase,
+                    wordCount = uiState.wordCount,
+                    handleUiEvent = handleUiEvent,
+                )
+            }
 
             OnboardingPageSubtitle(
                 text = "The only way back into your vault if you forget your password. Save it somewhere outside this phone."
@@ -219,11 +228,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            RecoveryPhraseSheet(
-                phrase = phrase,
-                wordCount = uiState.wordCount,
-                handleUiEvent = handleUiEvent,
-            )
+            RecoveryPhraseSheet(phrase = phrase)
         }
     }
 }
@@ -231,27 +236,18 @@ private fun OnboardingRecoveryPhraseSetupContent(
 @Composable
 private fun RecoveryPhraseSheet(
     phrase: RecoveryPhrase?,
-    wordCount: Bip39WordCount,
-    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .recoveryPhraseChip(RoundedCornerShape(18.dp))
     ) {
-        RecoveryPhraseSheetHeader(
-            phrase = phrase,
-            wordCount = wordCount,
-            handleUiEvent = handleUiEvent,
-        )
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Dimens.spacingLarge)
-                .padding(bottom = Dimens.spacingLarge)
+                .padding(Dimens.spacingLarge)
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -293,42 +289,6 @@ private fun RecoveryPhraseSheet(
                     .padding(Dimens.spacingMedium),
             )
         }
-    }
-}
-
-@Composable
-private fun RecoveryPhraseSheetHeader(
-    phrase: RecoveryPhrase?,
-    wordCount: Bip39WordCount,
-    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                start = Dimens.spacingLarge,
-                end = Dimens.spacingXSmall,
-                top = Dimens.spacingXSmall
-            )
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = "Recovery phrase",
-                style = MaterialTheme.typography.titleSmall,
-            )
-            Text(
-                text = "${wordCount.words} words",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        OtherWaysToSaveMenu(
-            phrase = phrase,
-            wordCount = wordCount,
-            handleUiEvent = handleUiEvent,
-        )
     }
 }
 
@@ -391,20 +351,6 @@ private fun OtherWaysToSaveMenu(
                 onClick = {
                     expanded = false
                     saveTextFileLauncher.launch("photok-recovery-phrase.txt")
-                },
-            )
-            DropdownMenuItem(
-                text = { Text("Share as text") },
-                leadingIcon = {
-                    Icon(
-                        painterResource(R.drawable.ic_share),
-                        contentDescription = null
-                    )
-                },
-                onClick = {
-                    expanded = false
-                    phrase ?: return@DropdownMenuItem
-                    handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShareText(context, phrase))
                 },
             )
             DropdownMenuItem(

@@ -25,7 +25,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.compose.ui.platform.ClipEntry
@@ -36,7 +35,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.RecoveryPhraseStore
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
@@ -74,7 +72,6 @@ private const val ACTION_SHARE_TARGET_CHOSEN = "dev.leonlatsch.photok.RECOVERY_P
 @HiltViewModel
 class OnboardingRecoveryPhraseViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context,
-    private val resources: Resources,
     private val io: IO,
     private val sessionRepository: SessionRepository,
     private val recoveryPhraseStore: RecoveryPhraseStore,
@@ -230,21 +227,6 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
                 io.copy(inputStream, outputStream)
 
                 savedTo.value = RecoveryPhraseSavedTo.File(io.getFileName(event.uri))
-            }
-
-            is OnboardingRecoveryPhraseUiEvent.ShareText -> {
-                val text = """
-                    Photok ${resources.getString(R.string.recovery_phrase_label)}
-
-                    ${event.phrase.toMnemonicString()}
-                """.trimIndent()
-
-                val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                    putExtra(Intent.EXTRA_TEXT, text)
-                    type = "text/plain"
-                }
-
-                event.context.startActivity(Intent.createChooser(sendIntent, null, shareTargetChosenSender()))
             }
 
             is OnboardingRecoveryPhraseUiEvent.CopyToClipboard -> viewModelScope.launch {
