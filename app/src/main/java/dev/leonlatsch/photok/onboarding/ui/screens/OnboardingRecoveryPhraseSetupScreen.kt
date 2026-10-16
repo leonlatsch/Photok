@@ -22,12 +22,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.animateBounds
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +38,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,12 +57,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -161,13 +167,6 @@ private fun OnboardingRecoveryPhraseSetupContent(
     Scaffold(
         bottomBar = {
             Column {
-                RecoveryPhraseSavedIndicator(
-                    savedTo = uiState.savedTo,
-                    modifier = Modifier
-                        .padding(horizontal = Dimens.spacingLarge)
-                        .padding(bottom = Dimens.spacingMedium)
-                )
-
                 when {
                     uiState.savedTo != null -> {
                         OnboardingNexButtonBar(
@@ -220,96 +219,177 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            RecoveryPhraseCard(phrase = phrase)
-
-            OtherWaysToSaveMenu(
+            RecoveryPhraseCard(
                 phrase = phrase,
-                wordCount = uiState.wordCount,
-                handleUiEvent = handleUiEvent,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                saved = uiState.savedTo != null,
             )
+
+            RecoveryPhraseSavedIndicator(savedTo = uiState.savedTo)
+
+            AnimatedVisibility(
+                visible = uiState.savedTo == null,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                OtherWaysToSaveMenu(
+                    phrase = phrase,
+                    wordCount = uiState.wordCount,
+                    handleUiEvent = handleUiEvent,
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun RecoveryPhraseCard(
     phrase: RecoveryPhrase?,
+    saved: Boolean,
 ) {
+    val qrCode = remember {
+        movableContentOf { shownPhrase: RecoveryPhrase?, modifier: Modifier ->
+            RecoveryPhraseQrCode(phrase = shownPhrase, modifier = modifier)
+        }
+    }
+    val phraseText = remember {
+        movableContentOf { shownPhrase: RecoveryPhrase?, textAlign: TextAlign, modifier: Modifier ->
+            RecoveryPhraseText(phrase = shownPhrase, textAlign = textAlign, modifier = modifier)
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .recoveryPhraseChip(RoundedCornerShape(18.dp))
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.spacingLarge)
-        ) {
-            AnimatedContent(
-                targetState = phrase,
-                transitionSpec = {
-                    (fadeIn(tween(400)) + scaleIn(tween(400), initialScale = 0.92f)) togetherWith
-                        fadeOut(tween(200))
-                },
-                contentAlignment = Alignment.Center,
-                label = "RecoveryPhraseQrCode",
-                modifier = Modifier.size(200.dp)
-            ) { shownPhrase ->
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.size(200.dp)
+        LookaheadScope {
+            if (saved) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.spacingMedium)
                 ) {
-                    if (shownPhrase != null) {
-                        QRCodeImage(
-                            text = shownPhrase.toMnemonicString(),
-                            foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-                            modifier = Modifier.size(200.dp)
-                        )
-                    } else {
-                        CircularProgressIndicator()
-                    }
+                    qrCode(
+                        phrase,
+                        Modifier
+                            .animateBounds(this@LookaheadScope)
+                            .size(96.dp)
+                    )
+                    phraseText(
+                        phrase,
+                        TextAlign.Start,
+                        Modifier
+                            .animateBounds(this@LookaheadScope)
+                            .weight(1f)
+                    )
+                }
+            } else {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.spacingLarge)
+                ) {
+                    qrCode(
+                        phrase,
+                        Modifier
+                            .animateBounds(this@LookaheadScope)
+                            .size(200.dp)
+                    )
+                    phraseText(
+                        phrase,
+                        TextAlign.Center,
+                        Modifier
+                            .animateBounds(this@LookaheadScope)
+                            .fillMaxWidth()
+                    )
                 }
             }
+        }
 
-            AnimatedContent(
-                targetState = phrase,
-                transitionSpec = {
-                    (fadeIn(tween(400, delayMillis = 150)) +
-                        slideInVertically(tween(400, delayMillis = 150)) { it / 4 }) togetherWith
-                        fadeOut(tween(200))
-                },
-                label = "RecoveryPhraseText",
-                modifier = Modifier.fillMaxWidth(),
-            ) { shownPhrase ->
+        AnimatedVisibility(
+            visible = AndroidFeatures.detectScreenRecording() && !saved,
+            enter = expandVertically() + fadeIn(),
+            exit = shrinkVertically() + fadeOut(),
+        ) {
+            Column {
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                )
+
                 Text(
-                    text = shownPhrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
-                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                    text = "Or just take a screenshot",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
-                    minLines = 3,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.spacingMedium),
                 )
             }
         }
+    }
+}
 
-        if (AndroidFeatures.detectScreenRecording()) {
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-            )
-
-            Text(
-                text = "Or just take a screenshot",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.spacingMedium),
-            )
+@Composable
+private fun RecoveryPhraseQrCode(
+    phrase: RecoveryPhrase?,
+    modifier: Modifier = Modifier,
+) {
+    AnimatedContent(
+        targetState = phrase,
+        transitionSpec = {
+            (fadeIn(tween(400)) + scaleIn(tween(400), initialScale = 0.92f)) togetherWith
+                fadeOut(tween(200))
+        },
+        contentAlignment = Alignment.Center,
+        label = "RecoveryPhraseQrCode",
+        modifier = modifier,
+    ) { shownPhrase ->
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            if (shownPhrase != null) {
+                QRCodeImage(
+                    text = shownPhrase.toMnemonicString(),
+                    foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                CircularProgressIndicator()
+            }
         }
+    }
+}
+
+@Composable
+private fun RecoveryPhraseText(
+    phrase: RecoveryPhrase?,
+    textAlign: TextAlign,
+    modifier: Modifier = Modifier,
+) {
+    AnimatedContent(
+        targetState = phrase,
+        transitionSpec = {
+            (fadeIn(tween(400, delayMillis = 150)) +
+                slideInVertically(tween(400, delayMillis = 150)) { it / 4 }) togetherWith
+                fadeOut(tween(200))
+        },
+        label = "RecoveryPhraseText",
+        modifier = modifier,
+    ) { shownPhrase ->
+        Text(
+            text = shownPhrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
+            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+            textAlign = textAlign,
+            minLines = 3,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
@@ -423,8 +503,8 @@ private fun RecoveryPhraseSavedIndicator(
 
     AnimatedVisibility(
         visible = savedTo != null,
-        enter = slideInVertically { it },
-        exit = slideOutVertically { it },
+        enter = expandVertically() + fadeIn(),
+        exit = shrinkVertically() + fadeOut(),
         modifier = modifier,
     ) {
         when (val shown = lastSavedTo) {
