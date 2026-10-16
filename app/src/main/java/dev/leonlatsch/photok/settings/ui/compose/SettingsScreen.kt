@@ -328,12 +328,14 @@ fun SettingsScreen() {
     val navigator = LocalNavigator.current
 
     val biometricUnlockViewModel = hiltViewModel<BiometricUnlockViewModel>()
+    val intruderWarningCount = rememberIntruderWarningCount()
 
     CompositionLocalProvider(
         LocalPreferencesValues provides uiState.preferencesValues
     ) {
         SettingsContent(
             uiState = uiState,
+            intruderWarningCount = intruderWarningCount,
             handleUiEvent = viewModel::handleUiEvent,
             onOpenDevSettings = { navigator.navigate(AppRoute.DevSettings) },
         )
@@ -346,6 +348,7 @@ fun SettingsScreen() {
 @Composable
 fun SettingsContent(
     uiState: SettingsUiState,
+    intruderWarningCount: Int,
     handleUiEvent: (SettingsUiEvent) -> Unit,
     onOpenDevSettings: () -> Unit,
 ) {
@@ -377,6 +380,7 @@ fun SettingsContent(
         SettingsPreferenceSections(
             sections = uiState.screenConfig.sections,
             proFeaturesActive = uiState.proFeaturesActive,
+            intruderWarningCount = intruderWarningCount,
             handleUiEvent = handleUiEvent,
             scrollBehavior = scrollBehavior,
             scrollState = scrollState,
@@ -393,13 +397,12 @@ fun SettingsContent(
 private fun SettingsPreferenceSections(
     sections: List<PreferenceSection>,
     proFeaturesActive: Boolean,
+    intruderWarningCount: Int,
     handleUiEvent: (SettingsUiEvent) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     scrollState: ScrollState,
     contentPadding: PaddingValues,
 ) {
-    val intruderWarningCount = rememberIntruderWarningCount()
-
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
         modifier = Modifier
@@ -727,6 +730,7 @@ private fun Preview() {
                 uiState = SettingsUiState(
                     screenConfig = PrefsScreenConfig,
                 ),
+                intruderWarningCount = 0,
                 handleUiEvent = {},
                 onOpenDevSettings = {},
             )
@@ -744,6 +748,7 @@ private fun PreviewDark() {
                 uiState = SettingsUiState(
                     screenConfig = PrefsScreenConfig,
                 ),
+                intruderWarningCount = 0,
                 handleUiEvent = {},
                 onOpenDevSettings = {},
             )
