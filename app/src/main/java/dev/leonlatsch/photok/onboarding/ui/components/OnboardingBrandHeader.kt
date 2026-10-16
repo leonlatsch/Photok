@@ -87,11 +87,11 @@ private fun stepIcon(step: Int): Int = when (step) {
 }
 
 private fun stepTitle(step: Int): String = when (step) {
-    1 -> "Your vault"
-    2 -> "Password"
-    3 -> "Biometrics"
-    4 -> "Recovery phrase"
-    5 -> "First photos"
+    1 -> "Where to start?"
+    2 -> "Your Password"
+    3 -> "Unlock with a touch"
+    4 -> "Recovery Phrase"
+    5 -> "Import photos"
     else -> "Photok Pro"
 }
 
@@ -140,27 +140,33 @@ private fun StepCounter(step: Int) {
 
 @Composable
 private fun StepTitle(step: Int) {
-    AnimatedContent(
-        targetState = step,
-        transitionSpec = { stepTransition(forward = targetState > initialState) },
-    ) { targetStep ->
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(52.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(LocalContentColor.current.copy(alpha = 0.15f)),
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(52.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(LocalContentColor.current.copy(alpha = 0.15f)),
-            ) {
+            AnimatedContent(
+                targetState = step,
+                transitionSpec = { stepTransition(forward = targetState > initialState) },
+            ) { targetStep ->
                 Icon(
                     painter = painterResource(stepIcon(targetStep)),
                     contentDescription = null,
                     modifier = Modifier.size(28.dp),
                 )
             }
+        }
+
+        AnimatedContent(
+            targetState = step,
+            transitionSpec = { stepTransition(forward = targetState > initialState) },
+        ) { targetStep ->
             Text(
                 text = stepTitle(targetStep),
                 style = MaterialTheme.typography.titleLarge,

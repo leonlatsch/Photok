@@ -110,7 +110,7 @@ private fun OnboardingSetupPasswordContent(
                 .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageSubtitle(
-                text = "You need it to unlock Photok. Don't forget it."
+                text = "Remember your password and keep it safe. For your security, we don’t store it, so it cannot be reset."
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))

@@ -20,9 +20,15 @@ import android.app.Activity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -244,29 +250,51 @@ private fun RecoveryPhraseCard(
                 .fillMaxWidth()
                 .padding(Dimens.spacingLarge)
         ) {
-            Box(
+            AnimatedContent(
+                targetState = phrase,
+                transitionSpec = {
+                    (fadeIn(tween(400)) + scaleIn(tween(400), initialScale = 0.92f)) togetherWith
+                        fadeOut(tween(200))
+                },
                 contentAlignment = Alignment.Center,
+                label = "RecoveryPhraseQrCode",
                 modifier = Modifier.size(200.dp)
-            ) {
-                if (phrase != null) {
-                    QRCodeImage(
-                        text = phrase.toMnemonicString(),
-                        foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-                        modifier = Modifier.size(200.dp)
-                    )
-                } else {
-                    CircularProgressIndicator()
+            ) { shownPhrase ->
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.size(200.dp)
+                ) {
+                    if (shownPhrase != null) {
+                        QRCodeImage(
+                            text = shownPhrase.toMnemonicString(),
+                            foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+                            modifier = Modifier.size(200.dp)
+                        )
+                    } else {
+                        CircularProgressIndicator()
+                    }
                 }
             }
 
-            Text(
-                text = phrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
-                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-                textAlign = TextAlign.Center,
-                minLines = 3,
+            AnimatedContent(
+                targetState = phrase,
+                transitionSpec = {
+                    (fadeIn(tween(400, delayMillis = 150)) +
+                        slideInVertically(tween(400, delayMillis = 150)) { it / 4 }) togetherWith
+                        fadeOut(tween(200))
+                },
+                label = "RecoveryPhraseText",
                 modifier = Modifier.fillMaxWidth(),
-            )
+            ) { shownPhrase ->
+                Text(
+                    text = shownPhrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                    textAlign = TextAlign.Center,
+                    minLines = 3,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
 
         if (AndroidFeatures.detectScreenRecording()) {

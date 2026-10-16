@@ -122,7 +122,12 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
             )
 
             Surface(
-                shape = RoundedCornerShape(28.dp),
+                shape = RoundedCornerShape(
+                    topStart = 28.dp,
+                    topEnd = 28.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp,
+                ),
                 modifier = Modifier
                     .padding(top = brandHeaderHeight * brandHeaderFraction)
                     .consumeWindowInsets(WindowInsets.statusBars)
