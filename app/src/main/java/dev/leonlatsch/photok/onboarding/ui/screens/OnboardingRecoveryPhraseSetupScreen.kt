@@ -46,10 +46,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -214,22 +214,20 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                OnboardingPageSubtitle(
-                    text = "Write down these words and keep them safe, away from this phone. They are the only way back in if you forget your password.",
-                    modifier = Modifier.weight(1f),
-                )
-
-                OtherWaysToSaveMenu(
-                    phrase = phrase,
-                    wordCount = uiState.wordCount,
-                    handleUiEvent = handleUiEvent,
-                )
-            }
+            OnboardingPageSubtitle(
+                text = "Keep these words off this phone. They unlock your vault if you forget your password.",
+            )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
             RecoveryPhraseCard(phrase = phrase)
+
+            OtherWaysToSaveMenu(
+                phrase = phrase,
+                wordCount = uiState.wordCount,
+                handleUiEvent = handleUiEvent,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
         }
     }
 }
@@ -335,14 +333,10 @@ private fun OtherWaysToSaveMenu(
         }
 
     Box(modifier = modifier) {
-        IconButton(
-            onClick = { expanded = true },
-            enabled = phrase != null,
+        TextButton(
+            onClick = { expanded = true }
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_more_vert),
-                contentDescription = "Other ways to save",
-            )
+            Text("More options")
         }
 
         RoundedDropdownMenu(

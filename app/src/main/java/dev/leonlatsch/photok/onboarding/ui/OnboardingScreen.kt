@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -60,17 +61,22 @@ import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
 import dev.leonlatsch.photok.pro.navigation.proOnboardingEntries
+import dev.leonlatsch.photok.settings.ui.compose.LocalPreferencesValues
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.animation.slideForward
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
 
 @Composable
-fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
+fun OnboardingScreen() {
+    val viewModel: OnboardingViewModel = hiltViewModel()
+    val preferencesValues by viewModel.preferencesValues.collectAsStateWithLifecycle()
+
     val rootNavigator = LocalNavigator.current
     val activity = LocalActivity.current
 
     val backStack = rememberNavBackStack(*viewModel.initialBackStack.toTypedArray())
-    val navigator = remember(backStack, rootNavigator) { OnboardingNavigator(backStack, rootNavigator) }
+    val navigator =
+        remember(backStack, rootNavigator) { OnboardingNavigator(backStack, rootNavigator) }
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
@@ -95,7 +101,10 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
         StatusBarBackground(colorScheme.primary)
     }
 
-    CompositionLocalProvider(LocalNavigator provides navigator) {
+    CompositionLocalProvider(
+        LocalNavigator provides navigator,
+        LocalPreferencesValues provides preferencesValues,
+    ) {
         val density = LocalDensity.current
         var brandHeaderHeight by remember { mutableStateOf(0.dp) }
 
@@ -110,7 +119,9 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = hiltViewModel()) {
                     OnboardingBrandHeader(
                         step = step ?: lastStep,
                         modifier = Modifier
-                            .onSizeChanged { brandHeaderHeight = with(density) { it.height.toDp() } }
+                            .onSizeChanged {
+                                brandHeaderHeight = with(density) { it.height.toDp() }
+                            }
                             .statusBarsPadding()
                     )
                 }

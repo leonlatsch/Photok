@@ -17,12 +17,15 @@
 package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,6 +61,9 @@ class OnboardingViewModel @Inject constructor(
 
         else -> listOf(OnboardingRoute.Welcome)
     }
+
+    val preferencesValues = config.valuesFlow
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), config.values)
 
     private val navigationEventsChannel = Channel<OnboardingNavigationEvent>()
     val navigationEvents = navigationEventsChannel.receiveAsFlow()
