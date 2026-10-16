@@ -1,0 +1,5 @@
+- Fix: Absturz beim Einfügen einer Wiederherstellungsphrase ohne Text in der Zwischenablage
+- Fix: Import von Dateien mit sehr langen Namen
+- Fix: Biometrie-Button wird nicht mehr angezeigt, wenn das Entsperren blockiert ist
+- Fix: Beim Löschen eines Albums wird das Album jetzt geschlossen
+- Fehlerbehebungen und Verbesserungen

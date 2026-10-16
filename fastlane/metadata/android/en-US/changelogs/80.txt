@@ -1,0 +1,5 @@
+- Fix: Crash when pasting a recovery phrase without text in the clipboard
+- Fix: Importing files with very long names
+- Fix: Biometric unlock button no longer shows when unlock is blocked
+- Fix: Deleting an album now closes the album
+- Bug fixes and improvements
