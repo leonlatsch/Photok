@@ -223,13 +223,13 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            RecoveryPhraseSheet(phrase = phrase)
+            RecoveryPhraseCard(phrase = phrase)
         }
     }
 }
 
 @Composable
-private fun RecoveryPhraseSheet(
+private fun RecoveryPhraseCard(
     phrase: RecoveryPhrase?,
 ) {
     Column(
