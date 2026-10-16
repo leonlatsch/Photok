@@ -70,7 +70,6 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseNavigationEvent
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiEvent
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiState
@@ -210,8 +209,8 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .padding(Dimens.spacingLarge)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                OnboardingPageTitle(
-                    text = "Your recovery phrase",
+                OnboardingPageSubtitle(
+                    text = "Your way back in if you forget your password. Store it off this phone.",
                     modifier = Modifier.weight(1f),
                 )
 
@@ -221,10 +220,6 @@ private fun OnboardingRecoveryPhraseSetupContent(
                     handleUiEvent = handleUiEvent,
                 )
             }
-
-            OnboardingPageSubtitle(
-                text = "The only way back into your vault if you forget your password. Save it somewhere outside this phone."
-            )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 

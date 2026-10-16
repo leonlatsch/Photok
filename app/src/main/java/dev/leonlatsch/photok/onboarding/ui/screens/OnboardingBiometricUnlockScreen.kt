@@ -51,7 +51,6 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
@@ -117,12 +116,8 @@ private fun OnboardingBiometricUnlockContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(
-                text = "Unlock with a touch"
-            )
-
             OnboardingPageSubtitle(
-                text = "Use your fingerprint or face instead of typing your password every time."
+                text = "Use your fingerprint or face instead of your password."
             )
 
             Surface(

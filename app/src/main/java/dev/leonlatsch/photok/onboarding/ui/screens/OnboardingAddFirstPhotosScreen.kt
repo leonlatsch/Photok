@@ -48,7 +48,6 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.pro.navigation.ProRoute
@@ -129,12 +128,8 @@ fun OnboardingAddFirstPhotosScreen() {
 
             ImagesRows(images)
 
-            OnboardingPageTitle(
-                text = "Add your first photos"
-            )
-
             OnboardingPageSubtitle(
-                text = "They are encrypted as they come in. You can always add more later."
+                text = "Encrypted on import. You can add more anytime."
             )
         }
     }

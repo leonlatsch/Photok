@@ -55,7 +55,6 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
@@ -81,10 +80,6 @@ fun OnboardingSelectStartScreen() {
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(
-                text = "How do you want to start?"
-            )
-
             OnboardingPageSubtitle(
                 text = "You can always import a backup later."
             )

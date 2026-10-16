@@ -47,7 +47,6 @@ import dev.leonlatsch.photok.onboarding.ui.SetupUiState
 import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
@@ -110,12 +109,8 @@ private fun OnboardingSetupPasswordContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(
-                text = "Choose a password"
-            )
-
             OnboardingPageSubtitle(
-                text = "You will need this to unlock Photok. Choose wisely and remember it."
+                text = "You need it to unlock Photok. Don't forget it."
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
