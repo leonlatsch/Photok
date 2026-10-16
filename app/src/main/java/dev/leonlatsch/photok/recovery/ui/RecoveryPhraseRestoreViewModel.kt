@@ -229,7 +229,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 }
 
                 val item = clipEntry.clipData.getItemAt(0)
-                val pastedText = item.text.toString()
+                val pastedText = item.text?.toString().orEmpty()
                 val phrase = RecoveryPhrase.from(pastedText.cleanupRawInput())
 
                 if (phrase.validate()) {

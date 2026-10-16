@@ -151,7 +151,7 @@ private fun UnlockScreenContent(
                     .fillMaxWidth()
                     .navigationBarsPadding()
             ) {
-                AnimatedVisibility(uiState.biometricAvailable) {
+                AnimatedVisibility(uiState.biometricAvailable && uiState.lockedUntil == null) {
                     TextButton(
                         onClick = {
                             fragmentActivity ?: return@TextButton
