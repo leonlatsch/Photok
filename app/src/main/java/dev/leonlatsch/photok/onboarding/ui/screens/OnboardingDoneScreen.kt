@@ -53,7 +53,7 @@ fun OnboardingDoneScreen(onFinish: () -> Unit) {
             )
 
             OnboardingPageSubtitle(
-                text = "Your vault is ready."
+                text = "Your vault is ready. Everything you add is encrypted right on this phone."
             )
         }
     }

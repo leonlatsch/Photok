@@ -216,7 +216,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OnboardingPageSubtitle(
-                    text = "Your way back in if you forget your password. Store it off this phone.",
+                    text = "Write down these words and keep them safe, away from this phone. They are the only way back in if you forget your password.",
                     modifier = Modifier.weight(1f),
                 )
 
@@ -303,7 +303,7 @@ private fun RecoveryPhraseCard(
             )
 
             Text(
-                text = "Tip: a screenshot of this card works too.",
+                text = "Or just take a screenshot",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

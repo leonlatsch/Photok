@@ -117,7 +117,7 @@ private fun OnboardingBiometricUnlockContent(
                 .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageSubtitle(
-                text = "Use your fingerprint or face instead of your password."
+                text = "Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings."
             )
 
             Surface(

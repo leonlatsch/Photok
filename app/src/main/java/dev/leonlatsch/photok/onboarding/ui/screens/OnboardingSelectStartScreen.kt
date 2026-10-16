@@ -81,7 +81,7 @@ fun OnboardingSelectStartScreen() {
                 .padding(Dimens.spacingLarge)
         ) {
             OnboardingPageSubtitle(
-                text = "You can always import a backup later."
+                text = "Create a new, empty vault or restore one from a backup. You can still import a backup later."
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))

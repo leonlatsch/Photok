@@ -129,7 +129,7 @@ fun OnboardingAddFirstPhotosScreen() {
             ImagesRows(images)
 
             OnboardingPageSubtitle(
-                text = "Encrypted on import. You can add more anytime."
+                text = "Your photos are encrypted as soon as you import them. You can add more at any time."
             )
         }
     }
