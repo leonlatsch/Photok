@@ -59,5 +59,6 @@ data class Photo(
         const val DATE_TAKEN = "dateTaken"
         const val COL_SIZE = "size"
         const val TABLE_NAME = "photo"
+        const val MAX_FILENAME_LENGTH = 255
     }
 }

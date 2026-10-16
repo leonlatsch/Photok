@@ -68,9 +68,11 @@ class PhotoRepository @Inject constructor(
     /**
      * @see PhotoDao.insert
      */
-    suspend fun insert(photo: Photo) = photoDao.insert(photo)
+    suspend fun insert(photo: Photo) = photoDao.insert(photo.withCappedFileName())
 
-    suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(photos)
+    suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(
+        photos.map { it.withCappedFileName() }
+    )
 
     /**
      * @see PhotoDao.delete
@@ -326,3 +328,5 @@ class PhotoRepository @Inject constructor(
     // endregion
     // endregion
 }
+
+private fun Photo.withCappedFileName() = copy(fileName = fileName.take(Photo.MAX_FILENAME_LENGTH))
