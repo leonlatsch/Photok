@@ -40,7 +40,6 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -50,7 +49,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -89,6 +87,7 @@ import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
@@ -102,19 +101,8 @@ fun OnboardingWelcomeScreen() {
     Scaffold(
         contentWindowInsets = WindowInsets(0),
         bottomBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-            ) {
-                Button(
-                    onClick = { navigator.navigate(OnboardingRoute.SelectStart) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Dimens.spacingLarge)
-                ) {
-                    Text(text = "Get started")
-                }
+            OnboardingNexButtonBar(text = "Get started") {
+                navigator.navigate(OnboardingRoute.SelectStart)
             }
         }
     ) { contentPadding ->

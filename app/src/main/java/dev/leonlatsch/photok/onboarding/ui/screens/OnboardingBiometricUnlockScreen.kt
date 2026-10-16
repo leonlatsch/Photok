@@ -18,11 +18,21 @@ package dev.leonlatsch.photok.onboarding.ui.screens
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -33,17 +43,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.ui.BiometricUnlockViewModel
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
-import dev.leonlatsch.photok.settings.domain.AppPreferences
-import dev.leonlatsch.photok.settings.ui.compose.PreferenceSwitchView
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
@@ -58,21 +70,16 @@ fun OnboardingBiometricUnlockScreen() {
 
     OnboardingBiometricUnlockContent(
         enabled = enabled,
-        onEnabledChanged = { newEnabled ->
-            if (newEnabled) {
-                activity?.let { viewModel.enableBiometricUnlock(it) }
-            } else {
-                viewModel.disableBiometricUnlock()
-            }
+        onEnable = {
+            activity?.let { viewModel.enableBiometricUnlock(it) }
         },
-
-        )
+    )
 }
 
 @Composable
 private fun OnboardingBiometricUnlockContent(
     enabled: Boolean,
-    onEnabledChanged: (Boolean) -> Unit,
+    onEnable: () -> Unit,
 ) {
     val navigator = LocalNavigator.current
 
@@ -97,9 +104,11 @@ private fun OnboardingBiometricUnlockContent(
                     Text("Not now")
                 }
 
-                OnboardingNexButtonBar(text = "Enable biometric unlock") {
-                    onEnabledChanged(true)
-                }
+                OnboardingNexButtonBar(
+                    text = "Enable biometric unlock",
+                    enabled = !enabled,
+                    onNext = onEnable,
+                )
             }
         }
     ) { contentPadding ->
@@ -109,23 +118,54 @@ private fun OnboardingBiometricUnlockContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
+            OnboardingPageTitle(text = "Unlock with a touch")
+
             OnboardingPageSubtitle(
                 text = "Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings."
             )
 
-            Surface(
-                shape = RoundedCornerShape(18.dp),
-                color = colorScheme.surfaceContainerLow,
-                modifier = Modifier.padding(bottom = Dimens.spacingXxSmall),
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
-                PreferenceSwitchView(
-                    preference = AppPreferences.Biometric,
-                    onSwitchChange = {
-                        onEnabledChanged(it)
-                    },
-                    proFeaturesActive = false,
+                BiometricGlyph(
+                    done = enabled,
+                    onClick = onEnable,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun BiometricGlyph(
+    done: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        shape = CircleShape,
+        color = colorScheme.primaryContainer,
+        contentColor = colorScheme.onPrimaryContainer,
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable(
+                enabled = !done,
+                onClick = onClick,
+            )
+    ) {
+        AnimatedContent(
+            targetState = done,
+            transitionSpec = { (fadeIn() + scaleIn(initialScale = 0.8f)) togetherWith fadeOut() },
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.padding(32.dp),
+        ) { shownEnabled ->
+            Icon(
+                painter = painterResource(if (shownEnabled) R.drawable.ic_check_circle else R.drawable.ic_fingerprint),
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+            )
         }
     }
 }
@@ -136,7 +176,7 @@ private fun OnboardingBiometricUnlockScreenPreview() {
     AppTheme {
         OnboardingBiometricUnlockContent(
             enabled = false,
-            onEnabledChanged = {},
+            onEnable = {},
         )
     }
 }

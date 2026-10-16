@@ -47,6 +47,7 @@ import dev.leonlatsch.photok.onboarding.ui.SetupUiState
 import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
@@ -109,6 +110,8 @@ private fun OnboardingSetupPasswordContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
+            OnboardingPageTitle(text = "Your password")
+
             OnboardingPageSubtitle(
                 text = "Remember your password and keep it safe. For your security, we don’t store it, so it cannot be reset."
             )

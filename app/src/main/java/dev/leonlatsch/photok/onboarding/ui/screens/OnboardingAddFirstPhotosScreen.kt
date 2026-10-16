@@ -23,9 +23,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -34,6 +37,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -48,6 +52,7 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.pro.navigation.ProRoute
@@ -113,8 +118,15 @@ fun OnboardingAddFirstPhotosScreen() {
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .padding(contentPadding)
+                .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
+            OnboardingPageTitle(text = "Import photos")
+
+            OnboardingPageSubtitle(
+                text = "Your photos are encrypted as soon as you import them. You can add more at any time."
+            )
+
             val images = listOf(
                 R.drawable.onboarding_placeholder_photo_1,
                 R.drawable.onboarding_placeholder_photo_2,
@@ -127,10 +139,6 @@ fun OnboardingAddFirstPhotosScreen() {
             )
 
             ImagesRows(images)
-
-            OnboardingPageSubtitle(
-                text = "Your photos are encrypted as soon as you import them. You can add more at any time."
-            )
         }
     }
 }
@@ -141,20 +149,22 @@ private fun ImagesRows(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall)
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
+        modifier = modifier,
     ) {
         images.chunked(4).forEach { chunk ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
-                modifier = modifier,
             ) {
                 for (image in chunk) {
                     Image(
                         painter = painterResource(image),
                         contentDescription = null,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
                             .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(12.dp))
                     )
                 }
             }

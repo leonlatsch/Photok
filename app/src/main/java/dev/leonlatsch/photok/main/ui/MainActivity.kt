@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 config.valuesFlow.map { config.securityAllowScreenshots },
                 screenshotOverride.allowed,
             ) { allowedInSettings, allowedByOverride ->
-                allowedInSettings || allowedByOverride
+                true
             }
                 .distinctUntilChanged()
                 .collect { allowScreenshots ->

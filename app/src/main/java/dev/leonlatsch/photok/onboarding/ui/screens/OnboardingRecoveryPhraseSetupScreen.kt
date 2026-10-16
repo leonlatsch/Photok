@@ -82,6 +82,7 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseNavigationEvent
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiEvent
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseUiState
@@ -213,6 +214,8 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
+            OnboardingPageTitle(text = "Recovery phrase")
+
             OnboardingPageSubtitle(
                 text = "Keep these words off this phone. They unlock your vault if you forget your password.",
             )
@@ -510,7 +513,7 @@ private fun RecoveryPhraseSavedIndicator(
         when (val shown = lastSavedTo) {
             RecoveryPhraseSavedTo.Photos -> SavedIndicatorRow(
                 title = "Saved to Photos",
-                description = "Look for it in the Photok album (Pictures/Photok)",
+                description = "Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too",
             )
 
             is RecoveryPhraseSavedTo.File -> SavedIndicatorRow(

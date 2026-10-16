@@ -55,6 +55,7 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
@@ -66,7 +67,6 @@ fun OnboardingSelectStartScreen() {
     var selectedOption by rememberSaveable { mutableStateOf(StartOption.Fresh) }
 
     Scaffold(
-        containerColor = Color.Transparent,
         bottomBar = {
             OnboardingNexButtonBar {
                 navigator.navigate(OnboardingRoute.SetupPassword)
@@ -80,6 +80,8 @@ fun OnboardingSelectStartScreen() {
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
+            OnboardingPageTitle(text = "Where to start?")
+
             OnboardingPageSubtitle(
                 text = "Create a new, empty vault or restore one from a backup. You can still import a backup later."
             )
