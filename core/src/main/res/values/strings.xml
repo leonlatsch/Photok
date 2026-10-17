@@ -441,8 +441,8 @@
     <string name="recovery_phrase_restore_option_type">Type words</string>
 
     <!-- Recovery Phrase — Card -->
-    <string name="recovery_key_card_label">RECOVERY KEY</string>
-    <string name="recovery_key_card_scan_label">SCAN TO RESTORE</string>
+    <string name="recovery_key_card_label">PHRASE</string>
+    <string name="recovery_key_card_scan_label">QR CODE</string>
     <string name="recovery_key_card_unlocked_label">VAULT UNLOCKED</string>
     <string name="recovery_key_card_word_count">%1$d words</string>
     <string name="recovery_key_card_hint_show_words">Tap the card to show as words</string>
