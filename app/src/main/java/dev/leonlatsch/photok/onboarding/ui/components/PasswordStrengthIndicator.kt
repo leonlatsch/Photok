@@ -23,17 +23,18 @@ import android.icu.util.MeasureUnit
 import android.icu.util.ULocale
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -44,7 +45,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -140,23 +140,23 @@ private fun StrengthBar(
     filledSegments: Int,
     color: Color,
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        repeat(SEGMENT_COUNT) { index ->
-            val segmentColor by animateColorAsState(
-                if (index < filledSegments) color else colorScheme.surfaceContainerHighest
-            )
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(6.dp)
-                    .clip(CircleShape)
-                    .background(segmentColor)
-            )
-        }
-    }
+    val targetProgress by animateFloatAsState(
+        targetValue = (filledSegments / SEGMENT_COUNT.toFloat()),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioLowBouncy,
+            stiffness = Spring.StiffnessLow,
+        )
+    )
+
+    LinearProgressIndicator(
+        progress = { targetProgress },
+        color = color,
+        trackColor = colorScheme.surfaceContainerHighest,
+        drawStopIndicator = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(6.dp)
+    )
 }
 
 @Composable
@@ -199,14 +199,31 @@ private fun formatCrackTime(seconds: Double, locale: Locale): String {
     return when {
         seconds < 1 -> "< " + format.format(Measure(1, MeasureUnit.SECOND))
         seconds < MINUTE -> format.format(Measure(seconds.roundToLong(), MeasureUnit.SECOND))
-        seconds < HOUR -> format.format(Measure((seconds / MINUTE).roundToLong(), MeasureUnit.MINUTE))
+        seconds < HOUR -> format.format(
+            Measure(
+                (seconds / MINUTE).roundToLong(),
+                MeasureUnit.MINUTE
+            )
+        )
+
         seconds < DAY -> format.format(Measure((seconds / HOUR).roundToLong(), MeasureUnit.HOUR))
         seconds < MONTH -> format.format(Measure((seconds / DAY).roundToLong(), MeasureUnit.DAY))
         seconds < YEAR -> format.format(Measure((seconds / MONTH).roundToLong(), MeasureUnit.MONTH))
-        seconds < CENTURY -> format.format(Measure((seconds / YEAR).roundToLong(), MeasureUnit.YEAR))
+        seconds < CENTURY -> format.format(
+            Measure(
+                (seconds / YEAR).roundToLong(),
+                MeasureUnit.YEAR
+            )
+        )
+
         else -> {
-            val compactNumbers = CompactDecimalFormat.getInstance(locale, CompactDecimalFormat.CompactStyle.LONG)
-            MeasureFormat.getInstance(ULocale.forLocale(locale), MeasureFormat.FormatWidth.WIDE, compactNumbers)
+            val compactNumbers =
+                CompactDecimalFormat.getInstance(locale, CompactDecimalFormat.CompactStyle.LONG)
+            MeasureFormat.getInstance(
+                ULocale.forLocale(locale),
+                MeasureFormat.FormatWidth.WIDE,
+                compactNumbers
+            )
                 .format(Measure((seconds / CENTURY).roundToLong(), MeasureUnit.CENTURY))
         }
     }
