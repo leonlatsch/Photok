@@ -180,7 +180,9 @@ fun OnboardingScreen() {
                             OnboardingSetupPasswordScreen()
                         }
                         entry<OnboardingRoute.BiometricUnlock> {
-                            OnboardingBiometricUnlockScreen()
+                            OnboardingBiometricUnlockScreen(
+                                handleUiEvent = viewModel::handleUiEvent,
+                            )
                         }
                         entry<OnboardingRoute.RecoveryPhraseSetup> {
                             OnboardingRecoveryPhraseSetupScreen()

@@ -27,6 +27,8 @@ import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -58,6 +60,7 @@ class SetupViewModel @Inject constructor(
     private val config: Config,
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
+    private val telemetryService: TelemetryService,
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(
@@ -123,6 +126,11 @@ class SetupViewModel @Inject constructor(
 
         val password = inputs.value.password
         if (!PasswordUtils.validatePasswords(password, inputs.value.confirmPassword)) return
+
+        telemetryService.signal(
+            Signal.OnboardingPasswordContinueClicked,
+            mapOf("strengthScore" to uiState.value.passwordStrength?.score.toString()),
+        )
 
         viewModelScope.launch(Dispatchers.IO) {
             try {

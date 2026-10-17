@@ -102,6 +102,7 @@ fun OnboardingWelcomeScreen(
         contentWindowInsets = WindowInsets.navigationBars,
         bottomBar = {
             OnboardingNexButtonBar(text = stringResource(R.string.onboarding_welcome_get_started)) {
+                handleUiEvent(OnboardingUiEvent.GetStartedClicked)
                 navigator.navigate(OnboardingRoute.SetupPassword)
             }
         }

@@ -29,6 +29,8 @@ import dev.leonlatsch.photok.other.AndroidFeatures
 import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseExporter
 import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSavedTo
 import dev.leonlatsch.photok.settings.domain.ScreenshotOverride
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -49,6 +51,7 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
     private val vaultService: VaultService,
     private val screenshotOverride: ScreenshotOverride,
     private val exporter: RecoveryPhraseExporter,
+    private val telemetryService: TelemetryService,
 ) : ViewModel() {
 
     private val wordCount = MutableStateFlow(Bip39WordCount.Twelve)
@@ -182,6 +185,23 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
             }
 
             OnboardingRecoveryPhraseUiEvent.Continue -> {
+                val savedToParam = when (savedTo.value) {
+                    is RecoveryPhraseSavedTo.Photos -> "photos"
+                    is RecoveryPhraseSavedTo.File -> "file"
+                    is RecoveryPhraseSavedTo.Shared -> "shared"
+                    is RecoveryPhraseSavedTo.Clipboard -> "clipboard"
+                    is RecoveryPhraseSavedTo.Screenshot -> "screenshot"
+                    null -> "none"
+                }
+
+                telemetryService.signal(
+                    Signal.OnboardingRecoveryPhraseContinueClicked,
+                    mapOf(
+                        "savedTo" to savedToParam,
+                        "wordCount" to wordCount.value.words.toString(),
+                    ),
+                )
+
                 navigationChannel.trySend(OnboardingRecoveryPhraseNavigationEvent.Continue)
             }
         }

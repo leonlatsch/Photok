@@ -55,6 +55,7 @@ import dev.leonlatsch.photok.encryption.ui.BiometricUnlockViewModel
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingCardWindowInsets
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.OnboardingUiEvent
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
@@ -64,7 +65,9 @@ import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun OnboardingBiometricUnlockScreen() {
+fun OnboardingBiometricUnlockScreen(
+    handleUiEvent: (OnboardingUiEvent) -> Unit,
+) {
     val activity = LocalActivity.current as? AppCompatActivity
 
     val viewModel: BiometricUnlockViewModel = hiltViewModel()
@@ -72,7 +75,12 @@ fun OnboardingBiometricUnlockScreen() {
 
     OnboardingBiometricUnlockContent(
         enabled = enabled,
-        onEnable = {
+        onEnableButtonClick = {
+            handleUiEvent(OnboardingUiEvent.BiometricEnableButtonClicked)
+            activity?.let { viewModel.enableBiometricUnlock(it) }
+        },
+        onGlyphClick = {
+            handleUiEvent(OnboardingUiEvent.BiometricGlyphClicked)
             activity?.let { viewModel.enableBiometricUnlock(it) }
         },
     )
@@ -81,7 +89,8 @@ fun OnboardingBiometricUnlockScreen() {
 @Composable
 private fun OnboardingBiometricUnlockContent(
     enabled: Boolean,
-    onEnable: () -> Unit,
+    onEnableButtonClick: () -> Unit,
+    onGlyphClick: () -> Unit,
 ) {
     val navigator = LocalNavigator.current
 
@@ -110,7 +119,7 @@ private fun OnboardingBiometricUnlockContent(
                 OnboardingNexButtonBar(
                     text = stringResource(R.string.onboarding_biometric_enable),
                     enabled = !enabled,
-                    onNext = onEnable,
+                    onNext = onEnableButtonClick,
                 )
             }
         }
@@ -135,7 +144,7 @@ private fun OnboardingBiometricUnlockContent(
             ) {
                 BiometricGlyph(
                     done = enabled,
-                    onClick = onEnable,
+                    onClick = onGlyphClick,
                 )
             }
         }
@@ -179,7 +188,8 @@ private fun OnboardingBiometricUnlockScreenPreview() {
     AppTheme {
         OnboardingBiometricUnlockContent(
             enabled = false,
-            onEnable = {},
+            onEnableButtonClick = {},
+            onGlyphClick = {},
         )
     }
 }

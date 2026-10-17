@@ -91,13 +91,15 @@ fun OnboardingAddFirstPhotosScreen() {
     val viewModel: AddFirstPhotosViewModel = hiltViewModel()
 
     OnboardingAddFirstPhotosContent(
-        nextRoute = viewModel::nextRoute
+        nextRoute = viewModel::nextRoute,
+        onImportClicked = viewModel::onImportClicked,
     )
 }
 
 @Composable
 fun OnboardingAddFirstPhotosContent(
     nextRoute: () -> NavKey,
+    onImportClicked: () -> Unit,
 ) {
 
     val navigator = LocalNavigator.current
@@ -150,6 +152,7 @@ fun OnboardingAddFirstPhotosContent(
                 }
 
                 OnboardingNexButtonBar(text = stringResource(R.string.onboarding_add_photos_import)) {
+                    onImportClicked()
                     pickFilesLauncher.launchAndIgnoreTimer(
                         input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
                         activity = activity,
@@ -308,7 +311,8 @@ private fun EncryptingPhotoTile(
 private fun OnboardingAddFirstPhotosScreenPreview() {
     AppTheme {
         OnboardingAddFirstPhotosContent(
-            nextRoute = { error("") }
+            nextRoute = { error("") },
+            onImportClicked = {},
         )
     }
 }

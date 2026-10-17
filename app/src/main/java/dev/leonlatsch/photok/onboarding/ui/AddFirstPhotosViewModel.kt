@@ -22,12 +22,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
+import dev.leonlatsch.photok.telemetry.domain.Signal
+import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import javax.inject.Inject
 
 @HiltViewModel
 class AddFirstPhotosViewModel @Inject constructor(
     private val purchaseService: PurchaseService,
+    private val telemetryService: TelemetryService,
 ) : ViewModel() {
+
+    fun onImportClicked() {
+        telemetryService.signal(Signal.OnboardingAddPhotosImportClicked)
+    }
+
 
     fun nextRoute(): NavKey = if (BuildConfig.PLAY && !purchaseService.get()) {
         ProRoute.OnboardingOffer
