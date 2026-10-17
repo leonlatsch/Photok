@@ -20,6 +20,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -31,6 +32,8 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,7 +53,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -69,6 +75,8 @@ import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun RecoveryKeyCard(
@@ -84,6 +92,27 @@ fun RecoveryKeyCard(
     val rotation by animateFloatAsState(
         targetValue = if (showQrCode) 180f else 0f,
         animationSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessLow),
+    )
+
+    var hasFlipped by rememberSaveable { mutableStateOf(false) }
+    val peek = remember { Animatable(0f) }
+    LaunchedEffect(hasFlipped, phrase != null) {
+        if (hasFlipped || phrase == null) {
+            peek.animateTo(0f)
+            return@LaunchedEffect
+        }
+        while (true) {
+            delay(2500.milliseconds)
+            peek.animateTo(16f, tween(durationMillis = 280, easing = FastOutSlowInEasing))
+            peek.animateTo(0f, spring(dampingRatio = 0.3f, stiffness = Spring.StiffnessMediumLow))
+        }
+    }
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val pressScale by animateFloatAsState(
+        targetValue = if (pressed) 0.96f else 1f,
+        animationSpec = spring(dampingRatio = 0.5f, stiffness = Spring.StiffnessMedium),
     )
 
     val reveal = remember(phrase) { Animatable(0f) }
@@ -104,6 +133,7 @@ fun RecoveryKeyCard(
         Box {
             Surface(
                 onClick = {
+                    hasFlipped = true
                     if (showQrCode) {
                         onShowWordsSide()
                     } else {
@@ -111,6 +141,7 @@ fun RecoveryKeyCard(
                     }
                 },
                 enabled = phrase != null,
+                interactionSource = interactionSource,
                 shape = RoundedCornerShape(24.dp),
                 color = colorScheme.primary,
                 contentColor = colorScheme.surface,
@@ -118,8 +149,10 @@ fun RecoveryKeyCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .graphicsLayer {
-                        rotationY = rotation
+                        rotationY = rotation + peek.value
                         cameraDistance = 12f * density
+                        scaleX = pressScale
+                        scaleY = pressScale
                     },
             ) {
                 Box(modifier = Modifier.animateContentSize()) {
@@ -180,7 +213,7 @@ private fun RecoveryKeyWordsFace(
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            (0 until count).chunked(3).forEach { row ->
+            (0 until count).chunked(2).forEach { row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     row.forEach { index ->
                         RecoveryWord(
