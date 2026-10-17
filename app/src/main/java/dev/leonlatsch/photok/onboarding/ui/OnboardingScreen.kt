@@ -155,7 +155,9 @@ fun OnboardingScreen() {
                     transitionSpec = { slideForward() },
                     entryProvider = entryProvider {
                         entry<OnboardingRoute.Welcome> {
-                            OnboardingWelcomeScreen()
+                            OnboardingWelcomeScreen(
+                                handleUiEvent = viewModel::handleUiEvent,
+                            )
                         }
                         entry<OnboardingRoute.SelectStart> {
                             OnboardingSelectStartScreen()
@@ -174,7 +176,7 @@ fun OnboardingScreen() {
                         }
                         entry<OnboardingRoute.Done> {
                             OnboardingDoneScreen(
-                                onFinish = { viewModel.handleUiEvent(OnboardingUiEvent.Finish) },
+                                handleUiEvent = viewModel::handleUiEvent,
                             )
                         }
                         proOnboardingEntries(

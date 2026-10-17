@@ -19,7 +19,6 @@ package dev.leonlatsch.photok.onboarding.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
@@ -41,8 +40,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-private val DEBUG_PASSWORD = if (BuildConfig.DEBUG) "abc123" else ""
-
 /**
  * ViewModel for the setup.
  * Handles password validation, creating the vault and initializing the session.
@@ -59,7 +56,7 @@ class SetupViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val inputs = MutableStateFlow(
-        SetupUiState.Inputs(password = DEBUG_PASSWORD, confirmPassword = DEBUG_PASSWORD)
+        SetupUiState.Inputs()
     )
 
     val uiState = inputs.map { inputs ->

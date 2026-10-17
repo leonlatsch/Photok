@@ -20,6 +20,7 @@ import androidx.navigation3.runtime.NavKey
 
 sealed interface OnboardingUiEvent {
     data class StepChanged(val route: NavKey) : OnboardingUiEvent
+    data object SetupTestVault : OnboardingUiEvent
     data object Finish : OnboardingUiEvent
 }
 

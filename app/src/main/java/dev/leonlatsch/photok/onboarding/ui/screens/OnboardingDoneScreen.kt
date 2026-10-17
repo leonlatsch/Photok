@@ -66,6 +66,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.onboarding.ui.OnboardingUiEvent
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
@@ -92,7 +93,9 @@ private val VAULT_ORBIT_RADIUS = 115.dp
 private val VAULT_SIZE = 300.dp
 
 @Composable
-fun OnboardingDoneScreen(onFinish: () -> Unit) {
+fun OnboardingDoneScreen(
+    handleUiEvent: (OnboardingUiEvent) -> Unit,
+) {
     val inPreview = LocalInspectionMode.current
     var sealed by remember { mutableStateOf(inPreview) }
 
@@ -111,7 +114,9 @@ fun OnboardingDoneScreen(onFinish: () -> Unit) {
             OnboardingNexButtonBar(
                 text = "Open my vault",
                 enabled = sealed,
-                onNext = onFinish,
+                onNext = {
+                    handleUiEvent(OnboardingUiEvent.Finish)
+                },
                 modifier = Modifier.graphicsLayer { alpha = buttonAlpha },
             )
         },
@@ -282,6 +287,8 @@ private fun VaultPhoto(
 @Composable
 private fun OnboardingDoneScreenPreview() {
     AppTheme {
-        OnboardingDoneScreen(onFinish = {})
+        OnboardingDoneScreen(
+            handleUiEvent = {}
+        )
     }
 }

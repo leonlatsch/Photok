@@ -20,6 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.FloatExponentialDecaySpec
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -79,16 +80,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.OnboardingUiEvent
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
-fun OnboardingWelcomeScreen() {
+fun OnboardingWelcomeScreen(
+    handleUiEvent: (OnboardingUiEvent) -> Unit,
+) {
     val navigator = LocalNavigator.current
 
     Scaffold(
@@ -115,7 +120,12 @@ fun OnboardingWelcomeScreen() {
                 Spacer(Modifier.height(Dimens.spacingMedium))
 
                 Column {
-                    AppName(fontSize = 48.sp)
+                    AppName(
+                        fontSize = 48.sp,
+                        modifier = Modifier.clickable(BuildConfig.DEBUG) {
+                            handleUiEvent(OnboardingUiEvent.SetupTestVault)
+                        }
+                    )
                     Text(
                         text = "A safe place for your photos",
                         style = MaterialTheme.typography.bodyLarge,
@@ -379,6 +389,8 @@ private fun FeatureRow(
 @Composable
 private fun OnboardingWelcomeScreenPreview() {
     AppTheme {
-        OnboardingWelcomeScreen()
+        OnboardingWelcomeScreen(
+            handleUiEvent = {}
+        )
     }
 }

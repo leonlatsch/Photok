@@ -20,20 +20,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
+import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val config: Config,
     private val telemetryService: TelemetryService,
+    private val vaultService: VaultService,
 ) : ViewModel() {
 
     val initialBackStack: List<NavKey> = when (config.systemOnboardingStep) {
@@ -77,7 +85,24 @@ class OnboardingViewModel @Inject constructor(
     fun handleUiEvent(event: OnboardingUiEvent) {
         when (event) {
             is OnboardingUiEvent.StepChanged -> config.systemOnboardingStep = event.route.stepKey()
+            is OnboardingUiEvent.SetupTestVault -> setupTestVault()
             OnboardingUiEvent.Finish -> finish()
+        }
+    }
+
+    private fun setupTestVault() {
+        if (!BuildConfig.DEBUG) {
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            vaultService.create(CreateRequest.Password("abc123"))
+
+            val result = vaultService.unlock(UnlockRequest.Password("abc123"))
+            val session = result.getOrElse { return@launch }
+            vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+
+            finish()
         }
     }
 
