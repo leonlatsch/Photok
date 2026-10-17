@@ -57,7 +57,6 @@ import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingAddFirstPhotosScree
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingBiometricUnlockScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingDoneScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingRecoveryPhraseSetupScreen
-import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSelectStartScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingSetupPasswordScreen
 import dev.leonlatsch.photok.onboarding.ui.screens.OnboardingWelcomeScreen
 import dev.leonlatsch.photok.pro.navigation.proOnboardingEntries
@@ -158,9 +157,6 @@ fun OnboardingScreen() {
                             OnboardingWelcomeScreen(
                                 handleUiEvent = viewModel::handleUiEvent,
                             )
-                        }
-                        entry<OnboardingRoute.SelectStart> {
-                            OnboardingSelectStartScreen()
                         }
                         entry<OnboardingRoute.SetupPassword> {
                             OnboardingSetupPasswordScreen()

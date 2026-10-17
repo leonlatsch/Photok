@@ -42,10 +42,6 @@ class OnboardingViewModel @Inject constructor(
 ) : ViewModel() {
 
     val initialBackStack: List<NavKey> = when (config.systemOnboardingStep) {
-        OnboardingRoute.SelectStart.stepKey() -> listOf(
-            OnboardingRoute.SelectStart,
-        )
-
         OnboardingRoute.SetupPassword.stepKey() -> listOf(
             OnboardingRoute.SetupPassword,
         )

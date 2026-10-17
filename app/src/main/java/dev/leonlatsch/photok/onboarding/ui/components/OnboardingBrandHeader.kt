@@ -43,15 +43,14 @@ import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
-private const val STEP_COUNT = 5
+private const val STEP_COUNT = 4
 
 fun NavKey.step(): Int? = when (this) {
     OnboardingRoute.Welcome -> null
-    OnboardingRoute.SelectStart -> 1
-    OnboardingRoute.SetupPassword -> 2
-    OnboardingRoute.BiometricUnlock -> 3
-    OnboardingRoute.RecoveryPhraseSetup -> 4
-    OnboardingRoute.AddFirstPhotos -> 5
+    OnboardingRoute.SetupPassword -> 1
+    OnboardingRoute.BiometricUnlock -> 2
+    OnboardingRoute.RecoveryPhraseSetup -> 3
+    OnboardingRoute.AddFirstPhotos -> 4
     OnboardingRoute.Done -> null
     ProRoute.OnboardingOffer -> null
     else -> null

@@ -100,7 +100,7 @@ fun OnboardingWelcomeScreen(
         contentWindowInsets = WindowInsets(0),
         bottomBar = {
             OnboardingNexButtonBar(text = "Get started") {
-                navigator.navigate(OnboardingRoute.SelectStart)
+                navigator.navigate(OnboardingRoute.SetupPassword)
             }
         }
     ) { contentPadding ->

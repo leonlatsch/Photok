@@ -27,9 +27,6 @@ sealed interface OnboardingRoute : NavKey {
     data object Welcome : OnboardingRoute
 
     @Serializable
-    data object SelectStart : OnboardingRoute
-
-    @Serializable
     data object SetupPassword : OnboardingRoute
 
     @Serializable
@@ -47,7 +44,6 @@ sealed interface OnboardingRoute : NavKey {
 
 fun NavKey.stepKey(): String? = when (this) {
     OnboardingRoute.Welcome -> "welcome"
-    OnboardingRoute.SelectStart -> "selectStart"
     OnboardingRoute.SetupPassword -> "setupPassword"
     OnboardingRoute.BiometricUnlock -> "biometricUnlock"
     OnboardingRoute.RecoveryPhraseSetup -> "recoveryPhraseSetup"
