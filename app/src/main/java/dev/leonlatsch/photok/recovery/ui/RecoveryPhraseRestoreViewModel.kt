@@ -55,7 +55,6 @@ data class RecoveryPhraseRestoreUiState(
     val revealToken: Int = 0,
     val source: String? = null,
     val error: String? = null,
-    val showCameraSettings: Boolean = false,
     val loading: Boolean = false,
     val unlocked: Boolean = false,
     val phraseValid: Boolean = false,
@@ -67,7 +66,6 @@ data class RecoveryPhraseRestoreUiState(
         val revealToken: Int = 0,
         val source: String? = null,
         val error: String? = null,
-    val showCameraSettings: Boolean = false,
         val loading: Boolean = false,
         val unlocked: Boolean = false,
     )
@@ -78,8 +76,6 @@ sealed interface RecoveryPhraseRestoreUiEvent {
     data class FillWords(val startIndex: Int, val words: List<String>) : RecoveryPhraseRestoreUiEvent
     data class SelectWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseRestoreUiEvent
     data object ShowScanner : RecoveryPhraseRestoreUiEvent
-    data object CameraPermissionDenied : RecoveryPhraseRestoreUiEvent
-    data object CameraPermissionPermanentlyDenied : RecoveryPhraseRestoreUiEvent
     data object ShowWords : RecoveryPhraseRestoreUiEvent
     data class QrScanned(val raw: String) : RecoveryPhraseRestoreUiEvent
     data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
@@ -114,7 +110,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
             revealToken = inputs.revealToken,
             source = inputs.source,
             error = inputs.error,
-            showCameraSettings = inputs.showCameraSettings,
             loading = inputs.loading,
             unlocked = inputs.unlocked,
             phraseValid = RecoveryPhrase(inputs.words).validate(),
@@ -130,7 +125,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                     words = it.words.toMutableList().apply { set(event.index, event.word) },
                     source = null,
                     error = null,
-                    showCameraSettings = false,
                 )
             }
 
@@ -153,7 +147,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                     revealToken = it.revealToken + 1,
                     source = null,
                     error = null,
-                    showCameraSettings = false,
                 )
             }
 
@@ -165,20 +158,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
             }
 
             RecoveryPhraseRestoreUiEvent.ShowScanner -> inputs.update {
-                it.copy(showScanner = true, error = null, showCameraSettings = false)
-            }
-
-            RecoveryPhraseRestoreUiEvent.CameraPermissionDenied -> {
-                showError(resources.getString(R.string.recovery_phrase_restore_camera_permission_rationale))
-            }
-
-            RecoveryPhraseRestoreUiEvent.CameraPermissionPermanentlyDenied -> inputs.update {
-                it.copy(
-                    showScanner = false,
-                    source = null,
-                    error = resources.getString(R.string.recovery_phrase_restore_camera_permission_rationale),
-                    showCameraSettings = true,
-                )
+                it.copy(showScanner = true, error = null)
             }
 
             RecoveryPhraseRestoreUiEvent.ShowWords -> inputs.update {
@@ -233,7 +213,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                         showScanner = false,
                         loading = true,
                         error = null,
-                        showCameraSettings = false,
                     )
                 }
 
@@ -271,7 +250,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 revealToken = it.revealToken + 1,
                 source = source,
                 error = null,
-                showCameraSettings = false,
             )
         }
     }
@@ -282,7 +260,6 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                 showScanner = false,
                 source = null,
                 error = error,
-                showCameraSettings = false,
             )
         }
     }

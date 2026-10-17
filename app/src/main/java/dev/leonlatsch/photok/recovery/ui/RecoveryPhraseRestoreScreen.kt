@@ -52,12 +52,14 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,6 +80,7 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
+import dev.leonlatsch.photok.other.shouldRequestPermissionInSettings
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
@@ -118,16 +121,17 @@ private fun RecoveryPhraseRestoreContent(
     val context = LocalContext.current
     val activity = LocalActivity.current
 
+    var shouldRequestCameraPermissionInSettings by remember {
+        mutableStateOf(activity?.shouldRequestPermissionInSettings(Manifest.permission.CAMERA) == true)
+    }
     val cameraPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        when {
-            granted -> handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
-            activity?.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) == false -> {
-                handleUiEvent(RecoveryPhraseRestoreUiEvent.CameraPermissionPermanentlyDenied)
-            }
-
-            else -> handleUiEvent(RecoveryPhraseRestoreUiEvent.CameraPermissionDenied)
+        if (granted) {
+            handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
+        } else {
+            shouldRequestCameraPermissionInSettings =
+                activity?.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) == false
         }
     }
 
@@ -242,14 +246,19 @@ private fun RecoveryPhraseRestoreContent(
                             enabled = inputEnabled,
                             onClick = {
                                 focusManager.clearFocus()
-                                if (ContextCompat.checkSelfPermission(
-                                        context,
-                                        Manifest.permission.CAMERA
-                                    ) == PackageManager.PERMISSION_GRANTED
-                                ) {
-                                    handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
-                                } else {
-                                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                                when {
+                                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
+                                        handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
+                                    }
+
+                                    shouldRequestCameraPermissionInSettings -> {
+                                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                            data = Uri.fromParts("package", context.packageName, null)
+                                        }
+                                        context.startActivity(intent)
+                                    }
+
+                                    else -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
                                 }
                             },
                             modifier = Modifier
@@ -303,29 +312,13 @@ private fun RecoveryPhraseRestoreContent(
                 enter = expandVertically() + fadeIn(),
                 exit = shrinkVertically() + fadeOut(),
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = uiState.error.orEmpty(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colorScheme.error,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-
-                    if (uiState.showCameraSettings) {
-                        TextButton(
-                            onClick = {
-                                val intent =
-                                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                        data = Uri.fromParts("package", context.packageName, null)
-                                    }
-                                context.startActivity(intent)
-                            },
-                        ) {
-                            Text(stringResource(R.string.permission_gate_change_in_settings))
-                        }
-                    }
-                }
+                Text(
+                    text = uiState.error.orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
     }
