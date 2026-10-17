@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,15 +30,21 @@ import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -59,15 +66,22 @@ class SetupViewModel @Inject constructor(
         SetupUiState.Inputs()
     )
 
-    val uiState = inputs.map { inputs ->
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val passwordStrength = inputs
+        .map { it.password }
+        .distinctUntilChanged()
+        .mapLatest { password ->
+            password.takeIf { it.isNotEmpty() }
+                ?.let { PasswordUtils.estimateStrength(it, AppCompatDelegate.getApplicationLocales()[0] ?: Locale.getDefault()) }
+        }
+        .flowOn(Dispatchers.Default)
+
+    val uiState = combine(inputs, passwordStrength) { inputs, passwordStrength ->
         SetupUiState(
             password = inputs.password,
             confirmPassword = inputs.confirmPassword,
             loading = inputs.loading,
-
-            passwordStrength = inputs.password
-                .takeIf { it.isNotEmpty() }
-                ?.let { PasswordUtils.calculateStrength(it) },
+            passwordStrength = passwordStrength,
             showConfirmPassword = PasswordUtils.validatePassword(inputs.password),
             passwordsMismatch = inputs.confirmPassword.isNotEmpty()
                     && inputs.password != inputs.confirmPassword,

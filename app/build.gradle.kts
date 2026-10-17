@@ -205,6 +205,9 @@ dependencies {
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 
+    // zxcvbn4j - password strength estimation
+    implementation("com.nulab-inc:zxcvbn:1.9.0")
+
     // Gson
     implementation("com.google.code.gson", "gson", "2.13.2")
 

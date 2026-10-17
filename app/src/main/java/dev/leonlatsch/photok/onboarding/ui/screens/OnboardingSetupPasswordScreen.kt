@@ -29,6 +29,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -48,6 +51,7 @@ import dev.leonlatsch.photok.onboarding.ui.SetupViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
+import dev.leonlatsch.photok.onboarding.ui.components.PasswordStrengthIndicator
 import dev.leonlatsch.photok.other.extensions.hideKeyboard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
@@ -124,6 +128,13 @@ private fun OnboardingSetupPasswordContent(
                 label = "Password",
                 imeAction = ImeAction.Next,
             )
+
+            var lastPasswordStrength by remember { mutableStateOf(uiState.passwordStrength) }
+            uiState.passwordStrength?.let { lastPasswordStrength = it }
+
+            AnimatedVisibility(visible = uiState.passwordStrength != null) {
+                lastPasswordStrength?.let { PasswordStrengthIndicator(strength = it) }
+            }
 
             AnimatedVisibility(
                 visible = uiState.showConfirmPassword,
