@@ -169,6 +169,8 @@ private fun VaultSealAnimation(
     LaunchedEffect(Unit) {
         if (skipAnimation) return@LaunchedEffect
 
+        delay(300.milliseconds)
+
         coroutineScope {
             appear.forEachIndexed { index, animatable ->
                 launch {
