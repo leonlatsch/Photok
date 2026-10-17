@@ -71,6 +71,7 @@ import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.AddFirstPhotosViewModel
+import dev.leonlatsch.photok.onboarding.ui.OnboardingCardWindowInsets
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
@@ -133,6 +134,7 @@ fun OnboardingAddFirstPhotosContent(
     }
 
     Scaffold(
+        contentWindowInsets = OnboardingCardWindowInsets,
         bottomBar = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

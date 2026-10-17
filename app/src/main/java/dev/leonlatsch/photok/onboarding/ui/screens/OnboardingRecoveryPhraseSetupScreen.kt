@@ -45,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingCardWindowInsets
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
@@ -139,6 +140,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
         }
 
     Scaffold(
+        contentWindowInsets = OnboardingCardWindowInsets,
         bottomBar = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

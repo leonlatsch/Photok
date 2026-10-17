@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -97,7 +98,7 @@ fun OnboardingWelcomeScreen(
     val navigator = LocalNavigator.current
 
     Scaffold(
-        contentWindowInsets = WindowInsets(0),
+        contentWindowInsets = WindowInsets.navigationBars,
         bottomBar = {
             OnboardingNexButtonBar(text = "Get started") {
                 navigator.navigate(OnboardingRoute.SetupPassword)

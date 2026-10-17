@@ -23,13 +23,14 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -65,6 +66,10 @@ import dev.leonlatsch.photok.settings.ui.compose.LocalPreferencesValues
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.animation.slideForward
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
+
+val OnboardingCardWindowInsets: WindowInsets
+    @Composable
+    get() = ScaffoldDefaults.contentWindowInsets.exclude(WindowInsets.statusBars)
 
 @Composable
 fun OnboardingScreen() {
@@ -146,9 +151,6 @@ fun OnboardingScreen() {
                 ),
                 modifier = Modifier
                     .padding(top = brandHeaderHeight * brandHeaderFraction)
-                    .then(
-                        if (step != null) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier
-                    )
             ) {
                 NavDisplay(
                     backStack = backStack,

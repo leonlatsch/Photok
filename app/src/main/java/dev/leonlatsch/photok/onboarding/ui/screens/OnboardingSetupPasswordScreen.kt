@@ -47,6 +47,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.onboarding.ui.OnboardingCardWindowInsets
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.SetupNavigationEvent
 import dev.leonlatsch.photok.onboarding.ui.SetupUiEvent
@@ -111,6 +112,7 @@ private fun OnboardingSetupPasswordContent(
     }
 
     Scaffold(
+        contentWindowInsets = OnboardingCardWindowInsets,
         bottomBar = {
             OnboardingNexButtonBar(
                 enabled = uiState.canSetup,
