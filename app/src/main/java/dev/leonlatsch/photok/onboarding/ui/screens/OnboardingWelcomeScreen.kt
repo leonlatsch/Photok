@@ -252,14 +252,14 @@ private fun WelcomeMosaic() {
                 )
             },
     ) {
-        MosaicColumnScrollingDown(height = mosaicHeight)
-        MosaicColumnScrollingDown(height = mosaicHeight)
-        MosaicColumnScrollingDown(height = mosaicHeight)
+        MosaicColumnAutoScrolling(height = mosaicHeight, speed = MOSAIC_SCROLL_SPEED)
+        MosaicColumnAutoScrolling(height = mosaicHeight, speed = -MOSAIC_SCROLL_SPEED)
+        MosaicColumnAutoScrolling(height = mosaicHeight, speed = MOSAIC_SCROLL_SPEED)
     }
 }
 
 @Composable
-private fun RowScope.MosaicColumnScrollingDown(height: Dp) {
+private fun RowScope.MosaicColumnAutoScrolling(height: Dp, speed: Float) {
     val state = remember(height) { MosaicColumnState(viewportHeight = height.value) }
     var dragging by remember { mutableStateOf(false) }
     var releaseVelocity by remember { mutableFloatStateOf(0f) }
@@ -273,7 +273,7 @@ private fun RowScope.MosaicColumnScrollingDown(height: Dp) {
         var previousFrameNanos = withFrameNanos { it }
         while (true) {
             withFrameNanos { frameNanos ->
-                state.scrollBy(MOSAIC_SCROLL_SPEED * (frameNanos - previousFrameNanos) / 1_000_000_000f)
+                state.scrollBy(speed * (frameNanos - previousFrameNanos) / 1_000_000_000f)
                 previousFrameNanos = frameNanos
             }
         }
