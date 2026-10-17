@@ -141,7 +141,9 @@ fun OnboardingScreen() {
                 ),
                 modifier = Modifier
                     .padding(top = brandHeaderHeight * brandHeaderFraction)
-                    .consumeWindowInsets(WindowInsets.statusBars)
+                    .then(
+                        if (step != null) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier
+                    )
             ) {
                 NavDisplay(
                     backStack = backStack,

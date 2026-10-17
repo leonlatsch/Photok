@@ -37,14 +37,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
-import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
-private val STEP_COUNT = if (BuildConfig.PLAY) 6 else 5
+private const val STEP_COUNT = 5
 
 fun NavKey.step(): Int? = when (this) {
     OnboardingRoute.Welcome -> null
@@ -54,7 +53,7 @@ fun NavKey.step(): Int? = when (this) {
     OnboardingRoute.RecoveryPhraseSetup -> 4
     OnboardingRoute.AddFirstPhotos -> 5
     OnboardingRoute.Done -> null
-    ProRoute.OnboardingOffer -> 6
+    ProRoute.OnboardingOffer -> null
     else -> null
 }
 
