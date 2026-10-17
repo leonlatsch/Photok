@@ -124,6 +124,7 @@ private fun OnboardingSetupPasswordContent(
         Column(
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
+                .imePadding()
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
@@ -160,7 +161,6 @@ private fun OnboardingSetupPasswordContent(
                     label = "Confirm password",
                     error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
                     onDone = { focusManager.clearFocus() },
-                    modifier = Modifier.imePadding()
                 )
             }
         }

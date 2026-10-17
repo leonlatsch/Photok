@@ -100,7 +100,8 @@
         <activity
             android:name=".main.ui.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".forwarddialer.ForwardDialerActivity"
