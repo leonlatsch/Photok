@@ -31,6 +31,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
+import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.gallery.ui.navigation.GetStartTab
 import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 config.valuesFlow.map { config.securityAllowScreenshots },
                 screenshotOverride.allowed,
             ) { allowedInSettings, allowedByOverride ->
-                true
+                allowedInSettings || allowedByOverride || BuildConfig.DEBUG
             }
                 .distinctUntilChanged()
                 .collect { allowScreenshots ->

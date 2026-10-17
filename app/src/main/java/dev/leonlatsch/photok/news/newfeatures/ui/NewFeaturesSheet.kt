@@ -149,8 +149,12 @@ fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Uni
         config ?: return@LaunchedEffect
 
         if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
-            delay(300.milliseconds)
-            visible = true
+
+            if (config.systemLastFeatureVersionCode != 0) {
+                delay(300.milliseconds)
+                visible = true
+            }
+
             config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
         }
     }
