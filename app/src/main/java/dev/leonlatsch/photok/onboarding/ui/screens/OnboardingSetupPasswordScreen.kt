@@ -137,31 +137,39 @@ private fun OnboardingSetupPasswordContent(
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            PasswordField(
-                value = uiState.password,
-                onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
-                label = "Password",
-                imeAction = ImeAction.Next,
-                modifier = Modifier.focusRequester(focusRequester)
-            )
-
-            var lastPasswordStrength by remember { mutableStateOf(uiState.passwordStrength) }
-            uiState.passwordStrength?.let { lastPasswordStrength = it }
-
-            AnimatedVisibility(visible = uiState.passwordStrength != null) {
-                lastPasswordStrength?.let { PasswordStrengthIndicator(strength = it) }
-            }
-
-            AnimatedVisibility(
-                visible = uiState.showConfirmPassword,
-            ) {
+            Column {
                 PasswordField(
-                    value = uiState.confirmPassword,
-                    onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
-                    label = "Confirm password",
-                    error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
-                    onDone = { focusManager.clearFocus() },
+                    value = uiState.password,
+                    onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
+                    label = "Password",
+                    imeAction = ImeAction.Next,
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
+
+                var lastPasswordStrength by remember { mutableStateOf(uiState.passwordStrength) }
+                uiState.passwordStrength?.let { lastPasswordStrength = it }
+
+                AnimatedVisibility(visible = uiState.passwordStrength != null) {
+                    lastPasswordStrength?.let {
+                        PasswordStrengthIndicator(
+                            strength = it,
+                            modifier = Modifier.padding(top = Dimens.spacingSmall),
+                        )
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = uiState.showConfirmPassword,
+                ) {
+                    PasswordField(
+                        value = uiState.confirmPassword,
+                        onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
+                        label = "Confirm password",
+                        error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
+                        onDone = { focusManager.clearFocus() },
+                        modifier = Modifier.padding(top = Dimens.spacingXLarge),
+                    )
+                }
             }
         }
     }

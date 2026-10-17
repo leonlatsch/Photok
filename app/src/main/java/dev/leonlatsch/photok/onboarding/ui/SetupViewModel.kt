@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -66,13 +67,17 @@ class SetupViewModel @Inject constructor(
         SetupUiState.Inputs()
     )
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     private val passwordStrength = inputs
         .map { it.password }
         .distinctUntilChanged()
         .mapLatest { password ->
-            password.takeIf { it.isNotEmpty() }
-                ?.let { PasswordUtils.estimateStrength(it, AppCompatDelegate.getApplicationLocales()[0] ?: Locale.getDefault()) }
+            password
+                .takeIf { PasswordUtils.validatePassword(it) }
+                ?.let {
+                    val locale = AppCompatDelegate.getApplicationLocales()[0] ?: Locale.getDefault()
+                    PasswordUtils.estimateStrength(it, locale)
+                }
         }
         .flowOn(Dispatchers.Default)
 
@@ -128,7 +133,12 @@ class SetupViewModel @Inject constructor(
                 vaultService.unlock(UnlockRequest.Password(password))
                     .onSuccess { session ->
                         sessionRepository.set(session)
-                        vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                        vaultService.create(
+                            CreateRequest.RecoveryPhrase(
+                                session,
+                                Bip39WordCount.Twelve
+                            )
+                        )
 
                         config.systemOnboardingStep = OnboardingRoute.RecoveryPhraseSetup.stepKey()
                         config.justFinishedSetup = true
