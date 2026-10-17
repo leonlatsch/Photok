@@ -146,8 +146,8 @@ private fun BiometricGlyph(
 ) {
     Surface(
         shape = CircleShape,
-        color = colorScheme.primaryContainer,
-        contentColor = colorScheme.onPrimaryContainer,
+        color = colorScheme.primary,
+        contentColor = colorScheme.onPrimary,
         modifier = Modifier
             .clip(CircleShape)
             .clickable(
