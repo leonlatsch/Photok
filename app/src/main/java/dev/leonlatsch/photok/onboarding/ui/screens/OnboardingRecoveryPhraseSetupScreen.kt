@@ -22,56 +22,67 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.animateBounds
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.LookaheadScope
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -89,13 +100,13 @@ import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhra
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseViewModel
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.RecoveryPhraseSavedTo
 import dev.leonlatsch.photok.other.AndroidFeatures
-import dev.leonlatsch.photok.recovery.ui.breakableAtDashes
-import dev.leonlatsch.photok.recovery.ui.recoveryPhraseChip
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val IMAGE_FILE_NAME = "photok-recovery-phrase.jpg"
 
@@ -167,7 +178,19 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
     Scaffold(
         bottomBar = {
-            Column {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                AnimatedVisibility(
+                    visible = uiState.savedTo == null,
+                ) {
+                    OtherWaysToSaveMenu(
+                        phrase = phrase,
+                        wordCount = uiState.wordCount,
+                        handleUiEvent = handleUiEvent,
+                    )
+                }
+
                 when {
                     uiState.savedTo != null -> {
                         OnboardingNexButtonBar(
@@ -222,176 +245,303 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            RecoveryPhraseCard(
+            RecoveryKeyCard(
                 phrase = phrase,
+                wordCount = uiState.wordCount,
                 saved = uiState.savedTo != null,
+                showQrCode = uiState.showQrCode,
+                handleUiEvent = handleUiEvent,
             )
 
             RecoveryPhraseSavedIndicator(savedTo = uiState.savedTo)
 
-            AnimatedVisibility(
-                visible = uiState.savedTo == null,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                OtherWaysToSaveMenu(
-                    phrase = phrase,
-                    wordCount = uiState.wordCount,
-                    handleUiEvent = handleUiEvent,
-                )
-            }
         }
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun RecoveryPhraseCard(
+private fun RecoveryKeyCard(
     phrase: RecoveryPhrase?,
+    wordCount: Bip39WordCount,
     saved: Boolean,
+    showQrCode: Boolean,
+    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
 ) {
-    val qrCode = remember {
-        movableContentOf { shownPhrase: RecoveryPhrase?, modifier: Modifier ->
-            RecoveryPhraseQrCode(phrase = shownPhrase, modifier = modifier)
-        }
-    }
-    val phraseText = remember {
-        movableContentOf { shownPhrase: RecoveryPhrase?, textAlign: TextAlign, modifier: Modifier ->
-            RecoveryPhraseText(phrase = shownPhrase, textAlign = textAlign, modifier = modifier)
+    val rotation by animateFloatAsState(
+        targetValue = if (showQrCode) 180f else 0f,
+        animationSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessLow),
+    )
+
+    val reveal = remember(phrase) { Animatable(0f) }
+    LaunchedEffect(phrase) {
+        if (phrase != null) {
+            reveal.animateTo(
+                targetValue = phrase.words.size.toFloat(),
+                animationSpec = tween(durationMillis = phrase.words.size * 70, easing = LinearEasing),
+            )
         }
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .recoveryPhraseChip(RoundedCornerShape(18.dp))
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
     ) {
-        LookaheadScope {
-            if (saved) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium)
-                ) {
-                    qrCode(
-                        phrase,
-                        Modifier
-                            .animateBounds(this@LookaheadScope)
-                            .size(96.dp)
+        Box {
+            Surface(
+                onClick = {
+                    if (showQrCode) {
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowWordsSide)
+                    } else {
+                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowQrCodeSide)
+                    }
+                },
+                enabled = phrase != null,
+                shape = RoundedCornerShape(24.dp),
+                color = colorScheme.primaryContainer,
+                contentColor = colorScheme.onPrimaryContainer,
+                shadowElevation = 10.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .graphicsLayer {
+                        rotationY = rotation
+                        cameraDistance = 12f * density
+                    },
+            ) {
+                Box(modifier = Modifier.animateContentSize()) {
+                    RecoveryKeyWordsFace(
+                        phrase = phrase,
+                        wordCount = wordCount,
+                        reveal = { reveal.value },
+                        modifier = Modifier.graphicsLayer {
+                            alpha = if (rotation <= 90f) 1f else 0f
+                        },
                     )
-                    phraseText(
-                        phrase,
-                        TextAlign.Start,
-                        Modifier
-                            .animateBounds(this@LookaheadScope)
-                            .weight(1f)
-                    )
-                }
-            } else {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingLarge)
-                ) {
-                    qrCode(
-                        phrase,
-                        Modifier
-                            .animateBounds(this@LookaheadScope)
-                            .size(200.dp)
-                    )
-                    phraseText(
-                        phrase,
-                        TextAlign.Center,
-                        Modifier
-                            .animateBounds(this@LookaheadScope)
-                            .fillMaxWidth()
+                    RecoveryKeyQrFace(
+                        phrase = phrase,
+                        showScreenshotHint = AndroidFeatures.detectScreenRecording() && !saved,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .graphicsLayer {
+                                alpha = if (rotation > 90f) 1f else 0f
+                                rotationY = 180f
+                            },
                     )
                 }
+            }
+
+            SavedStamp(
+                visible = saved,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .offset(x = (-12).dp, y = 14.dp),
+            )
+        }
+
+        AnimatedContent(
+            targetState = showQrCode,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            label = "RecoveryKeyFlipHint",
+        ) { shownQrCode ->
+            Text(
+                text = if (shownQrCode) "Tap the card to show as words" else "Tap the card to show as QR code",
+                style = MaterialTheme.typography.bodySmall,
+                color = colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun RecoveryKeyWordsFace(
+    phrase: RecoveryPhrase?,
+    wordCount: Bip39WordCount,
+    reveal: () -> Float,
+    modifier: Modifier = Modifier,
+) {
+    val count = phrase?.words?.size ?: wordCount.words
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        modifier = modifier.padding(Dimens.spacingLarge),
+    ) {
+        RecoveryKeyFaceHeader(label = "RECOVERY KEY") {
+            Text(
+                text = "$count words",
+                style = MaterialTheme.typography.labelMedium,
+            )
+        }
+
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            (0 until count).chunked(3).forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    row.forEach { index ->
+                        RecoveryWord(
+                            number = index + 1,
+                            word = phrase?.words?.getOrNull(index),
+                            revealProgress = { (reveal() - index).coerceIn(0f, 1f) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecoveryKeyQrFace(
+    phrase: RecoveryPhrase?,
+    showScreenshotHint: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+        modifier = modifier.padding(Dimens.spacingLarge),
+    ) {
+        RecoveryKeyFaceHeader(label = "SCAN TO RESTORE") {
+            Icon(
+                painter = painterResource(R.drawable.ic_qr_code),
+                contentDescription = null,
+                modifier = Modifier.size(18.dp),
+            )
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+        ) {
+            if (phrase != null) {
+                QRCodeImage(
+                    text = phrase.toMnemonicString(),
+                    foregroundColor = colorScheme.onSurface,
+                    backgroundColor = colorScheme.surface,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(colorScheme.surface)
+                        .padding(Dimens.spacingSmall),
+                )
             }
         }
 
         AnimatedVisibility(
-            visible = AndroidFeatures.detectScreenRecording() && !saved,
+            visible = showScreenshotHint,
             enter = expandVertically() + fadeIn(),
             exit = shrinkVertically() + fadeOut(),
         ) {
-            Column {
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                )
-
-                Text(
-                    text = "Or just take a screenshot",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Dimens.spacingMedium),
-                )
-            }
+            Text(
+                text = "You can also take a screenshot of the QR code",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.alpha(0.7f),
+            )
         }
     }
 }
 
 @Composable
-private fun RecoveryPhraseQrCode(
-    phrase: RecoveryPhrase?,
-    modifier: Modifier = Modifier,
+private fun RecoveryKeyFaceHeader(
+    label: String,
+    trailing: @Composable () -> Unit,
 ) {
-    AnimatedContent(
-        targetState = phrase,
-        transitionSpec = {
-            (fadeIn(tween(400)) + scaleIn(tween(400), initialScale = 0.92f)) togetherWith
-                fadeOut(tween(200))
-        },
-        contentAlignment = Alignment.Center,
-        label = "RecoveryPhraseQrCode",
-        modifier = modifier,
-    ) { shownPhrase ->
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            if (shownPhrase != null) {
-                QRCodeImage(
-                    text = shownPhrase.toMnemonicString(),
-                    foregroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else {
-                CircularProgressIndicator()
-            }
-        }
-    }
-}
-
-@Composable
-private fun RecoveryPhraseText(
-    phrase: RecoveryPhrase?,
-    textAlign: TextAlign,
-    modifier: Modifier = Modifier,
-) {
-    AnimatedContent(
-        targetState = phrase,
-        transitionSpec = {
-            (fadeIn(tween(400, delayMillis = 150)) +
-                slideInVertically(tween(400, delayMillis = 150)) { it / 4 }) togetherWith
-                fadeOut(tween(200))
-        },
-        label = "RecoveryPhraseText",
-        modifier = modifier,
-    ) { shownPhrase ->
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = shownPhrase?.toMnemonicString()?.breakableAtDashes().orEmpty(),
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = 2.sp,
+            modifier = Modifier
+                .weight(1f)
+                .alpha(0.7f),
+        )
+        trailing()
+    }
+}
+
+@Composable
+private fun RecoveryWord(
+    number: Int,
+    word: String?,
+    revealProgress: () -> Float,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(colorScheme.surface.copy(alpha = 0.6f))
+            .padding(horizontal = Dimens.spacingSmall, vertical = 6.dp),
+    ) {
+        Text(
+            text = number.toString().padStart(2, '0'),
+            style = MaterialTheme.typography.labelSmall.copy(fontFamily = FontFamily.Monospace),
+            modifier = Modifier.alpha(0.5f),
+        )
+        Text(
+            text = word.orEmpty(),
             style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-            textAlign = textAlign,
-            minLines = 3,
-            modifier = Modifier.fillMaxWidth(),
+            fontWeight = FontWeight.Medium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.graphicsLayer {
+                val progress = revealProgress()
+                alpha = progress
+                translationY = (1f - progress) * 6.dp.toPx()
+            },
+        )
+    }
+}
+
+@Composable
+private fun SavedStamp(
+    visible: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val haptics = LocalHapticFeedback.current
+    val progress by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = spring(dampingRatio = 0.45f, stiffness = Spring.StiffnessMediumLow),
+    )
+
+    LaunchedEffect(visible) {
+        if (visible) {
+            delay(120.milliseconds)
+            haptics.performHapticFeedback(HapticFeedbackType.Confirm)
+        }
+    }
+
+    val shape = RoundedCornerShape(8.dp)
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier
+            .graphicsLayer {
+                alpha = progress.coerceIn(0f, 1f)
+                val scale = 1.8f - 0.8f * progress
+                scaleX = scale
+                scaleY = scale
+                rotationZ = -10f
+            }
+            .background(colorScheme.surface, shape)
+            .border(2.dp, colorScheme.primary, shape)
+            .padding(horizontal = Dimens.spacingSmall, vertical = 4.dp),
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_check),
+            contentDescription = null,
+            tint = colorScheme.primary,
+            modifier = Modifier.size(18.dp),
+        )
+        Text(
+            text = "SAVED",
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 2.sp,
+            color = colorScheme.primary,
         )
     }
 }
@@ -552,24 +702,24 @@ private fun SavedIndicatorRow(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
-            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .background(colorScheme.secondaryContainer)
             .padding(Dimens.spacingMedium),
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_check_circle),
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            tint = colorScheme.onPrimaryContainer,
         )
         Column {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = colorScheme.onPrimaryContainer,
             )
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = colorScheme.onPrimaryContainer,
             )
         }
     }

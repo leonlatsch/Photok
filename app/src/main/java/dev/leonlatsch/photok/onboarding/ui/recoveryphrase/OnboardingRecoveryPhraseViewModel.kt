@@ -82,6 +82,7 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
     private val wordCount = MutableStateFlow(Bip39WordCount.Twelve)
     private val loading = MutableStateFlow(false)
     private val savedTo = MutableStateFlow<RecoveryPhraseSavedTo?>(null)
+    private val showQrCode = MutableStateFlow(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val phrase = sessionRepository.observe().flatMapLatest { session ->
@@ -93,12 +94,14 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
         wordCount,
         loading,
         savedTo,
-    ) { phrase, wordCount, loading, savedTo ->
+        showQrCode,
+    ) { phrase, wordCount, loading, savedTo, showQrCode ->
         OnboardingRecoveryPhraseUiState(
             phrase = phrase,
             wordCount = wordCount,
             loading = loading,
             savedTo = savedTo,
+            showQrCode = showQrCode,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), OnboardingRecoveryPhraseUiState())
 
@@ -263,7 +266,17 @@ class OnboardingRecoveryPhraseViewModel @Inject constructor(
             }
 
             OnboardingRecoveryPhraseUiEvent.ScreenshotTaken -> {
-                savedTo.value = RecoveryPhraseSavedTo.Screenshot
+                if (showQrCode.value) {
+                    savedTo.value = RecoveryPhraseSavedTo.Screenshot
+                }
+            }
+
+            OnboardingRecoveryPhraseUiEvent.ShowQrCodeSide -> {
+                showQrCode.value = true
+            }
+
+            OnboardingRecoveryPhraseUiEvent.ShowWordsSide -> {
+                showQrCode.value = false
             }
 
             OnboardingRecoveryPhraseUiEvent.Continue -> {

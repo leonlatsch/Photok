@@ -24,6 +24,7 @@ data class OnboardingRecoveryPhraseUiState(
     val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
     val loading: Boolean = false,
     val savedTo: RecoveryPhraseSavedTo? = null,
+    val showQrCode: Boolean = false,
 )
 
 sealed interface RecoveryPhraseSavedTo {

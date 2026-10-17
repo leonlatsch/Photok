@@ -32,5 +32,7 @@ sealed interface OnboardingRecoveryPhraseUiEvent {
     data object AllowScreenshots : OnboardingRecoveryPhraseUiEvent
     data object RevokeScreenshots : OnboardingRecoveryPhraseUiEvent
     data object ScreenshotTaken : OnboardingRecoveryPhraseUiEvent
+    data object ShowQrCodeSide : OnboardingRecoveryPhraseUiEvent
+    data object ShowWordsSide : OnboardingRecoveryPhraseUiEvent
     data object Continue : OnboardingRecoveryPhraseUiEvent
 }

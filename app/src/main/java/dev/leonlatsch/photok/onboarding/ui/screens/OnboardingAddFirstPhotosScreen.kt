@@ -19,24 +19,43 @@ package dev.leonlatsch.photok.onboarding.ui.screens
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -58,6 +77,10 @@ import dev.leonlatsch.photok.other.extensions.show
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import kotlinx.coroutines.delay
+import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun OnboardingAddFirstPhotosScreen() {
@@ -138,37 +161,118 @@ fun OnboardingAddFirstPhotosScreen() {
                 R.drawable.onboarding_placeholder_photo_8,
             )
 
-            ImagesRows(images)
+            EncryptingPhotoGrid(images)
+        }
+    }
+}
+
+private class EncryptingPhotoGridState(val photoCount: Int) {
+    var appeared by mutableIntStateOf(0)
+    var locked by mutableStateOf(emptySet<Int>())
+}
+
+@Composable
+private fun EncryptingPhotoGrid(
+    images: List<Int>,
+    modifier: Modifier = Modifier,
+) {
+    val state = remember(images) { EncryptingPhotoGridState(images.size) }
+
+    LaunchedEffect(state) {
+        for (count in 1..state.photoCount) {
+            delay(70.milliseconds)
+            state.appeared = count
+        }
+        while (true) {
+            delay(900.milliseconds)
+            for (index in (0 until state.photoCount).shuffled()) {
+                delay(Random.nextLong(120, 320).milliseconds)
+                state.locked += index
+            }
+            delay(2.seconds)
+            state.locked = emptySet()
+        }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
+        modifier = modifier,
+    ) {
+        images.withIndex().chunked(4).forEach { chunk ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
+            ) {
+                for ((index, image) in chunk) {
+                    EncryptingPhotoTile(
+                        image = image,
+                        appeared = index < state.appeared,
+                        locked = index in state.locked,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun ImagesRows(
-    images: List<Int>,
+private fun EncryptingPhotoTile(
+    @DrawableRes image: Int,
+    appeared: Boolean,
+    locked: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
-        modifier = modifier,
-    ) {
-        images.chunked(4).forEach { chunk ->
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
-            ) {
-                for (image in chunk) {
-                    Image(
-                        painter = painterResource(image),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(12.dp))
-                    )
-                }
+    val appear by animateFloatAsState(
+        targetValue = if (appeared) 1f else 0f,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
+    )
+    val lock by animateFloatAsState(
+        targetValue = if (locked) 1f else 0f,
+        animationSpec = tween(durationMillis = 400),
+    )
+    val lockIcon by animateFloatAsState(
+        targetValue = if (locked) 1f else 0f,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium),
+    )
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .aspectRatio(1f)
+            .graphicsLayer {
+                alpha = appear.coerceIn(0f, 1f)
+                val scale = (0.6f + 0.4f * appear) * (1f - 0.06f * lock)
+                scaleX = scale
+                scaleY = scale
             }
-        }
+            .clip(RoundedCornerShape(12.dp)),
+    ) {
+        Image(
+            painter = painterResource(image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .blur(8.dp * lock),
+        )
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .graphicsLayer { alpha = lock }
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.45f)),
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_lock),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier
+                .size(22.dp)
+                .graphicsLayer {
+                    alpha = lockIcon.coerceIn(0f, 1f)
+                    scaleX = lockIcon
+                    scaleY = lockIcon
+                },
+        )
     }
 }
 
