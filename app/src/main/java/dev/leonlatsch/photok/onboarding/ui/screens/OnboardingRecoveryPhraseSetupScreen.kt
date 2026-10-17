@@ -20,34 +20,20 @@ import android.app.Activity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -57,32 +43,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -100,13 +76,11 @@ import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhra
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.OnboardingRecoveryPhraseViewModel
 import dev.leonlatsch.photok.onboarding.ui.recoveryphrase.RecoveryPhraseSavedTo
 import dev.leonlatsch.photok.other.AndroidFeatures
+import dev.leonlatsch.photok.recovery.ui.RecoveryKeyCard
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import dev.leonlatsch.photok.uicomponnets.qr.QRCodeImage
-import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.milliseconds
 
 private const val IMAGE_FILE_NAME = "photok-recovery-phrase.jpg"
 
@@ -248,301 +222,16 @@ private fun OnboardingRecoveryPhraseSetupContent(
             RecoveryKeyCard(
                 phrase = phrase,
                 wordCount = uiState.wordCount,
-                saved = uiState.savedTo != null,
                 showQrCode = uiState.showQrCode,
-                handleUiEvent = handleUiEvent,
+                onShowQrCodeSide = { handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowQrCodeSide) },
+                onShowWordsSide = { handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowWordsSide) },
+                saved = uiState.savedTo != null,
+                showScreenshotHint = AndroidFeatures.detectScreenRecording(),
             )
 
             RecoveryPhraseSavedIndicator(savedTo = uiState.savedTo)
 
         }
-    }
-}
-
-@Composable
-private fun RecoveryKeyCard(
-    phrase: RecoveryPhrase?,
-    wordCount: Bip39WordCount,
-    saved: Boolean,
-    showQrCode: Boolean,
-    handleUiEvent: (OnboardingRecoveryPhraseUiEvent) -> Unit,
-) {
-    val rotation by animateFloatAsState(
-        targetValue = if (showQrCode) 180f else 0f,
-        animationSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessLow),
-    )
-
-    val reveal = remember(phrase) { Animatable(0f) }
-    LaunchedEffect(phrase) {
-        if (phrase != null) {
-            reveal.animateTo(
-                targetValue = phrase.words.size.toFloat(),
-                animationSpec = tween(durationMillis = phrase.words.size * 70, easing = LinearEasing),
-            )
-        }
-    }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-    ) {
-        Box {
-            Surface(
-                onClick = {
-                    if (showQrCode) {
-                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowWordsSide)
-                    } else {
-                        handleUiEvent(OnboardingRecoveryPhraseUiEvent.ShowQrCodeSide)
-                    }
-                },
-                enabled = phrase != null,
-                shape = RoundedCornerShape(24.dp),
-                color = colorScheme.primaryContainer,
-                contentColor = colorScheme.onPrimaryContainer,
-                shadowElevation = 10.dp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .graphicsLayer {
-                        rotationY = rotation
-                        cameraDistance = 12f * density
-                    },
-            ) {
-                Box(modifier = Modifier.animateContentSize()) {
-                    RecoveryKeyWordsFace(
-                        phrase = phrase,
-                        wordCount = wordCount,
-                        reveal = { reveal.value },
-                        modifier = Modifier.graphicsLayer {
-                            alpha = if (rotation <= 90f) 1f else 0f
-                        },
-                    )
-                    RecoveryKeyQrFace(
-                        phrase = phrase,
-                        showScreenshotHint = AndroidFeatures.detectScreenRecording() && !saved,
-                        modifier = Modifier
-                            .matchParentSize()
-                            .graphicsLayer {
-                                alpha = if (rotation > 90f) 1f else 0f
-                                rotationY = 180f
-                            },
-                    )
-                }
-            }
-
-            SavedStamp(
-                visible = saved,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = (-12).dp, y = 14.dp),
-            )
-        }
-
-        AnimatedContent(
-            targetState = showQrCode,
-            transitionSpec = { fadeIn() togetherWith fadeOut() },
-            label = "RecoveryKeyFlipHint",
-        ) { shownQrCode ->
-            Text(
-                text = if (shownQrCode) "Tap the card to show as words" else "Tap the card to show as QR code",
-                style = MaterialTheme.typography.bodySmall,
-                color = colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun RecoveryKeyWordsFace(
-    phrase: RecoveryPhrase?,
-    wordCount: Bip39WordCount,
-    reveal: () -> Float,
-    modifier: Modifier = Modifier,
-) {
-    val count = phrase?.words?.size ?: wordCount.words
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
-        modifier = modifier.padding(Dimens.spacingLarge),
-    ) {
-        RecoveryKeyFaceHeader(label = "RECOVERY KEY") {
-            Text(
-                text = "$count words",
-                style = MaterialTheme.typography.labelMedium,
-            )
-        }
-
-        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            (0 until count).chunked(3).forEach { row ->
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    row.forEach { index ->
-                        RecoveryWord(
-                            number = index + 1,
-                            word = phrase?.words?.getOrNull(index),
-                            revealProgress = { (reveal() - index).coerceIn(0f, 1f) },
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun RecoveryKeyQrFace(
-    phrase: RecoveryPhrase?,
-    showScreenshotHint: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-        modifier = modifier.padding(Dimens.spacingLarge),
-    ) {
-        RecoveryKeyFaceHeader(label = "SCAN TO RESTORE") {
-            Icon(
-                painter = painterResource(R.drawable.ic_qr_code),
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-            )
-        }
-
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-        ) {
-            if (phrase != null) {
-                QRCodeImage(
-                    text = phrase.toMnemonicString(),
-                    foregroundColor = colorScheme.onSurface,
-                    backgroundColor = colorScheme.surface,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(colorScheme.surface)
-                        .padding(Dimens.spacingSmall),
-                )
-            }
-        }
-
-        AnimatedVisibility(
-            visible = showScreenshotHint,
-            enter = expandVertically() + fadeIn(),
-            exit = shrinkVertically() + fadeOut(),
-        ) {
-            Text(
-                text = "You can also take a screenshot of the QR code",
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.alpha(0.7f),
-            )
-        }
-    }
-}
-
-@Composable
-private fun RecoveryKeyFaceHeader(
-    label: String,
-    trailing: @Composable () -> Unit,
-) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 2.sp,
-            modifier = Modifier
-                .weight(1f)
-                .alpha(0.7f),
-        )
-        trailing()
-    }
-}
-
-@Composable
-private fun RecoveryWord(
-    number: Int,
-    word: String?,
-    revealProgress: () -> Float,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .background(colorScheme.surface.copy(alpha = 0.6f))
-            .padding(horizontal = Dimens.spacingSmall, vertical = 6.dp),
-    ) {
-        Text(
-            text = number.toString().padStart(2, '0'),
-            style = MaterialTheme.typography.labelSmall.copy(fontFamily = FontFamily.Monospace),
-            modifier = Modifier.alpha(0.5f),
-        )
-        Text(
-            text = word.orEmpty(),
-            style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-            fontWeight = FontWeight.Medium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.graphicsLayer {
-                val progress = revealProgress()
-                alpha = progress
-                translationY = (1f - progress) * 6.dp.toPx()
-            },
-        )
-    }
-}
-
-@Composable
-private fun SavedStamp(
-    visible: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    val haptics = LocalHapticFeedback.current
-    val progress by animateFloatAsState(
-        targetValue = if (visible) 1f else 0f,
-        animationSpec = spring(dampingRatio = 0.45f, stiffness = Spring.StiffnessMediumLow),
-    )
-
-    LaunchedEffect(visible) {
-        if (visible) {
-            delay(120.milliseconds)
-            haptics.performHapticFeedback(HapticFeedbackType.Confirm)
-        }
-    }
-
-    val shape = RoundedCornerShape(8.dp)
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier
-            .graphicsLayer {
-                alpha = progress.coerceIn(0f, 1f)
-                val scale = 1.8f - 0.8f * progress
-                scaleX = scale
-                scaleY = scale
-                rotationZ = -10f
-            }
-            .background(colorScheme.surface, shape)
-            .border(2.dp, colorScheme.primary, shape)
-            .padding(horizontal = Dimens.spacingSmall, vertical = 4.dp),
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_check),
-            contentDescription = null,
-            tint = colorScheme.primary,
-            modifier = Modifier.size(18.dp),
-        )
-        Text(
-            text = "SAVED",
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.Black,
-            letterSpacing = 2.sp,
-            color = colorScheme.primary,
-        )
     }
 }
 

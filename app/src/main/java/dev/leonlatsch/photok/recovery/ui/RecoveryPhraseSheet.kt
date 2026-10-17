@@ -44,7 +44,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -163,16 +162,15 @@ fun RecoveryPhraseSheet(
                 textAlign = TextAlign.Center,
             )
 
-            if (uiState.phrase == null || uiState.phrase!!.words.isEmpty()) {
-                CircularProgressIndicator(
-                    modifier = Modifier.padding(Dimens.spacingLarge)
-                )
-            } else {
-                RecoveryPhraseFlowRow(
-                    phrase = uiState.phrase,
-                    animated = true,
-                )
-            }
+            RecoveryKeyCard(
+                phrase = uiState.phrase,
+                wordCount = uiState.inputs.wordCount,
+                showQrCode = uiState.inputs.showQrCode,
+                onShowQrCodeSide = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowQrCodeSide) },
+                onShowWordsSide = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowWordsSide) },
+                saved = uiState.inputs.phraseWasSaved,
+                modifier = Modifier.padding(vertical = Dimens.spacingLarge),
+            )
 
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,

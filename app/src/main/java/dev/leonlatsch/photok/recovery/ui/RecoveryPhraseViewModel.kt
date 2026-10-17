@@ -59,6 +59,7 @@ data class RecoveryPhraseUiState(
         val phraseWasSaved: Boolean = false,
         val qrSheetVisible: Boolean = false,
         val regenerated: Boolean = false,
+        val showQrCode: Boolean = false,
     )
 }
 
@@ -75,6 +76,8 @@ sealed interface RecoveryPhraseUiEvent {
     data object DismissQrSheet : RecoveryPhraseUiEvent
     data object MarkPhraseSaved : RecoveryPhraseUiEvent
     data object CreateNewPhrase : RecoveryPhraseUiEvent
+    data object ShowQrCodeSide : RecoveryPhraseUiEvent
+    data object ShowWordsSide : RecoveryPhraseUiEvent
 }
 
 @HiltViewModel
@@ -214,6 +217,14 @@ class RecoveryPhraseViewModel @Inject constructor(
 
             RecoveryPhraseUiEvent.MarkPhraseSaved -> {
                 inputs.update { it.copy(phraseWasSaved = true) }
+            }
+
+            RecoveryPhraseUiEvent.ShowQrCodeSide -> {
+                inputs.update { it.copy(showQrCode = true) }
+            }
+
+            RecoveryPhraseUiEvent.ShowWordsSide -> {
+                inputs.update { it.copy(showQrCode = false) }
             }
 
             RecoveryPhraseUiEvent.CreateNewPhrase -> {
