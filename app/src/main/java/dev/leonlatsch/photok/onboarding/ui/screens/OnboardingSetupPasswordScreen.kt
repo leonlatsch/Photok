@@ -106,7 +106,7 @@ private fun OnboardingSetupPasswordContent(
 
     LaunchedEffect(Unit) {
         if (uiState.password.isEmpty()) {
-            delay(300.milliseconds)
+            delay(400.milliseconds)
             focusRequester.requestFocus()
         }
     }
