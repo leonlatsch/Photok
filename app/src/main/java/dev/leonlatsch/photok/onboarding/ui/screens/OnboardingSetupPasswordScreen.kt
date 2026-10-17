@@ -28,11 +28,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalResources
@@ -42,6 +45,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.onboarding.ui.SetupNavigationEvent
@@ -58,6 +62,8 @@ import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun OnboardingSetupPasswordScreen(
@@ -94,7 +100,15 @@ private fun OnboardingSetupPasswordContent(
     uiState: SetupUiState,
     handleUiEvent: (SetupUiEvent) -> Unit,
 ) {
+    val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(Unit) {
+        if (uiState.password.isEmpty()) {
+            delay(300.milliseconds)
+            focusRequester.requestFocus()
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -127,6 +141,7 @@ private fun OnboardingSetupPasswordContent(
                 onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
                 label = "Password",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.focusRequester(focusRequester)
             )
 
             var lastPasswordStrength by remember { mutableStateOf(uiState.passwordStrength) }
@@ -159,6 +174,14 @@ private fun OnboardingSetupPasswordScreenPreview() {
         OnboardingSetupPasswordContent(
             uiState = SetupUiState(
                 password = "secret",
+                passwordStrength = PasswordStrength(
+                    score = 2,
+                    crackTimeSeconds = 2342.0,
+                    warning = "This may not be a good password",
+                    suggestions = listOf(
+                        "Maybe think twice"
+                    )
+                ),
                 confirmPassword = "secret",
                 showConfirmPassword = true,
                 canSetup = true,
