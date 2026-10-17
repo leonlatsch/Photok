@@ -104,7 +104,7 @@ The installable `:app` module has a single `MainActivity`. It calls `setContent`
 - Pro routes are cases of `sealed interface ProRoute : NavKey` in `core/.../pro/navigation/`, because `:app` `src/main` cannot see `:pro` types.
 - `:pro` registers their entries in `fun EntryProviderScope<NavKey>.proEntries()` (`pro/.../pro/navigation/ProEntries.kt`). `app/src/foss` has an empty stub with the same package and name.
 - Navigate with `LocalNavigator.current.navigate(ProRoute.X)`, and close a pro screen with `goBack()` rather than `activity.finish()`.
-- The paywall is still a standalone `PaywallActivity` opened through `Activity.showPaywall(source)`.
+- The paywall is `ProRoute.Paywall(source)` and slides up through its entry metadata. A purchase replaces it with `ProRoute.PaywallSuccess`. Onboarding shows it as `ProRoute.OnboardingOffer`, which continues to the onboarding done screen instead.
 
 ---
 
@@ -139,7 +139,7 @@ Still used by some dialogs. They extend `BindableDialogFragment<ViewDataBinding>
 
 `AppTheme` (in `core/.../ui/theme/Theme.kt`) respects the system dark/light setting.
 - `MainActivity` applies it once for all Navigation 3 screens, so do not wrap screens or in-tree sheets/dialogs in `AppTheme` again.
-- Only standalone roots apply it themselves: activities such as `PaywallActivity`, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
+- Only standalone roots apply it themselves: other activities, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
 
 ### CompositionLocals
 

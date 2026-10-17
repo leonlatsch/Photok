@@ -104,7 +104,6 @@ import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.pro.passwordattempts.BruteforceProtectionSheet
 import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import dev.leonlatsch.photok.pro.paywall.ui.components.ProSettingsBanner
-import dev.leonlatsch.photok.pro.paywall.ui.showPaywall
 import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSheet
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.Preference
@@ -651,7 +650,7 @@ fun PreferenceView(
     onClick: (() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
 ) {
-    val activity = LocalActivity.current
+    val navigator = LocalNavigator.current
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -659,7 +658,7 @@ fun PreferenceView(
         modifier = modifier
             .clickable(enabled = onClick != null) {
                 if (paywallSource != null && !proFeaturesActive) {
-                    activity?.showPaywall(paywallSource)
+                    navigator.navigate(ProRoute.Paywall(paywallSource))
                 } else {
                     onClick?.invoke()
                 }
