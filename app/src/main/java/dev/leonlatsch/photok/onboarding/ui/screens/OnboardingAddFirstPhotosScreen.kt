@@ -62,20 +62,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import dev.leonlatsch.photok.BuildConfig
+import androidx.navigation3.runtime.NavKey
 import dev.leonlatsch.photok.core.R
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
+import dev.leonlatsch.photok.onboarding.ui.AddFirstPhotosViewModel
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
 import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
@@ -86,8 +86,19 @@ import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun OnboardingAddFirstPhotosScreen() {
+    val viewModel: AddFirstPhotosViewModel = hiltViewModel()
+
+    OnboardingAddFirstPhotosContent(
+        nextRoute = viewModel::nextRoute
+    )
+}
+
+@Composable
+fun OnboardingAddFirstPhotosContent(
+    nextRoute: () -> NavKey,
+) {
+
     val navigator = LocalNavigator.current
-    val nextRoute = if (BuildConfig.PLAY) ProRoute.OnboardingOffer else OnboardingRoute.Done
     val activity = LocalActivity.current as? FragmentActivity
     val lifecycleOwner = LocalLifecycleOwner.current
     val scope = rememberCoroutineScope()
@@ -112,7 +123,7 @@ fun OnboardingAddFirstPhotosScreen() {
         ) { _, _ ->
             scope.launch {
                 delay(300.milliseconds)
-                navigator.navigate(nextRoute)
+                navigator.navigate(nextRoute())
             }
         }
 
@@ -129,7 +140,7 @@ fun OnboardingAddFirstPhotosScreen() {
             ) {
                 TextButton(
                     onClick = {
-                        navigator.navigate(nextRoute)
+                        navigator.navigate(nextRoute())
                     }
                 ) {
                     Text("Skip")
@@ -231,7 +242,10 @@ private fun EncryptingPhotoTile(
 ) {
     val appear by animateFloatAsState(
         targetValue = if (appeared) 1f else 0f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
     )
     val lock by animateFloatAsState(
         targetValue = if (locked) 1f else 0f,
@@ -239,7 +253,10 @@ private fun EncryptingPhotoTile(
     )
     val lockIcon by animateFloatAsState(
         targetValue = if (locked) 1f else 0f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
     )
 
     Box(
@@ -287,6 +304,8 @@ private fun EncryptingPhotoTile(
 @Composable
 private fun OnboardingAddFirstPhotosScreenPreview() {
     AppTheme {
-        OnboardingAddFirstPhotosScreen()
+        OnboardingAddFirstPhotosContent(
+            nextRoute = { error("") }
+        )
     }
 }
