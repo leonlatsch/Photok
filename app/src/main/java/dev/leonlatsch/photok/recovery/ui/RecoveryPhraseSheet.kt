@@ -19,25 +19,14 @@ package dev.leonlatsch.photok.recovery.ui
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -48,7 +37,6 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,28 +45,19 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
-import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.other.AndroidFeatures
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.Dimens
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private const val IMAGE_FILE_NAME = "photok-recovery-phrase.jpg"
@@ -264,122 +243,3 @@ fun RecoveryPhraseSheet(
         }
     }
 }
-
-// Vertical padding needed because animateContentSize() clips animation
-@Composable
-fun RecoveryPhraseFlowRow(
-    phrase: RecoveryPhrase?,
-    animated: Boolean,
-    verticalPadding: Dp = Dimens.spacingLarge,
-    modifier: Modifier = Modifier,
-) {
-    val isPreview = LocalInspectionMode.current
-
-    var words by remember {
-        mutableStateOf(phrase?.words.orEmpty())
-    }
-
-    LaunchedEffect(phrase) {
-        if (phrase != null) {
-            words = phrase.words
-        }
-    }
-
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        maxItemsInEachRow = if (words.size > 12) 4 else 3,
-        modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize()
-            .padding(vertical = verticalPadding)
-    ) {
-        words.forEachIndexed { index, word ->
-            var show by remember(phrase, animated) {
-                mutableStateOf(!animated || isPreview)
-            }
-
-            LaunchedEffect(phrase) {
-                if (animated) {
-                    delay(300L)
-
-                    delay((index.toLong() + 1) * 20)
-                    show = true
-                }
-            }
-
-            val scale by animateFloatAsState(
-                targetValue = if (show) 1f else 0f,
-                animationSpec = spring(
-                    dampingRatio = 0.6f,
-                    stiffness = 200f
-                ),
-                visibilityThreshold = 0.01f,
-            )
-
-            WordChip(
-                number = index + 1,
-                word = word,
-                modifier = Modifier.graphicsLayer {
-                    this.scaleX = scale
-                    this.scaleY = scale
-                    this.alpha = scale
-                }
-            )
-        }
-    }
-}
-
-@Composable
-internal fun WordChip(
-    number: Int,
-    word: String,
-    modifier: Modifier = Modifier,
-) {
-    val haptic = LocalHapticFeedback.current
-    val scope = rememberCoroutineScope()
-    val rotation = remember { Animatable(0f) }
-
-    Box(
-        modifier = modifier
-            .graphicsLayer { rotationZ = rotation.value }
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() },
-            ) {
-                haptic.performHapticFeedback(HapticFeedbackType.Confirm)
-                scope.launch {
-                    if (rotation.isRunning) rotation.stop()
-                    rotation.snapTo(12f)
-                    rotation.animateTo(0f, spring(dampingRatio = 0.3f, stiffness = 500f))
-                }
-            }
-            .recoveryPhraseChip(RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "$number",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                text = word,
-                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-    }
-}
-
-@Composable
-fun Modifier.recoveryPhraseChip(shape: Shape): Modifier = this
-    .background(
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        shape = shape,
-    )
-    .border(
-        width = 1.dp,
-        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-        shape = shape,
-    )

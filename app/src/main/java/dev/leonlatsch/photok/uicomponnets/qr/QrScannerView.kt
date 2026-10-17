@@ -94,6 +94,7 @@ fun QrScannerView(
         AndroidView(
             factory = { ctx ->
                 PreviewView(ctx).also { previewView ->
+                    previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
                     val future = ProcessCameraProvider.getInstance(ctx)
                     future.addListener({
                         runCatching {

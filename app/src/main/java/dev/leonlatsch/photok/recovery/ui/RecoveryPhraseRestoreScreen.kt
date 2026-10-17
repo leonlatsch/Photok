@@ -16,90 +16,78 @@
 
 package dev.leonlatsch.photok.recovery.ui
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
-import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.ui.components.CenteredScrollableColumn
-import dev.leonlatsch.photok.ui.components.NoKeyboardLearning
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageSubtitle
+import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import dev.leonlatsch.photok.uicomponnets.qr.QrScannerView
 import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecoveryPhraseRestoreScreen(
     onUnlocked: () -> Unit,
 ) {
     val viewModel: RecoveryPhraseRestoreViewModel = hiltViewModel()
-    val navigator = LocalNavigator.current
     val activity = LocalActivity.current
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -115,7 +103,6 @@ fun RecoveryPhraseRestoreScreen(
     RecoveryPhraseRestoreContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onBack = navigator::goBack,
     )
 }
 
@@ -124,349 +111,219 @@ fun RecoveryPhraseRestoreScreen(
 private fun RecoveryPhraseRestoreContent(
     uiState: RecoveryPhraseRestoreUiState,
     handleUiEvent: (RecoveryPhraseRestoreUiEvent) -> Unit,
-    onBack: () -> Unit,
 ) {
+    val navigator = LocalNavigator.current
     val clipboard = LocalClipboard.current
+    val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val activity = LocalActivity.current
+
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        when {
+            granted -> handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
+            activity?.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) == false -> {
+                handleUiEvent(RecoveryPhraseRestoreUiEvent.CameraPermissionPermanentlyDenied)
+            }
+
+            else -> handleUiEvent(RecoveryPhraseRestoreUiEvent.CameraPermissionDenied)
+        }
+    }
 
     val selectFileLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
         uri ?: return@rememberLauncherForActivityResult
-
         handleUiEvent(RecoveryPhraseRestoreUiEvent.LoadFromFile(uri))
     }
 
-    BackHandler(uiState.selectedRestoreMethod != null) {
-        handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
+    BackHandler(uiState.showScanner) {
+        handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowWords)
     }
 
-    Scaffold(
-        bottomBar = {
-            val animatedAlpha by animateFloatAsState(
-                targetValue = if (uiState.unlocked) 0f else 1f
-            )
+    val inputEnabled = !uiState.loading && !uiState.unlocked
 
-            Button(
-                onClick = {
-                    handleUiEvent(RecoveryPhraseRestoreUiEvent.Unlock(uiState.phrase))
-                },
-                enabled = uiState.phraseValid && !uiState.loading,
-                modifier = Modifier
-                    .padding(horizontal = Dimens.spacingLarge)
-                    .navigationBarsPadding()
-                    .fillMaxWidth()
-                    .alpha(animatedAlpha)
-            ) {
-                Text(text = stringResource(R.string.recovery_phrase_restore_button))
-            }
-        },
+    Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.recovery_phrase_forgot_password)
-                    )
-                },
+                title = {},
                 navigationIcon = {
-                    IconButton(
-                        onClick = onBack,
-                    ) {
+                    IconButton(onClick = navigator::goBack) {
                         Icon(
                             painter = painterResource(R.drawable.ic_back),
-                            contentDescription = stringResource(R.string.common_cancel)
+                            contentDescription = stringResource(R.string.common_cancel),
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+            )
+        },
+        bottomBar = {
+            OnboardingNexButtonBar(
+                text = stringResource(R.string.recovery_phrase_restore_button),
+                enabled = uiState.phraseValid && !uiState.unlocked,
+                loading = uiState.loading && !uiState.unlocked,
+                onNext = {
+                    focusManager.clearFocus()
+                    handleUiEvent(RecoveryPhraseRestoreUiEvent.Unlock)
+                },
             )
         },
     ) { contentPadding ->
-        CenteredScrollableColumn(
+        Column(
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
-                .padding(contentPadding)
                 .fillMaxSize()
+                .padding(contentPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = Dimens.spacingLarge)
+                .padding(bottom = Dimens.spacingLarge),
         ) {
-            Text(
-                text = stringResource(R.string.recovery_phrase_restore_enter_title),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
+            OnboardingPageTitle(text = stringResource(R.string.recovery_phrase_forgot_password))
+
+            OnboardingPageSubtitle(
+                text = "Enter the words of your recovery phrase to unlock your vault.",
             )
 
-            Spacer(Modifier.height(Dimens.spacingLarge))
+            Spacer(Modifier.height(Dimens.spacingXSmall))
 
-            AnimatedVisibility(uiState.selectedRestoreMethod == null) {
-                Text(
-                    text = stringResource(R.string.recovery_phrase_restore_choose_option),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                OptionButton(
-                    text = stringResource(R.string.recovery_phrase_restore_option_type),
-                    icon = R.drawable.ic_keyboard,
-                    onClick = {
-                        if (uiState.selectedRestoreMethod == null) {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.TypeByHand)
-                        } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
-                        }
-                    },
-                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
-                    selectedRestoreMethod = uiState.selectedRestoreMethod,
-                )
-                OptionButton(
-                    text = stringResource(R.string.recovery_phrase_restore_option_open_file),
-                    icon = R.drawable.ic_upload,
-                    onClick = {
-                        if (uiState.selectedRestoreMethod == null) {
-                            selectFileLauncher.launch(arrayOf("text/plain"))
-                        } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
-                        }
-                    },
-                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
-                    selectedRestoreMethod = uiState.selectedRestoreMethod,
-                )
-                OptionButton(
-                    text = stringResource(R.string.recovery_phrase_restore_option_scan_qr),
-                    icon = R.drawable.ic_qr_code,
-                    onClick = {
-                        if (uiState.selectedRestoreMethod == null) {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ScanQrCode)
-                        } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
-                        }
-                    },
-                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
-                    selectedRestoreMethod = uiState.selectedRestoreMethod,
-                )
-                OptionButton(
-                    text = stringResource(R.string.recovery_phrase_restore_option_paste),
-                    icon = R.drawable.ic_paste,
-                    onClick = {
-                        if (uiState.selectedRestoreMethod == null) {
-                            handleUiEvent(
-                                RecoveryPhraseRestoreUiEvent.PasteFromClipboard(
-                                    clipboard
-                                )
-                            )
-                        } else {
-                            handleUiEvent(RecoveryPhraseRestoreUiEvent.ResetInputs)
-                        }
-                    },
-                    restoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                    selectedRestoreMethod = uiState.selectedRestoreMethod,
-                )
-            }
-
-
-            val focusRequester = remember { FocusRequester() }
-            val focusManager = LocalFocusManager.current
-
-            LaunchedEffect(uiState.selectedRestoreMethod) {
-                if (uiState.selectedRestoreMethod == RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand) {
-                    delay(800.milliseconds)
-                    focusRequester.requestFocus()
-                }
-
-                if (uiState.selectedRestoreMethod == null) {
-                    focusManager.clearFocus()
-                }
-            }
-
-            AnimatedVisibility(
-                visible = uiState.restoreSupportingText != null,
-            ) {
-                Text(
-                    text = uiState.restoreSupportingText.orEmpty(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = Dimens.spacingLarge)
-                )
-            }
-
-            AnimatedContent(
-                uiState.selectedRestoreMethod,
-                transitionSpec = {
-                    fadeIn() + scaleIn() togetherWith fadeOut() + scaleOut()
-                },
-            ) {
-                when (it) {
-                    RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand -> {
-                        NoKeyboardLearning {
-                            OutlinedTextField(
-                                value = uiState.phrase.toMnemonicString(),
-                                onValueChange = { raw ->
-                                    val new = raw.cleanupRawInput()
-
-                                    handleUiEvent(
-                                        RecoveryPhraseRestoreUiEvent.UpdatePhrase(
-                                            RecoveryPhrase.from(new)
-                                        )
-                                    )
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    capitalization = KeyboardCapitalization.None,
-                                    autoCorrectEnabled = false,
-                                    imeAction = ImeAction.Done,
-                                    keyboardType = KeyboardType.PasswordVisible,
-                                ),
-                                keyboardActions = KeyboardActions(
-                                    onDone = { focusManager.clearFocus() }
-                                ),
-                                maxLines = 4,
-                                shape = RoundedCornerShape(24.dp),
-                                label = {
-                                    Text(stringResource(R.string.recovery_phrase_label))
-                                },
-                                placeholder = {
-                                    Text(stringResource(R.string.recovery_phrase_restore_input_placeholder))
-                                },
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .focusRequester(focusRequester)
-                                    .padding(vertical = Dimens.spacingLarge)
-                            )
-                        }
-                    }
-
-                    RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode -> {
-                        AnimatedVisibility(
-                            visible = uiState.phrase.words.isEmpty(),
-                        ) {
-                            QrScannerView(
-                                onQrCodeDecoded = { qrCodeContent ->
-                                    handleUiEvent(
-                                        RecoveryPhraseRestoreUiEvent.QrScanned(
-                                            qrCodeContent
-                                        )
-                                    )
-                                },
-                                modifier = Modifier
-                                    .height(200.dp)
-                                    .fillMaxWidth()
-                                    .padding(vertical = Dimens.spacingLarge)
-                            )
-                        }
-                    }
-
-                    RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                    RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
-                    null -> Box(
-                        modifier = Modifier.fillMaxWidth()
+            RecoveryKeyInputCard(
+                words = uiState.words,
+                wordCount = uiState.wordCount,
+                unknownWordIndices = uiState.unknownWordIndices,
+                showScanner = uiState.showScanner,
+                unlocked = uiState.unlocked,
+                revealToken = uiState.revealToken,
+                enabled = inputEnabled,
+                onUpdateWord = { index, word ->
+                    handleUiEvent(
+                        RecoveryPhraseRestoreUiEvent.UpdateWord(
+                            index,
+                            word
+                        )
                     )
-                }
-            }
-
-            AnimatedVisibility(
-                uiState.phrase.words.isNotEmpty() && uiState.selectedRestoreMethod != RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
-            ) {
-                RecoveryPhraseFlowRow(
-                    phrase = uiState.phrase,
-                    animated = true,
-                )
-            }
-
-            AnimatedVisibility(uiState.error != null) {
-                Text(
-                    text = uiState.error.orEmpty(),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            AnimatedVisibility(uiState.loading) {
-                Crossfade(uiState.unlocked) { unlocked ->
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        if (unlocked) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_check),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-
-                            Text(
-                                text = stringResource(R.string.recovery_phrase_restore_unlocked),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        } else {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(24.dp)
-                            )
-
-                            Text(
-                                text = stringResource(R.string.recovery_phrase_restore_unlocking),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ColumnScope.OptionButton(
-    text: String,
-    icon: Int,
-    onClick: () -> Unit,
-    selectedRestoreMethod: RecoveryPhraseRestoreUiState.RestoreMethod?,
-    restoreMethod: RecoveryPhraseRestoreUiState.RestoreMethod,
-    modifier: Modifier = Modifier,
-) {
-    val selected = selectedRestoreMethod == restoreMethod
-
-    AnimatedVisibility(
-        visible = selectedRestoreMethod == null || selected,
-    ) {
-
-        Column {
-            val color by animateColorAsState(
-                if (selected) {
-                    MaterialTheme.colorScheme.surfaceVariant
-                } else {
-                    MaterialTheme.colorScheme.surface
-                }
+                },
+                onFillWords = { index, words ->
+                    handleUiEvent(
+                        RecoveryPhraseRestoreUiEvent.FillWords(
+                            index,
+                            words
+                        )
+                    )
+                },
+                onSelectWordCount = { handleUiEvent(RecoveryPhraseRestoreUiEvent.SelectWordCount(it)) },
+                onQrScanned = { handleUiEvent(RecoveryPhraseRestoreUiEvent.QrScanned(it)) },
+                modifier = Modifier.imePadding()
             )
 
-            Spacer(Modifier.height(16.dp))
 
-            OutlinedButton(
-                onClick = onClick,
-                modifier = modifier,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = color,
-                ),
+            AnimatedVisibility(
+                !uiState.unlocked
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
+                    modifier = Modifier.height(IntrinsicSize.Min),
                 ) {
-                    Icon(
-                        painter = painterResource(icon),
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = text,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                    AnimatedVisibility(selected) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_check),
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 8.dp)
+                    if (uiState.showScanner) {
+                        RestoreSourceButton(
+                            text = "Type words",
+                            icon = R.drawable.ic_keyboard,
+                            enabled = inputEnabled,
+                            onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowWords) },
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
                         )
+                    } else {
+                        RestoreSourceButton(
+                            text = stringResource(R.string.recovery_phrase_restore_option_scan_qr),
+                            icon = R.drawable.ic_qr_code,
+                            enabled = inputEnabled,
+                            onClick = {
+                                focusManager.clearFocus()
+                                if (ContextCompat.checkSelfPermission(
+                                        context,
+                                        Manifest.permission.CAMERA
+                                    ) == PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowScanner)
+                                } else {
+                                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                                }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                        )
+                    }
+                    RestoreSourceButton(
+                        text = stringResource(R.string.recovery_phrase_restore_option_paste),
+                        icon = R.drawable.ic_paste,
+                        enabled = inputEnabled,
+                        onClick = {
+                            focusManager.clearFocus()
+                            handleUiEvent(RecoveryPhraseRestoreUiEvent.PasteFromClipboard(clipboard))
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                    RestoreSourceButton(
+                        text = stringResource(R.string.recovery_phrase_restore_option_open_file),
+                        icon = R.drawable.ic_upload,
+                        enabled = inputEnabled,
+                        onClick = {
+                            focusManager.clearFocus()
+                            selectFileLauncher.launch(arrayOf("text/plain"))
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = uiState.source != null && !uiState.unlocked,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut(),
+            ) {
+                Text(
+                    text = uiState.source.orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+
+            AnimatedVisibility(
+                visible = uiState.error != null,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut(),
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = uiState.error.orEmpty(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    if (uiState.showCameraSettings) {
+                        TextButton(
+                            onClick = {
+                                val intent =
+                                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                        data = Uri.fromParts("package", context.packageName, null)
+                                    }
+                                context.startActivity(intent)
+                            },
+                        ) {
+                            Text(stringResource(R.string.permission_gate_change_in_settings))
+                        }
                     }
                 }
             }
@@ -474,120 +331,110 @@ private fun ColumnScope.OptionButton(
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
-private fun Preview() {
+private fun RestoreSourceButton(
+    text: String,
+    icon: Int,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        onClick = onClick,
+        enabled = enabled,
+        shape = RoundedCornerShape(18.dp),
+        color = colorScheme.secondaryContainer,
+        contentColor = colorScheme.onSecondaryContainer,
+        modifier = modifier,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall, Alignment.CenterVertically),
+            modifier = Modifier.padding(
+                vertical = Dimens.spacingMedium,
+                horizontal = Dimens.spacingSmall
+            ),
+        ) {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelMedium,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+            )
+        }
+    }
+}
+
+private val PREVIEW_WORDS = listOf(
+    "river",
+    "apple",
+    "orbit",
+    "candle",
+    "frozen",
+    "maple",
+    "tunnel",
+    "quiet",
+    "velvet",
+    "harbor",
+    "pixel",
+    "summit"
+)
+
+@PreviewLightDark
+@Composable
+private fun RecoveryPhraseRestoreEmptyPreview() {
     AppTheme {
         RecoveryPhraseRestoreContent(
-            uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(),
-                phraseValid = false,
-                loading = false,
-            ),
+            uiState = RecoveryPhraseRestoreUiState(),
             handleUiEvent = {},
-            onBack = {},
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@PreviewLightDark
 @Composable
-private fun PreviewTypeByHand() {
+private fun RecoveryPhraseRestorePastedPreview() {
     AppTheme {
         RecoveryPhraseRestoreContent(
             uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(),
-                phraseValid = false,
-                loading = false,
-                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand
-            ),
-            handleUiEvent = {},
-            onBack = {},
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun PreviewQr() {
-    AppTheme {
-        RecoveryPhraseRestoreContent(
-            uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(),
-                phraseValid = false,
-                loading = false,
-                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
-            ),
-            handleUiEvent = {},
-            onBack = {},
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun PreviewFromFile() {
-    val context = LocalContext.current
-
-    AppTheme {
-        RecoveryPhraseRestoreContent(
-            uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(
-                    Bip39MnemonicGenerator(context).generate()
-                ),
+                words = PREVIEW_WORDS,
+                wordCount = Bip39WordCount.Twelve,
+                source = "Pasted from clipboard",
                 phraseValid = true,
-                loading = false,
-                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
-                restoreSupportingText = "Loaded from file"
             ),
             handleUiEvent = {},
-            onBack = {},
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@PreviewLightDark
 @Composable
-private fun PreviewTypePasted() {
-    val context = LocalContext.current
-
+private fun RecoveryPhraseRestoreScannerPreview() {
     AppTheme {
         RecoveryPhraseRestoreContent(
-            uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(
-                    Bip39MnemonicGenerator(context).generate()
-                ),
-                phraseValid = true,
-                loading = false,
-                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                restoreSupportingText = "Pasted from clipboard"
-            ),
+            uiState = RecoveryPhraseRestoreUiState(showScanner = true),
             handleUiEvent = {},
-            onBack = {},
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@PreviewLightDark
 @Composable
-private fun PreviewUnlocked() {
-    val context = LocalContext.current
-
+private fun RecoveryPhraseRestoreUnlockedPreview() {
     AppTheme {
         RecoveryPhraseRestoreContent(
-
             uiState = RecoveryPhraseRestoreUiState(
-                phrase = RecoveryPhrase(
-                    Bip39MnemonicGenerator(context).generate()
-                ),
+                words = PREVIEW_WORDS,
+                wordCount = Bip39WordCount.Twelve,
                 phraseValid = true,
                 loading = true,
                 unlocked = true,
-                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                restoreSupportingText = "Pasted from clipboard"
             ),
             handleUiEvent = {},
-            onBack = {},
         )
     }
 }

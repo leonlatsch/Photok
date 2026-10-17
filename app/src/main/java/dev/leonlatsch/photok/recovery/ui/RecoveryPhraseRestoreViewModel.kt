@@ -26,6 +26,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.io.IO
@@ -46,43 +48,43 @@ import kotlin.time.Duration.Companion.seconds
 private const val MAX_PHRASE_FILE_BYTES = 512
 
 data class RecoveryPhraseRestoreUiState(
-    val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
-    val loading: Boolean = false,
+    val words: List<String> = List(Bip39WordCount.Twelve.words) { "" },
+    val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
+    val unknownWordIndices: Set<Int> = emptySet(),
+    val showScanner: Boolean = false,
+    val revealToken: Int = 0,
+    val source: String? = null,
     val error: String? = null,
+    val showCameraSettings: Boolean = false,
+    val loading: Boolean = false,
     val unlocked: Boolean = false,
-    val selectedRestoreMethod: RestoreMethod? = null,
-    val restoreSupportingText: String? = null,
-
     val phraseValid: Boolean = false,
 ) {
-    enum class RestoreMethod {
-        TypeByHand,
-        PasteFromClipboard,
-        ScanQrCode,
-        LoadFromFile,
-    }
-
     data class Inputs(
-        val phrase: RecoveryPhrase = RecoveryPhrase(emptyList()),
-        val loading: Boolean = false,
+        val words: List<String> = List(Bip39WordCount.Twelve.words) { "" },
+        val wordCount: Bip39WordCount = Bip39WordCount.Twelve,
+        val showScanner: Boolean = false,
+        val revealToken: Int = 0,
+        val source: String? = null,
         val error: String? = null,
-        val selectedRestoreMethod: RestoreMethod? = null,
-        val restoreSupportingText: String? = null,
+    val showCameraSettings: Boolean = false,
+        val loading: Boolean = false,
         val unlocked: Boolean = false,
     )
 }
 
 sealed interface RecoveryPhraseRestoreUiEvent {
-    data class Unlock(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
-    data class UpdatePhrase(val phrase: RecoveryPhrase) : RecoveryPhraseRestoreUiEvent
-
-    data object TypeByHand : RecoveryPhraseRestoreUiEvent
-    data object ScanQrCode : RecoveryPhraseRestoreUiEvent
+    data class UpdateWord(val index: Int, val word: String) : RecoveryPhraseRestoreUiEvent
+    data class FillWords(val startIndex: Int, val words: List<String>) : RecoveryPhraseRestoreUiEvent
+    data class SelectWordCount(val wordCount: Bip39WordCount) : RecoveryPhraseRestoreUiEvent
+    data object ShowScanner : RecoveryPhraseRestoreUiEvent
+    data object CameraPermissionDenied : RecoveryPhraseRestoreUiEvent
+    data object CameraPermissionPermanentlyDenied : RecoveryPhraseRestoreUiEvent
+    data object ShowWords : RecoveryPhraseRestoreUiEvent
     data class QrScanned(val raw: String) : RecoveryPhraseRestoreUiEvent
     data class PasteFromClipboard(val clipboard: Clipboard) : RecoveryPhraseRestoreUiEvent
     data class LoadFromFile(val uri: Uri) : RecoveryPhraseRestoreUiEvent
-
-    data object ResetInputs : RecoveryPhraseRestoreUiEvent
+    data object Unlock : RecoveryPhraseRestoreUiEvent
 }
 
 @HiltViewModel
@@ -90,6 +92,7 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
     private val resources: Resources,
     private val sessionRepository: SessionRepository,
     private val vaultService: VaultService,
+    private val mnemonicGenerator: Bip39MnemonicGenerator,
     private val io: IO,
     private val inAppReview: InAppReview,
 ) : ViewModel() {
@@ -102,14 +105,19 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
 
     val uiState = inputs.map { inputs ->
         RecoveryPhraseRestoreUiState(
-            phrase = inputs.phrase,
-            loading = inputs.loading,
+            words = inputs.words,
+            wordCount = inputs.wordCount,
+            unknownWordIndices = inputs.words.indices
+                .filter { inputs.words[it].isNotEmpty() && !mnemonicGenerator.hasWordStartingWith(inputs.words[it]) }
+                .toSet(),
+            showScanner = inputs.showScanner,
+            revealToken = inputs.revealToken,
+            source = inputs.source,
             error = inputs.error,
+            showCameraSettings = inputs.showCameraSettings,
+            loading = inputs.loading,
             unlocked = inputs.unlocked,
-            selectedRestoreMethod = inputs.selectedRestoreMethod,
-            restoreSupportingText = inputs.restoreSupportingText,
-
-            phraseValid = inputs.phrase.validate(),
+            phraseValid = RecoveryPhrase(inputs.words).validate(),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), RecoveryPhraseRestoreUiState())
 
@@ -117,24 +125,127 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
         if (inputs.value.unlocked) return
 
         when (event) {
-            is RecoveryPhraseRestoreUiEvent.Unlock -> {
+            is RecoveryPhraseRestoreUiEvent.UpdateWord -> inputs.update {
+                it.copy(
+                    words = it.words.toMutableList().apply { set(event.index, event.word) },
+                    source = null,
+                    error = null,
+                    showCameraSettings = false,
+                )
+            }
+
+            is RecoveryPhraseRestoreUiEvent.FillWords -> inputs.update {
+                val wordCount = if (event.startIndex + event.words.size > Bip39WordCount.Twelve.words) {
+                    Bip39WordCount.TwentyFour
+                } else {
+                    it.wordCount
+                }
+                val words = it.words.resizedTo(wordCount).toMutableList()
+                event.words.forEachIndexed { offset, word ->
+                    if (event.startIndex + offset < words.size) {
+                        words[event.startIndex + offset] = word
+                    }
+                }
+
+                it.copy(
+                    words = words,
+                    wordCount = wordCount,
+                    revealToken = it.revealToken + 1,
+                    source = null,
+                    error = null,
+                    showCameraSettings = false,
+                )
+            }
+
+            is RecoveryPhraseRestoreUiEvent.SelectWordCount -> inputs.update {
+                it.copy(
+                    words = it.words.resizedTo(event.wordCount),
+                    wordCount = event.wordCount,
+                )
+            }
+
+            RecoveryPhraseRestoreUiEvent.ShowScanner -> inputs.update {
+                it.copy(showScanner = true, error = null, showCameraSettings = false)
+            }
+
+            RecoveryPhraseRestoreUiEvent.CameraPermissionDenied -> {
+                showError(resources.getString(R.string.recovery_phrase_restore_camera_permission_rationale))
+            }
+
+            RecoveryPhraseRestoreUiEvent.CameraPermissionPermanentlyDenied -> inputs.update {
+                it.copy(
+                    showScanner = false,
+                    source = null,
+                    error = resources.getString(R.string.recovery_phrase_restore_camera_permission_rationale),
+                    showCameraSettings = true,
+                )
+            }
+
+            RecoveryPhraseRestoreUiEvent.ShowWords -> inputs.update {
+                it.copy(showScanner = false)
+            }
+
+            is RecoveryPhraseRestoreUiEvent.QrScanned -> {
+                val words = event.raw.toRecoveryPhraseWords()
+                if (RecoveryPhrase(words).validate()) {
+                    showLoadedPhrase(words, resources.getString(R.string.recovery_phrase_restore_source_qr))
+                } else {
+                    showError(resources.getString(R.string.recovery_phrase_restore_error_invalid_qr))
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.LoadFromFile -> viewModelScope.launch(IO) {
+                io.openFileInput(event.uri)?.use { inputStream ->
+                    val filename = io.getFileName(event.uri)
+
+                    // A recovery phrase file is always tiny; cap to prevent OOM from a malicious file.
+                    val buffer = ByteArray(MAX_PHRASE_FILE_BYTES)
+                    val bytesRead = inputStream.read(buffer).coerceAtLeast(0)
+
+                    val words = String(buffer, 0, bytesRead).toRecoveryPhraseWords()
+                    if (RecoveryPhrase(words).validate()) {
+                        showLoadedPhrase(words, resources.getString(R.string.recovery_phrase_restore_source_file, filename))
+                    } else {
+                        showError(resources.getString(R.string.recovery_phrase_restore_error_invalid))
+                    }
+                }
+            }
+
+            is RecoveryPhraseRestoreUiEvent.PasteFromClipboard -> viewModelScope.launch {
+                val clipEntry = event.clipboard.getClipEntry() ?: return@launch
+                if (clipEntry.clipData.itemCount < 1) {
+                    return@launch
+                }
+
+                val pastedText = clipEntry.clipData.getItemAt(0).text?.toString().orEmpty()
+                val words = pastedText.toRecoveryPhraseWords()
+                if (RecoveryPhrase(words).validate()) {
+                    showLoadedPhrase(words, resources.getString(R.string.recovery_phrase_restore_source_clipboard))
+                } else {
+                    showError(resources.getString(R.string.recovery_phrase_restore_error_invalid))
+                }
+            }
+
+            RecoveryPhraseRestoreUiEvent.Unlock -> {
+                val phrase = RecoveryPhrase(inputs.value.words)
                 inputs.update {
                     it.copy(
+                        showScanner = false,
                         loading = true,
                         error = null,
+                        showCameraSettings = false,
                     )
                 }
 
                 viewModelScope.launch {
                     delay(1.seconds)
-                    vaultService.unlock(UnlockRequest.RecoveryPhrase(event.phrase))
+                    vaultService.unlock(UnlockRequest.RecoveryPhrase(phrase))
                         .onSuccess { session ->
                             sessionRepository.set(session)
-
                             inputs.update {
                                 it.copy(
                                     unlocked = true,
-                                    restoreSupportingText = null,
+                                    source = null,
                                 )
                             }
                         }
@@ -148,116 +259,34 @@ class RecoveryPhraseRestoreViewModel @Inject constructor(
                         }
                 }
             }
-
-            is RecoveryPhraseRestoreUiEvent.TypeByHand -> {
-                inputs.update {
-                    it.copy(
-                        selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.TypeByHand,
-                        phrase = RecoveryPhrase(),
-                        error = null,
-                        restoreSupportingText = null,
-                    )
-                }
-            }
-
-            is RecoveryPhraseRestoreUiEvent.ScanQrCode -> {
-                inputs.update {
-                    it.copy(
-                        selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.ScanQrCode,
-                        phrase = RecoveryPhrase(),
-                        error = null,
-                        restoreSupportingText = null,
-                    )
-                }
-            }
-
-            is RecoveryPhraseRestoreUiEvent.QrScanned -> {
-                val phrase = RecoveryPhrase.from(event.raw)
-                if (phrase.validate()) {
-                    inputs.update {
-                        it.copy(
-                            phrase = phrase,
-                            error = null,
-                            restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_qr),
-                        )
-                    }
-                } else {
-                    inputs.update {
-                        it.copy(
-                            error = resources.getString(R.string.recovery_phrase_restore_error_invalid_qr),
-                            restoreSupportingText = null,
-                        )
-                    }
-                }
-            }
-
-            is RecoveryPhraseRestoreUiEvent.LoadFromFile -> viewModelScope.launch(IO) {
-                io.openFileInput(event.uri)?.use { inputStream ->
-                    val filename = io.getFileName(event.uri)
-
-                    // A recovery phrase file is always tiny; cap to prevent OOM from a malicious file.
-                    val buffer = ByteArray(MAX_PHRASE_FILE_BYTES)
-                    val bytesRead = inputStream.read(buffer).coerceAtLeast(0)
-
-                    val phrase = RecoveryPhrase.from(String(buffer, 0, bytesRead))
-
-                    if (phrase.validate()) {
-                        inputs.update {
-                            it.copy(
-                                phrase = phrase,
-                                selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.LoadFromFile,
-                                error = null,
-                                restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_file, filename),
-                            )
-                        }
-                    } else {
-                        inputs.update {
-                            it.copy(
-                                error = resources.getString(R.string.recovery_phrase_restore_error_invalid),
-                                restoreSupportingText = null,
-                            )
-                        }
-                    }
-                }
-            }
-
-            is RecoveryPhraseRestoreUiEvent.PasteFromClipboard -> viewModelScope.launch {
-                val clipEntry = event.clipboard.getClipEntry()
-                clipEntry ?: return@launch
-                if (clipEntry.clipData.itemCount < 1) {
-                    return@launch
-                }
-
-                val item = clipEntry.clipData.getItemAt(0)
-                val pastedText = item.text?.toString().orEmpty()
-                val phrase = RecoveryPhrase.from(pastedText.cleanupRawInput())
-
-                if (phrase.validate()) {
-                    inputs.update {
-                        it.copy(
-                            phrase = phrase,
-                            selectedRestoreMethod = RecoveryPhraseRestoreUiState.RestoreMethod.PasteFromClipboard,
-                            error = null,
-                            restoreSupportingText = resources.getString(R.string.recovery_phrase_restore_source_clipboard),
-                        )
-                    }
-                } else {
-                    inputs.update {
-                        it.copy(
-                            error = resources.getString(R.string.recovery_phrase_restore_error_invalid),
-                            restoreSupportingText = null,
-                        )
-                    }
-                }
-            }
-
-            is RecoveryPhraseRestoreUiEvent.UpdatePhrase -> inputs.update {
-                it.copy(phrase = event.phrase)
-            }
-
-            RecoveryPhraseRestoreUiEvent.ResetInputs -> inputs.update {
-                RecoveryPhraseRestoreUiState.Inputs()
-            }
         }
     }
+
+    private fun showLoadedPhrase(words: List<String>, source: String) {
+        inputs.update {
+            it.copy(
+                words = words,
+                wordCount = if (words.size == Bip39WordCount.TwentyFour.words) Bip39WordCount.TwentyFour else Bip39WordCount.Twelve,
+                showScanner = false,
+                revealToken = it.revealToken + 1,
+                source = source,
+                error = null,
+                showCameraSettings = false,
+            )
+        }
+    }
+
+    private fun showError(error: String) {
+        inputs.update {
+            it.copy(
+                showScanner = false,
+                source = null,
+                error = error,
+                showCameraSettings = false,
+            )
+        }
+    }
+
+    private fun List<String>.resizedTo(wordCount: Bip39WordCount): List<String> =
+        List(wordCount.words) { getOrNull(it).orEmpty() }
 }

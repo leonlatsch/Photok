@@ -16,9 +16,9 @@
 
 package dev.leonlatsch.photok.recovery.ui
 
-fun String.cleanupRawInput(): String {
-    return this
-        .replace(" ", "-")
-        .replace("\n", "-")
-        .replace("--", "-")
-}
+private val WORD_SEPARATORS = Regex("[\\s,-]+")
+
+fun String.toRecoveryPhraseWords(): List<String> =
+    lowercase()
+        .split(WORD_SEPARATORS)
+        .filter { it.isNotBlank() }

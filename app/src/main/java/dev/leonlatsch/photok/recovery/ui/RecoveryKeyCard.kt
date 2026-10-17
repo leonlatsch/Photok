@@ -284,7 +284,7 @@ private fun RecoveryKeyQrFace(
 }
 
 @Composable
-private fun RecoveryKeyFaceHeader(
+internal fun RecoveryKeyFaceHeader(
     label: String,
     trailing: @Composable () -> Unit,
 ) {
