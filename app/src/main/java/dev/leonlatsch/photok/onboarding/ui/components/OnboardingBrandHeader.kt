@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -41,7 +42,6 @@ import dev.leonlatsch.photok.onboarding.ui.OnboardingRoute
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 private const val STEP_COUNT = 5
 
@@ -60,14 +60,22 @@ fun NavKey.step(): Int? = when (this) {
 @Composable
 fun OnboardingBrandHeader(step: Int, modifier: Modifier = Modifier) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .padding(horizontal = Dimens.spacingLarge)
-            .padding(top = Dimens.spacingSmall, bottom = Dimens.spacingXLarge),
+            .padding(horizontal = Dimens.spacingLarge, vertical = Dimens.spacingXLarge),
     ) {
-        AppName(
-            color = LocalContentColor.current,
-        )
+//        AppName(
+//            fontSize = 48.sp,
+//            color = LocalContentColor.current,
+//        )
+//        Text(
+//            text = "Setup",
+//            style = typography.labelLarge,
+//            fontWeight = FontWeight.SemiBold,
+//            fontStyle = FontStyle.Italic,
+//        )
+
+//        Spacer(Modifier.height(Dimens.spacingMedium))
 
         SegmentedProgress(step = step)
     }
@@ -91,9 +99,9 @@ private fun SegmentedProgress(step: Int) {
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(4.dp)
+                    .height(6.dp)
                     .clip(CircleShape)
-                    .background(color),
+                    .background(color)
             )
         }
     }
