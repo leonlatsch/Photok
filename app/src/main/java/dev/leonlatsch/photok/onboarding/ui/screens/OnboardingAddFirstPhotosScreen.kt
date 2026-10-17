@@ -50,6 +50,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,6 +79,7 @@ import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -88,6 +90,7 @@ fun OnboardingAddFirstPhotosScreen() {
     val nextRoute = if (BuildConfig.PLAY) ProRoute.OnboardingOffer else OnboardingRoute.Done
     val activity = LocalActivity.current as? FragmentActivity
     val lifecycleOwner = LocalLifecycleOwner.current
+    val scope = rememberCoroutineScope()
 
     val pickFilesLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenMultipleDocuments()
@@ -100,13 +103,17 @@ fun OnboardingAddFirstPhotosScreen() {
         ).show(activity.supportFragmentManager)
     }
 
+
     DisposableEffect(activity, lifecycleOwner) {
         val fragmentManager = activity?.supportFragmentManager
         fragmentManager?.setFragmentResultListener(
             ImportBottomSheetDialogFragment.REQUEST_KEY_IMPORT_FINISHED,
             lifecycleOwner,
         ) { _, _ ->
-            navigator.navigate(nextRoute)
+            scope.launch {
+                delay(300.milliseconds)
+                navigator.navigate(nextRoute)
+            }
         }
 
         onDispose {
