@@ -18,7 +18,9 @@ package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
@@ -34,7 +36,7 @@ class OnboardingViewModel @Inject constructor(
     private val telemetryService: TelemetryService,
 ) : ViewModel() {
 
-    val initialBackStack: List<OnboardingRoute> = when (config.systemOnboardingStep) {
+    val initialBackStack: List<NavKey> = when (config.systemOnboardingStep) {
         OnboardingRoute.SelectStart.stepKey() -> listOf(
             OnboardingRoute.SelectStart,
         )
@@ -53,6 +55,10 @@ class OnboardingViewModel @Inject constructor(
 
         OnboardingRoute.AddFirstPhotos.stepKey() -> listOf(
             OnboardingRoute.AddFirstPhotos,
+        )
+
+        ProRoute.OnboardingOffer.stepKey() -> listOf(
+            ProRoute.OnboardingOffer,
         )
 
         OnboardingRoute.Done.stepKey() -> listOf(

@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.pro.navigation.ProRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -44,12 +45,14 @@ sealed interface OnboardingRoute : NavKey {
     data object Done : OnboardingRoute
 }
 
-fun OnboardingRoute.stepKey(): String = when (this) {
+fun NavKey.stepKey(): String? = when (this) {
     OnboardingRoute.Welcome -> "welcome"
     OnboardingRoute.SelectStart -> "selectStart"
     OnboardingRoute.SetupPassword -> "setupPassword"
     OnboardingRoute.BiometricUnlock -> "biometricUnlock"
     OnboardingRoute.RecoveryPhraseSetup -> "recoveryPhraseSetup"
     OnboardingRoute.AddFirstPhotos -> "addFirstPhotos"
+    ProRoute.OnboardingOffer -> "proOffer"
     OnboardingRoute.Done -> "done"
+    else -> null
 }

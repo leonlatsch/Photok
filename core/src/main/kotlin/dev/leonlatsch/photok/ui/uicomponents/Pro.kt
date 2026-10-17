@@ -38,7 +38,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ShimmerProBadge(textStyle: TextStyle = MaterialTheme.typography.labelLarge) {
+fun ShimmerProBadge(
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = MaterialTheme.typography.labelLarge,
+) {
     val shimmerTransition = rememberInfiniteTransition(label = "proBadgeShimmer")
     val shimmerOffset by shimmerTransition.animateFloat(
         initialValue = -150f,
@@ -54,7 +57,7 @@ fun ShimmerProBadge(textStyle: TextStyle = MaterialTheme.typography.labelLarge) 
     val textColor = MaterialTheme.colorScheme.onPrimaryContainer
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .background(containerColor),
     ) {

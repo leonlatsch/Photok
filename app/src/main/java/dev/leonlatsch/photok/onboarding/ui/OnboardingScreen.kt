@@ -86,7 +86,7 @@ fun OnboardingScreen() {
 
     val currentRoute = backStack.lastOrNull()
     LaunchedEffect(currentRoute) {
-        if (currentRoute is OnboardingRoute) {
+        if (currentRoute != null) {
             viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(currentRoute))
         }
     }

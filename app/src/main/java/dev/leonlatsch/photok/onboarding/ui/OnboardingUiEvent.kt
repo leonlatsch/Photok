@@ -16,8 +16,10 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import androidx.navigation3.runtime.NavKey
+
 sealed interface OnboardingUiEvent {
-    data class StepChanged(val route: OnboardingRoute) : OnboardingUiEvent
+    data class StepChanged(val route: NavKey) : OnboardingUiEvent
     data object Finish : OnboardingUiEvent
 }
 
