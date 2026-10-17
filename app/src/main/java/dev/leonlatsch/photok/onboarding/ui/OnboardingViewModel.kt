@@ -27,8 +27,6 @@ import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.telemetry.domain.Signal
-import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,7 +38,6 @@ import javax.inject.Inject
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val config: Config,
-    private val telemetryService: TelemetryService,
     private val vaultService: VaultService,
 ) : ViewModel() {
 
@@ -107,7 +104,6 @@ class OnboardingViewModel @Inject constructor(
     }
 
     private fun finish() {
-        telemetryService.signal(Signal.OnboardingFinished)
         config.systemFirstStart = false
         config.systemOnboardingStep = null
         navigationEventsChannel.trySend(OnboardingNavigationEvent.Finished)
