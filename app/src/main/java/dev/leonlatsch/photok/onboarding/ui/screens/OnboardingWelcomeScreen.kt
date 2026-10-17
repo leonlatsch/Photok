@@ -156,6 +156,7 @@ fun OnboardingWelcomeScreen(
 private const val MOSAIC_EPSILON = 0.01f
 private const val MOSAIC_SCROLL_SPEED = 16f
 private val MOSAIC_GAP = 10.dp
+private val MOSAIC_HEIGHT = 290.dp
 private val MOSAIC_TILE_SHAPE = RoundedCornerShape(20.dp)
 
 private val MOSAIC_PHOTOS = listOf(
@@ -240,14 +241,13 @@ private class MosaicColumnState(private val viewportHeight: Float) {
 @Composable
 private fun WelcomeMosaic() {
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-    val mosaicHeight = 260.dp + statusBarHeight
-    val topFadeEnd = (statusBarHeight + 24.dp) / mosaicHeight
+    val topFadeEnd = (statusBarHeight + 24.dp) / MOSAIC_HEIGHT
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(MOSAIC_GAP),
         modifier = Modifier
             .fillMaxWidth()
-            .height(mosaicHeight)
+            .height(MOSAIC_HEIGHT)
             .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
             .drawWithContent {
                 drawContent()
@@ -262,15 +262,15 @@ private fun WelcomeMosaic() {
                 )
             },
     ) {
-        MosaicColumnAutoScrolling(height = mosaicHeight, speed = MOSAIC_SCROLL_SPEED)
-        MosaicColumnAutoScrolling(height = mosaicHeight, speed = -MOSAIC_SCROLL_SPEED)
-        MosaicColumnAutoScrolling(height = mosaicHeight, speed = MOSAIC_SCROLL_SPEED)
+        MosaicColumnAutoScrolling(speed = MOSAIC_SCROLL_SPEED)
+        MosaicColumnAutoScrolling(speed = -MOSAIC_SCROLL_SPEED)
+        MosaicColumnAutoScrolling(speed = MOSAIC_SCROLL_SPEED)
     }
 }
 
 @Composable
-private fun RowScope.MosaicColumnAutoScrolling(height: Dp, speed: Float) {
-    val state = remember(height) { MosaicColumnState(viewportHeight = height.value) }
+private fun RowScope.MosaicColumnAutoScrolling(speed: Float) {
+    val state = remember { MosaicColumnState(viewportHeight = MOSAIC_HEIGHT.value) }
     var dragging by remember { mutableStateOf(false) }
     var releaseVelocity by remember { mutableFloatStateOf(0f) }
     val haptics = LocalHapticFeedback.current
