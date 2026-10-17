@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import android.content.pm.ActivityInfo
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -34,6 +35,7 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -78,6 +80,14 @@ fun OnboardingScreen() {
 
     val rootNavigator = LocalNavigator.current
     val activity = LocalActivity.current
+
+    DisposableEffect(activity) {
+        val previousOrientation = activity?.requestedOrientation
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        onDispose {
+            previousOrientation?.let { activity.requestedOrientation = it }
+        }
+    }
 
     val backStack = rememberNavBackStack(*viewModel.initialBackStack.toTypedArray())
     val navigator =
