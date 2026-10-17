@@ -17,14 +17,8 @@
 package dev.leonlatsch.photok.onboarding.ui.screens
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.FloatExponentialDecaySpec
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateDecay
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -63,6 +57,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -91,8 +86,6 @@ import dev.leonlatsch.photok.onboarding.ui.components.OnboardingNexButtonBar
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
-import kotlinx.coroutines.delay
-import kotlin.random.Random
 
 @Composable
 fun OnboardingWelcomeScreen() {
@@ -151,6 +144,7 @@ fun OnboardingWelcomeScreen() {
 }
 
 private const val MOSAIC_EPSILON = 0.01f
+private const val MOSAIC_SCROLL_SPEED = 16f
 private val MOSAIC_GAP = 10.dp
 private val MOSAIC_TILE_SHAPE = RoundedCornerShape(20.dp)
 
@@ -189,8 +183,7 @@ private class MosaicColumnState(private val viewportHeight: Float) {
     val tiles = mutableStateListOf<MosaicTileState>()
     var offset by mutableFloatStateOf(0f)
         private set
-    var nextTopTile = randomMosaicTile()
-        private set
+    private var nextTopTile = randomMosaicTile()
 
     init {
         normalize()
@@ -201,14 +194,6 @@ private class MosaicColumnState(private val viewportHeight: Float) {
         return normalize()
     }
 
-    suspend fun animateScrollBy(distance: Float, animationSpec: AnimationSpec<Float>) {
-        var previous = 0f
-        animate(initialValue = 0f, targetValue = distance, animationSpec = animationSpec) { value, _ ->
-            scrollBy(value - previous)
-            previous = value
-        }
-    }
-
     suspend fun settle(velocity: Float, onTileCrossed: () -> Unit) {
         var previous = 0f
         animateDecay(initialValue = 0f, initialVelocity = velocity, animationSpec = FloatExponentialDecaySpec()) { value, _ ->
@@ -217,9 +202,6 @@ private class MosaicColumnState(private val viewportHeight: Float) {
             }
             previous = value
         }
-        val previousBoundary = -tiles.first().extent
-        val target = if (offset < previousBoundary / 2) previousBoundary else 0f
-        animateScrollBy(target - offset, spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow))
     }
 
     private fun normalize(): Boolean {
@@ -270,41 +252,10 @@ private fun WelcomeMosaic() {
                 )
             },
     ) {
-        MosaicColumnScrollingUp(height = mosaicHeight)
         MosaicColumnScrollingDown(height = mosaicHeight)
-        MosaicColumnScrollingUp(height = mosaicHeight)
+        MosaicColumnScrollingDown(height = mosaicHeight)
+        MosaicColumnScrollingDown(height = mosaicHeight)
     }
-}
-
-@Composable
-private fun RowScope.MosaicColumnScrollingUp(height: Dp) {
-    val state = remember(height) { MosaicColumnState(viewportHeight = height.value) }
-    var dragging by remember { mutableStateOf(false) }
-    var releaseVelocity by remember { mutableFloatStateOf(0f) }
-    val haptics = LocalHapticFeedback.current
-
-    LaunchedEffect(state, dragging) {
-        if (dragging) return@LaunchedEffect
-        state.settle(releaseVelocity) {
-            haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
-        }
-        while (true) {
-            delay(Random.nextLong(1200, 4000))
-            state.animateScrollBy(
-                distance = -state.tiles.first().extent,
-                animationSpec = tween(Random.nextInt(900, 1500), easing = FastOutSlowInEasing),
-            )
-        }
-    }
-
-    MosaicColumn(
-        state = state,
-        onDragStarted = { dragging = true },
-        onDragStopped = { velocity ->
-            releaseVelocity = velocity
-            dragging = false
-        },
-    )
 }
 
 @Composable
@@ -319,12 +270,12 @@ private fun RowScope.MosaicColumnScrollingDown(height: Dp) {
         state.settle(releaseVelocity) {
             haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
         }
+        var previousFrameNanos = withFrameNanos { it }
         while (true) {
-            delay(Random.nextLong(1200, 4000))
-            state.animateScrollBy(
-                distance = state.nextTopTile.extent,
-                animationSpec = tween(Random.nextInt(900, 1500), easing = FastOutSlowInEasing),
-            )
+            withFrameNanos { frameNanos ->
+                state.scrollBy(MOSAIC_SCROLL_SPEED * (frameNanos - previousFrameNanos) / 1_000_000_000f)
+                previousFrameNanos = frameNanos
+            }
         }
     }
 
