@@ -48,6 +48,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -90,7 +91,7 @@ fun PasswordStrengthIndicator(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Password strength:",
+                    text = stringResource(R.string.setup_password_strength_label),
                     style = typography.bodyMedium,
                     color = colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
@@ -108,7 +109,7 @@ fun PasswordStrengthIndicator(
             )
 
             Text(
-                text = "Time to crack: $crackTime",
+                text = stringResource(R.string.setup_password_strength_crack_time, crackTime),
                 style = typography.bodySmall,
                 color = colorScheme.onSurfaceVariant,
             )
@@ -211,12 +212,13 @@ private fun formatCrackTime(seconds: Double, locale: Locale): String {
     }
 }
 
+@Composable
 private fun strengthLabel(score: Int): String = when (score) {
-    0 -> "Very weak"
-    1 -> "Weak"
-    2 -> "Moderate"
-    3 -> "Strong"
-    else -> "Very strong"
+    0 -> stringResource(R.string.setup_password_strength_very_weak)
+    1 -> stringResource(R.string.setup_password_strength_weak)
+    2 -> stringResource(R.string.setup_password_strength_moderate)
+    3 -> stringResource(R.string.setup_password_strength_strong)
+    else -> stringResource(R.string.setup_password_strength_very_strong)
 }
 
 @PreviewLightDark

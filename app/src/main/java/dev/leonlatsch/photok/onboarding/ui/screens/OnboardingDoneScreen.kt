@@ -61,6 +61,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -112,7 +113,7 @@ fun OnboardingDoneScreen(
         contentWindowInsets = WindowInsets(0),
         bottomBar = {
             OnboardingNexButtonBar(
-                text = "Open my vault",
+                text = stringResource(R.string.onboarding_done_open_vault),
                 enabled = sealed,
                 onNext = {
                     handleUiEvent(OnboardingUiEvent.Finish)
@@ -144,12 +145,12 @@ fun OnboardingDoneScreen(
                 },
             ) {
                 Text(
-                    text = "You're all set",
+                    text = stringResource(R.string.onboarding_done_title),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    text = "Your vault is sealed. Everything you add is encrypted right on this phone.",
+                    text = stringResource(R.string.onboarding_done_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.graphicsLayer { alpha = 0.8f },

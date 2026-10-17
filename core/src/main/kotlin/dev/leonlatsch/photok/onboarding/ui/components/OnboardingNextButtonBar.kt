@@ -13,13 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.leonlatsch.photok.core.R
 import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun OnboardingNexButtonBar(
     modifier: Modifier = Modifier,
-    text: String = "Continue",
+    text: String = stringResource(R.string.common_continue),
     enabled: Boolean = true,
     loading: Boolean = false,
     onNext: () -> Unit,

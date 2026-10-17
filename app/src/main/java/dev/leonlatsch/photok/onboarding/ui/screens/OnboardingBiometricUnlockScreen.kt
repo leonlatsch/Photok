@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -103,11 +104,11 @@ private fun OnboardingBiometricUnlockContent(
                         navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
                     }
                 ) {
-                    Text("Not now")
+                    Text(stringResource(R.string.onboarding_not_now))
                 }
 
                 OnboardingNexButtonBar(
-                    text = "Enable biometric unlock",
+                    text = stringResource(R.string.onboarding_biometric_enable),
                     enabled = !enabled,
                     onNext = onEnable,
                 )
@@ -120,10 +121,10 @@ private fun OnboardingBiometricUnlockContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(text = "Unlock with a touch")
+            OnboardingPageTitle(text = stringResource(R.string.onboarding_biometric_title))
 
             OnboardingPageSubtitle(
-                text = "Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings."
+                text = stringResource(R.string.onboarding_biometric_subtitle)
             )
 
             Box(

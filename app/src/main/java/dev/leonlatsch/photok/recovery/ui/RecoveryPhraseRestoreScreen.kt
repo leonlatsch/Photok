@@ -187,7 +187,7 @@ private fun RecoveryPhraseRestoreContent(
             OnboardingPageTitle(text = stringResource(R.string.recovery_phrase_forgot_password))
 
             OnboardingPageSubtitle(
-                text = "Enter the words of your recovery phrase to unlock your vault.",
+                text = stringResource(R.string.recovery_phrase_restore_subtitle),
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
@@ -231,7 +231,7 @@ private fun RecoveryPhraseRestoreContent(
                 ) {
                     if (uiState.showScanner) {
                         RestoreSourceButton(
-                            text = "Type words",
+                            text = stringResource(R.string.recovery_phrase_restore_option_type),
                             icon = R.drawable.ic_keyboard,
                             enabled = inputEnabled,
                             onClick = { handleUiEvent(RecoveryPhraseRestoreUiEvent.ShowWords) },

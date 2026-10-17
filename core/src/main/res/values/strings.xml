@@ -47,6 +47,13 @@
     <string name="setup_enter_password">Enter your password</string>
     <string name="setup_confirm_password">Confirm your password</string>
     <string name="setup_password_match_warning">\u26A0 Passwords do not match</string>
+    <string name="setup_password_strength_label">Password strength:</string>
+    <string name="setup_password_strength_very_weak">Very weak</string>
+    <string name="setup_password_strength_weak">Weak</string>
+    <string name="setup_password_strength_moderate">Moderate</string>
+    <string name="setup_password_strength_strong">Strong</string>
+    <string name="setup_password_strength_very_strong">Very strong</string>
+    <string name="setup_password_strength_crack_time">Time to crack: %1$s</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Unlock your safe</string>
@@ -388,6 +395,30 @@
     <string name="telemetry_choice_yes">Share anonymous usage data</string>
     <string name="telemetry_toggle">Allow collection of usage data</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Get started</string>
+    <string name="onboarding_welcome_tagline">A safe place for your photos</string>
+    <string name="onboarding_welcome_feature_encrypted">Encrypted on your phone with your password</string>
+    <string name="onboarding_welcome_feature_hidden">Hidden from your gallery and other apps</string>
+    <string name="onboarding_welcome_feature_offline">No account, no cloud. Your data never leaves this phone</string>
+    <string name="onboarding_password_title">Your password</string>
+    <string name="onboarding_password_subtitle">Remember your password and keep it safe. For your security, we don’t store it, so it cannot be reset.</string>
+    <string name="onboarding_password_confirm_label">Confirm password</string>
+    <string name="onboarding_biometric_title">Unlock with a touch</string>
+    <string name="onboarding_biometric_subtitle">Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings.</string>
+    <string name="onboarding_biometric_enable">Enable biometric unlock</string>
+    <string name="onboarding_not_now">Not now</string>
+    <string name="onboarding_recovery_phrase_title">Recovery phrase</string>
+    <string name="onboarding_recovery_phrase_subtitle">Keep these words off this phone. They unlock your vault if you forget your password.</string>
+    <string name="onboarding_recovery_phrase_use_12_words">Use 12 words instead</string>
+    <string name="onboarding_recovery_phrase_use_24_words">Use 24 words instead</string>
+    <string name="onboarding_add_photos_title">Import photos</string>
+    <string name="onboarding_add_photos_subtitle">Your photos are encrypted as soon as you import them. You can add more at any time.</string>
+    <string name="onboarding_add_photos_import">Import photos</string>
+    <string name="onboarding_done_title">You\'re all set</string>
+    <string name="onboarding_done_subtitle">Your vault is sealed. Everything you add is encrypted right on this phone.</string>
+    <string name="onboarding_done_open_vault">Open my vault</string>
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Recovery Phrase</string>
     <string name="recovery_phrase_title">Your Recovery Phrase</string>
@@ -408,4 +439,38 @@
     <string name="recovery_phrase_restore_source_qr">Scanned from QR code</string>
     <string name="recovery_phrase_restore_source_file">Loaded from %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Pasted from clipboard</string>
+    <string name="recovery_phrase_restore_subtitle">Enter the words of your recovery phrase to unlock your vault.</string>
+    <string name="recovery_phrase_restore_option_type">Type words</string>
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">RECOVERY KEY</string>
+    <string name="recovery_key_card_scan_label">SCAN TO RESTORE</string>
+    <string name="recovery_key_card_unlocked_label">VAULT UNLOCKED</string>
+    <string name="recovery_key_card_word_count">%1$d words</string>
+    <string name="recovery_key_card_hint_show_words">Tap the card to show as words</string>
+    <string name="recovery_key_card_hint_show_qr">Tap the card to show as QR code</string>
+    <string name="recovery_key_card_screenshot_hint">You can also take a screenshot of the QR code</string>
+    <string name="recovery_key_card_opening_vault">Opening your vault</string>
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Save to Photos</string>
+    <string name="recovery_phrase_qr_save_as_image">Save as image</string>
+    <string name="recovery_phrase_more_options">More options</string>
+    <string name="recovery_phrase_share_as_image">Share as image</string>
+    <string name="recovery_phrase_save_as_text_file">Save as text file</string>
+    <string name="recovery_phrase_copy_to_clipboard">Copy to clipboard</string>
+    <string name="recovery_phrase_new_12_words">New phrase with 12 words</string>
+    <string name="recovery_phrase_new_24_words">New phrase with 24 words</string>
+    <string name="recovery_phrase_saved_photos_title">Saved to Photos</string>
+    <string name="recovery_phrase_saved_photos_description">Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too</string>
+    <string name="recovery_phrase_saved_to_file">Saved to %1$s</string>
+    <string name="recovery_phrase_saved_as_file">Saved as file</string>
+    <string name="recovery_phrase_saved_file_description">Find it in the folder you picked</string>
+    <string name="recovery_phrase_shared_with">Shared with %1$s</string>
+    <string name="recovery_phrase_shared">Shared</string>
+    <string name="recovery_phrase_shared_description">Make sure it arrived where you sent it</string>
+    <string name="recovery_phrase_copied_title">Copied to clipboard</string>
+    <string name="recovery_phrase_copied_description">Paste it somewhere safe outside this phone</string>
+    <string name="recovery_phrase_screenshot_title">Screenshot taken</string>
+    <string name="recovery_phrase_screenshot_description">Look for it in your Screenshots album</string>
 </resources>

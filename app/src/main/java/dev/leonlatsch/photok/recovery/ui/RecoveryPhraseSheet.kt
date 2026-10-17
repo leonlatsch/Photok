@@ -181,14 +181,14 @@ fun RecoveryPhraseSheet(
                 },
             ) { closeMenu ->
                 DropdownMenuItem(
-                    text = { Text("New phrase with 12 words") },
+                    text = { Text(stringResource(R.string.recovery_phrase_new_12_words)) },
                     onClick = {
                         closeMenu()
                         showNewTwelveWordPhraseDialog = true
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("New phrase with 24 words") },
+                    text = { Text(stringResource(R.string.recovery_phrase_new_24_words)) },
                     onClick = {
                         closeMenu()
                         showNewTwentyFourWordPhraseDialog = true
@@ -207,7 +207,7 @@ fun RecoveryPhraseSheet(
                             .navigationBarsPadding()
                             .fillMaxWidth(),
                     ) {
-                        Text("Done")
+                        Text(stringResource(R.string.common_done))
                     }
                 }
 
@@ -222,7 +222,7 @@ fun RecoveryPhraseSheet(
                             .navigationBarsPadding()
                             .fillMaxWidth(),
                     ) {
-                        Text("Save to Photos")
+                        Text(stringResource(R.string.recovery_phrase_save_to_photos))
                     }
                 }
 
@@ -234,7 +234,7 @@ fun RecoveryPhraseSheet(
                             .navigationBarsPadding()
                             .fillMaxWidth(),
                     ) {
-                        Text("Save as image")
+                        Text(stringResource(R.string.recovery_phrase_qr_save_as_image))
                     }
                 }
             }

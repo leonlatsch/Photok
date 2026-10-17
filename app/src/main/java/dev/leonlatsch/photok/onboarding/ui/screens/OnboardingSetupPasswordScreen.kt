@@ -131,10 +131,10 @@ private fun OnboardingSetupPasswordContent(
                 .padding(contentPadding)
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(text = "Your password")
+            OnboardingPageTitle(text = stringResource(R.string.onboarding_password_title))
 
             OnboardingPageSubtitle(
-                text = "Remember your password and keep it safe. For your security, we don’t store it, so it cannot be reset."
+                text = stringResource(R.string.onboarding_password_subtitle)
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
@@ -143,7 +143,7 @@ private fun OnboardingSetupPasswordContent(
                 PasswordField(
                     value = uiState.password,
                     onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
-                    label = "Password",
+                    label = stringResource(R.string.common_password),
                     imeAction = ImeAction.Next,
                     modifier = Modifier.focusRequester(focusRequester)
                 )
@@ -166,7 +166,7 @@ private fun OnboardingSetupPasswordContent(
                     PasswordField(
                         value = uiState.confirmPassword,
                         onValueChange = { handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(it)) },
-                        label = "Confirm password",
+                        label = stringResource(R.string.onboarding_password_confirm_label),
                         error = stringResource(R.string.setup_password_match_warning).takeIf { uiState.passwordsMismatch },
                         onDone = { focusManager.clearFocus() },
                         modifier = Modifier.padding(top = Dimens.spacingXLarge),

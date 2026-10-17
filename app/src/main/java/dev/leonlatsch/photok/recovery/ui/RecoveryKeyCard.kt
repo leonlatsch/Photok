@@ -63,6 +63,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -184,7 +185,11 @@ fun RecoveryKeyCard(
             label = "RecoveryKeyFlipHint",
         ) { shownQrCode ->
             Text(
-                text = if (shownQrCode) "Tap the card to show as words" else "Tap the card to show as QR code",
+                text = if (shownQrCode) {
+                    stringResource(R.string.recovery_key_card_hint_show_words)
+                } else {
+                    stringResource(R.string.recovery_key_card_hint_show_qr)
+                },
                 style = MaterialTheme.typography.bodySmall,
                 color = colorScheme.onSurfaceVariant,
             )
@@ -205,9 +210,9 @@ private fun RecoveryKeyWordsFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = "RECOVERY KEY") {
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_label)) {
             Text(
-                text = "$count words",
+                text = stringResource(R.string.recovery_key_card_word_count, count),
                 style = MaterialTheme.typography.labelMedium,
             )
         }
@@ -240,7 +245,7 @@ private fun RecoveryKeyQrFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = "SCAN TO RESTORE") {
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label)) {
             Icon(
                 painter = painterResource(R.drawable.ic_qr_code),
                 contentDescription = null,
@@ -275,7 +280,7 @@ private fun RecoveryKeyQrFace(
             exit = shrinkVertically() + fadeOut(),
         ) {
             Text(
-                text = "You can also take a screenshot of the QR code",
+                text = stringResource(R.string.recovery_key_card_screenshot_hint),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.alpha(0.7f),
             )

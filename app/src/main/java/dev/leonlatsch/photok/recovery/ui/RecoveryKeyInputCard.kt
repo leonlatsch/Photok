@@ -173,7 +173,7 @@ private fun RecoveryKeyInputWordsFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = "RECOVERY KEY") {
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_label)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -182,13 +182,13 @@ private fun RecoveryKeyInputWordsFace(
                     .padding(3.dp),
             ) {
                 WordCountPill(
-                    text = "12 words",
+                    text = stringResource(R.string.recovery_key_card_word_count, 12),
                     selected = wordCount == Bip39WordCount.Twelve,
                     enabled = enabled,
                     onClick = { onSelectWordCount(Bip39WordCount.Twelve) },
                 )
                 WordCountPill(
-                    text = "24 words",
+                    text = stringResource(R.string.recovery_key_card_word_count, 24),
                     selected = wordCount == Bip39WordCount.TwentyFour,
                     enabled = enabled,
                     onClick = { onSelectWordCount(Bip39WordCount.TwentyFour) },
@@ -339,7 +339,7 @@ private fun RecoveryKeyScannerFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = "SCAN TO RESTORE") {
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label)) {
             Icon(
                 painter = painterResource(R.drawable.ic_qr_code),
                 contentDescription = null,
@@ -380,7 +380,7 @@ private fun RecoveryKeyUnlockedFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = "VAULT UNLOCKED") {
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_unlocked_label)) {
             Icon(
                 painter = painterResource(R.drawable.ic_lock),
                 contentDescription = null,
@@ -411,7 +411,7 @@ private fun RecoveryKeyUnlockedFace(
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = "Opening your vault",
+                text = stringResource(R.string.recovery_key_card_opening_vault),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.alpha(0.7f),
             )

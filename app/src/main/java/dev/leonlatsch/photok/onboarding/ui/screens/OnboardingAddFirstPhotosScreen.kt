@@ -59,6 +59,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -145,10 +146,10 @@ fun OnboardingAddFirstPhotosContent(
                         navigator.navigate(nextRoute())
                     }
                 ) {
-                    Text("Skip")
+                    Text(stringResource(R.string.onboarding_not_now))
                 }
 
-                OnboardingNexButtonBar(text = "Import photos") {
+                OnboardingNexButtonBar(text = stringResource(R.string.onboarding_add_photos_import)) {
                     pickFilesLauncher.launchAndIgnoreTimer(
                         input = PhotoType.entries.map { it.mimeType }.toTypedArray(),
                         activity = activity,
@@ -164,10 +165,10 @@ fun OnboardingAddFirstPhotosContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(text = "Import photos")
+            OnboardingPageTitle(text = stringResource(R.string.onboarding_add_photos_title))
 
             OnboardingPageSubtitle(
-                text = "Your photos are encrypted as soon as you import them. You can add more at any time."
+                text = stringResource(R.string.onboarding_add_photos_subtitle)
             )
 
             val images = listOf(

@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
@@ -64,7 +65,7 @@ fun MoreSaveOptionsMenu(
         TextButton(
             onClick = { expanded = true }
         ) {
-            Text("More options")
+            Text(stringResource(R.string.recovery_phrase_more_options))
         }
 
         RoundedDropdownMenu(
@@ -72,7 +73,7 @@ fun MoreSaveOptionsMenu(
             onDismissRequest = { expanded = false },
         ) {
             DropdownMenuItem(
-                text = { Text("Share as image") },
+                text = { Text(stringResource(R.string.recovery_phrase_share_as_image)) },
                 leadingIcon = {
                     Icon(
                         painterResource(R.drawable.ic_share),
@@ -85,7 +86,7 @@ fun MoreSaveOptionsMenu(
                 },
             )
             DropdownMenuItem(
-                text = { Text("Save as text file") },
+                text = { Text(stringResource(R.string.recovery_phrase_save_as_text_file)) },
                 leadingIcon = {
                     Icon(
                         painterResource(R.drawable.ic_download),
@@ -98,7 +99,7 @@ fun MoreSaveOptionsMenu(
                 },
             )
             DropdownMenuItem(
-                text = { Text("Copy to clipboard") },
+                text = { Text(stringResource(R.string.recovery_phrase_copy_to_clipboard)) },
                 leadingIcon = {
                     Icon(
                         painterResource(R.drawable.ic_content_copy),
@@ -134,28 +135,28 @@ fun RecoveryPhraseSavedIndicator(
     ) {
         when (val shown = lastSavedTo) {
             RecoveryPhraseSavedTo.Photos -> SavedIndicatorRow(
-                title = "Saved to Photos",
-                description = "Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too",
+                title = stringResource(R.string.recovery_phrase_saved_photos_title),
+                description = stringResource(R.string.recovery_phrase_saved_photos_description),
             )
 
             is RecoveryPhraseSavedTo.File -> SavedIndicatorRow(
-                title = if (shown.fileName != null) "Saved to ${shown.fileName}" else "Saved as file",
-                description = "Find it in the folder you picked",
+                title = if (shown.fileName != null) stringResource(R.string.recovery_phrase_saved_to_file, shown.fileName) else stringResource(R.string.recovery_phrase_saved_as_file),
+                description = stringResource(R.string.recovery_phrase_saved_file_description),
             )
 
             is RecoveryPhraseSavedTo.Shared -> SavedIndicatorRow(
-                title = if (shown.appName != null) "Shared with ${shown.appName}" else "Shared",
-                description = "Make sure it arrived where you sent it",
+                title = if (shown.appName != null) stringResource(R.string.recovery_phrase_shared_with, shown.appName) else stringResource(R.string.recovery_phrase_shared),
+                description = stringResource(R.string.recovery_phrase_shared_description),
             )
 
             RecoveryPhraseSavedTo.Clipboard -> SavedIndicatorRow(
-                title = "Copied to clipboard",
-                description = "Paste it somewhere safe outside this phone",
+                title = stringResource(R.string.recovery_phrase_copied_title),
+                description = stringResource(R.string.recovery_phrase_copied_description),
             )
 
             RecoveryPhraseSavedTo.Screenshot -> SavedIndicatorRow(
-                title = "Screenshot taken",
-                description = "Look for it in your Screenshots album",
+                title = stringResource(R.string.recovery_phrase_screenshot_title),
+                description = stringResource(R.string.recovery_phrase_screenshot_description),
             )
 
             null -> Unit

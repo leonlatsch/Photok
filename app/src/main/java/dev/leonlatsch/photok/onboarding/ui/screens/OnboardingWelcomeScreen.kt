@@ -75,6 +75,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
@@ -100,7 +101,7 @@ fun OnboardingWelcomeScreen(
     Scaffold(
         contentWindowInsets = WindowInsets.navigationBars,
         bottomBar = {
-            OnboardingNexButtonBar(text = "Get started") {
+            OnboardingNexButtonBar(text = stringResource(R.string.onboarding_welcome_get_started)) {
                 navigator.navigate(OnboardingRoute.SetupPassword)
             }
         }
@@ -128,7 +129,7 @@ fun OnboardingWelcomeScreen(
                         }
                     )
                     Text(
-                        text = "A safe place for your photos",
+                        text = stringResource(R.string.onboarding_welcome_tagline),
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
@@ -137,15 +138,15 @@ fun OnboardingWelcomeScreen(
 
                 FeatureRow(
                     icon = R.drawable.ic_lock,
-                    text = "Encrypted on your phone with your password",
+                    text = stringResource(R.string.onboarding_welcome_feature_encrypted),
                 )
                 FeatureRow(
                     icon = R.drawable.ic_eye_closed,
-                    text = "Hidden from your gallery and other apps",
+                    text = stringResource(R.string.onboarding_welcome_feature_hidden),
                 )
                 FeatureRow(
                     icon = R.drawable.ic_cloud_off,
-                    text = "No account, no cloud. Your data never leaves this phone",
+                    text = stringResource(R.string.onboarding_welcome_feature_offline),
                 )
             }
 

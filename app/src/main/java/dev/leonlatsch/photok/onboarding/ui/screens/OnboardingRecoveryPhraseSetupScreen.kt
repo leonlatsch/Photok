@@ -38,10 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.navigation.LocalNavigator
@@ -161,7 +163,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
                     ) { closeMenu ->
                         if (uiState.wordCount == Bip39WordCount.Twelve) {
                             DropdownMenuItem(
-                                text = { Text("Use 24 words instead") },
+                                text = { Text(stringResource(R.string.onboarding_recovery_phrase_use_24_words)) },
                                 onClick = {
                                     closeMenu()
                                     handleUiEvent(OnboardingRecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.TwentyFour))
@@ -169,7 +171,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
                             )
                         } else {
                             DropdownMenuItem(
-                                text = { Text("Use 12 words instead") },
+                                text = { Text(stringResource(R.string.onboarding_recovery_phrase_use_12_words)) },
                                 onClick = {
                                     closeMenu()
                                     handleUiEvent(OnboardingRecoveryPhraseUiEvent.UpdateWordCount(Bip39WordCount.Twelve))
@@ -182,7 +184,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 when {
                     uiState.savedTo != null -> {
                         OnboardingNexButtonBar(
-                            text = "Continue",
+                            text = stringResource(R.string.common_continue),
                             enabled = phrase != null,
                             loading = uiState.loading,
                             onNext = { handleUiEvent(OnboardingRecoveryPhraseUiEvent.Continue) },
@@ -191,7 +193,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
                     AndroidFeatures.mediaStore() -> {
                         OnboardingNexButtonBar(
-                            text = "Save to Photos",
+                            text = stringResource(R.string.recovery_phrase_save_to_photos),
                             enabled = phrase != null,
                             loading = uiState.loading,
                             onNext = {
@@ -208,7 +210,7 @@ private fun OnboardingRecoveryPhraseSetupContent(
 
                     else -> {
                         OnboardingNexButtonBar(
-                            text = "Save as image",
+                            text = stringResource(R.string.recovery_phrase_qr_save_as_image),
                             enabled = phrase != null,
                             loading = uiState.loading,
                             onNext = onSaveImageAsFile,
@@ -225,10 +227,10 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(text = "Recovery phrase")
+            OnboardingPageTitle(text = stringResource(R.string.onboarding_recovery_phrase_title))
 
             OnboardingPageSubtitle(
-                text = "Keep these words off this phone. They unlock your vault if you forget your password.",
+                text = stringResource(R.string.onboarding_recovery_phrase_subtitle),
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))
