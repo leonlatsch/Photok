@@ -59,6 +59,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val appNavViewModel: AppNavViewModel by viewModels()
 
     @Inject
     lateinit var config: Config
@@ -76,7 +77,9 @@ class MainActivity : AppCompatActivity() {
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { appNavViewModel.startRoute.value == null }
+        }
         enableEdgeToEdge(
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
         )
@@ -108,7 +111,10 @@ class MainActivity : AppCompatActivity() {
                         LocalConfig provides config,
                         LocalEncryptedImageLoader provides encryptedImageLoader,
                     ) {
-                        AppNavHost(startTab = getStartTab::invoke)
+                        AppNavHost(
+                            startTab = getStartTab::invoke,
+                            viewModel = appNavViewModel,
+                        )
                     }
                 }
             }
@@ -137,5 +143,9 @@ class MainActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
 
         onOrientationChanged(newConfig.orientation)
+    }
+
+    companion object {
+        private const val SPLASH_FADE_OUT_DURATION = 200L
     }
 }
