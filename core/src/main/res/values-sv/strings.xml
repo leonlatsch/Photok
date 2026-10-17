@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Laddar …</string>
     <string name="common_password">Lösenord</string>
     <string name="common_delete">Radera</string>
     <string name="common_export">Exportera</string>
@@ -29,7 +27,6 @@
     <string name="common_no">Nej</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Är du säker?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Mer</string>
     <string name="common_cancel">Avbryt</string>
     <string name="common_canceling">Avbryter…</string>
@@ -44,22 +41,12 @@
 
     <!-- IMPORT -->
     <string name="import_importing">Importerar fil(er)</string>
-    <string name="import_permission_rationale">Photok behöver åtkomst till lagringen för att importera filer.</string>
     <string name="import_sharted_question">Vill du importera %1$d fil(er)?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Skapa ditt lösenord</string>
     <string name="setup_enter_password">Ange ditt lösenord</string>
     <string name="setup_confirm_password">Bekräfta ditt lösenord</string>
-    <string name="setup_password_strength_label">Lösenordsstyrka:</string>
-    <string name="setup_button">Skapa</string>
-    <string name="setup_password_strength_very_weak">Mycket svag</string>
-    <string name="setup_password_strength_weak">Svag</string>
-    <string name="setup_password_strength_moderate">Medel</string>
-    <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_strength_very_strong">Mycket stark</string>
     <string name="setup_password_match_warning">\u26A0 Lösenorden matchar inte</string>
-    <string name="setupSetup">Installation</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Lås upp ditt valv</string>
@@ -112,13 +99,10 @@
     <string name="view_photo_video_playback_speed">Uppspelningshastighet</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Lås</string>
     <string name="menu_main_settings">Inställningar</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Markera alla</string>
-    <string name="menu_ms_delete">Radera</string>
-    <string name="menu_ms_export">Exportera</string>
     <string name="menu_ms_info">%1$d objekt markerade</string>
     <string name="menu_ms_add_to_album">Lägg till i album</string>
     <string name="menu_ms_remove_from_album">Ta bort från album</string>
@@ -138,9 +122,6 @@
     <string name="export_are_you_sure_this">Är du säker på att du vill <b>exportera</b> den här filen till ditt galleri?</string>
     <string name="export_and_delete_are_you_sure_this">Är du säker på att du vill <b>exportera</b> den här filen till ditt galleri och radera den?</string>
     <string name="export_exporting">Exporterar fil(er)…</string>
-    <string name="export_permission_rationale">Photok behöver åtkomst till lagringen för att exportera filer.</string>
-    <string name="export_finished">Exporterad</string>
-    <string name="export_and_delete_finished">Exporterad och raderad</string>
 
     <!-- ABOUT -->
     <string name="about_version">Version:</string>
@@ -150,7 +131,6 @@
     <string name="about_third_party">Tredjepartsprogramvara</string>
     <string name="about_privacy_policy">Integritetspolicy</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Nyheter</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Inställningar</string>
@@ -167,7 +147,6 @@
     <string name="settings_category_security">Säkerhet</string>
     <string name="settings_security_allow_screenshots_title">Tillåt skärmdumpar</string>
     <string name="settings_security_allow_screenshots_summary">Tillåt att ta skärmdumpar.</string>
-    <string name="settings_security_change_password_title">Byt lösenord</string>
     <string name="settings_security_change_password_summary">Byt ditt lösenord</string>
     <string name="settings_security_biometric_title">Biometrisk upplåsning</string>
     <string name="settings_security_biometric_summary">Lås upp Photok med biometrisk autentisering.</string>
@@ -175,7 +154,6 @@
     <string name="settings_security_recovery_phrase_title">Återställningsfras</string>
     <string name="settings_security_recovery_phrase_summary">Hantera din återställningsfras.</string>
     <string name="settings_security_timeout_title">Automatisk låsning</string>
-    <string name="settings_security_timeout_summary">Lås automatiskt efter angiven tid i bakgrunden</string>
     <string name="settings_security_timeout_immediately">Omedelbart</string>
     <string name="settings_security_timeout_one_minute">1 minut</string>
     <string name="settings_security_timeout_two_minute">2 minuter</string>
@@ -229,18 +207,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Byt ditt lösenord</string>
     <string name="change_password_old_password">Gammalt lösenord</string>
-    <string name="change_password_new_password">Nytt lösenord</string>
     <string name="change_password_check">Kontrollera</string>
     <string name="change_password_enter_new_password">Ange ditt nya lösenord</string>
     <string name="change_password_confirm_new_password">Bekräfta ditt nya lösenord</string>
     <string name="change_password_button">Byt lösenord</string>
-    <string name="change_password_confirm_message">Säkerhetskopia rekommenderas!<br /> Att byta lösenord kräver att alla dina filer krypteras om! Vill du fortsätta?</string>
-    <string name="change_password_reencrypting">Krypterar om fil(er)…</string>
     <string name="change_password_done">Lösenordet har bytts</string>
     <string name="change_password_recovery_phrase_used">Återställningsfras användes — kontroll av gammalt lösenord behövs inte</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verifiera lösenord</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Dölj Photok</string>
@@ -334,7 +306,6 @@
     <string name="news_new_in_title">Nytt i</string>
     <string name="news_view_changelog">Visa ändringslogg</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">Höjdpunkt</string>
     <string name="news_change_kind_new">Nytt</string>
     <string name="news_change_kind_improved">Förbättrat</string>
     <string name="news_change_kind_fixed">Åtgärdat</string>
@@ -346,11 +317,6 @@
     <string name="release_highlight_point_4" formatted="false">100 % bakåtkompatibel med alla dina gamla säkerhetskopior</string>
     <string name="release_change_title_2">Olika åtgärder och förbättringar</string>
     <string name="release_change_summary_2">Smidigare upplåsning och konfiguration, tangentbordet lär sig inte längre ditt lösenord och appen låses tillförlitligt i bakgrunden.</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Återställningsmeny</string>
-    <string name="recovery_menu_item_open_photok">Öppna Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Återställ inställning för dölj app</string>
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Välkommen till</string>
@@ -379,9 +345,6 @@
     <string name="migration_error_button">Skicka felrapport</string>
 
     <string name="notification_channel_background_tasks">Bakgrundsaktiviteter</string>
-    <string name="migration_error_extract_data">Extrahera data</string>
-    <string name="migration_error_extract_confirmation_text">Är du säker på att du vill extrahera alla dina filer OKRYPTERADE i en ZIP-fil?</string>
-    <string name="migration_error_extracting_title">Dekrypterar till ZIP…</string>
 
 
     <!-- Biometric -->
@@ -429,38 +392,20 @@
     <string name="recovery_phrase_label">Återställningsfras</string>
     <string name="recovery_phrase_title">Din återställningsfras</string>
     <string name="recovery_phrase_description">Skriv ner de här orden i ordning och förvara dem på ett säkert ställe. Du kan använda frasen för att återfå åtkomst till ditt valv.</string>
-    <string name="recovery_phrase_confirm">Fras sparad</string>
     <string name="recovery_phrase_save_warning">Spara din återställningsfras</string>
-    <string name="recovery_phrase_create_new">Skapa ny fras</string>
     <string name="recovery_phrase_create_new_confirm">Att skapa en ny fras ersätter permanent din nuvarande. Din befintliga fras fungerar inte längre för att återställa ditt valv.</string>
-    <string name="recovery_phrase_saved_to_file">Sparad till %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Antal ord</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Spara som bild</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Glömt lösenord</string>
     <string name="recovery_phrase_restore_button">Återställ</string>
-    <string name="recovery_phrase_restore_word_placeholder">Ord %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Ange återställningsfras</string>
-    <string name="recovery_phrase_restore_choose_option">Välj hur du vill ange din fras.</string>
-    <string name="recovery_phrase_restore_option_type">Skriv för hand</string>
     <string name="recovery_phrase_restore_option_open_file">Ladda från fil</string>
     <string name="recovery_phrase_restore_option_scan_qr">Skanna QR-kod</string>
     <string name="recovery_phrase_restore_option_paste">Klistra in från urklipp</string>
-    <string name="recovery_phrase_restore_input_placeholder">Skriv din återställningsfras ord för ord</string>
     <string name="recovery_phrase_restore_unlocked">Upplåst</string>
-    <string name="recovery_phrase_restore_unlocking">Låser upp…</string>
     <string name="recovery_phrase_restore_error_generic">Kunde inte återställa valvet. Kontrollera din fras och försök igen.</string>
     <string name="recovery_phrase_restore_error_invalid">Ogiltig återställningsfras. Dubbelkolla orden.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">QR-koden innehåller ingen giltig återställningsfras.</string>
     <string name="recovery_phrase_restore_source_qr">Inskannad från QR-kod</string>
     <string name="recovery_phrase_restore_source_file">Laddad från %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Inklistrad från urklipp</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Begär kamerabehörighet</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">Kamerabehörighet krävs för att skanna QR-koder.</string>
-    <string name="permission_gate_change_in_settings">Ändra i Inställningar</string>
 </resources>

@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">کام ہو رہا ہے …</string>
     <string name="common_password">پاس ورڈ</string>
     <string name="common_delete">مٹائیں</string>
     <string name="common_export">باہر نکالیں</string>
@@ -29,7 +27,6 @@
     <string name="common_no">نہیں</string>
     <string name="common_ok">ٹھیک ہے</string>
     <string name="common_are_you_sure">کیا آپ کو یقین ہے؟</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">مزید</string>
     <string name="common_cancel">کینسل کریں</string>
     <string name="common_canceling">روکا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Canceling… -->
@@ -44,22 +41,12 @@
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>
-    <string name="import_permission_rationale">فائلیں لانے کے لیے Photok کو آپ کے فون کی اسٹوریج استعمال کرنے کی اجازت چاہیے۔</string>
     <string name="import_sharted_question">کیا آپ %1$d فائلیں لانا چاہتے ہیں؟</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">اپنا پاس ورڈ بنائیں</string>
     <string name="setup_enter_password">پاس ورڈ لکھیں</string>
     <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
-    <string name="setup_password_strength_label">پاس ورڈ کتنا مضبوط ہے:</string>
-    <string name="setup_button">بنائیں</string>
-    <string name="setup_password_strength_very_weak">بہت کمزور</string> <!-- TODO: machine translated | EN: Very weak -->
-    <string name="setup_password_strength_weak">کمزور</string>
-    <string name="setup_password_strength_moderate">درمیانہ</string>
-    <string name="setup_password_strength_strong">بہت مضبوط</string>
-    <string name="setup_password_strength_very_strong">انتہائی مضبوط</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
-    <string name="setupSetup">تیاری</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">اپنا سیف کھولیں</string>
@@ -112,13 +99,10 @@
     <string name="view_photo_video_playback_speed">چلنے کی رفتار</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">لاک کریں</string>
     <string name="menu_main_settings">سیٹنگز</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">سب منتخب کریں</string>
-    <string name="menu_ms_delete">مٹائیں</string>
-    <string name="menu_ms_export">باہر نکالیں</string>
     <string name="menu_ms_info">%1$d چیزیں منتخب کر لیں</string>
     <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
     <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
@@ -138,9 +122,6 @@
     <string name="export_are_you_sure_this">کیا آپ یہ فائل واپس گیلری میں بھیجنا چاہتے ہیں؟</string>
     <string name="export_and_delete_are_you_sure_this">کیا آپ یہ فائل گیلری میں بھیج کر یہاں سے مٹانا چاہتے ہیں؟</string>
     <string name="export_exporting">فائلیں باہر نکالی جا رہی ہیں…</string>
-    <string name="export_permission_rationale">باہر بھیجنے کے لیے Photok کو اسٹوریج کی اجازت چاہیے۔</string>
-    <string name="export_finished">باہر بھیج دی گئیں</string>
-    <string name="export_and_delete_finished">باہر بھیج کر مٹا دی گئیں</string>
 
     <!-- ABOUT -->
     <string name="about_version">ورژن:</string>
@@ -150,7 +131,6 @@
     <string name="about_third_party">دیگر سافٹ ویئر</string>
     <string name="about_privacy_policy">رازداری کی پالیسی</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">نئی خبریں</string>
 
   <!-- SETTINGS -->
     <string name="settings_title">سیٹنگز</string>
@@ -167,7 +147,6 @@
     <string name="settings_category_security">حفاظت</string>
     <string name="settings_security_allow_screenshots_title">اسکرین شاٹ کی اجازت</string>
     <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔</string>
-    <string name="settings_security_change_password_title">پاس ورڈ بدلیں</string>
     <string name="settings_security_change_password_summary">اپنا نیا پاس ورڈ سیٹ کریں</string>
     <string name="settings_security_biometric_title">فنگر پرنٹ یا چہرہ</string>
     <string name="settings_security_biometric_summary">Photok کو فون کے لاک سے کھولیں۔</string>
@@ -175,7 +154,6 @@
     <string name="settings_security_recovery_phrase_title">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="settings_security_recovery_phrase_summary">اپنی ریکوری فریز کا انتظام کریں۔</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">خودکار لاک کا وقت</string>
-    <string name="settings_security_timeout_summary">بیک گراؤنڈ میں جانے کے کتنی دیر بعد لاک ہو</string>
     <string name="settings_security_timeout_immediately">فوراً</string>
     <string name="settings_security_timeout_one_minute">۱ منٹ</string>
     <string name="settings_security_timeout_two_minute">۲ منٹ</string>
@@ -229,18 +207,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">پاس ورڈ بدلیں</string>
     <string name="change_password_old_password">پرانا پاس ورڈ</string>
-    <string name="change_password_new_password">نیا پاس ورڈ</string>
     <string name="change_password_check">چیک کریں</string>
     <string name="change_password_enter_new_password">نیا پاس ورڈ لکھیں</string>
     <string name="change_password_confirm_new_password">نئے پاس ورڈ کی تصدیق کریں</string>
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
-    <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
-    <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
     <string name="change_password_done">پاس ورڈ بدل دیا گیا</string> <!-- TODO: machine translated | EN: Password has been changed -->
     <string name="change_password_recovery_phrase_used">ریکوری فریز استعمال کی گئی — پرانے پاس ورڈ کی جانچ ضروری نہیں</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok چھپائیں</string>
@@ -334,7 +306,6 @@
     <string name="news_new_in_title">نیا کیا ہے</string>
     <string name="news_view_changelog">تبدیلیوں کی لسٹ دیکھیں</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">نمایاں</string> <!-- TODO: machine translated | EN: Highlight -->
     <string name="news_change_kind_new">نیا</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">بہتر</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">درست کیا گیا</string> <!-- TODO: machine translated | EN: Fixed -->
@@ -346,11 +317,6 @@
     <string name="release_highlight_point_4" formatted="false">آپ کے تمام پرانے بیک اپ کے ساتھ 100% مطابقت</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_2">مختلف اصلاحات اور بہتریاں</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">زیادہ ہموار ان لاک اور سیٹ اپ، کی بورڈ اب آپ کا پاس ورڈ نہیں سیکھتے اور ایپ پس منظر میں قابل اعتماد طریقے سے لاک ہو جاتی ہے۔</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">واپسی کا مینو</string>
-    <string name="recovery_menu_item_open_photok">Photok کھولیں</string>
-    <string name="recovery_subtitle_reset_hide_app">ایپ چھپانے کی سیٹنگ ختم کریں</string>
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">خوش آمدید</string>
@@ -379,9 +345,6 @@
     <string name="migration_error_button">رپورٹ بھیجیں</string>
 
     <string name="notification_channel_background_tasks">بیک گراؤنڈ کام</string>
-    <string name="migration_error_extract_data">ڈیٹا نکالیں</string>
-    <string name="migration_error_extract_confirmation_text">کیا آپ واقعی اپنا سارا ڈیٹا بغیر لاک کے ایک ZIP فائل میں نکالنا چاہتے ہیں؟</string>
-    <string name="migration_error_extracting_title">ZIP میں نکالا جا رہا ہے…</string>
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Photok کھولیں</string>
@@ -428,38 +391,20 @@
     <string name="recovery_phrase_label">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="recovery_phrase_title">آپ کی ریکوری فریز</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
     <string name="recovery_phrase_description">یہ الفاظ ترتیب سے لکھ لیں اور کسی محفوظ جگہ رکھیں۔ آپ اس فریز سے اپنے سیف تک دوبارہ رسائی حاصل کر سکتے ہیں۔</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
-    <string name="recovery_phrase_confirm">فریز محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Phrase saved -->
     <string name="recovery_phrase_save_warning">براہ کرم اپنی ریکوری فریز محفوظ کریں</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
-    <string name="recovery_phrase_create_new">نئی فریز بنائیں</string> <!-- TODO: machine translated | EN: Create New Phrase -->
     <string name="recovery_phrase_create_new_confirm">نئی فریز بنانے سے آپ کی موجودہ فریز ہمیشہ کے لیے بدل جائے گی۔ پرانی فریز سے آپ کا سیف واپس نہیں لایا جا سکے گا۔</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
-    <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">الفاظ کی تعداد</string> <!-- TODO: machine translated | EN: Word Count -->
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">پاس ورڈ بھول گئے؟</string> <!-- TODO: machine translated | EN: Forgot password -->
     <string name="recovery_phrase_restore_button">واپس لائیں</string> <!-- TODO: machine translated | EN: Restore -->
-    <string name="recovery_phrase_restore_word_placeholder">لفظ %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
-    <string name="recovery_phrase_restore_enter_title">ریکوری فریز لکھیں</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
-    <string name="recovery_phrase_restore_choose_option">اپنی فریز لکھنے کا طریقہ منتخب کریں۔</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
-    <string name="recovery_phrase_restore_option_type">ہاتھ سے لکھیں</string> <!-- TODO: machine translated | EN: Type by hand -->
     <string name="recovery_phrase_restore_option_open_file">فائل سے لائیں</string> <!-- TODO: machine translated | EN: Load from file -->
     <string name="recovery_phrase_restore_option_scan_qr">QR کوڈ اسکین کریں</string> <!-- TODO: machine translated | EN: Scan QR Code -->
     <string name="recovery_phrase_restore_option_paste">کلپ بورڈ سے پیسٹ کریں</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
-    <string name="recovery_phrase_restore_input_placeholder">اپنی ریکوری فریز لفظ بہ لفظ لکھیں</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
     <string name="recovery_phrase_restore_unlocked">کھل گیا</string> <!-- TODO: machine translated | EN: Unlocked -->
-    <string name="recovery_phrase_restore_unlocking">کھل رہا ہے&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
     <string name="recovery_phrase_restore_error_generic">سیف واپس نہیں لایا جا سکا۔ اپنی فریز چیک کریں اور دوبارہ کوشش کریں۔</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
     <string name="recovery_phrase_restore_error_invalid">غلط ریکوری فریز۔ الفاظ دوبارہ چیک کریں۔</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
     <string name="recovery_phrase_restore_error_invalid_qr">اس QR کوڈ میں صحیح ریکوری فریز موجود نہیں ہے۔</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
     <string name="recovery_phrase_restore_source_qr">QR کوڈ سے اسکین کی گئی</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
     <string name="recovery_phrase_restore_source_file">%1$s سے لائی گئی</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
     <string name="recovery_phrase_restore_source_clipboard">کلپ بورڈ سے پیسٹ کی گئی</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
-    <string name="recovery_phrase_restore_camera_permission_button">کیمرے کی اجازت مانگیں</string> <!-- TODO: machine translated | EN: Request camera permission -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">QR کوڈ اسکین کرنے کے لیے کیمرے کی اجازت درکار ہے۔</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
-    <string name="permission_gate_change_in_settings">سیٹنگز میں بدلیں</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>

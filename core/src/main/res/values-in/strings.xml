@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Memuat …</string>
     <string name="common_password">Kata sandi</string>
     <string name="common_delete">Hapus</string>
     <string name="common_export">Ekspor</string>
@@ -29,7 +27,6 @@
     <string name="common_no">Tidak</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Kamu yakin?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Lainnya</string>
     <string name="common_cancel">Batal</string>
     <string name="common_canceling">Membatalkan…</string> <!-- TODO: machine translated | EN: Canceling… -->
@@ -44,22 +41,12 @@
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>
-    <string name="import_permission_rationale">Photok perlu akses ke penyimpanan kamu untuk mengimpor file.</string>
     <string name="import_sharted_question">Kamu ingin mengimpor %1$d file?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Buat kata sandimu</string>
     <string name="setup_enter_password">Masukkan kata sandimu</string>
     <string name="setup_confirm_password">Konfirmasi kata sandimu</string>
-    <string name="setup_password_strength_label">Kekuatan kata sandimu:</string>
-    <string name="setup_button">Buat</string>
-    <string name="setup_password_strength_very_weak">Sangat lemah</string>
-    <string name="setup_password_strength_weak">Lemah</string>
-    <string name="setup_password_strength_moderate">Sedang</string>
-    <string name="setup_password_strength_strong">Kuat</string>
-    <string name="setup_password_strength_very_strong">Sangat kuat</string>
     <string name="setup_password_match_warning">\u26A0 Kata sandi tidak sama</string>
-    <string name="setupSetup">Pengaturan Awal</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Buka kunci brankasmu</string>
@@ -112,13 +99,10 @@
     <string name="view_photo_video_playback_speed">Kecepatan pemutaran</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Kunci</string>
     <string name="menu_main_settings">Pengaturan</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Pilih Semua</string>
-    <string name="menu_ms_delete">Hapus</string>
-    <string name="menu_ms_export">Ekspor</string>
     <string name="menu_ms_info">%1$d item dipilih</string>
     <string name="menu_ms_add_to_album">Tambahkan ke album</string>
     <string name="menu_ms_remove_from_album">Keluarkan dari album</string>
@@ -138,9 +122,6 @@
     <string name="export_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu?</string>
     <string name="export_and_delete_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu dan menghapusnya setelah itu?</string>
     <string name="export_exporting">Mengekspor file…</string>
-    <string name="export_permission_rationale">Photok perlu akses ke penyimpanan kamu untuk mengekspor file.</string>
-    <string name="export_finished">Telah diekspor</string>
-    <string name="export_and_delete_finished">Telah diekspor dan dihapus</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versi:</string>
@@ -150,7 +131,6 @@
     <string name="about_third_party">Perangkat Lunak Pihak Ketiga</string>
     <string name="about_privacy_policy">Kebijakan Privasi</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Berita</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Pengaturan</string>
@@ -167,7 +147,6 @@
     <string name="settings_category_security">Keamanan</string>
     <string name="settings_security_allow_screenshots_title">Izinkan Tangkapan Layar</string>
     <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar.</string>
-    <string name="settings_security_change_password_title">Ubah Kata Sandi</string>
     <string name="settings_security_change_password_summary">Ubah kata sandimu</string>
     <string name="settings_security_biometric_title">Buka Kunci Biometrik</string>
     <string name="settings_security_biometric_summary">Buka kunci Photok dengan autentikasi biometrik.</string>
@@ -175,7 +154,6 @@
     <string name="settings_security_recovery_phrase_title">Frasa Pemulihan</string>
     <string name="settings_security_recovery_phrase_summary">Kelola frasa pemulihanmu.</string>
     <string name="settings_security_timeout_title">Waktu Kunci Otomatis</string>
-    <string name="settings_security_timeout_summary">Kunci otomatis setelah aplikasi berada di latar belakang selama waktu tertentu</string>
     <string name="settings_security_timeout_immediately">Segera</string>
     <string name="settings_security_timeout_one_minute">1 Menit</string>
     <string name="settings_security_timeout_two_minute">2 Menit</string>
@@ -229,18 +207,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Ubah Kata Sandimu</string>
     <string name="change_password_old_password">Kata sandi lama</string>
-    <string name="change_password_new_password">Kata sandi baru</string>
     <string name="change_password_check">Periksa</string>
     <string name="change_password_enter_new_password">Masukkan kata sandi barumu</string>
     <string name="change_password_confirm_new_password">Konfirmasi kata sandi barumu</string>
     <string name="change_password_button">Ubah Kata Sandi</string>
-    <string name="change_password_confirm_message">Sebaiknya buat cadangan dulu!<br /> Mengubah kata sandimu akan memerlukan enkripsi ulang semua file kamu! Lanjutkan?</string>
-    <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
     <string name="change_password_done">Kata sandi telah diubah</string>
     <string name="change_password_recovery_phrase_used">Frasa pemulihan telah dipakai — kata sandi lama tidak perlu diperiksa</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verifikasi Kata Sandi</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Sembunyikan Photok</string>
@@ -334,7 +306,6 @@
     <string name="news_new_in_title">Baru di</string>
     <string name="news_view_changelog">Lihat Riwayat Perubahan</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">Sorotan</string> <!-- TODO: machine translated | EN: Highlight -->
     <string name="news_change_kind_new">Baru</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">Ditingkatkan</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">Diperbaiki</string> <!-- TODO: machine translated | EN: Fixed -->
@@ -346,11 +317,6 @@
     <string name="release_highlight_point_4" formatted="false">100% kompatibel dengan semua cadangan lamamu</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_2">Berbagai Perbaikan dan Peningkatan</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">Buka kunci dan penyiapan lebih lancar, keyboard tidak lagi mempelajari kata sandimu, dan aplikasi terkunci dengan andal di latar belakang.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Menu Pemulihan</string>
-    <string name="recovery_menu_item_open_photok">Buka Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Atur Ulang Pengaturan Sembunyikan Aplikasi</string>
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Selamat datang di</string>
@@ -379,9 +345,6 @@
     <string name="migration_error_button">Kirim laporan kesalahan</string>
 
     <string name="notification_channel_background_tasks">Tugas Latar Belakang</string>
-    <string name="migration_error_extract_data">Ekstrak data</string>
-    <string name="migration_error_extract_confirmation_text">Kamu yakin ingin mengekstrak semua file kamu TANPA ENKRIPSI ke dalam file ZIP?</string>
-    <string name="migration_error_extracting_title">Mendekripsi ke ZIP…</string>
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Buka Kunci Photok</string>
@@ -428,38 +391,20 @@
     <string name="recovery_phrase_label">Frasa Pemulihan</string>
     <string name="recovery_phrase_title">Frasa Pemulihanmu</string>
     <string name="recovery_phrase_description">Tulis kata-kata ini secara berurutan dan simpan di tempat yang aman. Kamu bisa memakai frasa ini untuk memulihkan akses ke brankasmu.</string>
-    <string name="recovery_phrase_confirm">Frasa telah disimpan</string>
     <string name="recovery_phrase_save_warning">Simpan frasa pemulihanmu</string>
-    <string name="recovery_phrase_create_new">Buat Frasa Baru</string>
     <string name="recovery_phrase_create_new_confirm">Membuat frasa baru akan menggantikan frasa kamu saat ini secara permanen. Frasa lamamu tidak akan berfungsi lagi untuk memulihkan brankasmu.</string>
-    <string name="recovery_phrase_saved_to_file">Disimpan ke %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Jumlah Kata</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Simpan sebagai Gambar</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Lupa kata sandi</string>
     <string name="recovery_phrase_restore_button">Pulihkan</string>
-    <string name="recovery_phrase_restore_word_placeholder">Kata %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Masukkan Frasa Pemulihan</string>
-    <string name="recovery_phrase_restore_choose_option">Pilih cara memasukkan frasamu.</string>
-    <string name="recovery_phrase_restore_option_type">Ketik manual</string>
     <string name="recovery_phrase_restore_option_open_file">Muat dari file</string>
     <string name="recovery_phrase_restore_option_scan_qr">Pindai Kode QR</string>
     <string name="recovery_phrase_restore_option_paste">Tempel dari Papan Klip</string>
-    <string name="recovery_phrase_restore_input_placeholder">Ketik frasa pemulihanmu kata demi kata</string>
     <string name="recovery_phrase_restore_unlocked">Terbuka</string>
-    <string name="recovery_phrase_restore_unlocking">Membuka kunci…</string>
     <string name="recovery_phrase_restore_error_generic">Brankas tidak bisa dipulihkan. Periksa frasamu dan coba lagi.</string>
     <string name="recovery_phrase_restore_error_invalid">Frasa pemulihan tidak valid. Periksa lagi kata-katanya.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">Kode QR ini tidak berisi frasa pemulihan yang valid.</string>
     <string name="recovery_phrase_restore_source_qr">Dipindai dari kode QR</string>
     <string name="recovery_phrase_restore_source_file">Dimuat dari %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Ditempel dari papan klip</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Minta izin kamera</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">Izin kamera diperlukan untuk memindai kode QR.</string>
-    <string name="permission_gate_change_in_settings">Ubah di Pengaturan</string>
 </resources>

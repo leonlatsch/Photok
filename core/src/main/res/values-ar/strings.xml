@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">حقوق النشر  \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">أنتظر …</string>
     <string name="common_password">كلمة السر</string>
     <string name="common_delete">حذف</string>
     <string name="common_export">يصدّر </string>
@@ -29,7 +27,6 @@
     <string name="common_no">لا </string>
     <string name="common_ok">نعم </string>
     <string name="common_are_you_sure">هل أنت متأكد؟ </string>
-    <string name="common_bullet">•</string>
     <string name="common_more">المزيد</string> <!-- TODO: machine translated | EN: More -->
     <string name="common_cancel">إلغاء</string> <!-- TODO: machine translated | EN: Cancel -->
     <string name="common_canceling">جارٍ الإلغاء…</string> <!-- TODO: machine translated | EN: Canceling… -->
@@ -44,22 +41,12 @@
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
-    <string name="import_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لاستيراد الملفات. </string>
     <string name="import_sharted_question">هل تريد استيراد %1$d ملف (ملفات)؟ </string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">إنشاء كلمة مرورك </string>
     <string name="setup_enter_password">ادخل رقمك السري </string>
     <string name="setup_confirm_password">أكد رقمك السري </string>
-    <string name="setup_password_strength_label">قوة كلمة المرور: </string>
-    <string name="setup_button">إنشاء</string>
-    <string name="setup_password_strength_very_weak">ضعيف جداً</string> <!-- TODO: machine translated | EN: Very weak -->
-    <string name="setup_password_strength_weak">ضعيف </string>
-    <string name="setup_password_strength_moderate">معتدل </string>
-    <string name="setup_password_strength_strong">قوي </string>
-    <string name="setup_password_strength_very_strong">قوي جداً</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 كلمة المرور غير مطابقة </string>
-    <string name="setupSetup">تنصيب</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">افتح خزنتك </string>
@@ -112,13 +99,10 @@
     <string name="view_photo_video_playback_speed">سرعة التشغيل</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">قفل</string>
     <string name="menu_main_settings">إعدادات</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">اختر الكل</string>
-    <string name="menu_ms_delete">مسح</string>
-    <string name="menu_ms_export">تصدير</string>
     <string name="menu_ms_info">تم تحديد %1$d عنصر (عناصر)</string> <!-- TODO: machine translated | EN: %1$d item(s) selected -->
     <string name="menu_ms_add_to_album">إضافة إلى ألبوم</string> <!-- TODO: machine translated | EN: Add to album -->
     <string name="menu_ms_remove_from_album">إزالة من الألبوم</string> <!-- TODO: machine translated | EN: Remove from album -->
@@ -137,10 +121,7 @@
     <string name="export_are_you_sure_this">هل أنت متأكد أنك تريد  <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك؟ </string>
     <string name="export_and_delete_are_you_sure">هل أنت متأكد أنك تريد <b>تصدير</b> %1$d ملف (ملفات) إلى معرض الصور الخاص بك وحذفها؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> %1$d file(s), back to your gallery and delete them? -->
     <string name="export_and_delete_are_you_sure_this">هل أنت متأكد أنك تريد <b>تصدير</b> هذا الملف إلى معرض الصور الخاص بك وحذفه؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to <b>export</b> this file to your gallery and delete it? -->
-    <string name="export_and_delete_finished">تم التصدير والحذف</string> <!-- TODO: machine translated | EN: Exported and deleted -->
     <string name="export_exporting">جارٍ تصدير الملف (الملفات) ... </string>
-    <string name="export_permission_rationale">يحتاج Photok للوصول إلى التخزين الخاص بك ، لتصدير الملفات. </string>
-    <string name="export_finished">تم التصدير</string>
 
     <!-- ABOUT -->
     <string name="about_version">إصدار:</string>
@@ -150,7 +131,6 @@
     <string name="about_third_party">برامج الطرف الثالث</string>
     <string name="about_privacy_policy">سياسة الخصوصية</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">أخبار</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">إعدادات</string>
@@ -168,7 +148,6 @@
     <string name="settings_category_security">حماية</string>
     <string name="settings_security_allow_screenshots_title">السماح بلقطات الشاشة</string>
     <string name="settings_security_allow_screenshots_summary">السماح بأخذ لقطة شاشة.</string>
-    <string name="settings_security_change_password_title">تغيير كلمة المرور</string>
     <string name="settings_security_change_password_summary">غير كلمة المرور الخاصة بك</string>
     <string name="settings_security_biometric_title">الفتح البيومتري</string> <!-- TODO: machine translated | EN: Biometric Unlock -->
     <string name="settings_security_biometric_summary">افتح Photok باستخدام المصادقة البيومترية.</string> <!-- TODO: machine translated | EN: Unlock Photok with biometric authentication. -->
@@ -176,7 +155,6 @@
     <string name="settings_security_recovery_phrase_title">عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="settings_security_recovery_phrase_summary">إدارة عبارة الاسترداد الخاصة بك.</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">مهلة القفل التلقائي</string>
-    <string name="settings_security_timeout_summary">قفل تلقائي بعد وقت معين في الخلفية</string>
     <string name="settings_security_timeout_immediately">في الحال</string>
     <string name="settings_security_timeout_one_minute">دقيقة واحده</string>
     <string name="settings_security_timeout_two_minute">دقيقتين</string>
@@ -228,18 +206,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">غير كلمة المرور الخاصة بك</string>
     <string name="change_password_old_password">كلمة المرور القديمة</string>
-    <string name="change_password_new_password">كلمة المرور الجديدة</string>
     <string name="change_password_check">يفحص</string>
     <string name="change_password_enter_new_password">أدخل كلمة المرور الجديدة </string>
     <string name="change_password_confirm_new_password">قم بتأكيد كلمة المرور الجديدة الخاصة بك</string>
     <string name="change_password_button">تغيير كلمة المرور</string>
-    <string name="change_password_confirm_message">موصي بالنسخ الاحتياطي! <br /> يتطلب تغيير كلمة المرور إعادة تشفير جميع ملفاتك! هل تريد الاستمرار؟ </string>
-    <string name="change_password_reencrypting">إعادة تشفير الملف (الملفات) ...</string>
     <string name="change_password_done">تم تغيير كلمة المرور</string> <!-- TODO: machine translated | EN: Password has been changed -->
     <string name="change_password_recovery_phrase_used">تم استخدام عبارة الاسترداد — لا حاجة للتحقق من كلمة المرور القديمة</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">التحقق من كلمة المرور</string> <!-- TODO: machine translated | EN: Verify Password -->
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">إخفاء فوتوك</string>
@@ -333,7 +305,6 @@
     <string name="news_new_in_title">الجديد في</string>
     <string name="news_view_changelog">مشاهدة ملف Changelog</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">أبرز الميزات</string> <!-- TODO: machine translated | EN: Highlight -->
     <string name="news_change_kind_new">جديد</string> <!-- TODO: machine translated | EN: New -->
     <string name="news_change_kind_improved">محسّن</string> <!-- TODO: machine translated | EN: Improved -->
     <string name="news_change_kind_fixed">تم الإصلاح</string> <!-- TODO: machine translated | EN: Fixed -->
@@ -345,11 +316,6 @@
     <string name="release_highlight_point_4" formatted="false">متوافق 100% مع جميع نسخك الاحتياطية القديمة</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
     <string name="release_change_title_2">إصلاحات وتحسينات متنوعة</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
     <string name="release_change_summary_2">فتح قفل وإعداد أكثر سلاسة، ولم تعد لوحات المفاتيح تتعلم كلمة مرورك، ويُقفل التطبيق بشكل موثوق في الخلفية.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">قائمة الاسترداد</string>
-    <string name="recovery_menu_item_open_photok">افتح برنامج فوتوك</string>
-    <string name="recovery_subtitle_reset_hide_app">إعادة تعيين إعدادات إخفاء التطبيق</string>
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">مرحباً بك في</string> <!-- TODO: machine translated | EN: Welcome to -->
@@ -379,9 +345,6 @@
 
     <string name="notification_channel_background_tasks">مهام الخلفية</string> <!-- TODO: machine translated | EN: Background Tasks -->
 
-    <string name="migration_error_extract_data">استخراج البيانات</string> <!-- TODO: machine translated | EN: Extract data -->
-    <string name="migration_error_extract_confirmation_text">هل أنت متأكد أنك تريد استخراج جميع ملفاتك غير مشفرة في ملف ZIP؟</string> <!-- TODO: machine translated | EN: Are you sure, you want to extract all your files UNENCRYPTED in a ZIP file? -->
-    <string name="migration_error_extracting_title">جارٍ فك التشفير إلى ZIP…</string> <!-- TODO: machine translated | EN: Decrypting to ZIP… -->
 
 
     <!-- Biometric -->
@@ -428,38 +391,20 @@
     <string name="recovery_phrase_label">عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="recovery_phrase_title">عبارة الاسترداد الخاصة بك</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
     <string name="recovery_phrase_description">اكتب هذه الكلمات بالترتيب واحتفظ بها في مكان آمن. يمكنك استخدام هذه العبارة لاستعادة الوصول إلى خزنتك.</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
-    <string name="recovery_phrase_confirm">تم حفظ العبارة</string> <!-- TODO: machine translated | EN: Phrase saved -->
     <string name="recovery_phrase_save_warning">يرجى حفظ عبارة الاسترداد الخاصة بك</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
-    <string name="recovery_phrase_create_new">إنشاء عبارة جديدة</string> <!-- TODO: machine translated | EN: Create New Phrase -->
     <string name="recovery_phrase_create_new_confirm">سيؤدي إنشاء عبارة جديدة إلى استبدال عبارتك الحالية بشكل دائم. لن تعمل عبارتك الحالية بعد الآن لاستعادة خزنتك.</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
-    <string name="recovery_phrase_saved_to_file">تم الحفظ في %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">عدد الكلمات</string> <!-- TODO: machine translated | EN: Word Count -->
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">حفظ كصورة</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">نسيت كلمة المرور</string> <!-- TODO: machine translated | EN: Forgot password -->
     <string name="recovery_phrase_restore_button">استعادة</string> <!-- TODO: machine translated | EN: Restore -->
-    <string name="recovery_phrase_restore_word_placeholder">الكلمة %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
-    <string name="recovery_phrase_restore_enter_title">إدخال عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
-    <string name="recovery_phrase_restore_choose_option">اختر طريقة إدخال عبارتك.</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
-    <string name="recovery_phrase_restore_option_type">الكتابة يدوياً</string> <!-- TODO: machine translated | EN: Type by hand -->
     <string name="recovery_phrase_restore_option_open_file">التحميل من ملف</string> <!-- TODO: machine translated | EN: Load from file -->
     <string name="recovery_phrase_restore_option_scan_qr">مسح رمز QR</string> <!-- TODO: machine translated | EN: Scan QR Code -->
     <string name="recovery_phrase_restore_option_paste">اللصق من الحافظة</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
-    <string name="recovery_phrase_restore_input_placeholder">اكتب عبارة الاسترداد الخاصة بك كلمة بكلمة</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
     <string name="recovery_phrase_restore_unlocked">تم الفتح</string> <!-- TODO: machine translated | EN: Unlocked -->
-    <string name="recovery_phrase_restore_unlocking">جارٍ الفتح&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
     <string name="recovery_phrase_restore_error_generic">تعذرت استعادة الخزنة. يرجى التحقق من عبارتك والمحاولة مرة أخرى.</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
     <string name="recovery_phrase_restore_error_invalid">عبارة استرداد غير صالحة. يرجى التحقق من الكلمات مرة أخرى.</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
     <string name="recovery_phrase_restore_error_invalid_qr">لا يحتوي رمز QR على عبارة استرداد صالحة.</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
     <string name="recovery_phrase_restore_source_qr">تم المسح من رمز QR</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
     <string name="recovery_phrase_restore_source_file">تم التحميل من %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
     <string name="recovery_phrase_restore_source_clipboard">تم اللصق من الحافظة</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
-    <string name="recovery_phrase_restore_camera_permission_button">طلب إذن الكاميرا</string> <!-- TODO: machine translated | EN: Request camera permission -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">إذن الكاميرا مطلوب لمسح رموز QR.</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
-    <string name="permission_gate_change_in_settings">التغيير من الإعدادات</string> <!-- TODO: machine translated | EN: Change in Settings -->
 </resources>
