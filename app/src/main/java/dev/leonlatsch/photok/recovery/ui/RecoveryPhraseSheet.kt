@@ -17,10 +17,8 @@
 package dev.leonlatsch.photok.recovery.ui
 
 import android.widget.Toast
-import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
@@ -32,9 +30,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,9 +40,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
@@ -69,7 +64,6 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -78,13 +72,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.other.AndroidFeatures
+import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+private const val IMAGE_FILE_NAME = "photok-recovery-phrase.jpg"
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecoveryPhraseSheet(
     onDismissRequest: () -> Unit,
@@ -93,8 +92,11 @@ fun RecoveryPhraseSheet(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
+    val clipboard = LocalClipboard.current
+    val scope = rememberCoroutineScope()
+    val phrase = uiState.phrase
 
-    val canDismiss by rememberUpdatedState(!uiState.inputs.regenerated || uiState.inputs.phraseWasSaved)
+    val canDismiss by rememberUpdatedState(!uiState.inputs.regenerated || uiState.inputs.savedTo != null)
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = { value ->
@@ -107,32 +109,41 @@ fun RecoveryPhraseSheet(
         },
     )
 
-    val activity = LocalActivity.current
-    val clipboard = LocalClipboard.current
-
-    var showConfirmDialog by remember { mutableStateOf(false) }
+    var showNewTwelveWordPhraseDialog by remember { mutableStateOf(false) }
+    var showNewTwentyFourWordPhraseDialog by remember { mutableStateOf(false) }
 
     ConfirmationDialog(
-        show = showConfirmDialog,
-        onDismissRequest = { showConfirmDialog = false },
+        show = showNewTwelveWordPhraseDialog,
+        onDismissRequest = { showNewTwelveWordPhraseDialog = false },
         text = stringResource(R.string.recovery_phrase_create_new_confirm),
-        onConfirm = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.CreateNewPhrase) },
+        onConfirm = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.CreateNewPhrase(Bip39WordCount.Twelve)) },
     )
 
-    val selectFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
-        it ?: return@rememberLauncherForActivityResult
-        val phrase = uiState.phrase ?: return@rememberLauncherForActivityResult
-        if (activity !is AppCompatActivity) return@rememberLauncherForActivityResult
-        viewModel.handleUiEvent(RecoveryPhraseUiEvent.SaveToFile(context, it, phrase))
-    }
+    ConfirmationDialog(
+        show = showNewTwentyFourWordPhraseDialog,
+        onDismissRequest = { showNewTwentyFourWordPhraseDialog = false },
+        text = stringResource(R.string.recovery_phrase_create_new_confirm),
+        onConfirm = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.CreateNewPhrase(Bip39WordCount.TwentyFour)) },
+    )
 
-    val phrase = uiState.phrase
-    if (uiState.inputs.qrSheetVisible && phrase != null) {
-        RecoveryPhraseQrSheet(
-            phrase = phrase,
-            onDismiss = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.DismissQrSheet) },
-            onSaved = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.MarkPhraseSaved) },
-        )
+    val saveImageFileLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("image/jpeg")) {
+            it ?: return@rememberLauncherForActivityResult
+            phrase ?: return@rememberLauncherForActivityResult
+            viewModel.handleUiEvent(RecoveryPhraseUiEvent.SaveImageFile(context, it, phrase))
+        }
+
+    val saveTextFileLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) {
+            it ?: return@rememberLauncherForActivityResult
+            phrase ?: return@rememberLauncherForActivityResult
+            viewModel.handleUiEvent(RecoveryPhraseUiEvent.SaveTextFile(it, phrase))
+        }
+
+    ObserveAsEvents(viewModel.navigationEvents) { event ->
+        when (event) {
+            RecoveryPhraseNavigationEvent.PickImageFileLocation -> saveImageFileLauncher.launch(IMAGE_FILE_NAME)
+        }
     }
 
     ModalBottomSheet(
@@ -163,73 +174,90 @@ fun RecoveryPhraseSheet(
             )
 
             RecoveryKeyCard(
-                phrase = uiState.phrase,
+                phrase = phrase,
                 wordCount = uiState.inputs.wordCount,
                 showQrCode = uiState.inputs.showQrCode,
                 onShowQrCodeSide = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowQrCodeSide) },
                 onShowWordsSide = { viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowWordsSide) },
-                saved = uiState.inputs.phraseWasSaved,
-                modifier = Modifier.padding(vertical = Dimens.spacingLarge),
+                saved = uiState.inputs.savedTo != null,
+                modifier = Modifier.padding(top = Dimens.spacingLarge),
             )
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                IconButton(
-                    onClick = { selectFileLauncher.launch("photok-recovery-phrase.txt") },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_download),
-                        contentDescription = null,
-                    )
-                }
-                IconButton(
+            RecoveryPhraseSavedIndicator(
+                savedTo = uiState.inputs.savedTo,
+                modifier = Modifier.padding(top = Dimens.spacingMedium),
+            )
+
+            Spacer(Modifier.height(Dimens.spacingMedium))
+
+            MoreSaveOptionsMenu(
+                onShareImage = {
+                    phrase ?: return@MoreSaveOptionsMenu
+                    viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShareImage(context, phrase))
+                },
+                onSaveTextFile = { saveTextFileLauncher.launch("photok-recovery-phrase.txt") },
+                onCopyToClipboard = {
+                    phrase ?: return@MoreSaveOptionsMenu
+                    viewModel.handleUiEvent(RecoveryPhraseUiEvent.CopyToClipboard(clipboard, phrase))
+                },
+            ) { closeMenu ->
+                DropdownMenuItem(
+                    text = { Text("New phrase with 12 words") },
                     onClick = {
-                        val p = uiState.phrase ?: return@IconButton
-                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.Share(context, p))
+                        closeMenu()
+                        showNewTwelveWordPhraseDialog = true
                     },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_share),
-                        contentDescription = null,
-                    )
-                }
-                IconButton(
+                )
+                DropdownMenuItem(
+                    text = { Text("New phrase with 24 words") },
                     onClick = {
-                        uiState.phrase ?: return@IconButton
-                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.ShowQrCode)
+                        closeMenu()
+                        showNewTwentyFourWordPhraseDialog = true
                     },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_qr_code),
-                        contentDescription = null,
-                    )
-                }
-                IconButton(
-                    onClick = {
-                        val p = uiState.phrase ?: return@IconButton
-                        viewModel.handleUiEvent(RecoveryPhraseUiEvent.CopyToClipboard(clipboard, p))
-                    },
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_content_copy),
-                        contentDescription = null,
-                    )
-                }
+                )
             }
 
-            Spacer(Modifier.height(8.dp))
+            when {
+                uiState.inputs.savedTo != null -> {
+                    Button(
+                        onClick = {
+                            scope.launch { sheetState.hide() }
+                                .invokeOnCompletion { onDismissRequest() }
+                        },
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .fillMaxWidth(),
+                    ) {
+                        Text("Done")
+                    }
+                }
 
-            Button(
-                onClick = { showConfirmDialog = true },
-                enabled = !uiState.inputs.loading && canDismiss,
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .padding(horizontal = Dimens.spacingLarge)
-                    .fillMaxWidth(),
-            ) {
-                Text(text = stringResource(R.string.recovery_phrase_create_new))
+                AndroidFeatures.mediaStore() -> {
+                    Button(
+                        onClick = {
+                            phrase ?: return@Button
+                            viewModel.handleUiEvent(RecoveryPhraseUiEvent.SaveImageToPhotos(context, phrase))
+                        },
+                        enabled = phrase != null && !uiState.inputs.loading,
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .fillMaxWidth(),
+                    ) {
+                        Text("Save to Photos")
+                    }
+                }
+
+                else -> {
+                    Button(
+                        onClick = { saveImageFileLauncher.launch(IMAGE_FILE_NAME) },
+                        enabled = phrase != null && !uiState.inputs.loading,
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .fillMaxWidth(),
+                    ) {
+                        Text("Save as image")
+                    }
+                }
             }
 
             Spacer(Modifier.height(8.dp))

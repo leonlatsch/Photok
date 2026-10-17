@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.onboarding.ui.recoveryphrase
 
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseSavedTo
 
 data class OnboardingRecoveryPhraseUiState(
     val phrase: RecoveryPhrase? = null,
@@ -26,14 +27,6 @@ data class OnboardingRecoveryPhraseUiState(
     val savedTo: RecoveryPhraseSavedTo? = null,
     val showQrCode: Boolean = false,
 )
-
-sealed interface RecoveryPhraseSavedTo {
-    data object Photos : RecoveryPhraseSavedTo
-    data class File(val fileName: String?) : RecoveryPhraseSavedTo
-    data class Shared(val appName: String?) : RecoveryPhraseSavedTo
-    data object Clipboard : RecoveryPhraseSavedTo
-    data object Screenshot : RecoveryPhraseSavedTo
-}
 
 sealed interface OnboardingRecoveryPhraseNavigationEvent {
     data object Continue : OnboardingRecoveryPhraseNavigationEvent
