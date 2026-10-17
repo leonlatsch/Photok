@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.onboarding.ui
 
 import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -128,13 +129,18 @@ fun OnboardingScreen() {
 
             val brandHeaderFraction by animateFloatAsState(
                 targetValue = if (step == null) 0f else 1f,
-                animationSpec = tween(delayMillis = 300)
+                animationSpec = tween(delayMillis = 300),
+            )
+
+            val rounding by animateDpAsState(
+                targetValue = if (step == null) 0.dp else 28.dp,
+                animationSpec = tween(delayMillis = 300),
             )
 
             Surface(
                 shape = RoundedCornerShape(
-                    topStart = 28.dp,
-                    topEnd = 28.dp,
+                    topStart = rounding,
+                    topEnd = rounding,
                     bottomStart = 0.dp,
                     bottomEnd = 0.dp,
                 ),
