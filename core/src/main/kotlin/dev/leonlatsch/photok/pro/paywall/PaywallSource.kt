@@ -26,4 +26,5 @@ enum class PaywallSource {
     PanicLock,
     BruteforceProtection,
     IntruderWarnings,
+    Onboarding,
 }

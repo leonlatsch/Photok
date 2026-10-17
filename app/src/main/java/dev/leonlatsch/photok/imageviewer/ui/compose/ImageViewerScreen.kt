@@ -48,7 +48,7 @@ import androidx.media3.common.Player.COMMAND_SET_SPEED_AND_PITCH
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
-import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsController
+import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsVisibility
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
@@ -56,6 +56,8 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.findWindow
+import dev.leonlatsch.photok.ui.systembars.NavigationBarBackground
+import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -298,7 +300,9 @@ fun ImageViewerScreen(
             onBack = navigator::goBack,
         )
 
-        ImageViewerSystemBarsController(visible = uiState.inputs.showControls)
+        StatusBarBackground(Color.Black)
+        NavigationBarBackground(Color.Black)
+        ImageViewerSystemBarsVisibility(visible = uiState.inputs.showControls)
     }
 }
 

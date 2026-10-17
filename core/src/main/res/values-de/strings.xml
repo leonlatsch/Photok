@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Laden …</string>
     <string name="common_password">Passwort</string>
     <string name="common_delete">Löschen</string>
     <string name="common_export">Exportieren</string>
@@ -29,7 +27,6 @@
     <string name="common_no">Nein</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Bist du sicher?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Mehr</string>
     <string name="common_cancel">Abbrechen</string>
     <string name="common_canceling">Wird abgebrochen…</string>
@@ -44,22 +41,12 @@
 
     <!-- IMPORT -->
     <string name="import_importing">Importiere Dateien</string>
-    <string name="import_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Dateien zu importieren.</string>
     <string name="import_sharted_question">Willst du %1$d Dateien importieren?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Erstelle dein Passwort</string>
     <string name="setup_enter_password">Passwort eingeben</string>
     <string name="setup_confirm_password">Passwort bestätigen</string>
-    <string name="setup_password_strength_label">Passwort stärke:</string>
-    <string name="setup_button">Erstellen</string>
-    <string name="setup_password_strength_very_weak">Sehr schwach</string>
-    <string name="setup_password_strength_weak">Schwach</string>
-    <string name="setup_password_strength_moderate">Moderat</string>
-    <string name="setup_password_strength_strong">Stark</string>
-    <string name="setup_password_strength_very_strong">Sehr stark</string>
     <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht überein</string>
-    <string name="setupSetup">Setup</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Entsperre deinen Safe</string>
@@ -112,13 +99,10 @@
     <string name="view_photo_video_playback_speed">Wiedergabegeschwindigkeit</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Sperren</string>
     <string name="menu_main_settings">Einstellungen</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Alle auswählen</string>
-    <string name="menu_ms_delete">Löschen</string>
-    <string name="menu_ms_export">Exportieren</string>
     <string name="menu_ms_info">%1$d Element(e) ausgewählt</string>
     <string name="menu_ms_add_to_album">Zu Album hinzufügen</string>
     <string name="menu_ms_remove_from_album">Aus Album entfernen</string>
@@ -137,10 +121,7 @@
     <string name="export_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> willst?</string>
     <string name="export_and_delete_are_you_sure">Bist du sicher, dass du %1$d Dateien, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
     <string name="export_and_delete_are_you_sure_this">Bist du sicher, dass du diese Datei, zurück in deine Galerie, <b>exportieren</b> und <b>löschen</b> willst?</string>
-    <string name="export_and_delete_finished">Exportiert und gelöscht</string>
     <string name="export_exporting">Exportiere Dateien…</string>
-    <string name="export_permission_rationale">Photok benötigt Zugang zu deinem Speicher, um Fotos zu exportieren.</string>
-    <string name="export_finished">Exportiert</string>
 
     <!-- ABOUT -->
     <string name="about_version">Version:</string>
@@ -150,7 +131,6 @@
     <string name="about_third_party">Drittanbietersoftware</string>
     <string name="about_privacy_policy">Datenschutzerklärung</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy/de</string>
-    <string name="about_menu_news">Neuigkeiten</string>
 
 
     <!-- SETTINGS -->
@@ -168,7 +148,6 @@
     <string name="settings_category_security">Sicherheit</string>
     <string name="settings_security_allow_screenshots_title">Erlaube Screenshots</string>
     <string name="settings_security_allow_screenshots_summary">Erlaube das Erstellen von Screenshots.</string>
-    <string name="settings_security_change_password_title">Passwort ändern</string>
     <string name="settings_security_change_password_summary">Ändere dein Passwort</string>
     <string name="settings_security_biometric_title">Mit Biometrie entsperren</string>
     <string name="settings_security_biometric_summary">Entsperre Photok mit Biometrie.</string>
@@ -176,7 +155,6 @@
     <string name="settings_security_recovery_phrase_title">Wiederherstellungswörter</string>
     <string name="settings_security_recovery_phrase_summary">Wiederherstellungswörter verwalten.</string>
     <string name="settings_security_timeout_title">Automatischer Sperr-Timeout</string>
-    <string name="settings_security_timeout_summary">Automatischer Sperren nach bestimmter Zeit im Hintergrund</string>
     <string name="settings_security_timeout_immediately">Sofort</string>
     <string name="settings_security_timeout_one_minute">1 Minute</string>
     <string name="settings_security_timeout_two_minute">2 Minuten</string>
@@ -230,18 +208,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Passwort ändern</string>
     <string name="change_password_old_password">Altes Passwort</string>
-    <string name="change_password_new_password">Neues Passwort</string>
     <string name="change_password_check">Prüfen</string>
     <string name="change_password_enter_new_password">Neues Passwort eingeben</string>
     <string name="change_password_confirm_new_password">Neues Passwort bestätigen</string>
     <string name="change_password_button">Passwort ändern</string>
-    <string name="change_password_confirm_message">Backup empfohlen!<br /> Durch das Ändern des Passwortes müssen alle deine Dateien neu verschlüsselt werden! Willst du fortfahren?</string>
-    <string name="change_password_reencrypting">Dateien neu verschlüsseln…</string>
     <string name="change_password_done">Passwort wurde geändert</string>
     <string name="change_password_recovery_phrase_used">Wiederherstellungswörter verwendet — altes Passwort nicht nötig</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Passwort prüfen</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok verstecken</string>
@@ -254,18 +226,6 @@
     <string name="hide_app_confirm_show">Willst du Photok wieder anzeigen?</string>
     <string name="hide_app_hint">Sobald es versteckt ist, kann Photok nur über die Telefon Wahltastatur, mit deinem geheimen Start-Code gestartet werden.</string>
     <string name="hide_app_hint_current_code">Momentaner Start-Code:</string>
-
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Weiter</string>
-    <string name="onboarding_finish">Fertig</string>
-    <string name="onboarding_skip"><u>Überspringen</u></string>
-
-    <string name="onboarding_slide1_title">Willkommen bei</string>
-    <string name="onboarding_slide1_description">Ein sicherer Ort für deine Fotos.</string>
-    <string name="onboarding_slide2_title">Erstelle ein Passwort</string>
-    <string name="onboarding_slide2_description">Erstelle ein sicheres Passwort. Dein Passwort wird benutzt um deine Fotos direkt auf deinem Smartphone zu verschlüsseln.</string>
-    <string name="onboarding_slide3_title">Fang an zu importieren</string>
-    <string name="onboarding_slide3_description">Importiere deine Fotos und halte sie sicher vor anderen.\nDanach kannst du sie in deiner Galerie löschen.</string>
 
     <!-- BACKUP -->
     <string name="backup_processing_title">Erstelle Backup…</string>
@@ -347,7 +307,6 @@
     <string name="news_new_in_title">Neu bei</string>
     <string name="news_view_changelog">Changelog ansehen</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-    <string name="news_highlight_label">Highlight</string>
     <string name="news_change_kind_new">Neu</string>
     <string name="news_change_kind_improved">Verbessert</string>
     <string name="news_change_kind_fixed">Behoben</string>
@@ -359,11 +318,6 @@
     <string name="release_highlight_point_4" formatted="false">100% kompatibel mit all deinen alten Backups</string>
     <string name="release_change_title_2">Diverse Fehlerbehebungen und Verbesserungen</string>
     <string name="release_change_summary_2">Flüssigeres Entsperren und Einrichten, Tastaturen lernen dein Passwort nicht mehr und die App sperrt sich im Hintergrund zuverlässig.</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Wiederherstellungs Menu</string>
-    <string name="recovery_menu_item_open_photok">Photok Öffnen</string>
-    <string name="recovery_subtitle_reset_hide_app">App Verstecken Einstellung zurücksetzen</string>
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Willkommen bei</string>
@@ -393,9 +347,6 @@
     <string name="migration_error_button">Fehlerbericht senden</string>
 
     <string name="notification_channel_background_tasks">Hintergrundprozesse</string>
-    <string name="migration_error_extract_data">Daten extrahieren</string>
-    <string name="migration_error_extract_confirmation_text"> Bist du sicher, dass du alle Dateien, UNVERSCHLÜSSELT in eine ZIP Datei exportieren willst?</string>
-    <string name="migration_error_extracting_title">Entschlüssele in ZIP…</string>
 
 
     <!-- Biometric -->
@@ -444,38 +395,20 @@
     <string name="recovery_phrase_label">Wiederherstellungswörter</string>
     <string name="recovery_phrase_title">Deine Wiederherstellungswörter</string>
     <string name="recovery_phrase_description">Schreib diese Wörter der Reihe nach auf und bewahre sie sicher auf. Mit diesen Wörtern kommst du wieder in deinen Safe.</string>
-    <string name="recovery_phrase_confirm">Wörter gespeichert</string>
     <string name="recovery_phrase_save_warning">Bitte speichere deine Wiederherstellungswörter</string>
-    <string name="recovery_phrase_create_new">Neue Wörter erstellen</string>
     <string name="recovery_phrase_create_new_confirm">Neue Wörter ersetzen deine aktuellen dauerhaft. Die alten Wörter funktionieren danach nicht mehr.</string>
-    <string name="recovery_phrase_saved_to_file">Gespeichert in %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Wortanzahl</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Als Bild speichern</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Passwort vergessen</string>
     <string name="recovery_phrase_restore_button">Wiederherstellen</string>
-    <string name="recovery_phrase_restore_word_placeholder">Wort %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Wiederherstellungswörter eingeben</string>
-    <string name="recovery_phrase_restore_choose_option">Wie willst du deine Wörter eingeben?</string>
-    <string name="recovery_phrase_restore_option_type">Manuell eingeben</string>
     <string name="recovery_phrase_restore_option_open_file">Aus Datei laden</string>
     <string name="recovery_phrase_restore_option_scan_qr">QR-Code scannen</string>
     <string name="recovery_phrase_restore_option_paste">Aus Zwischenablage einfügen</string>
-    <string name="recovery_phrase_restore_input_placeholder">Tippe deine Wiederherstellungswörter Wort für Wort</string>
     <string name="recovery_phrase_restore_unlocked">Entsperrt</string>
-    <string name="recovery_phrase_restore_unlocking">Entsperren…</string>
     <string name="recovery_phrase_restore_error_generic">Der Safe konnte nicht entsperrt werden. Überprüfe die Wörter und versuch es nochmal.</string>
     <string name="recovery_phrase_restore_error_invalid">Ungültige Wiederherstellungswörter. Überprüfe sie nochmal.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">Der QR-Code enthält keine gültigen Wiederherstellungswörter.</string>
     <string name="recovery_phrase_restore_source_qr">Vom QR-Code gescannt</string>
     <string name="recovery_phrase_restore_source_file">Geladen von %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Aus Zwischenablage eingefügt</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Kamera Berechtigung anfragen</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">Die Kamera Berechtigung wird benötigt, um QR Codes zu scannen.</string>
-    <string name="permission_gate_change_in_settings">In Einstellungen ändern</string>
 </resources>

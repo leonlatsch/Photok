@@ -25,6 +25,11 @@ interface Navigator {
     fun replaceAll(route: NavKey)
 }
 
-val LocalNavigator = staticCompositionLocalOf<Navigator> {
-    error("No Navigator provided")
+// For previews to be able to use navigator and not have LocalNavigator be nullable
+private object NoOpNavigator: Navigator {
+    override fun navigate(route: NavKey) { }
+    override fun goBack() { }
+    override fun replaceAll(route: NavKey) { }
 }
+
+val LocalNavigator = staticCompositionLocalOf<Navigator> { NoOpNavigator }

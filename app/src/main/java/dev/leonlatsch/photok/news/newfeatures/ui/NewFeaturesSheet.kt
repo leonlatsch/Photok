@@ -60,7 +60,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
@@ -78,6 +77,7 @@ import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
+import dev.leonlatsch.photok.ui.theme.Gradients
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 import dev.leonlatsch.photok.ui.uicomponents.ShimmerProBadge
 import kotlinx.coroutines.delay
@@ -149,8 +149,12 @@ fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Uni
         config ?: return@LaunchedEffect
 
         if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
-            delay(300.milliseconds)
-            visible = true
+
+            if (config.systemLastFeatureVersionCode != 0) {
+                delay(300.milliseconds)
+                visible = true
+            }
+
             config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
         }
     }
@@ -294,11 +298,7 @@ private fun HighlightCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(28.dp))
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(colors.primaryContainer, colors.tertiaryContainer),
-                )
-            )
+            .background(Gradients.marketing())
     ) {
         Icon(
             painter = painterResource(highlight.icon),

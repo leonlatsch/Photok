@@ -17,12 +17,14 @@
 package dev.leonlatsch.photok.encryption.domain.models
 
 /**
- * Represents the estimated strength of a password, ordered from weakest to strongest.
+ * Estimated strength of a password.
+ *
+ * @param score `0` (very weak) to `4` (very strong).
+ * @param crackTimeSeconds Estimated time in seconds an offline attack against a slow hash needs to guess the password.
  */
-enum class PasswordStrength {
-    VERY_WEAK,
-    WEAK,
-    MODERATE,
-    STRONG,
-    VERY_STRONG
-}
+data class PasswordStrength(
+    val score: Int,
+    val crackTimeSeconds: Double,
+    val warning: String?,
+    val suggestions: List<String>,
+)

@@ -16,21 +16,21 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 sealed interface UnlockUiEvent {
     data class PasswordChanged(val password: String) : UnlockUiEvent
     data object UnlockWithPassword : UnlockUiEvent
 
-    /** Needs the hosting [Fragment] to show the system biometric prompt. */
-    data class UnlockWithBiometric(val fragment: Fragment) : UnlockUiEvent
+    /** Needs the hosting [FragmentActivity] to show the system biometric prompt. */
+    data class UnlockWithBiometric(val activity: FragmentActivity) : UnlockUiEvent
     data object ForgotPassword : UnlockUiEvent
 }
 
 sealed interface UnlockNavigationEvent {
     data object Unlocked : UnlockNavigationEvent
+    data object ContinueOnboarding : UnlockNavigationEvent
     data object StartLegacyMigration : UnlockNavigationEvent
-    data object ShowRecoveryPhraseSetup : UnlockNavigationEvent
     data object ShowRecoveryPhraseRestore : UnlockNavigationEvent
     data object ShowError : UnlockNavigationEvent
 }

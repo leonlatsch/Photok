@@ -66,7 +66,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         }
 
         val unlockedCipher = unlockCipher(
-            fragment = request.fragment,
+            activity = request.activity,
             cipher = cipher,
             title = resources.getString(R.string.biometric_unlock_title),
             subtitle = resources.getString(R.string.biometric_unlock_subtitle),
@@ -93,7 +93,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         }
 
         val unlockedCipher = unlockCipher(
-            fragment = request.fragment,
+            activity = request.activity,
             cipher = cipher,
             title = resources.getString(R.string.biometric_unlock_setup_title),
             subtitle = resources.getString(R.string.biometric_unlock_setup_subtitle),

@@ -21,43 +21,104 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.ActivityMainBinding
+import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.gallery.ui.navigation.GetStartTab
+import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
 import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
+import dev.leonlatsch.photok.settings.domain.ScreenshotOverride
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
+import dev.leonlatsch.photok.ui.systembars.ProvideSystemBarsController
+import dev.leonlatsch.photok.ui.theme.AppTheme
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
  * The main Activity.
- * Holds all fragments and initializes toolbar, menu, etc.
+ * Hosts the Compose navigation.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val appNavViewModel: AppNavViewModel by viewModels()
 
     @Inject
-    override lateinit var config: Config
+    lateinit var config: Config
+
+    @Inject
+    lateinit var getStartTab: GetStartTab
+
+    @Inject
+    lateinit var screenshotOverride: ScreenshotOverride
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
 
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { appNavViewModel.startRoute.value == null }
+        }
         enableEdgeToEdge(
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
         )
 
         val hasSession = getBaseApplication()?.sessionRepository?.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })
+
+        launchLifecycleAwareJob {
+            combine(
+                config.valuesFlow.map { config.securityAllowScreenshots },
+                screenshotOverride.allowed,
+            ) { allowedInSettings, allowedByOverride ->
+                allowedInSettings || allowedByOverride || BuildConfig.DEBUG
+            }
+                .distinctUntilChanged()
+                .collect { allowScreenshots ->
+                    if (allowScreenshots) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
+        }
+
+        setContent {
+            AppTheme {
+                ProvideSystemBarsController(window) {
+                    CompositionLocalProvider(
+                        LocalConfig provides config,
+                        LocalEncryptedImageLoader provides encryptedImageLoader,
+                    ) {
+                        AppNavHost(
+                            startTab = getStartTab::invoke,
+                            viewModel = appNavViewModel,
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -82,5 +143,9 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         super.onConfigurationChanged(newConfig)
 
         onOrientationChanged(newConfig.orientation)
+    }
+
+    companion object {
+        private const val SPLASH_FADE_OUT_DURATION = 200L
     }
 }

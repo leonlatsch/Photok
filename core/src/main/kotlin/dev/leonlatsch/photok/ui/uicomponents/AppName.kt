@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,13 +32,14 @@ import dev.leonlatsch.photok.core.R
 @Composable
 fun AppName(
     fontSize: TextUnit = 38.sp,
+    color: Color = contentColorFor(MaterialTheme.colorScheme.background),
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = "Photok",
         fontFamily = FontFamily(Font(R.font.lobster_regular)),
         fontSize = fontSize,
-        color = contentColorFor(MaterialTheme.colorScheme.background),
+        color = color,
         modifier = modifier
     )
 }

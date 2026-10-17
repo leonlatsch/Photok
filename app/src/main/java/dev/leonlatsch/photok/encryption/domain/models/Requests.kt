@@ -16,7 +16,7 @@
 
 package dev.leonlatsch.photok.encryption.domain.models
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase as Phrase
 
@@ -27,7 +27,7 @@ sealed interface UnlockRequest {
         override val protectionType = VaultProtectionType.Password
     }
 
-    data class Biometric(val fragment: Fragment) : UnlockRequest {
+    data class Biometric(val activity: FragmentActivity) : UnlockRequest {
         override val protectionType = VaultProtectionType.Biometric
     }
 
@@ -45,7 +45,7 @@ sealed interface CreateRequest {
 
     data class Biometric(
         val session: VaultSession,
-        val fragment: Fragment,
+        val activity: FragmentActivity,
     ) : CreateRequest {
         override val protectionType = VaultProtectionType.Biometric
     }

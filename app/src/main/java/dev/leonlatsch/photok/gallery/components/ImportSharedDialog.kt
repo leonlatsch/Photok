@@ -17,9 +17,11 @@
 package dev.leonlatsch.photok.gallery.components
 
 import android.net.Uri
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -31,7 +33,6 @@ import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragmen
 import dev.leonlatsch.photok.gallery.ui.importing.SharedUrisStore
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.other.extensions.show
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -81,15 +82,15 @@ fun ImportSharedDialog() {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val handleUiEvent = viewModel::handleUiEvent
 
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
 
     ConfirmationDialog(
         show = uiState.sharedUris.isNotEmpty(),
         text = stringResource(R.string.import_sharted_question, uiState.sharedUris.size),
         onDismissRequest = { handleUiEvent(ImportSharedUiEvent.ClearSharedUris) },
         onConfirm = {
-            fragment ?: return@ConfirmationDialog
-            handleUiEvent(ImportSharedUiEvent.StartImportShared(fragment.childFragmentManager))
+            fragmentActivity ?: return@ConfirmationDialog
+            handleUiEvent(ImportSharedUiEvent.StartImportShared(fragmentActivity.supportFragmentManager))
         }
     )
 }

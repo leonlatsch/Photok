@@ -88,13 +88,6 @@
         <item name="android:textSize">40sp</item>
     </style>
 
-    <style name="AppNameTitleStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/lobster_regular</item>
-        <item name="android:text">@string/app_name</item>
-        <item name="android:textColor">@color/appTitleColor</item>
-        <item name="android:textSize">62sp</item>
-    </style>
-
     <!-- EDIT TEXT -->
     <style name="editTextStyle" parent="android:Widget.EditText">
         <item name="android:textFontWeight">400</item>
