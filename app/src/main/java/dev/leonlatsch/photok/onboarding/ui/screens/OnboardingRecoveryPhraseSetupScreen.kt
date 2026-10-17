@@ -227,10 +227,10 @@ private fun OnboardingRecoveryPhraseSetupContent(
                 .verticalScroll(rememberScrollState())
                 .padding(Dimens.spacingLarge)
         ) {
-            OnboardingPageTitle(text = stringResource(R.string.onboarding_recovery_phrase_title))
+            OnboardingPageTitle(text = stringResource(R.string.recovery_phrase_label))
 
             OnboardingPageSubtitle(
-                text = stringResource(R.string.onboarding_recovery_phrase_subtitle),
+                text = stringResource(R.string.recovery_phrase_description),
             )
 
             Spacer(Modifier.height(Dimens.spacingXSmall))

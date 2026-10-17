@@ -408,12 +408,10 @@
     <string name="onboarding_biometric_subtitle">Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings.</string>
     <string name="onboarding_biometric_enable">Enable biometric unlock</string>
     <string name="onboarding_not_now">Not now</string>
-    <string name="onboarding_recovery_phrase_title">Recovery phrase</string>
-    <string name="onboarding_recovery_phrase_subtitle">Keep these words off this phone. They unlock your vault if you forget your password.</string>
     <string name="onboarding_recovery_phrase_use_12_words">Use 12 words instead</string>
     <string name="onboarding_recovery_phrase_use_24_words">Use 24 words instead</string>
-    <string name="onboarding_add_photos_title">Import photos</string>
-    <string name="onboarding_add_photos_subtitle">Your photos are encrypted as soon as you import them. You can add more at any time.</string>
+    <string name="onboarding_add_photos_title">Secure your first photos</string>
+    <string name="onboarding_add_photos_subtitle">Everything you import is encrypted right away. Add more whenever you like.</string>
     <string name="onboarding_add_photos_import">Import photos</string>
     <string name="onboarding_done_title">You\'re all set</string>
     <string name="onboarding_done_subtitle">Your vault is sealed. Everything you add is encrypted right on this phone.</string>
