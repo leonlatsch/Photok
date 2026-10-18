@@ -20,6 +20,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.SystemBarStyle
@@ -83,6 +84,9 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge(
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
         )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         val hasSession = getBaseApplication()?.sessionRepository?.get() != null
         super.onCreate(savedInstanceState.takeIf { hasSession })

@@ -37,7 +37,7 @@ fun OnboardingNexButtonBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = Dimens.spacingLarge)
-                .padding(bottom = Dimens.spacingMedium)
+                .padding(bottom = Dimens.spacingSmall)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Text(
