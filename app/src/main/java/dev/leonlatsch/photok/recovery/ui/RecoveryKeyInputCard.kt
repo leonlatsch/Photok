@@ -339,13 +339,7 @@ private fun RecoveryKeyScannerFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label)) {
-            Icon(
-                painter = painterResource(R.drawable.ic_qr_code),
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-            )
-        }
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label))
 
         Box(
             contentAlignment = Alignment.Center,
@@ -380,13 +374,7 @@ private fun RecoveryKeyUnlockedFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_unlocked_label)) {
-            Icon(
-                painter = painterResource(R.drawable.ic_lock),
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-            )
-        }
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_unlocked_label))
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
