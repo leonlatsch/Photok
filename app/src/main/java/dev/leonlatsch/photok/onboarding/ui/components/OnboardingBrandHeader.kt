@@ -63,19 +63,6 @@ fun OnboardingBrandHeader(step: Int, modifier: Modifier = Modifier) {
         modifier = modifier
             .padding(horizontal = Dimens.spacingLarge, vertical = Dimens.spacingXLarge),
     ) {
-//        AppName(
-//            fontSize = 48.sp,
-//            color = LocalContentColor.current,
-//        )
-//        Text(
-//            text = "Setup",
-//            style = typography.labelLarge,
-//            fontWeight = FontWeight.SemiBold,
-//            fontStyle = FontStyle.Italic,
-//        )
-
-//        Spacer(Modifier.height(Dimens.spacingMedium))
-
         SegmentedProgress(step = step)
     }
 }

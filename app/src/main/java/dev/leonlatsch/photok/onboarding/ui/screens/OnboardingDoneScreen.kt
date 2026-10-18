@@ -79,14 +79,14 @@ import kotlin.math.sin
 import kotlin.time.Duration.Companion.milliseconds
 
 private val VAULT_PHOTOS = listOf(
-    R.drawable.onboarding_placeholder_photo_1,
-    R.drawable.onboarding_placeholder_photo_2,
-    R.drawable.onboarding_placeholder_photo_3,
-    R.drawable.onboarding_placeholder_photo_4,
-    R.drawable.onboarding_placeholder_photo_5,
-    R.drawable.onboarding_placeholder_photo_6,
-    R.drawable.onboarding_placeholder_photo_7,
-    R.drawable.onboarding_placeholder_photo_8,
+    R.drawable.onboarding_photo_1,
+    R.drawable.onboarding_photo_2,
+    R.drawable.onboarding_photo_3,
+    R.drawable.onboarding_photo_4,
+    R.drawable.onboarding_photo_5,
+    R.drawable.onboarding_photo_6,
+    R.drawable.onboarding_photo_7,
+    R.drawable.onboarding_photo_8,
 )
 private val VAULT_PHOTO_TILTS = listOf(-12f, 8f, -6f, 14f, -10f, 6f, -14f, 10f)
 private val VAULT_PHOTO_SIZE = 56.dp

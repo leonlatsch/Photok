@@ -175,14 +175,14 @@ fun OnboardingAddFirstPhotosContent(
             )
 
             val images = listOf(
-                R.drawable.onboarding_placeholder_photo_1,
-                R.drawable.onboarding_placeholder_photo_2,
-                R.drawable.onboarding_placeholder_photo_3,
-                R.drawable.onboarding_placeholder_photo_4,
-                R.drawable.onboarding_placeholder_photo_5,
-                R.drawable.onboarding_placeholder_photo_6,
-                R.drawable.onboarding_placeholder_photo_7,
-                R.drawable.onboarding_placeholder_photo_8,
+                R.drawable.onboarding_photo_1,
+                R.drawable.onboarding_photo_2,
+                R.drawable.onboarding_photo_3,
+                R.drawable.onboarding_photo_4,
+                R.drawable.onboarding_photo_5,
+                R.drawable.onboarding_photo_6,
+                R.drawable.onboarding_photo_7,
+                R.drawable.onboarding_photo_8,
             )
 
             EncryptingPhotoGrid(images)

@@ -163,22 +163,22 @@ private val MOSAIC_HEIGHT = 290.dp
 private val MOSAIC_TILE_SHAPE = RoundedCornerShape(20.dp)
 
 private val MOSAIC_PHOTOS = listOf(
-    R.drawable.onboarding_placeholder_photo_1,
-    R.drawable.onboarding_placeholder_photo_2,
-    R.drawable.onboarding_placeholder_photo_3,
-    R.drawable.onboarding_placeholder_photo_4,
-    R.drawable.onboarding_placeholder_photo_5,
-    R.drawable.onboarding_placeholder_photo_6,
-    R.drawable.onboarding_placeholder_photo_7,
-    R.drawable.onboarding_placeholder_photo_8,
-    R.drawable.onboarding_placeholder_photo_9,
-    R.drawable.onboarding_placeholder_photo_10,
-    R.drawable.onboarding_placeholder_photo_11,
-    R.drawable.onboarding_placeholder_photo_12,
-    R.drawable.onboarding_placeholder_photo_13,
-    R.drawable.onboarding_placeholder_photo_14,
-    R.drawable.onboarding_placeholder_photo_15,
-    R.drawable.onboarding_placeholder_photo_16,
+    R.drawable.onboarding_photo_1,
+    R.drawable.onboarding_photo_2,
+    R.drawable.onboarding_photo_3,
+    R.drawable.onboarding_photo_4,
+    R.drawable.onboarding_photo_5,
+    R.drawable.onboarding_photo_6,
+    R.drawable.onboarding_photo_7,
+    R.drawable.onboarding_photo_8,
+    R.drawable.onboarding_photo_9,
+    R.drawable.onboarding_photo_10,
+    R.drawable.onboarding_photo_11,
+    R.drawable.onboarding_photo_12,
+    R.drawable.onboarding_photo_13,
+    R.drawable.onboarding_photo_14,
+    R.drawable.onboarding_photo_15,
+    R.drawable.onboarding_photo_16,
 )
 
 private class MosaicTileState(
