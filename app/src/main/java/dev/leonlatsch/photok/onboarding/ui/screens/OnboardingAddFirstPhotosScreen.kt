@@ -51,6 +51,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -118,6 +119,8 @@ fun OnboardingAddFirstPhotosContent(
         ).show(activity.supportFragmentManager)
     }
 
+    var importDone by rememberSaveable { mutableStateOf(false) }
+
 
     DisposableEffect(activity, lifecycleOwner) {
         val fragmentManager = activity?.supportFragmentManager
@@ -125,8 +128,10 @@ fun OnboardingAddFirstPhotosContent(
             ImportBottomSheetDialogFragment.REQUEST_KEY_IMPORT_FINISHED,
             lifecycleOwner,
         ) { _, _ ->
+            importDone = true
+
             scope.launch {
-                delay(300.milliseconds)
+                delay(400.milliseconds)
                 navigator.navigate(nextRoute())
             }
         }
@@ -146,12 +151,16 @@ fun OnboardingAddFirstPhotosContent(
                 TextButton(
                     onClick = {
                         navigator.navigate(nextRoute())
-                    }
+                    },
+                    enabled = !importDone,
                 ) {
                     Text(stringResource(R.string.onboarding_not_now))
                 }
 
-                OnboardingNexButtonBar(text = stringResource(R.string.onboarding_add_photos_import)) {
+                OnboardingNexButtonBar(
+                    text = stringResource(R.string.onboarding_add_photos_import),
+                    enabled = !importDone,
+                ) {
                     onImportClicked()
                     pickFilesLauncher.launchAndIgnoreTimer(
                         input = PhotoType.entries.map { it.mimeType }.toTypedArray(),

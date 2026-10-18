@@ -19,6 +19,11 @@ package dev.leonlatsch.photok.onboarding.ui.screens
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -41,9 +46,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -62,6 +71,7 @@ import dev.leonlatsch.photok.onboarding.ui.components.OnboardingPageTitle
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -111,7 +121,8 @@ private fun OnboardingBiometricUnlockContent(
                 TextButton(
                     onClick = {
                         navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
-                    }
+                    },
+                    enabled = !enabled,
                 ) {
                     Text(stringResource(R.string.onboarding_not_now))
                 }
@@ -156,16 +167,35 @@ private fun BiometricGlyph(
     done: Boolean,
     onClick: () -> Unit,
 ) {
+    var clicked by remember { mutableStateOf(false) }
+    val pulse = remember { Animatable(1f) }
+
+    LaunchedEffect(done) {
+        if (done) {
+            pulse.animateTo(1f)
+            return@LaunchedEffect
+        }
+        while (!clicked) {
+            delay(2500.milliseconds)
+            pulse.animateTo(1.05f, tween(durationMillis = 280, easing = FastOutSlowInEasing))
+            pulse.animateTo(1f, spring(dampingRatio = 0.3f, stiffness = Spring.StiffnessLow))
+        }
+    }
+
     Surface(
         shape = CircleShape,
         color = colorScheme.primary,
         contentColor = colorScheme.onPrimary,
         modifier = Modifier
+            .graphicsLayer {
+                scaleX = pulse.value
+                scaleY = pulse.value
+            }
             .clip(CircleShape)
-            .clickable(
-                enabled = !done,
-                onClick = onClick,
-            )
+            .clickable(enabled = !done) {
+                clicked = true
+                onClick()
+            }
     ) {
         AnimatedContent(
             targetState = done,
