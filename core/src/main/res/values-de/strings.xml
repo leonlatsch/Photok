@@ -47,6 +47,27 @@
     <string name="setup_enter_password">Passwort eingeben</string>
     <string name="setup_confirm_password">Passwort bestätigen</string>
     <string name="setup_password_match_warning">\u26A0 Die Passwörter stimmen nicht überein</string>
+    <string name="setup_password_strength_very_weak">Sehr schwach</string>
+    <string name="setup_password_strength_weak">Schwach</string>
+    <string name="setup_password_strength_moderate">Mittel</string>
+    <string name="setup_password_strength_strong">Stark</string>
+    <string name="setup_password_strength_very_strong">Sehr stark</string>
+    <string name="setup_password_strength_crack_time">Geknackt in %1$s</string>
+    <string name="setup_password_strength_crack_time_universe">Länger, als es das Universum gibt</string>
+    <string name="setup_password_crack_time_info_title">Wie wird die Zeit zum Knacken berechnet?</string>
+    <string name="setup_password_crack_time_info_patterns_title">Musteranalyse</string>
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn sucht nach häufigen Passwörtern, Wörtern, Namen und Mustern und zählt die nötigen Versuche.</string>
+    <string name="setup_password_crack_time_info_attack_title">Absichtlich langsam</string>
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 macht jeden Versuch langsam. Wir gehen von einer High-End-Grafikkarte mit etwa %1$s Versuchen pro Sekunde aus. Viele Karten sind schneller.</string>
+    <string name="setup_password_crack_time_info_details_title">Technische Details</string>
+    <string name="setup_password_crack_time_info_kdf">Schlüsselableitung</string>
+    <string name="setup_password_crack_time_info_iterations">Iterationen</string>
+    <string name="setup_password_crack_time_info_attack_speed">Angriffsgeschwindigkeit</string>
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s Versuche/s</string>
+    <string name="setup_password_crack_time_info_learn_more">Mehr erfahren</string>
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j auf GitHub</string>
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn von Dropbox</string>
+    <string name="setup_password_crack_time_info_link_encryption">Wie Photok deine Dateien verschlüsselt</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Entsperre deinen Safe</string>
@@ -391,6 +412,28 @@
     <string name="telemetry_choice_yes">Anonyme Nutzungsdaten teilen</string>
     <string name="telemetry_toggle">Teilen von Nutzungsdaten erlauben</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Los geht\'s</string>
+    <string name="onboarding_welcome_tagline">Ein sicherer Ort für deine Fotos</string>
+    <string name="onboarding_welcome_feature_encrypted">Auf deinem Handy mit deinem Passwort verschlüsselt</string>
+    <string name="onboarding_welcome_feature_hidden">Versteckt vor deiner Galerie und anderen Apps</string>
+    <string name="onboarding_welcome_feature_offline">Kein Konto, keine Cloud. Deine Daten verlassen nie dieses Handy</string>
+    <string name="onboarding_password_title">Dein Passwort</string>
+    <string name="onboarding_password_subtitle">Merk dir dein Passwort und bewahre es sicher auf. Es kann nicht zurückgesetzt werden.</string>
+    <string name="onboarding_password_confirm_label">Passwort bestätigen</string>
+    <string name="onboarding_biometric_title">Mit einer Berührung entsperren</string>
+    <string name="onboarding_biometric_subtitle">Entsperre Photok mit deinem Fingerabdruck oder Gesicht, statt dein Passwort einzugeben. Du kannst das später in den Einstellungen ändern.</string>
+    <string name="onboarding_biometric_enable">Biometrisches Entsperren aktivieren</string>
+    <string name="onboarding_not_now">Nicht jetzt</string>
+    <string name="onboarding_recovery_phrase_use_12_words">Stattdessen 12 Wörter verwenden</string>
+    <string name="onboarding_recovery_phrase_use_24_words">Stattdessen 24 Wörter verwenden</string>
+    <string name="onboarding_add_photos_title">Sichere deine ersten Fotos</string>
+    <string name="onboarding_add_photos_subtitle">Alles, was du importierst, wird sofort verschlüsselt. Füge jederzeit mehr hinzu.</string>
+    <string name="onboarding_add_photos_import">Fotos importieren</string>
+    <string name="onboarding_done_title">Alles bereit</string>
+    <string name="onboarding_done_subtitle">Dein Safe ist versiegelt. Alles, was du hinzufügst, wird direkt auf diesem Handy verschlüsselt.</string>
+    <string name="onboarding_done_open_vault">Meinen Safe öffnen</string>
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Wiederherstellungswörter</string>
     <string name="recovery_phrase_title">Deine Wiederherstellungswörter</string>
@@ -411,4 +454,38 @@
     <string name="recovery_phrase_restore_source_qr">Vom QR-Code gescannt</string>
     <string name="recovery_phrase_restore_source_file">Geladen von %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Aus Zwischenablage eingefügt</string>
+    <string name="recovery_phrase_restore_subtitle">Gib deine Wiederherstellungswörter ein, um deinen Safe zu entsperren.</string>
+    <string name="recovery_phrase_restore_option_type">Wörter eingeben</string>
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">WÖRTER</string>
+    <string name="recovery_key_card_scan_label">QR-CODE</string>
+    <string name="recovery_key_card_unlocked_label">SAFE ENTSPERRT</string>
+    <string name="recovery_key_card_word_count">%1$d Wörter</string>
+    <string name="recovery_key_card_hint_show_words">Tippe auf die Karte, um die Wörter anzuzeigen</string>
+    <string name="recovery_key_card_hint_show_qr">Tippe auf die Karte, um den QR-Code anzuzeigen</string>
+    <string name="recovery_key_card_screenshot_hint">Du kannst auch einen Screenshot vom QR-Code machen</string>
+    <string name="recovery_key_card_opening_vault">Dein Safe wird geöffnet</string>
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">In Fotos speichern</string>
+    <string name="recovery_phrase_qr_save_as_image">Als Bild speichern</string>
+    <string name="recovery_phrase_more_options">Weitere Optionen</string>
+    <string name="recovery_phrase_share_as_image">Als Bild teilen</string>
+    <string name="recovery_phrase_save_as_text_file">Als Textdatei speichern</string>
+    <string name="recovery_phrase_copy_to_clipboard">In Zwischenablage kopieren</string>
+    <string name="recovery_phrase_new_12_words">12 neue Wiederherstellungswörter</string>
+    <string name="recovery_phrase_new_24_words">24 neue Wiederherstellungswörter</string>
+    <string name="recovery_phrase_saved_photos_title">In Fotos gespeichert</string>
+    <string name="recovery_phrase_saved_photos_description">Du findest es unter Bilder/Photok. Wenn deine Galerie in die Cloud sichert, wird das Bild auch hochgeladen</string>
+    <string name="recovery_phrase_saved_to_file">In %1$s gespeichert</string>
+    <string name="recovery_phrase_saved_as_file">Als Datei gespeichert</string>
+    <string name="recovery_phrase_saved_file_description">Du findest sie im ausgewählten Ordner</string>
+    <string name="recovery_phrase_shared_with">Mit %1$s geteilt</string>
+    <string name="recovery_phrase_shared">Geteilt</string>
+    <string name="recovery_phrase_shared_description">Prüfe, ob alles dort angekommen ist, wohin du es geschickt hast</string>
+    <string name="recovery_phrase_copied_title">In Zwischenablage kopiert</string>
+    <string name="recovery_phrase_copied_description">Füge sie an einem sicheren Ort außerhalb dieses Handys ein</string>
+    <string name="recovery_phrase_screenshot_title">Screenshot erstellt</string>
+    <string name="recovery_phrase_screenshot_description">Du findest ihn in deinem Screenshots-Album</string>
 </resources>

@@ -47,6 +47,27 @@
     <string name="setup_enter_password">Şifrenizi girin</string>
     <string name="setup_confirm_password">Şifrenizi onaylayın</string>
     <string name="setup_password_match_warning">\u26A0 Şifreler eşleşmiyor</string>
+    <string name="setup_password_strength_very_weak">Çok zayıf</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Zayıf</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Orta</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Güçlü</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Çok güçlü</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Kırılma süresi: %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Evrenin yaşından daha uzun</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Kırılma süresi nasıl hesaplanır?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Örüntü analizi</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn yaygın şifreleri, kelimeleri, isimleri ve örüntüleri kontrol eder ve gereken tahmin sayısını hesaplar.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Bilerek yavaş</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 her tahmini yavaşlatır. Saniyede yaklaşık %1$s tahmin yapan tek bir üst düzey ekran kartı varsayıyoruz. Birden fazla kart daha hızlıdır.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Teknik ayrıntılar</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Anahtar türetme</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Yineleme</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Saldırı hızı</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s tahmin/sn</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">Daha fazla bilgi</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">GitHub\'da zxcvbn4j</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">Dropbox\'tan zxcvbn</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Photok dosyalarını nasıl şifreler</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Kasayı Aç</string>
@@ -388,6 +409,28 @@
     <string name="telemetry_choice_yes">Anonim kullanım verilerini paylaş</string>
     <string name="telemetry_toggle">Kullanım verilerinin toplanmasına izin ver</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Başla</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Fotoğrafların için güvenli bir yer</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Telefonunda şifrenle şifrelenir</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Galerinden ve diğer uygulamalardan gizlenir</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Hesap yok, bulut yok. Verilerin bu telefondan asla çıkmaz</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Şifren</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Şifreni unutma ve güvenli bir yerde sakla. Sıfırlanamaz.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Şifreyi onayla</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Tek dokunuşla kilidi aç</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Şifreni yazmak yerine parmak izin veya yüzünle Photok\'un kilidini aç. Bunu daha sonra ayarlardan değiştirebilirsin.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_enable">Biyometrik kilit açmayı etkinleştir</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Şimdi değil</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Bunun yerine 12 kelime kullan</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Bunun yerine 24 kelime kullan</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">İlk fotoğraflarını koru</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">İçe aktardığın her şey hemen şifrelenir. İstediğin zaman daha fazlasını ekle.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Fotoğrafları içe aktar</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Her şey hazır</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Kasan mühürlendi. Eklediğin her şey doğrudan bu telefonda şifrelenir.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Kasamı aç</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Kurtarma Kelimeleri</string>
     <string name="recovery_phrase_title">Kurtarma Kelimeleri</string>
@@ -408,4 +451,38 @@
     <string name="recovery_phrase_restore_source_qr">QR Kodundan Taratıldı</string>
     <string name="recovery_phrase_restore_source_file">%1$s Adlı Dosyadan Yüklendi</string>
     <string name="recovery_phrase_restore_source_clipboard">Panodan Yapıştırıldı</string>
+    <string name="recovery_phrase_restore_subtitle">Kasanın kilidini açmak için kurtarma kelimelerini gir.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Kelimeleri yaz</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">KELİMELER</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">QR KOD</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">KASA AÇILDI</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d kelime</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Kelimeleri göstermek için karta dokun</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">QR kodu göstermek için karta dokun</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">QR kodun ekran görüntüsünü de alabilirsin</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Kasan açılıyor</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Fotoğraflar\'a kaydet</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_qr_save_as_image">Görsel olarak kaydet</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Diğer seçenekler</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Görsel olarak paylaş</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Metin dosyası olarak kaydet</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Panoya kopyala</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">12 kelimelik yeni kurtarma kelimeleri</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">24 kelimelik yeni kurtarma kelimeleri</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Fotoğraflar\'a kaydedildi</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_description">Pictures/Photok klasörüne bak. Galerin buluta yedekleniyorsa görsel de yüklenir</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">%1$s konumuna kaydedildi</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Dosya olarak kaydedildi</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Seçtiğin klasörde bulabilirsin</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">%1$s ile paylaşıldı</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Paylaşıldı</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Gönderdiğin yere ulaştığından emin ol</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Panoya kopyalandı</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Bu telefonun dışında güvenli bir yere yapıştır</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Ekran görüntüsü alındı</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Ekran görüntüleri albümünde bulabilirsin</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

@@ -416,7 +416,7 @@
     <string name="onboarding_welcome_feature_hidden">Hidden from your gallery and other apps</string>
     <string name="onboarding_welcome_feature_offline">No account, no cloud. Your data never leaves this phone</string>
     <string name="onboarding_password_title">Your password</string>
-    <string name="onboarding_password_subtitle">Remember your password and keep it safe. For your security, we don’t store it, so it cannot be reset.</string>
+    <string name="onboarding_password_subtitle">Remember your password and keep it safe. It cannot be reset.</string>
     <string name="onboarding_password_confirm_label">Confirm password</string>
     <string name="onboarding_biometric_title">Unlock with a touch</string>
     <string name="onboarding_biometric_subtitle">Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings.</string>

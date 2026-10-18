@@ -47,6 +47,27 @@
     <string name="setup_enter_password">پاس ورڈ لکھیں</string>
     <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
     <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
+    <string name="setup_password_strength_very_weak">بہت کمزور</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">کمزور</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">درمیانہ</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">مضبوط</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">بہت مضبوط</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">%1$s میں توڑا جا سکتا ہے</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">کائنات کی عمر سے بھی زیادہ وقت</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">توڑنے کا وقت کیسے نکالا جاتا ہے؟</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">پیٹرن کی جانچ</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn عام پاس ورڈ، الفاظ، نام اور پیٹرن تلاش کرتا ہے اور گنتا ہے کہ کتنے اندازے لگانے پڑیں گے۔</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">جان بوجھ کر سست</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 ہر اندازے کو سست بنا دیتا ہے۔ ہم ایک طاقتور گرافکس کارڈ مانتے ہیں جو ہر سیکنڈ میں تقریباً %1$s اندازے لگاتا ہے۔ کئی کارڈ مل کر اس سے تیز ہوتے ہیں۔</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">تکنیکی تفصیلات</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">کی ڈیریویشن</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">دہرائی کی تعداد</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">حملے کی رفتار</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s اندازے/سیکنڈ</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">مزید جانیں</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">GitHub پر zxcvbn4j</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">Dropbox کا zxcvbn</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Photok آپ کی فائلوں کو کیسے خفیہ کرتا ہے</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">اپنا سیف کھولیں</string>
@@ -387,6 +408,28 @@
     <string name="telemetry_choice_yes">گمنام استعمال کا ڈیٹا شیئر کریں</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
     <string name="telemetry_toggle">استعمال کے ڈیٹا کے اکٹھا ہونے کی اجازت دیں</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">شروع کریں</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">آپ کی تصاویر کے لیے ایک محفوظ جگہ</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">آپ کے فون پر آپ کے پاس ورڈ سے خفیہ</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">آپ کی گیلری اور دوسری ایپس سے چھپی ہوئی</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">نہ کوئی اکاؤنٹ، نہ کلاؤڈ۔ آپ کا ڈیٹا کبھی اس فون سے باہر نہیں جاتا</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">آپ کا پاس ورڈ</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">اپنا پاس ورڈ یاد رکھیں اور محفوظ رکھیں۔ اسے ری سیٹ نہیں کیا جا سکتا۔</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">پاس ورڈ کی تصدیق کریں</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">ایک چھونے سے کھولیں</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">پاس ورڈ لکھنے کے بجائے Photok کو اپنے فنگر پرنٹ یا چہرے سے کھولیں۔ آپ اسے بعد میں سیٹنگز میں بدل سکتے ہیں۔</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_enable">فنگر پرنٹ یا چہرے سے کھولنا آن کریں</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">ابھی نہیں</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">اس کے بجائے 12 الفاظ استعمال کریں</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">اس کے بجائے 24 الفاظ استعمال کریں</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">اپنی پہلی تصاویر محفوظ کریں</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">جو کچھ بھی آپ یہاں لاتے ہیں وہ فوراً خفیہ ہو جاتا ہے۔ جب چاہیں مزید شامل کریں۔</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">تصاویر لائیں</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">سب تیار ہے</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">آپ کا سیف بند ہو گیا ہے۔ آپ جو کچھ شامل کریں گے وہ اسی فون پر خفیہ ہو جائے گا۔</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">میرا سیف کھولیں</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="recovery_phrase_title">آپ کی ریکوری فریز</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
@@ -407,4 +450,38 @@
     <string name="recovery_phrase_restore_source_qr">QR کوڈ سے اسکین کی گئی</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
     <string name="recovery_phrase_restore_source_file">%1$s سے لائی گئی</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
     <string name="recovery_phrase_restore_source_clipboard">کلپ بورڈ سے پیسٹ کی گئی</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_subtitle">اپنا سیف کھولنے کے لیے اپنی ریکوری فریز کے الفاظ لکھیں۔</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">الفاظ لکھیں</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">فریز</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">QR کوڈ</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">سیف کھل گیا</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d الفاظ</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">الفاظ دیکھنے کے لیے کارڈ پر ٹیپ کریں</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">QR کوڈ دیکھنے کے لیے کارڈ پر ٹیپ کریں</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">آپ QR کوڈ کا اسکرین شاٹ بھی لے سکتے ہیں</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">آپ کا سیف کھل رہا ہے</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">گیلری میں محفوظ کریں</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">مزید آپشنز</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">تصویر کے طور پر شیئر کریں</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">ٹیکسٹ فائل کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">کلپ بورڈ پر کاپی کریں</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">12 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">24 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">گیلری میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_description">اسے Pictures/Photok میں دیکھیں۔ اگر آپ کی گیلری کا بیک اپ کلاؤڈ پر جاتا ہے تو یہ تصویر بھی اپ لوڈ ہو جائے گی</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">فائل کے طور پر محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">اسے اپنے چنے ہوئے فولڈر میں دیکھیں</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">%1$s کے ساتھ شیئر ہو گئی</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">شیئر ہو گئی</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">یقینی بنائیں کہ یہ وہاں پہنچ گئی جہاں آپ نے بھیجی تھی</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">کلپ بورڈ پر کاپی ہو گئی</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">اسے اس فون کے باہر کسی محفوظ جگہ پیسٹ کریں</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">اسکرین شاٹ لے لیا گیا</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">اسے اپنے اسکرین شاٹس البم میں دیکھیں</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

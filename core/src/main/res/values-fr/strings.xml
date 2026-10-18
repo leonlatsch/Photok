@@ -47,6 +47,27 @@
     <string name="setup_enter_password">Entrez votre mot de passe</string>
     <string name="setup_confirm_password">Confirmer votre mot de passe</string>
     <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
+    <string name="setup_password_strength_very_weak">Très faible</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Faible</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Moyen</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Fort</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Très fort</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Craqué en %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Plus longtemps que l\'âge de l\'univers</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Comment le temps de craquage est-il calculé ?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Analyse des motifs</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn recherche les mots de passe courants, les mots, les noms et les motifs, puis compte le nombre de tentatives nécessaires.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Lent par conception</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 ralentit chaque tentative. Nous supposons une carte graphique haut de gamme avec environ %1$s tentatives par seconde. Plusieurs cartes sont plus rapides.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Détails techniques</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Dérivation de clé</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Itérations</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Vitesse d\'attaque</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s tentatives/s</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">En savoir plus</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j sur GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn par Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Comment Photok chiffre vos fichiers</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Déverrouillez votre coffre-fort</string>
@@ -388,6 +409,28 @@
     <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
     <string name="telemetry_toggle">Autoriser la collecte des données d\'utilisation</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Commencer</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Un lieu sûr pour vos photos</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Chiffrées sur votre téléphone avec votre mot de passe</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Cachées de votre galerie et des autres applis</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Pas de compte, pas de cloud. Vos données ne quittent jamais ce téléphone</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Votre mot de passe</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Retenez votre mot de passe et gardez-le en sécurité. Il ne peut pas être réinitialisé.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Confirmer le mot de passe</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Déverrouillez d\'un geste</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Déverrouillez Photok avec votre empreinte ou votre visage au lieu de saisir votre mot de passe. Vous pourrez modifier cela plus tard dans les paramètres.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_enable">Activer le déverrouillage biométrique</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Pas maintenant</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Utiliser 12 mots à la place</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Utiliser 24 mots à la place</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">Protégez vos premières photos</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">Tout ce que vous importez est chiffré immédiatement. Ajoutez-en d\'autres quand vous voulez.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Importer des photos</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Tout est prêt</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Votre coffre-fort est scellé. Tout ce que vous ajoutez est chiffré directement sur ce téléphone.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Ouvrir mon coffre-fort</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Phrase de récupération</string>
     <string name="recovery_phrase_title">Votre phrase de récupération</string>
@@ -408,4 +451,38 @@
     <string name="recovery_phrase_restore_source_qr">Scanné depuis un code QR</string>
     <string name="recovery_phrase_restore_source_file">Chargé depuis %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Collé depuis le presse-papiers</string>
+    <string name="recovery_phrase_restore_subtitle">Saisissez les mots de votre phrase de récupération pour déverrouiller votre coffre-fort.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Saisir les mots</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">PHRASE</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">CODE QR</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">COFFRE DÉVERROUILLÉ</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d mots</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Touchez la carte pour afficher les mots</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">Touchez la carte pour afficher le code QR</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">Vous pouvez aussi faire une capture d\'écran du code QR</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Ouverture de votre coffre-fort</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Enregistrer dans Photos</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_qr_save_as_image">Enregistrer en image</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Plus d\'options</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Partager en image</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Enregistrer en fichier texte</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Copier dans le presse-papiers</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">Nouvelle phrase de 12 mots</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">Nouvelle phrase de 24 mots</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Enregistrée dans Photos</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_description">Elle se trouve dans Pictures/Photok. Si votre galerie est sauvegardée dans le cloud, l\'image y est aussi envoyée</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">Enregistrée dans %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Enregistrée en fichier</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Elle se trouve dans le dossier choisi</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">Partagée avec %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Partagée</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Vérifiez qu\'elle est bien arrivée à destination</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Copiée dans le presse-papiers</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Collez-la en lieu sûr, hors de ce téléphone</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Capture d\'écran effectuée</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Elle se trouve dans votre album Captures d\'écran</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

@@ -47,6 +47,27 @@
     <string name="setup_enter_password">Ange ditt lösenord</string>
     <string name="setup_confirm_password">Bekräfta ditt lösenord</string>
     <string name="setup_password_match_warning">\u26A0 Lösenorden matchar inte</string>
+    <string name="setup_password_strength_very_weak">Mycket svagt</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Svagt</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Medel</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Starkt</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Mycket starkt</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Knäcks på %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Längre än universum har funnits</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Hur beräknas tiden att knäcka?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Mönsteranalys</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn letar efter vanliga lösenord, ord, namn och mönster och räknar hur många gissningar som behövs.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Långsamt med avsikt</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 gör varje gissning långsam. Vi utgår från ett avancerat grafikkort med cirka %1$s gissningar per sekund. Flera kort är snabbare.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Tekniska detaljer</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Nyckelhärledning</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Iterationer</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Attackhastighet</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s gissningar/s</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">Läs mer</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j på GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn av Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Så krypterar Photok dina filer</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Lås upp ditt valv</string>
@@ -388,6 +409,28 @@
     <string name="telemetry_choice_yes">Dela anonym användningsdata</string>
     <string name="telemetry_toggle">Tillåt insamling av användningsdata</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Kom igång</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">En säker plats för dina foton</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Krypterat på din telefon med ditt lösenord</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Dolt för ditt galleri och andra appar</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Inget konto, inget moln. Dina data lämnar aldrig den här telefonen</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Ditt lösenord</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Kom ihåg ditt lösenord och förvara det säkert. Det kan inte återställas.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Bekräfta lösenord</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Lås upp med en beröring</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Lås upp Photok med fingeravtryck eller ansikte i stället för att skriva ditt lösenord. Du kan ändra detta senare i inställningarna.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_enable">Aktivera biometrisk upplåsning</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Inte nu</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Använd 12 ord i stället</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Använd 24 ord i stället</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">Skydda dina första foton</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">Allt du importerar krypteras direkt. Lägg till fler när du vill.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Importera foton</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Allt är klart</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Ditt valv är förseglat. Allt du lägger till krypteras direkt på den här telefonen.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Öppna mitt valv</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Återställningsfras</string>
     <string name="recovery_phrase_title">Din återställningsfras</string>
@@ -408,4 +451,38 @@
     <string name="recovery_phrase_restore_source_qr">Inskannad från QR-kod</string>
     <string name="recovery_phrase_restore_source_file">Laddad från %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Inklistrad från urklipp</string>
+    <string name="recovery_phrase_restore_subtitle">Ange orden i din återställningsfras för att låsa upp ditt valv.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Skriv in ord</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">FRAS</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">QR-KOD</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">VALV UPPLÅST</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d ord</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Tryck på kortet för att visa som ord</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">Tryck på kortet för att visa som QR-kod</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">Du kan också ta en skärmdump av QR-koden</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Öppnar ditt valv</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Spara i Foton</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_qr_save_as_image">Spara som bild</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Fler alternativ</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Dela som bild</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Spara som textfil</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Kopiera till urklipp</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">Ny fras med 12 ord</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">Ny fras med 24 ord</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Sparad i Foton</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_description">Leta efter den i Pictures/Photok. Om ditt galleri säkerhetskopieras till molnet laddas bilden också upp</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">Sparad i %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Sparad som fil</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Du hittar den i mappen du valde</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">Delad med %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Delad</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Kontrollera att den kom fram dit du skickade den</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Kopierad till urklipp</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Klistra in den på ett säkert ställe utanför den här telefonen</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Skärmdump tagen</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Leta efter den i albumet Skärmdumpar</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

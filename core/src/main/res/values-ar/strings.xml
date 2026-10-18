@@ -47,6 +47,27 @@
     <string name="setup_enter_password">ادخل رقمك السري </string>
     <string name="setup_confirm_password">أكد رقمك السري </string>
     <string name="setup_password_match_warning">\u26A0 كلمة المرور غير مطابقة </string>
+    <string name="setup_password_strength_very_weak">ضعيفة جدًا</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">ضعيفة</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">متوسطة</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">قوية</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">قوية جدًا</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">تُكسر خلال %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">أطول من عمر الكون</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">كيف يُحسب وقت الكسر؟</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">تحليل الأنماط</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">يبحث zxcvbn عن كلمات المرور الشائعة والكلمات والأسماء والأنماط ويحسب عدد التخمينات اللازمة.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">بطيء عن قصد</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">تجعل PBKDF2 كل تخمين بطيئًا. نفترض بطاقة رسومات واحدة عالية الأداء بنحو %1$s تخمين في الثانية. عدة بطاقات أسرع.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">تفاصيل تقنية</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">اشتقاق المفتاح</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">التكرارات</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">سرعة الهجوم</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s تخمين/ث</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">اعرف المزيد</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j على GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn من Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">كيف يشفّر Photok ملفاتك</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">افتح خزنتك </string>
@@ -387,6 +408,28 @@
     <string name="telemetry_choice_yes">مشاركة بيانات الاستخدام المجهولة</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
     <string name="telemetry_toggle">السماح بجمع بيانات الاستخدام</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">ابدأ</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">مكان آمن لصورك</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">مشفّرة على هاتفك بكلمة المرور الخاصة بك</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">مخفية عن معرض الصور والتطبيقات الأخرى</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">بلا حساب وبلا سحابة. بياناتك لا تغادر هذا الهاتف أبدًا</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">كلمة المرور الخاصة بك</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">تذكّر كلمة المرور واحفظها في مكان آمن. لا يمكن إعادة تعيينها.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">أكّد كلمة المرور</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">افتح بلمسة</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">افتح Photok ببصمة إصبعك أو وجهك بدلًا من كتابة كلمة المرور. يمكنك تغيير ذلك لاحقًا في الإعدادات.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_enable">فعّل الفتح البيومتري</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">ليس الآن</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">استخدم 12 كلمة بدلًا من ذلك</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">استخدم 24 كلمة بدلًا من ذلك</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">أمّن صورك الأولى</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">كل ما تستورده يُشفَّر فورًا. أضف المزيد متى شئت.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">استورد الصور</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">كل شيء جاهز</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">خزنتك مغلقة بإحكام. كل ما تضيفه يُشفَّر مباشرة على هذا الهاتف.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">افتح خزنتي</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">عبارة الاسترداد</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="recovery_phrase_title">عبارة الاسترداد الخاصة بك</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
@@ -407,4 +450,38 @@
     <string name="recovery_phrase_restore_source_qr">تم المسح من رمز QR</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
     <string name="recovery_phrase_restore_source_file">تم التحميل من %1$s</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
     <string name="recovery_phrase_restore_source_clipboard">تم اللصق من الحافظة</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
+    <string name="recovery_phrase_restore_subtitle">أدخل كلمات عبارة الاسترداد لفتح خزنتك.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">اكتب الكلمات</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">العبارة</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">رمز QR</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">الخزنة مفتوحة</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d كلمة</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">اضغط على البطاقة لعرضها ككلمات</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">اضغط على البطاقة لعرضها كرمز QR</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">يمكنك أيضًا التقاط لقطة شاشة لرمز QR</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">جارٍ فتح خزنتك</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">احفظ في الصور</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_qr_save_as_image">احفظ كصورة</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">خيارات أخرى</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">شارك كصورة</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">احفظ كملف نصي</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">انسخ إلى الحافظة</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">عبارة جديدة من 12 كلمة</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">عبارة جديدة من 24 كلمة</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">حُفظت في الصور</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_description">ابحث عنها في Pictures/Photok. إذا كان معرض الصور ينسخ احتياطيًا إلى السحابة، فسيتم رفع الصورة أيضًا</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">حُفظت في %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">حُفظت كملف</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">ستجدها في المجلد الذي اخترته</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">تمت المشاركة مع %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">تمت المشاركة</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">تأكّد من وصولها إلى حيث أرسلتها</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">نُسخت إلى الحافظة</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">الصقها في مكان آمن خارج هذا الهاتف</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">تم التقاط لقطة الشاشة</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">ابحث عنها في ألبوم لقطات الشاشة</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>
