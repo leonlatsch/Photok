@@ -16,34 +16,19 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.content.res.Configuration
 import android.view.Window
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 @Composable
-fun ImageViewerSystemBarsController(
-    visible: Boolean
-) {
-    val activity = LocalActivity.current ?: return
-    val window = activity.window
-    val isNightMode = LocalConfiguration.current.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+fun ImageViewerSystemBarsVisibility(visible: Boolean) {
+    val window = LocalActivity.current?.window ?: return
 
-    DisposableEffect(visible, isNightMode) {
-        val previousStatusColor = window.statusBarColor
-        val previousNavColor = window.navigationBarColor
-
-        window.forceLightSystemBarIcons()
-
-        // OEM / edge-to-edge safety net
-        window.statusBarColor = android.graphics.Color.TRANSPARENT
-        window.navigationBarColor = android.graphics.Color.TRANSPARENT
-
+    DisposableEffect(window, visible) {
         if (visible) {
             window.showSystemBars()
         } else {
@@ -52,19 +37,9 @@ fun ImageViewerSystemBarsController(
 
         onDispose {
             window.showSystemBars()
-
-            // restore colors
-            window.statusBarColor = previousStatusColor
-            window.navigationBarColor = previousNavColor
-
-            WindowCompat.getInsetsController(window, window.decorView).apply {
-                isAppearanceLightStatusBars = !isNightMode
-                isAppearanceLightNavigationBars = !isNightMode
-            }
         }
     }
 }
-
 
 fun Window.forceLightSystemBarIcons() {
     WindowCompat.getInsetsController(this, decorView).apply {

@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.albums.detail.ui.compose
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
@@ -42,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
@@ -56,7 +58,6 @@ import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
-import dev.leonlatsch.photok.ui.LocalFragment
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
@@ -67,16 +68,16 @@ fun AlbumDetailScreen(albumUuid: String) {
         creationCallback = { factory -> factory.create(albumUuid) }
     )
     val navigator = LocalNavigator.current
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
 
     ObserveAsEvents(viewModel.photoActions) { action ->
-        fragment ?: return@ObserveAsEvents
-        PhotoActionsNavigator.navigate(action, fragment, navigator)
+        fragmentActivity ?: return@ObserveAsEvents
+        PhotoActionsNavigator.navigate(action, fragmentActivity, navigator)
     }
 
     ObserveAsEvents(viewModel.navEvents) { event ->
-        fragment ?: return@ObserveAsEvents
-        AlbumDetailNavigator.navigate(event, fragment, navigator)
+        fragmentActivity ?: return@ObserveAsEvents
+        AlbumDetailNavigator.navigate(event, fragmentActivity, navigator)
     }
 
     AlbumDetailScreen(viewModel)

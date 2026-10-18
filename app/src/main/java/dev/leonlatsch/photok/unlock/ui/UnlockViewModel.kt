@@ -17,7 +17,7 @@
 package dev.leonlatsch.photok.unlock.ui
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -111,7 +111,7 @@ class UnlockViewModel @Inject constructor(
 
             UnlockUiEvent.UnlockWithPassword -> unlockWithPassword()
 
-            is UnlockUiEvent.UnlockWithBiometric -> unlockWithBiometric(event.fragment)
+            is UnlockUiEvent.UnlockWithBiometric -> unlockWithBiometric(event.activity)
 
             UnlockUiEvent.ForgotPassword -> {
                 navigationEventsChannel.trySend(UnlockNavigationEvent.ShowRecoveryPhraseRestore)
@@ -160,14 +160,13 @@ class UnlockViewModel @Inject constructor(
 
                             _uiState.update { it.copy(loading = false) }
                             navigationEventsChannel.trySend(UnlockNavigationEvent.StartLegacyMigration)
-                        } else if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
-                            vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                        } else {
+                            if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
+                                vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+                            }
 
                             _uiState.update { it.copy(loading = false) }
-                            navigationEventsChannel.trySend(UnlockNavigationEvent.ShowRecoveryPhraseSetup)
-                        } else {
-                            _uiState.update { it.copy(loading = false) }
-                            navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
+                            sendUnlockedEvent()
                         }
                     }
                     .onFailure {
@@ -200,16 +199,16 @@ class UnlockViewModel @Inject constructor(
         }
     }
 
-    private fun unlockWithBiometric(fragment: Fragment) {
+    private fun unlockWithBiometric(activity: FragmentActivity) {
         // A bruteforce lockout must not be skippable by falling back to biometrics.
         if (_uiState.value.lockedUntil != null) return
 
         viewModelScope.launch {
-            vaultService.unlock(UnlockRequest.Biometric(fragment))
+            vaultService.unlock(UnlockRequest.Biometric(activity))
                 .onSuccess { session ->
                     passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
-                    navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
+                    sendUnlockedEvent()
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
@@ -220,11 +219,19 @@ class UnlockViewModel @Inject constructor(
                                 }
                         }
                         Dialogs.showLongToast(
-                            context = fragment.requireContext(),
+                            context = activity,
                             message = resources.getString(R.string.biometric_unlock_error),
                         )
                     }
                 }
+        }
+    }
+
+    private fun sendUnlockedEvent() {
+        if (config.systemOnboardingStep != null) {
+            navigationEventsChannel.trySend(UnlockNavigationEvent.ContinueOnboarding)
+        } else {
+            navigationEventsChannel.trySend(UnlockNavigationEvent.Unlocked)
         }
     }
 }

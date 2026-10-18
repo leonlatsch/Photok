@@ -34,7 +34,7 @@ interface Bindable<BindingType : ViewDataBinding> {
 
     /**
      * Used to insert bindings.
-     * @sample dev.leonlatsch.photok.main.components.bindings.BindableActivity.bind
+     * @sample dev.leonlatsch.photok.uicomponnets.bindings.BindableDialogFragment.bind
      */
     fun bind(binding: BindingType)
 

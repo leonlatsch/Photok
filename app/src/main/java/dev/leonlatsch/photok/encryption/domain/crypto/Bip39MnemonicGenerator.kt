@@ -62,6 +62,9 @@ class Bip39MnemonicGenerator @Inject constructor(
      */
     fun entropyToMnemonic(entropy: ByteArray): List<String> =
         entropyToWords(entropy, wordlist)
+
+    fun hasWordStartingWith(prefix: String): Boolean =
+        wordlist.any { it.startsWith(prefix) }
 }
 
 /**

@@ -60,7 +60,6 @@ import dev.leonlatsch.photok.settings.ui.AboutScreen
 import dev.leonlatsch.photok.settings.ui.compose.SettingsScreen
 import dev.leonlatsch.photok.settings.ui.credits.CreditsScreen
 import dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesScreen
-import dev.leonlatsch.photok.setup.ui.RecoveryPhraseSetupScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -122,8 +121,6 @@ fun MainTabsScreen(homeTab: MainTab) {
         TabNavigator(selectedBackStack, rootNavigator)
     }
     val currentRoute = selectedBackStack.lastOrNull()
-
-    LightStatusBarsEffect(currentRoute)
 
     BackHandler(enabled = selectedTab != homeTab && selectedBackStack.size == 1) {
         selectedTab = homeTab
@@ -237,10 +234,6 @@ private val tabEntryProvider = entryProvider<NavKey> {
     }
     entry<AppRoute.RestoreBackup> { route ->
         RestoreBackupScreen(backupUri = route.backupUri.toUri())
-    }
-    entry<AppRoute.RecoveryPhraseSetupFromSettings> {
-        val navigator = LocalNavigator.current
-        RecoveryPhraseSetupScreen(onContinue = navigator::goBack)
     }
     proEntries()
 }

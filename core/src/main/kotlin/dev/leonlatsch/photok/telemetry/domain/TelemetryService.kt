@@ -27,8 +27,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 enum class Signal {
-    OnboardingFinished,
-    SetupCompleted,
     ReviewRequested,
     MigratedFromAesGcm,
 
@@ -40,6 +38,20 @@ enum class Signal {
     PaywallPurchaseCancelled,
     PaywallPurchaseFailed,
     PaywallDismissed,
+
+    // Onboarding funnel. All OnboardingXShown signals carry the "resumed" param.
+    OnboardingWelcomeShown,
+    OnboardingPasswordShown,
+    OnboardingBiometricShown,
+    OnboardingRecoveryPhraseShown,
+    OnboardingAddPhotosShown,
+    OnboardingDoneShown,
+    OnboardingWelcomeGetStartedClicked,
+    OnboardingPasswordContinueClicked,
+    OnboardingBiometricEnableClicked,
+    OnboardingRecoveryPhraseContinueClicked,
+    OnboardingAddPhotosImportClicked,
+    OnboardingFinished,
 }
 
 @Singleton

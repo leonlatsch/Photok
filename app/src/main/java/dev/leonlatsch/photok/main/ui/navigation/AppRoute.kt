@@ -23,9 +23,6 @@ import kotlinx.serialization.Serializable
 sealed interface AppRoute : NavKey {
 
     @Serializable
-    data object RecoveryPhraseSetupFromSettings : AppRoute
-
-    @Serializable
     data object Gallery : AppRoute
 
     @Serializable

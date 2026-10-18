@@ -30,11 +30,13 @@ import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseExporter
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import dev.leonlatsch.photok.transcoding.di.EncryptedImageMemoryCache
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -74,6 +76,9 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     @Inject
     lateinit var proFeaturesLifecycle: ProFeaturesLifecycle
 
+    @Inject
+    lateinit var recoveryPhraseExporter: RecoveryPhraseExporter
+
     @EncryptedImageMemoryCache
     @Inject
     lateinit var encryptedImageMemoryCache: MemoryCache
@@ -104,6 +109,7 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
         setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
         thumbnailMaintainer.start()
+        appScope.launch(Dispatchers.IO) { recoveryPhraseExporter.clearShareCache() }
 
         appScope.launch {
             var session = sessionRepository.get()

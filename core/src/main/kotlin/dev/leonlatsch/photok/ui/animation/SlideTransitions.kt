@@ -17,9 +17,12 @@
 package dev.leonlatsch.photok.ui.animation
 
 import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 
 /** Matches the duration of the fragment navigation slide animations in `res/anim`. */
@@ -48,3 +51,13 @@ fun slideBackward(): ContentTransform =
         .togetherWith(
             slideOutHorizontally(tween(SlideTransitionDuration)) { width -> width }
         )
+
+/** Opening a modal screen: the new content slides up from the bottom over the old one. */
+fun slideUp(): ContentTransform =
+    slideInVertically(tween(SlideTransitionDuration)) { height -> height }
+        .togetherWith(slideOutVertically(tween(SlideTransitionDuration)) { 0 })
+
+/** Closing a modal screen: the old content slides down and reveals the new one underneath. */
+fun slideDown(): ContentTransform =
+    EnterTransition.None
+        .togetherWith(slideOutVertically(tween(SlideTransitionDuration)) { height -> height })

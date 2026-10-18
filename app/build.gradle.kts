@@ -134,6 +134,9 @@ dependencies {
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -160,9 +163,6 @@ dependencies {
     // Coroutine Lifecycle Scopes
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
-
-    // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.10.2")
 
     // Navigation 3
     implementation("androidx.navigation3:navigation3-ui:1.2.0")
@@ -204,6 +204,9 @@ dependencies {
 
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
+
+    // zxcvbn4j - password strength estimation
+    implementation("com.nulab-inc:zxcvbn:1.9.0")
 
     // Gson
     implementation("com.google.code.gson", "gson", "2.13.2")

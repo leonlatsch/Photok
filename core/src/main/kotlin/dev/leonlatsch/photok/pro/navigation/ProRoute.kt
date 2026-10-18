@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.pro.navigation
 
 import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.pro.paywall.PaywallSource
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -24,4 +25,13 @@ sealed interface ProRoute : NavKey {
 
     @Serializable
     data object IntruderWarnings : ProRoute
+
+    @Serializable
+    data object OnboardingOffer : ProRoute
+
+    @Serializable
+    data class Paywall(val source: PaywallSource) : ProRoute
+
+    @Serializable
+    data object PaywallSuccess : ProRoute
 }

@@ -21,7 +21,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -80,7 +79,7 @@ fun PasswordField(
                 { Text(error) }
             } else null,
             maxLines = 1,
-            shape = RoundedCornerShape(24.dp),
+            shape = CircleShape,
             suffix = {
                 val icon = if (passwordVisible) R.drawable.ic_eye_closed else R.drawable.ic_eye
                 Crossfade(targetState = icon, label = "PasswordVisibility") { iconRes ->
