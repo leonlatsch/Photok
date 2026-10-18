@@ -23,6 +23,7 @@ import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
@@ -44,6 +45,7 @@ import javax.inject.Inject
 class OnboardingViewModel @Inject constructor(
     private val config: Config,
     private val vaultService: VaultService,
+    private val sessionRepository: SessionRepository,
     private val telemetryService: TelemetryService,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
@@ -170,6 +172,7 @@ class OnboardingViewModel @Inject constructor(
 
             val result = vaultService.unlock(UnlockRequest.Password("abc123"))
             val session = result.getOrElse { return@launch }
+            sessionRepository.set(session)
             vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
 
             finish()

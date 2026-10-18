@@ -141,6 +141,7 @@ class OnboardingViewModelTest {
     private fun createViewModel() = OnboardingViewModel(
         config = config,
         vaultService = mockk(relaxed = true),
+        sessionRepository = mockk(relaxed = true),
         telemetryService = telemetryService,
         context = context,
     )
