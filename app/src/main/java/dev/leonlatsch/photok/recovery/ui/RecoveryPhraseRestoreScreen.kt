@@ -179,8 +179,9 @@ private fun RecoveryPhraseRestoreContent(
             verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
+                .imePadding()
                 .verticalScroll(rememberScrollState())
+                .padding(contentPadding)
                 .padding(horizontal = Dimens.spacingLarge)
                 .padding(bottom = Dimens.spacingLarge),
         ) {
@@ -218,7 +219,6 @@ private fun RecoveryPhraseRestoreContent(
                 },
                 onSelectWordCount = { handleUiEvent(RecoveryPhraseRestoreUiEvent.SelectWordCount(it)) },
                 onQrScanned = { handleUiEvent(RecoveryPhraseRestoreUiEvent.QrScanned(it)) },
-                modifier = Modifier.imePadding()
             )
 
 
