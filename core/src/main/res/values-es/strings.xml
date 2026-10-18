@@ -419,7 +419,7 @@
     <string name="onboarding_password_subtitle">Recuerda tu contraseña y guárdala en un lugar seguro. No se puede restablecer.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Confirmar contraseña</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Desbloquea con un toque</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Desbloquea Photok con tu huella o tu cara en lugar de escribir tu contraseña. Puedes cambiarlo más tarde en los ajustes.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Desbloquea Photok con tu huella en lugar de escribir tu contraseña.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Activar desbloqueo biométrico</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Ahora no</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Usar 12 palabras</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

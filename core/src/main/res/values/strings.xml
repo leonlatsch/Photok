@@ -419,7 +419,7 @@
     <string name="onboarding_password_subtitle">Remember your password and keep it safe. It cannot be reset.</string>
     <string name="onboarding_password_confirm_label">Confirm password</string>
     <string name="onboarding_biometric_title">Unlock with a touch</string>
-    <string name="onboarding_biometric_subtitle">Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings.</string>
+    <string name="onboarding_biometric_subtitle">Unlock Photok with your fingerprint instead of typing your password.</string>
     <string name="onboarding_biometric_enable">Enable biometric unlock</string>
     <string name="onboarding_not_now">Not now</string>
     <string name="onboarding_recovery_phrase_use_12_words">Use 12 words instead</string>

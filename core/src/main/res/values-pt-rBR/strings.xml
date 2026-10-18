@@ -421,7 +421,7 @@
     <string name="onboarding_password_subtitle">Lembre da sua senha e guarde-a bem. Ela não pode ser redefinida.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Confirmar senha</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Desbloqueie com um toque</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Desbloqueie o Photok com sua digital ou seu rosto em vez de digitar a senha. Você pode mudar isso depois nas configurações.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Desbloqueie o Photok com sua digital em vez de digitar a senha.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Ativar desbloqueio por biometria</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Agora não</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Usar 12 palavras</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

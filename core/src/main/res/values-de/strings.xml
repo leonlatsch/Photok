@@ -422,7 +422,7 @@
     <string name="onboarding_password_subtitle">Merk dir dein Passwort und bewahre es sicher auf. Es kann nicht zurückgesetzt werden.</string>
     <string name="onboarding_password_confirm_label">Passwort bestätigen</string>
     <string name="onboarding_biometric_title">Mit einer Berührung entsperren</string>
-    <string name="onboarding_biometric_subtitle">Entsperre Photok mit deinem Fingerabdruck oder Gesicht, statt dein Passwort einzugeben. Du kannst das später in den Einstellungen ändern.</string>
+    <string name="onboarding_biometric_subtitle">Entsperre Photok mit deinem Fingerabdruck, statt dein Passwort einzugeben.</string>
     <string name="onboarding_biometric_enable">Biometrisches Entsperren aktivieren</string>
     <string name="onboarding_not_now">Nicht jetzt</string>
     <string name="onboarding_recovery_phrase_use_12_words">Stattdessen 12 Wörter verwenden</string>

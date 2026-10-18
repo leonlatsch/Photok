@@ -418,7 +418,7 @@
     <string name="onboarding_password_subtitle">Ingat kata sandimu dan simpan dengan aman. Kata sandi tidak bisa diatur ulang.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Konfirmasi kata sandi</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Buka kunci dengan sentuhan</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Buka kunci Photok dengan sidik jari atau wajahmu tanpa mengetik kata sandi. Kamu bisa mengubahnya nanti di pengaturan.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Buka kunci Photok dengan sidik jarimu tanpa mengetik kata sandi.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Aktifkan buka kunci biometrik</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Nanti saja</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Gunakan 12 kata</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

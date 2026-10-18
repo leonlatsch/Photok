@@ -419,7 +419,7 @@
     <string name="onboarding_password_subtitle">Şifreni unutma ve güvenli bir yerde sakla. Sıfırlanamaz.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Şifreyi onayla</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Tek dokunuşla kilidi aç</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Şifreni yazmak yerine parmak izin veya yüzünle Photok\'un kilidini aç. Bunu daha sonra ayarlardan değiştirebilirsin.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Şifreni yazmak yerine parmak izinle Photok\'un kilidini aç.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Biyometrik kilit açmayı etkinleştir</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Şimdi değil</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Bunun yerine 12 kelime kullan</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

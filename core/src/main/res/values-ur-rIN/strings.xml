@@ -418,7 +418,7 @@
     <string name="onboarding_password_subtitle">اپنا پاس ورڈ یاد رکھیں اور محفوظ رکھیں۔ اسے ری سیٹ نہیں کیا جا سکتا۔</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">پاس ورڈ کی تصدیق کریں</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">ایک چھونے سے کھولیں</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">پاس ورڈ لکھنے کے بجائے Photok کو اپنے فنگر پرنٹ یا چہرے سے کھولیں۔ آپ اسے بعد میں سیٹنگز میں بدل سکتے ہیں۔</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">پاس ورڈ لکھنے کے بجائے Photok کو اپنے فنگر پرنٹ سے کھولیں۔</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">فنگر پرنٹ یا چہرے سے کھولنا آن کریں</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">ابھی نہیں</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">اس کے بجائے 12 الفاظ استعمال کریں</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

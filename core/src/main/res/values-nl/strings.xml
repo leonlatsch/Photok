@@ -416,7 +416,7 @@
     <string name="onboarding_password_subtitle">Onthoud je wachtwoord en bewaar het goed. Het kan niet worden hersteld.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Bevestig wachtwoord</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Ontgrendel met één aanraking</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Ontgrendel Photok met je vingerafdruk of gezicht in plaats van je wachtwoord te typen. Je kunt dit later wijzigen in de instellingen.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Ontgrendel Photok met je vingerafdruk in plaats van je wachtwoord te typen.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Biometrische ontgrendeling inschakelen</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Niet nu</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Gebruik 12 woorden</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

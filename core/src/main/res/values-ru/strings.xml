@@ -418,7 +418,7 @@
     <string name="onboarding_password_subtitle">Запомните пароль и храните его в надёжном месте. Сбросить его нельзя.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Подтвердите пароль</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Разблокировка касанием</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Разблокируйте Photok отпечатком пальца или лицом вместо ввода пароля. Это можно изменить позже в настройках.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Разблокируйте Photok отпечатком пальца вместо ввода пароля.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Включить биометрическую разблокировку</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Не сейчас</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Использовать 12 слов</string> <!-- TODO: machine translated | EN: Use 12 words instead -->

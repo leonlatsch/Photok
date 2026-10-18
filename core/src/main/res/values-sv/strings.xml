@@ -419,7 +419,7 @@
     <string name="onboarding_password_subtitle">Kom ihåg ditt lösenord och förvara det säkert. Det kan inte återställas.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
     <string name="onboarding_password_confirm_label">Bekräfta lösenord</string> <!-- TODO: machine translated | EN: Confirm password -->
     <string name="onboarding_biometric_title">Lås upp med en beröring</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
-    <string name="onboarding_biometric_subtitle">Lås upp Photok med fingeravtryck eller ansikte i stället för att skriva ditt lösenord. Du kan ändra detta senare i inställningarna.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint or face instead of typing your password. You can change this later in the settings. -->
+    <string name="onboarding_biometric_subtitle">Lås upp Photok med fingeravtryck i stället för att skriva ditt lösenord.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
     <string name="onboarding_biometric_enable">Aktivera biometrisk upplåsning</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
     <string name="onboarding_not_now">Inte nu</string> <!-- TODO: machine translated | EN: Not now -->
     <string name="onboarding_recovery_phrase_use_12_words">Använd 12 ord i stället</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
