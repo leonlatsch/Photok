@@ -462,7 +462,7 @@
     <string name="recovery_key_card_opening_vault">Je kluis wordt geopend</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">Opslaan in Foto\'s</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">Opslaan in galerij</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">Opslaan als afbeelding</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">Meer opties</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">Delen als afbeelding</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -470,7 +470,7 @@
     <string name="recovery_phrase_copy_to_clipboard">Kopiëren naar klembord</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">Nieuwe zin met 12 woorden</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">Nieuwe zin met 24 woorden</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">Opgeslagen in Foto\'s</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">Opgeslagen in galerij</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">Je vindt het in Pictures/Photok. Als je galerij een back-up naar de cloud maakt, wordt de afbeelding ook geüpload</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">Opgeslagen in %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">Opgeslagen als bestand</string> <!-- TODO: machine translated | EN: Saved as file -->

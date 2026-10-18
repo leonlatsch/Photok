@@ -468,7 +468,7 @@
     <string name="recovery_key_card_opening_vault">Dein Safe wird geöffnet</string>
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">In Fotos speichern</string>
+    <string name="recovery_phrase_save_to_photos">In Galerie speichern</string>
     <string name="recovery_phrase_qr_save_as_image">Als Bild speichern</string>
     <string name="recovery_phrase_more_options">Weitere Optionen</string>
     <string name="recovery_phrase_share_as_image">Als Bild teilen</string>
@@ -476,7 +476,7 @@
     <string name="recovery_phrase_copy_to_clipboard">In Zwischenablage kopieren</string>
     <string name="recovery_phrase_new_12_words">12 neue Wiederherstellungswörter</string>
     <string name="recovery_phrase_new_24_words">24 neue Wiederherstellungswörter</string>
-    <string name="recovery_phrase_saved_photos_title">In Fotos gespeichert</string>
+    <string name="recovery_phrase_saved_photos_title">In Galerie gespeichert</string>
     <string name="recovery_phrase_saved_photos_description">Du findest es unter Bilder/Photok. Wenn deine Galerie in die Cloud sichert, wird das Bild auch hochgeladen</string>
     <string name="recovery_phrase_saved_to_file">In %1$s gespeichert</string>
     <string name="recovery_phrase_saved_as_file">Als Datei gespeichert</string>

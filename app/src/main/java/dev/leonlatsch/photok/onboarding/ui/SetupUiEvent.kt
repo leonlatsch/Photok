@@ -23,6 +23,6 @@ sealed interface SetupUiEvent {
 }
 
 sealed interface SetupNavigationEvent {
-    data object ShowRecoveryPhraseSetup : SetupNavigationEvent
+    data object ShowBiometricUnlock : SetupNavigationEvent
     data object ShowError : SetupNavigationEvent
 }

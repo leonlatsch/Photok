@@ -145,11 +145,11 @@ class SetupViewModel @Inject constructor(
                             )
                         )
 
-                        config.systemOnboardingStep = OnboardingRoute.RecoveryPhraseSetup.stepKey()
+                        config.systemOnboardingStep = OnboardingRoute.BiometricUnlock.stepKey()
                         config.justFinishedSetup = true
 
                         inputs.update { it.copy(loading = false) }
-                        navigationEventsChannel.trySend(SetupNavigationEvent.ShowRecoveryPhraseSetup)
+                        navigationEventsChannel.trySend(SetupNavigationEvent.ShowBiometricUnlock)
                     }
                     .onFailure {
                         Timber.e(it)

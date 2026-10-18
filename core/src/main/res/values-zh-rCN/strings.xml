@@ -464,7 +464,7 @@
     <string name="recovery_key_card_opening_vault">正在打开你的保险库</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">保存到相册</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">保存到相册</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">保存为图片</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">更多选项</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">以图片分享</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -472,7 +472,7 @@
     <string name="recovery_phrase_copy_to_clipboard">复制到剪贴板</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">12 个单词的新短语</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">24 个单词的新短语</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">已保存到相册</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">已保存到相册</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">在 Pictures/Photok 中查找。如果你的图库会备份到云端，这张图片也会被上传</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">已保存到 %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">已保存为文件</string> <!-- TODO: machine translated | EN: Saved as file -->

@@ -45,8 +45,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 private const val SHARE_DIR = "recovery"
@@ -89,7 +91,9 @@ class RecoveryPhraseExporter @Inject constructor(
                 fileName = IMAGE_FILE_NAME,
                 mimeType = "image/jpeg",
                 subDir = PHOTOS_SUB_DIR,
-            ) { documentBitmap.writeTo(it) }
+            ) { output ->
+                if (!documentBitmap.writeTo(output)) throw IOException("Could not encode recovery phrase image")
+            }
             documentBitmap.recycle()
 
             uri?.let { RecoveryPhraseSavedTo.Photos }
@@ -98,20 +102,30 @@ class RecoveryPhraseExporter @Inject constructor(
     suspend fun saveImageFile(context: Context, uri: Uri, phrase: RecoveryPhrase): RecoveryPhraseSavedTo.File? =
         withContext(Dispatchers.IO) {
             val documentBitmap = renderDocument(context, phrase) ?: return@withContext null
-            val outputStream = io.openFileOutput(uri)
-            outputStream?.use { documentBitmap.writeTo(it) }
+            val written = try {
+                io.openFileOutput(uri)?.use { documentBitmap.writeTo(it) } ?: false
+            } catch (e: IOException) {
+                Timber.e(e, "Error saving recovery phrase image to $uri")
+                false
+            }
             documentBitmap.recycle()
 
-            outputStream?.let { RecoveryPhraseSavedTo.File(io.getFileName(uri)) }
+            if (written) RecoveryPhraseSavedTo.File(io.getFileName(uri)) else null
         }
 
     suspend fun shareImage(context: Context, phrase: RecoveryPhrase) {
         val imageFile = withContext(Dispatchers.IO) {
+            clearShareCache()
             val documentBitmap = renderDocument(context, phrase) ?: return@withContext null
             val file = File(File(appContext.cacheDir, SHARE_DIR).apply { mkdirs() }, IMAGE_FILE_NAME)
-            file.outputStream().use { documentBitmap.writeTo(it) }
+            val written = try {
+                file.outputStream().use { documentBitmap.writeTo(it) }
+            } catch (e: IOException) {
+                Timber.e(e, "Error writing recovery phrase image for sharing")
+                false
+            }
             documentBitmap.recycle()
-            file
+            file.takeIf { written }
         } ?: return
 
         val uri = FileProvider.getUriForFile(
@@ -143,6 +157,8 @@ class RecoveryPhraseExporter @Inject constructor(
             val outputStream = io.openFileOutput(uri) ?: return@withContext null
 
             io.copy(inputStream, outputStream)
+                .onFailure { Timber.e(it, "Error saving recovery phrase text to $uri") }
+                .getOrNull() ?: return@withContext null
 
             RecoveryPhraseSavedTo.File(io.getFileName(uri))
         }

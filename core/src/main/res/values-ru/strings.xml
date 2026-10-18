@@ -464,7 +464,7 @@
     <string name="recovery_key_card_opening_vault">Открываем ваш сейф</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">Сохранить в галерею</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">Сохранить в галерею</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">Сохранить как изображение</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">Другие варианты</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">Поделиться как изображением</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -472,7 +472,7 @@
     <string name="recovery_phrase_copy_to_clipboard">Скопировать в буфер обмена</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">Новая фраза из 12 слов</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">Новая фраза из 24 слов</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">Сохранено в галерею</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">Сохранено в галерею</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">Ищите в Pictures/Photok. Если галерея синхронизируется с облаком, изображение тоже будет загружено</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">Сохранено в %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">Сохранено как файл</string> <!-- TODO: machine translated | EN: Saved as file -->

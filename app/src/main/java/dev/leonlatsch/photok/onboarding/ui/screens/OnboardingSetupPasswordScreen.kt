@@ -85,7 +85,7 @@ fun OnboardingSetupPasswordScreen(
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
-            SetupNavigationEvent.ShowRecoveryPhraseSetup -> {
+            SetupNavigationEvent.ShowBiometricUnlock -> {
                 activity?.hideKeyboard()
                 navigator.navigate(OnboardingRoute.BiometricUnlock)
             }

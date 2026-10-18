@@ -465,7 +465,7 @@
     <string name="recovery_key_card_opening_vault">Abriendo tu baúl</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">Guardar en Fotos</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">Guardar en la galería</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">Guardar como imagen</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">Más opciones</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">Compartir como imagen</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -473,7 +473,7 @@
     <string name="recovery_phrase_copy_to_clipboard">Copiar al portapapeles</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">Nueva frase de 12 palabras</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">Nueva frase de 24 palabras</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">Guardada en Fotos</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">Guardada en la galería</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">Búscala en Pictures/Photok. Si tu galería hace copia de seguridad en la nube, la imagen también se sube</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">Guardada en %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">Guardada como archivo</string> <!-- TODO: machine translated | EN: Saved as file -->

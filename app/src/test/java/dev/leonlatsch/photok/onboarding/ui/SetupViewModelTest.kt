@@ -126,13 +126,13 @@ class SetupViewModelTest {
     }
 
     @Test
-    fun `setup creates the vault and continues to the recovery phrase`() = runTest {
+    fun `setup creates the vault and continues to biometric unlock`() = runTest {
         enterPasswords(PASSWORD, PASSWORD)
 
         viewModel.handleUiEvent(SetupUiEvent.Setup)
 
         assertEquals(
-            SetupNavigationEvent.ShowRecoveryPhraseSetup,
+            SetupNavigationEvent.ShowBiometricUnlock,
             viewModel.navigationEvents.first(),
         )
         coVerify {
@@ -140,7 +140,7 @@ class SetupViewModelTest {
             vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
         }
         verify { sessionRepository.set(session) }
-        assertEquals(OnboardingRoute.RecoveryPhraseSetup.stepKey(), config.systemOnboardingStep)
+        assertEquals(OnboardingRoute.BiometricUnlock.stepKey(), config.systemOnboardingStep)
         assertFalse(viewModel.uiState.first { !it.loading }.loading)
     }
 

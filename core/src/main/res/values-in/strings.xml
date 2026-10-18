@@ -464,7 +464,7 @@
     <string name="recovery_key_card_opening_vault">Membuka brankasmu</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">Simpan ke Foto</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">Simpan ke galeri</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">Simpan sebagai gambar</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">Opsi lainnya</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">Bagikan sebagai gambar</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -472,7 +472,7 @@
     <string name="recovery_phrase_copy_to_clipboard">Salin ke papan klip</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">Frasa baru dengan 12 kata</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">Frasa baru dengan 24 kata</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">Disimpan ke Foto</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">Disimpan ke galeri</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">Cari di Pictures/Photok. Jika galerimu dicadangkan ke cloud, gambar ini juga ikut diunggah</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">Disimpan ke %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">Disimpan sebagai file</string> <!-- TODO: machine translated | EN: Saved as file -->

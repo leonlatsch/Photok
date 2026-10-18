@@ -464,7 +464,7 @@
     <string name="recovery_key_card_opening_vault">آپ کا سیف کھل رہا ہے</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">گیلری میں محفوظ کریں</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">گیلری میں محفوظ کریں</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">مزید آپشنز</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">تصویر کے طور پر شیئر کریں</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -472,7 +472,7 @@
     <string name="recovery_phrase_copy_to_clipboard">کلپ بورڈ پر کاپی کریں</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">12 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">24 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">گیلری میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">گیلری میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">اسے Pictures/Photok میں دیکھیں۔ اگر آپ کی گیلری کا بیک اپ کلاؤڈ پر جاتا ہے تو یہ تصویر بھی اپ لوڈ ہو جائے گی</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">فائل کے طور پر محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved as file -->

@@ -465,7 +465,7 @@
     <string name="recovery_key_card_opening_vault">Ouverture de votre coffre-fort</string> <!-- TODO: machine translated | EN: Opening your vault -->
 
     <!-- Recovery Phrase — Save -->
-    <string name="recovery_phrase_save_to_photos">Enregistrer dans Photos</string> <!-- TODO: machine translated | EN: Save to Photos -->
+    <string name="recovery_phrase_save_to_photos">Enregistrer dans la galerie</string> <!-- TODO: machine translated | EN: Save to gallery -->
     <string name="recovery_phrase_qr_save_as_image">Enregistrer en image</string> <!-- TODO: machine translated | EN: Save as image -->
     <string name="recovery_phrase_more_options">Plus d\'options</string> <!-- TODO: machine translated | EN: More options -->
     <string name="recovery_phrase_share_as_image">Partager en image</string> <!-- TODO: machine translated | EN: Share as image -->
@@ -473,7 +473,7 @@
     <string name="recovery_phrase_copy_to_clipboard">Copier dans le presse-papiers</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
     <string name="recovery_phrase_new_12_words">Nouvelle phrase de 12 mots</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
     <string name="recovery_phrase_new_24_words">Nouvelle phrase de 24 mots</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
-    <string name="recovery_phrase_saved_photos_title">Enregistrée dans Photos</string> <!-- TODO: machine translated | EN: Saved to Photos -->
+    <string name="recovery_phrase_saved_photos_title">Enregistrée dans la galerie</string> <!-- TODO: machine translated | EN: Saved to gallery -->
     <string name="recovery_phrase_saved_photos_description">Elle se trouve dans Pictures/Photok. Si votre galerie est sauvegardée dans le cloud, l\'image y est aussi envoyée</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
     <string name="recovery_phrase_saved_to_file">Enregistrée dans %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
     <string name="recovery_phrase_saved_as_file">Enregistrée en fichier</string> <!-- TODO: machine translated | EN: Saved as file -->
