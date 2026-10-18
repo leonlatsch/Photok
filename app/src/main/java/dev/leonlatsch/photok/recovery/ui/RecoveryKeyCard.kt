@@ -42,9 +42,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -62,7 +60,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -210,12 +207,7 @@ private fun RecoveryKeyWordsFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_label)) {
-            Text(
-                text = stringResource(R.string.recovery_key_card_word_count, count),
-                style = MaterialTheme.typography.labelMedium,
-            )
-        }
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_word_count, count).uppercase())
 
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
             (0 until count).chunked(2).forEach { row ->
@@ -245,13 +237,7 @@ private fun RecoveryKeyQrFace(
         verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier.padding(Dimens.spacingLarge),
     ) {
-        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label)) {
-            Icon(
-                painter = painterResource(R.drawable.ic_qr_code),
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-            )
-        }
+        RecoveryKeyFaceHeader(label = stringResource(R.string.recovery_key_card_scan_label))
 
         Box(
             contentAlignment = Alignment.Center,
@@ -291,7 +277,7 @@ private fun RecoveryKeyQrFace(
 @Composable
 internal fun RecoveryKeyFaceHeader(
     label: String,
-    trailing: @Composable () -> Unit,
+    trailing: @Composable () -> Unit = {},
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
