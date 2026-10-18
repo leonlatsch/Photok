@@ -356,7 +356,6 @@ private fun RestoreSourceButton(
                 text = text,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center,
-                maxLines = 2,
             )
         }
     }
