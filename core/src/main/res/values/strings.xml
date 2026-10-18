@@ -47,13 +47,27 @@
     <string name="setup_enter_password">Enter your password</string>
     <string name="setup_confirm_password">Confirm your password</string>
     <string name="setup_password_match_warning">\u26A0 Passwords do not match</string>
-    <string name="setup_password_strength_label">Password strength:</string>
     <string name="setup_password_strength_very_weak">Very weak</string>
     <string name="setup_password_strength_weak">Weak</string>
     <string name="setup_password_strength_moderate">Moderate</string>
     <string name="setup_password_strength_strong">Strong</string>
     <string name="setup_password_strength_very_strong">Very strong</string>
-    <string name="setup_password_strength_crack_time">Time to crack: %1$s</string>
+    <string name="setup_password_strength_crack_time">Cracked in %1$s</string>
+    <string name="setup_password_strength_crack_time_universe">Longer than the universe has existed</string>
+    <string name="setup_password_crack_time_info_title">How is time to crack calculated?</string>
+    <string name="setup_password_crack_time_info_patterns_title">Pattern analysis</string>
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed.</string>
+    <string name="setup_password_crack_time_info_attack_title">Slow by design</string>
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 makes every guess slow. We assume %1$s guesses per second, strong hardware can be faster.</string>
+    <string name="setup_password_crack_time_info_details_title">Technical details</string>
+    <string name="setup_password_crack_time_info_kdf">Key derivation</string>
+    <string name="setup_password_crack_time_info_iterations">Iterations</string>
+    <string name="setup_password_crack_time_info_attack_speed">Attack speed</string>
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s guesses/s</string>
+    <string name="setup_password_crack_time_info_learn_more">Learn more</string>
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j on GitHub</string>
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn by Dropbox</string>
+    <string name="setup_password_crack_time_info_link_encryption">How Photok encrypts your files</string>
 
     <!-- UNLOCK -->
     <string name="unlock_title">Unlock your safe</string>

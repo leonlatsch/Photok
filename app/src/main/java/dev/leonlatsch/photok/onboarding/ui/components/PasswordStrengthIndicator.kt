@@ -26,13 +26,16 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -42,13 +45,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
@@ -59,6 +67,7 @@ import java.util.Locale
 import kotlin.math.roundToLong
 
 private const val SEGMENT_COUNT = 5
+private const val STRONG_SCORE = 3
 
 private const val MINUTE = 60.0
 private const val HOUR = MINUTE * 60
@@ -66,16 +75,26 @@ private const val DAY = HOUR * 24
 private const val MONTH = DAY * 31
 private const val YEAR = MONTH * 12
 private const val CENTURY = YEAR * 100
+private const val AGE_OF_UNIVERSE = YEAR * 13.8e9
 
 @Composable
 fun PasswordStrengthIndicator(
     strength: PasswordStrength,
+    showFeedback: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val levelColor by animateColorAsState(strengthColor(strength.score))
+    val levelColor by animateColorAsState(
+        targetValue = strengthColor(strength.score),
+        animationSpec = spring(stiffness = Spring.StiffnessLow),
+    )
     val locale = LocalConfiguration.current.locales[0]
     val crackTime = remember(strength.crackTimeSeconds, locale) {
         formatCrackTime(strength.crackTimeSeconds, locale)
+    }
+    val crackTimeText = if (strength.crackTimeSeconds > AGE_OF_UNIVERSE) {
+        stringResource(R.string.setup_password_strength_crack_time_universe)
+    } else {
+        stringResource(R.string.setup_password_strength_crack_time, crackTime)
     }
 
     Surface(
@@ -89,49 +108,84 @@ fun PasswordStrengthIndicator(
                 .animateContentSize()
                 .padding(Dimens.spacingMedium),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(R.string.setup_password_strength_label),
-                    style = typography.bodyMedium,
-                    color = colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1f),
-                )
-                Text(
-                    text = strengthLabel(strength.score),
-                    style = typography.labelLarge,
-                    color = levelColor,
-                )
-            }
+            Header(
+                strengthLabel = strengthLabel(strength.score),
+                levelColor = levelColor,
+                crackTimeText = crackTimeText,
+            )
 
             StrengthBar(
                 filledSegments = strength.score + 1,
                 color = levelColor,
             )
 
-            Text(
-                text = stringResource(R.string.setup_password_strength_crack_time, crackTime),
-                style = typography.bodySmall,
-                color = colorScheme.onSurfaceVariant,
-            )
+            if (showFeedback && strength.score < STRONG_SCORE) {
+                strength.warning?.let { warning ->
+                    FeedbackLine(
+                        text = warning,
+                        iconRes = R.drawable.ic_warning,
+                        iconTint = levelColor,
+                        textColor = colorScheme.onSurface,
+                    )
+                }
 
-            strength.warning?.let { warning ->
-                FeedbackLine(
-                    text = warning,
-                    iconRes = R.drawable.ic_warning,
-                    iconTint = levelColor,
-                    textColor = colorScheme.onSurface,
-                )
-            }
-
-            strength.suggestions.forEach { suggestion ->
-                FeedbackLine(
-                    text = suggestion,
-                    iconRes = R.drawable.ic_info,
-                    iconTint = colorScheme.onSurfaceVariant,
-                    textColor = colorScheme.onSurfaceVariant,
-                )
+                strength.suggestions.firstOrNull()?.let { suggestion ->
+                    FeedbackLine(
+                        text = suggestion,
+                        iconRes = R.drawable.ic_info,
+                        iconTint = colorScheme.onSurfaceVariant,
+                        textColor = colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
+    }
+}
+
+@Composable
+private fun Header(
+    strengthLabel: String,
+    levelColor: Color,
+    crackTimeText: String,
+) {
+    var showExplanation by rememberSaveable { mutableStateOf(false) }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXSmall),
+    ) {
+        FlowRow(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            itemVerticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .weight(1f)
+                .padding(top = Dimens.spacingXxSmall),
+        ) {
+            Text(
+                text = strengthLabel,
+                style = typography.labelLarge,
+                color = levelColor,
+                modifier = Modifier.padding(end = Dimens.spacingSmall),
+            )
+            Text(
+                text = crackTimeText,
+                style = typography.labelMedium,
+                color = colorScheme.onSurfaceVariant,
+            )
+        }
+        Icon(
+            painter = painterResource(R.drawable.ic_info),
+            contentDescription = stringResource(R.string.setup_password_crack_time_info_title),
+            tint = colorScheme.onSurfaceVariant,
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable(role = Role.Button) { showExplanation = true }
+                .padding(Dimens.spacingXxSmall)
+                .size(18.dp),
+        )
+    }
+
+    if (showExplanation) {
+        CrackTimeExplanationSheet(onDismissRequest = { showExplanation = false })
     }
 }
 
@@ -252,6 +306,7 @@ private fun PasswordStrengthIndicatorWeakPreview() {
                     "Capitalization doesn't help very much.",
                 ),
             ),
+            showFeedback = true,
             modifier = Modifier.padding(Dimens.spacingLarge),
         )
     }
@@ -268,6 +323,7 @@ private fun PasswordStrengthIndicatorStrongPreview() {
                 warning = null,
                 suggestions = emptyList(),
             ),
+            showFeedback = true,
             modifier = Modifier.padding(Dimens.spacingLarge),
         )
     }

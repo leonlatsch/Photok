@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
@@ -32,10 +34,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalResources
@@ -64,6 +69,7 @@ import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
@@ -140,21 +146,38 @@ private fun OnboardingSetupPasswordContent(
             Spacer(Modifier.height(Dimens.spacingXSmall))
 
             Column {
+                var passwordFocused by remember { mutableStateOf(false) }
+
                 PasswordField(
                     value = uiState.password,
                     onValueChange = { handleUiEvent(SetupUiEvent.PasswordChanged(it)) },
                     label = stringResource(R.string.common_password),
                     imeAction = ImeAction.Next,
-                    modifier = Modifier.focusRequester(focusRequester)
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .onFocusChanged { passwordFocused = it.isFocused }
                 )
 
                 var lastPasswordStrength by remember { mutableStateOf(uiState.passwordStrength) }
                 uiState.passwordStrength?.let { lastPasswordStrength = it }
 
-                AnimatedVisibility(visible = uiState.passwordStrength != null) {
+                val strengthBringIntoViewRequester = remember { BringIntoViewRequester() }
+                val coroutineScope = rememberCoroutineScope()
+
+                AnimatedVisibility(
+                    visible = uiState.passwordStrength != null,
+                    modifier = Modifier
+                        .bringIntoViewRequester(strengthBringIntoViewRequester)
+                        .onSizeChanged { size ->
+                            if (passwordFocused && size.height > 0) {
+                                coroutineScope.launch { strengthBringIntoViewRequester.bringIntoView() }
+                            }
+                        },
+                ) {
                     lastPasswordStrength?.let {
                         PasswordStrengthIndicator(
                             strength = it,
+                            showFeedback = passwordFocused,
                             modifier = Modifier.padding(top = Dimens.spacingSmall),
                         )
                     }

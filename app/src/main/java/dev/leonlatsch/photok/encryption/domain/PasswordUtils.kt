@@ -58,6 +58,8 @@ object PasswordUtils {
 
     private val zxcvbn by lazy { Zxcvbn() }
 
+    const val CRACK_TIME_GUESSES_PER_SECOND = 10_000
+
     /**
      * Estimates the strength of [password] with zxcvbn. Blocking and possibly slow, call it off the main thread.
      * [locale] is used for the feedback messages.
