@@ -48,7 +48,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -97,9 +99,12 @@ fun RecoveryKeyInputCard(
     )
 
     val reveal = remember { Animatable(Bip39WordCount.TwentyFour.words.toFloat()) }
+    var startedRevealToken by remember { mutableIntStateOf(revealToken) }
+    val revealPending = revealToken != startedRevealToken
     LaunchedEffect(revealToken) {
         if (revealToken == 0) return@LaunchedEffect
         reveal.snapTo(0f)
+        startedRevealToken = revealToken
         reveal.animateTo(
             targetValue = words.size.toFloat(),
             animationSpec = tween(durationMillis = words.size * 70, easing = LinearEasing),
@@ -124,7 +129,7 @@ fun RecoveryKeyInputCard(
                 wordCount = wordCount,
                 unknownWordIndices = unknownWordIndices,
                 enabled = enabled && !showScanner,
-                reveal = { reveal.value },
+                reveal = { if (revealPending) 0f else reveal.value },
                 onUpdateWord = onUpdateWord,
                 onFillWords = onFillWords,
                 onSelectWordCount = onSelectWordCount,
