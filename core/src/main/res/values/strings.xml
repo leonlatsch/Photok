@@ -58,7 +58,7 @@
     <string name="setup_password_crack_time_info_patterns_title">Pattern analysis</string>
     <string name="setup_password_crack_time_info_patterns_body">zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed.</string>
     <string name="setup_password_crack_time_info_attack_title">Slow by design</string>
-    <string name="setup_password_crack_time_info_attack_body">PBKDF2 makes every guess slow. We assume %1$s guesses per second, strong hardware can be faster.</string>
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster.</string>
     <string name="setup_password_crack_time_info_details_title">Technical details</string>
     <string name="setup_password_crack_time_info_kdf">Key derivation</string>
     <string name="setup_password_crack_time_info_iterations">Iterations</string>

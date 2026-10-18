@@ -58,7 +58,7 @@ object PasswordUtils {
 
     private val zxcvbn by lazy { Zxcvbn() }
 
-    const val CRACK_TIME_GUESSES_PER_SECOND = 10_000
+    const val CRACK_TIME_GUESSES_PER_SECOND = 100_000
 
     /**
      * Estimates the strength of [password] with zxcvbn. Blocking and possibly slow, call it off the main thread.
@@ -68,7 +68,7 @@ object PasswordUtils {
         val strength = zxcvbn.measure(password)
         val result = PasswordStrength(
             score = strength.score,
-            crackTimeSeconds = strength.crackTimeSeconds.offlineSlowHashing1e4perSecond,
+            crackTimeSeconds = strength.guesses / CRACK_TIME_GUESSES_PER_SECOND,
             warning = strength.feedback.getWarning(locale)?.takeIf { it.isNotBlank() },
             suggestions = strength.feedback.getSuggestions(locale),
         )
