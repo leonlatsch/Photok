@@ -84,7 +84,7 @@ class OnboardingViewModel @Inject constructor(
     val preferencesValues = config.valuesFlow
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), config.values)
 
-    private val navigationEventsChannel = Channel<OnboardingNavigationEvent>()
+    private val navigationEventsChannel = Channel<OnboardingNavigationEvent>(Channel.UNLIMITED)
     val navigationEvents = navigationEventsChannel.receiveAsFlow()
 
     fun handleUiEvent(event: OnboardingUiEvent) {

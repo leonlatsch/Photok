@@ -155,6 +155,19 @@ class SetupViewModelTest {
         verify(exactly = 0) { sessionRepository.set(any()) }
     }
 
+    @Test
+    fun `setup with mismatching passwords keeps the form editable`() = runTest {
+        enterPasswords(PASSWORD, "different")
+
+        viewModel.handleUiEvent(SetupUiEvent.Setup)
+        viewModel.handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(PASSWORD))
+
+        val state = viewModel.uiState.first { it.confirmPassword == PASSWORD }
+        assertFalse(state.loading)
+        assertTrue(state.canSetup)
+        coVerify(exactly = 0) { vaultService.create(any()) }
+    }
+
     private fun enterPasswords(password: String, confirmPassword: String) {
         viewModel.handleUiEvent(SetupUiEvent.PasswordChanged(password))
         viewModel.handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(confirmPassword))

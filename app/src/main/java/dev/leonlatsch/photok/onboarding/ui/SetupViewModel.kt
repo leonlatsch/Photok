@@ -122,10 +122,10 @@ class SetupViewModel @Inject constructor(
     }
 
     private fun setup() {
-        inputs.update { it.copy(loading = true) }
-
         val password = inputs.value.password
         if (!PasswordUtils.validatePasswords(password, inputs.value.confirmPassword)) return
+
+        inputs.update { it.copy(loading = true) }
 
         telemetryService.signal(
             Signal.OnboardingPasswordContinueClicked,

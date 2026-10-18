@@ -22,10 +22,8 @@ import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -131,13 +129,10 @@ class OnboardingViewModelTest {
         config.systemFirstStart = true
         config.systemOnboardingStep = OnboardingRoute.Done.stepKey()
         val viewModel = createViewModel()
-        val navigationEvent = async(start = CoroutineStart.UNDISPATCHED) {
-            viewModel.navigationEvents.first()
-        }
 
         viewModel.handleUiEvent(OnboardingUiEvent.Finish)
 
-        assertEquals(OnboardingNavigationEvent.Finished, navigationEvent.await())
+        assertEquals(OnboardingNavigationEvent.Finished, viewModel.navigationEvents.first())
         assertFalse(config.systemFirstStart)
         assertNull(config.systemOnboardingStep)
         verify { telemetryService.signal(Signal.OnboardingFinished, any()) }
