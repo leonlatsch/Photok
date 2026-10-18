@@ -279,7 +279,7 @@ internal fun RecoveryKeyFaceHeader(
     label: String,
     trailing: @Composable () -> Unit = {},
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row {
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
