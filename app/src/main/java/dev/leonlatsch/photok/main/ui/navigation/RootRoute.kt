@@ -23,13 +23,10 @@ import kotlinx.serialization.Serializable
 sealed interface RootRoute : NavKey {
 
     @Serializable
-    data object Setup : RootRoute
+    data object Onboarding : RootRoute
 
     @Serializable
     data object Unlock : RootRoute
-
-    @Serializable
-    data object RecoveryPhraseSetup : RootRoute
 
     @Serializable
     data object RecoveryPhraseRestore : RootRoute

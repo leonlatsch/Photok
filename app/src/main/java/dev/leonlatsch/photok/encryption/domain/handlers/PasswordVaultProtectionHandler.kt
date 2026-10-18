@@ -36,7 +36,7 @@ import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
 private const val KEK_SIZE = 256
-private const val KEK_ITERATIONS = 100_000
+const val PASSWORD_KEK_ITERATIONS = 100_000
 
 class PasswordVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
@@ -81,7 +81,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
             kdf = kdf,
-            kdfIterations = KEK_ITERATIONS,
+            kdfIterations = PASSWORD_KEK_ITERATIONS,
             algorithm = Algorithm.AesCbcPkcs7Padding,
             keySize = KEK_SIZE,
         )
@@ -92,7 +92,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
             password = request.password,
             salt = salt,
             kdf = kdf,
-            kdfIterations = KEK_ITERATIONS,
+            kdfIterations = PASSWORD_KEK_ITERATIONS,
             keySize = params.keySize,
         )
 
@@ -130,7 +130,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
                 password = request.password,
                 salt = vmkSalt,
                 kdf = Kdf.PBKDF2WithHmacSHA256,
-                kdfIterations = KEK_ITERATIONS,
+                kdfIterations = PASSWORD_KEK_ITERATIONS,
                 keySize = KEK_SIZE,
             )
         }
@@ -142,7 +142,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
             kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = KEK_ITERATIONS,
+            kdfIterations = PASSWORD_KEK_ITERATIONS,
             algorithm = Algorithm.AesCbcPkcs7Padding,
             keySize = KEK_SIZE,
         )

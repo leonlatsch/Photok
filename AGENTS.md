@@ -87,24 +87,25 @@ The codebase follows a **feature-first layered architecture** within the module 
 
 ### Single Activity
 
-The installable `:app` module has a single `MainActivity` (with `DataBinding`). It hosts a small fragment graph (`app/src/main/res/navigation/main_nav_graph.xml`) with only `InitialFragment`, the legacy `OnBoardingFragment`, and `AppNavFragment`. `AppNavFragment` is a transitional wrapper that hosts all Compose screens through Navigation 3. Once onboarding is migrated, it becomes a route and the `NavDisplay` moves into `MainActivity`.
+The installable `:app` module has a single `MainActivity`. It calls `setContent` with `AppNavHost`, which hosts all Compose screens through Navigation 3. There are no navigation fragments.
 
 ### Navigation
 
-- **Root stack.** `AppNavHost` (`main/ui/navigation/`) owns the root back stack and `NavDisplay`. It holds the pre-unlock flow (`Setup`, `Unlock`, `RecoveryPhraseSetup`, `RecoveryPhraseRestore`, `EncryptionMigration`) and `Main`. These are the cases of `sealed interface RootRoute : NavKey`. Once the vault is unlocked, call `replaceAll(RootRoute.Main)`.
+- **Root stack.** `AppNavHost` (`main/ui/navigation/`) owns the root back stack and `NavDisplay`. It holds the pre-unlock flow (`Onboarding`, `Unlock`, `RecoveryPhraseRestore`, `EncryptionMigration`) and `Main`. These are the cases of `sealed interface RootRoute : NavKey`. Once the vault is unlocked, call `replaceAll(RootRoute.Main)`.
 - **Tabs, one stack each (iOS style).** `RootRoute.Main` renders `MainTabsScreen`, which owns one back stack per `MainTab` (Gallery, Albums, Settings; each starts at `MainTab.rootRoute`) and registers every in-app route in `tabEntryProvider`. Each stack is decorated with `rememberDecoratedNavEntries` on every composition, so hidden tabs keep their entries, ViewModels and scroll state. Only the selected tab's entries go into the `NavDisplay`. Tapping the selected tab pops it to its root. Back at the root of a non-home tab goes to the home tab (the start page from `GetStartTab`).
 - **Routes are typed objects, never strings.** In-app routes are `@Serializable` cases of `sealed interface AppRoute : NavKey`, shared by all tabs, so any tab can push any of them. Routes with arguments are data classes, for example `AppRoute.AlbumDetail(albumUuid)`. Non-serializable args such as `Uri` are stored as `String`. New in-app screens go into `AppRoute` and `tabEntryProvider`; only pre-unlock screens go into `RootRoute` and `AppNavHost`. Tab selection (`MainMenu`, `GetStartTab`) uses the `MainTab` enum, never routes.
-- **Navigating.** Always use `LocalNavigator.current` (the `Navigator` interface in `core/.../navigation/`: `navigate`, `goBack`, `replaceAll`). In the root stack it is a `RootNavigator`. Inside a tab it is a `TabNavigator`, which pushes and pops on that tab's stack; its `replaceAll` replaces the whole root stack.
+- **Navigating.** Always use `LocalNavigator.current` (the `Navigator` interface in `core/.../navigation/`: `navigate`, `goBack`, `replaceAll`). In the root stack it is a `RootNavigator`. Inside a tab it is a `TabNavigator`, which pushes and pops on that tab's stack; its `replaceAll` replaces the whole root stack. Without a provider, for example in a `@Preview`, it defaults to a no-op navigator, so composables can read it anywhere.
+- **Onboarding.** `RootRoute.Onboarding` renders `OnboardingScreen`, which owns a nested stack of `OnboardingRoute` steps plus `ProRoute.OnboardingOffer`. Its `OnboardingNavigator` keeps only the current step (`navigate` replaces the stack, `goBack` does nothing) and delegates `replaceAll` to the root. The current step is persisted in `Config.systemOnboardingStep` so a restarted app resumes there. Steps report to the shared `OnboardingViewModel` through a `handleUiEvent` parameter.
 - **Bottom menu.** `MainMenu` is drawn by `MainTabsScreen` on tab roots, `AlbumDetail` and `DevSettings`; it is hidden on every other route. Screens under it read `LocalMainMenuPadding`.
 - **Transitions.** The default is the core `slideForward()` / `slideBackward()`. Switching tabs swaps the stack without animation.
-- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `Navigator`, plus the host fragment for showing `DialogFragment`s.
+- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `Navigator`, plus the host `FragmentActivity` for showing `DialogFragment`s.
 
 ### Pro-only screens
 
 - Pro routes are cases of `sealed interface ProRoute : NavKey` in `core/.../pro/navigation/`, because `:app` `src/main` cannot see `:pro` types.
-- `:pro` registers their entries in `fun EntryProviderScope<NavKey>.proEntries()` (`pro/.../pro/navigation/ProEntries.kt`). `app/src/foss` has an empty stub with the same package and name.
+- `:pro` registers their entries in `fun EntryProviderScope<NavKey>.proEntries()` (`pro/.../pro/navigation/ProEntries.kt`). Onboarding-only pro steps are registered in `proOnboardingEntries(onContinue)`. `app/src/foss` has empty stubs with the same package and names.
 - Navigate with `LocalNavigator.current.navigate(ProRoute.X)`, and close a pro screen with `goBack()` rather than `activity.finish()`.
-- The paywall is still a standalone `PaywallActivity` opened through `Activity.showPaywall(source)`.
+- The paywall is `ProRoute.Paywall(source)` and slides up through its entry metadata. A purchase replaces it with `ProRoute.PaywallSuccess`. Onboarding shows it as `ProRoute.OnboardingOffer`, which continues to the onboarding done screen instead.
 
 ---
 
@@ -127,25 +128,25 @@ Every screen follows a **simple, flat MVI**. There is no dedicated MVI framework
 | `XyzUiEvent.kt` | `sealed interface XyzUiEvent`. One `data class`/`data object` per user action. |
 | `XyzScreen.kt` | Top-level `@Composable`, registered as an `entry<AppRoute.Xyz>` in `AppNavHost`. It gets the `ViewModel` via `hiltViewModel()`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
 
-Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalNavigator.current`. Do not pass a plain back action down from `AppNavHost` as `onClose`/`onBack`; the screen calls `LocalNavigator.current.goBack()` itself. Callbacks from the host are only for actions that differ per route (for example `RecoveryPhraseSetupScreen(onContinue)`). Private `*Content` composables may still take lambdas so previews work without a navigator.
+Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalNavigator.current`. Do not pass navigation actions down as `onClose`/`onBack`/`onContinue` lambdas; any composable, including sub-composables and scaffolds, calls `LocalNavigator.current` itself. Previews need no lambdas for navigation because the default navigator does nothing. Callbacks from the host are only for actions that differ per route (for example `proOnboardingEntries(onContinue)`). Some older screens still have navigation lambdas only for previews; remove them when you touch those screens.
 
 **Canonical example** — `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
 
 ### Legacy DataBinding Screens
 
-Still used by onboarding and some dialogs. They extend `BindableFragment<ViewDataBinding>` / `BindableActivity<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
+Still used by some dialogs. They extend `BindableDialogFragment<ViewDataBinding>` / `BindableBottomSheetDialogFragment<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
 
 ### Theme
 
 `AppTheme` (in `core/.../ui/theme/Theme.kt`) respects the system dark/light setting.
-- `AppNavFragment` applies it once for all Navigation 3 screens, so do not wrap screens or in-tree sheets/dialogs in `AppTheme` again.
-- Only standalone roots apply it themselves: activities such as `PaywallActivity`, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
+- `MainActivity` applies it once for all Navigation 3 screens, so do not wrap screens or in-tree sheets/dialogs in `AppTheme` again.
+- Only standalone roots apply it themselves: other activities, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
 
 ### CompositionLocals
 
 Shared objects are injected into the Compose tree via `CompositionLocal`. Check the relevant module's UI package and feature-specific files (for example, `app/.../transcoding/compose/LocalEncryptedImageLoader.kt`) for the current set.
 
-They are provided once in `AppNavFragment` (`LocalFragment`, `LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` / `MainTabsScreen` (`LocalNavigator`, `LocalMainMenuPadding`). `LocalFragment` is the wrapper fragment. Use its `childFragmentManager` to show `DialogFragment`s from Compose, and use it for APIs that still need a `Fragment`, such as `BiometricPrompt`.
+They are provided once in `MainActivity` (`LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` / `MainTabsScreen` (`LocalNavigator`, `LocalMainMenuPadding`). To show `DialogFragment`s from Compose or for APIs that need a `FragmentActivity`, such as `BiometricPrompt`, use `LocalActivity.current as? FragmentActivity` and its `supportFragmentManager`.
 
 ### Compose Components
 
@@ -185,7 +186,7 @@ Check the owning module's build file for the current library list. Key areas to 
 - **Jetpack Compose + Material3** — all new UI.
 - **Hilt / Dagger** — DI throughout.
 - **Room** — SQLite ORM with auto-migrations.
-- **Navigation 3** — Compose navigation for all screens. **Navigation Component** remains only for the initial/onboarding → `AppNavFragment` hand-off.
+- **Navigation 3** — Compose navigation for all screens.
 - **kotlinx-serialization** — `@Serializable` navigation routes.
 - **Coil** — image loading; there is a custom `EncryptedImageFetcher` in `transcoding/` that decrypts on-the-fly.
 - **ExoPlayer / Media3** — video playback.

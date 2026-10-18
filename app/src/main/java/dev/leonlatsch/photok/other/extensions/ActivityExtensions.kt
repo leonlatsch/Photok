@@ -1,10 +1,8 @@
 package dev.leonlatsch.photok.other.extensions
 
 import android.app.Activity
-import android.os.Build
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,3 +24,8 @@ inline fun AppCompatActivity.launchLifecycleAwareJob(
     state: Lifecycle.State = Lifecycle.State.CREATED,
     crossinline block: suspend () -> Unit
 ) = lifecycleScope.launch { repeatOnLifecycle(state) { block() } }
+
+fun Activity.hideKeyboard() {
+    val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+}
