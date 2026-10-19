@@ -36,7 +36,8 @@ import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
 private const val KEK_SIZE = 256
-const val PASSWORD_KEK_ITERATIONS = 100_000
+const val PASSWORD_KEK_ITERATIONS = 600_000
+private const val LEGACY_V2_KDF_ITERATIONS = 100_000
 
 class PasswordVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
@@ -130,7 +131,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
                 password = request.password,
                 salt = vmkSalt,
                 kdf = Kdf.PBKDF2WithHmacSHA256,
-                kdfIterations = PASSWORD_KEK_ITERATIONS,
+                kdfIterations = LEGACY_V2_KDF_ITERATIONS,
                 keySize = KEK_SIZE,
             )
         }

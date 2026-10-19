@@ -19,6 +19,8 @@ package dev.leonlatsch.photok.encryption.domain
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
+import dev.leonlatsch.photok.encryption.domain.handlers.PASSWORD_KEK_ITERATIONS
+import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.data.Config
 import java.security.SecureRandom
@@ -45,8 +47,8 @@ class ChangePasswordUseCase @Inject constructor(
         val newKek = keyGen.derivePasswordKeyEncryptionKey(
             password = newPassword,
             salt = newSalt,
-            kdf = requireNotNull(currentProtection.params.kdf) { "Password protection is missing KDF" },
-            kdfIterations = requireNotNull(currentProtection.params.kdfIterations) { "Password protection is missing KDF iterations" },
+            kdf = Kdf.PBKDF2WithHmacSHA256,
+            kdfIterations = PASSWORD_KEK_ITERATIONS,
             keySize = currentProtection.params.keySize,
         )
 
@@ -59,6 +61,8 @@ class ChangePasswordUseCase @Inject constructor(
         val newParams = currentProtection.params.copy(
             salt = Base64.encode(newSalt),
             iv = Base64.encode(newIv),
+            kdf = Kdf.PBKDF2WithHmacSHA256,
+            kdfIterations = PASSWORD_KEK_ITERATIONS,
         )
 
         val newProtection = currentProtection.copy(
