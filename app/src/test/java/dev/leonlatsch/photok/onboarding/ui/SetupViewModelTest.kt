@@ -16,16 +16,21 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import android.app.Activity
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.settings.data.Config
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -52,12 +57,16 @@ class SetupViewModelTest {
     private val vaultService = mockk<VaultService>(relaxed = true)
     private val sessionRepository = mockk<SessionRepository>(relaxed = true)
     private val session = mockk<VaultSession>()
+    private val activity = mockk<Activity>()
 
     private lateinit var viewModel: SetupViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
+
+        mockkStatic(EXTENSIONS)
+        every { activity.areBiometricsAvailable() } returns true
 
         coEvery { vaultService.unlock(UnlockRequest.Password(PASSWORD)) } returns
             Result.success(session)
@@ -73,6 +82,7 @@ class SetupViewModelTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        unmockkStatic(EXTENSIONS)
     }
 
     @Test
@@ -129,10 +139,10 @@ class SetupViewModelTest {
     fun `setup creates the vault and continues to biometric unlock`() = runTest {
         enterPasswords(PASSWORD, PASSWORD)
 
-        viewModel.handleUiEvent(SetupUiEvent.Setup)
+        viewModel.handleUiEvent(SetupUiEvent.Setup(activity))
 
         assertEquals(
-            SetupNavigationEvent.ShowBiometricUnlock,
+            SetupNavigationEvent.SetupBiometricUnlock,
             viewModel.navigationEvents.first(),
         )
         coVerify {
@@ -145,11 +155,25 @@ class SetupViewModelTest {
     }
 
     @Test
+    fun `setup continues to recovery phrase without biometrics`() = runTest {
+        every { activity.areBiometricsAvailable() } returns false
+        enterPasswords(PASSWORD, PASSWORD)
+
+        viewModel.handleUiEvent(SetupUiEvent.Setup(activity))
+
+        assertEquals(
+            SetupNavigationEvent.SetupRecoveryPhrase,
+            viewModel.navigationEvents.first(),
+        )
+        assertEquals(OnboardingRoute.RecoveryPhraseSetup.stepKey(), config.systemOnboardingStep)
+    }
+
+    @Test
     fun `setup shows an error when unlocking fails`() = runTest {
         coEvery { vaultService.unlock(any()) } returns Result.failure(IllegalStateException())
         enterPasswords(PASSWORD, PASSWORD)
 
-        viewModel.handleUiEvent(SetupUiEvent.Setup)
+        viewModel.handleUiEvent(SetupUiEvent.Setup(activity))
 
         assertEquals(SetupNavigationEvent.ShowError, viewModel.navigationEvents.first())
         verify(exactly = 0) { sessionRepository.set(any()) }
@@ -159,7 +183,7 @@ class SetupViewModelTest {
     fun `setup with mismatching passwords keeps the form editable`() = runTest {
         enterPasswords(PASSWORD, "different")
 
-        viewModel.handleUiEvent(SetupUiEvent.Setup)
+        viewModel.handleUiEvent(SetupUiEvent.Setup(activity))
         viewModel.handleUiEvent(SetupUiEvent.ConfirmPasswordChanged(PASSWORD))
 
         val state = viewModel.uiState.first { it.confirmPassword == PASSWORD }
@@ -175,5 +199,6 @@ class SetupViewModelTest {
 
     private companion object {
         const val PASSWORD = "correct horse battery"
+        const val EXTENSIONS = "dev.leonlatsch.photok.other.extensions.ExtensionsKt"
     }
 }
