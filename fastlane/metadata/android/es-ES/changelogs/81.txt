@@ -1,0 +1,5 @@
+- Configuración totalmente nueva: Empezar con Photok nunca había sido tan agradable. Configura tu bóveda, protégela a tu manera y pon a salvo tus primeras fotos en un momento
+- Medidor de seguridad de la contraseña en tiempo real y cuánto tardarían en descifrarla
+- Nuevo diseño de la frase de recuperación: Muéstrala como palabras o código QR y guárdala en la galería, en un archivo, en el portapapeles o compártela
+- Restaurar con tu frase de recuperación es más fácil
+- Correcciones y mejoras

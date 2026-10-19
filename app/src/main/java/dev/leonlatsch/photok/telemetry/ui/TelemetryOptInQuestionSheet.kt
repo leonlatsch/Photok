@@ -30,12 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,46 +40,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.other.openUrl
-import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
-import dev.leonlatsch.photok.telemetry.domain.TelemetryEnabledByDefault
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun TelemetryOptInQuestionSheet() {
-    val config = LocalConfig.current
-    var visible by rememberSaveable { mutableStateOf(false) }
+fun TelemetryOptInQuestionSheet(onDismissRequest: () -> Unit) {
+    val viewModel: TelemetryViewModel = hiltViewModel()
 
-    LaunchedEffect(Unit) {
-        config ?: return@LaunchedEffect
-
-        if (
-            !TelemetryEnabledByDefault
-            && !config.telemetryAskedForOptIn
-            && !config.justFinishedSetup
-            && config.lastUsedUnlockMethod != VaultProtectionType.RecoveryPhrase
-        ) {
-            delay(300)
-            visible = true
-            config.telemetryAskedForOptIn = true
-        }
-    }
-
-    if (visible) {
-        val viewModel: TelemetryViewModel = hiltViewModel()
-
-        SheetContent(
-            updateEnabled = {
-                viewModel.updateTelemetryEnabled(it)
-            },
-            onDismissRequest = { visible = false },
-        )
-    }
-
+    SheetContent(
+        updateEnabled = {
+            viewModel.updateTelemetryEnabled(it)
+        },
+        onDismissRequest = onDismissRequest,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

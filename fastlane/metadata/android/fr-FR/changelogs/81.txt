@@ -1,0 +1,5 @@
+- Configuration entièrement repensée : Démarrer avec Photok n'a jamais été aussi agréable. Créez votre coffre, protégez-le à votre façon et sécurisez vos premières photos en un instant
+- Indicateur de robustesse du mot de passe en direct et temps estimé pour le craquer
+- Phrase de récupération repensée : En mots ou en QR code, à enregistrer dans la galerie, un fichier, le presse-papiers ou à partager
+- Restauration simplifiée avec la phrase de récupération
+- Corrections et améliorations
