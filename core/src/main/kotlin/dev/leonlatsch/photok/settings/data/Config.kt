@@ -73,6 +73,13 @@ class Config(context: Context) {
         set(value) = putString(SYSTEM_ONBOARDING_STEP, value)
 
     /**
+     * True if a recovery phrase was created for an existing vault and has not been shown to the user yet.
+     */
+    var systemShowRecoveryPhraseSheet: Boolean
+        get() = getBoolean(SYSTEM_SHOW_RECOVERY_PHRASE_SHEET, SYSTEM_SHOW_RECOVERY_PHRASE_SHEET_DEFAULT)
+        set(value) = putBoolean(SYSTEM_SHOW_RECOVERY_PHRASE_SHEET, value)
+
+    /**
      * The version code of the last app version.
      * Updates after showing new features.
      */
@@ -306,6 +313,9 @@ class Config(context: Context) {
         const val SYSTEM_FIRST_START_DEFAULT = true
 
         const val SYSTEM_ONBOARDING_STEP = "system^onboardingStep"
+
+        const val SYSTEM_SHOW_RECOVERY_PHRASE_SHEET = "system^showRecoveryPhraseSheet"
+        const val SYSTEM_SHOW_RECOVERY_PHRASE_SHEET_DEFAULT = false
 
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0

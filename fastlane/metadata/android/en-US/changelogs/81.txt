@@ -1,0 +1,5 @@
+- All-new setup: Getting started with Photok has never felt better. Set up your vault, protect it your way and lock away your first photos in moments
+- Know your password is strong with a live strength meter and time-to-crack estimate
+- Redesigned recovery phrase: View it as words or a QR code and keep it safe in your gallery, a file, your clipboard or share it
+- Smoother restore with your recovery phrase
+- Bug fixes and improvements

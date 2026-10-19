@@ -32,16 +32,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsUiEvent
 import dev.leonlatsch.photok.gallery.albums.ui.AlbumsViewModel
-import dev.leonlatsch.photok.gallery.albums.domain.DisplayMode
 import dev.leonlatsch.photok.gallery.albums.ui.navigation.AlbumsNavigator
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.main.ui.StartupSheets
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
-import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -115,6 +114,5 @@ fun AlbumsScreen(viewModel: AlbumsViewModel = hiltViewModel()) {
         ImportSharedDialog()
     }
 
-    NewFeaturesSheet()
-    TelemetryOptInQuestionSheet()
+    StartupSheets()
 }

@@ -1,0 +1,5 @@
+- Configurazione tutta nuova: Iniziare con Photok non è mai stato così piacevole. Crea la tua cassaforte, proteggila a modo tuo e metti al sicuro le tue prime foto in un attimo
+- Indicatore in tempo reale della sicurezza della password e del tempo necessario per violarla
+- Frase di recupero ridisegnata: Mostrala come parole o codice QR e salvala nella galleria, in un file, negli appunti o condividila
+- Ripristino più semplice con la frase di recupero
+- Correzioni e miglioramenti

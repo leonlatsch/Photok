@@ -1,0 +1,5 @@
+- Yepyeni kurulum: Photok'a başlamak hiç bu kadar keyifli olmamıştı. Kasanı oluştur, dilediğin gibi koru ve ilk fotoğraflarını anında güvene al
+- Şifrenin gücünü anlık olarak gör ve kırılmasının ne kadar süreceğini öğren
+- Yeniden tasarlanan kurtarma kelimeleri: Kelime ya da QR kod olarak göster; galeriye, dosyaya, panoya kaydet veya paylaş
+- Kurtarma kelimeleriyle geri yükleme artık daha kolay
+- Hata düzeltmeleri ve iyileştirmeler
