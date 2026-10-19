@@ -196,10 +196,11 @@ private fun AboutContent(
     }
 
 
-    NewFeaturesSheet(
-        overrideShow = showNewsDialog,
-        onDismissOverride = { showNewsDialog = false},
-    )
+    if (showNewsDialog) {
+        NewFeaturesSheet(
+            onDismissRequest = { showNewsDialog = false },
+        )
+    }
 }
 
 @PreviewLightDark

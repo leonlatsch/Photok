@@ -43,14 +43,13 @@ import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
 import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
+import dev.leonlatsch.photok.main.ui.StartupSheets
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
-import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
-import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
 import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
@@ -149,6 +148,5 @@ fun GalleryScreen(
         ImportSharedDialog()
     }
 
-    NewFeaturesSheet()
-    TelemetryOptInQuestionSheet()
+    StartupSheets()
 }
