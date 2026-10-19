@@ -1,0 +1,5 @@
+- Komplett neue Einrichtung: Der Start mit Photok war noch nie so angenehm. Richte deinen Tresor ein, schütze ihn auf deine Art und sichere deine ersten Fotos im Handumdrehen
+- Live-Anzeige der Passwortstärke und wie lange das Knacken dauern würde
+- Neues Design für Wiederherstellungswörter: Als Wörter oder QR-Code anzeigen und in der Galerie, als Datei, in der Zwischenablage speichern oder teilen
+- Einfacheres Wiederherstellen per Wiederherstellungswörter
+- Fehlerbehebungen und Verbesserungen
