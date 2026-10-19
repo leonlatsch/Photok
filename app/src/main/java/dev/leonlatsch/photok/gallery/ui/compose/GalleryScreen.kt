@@ -16,9 +16,11 @@
 
 package dev.leonlatsch.photok.gallery.ui.compose
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
@@ -30,6 +32,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.fragment.app.FragmentActivity
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
@@ -37,91 +41,114 @@ import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.gallery.ui.GalleryViewModel
+import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigator
+import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.news.newfeatures.ui.NewFeaturesSheet
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.telemetry.ui.TelemetryOptInQuestionSheet
-import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(
-    viewModel: GalleryViewModel,
+    viewModel: GalleryViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
+
+    ObserveAsEvents(viewModel.eventsFlow) { event ->
+        fragmentActivity ?: return@ObserveAsEvents
+        GalleryNavigator.navigate(event, fragmentActivity, navigator)
+    }
+
+    ObserveAsEvents(viewModel.photoActions) { action ->
+        fragmentActivity ?: return@ObserveAsEvents
+        PhotoActionsNavigator.navigate(action, fragmentActivity, navigator)
+    }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val gridState = rememberLazyGridState()
 
-    AppTheme {
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    title = { AppName() },
-                    windowInsets = WindowInsets.statusBars,
-                    scrollBehavior = scrollBehavior,
-                    actions = {
-                        if (uiState is GalleryUiState.Content) {
-                            val sort = (uiState as GalleryUiState.Content).sort
+    ScrollToTopEffect(scrollBehavior.state) {
+        gridState.animateScrollToItem(0)
+    }
 
-                            var showSortMenu by remember { mutableStateOf(false) }
+    Scaffold(
+        topBar = {
+            LargeTopAppBar(
+                title = { AppName() },
+                windowInsets = WindowInsets.statusBars,
+                scrollBehavior = scrollBehavior,
+                actions = {
+                    if (uiState is GalleryUiState.Content) {
+                        val sort = (uiState as GalleryUiState.Content).sort
 
-                            SortingMenuIconButton(
-                                config = SortConfig.Gallery,
-                                sort = sort,
-                                onClick = { showSortMenu = true },
-                            )
+                        var showSortMenu by remember { mutableStateOf(false) }
 
-                            SortingMenu(
-                                config = SortConfig.Gallery,
-                                expanded = showSortMenu,
-                                onDismissRequest = { showSortMenu = false },
-                                sort = sort,
-                                onSortChanged = { sort ->
-                                    viewModel.handleUiEvent(GalleryUiEvent.SortChanged(sort))
-                                }
-                            )
-                        }
+                        SortingMenuIconButton(
+                            config = SortConfig.Gallery,
+                            sort = sort,
+                            onClick = { showSortMenu = true },
+                        )
+
+                        SortingMenu(
+                            config = SortConfig.Gallery,
+                            expanded = showSortMenu,
+                            onDismissRequest = { showSortMenu = false },
+                            sort = sort,
+                            onSortChanged = { sort ->
+                                viewModel.handleUiEvent(GalleryUiEvent.SortChanged(sort))
+                            }
+                        )
                     }
-                )
-            },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
-        ) { contentPadding ->
-            val modifier = Modifier.padding(top = contentPadding.calculateTopPadding())
-
-            when (uiState) {
-                is GalleryUiState.Empty -> GalleryPlaceholder(
-                    handleUiEvent = { viewModel.handleUiEvent(it) },
-                    modifier = modifier,
-                )
-
-                is GalleryUiState.Content -> {
-                    val contentUiState = uiState as GalleryUiState.Content
-                    val multiSelectionState = rememberMultiSelectionState(
-                        items = contentUiState.photos.map { it.uuid }
-                    )
-
-                    GalleryContent(
-                        uiState = contentUiState,
-                        handleUiEvent = { viewModel.handleUiEvent(it) },
-                        multiSelectionState = multiSelectionState,
-                        modifier = modifier,
-                    )
-
-                    AlbumPickerDialog(
-                        visible = contentUiState.showAlbumSelectionDialog,
-                        selectedItemIds = multiSelectionState.selectedItems.value.toList(),
-                        onAlbumSelected = { multiSelectionState.cancelSelection() },
-                        onDismissRequest = { viewModel.handleUiEvent(GalleryUiEvent.CancelAlbumSelection) }
-                    )
                 }
-            }
+            )
+        },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+    ) { contentPadding ->
+        val modifier = Modifier.padding(top = contentPadding.calculateTopPadding())
+        val mainMenuPadding = LocalMainMenuPadding.current
 
-            ImportSharedDialog()
+        when (uiState) {
+            is GalleryUiState.Empty -> GalleryPlaceholder(
+                handleUiEvent = { viewModel.handleUiEvent(it) },
+                modifier = modifier.padding(mainMenuPadding),
+            )
+
+            is GalleryUiState.Content -> {
+                val contentUiState = uiState as GalleryUiState.Content
+                val multiSelectionState = rememberMultiSelectionState(
+                    items = contentUiState.photos.map { it.uuid }
+                )
+
+                GalleryContent(
+                    uiState = contentUiState,
+                    handleUiEvent = { viewModel.handleUiEvent(it) },
+                    multiSelectionState = multiSelectionState,
+                    modifier = modifier,
+                    contentPadding = mainMenuPadding,
+                    gridState = gridState,
+                )
+
+                AlbumPickerDialog(
+                    visible = contentUiState.showAlbumSelectionDialog,
+                    selectedItemIds = multiSelectionState.selectedItems.value.toList(),
+                    onAlbumSelected = { multiSelectionState.cancelSelection() },
+                    onDismissRequest = { viewModel.handleUiEvent(GalleryUiEvent.CancelAlbumSelection) }
+                )
+            }
         }
 
-        NewFeaturesSheet()
-        TelemetryOptInQuestionSheet()
+        ImportSharedDialog()
     }
+
+    NewFeaturesSheet()
+    TelemetryOptInQuestionSheet()
 }

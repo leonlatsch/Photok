@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">版权所有 \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">加载中 ……</string>
     <string name="common_password">密码</string>
     <string name="common_delete">删除</string>
     <string name="common_export">导出</string>
@@ -29,34 +27,47 @@
     <string name="common_no">否</string>
     <string name="common_ok">好</string>
     <string name="common_are_you_sure">你确定吗？</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">更多</string>
     <string name="common_cancel">取消</string>
+    <string name="common_canceling">正在取消…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">创建</string>
     <string name="common_empty">空</string>
     <string name="common_rename">重命名</string>
     <string name="common_try_again">重试</string>
     <string name="common_continue">继续</string>
     <string name="common_hold_to_confirm">长按确认</string>
+    <string name="common_back">返回</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">完成</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>
-    <string name="import_permission_rationale">Photok 需要访问你的存储来导入文件</string>
     <string name="import_sharted_question">你想导入 %1$d 个文件吗？</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">创建你的密码</string>
     <string name="setup_enter_password">输入你的密码</string>
     <string name="setup_confirm_password">确认你的密码</string>
-    <string name="setup_password_strength_label">密码强度:</string>
-    <string name="setup_button">创建</string>
-    <string name="setup_password_strength_very_weak">非常弱</string>
-    <string name="setup_password_strength_weak">弱</string>
-    <string name="setup_password_strength_moderate">中等</string>
-    <string name="setup_password_strength_strong">强</string>
-    <string name="setup_password_strength_very_strong">非常强</string>
     <string name="setup_password_match_warning">\u26A0 密码不匹配</string>
-    <string name="setupSetup">设置</string>
+    <string name="setup_password_strength_very_weak">非常弱</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">弱</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">中等</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">强</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">非常强</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">破解需要 %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">比宇宙存在的时间还长</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">破解时间是如何计算的？</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">模式分析</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn 会检查常见密码、单词、姓名和模式，并计算所需的猜测次数。</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">刻意放慢</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 让每次猜测都很慢。我们假设攻击者使用一块高端显卡，每秒约 %1$s 次猜测。多块显卡会更快。</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">技术细节</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">密钥派生</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">迭代次数</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">攻击速度</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">每秒 %1$s 次猜测</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">了解更多</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">GitHub 上的 zxcvbn4j</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">Dropbox 出品的 zxcvbn</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Photok 如何加密你的文件</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">解锁你的文件库</string>
@@ -109,13 +120,10 @@
     <string name="view_photo_video_playback_speed">播放速度</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">锁定</string>
     <string name="menu_main_settings">设置</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">选择全部</string>
-    <string name="menu_ms_delete">删除</string>
-    <string name="menu_ms_export">导出</string>
     <string name="menu_ms_info">选中了 %1$d 个项目 </string>
     <string name="menu_ms_add_to_album">添加到相簿</string>
     <string name="menu_ms_remove_from_album">从相簿中删除</string>
@@ -135,9 +143,6 @@
     <string name="export_and_delete_are_you_sure">你确定要把  %1$d 个文件<b>导回</b>图库并删除它们吗？</string>
     <string name="export_and_delete_are_you_sure_this">你确定要把这个文件<b>导入</b>图库并删除它吗？</string>
     <string name="export_exporting">导出文件中……</string>
-    <string name="export_and_delete_finished">已导出并删除</string>
-    <string name="export_permission_rationale">Photok 需要访问你的存储来导出文件。</string>
-    <string name="export_finished">已导出</string>
 
     <!-- ABOUT -->
     <string name="about_version">版本号:</string>
@@ -147,7 +152,6 @@
     <string name="about_third_party">第三方软件</string>
     <string name="about_privacy_policy">隐私政策</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">新功能</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">设置</string>
@@ -163,8 +167,7 @@
 
     <string name="settings_category_security">安全</string>
     <string name="settings_security_allow_screenshots_title">允许截屏</string>
-    <string name="settings_security_allow_screenshots_summary">允许截屏。需要重新启动应用</string>
-    <string name="settings_security_change_password_title">更改密码</string>
+    <string name="settings_security_allow_screenshots_summary">允许截屏。</string>
     <string name="settings_security_change_password_summary">更改你的密码</string>
     <string name="settings_security_biometric_title">生物特征解锁</string>
     <string name="settings_security_biometric_summary">使用生物识别解锁 Photok</string>
@@ -172,7 +175,6 @@
     <string name="settings_security_recovery_phrase_title">恢复短语</string>
     <string name="settings_security_recovery_phrase_summary">管理恢复短语</string>
     <string name="settings_security_timeout_title">自动锁定超时</string>
-    <string name="settings_security_timeout_summary">后台运行给定时间后自动锁定文件库</string>
     <string name="settings_security_timeout_immediately">立即</string>
     <string name="settings_security_timeout_one_minute">1 分钟</string>
     <string name="settings_security_timeout_two_minute">2 分钟</string>
@@ -224,18 +226,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">更改你的密码</string>
     <string name="change_password_old_password">旧密码</string>
-    <string name="change_password_new_password">新密码</string>
     <string name="change_password_check">检查</string>
     <string name="change_password_enter_new_password">输入你的新密码</string>
     <string name="change_password_confirm_new_password">确认你的新密码</string>
     <string name="change_password_button">更改密码</string>
-    <string name="change_password_confirm_message">建议备份！<br /> 更改你的密码需要重新加密你的所有文件！你想继续吗？</string>
-    <string name="change_password_reencrypting">重新加密文件中……</string>
     <string name="change_password_done">已更改密码</string>
     <string name="change_password_recovery_phrase_used">使用了恢复短语 — 无需检查旧密码</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">验证密码</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">隐藏 Photok</string>
@@ -251,42 +247,97 @@
     <string name="settings_security_launch_code_suffix">#*#*</string>
     <string name="hide_app_hint_current_code">当前启动代码：</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">下一步</string>
-    <string name="onboarding_finish">完成</string>
-    <string name="onboarding_skip"><u>跳过</u></string>
-
-    <string name="onboarding_slide1_title">欢迎来到</string>
-    <string name="onboarding_slide1_description">一个安全存放照片的地方</string>
-    <string name="onboarding_slide2_title">创建一个密码</string>
-    <string name="onboarding_slide2_description">创建一个安全密码。你的密码用来直接在你的手机上加密你的照片。</string>
-    <string name="onboarding_slide3_title">开始导入</string>
-    <string name="onboarding_slide3_description">开始导入你的照片，并保护它们不被其他人窥视。\n你可以在导入后从系统图库中删除它们。</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">创建备份中……</string>
-    <string name="backup_restore_title">还原备份</string>
-    <string name="backup_restore_validating">验证备份中…</string>
-    <string name="backup_restore_details_created_at">创建于:</string>
-    <string name="backup_restore_details_photos_contained">包含的文件:</string>
-    <string name="backup_restore_details_compatible">兼容性:</string>
-    <string name="backup_restore_details_size">大小:</string>
-    <string name="backup_restore_button">解锁并还原</string>
-    <string name="backup_restore_invalid_file">\u26A0 无效文件</string>
-    <string name="backup_restore_processing">还原备份中……</string>
-    <string name="backup_unlock_title">解锁备份</string>
     <string name="backup_confirm_password">确认密码来创建备份</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">恢复备份</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">正在验证…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">备份无效</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">统计</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">照片</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">视频</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">相簿</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">大小</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">归档文件</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">创建时间</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">加密方式</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">兼容性</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">最新版本 (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">向后兼容 (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">解锁备份</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">解锁并恢复</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">输入备份密码</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">此备份已加密，需要用创建时使用的密码解锁。</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">此密码只用于解锁备份，不会存储在任何地方。</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">正在恢复备份</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">恢复中…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s / %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d 个文件</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">正在估算…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">剩余 %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">这可能需要一些时间。保持应用开启。</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">取消恢复</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">正在建立索引…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">所有文件已恢复，正在为你的照片和相簿建立索引。</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">恢复已取消</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s 中没有任何内容被添加到你的保险库。已经恢复的文件都已被删除。</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">恢复成功</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">恢复完成，有 1 个问题</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">恢复完成，有 %1$d 个问题</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">失败的项目</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">未知错误</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">无法打开备份</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">无法打开此文件。确认它是 Photok 备份，并且仍在此设备上。</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">此备份中没有照片</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">此归档文件不包含任何 Photok 文件，没有可恢复的内容。</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">备份不完整</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">此备份没有元数据，Photok 无法得知其中的内容。</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">无法读取备份</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">读取此备份时出错。</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">保险库中已有的照片</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">跳过</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">保留保险库中已有的副本。</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">再次导入</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">将此备份中的副本添加到保险库中已有副本的旁边。</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">此备份需要 %1$s，但只有 %2$s 可用空间。恢复前先释放一些空间。</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">备份文件不完整</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">此文件被截断了，很可能是下载或复制中断导致的。重新传输一次试试。</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">备份版本过新</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">此备份由更新版本的 Photok 创建（格式 %1$d）。更新 Photok 后才能恢复。</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">已在 %2$s 内添加 %1$d 个文件。</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">已在 %2$s 内添加 %1$d 个文件。</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">已恢复 %1$d 个相册。</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">已恢复 %1$d 个相册。</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">已跳过 %1$d 个重复项。</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">已跳过 %1$d 个重复项。</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">新功能</string>
     <string name="news_view_changelog">查看变更记录</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">恢复菜单</string>
-    <string name="recovery_menu_item_open_photok">打开 Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">重置“隐藏应用”设置</string>
-
+    <string name="news_change_kind_new">新增</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">改进</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">修复</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">全新的备份</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">恢复备份现在是一个全屏引导流程。备份和恢复也比以往更加可靠。</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">实时进度、速度和剩余时间</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">跳过或替换已有的文件</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">清晰的错误提示，而不是笼统的失败</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% 兼容你所有的旧备份</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">多项修复与改进</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">解锁和设置更加流畅，键盘不再学习你的密码，应用在后台也能可靠地锁定。</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">欢迎来到</string>
@@ -315,9 +366,6 @@
     <string name="migration_error_button">发送错误报告</string>
 
     <string name="notification_channel_background_tasks">后台任务</string>
-    <string name="migration_error_extract_data">提取数据</string>
-    <string name="migration_error_extract_confirmation_text">确定要从图库提取所有文件并不加密地放在 ZIP 文件中吗？</string>
-    <string name="migration_error_extracting_title">正在解密以制作 ZIP…</string>
 
 
     <!-- Biometric -->
@@ -360,42 +408,80 @@
     <string name="telemetry_choice_yes">分享匿名使用情况数据</string>
     <string name="telemetry_toggle">允许收集使用情况数据</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">开始使用</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">安放照片的安全之处</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">在你的手机上用你的密码加密</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">对图库和其他应用隐藏</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">无需账户，没有云端。你的数据永远不会离开这部手机</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">你的密码</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">记住你的密码并妥善保管。密码无法重置。</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">确认密码</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">轻触即可解锁</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">用指纹解锁 Photok，无需输入密码。</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">启用生物特征解锁</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">以后再说</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">改用 12 个单词</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">改用 24 个单词</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">保护你的第一批照片</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">你导入的所有内容都会立即加密。随时可以添加更多。</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">导入照片</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">一切就绪</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">你的保险库已封存。你添加的所有内容都会直接在这部手机上加密。</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">打开我的保险库</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">恢复短语</string> 
     <string name="recovery_phrase_title">你的恢复短语</string>
     <string name="recovery_phrase_description">按顺序写下这些单词并将它们存储在某个安全之处。可以使用此短语恢复对文件保险库的访问。</string>
-    <string name="recovery_phrase_confirm">已保存短语</string>
     <string name="recovery_phrase_save_warning">请保存恢复短语</string>
-    <string name="recovery_phrase_create_new">创建新短语</string>
     <string name="recovery_phrase_create_new_confirm">创建新短语会永久替代当前短语。 现有短语无法再用于还原保险库。</string> 
-    <string name="recovery_phrase_saved_to_file">已保存到 %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">单词数</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">另存为图片</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">忘记密码</string>
     <string name="recovery_phrase_restore_button">恢复</string>
-    <string name="recovery_phrase_restore_word_placeholder">单词 %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">输入恢复短语</string>
-    <string name="recovery_phrase_restore_choose_option">选择如何输入短语</string>
-    <string name="recovery_phrase_restore_option_type">手动输入</string>
     <string name="recovery_phrase_restore_option_open_file">从文件加载</string>
     <string name="recovery_phrase_restore_option_scan_qr">扫描二维码</string>
     <string name="recovery_phrase_restore_option_paste">从剪贴板粘贴</string>
-    <string name="recovery_phrase_restore_input_placeholder">逐个单词输入恢复短语</string>
     <string name="recovery_phrase_restore_unlocked">已解锁</string>
-    <string name="recovery_phrase_restore_unlocking">正在解锁&#x2026;</string>
     <string name="recovery_phrase_restore_error_generic">无法恢复保险库。 请检查短语并重试。</string>
     <string name="recovery_phrase_restore_error_invalid">恢复短语无效。请仔细检查输入的单词。</string>
     <string name="recovery_phrase_restore_error_invalid_qr">二维码不含有效恢复短语。</string>
     <string name="recovery_phrase_restore_source_qr">从二维码扫描</string>
     <string name="recovery_phrase_restore_source_file">从 %1$s 加载</string>
     <string name="recovery_phrase_restore_source_clipboard">从剪贴板粘贴</string>
-    <string name="recovery_phrase_restore_camera_permission_button">请求相机权限</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">需要相机权限来扫描二维码。</string>
-    <string name="permission_gate_change_in_settings">在设置中更改</string>
+    <string name="recovery_phrase_restore_subtitle">输入恢复短语中的单词来解锁你的保险库。</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">输入单词</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">短语</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">二维码</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">保险库已解锁</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d 个单词</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">轻触卡片以单词显示</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">轻触卡片以二维码显示</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">你也可以截取二维码的屏幕截图</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">正在打开你的保险库</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">保存到相册</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">保存为图片</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">更多选项</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">以图片分享</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">保存为文本文件</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">复制到剪贴板</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">12 个单词的新短语</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">24 个单词的新短语</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">已保存到相册</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">在 Pictures/Photok 中查找。如果你的图库会备份到云端，这张图片也会被上传</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">已保存到 %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">已保存为文件</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">在你选择的文件夹中查找</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">已分享到 %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">已分享</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">确认它已送达你发送的地方</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">已复制到剪贴板</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">把它粘贴到这部手机以外的安全之处</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">已截屏</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">在你的“截屏”相簿中查找</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

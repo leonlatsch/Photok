@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020-2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Cargando…</string>
     <string name="common_password">Contraseña</string>
     <string name="common_delete">Borrar</string>
     <string name="common_export">Exportar</string>
@@ -29,34 +27,47 @@
     <string name="common_no">No</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">¿Estás seguro?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Más</string>
     <string name="common_cancel">Cancelar</string>
+    <string name="common_canceling">Cancelando…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Crear</string>
     <string name="common_empty">Vacío</string>
     <string name="common_rename">Renombrar</string>
     <string name="common_try_again">Intentar de nuevo</string>
     <string name="common_continue">Continuar</string>
     <string name="common_hold_to_confirm">Mantén pulsado para confirmar</string>
+    <string name="common_back">Atrás</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Hecho</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando archivo(s)</string>
-    <string name="import_permission_rationale">Photok necesita acceder al almacenamiento para importar archivos.</string>
     <string name="import_sharted_question">¿Quieres importar %1$d archivo(s)?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Crea tu contraseña</string>
     <string name="setup_enter_password">Introduce tu contraseña</string>
     <string name="setup_confirm_password">Confirma tu contraseña</string>
-    <string name="setup_password_strength_label">Seguridad de la contraseña:</string>
-    <string name="setup_button">Crear</string>
-    <string name="setup_password_strength_very_weak">Muy débil</string>
-    <string name="setup_password_strength_weak">Débil</string>
-    <string name="setup_password_strength_moderate">Moderada</string>
-    <string name="setup_password_strength_strong">Fuerte</string>
-    <string name="setup_password_strength_very_strong">Muy fuerte</string>
     <string name="setup_password_match_warning">\u26A0 Las contraseñas no coinciden</string>
-    <string name="setupSetup">Inicio</string>
+    <string name="setup_password_strength_very_weak">Muy débil</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Débil</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Moderada</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Fuerte</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Muy fuerte</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Descifrada en %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Más que la edad del universo</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">¿Cómo se calcula el tiempo para descifrarla?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Análisis de patrones</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn busca contraseñas comunes, palabras, nombres y patrones, y cuenta los intentos necesarios.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Lento a propósito</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 hace que cada intento sea lento. Suponemos una tarjeta gráfica de gama alta con unos %1$s intentos por segundo. Varias tarjetas son más rápidas.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Detalles técnicos</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Derivación de clave</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Iteraciones</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Velocidad de ataque</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s intentos/s</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">Más información</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j en GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn de Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Cómo cifra Photok tus archivos</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Desbloquea tu baúl</string>
@@ -109,13 +120,10 @@
     <string name="view_photo_video_playback_speed">Velocidad de reproducción</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Bloquear</string>
     <string name="menu_main_settings">Ajustes</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Seleccionar todo</string>
-    <string name="menu_ms_delete">Borrar</string>
-    <string name="menu_ms_export">Exportar</string>
     <string name="menu_ms_info">%1$d elemento(s) seleccionado(s)</string>
     <string name="menu_ms_add_to_album">Añadir al álbum</string>
     <string name="menu_ms_remove_from_album">Eliminar del álbum</string>
@@ -135,9 +143,6 @@
     <string name="export_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería?</string>
     <string name="export_and_delete_are_you_sure_this">¿Estás seguro de que quieres <b>exportar</b> este archivo a tu galería y eliminarlo?</string>
     <string name="export_exporting">Exportando archivo(s)…</string>
-    <string name="export_permission_rationale">Photok necesita acceder a tu almacenamiento interno para exportar archivos.</string>
-    <string name="export_finished">Exportado</string>
-    <string name="export_and_delete_finished">Exportado y eliminado</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versión:</string>
@@ -147,7 +152,6 @@
     <string name="about_third_party">Software de terceros</string>
     <string name="about_privacy_policy">Política de privacidad</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Novedades</string>
 
 
     <!-- SETTINGS -->
@@ -164,8 +168,7 @@
 
     <string name="settings_category_security">Seguridad</string>
     <string name="settings_security_allow_screenshots_title">Permitir capturas de pantalla</string>
-    <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla. Requiere reinicio.</string>
-    <string name="settings_security_change_password_title">Cambiar contraseña</string>
+    <string name="settings_security_allow_screenshots_summary">Permitir tomar capturas de pantalla.</string>
     <string name="settings_security_change_password_summary">Cambia tu contraseña</string>
     <string name="settings_security_biometric_title">Desbloqueo biométrico</string>
     <string name="settings_security_biometric_summary">Desbloquear Photok con tus datos biométricos.</string>
@@ -173,7 +176,6 @@
     <string name="settings_security_recovery_phrase_title">Frase de recuperación</string>
     <string name="settings_security_recovery_phrase_summary">Gestiona tu frase de recuperación.</string>
     <string name="settings_security_timeout_title">Tiempo de espera de bloqueo automático</string>
-    <string name="settings_security_timeout_summary">Bloqueo automático en segundo plano después de un tiempo predeterminado.</string>
     <string name="settings_security_timeout_immediately">Inmediatamente</string>
     <string name="settings_security_timeout_one_minute">1 minuto</string>
     <string name="settings_security_timeout_two_minute">2 minutos</string>
@@ -227,18 +229,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Cambiar contraseña</string>
     <string name="change_password_old_password">Contraseña antigua</string>
-    <string name="change_password_new_password">Contraseña nueva</string>
     <string name="change_password_check">Comprobar</string>
     <string name="change_password_enter_new_password">Introduce tu nueva contraseña</string>
     <string name="change_password_confirm_new_password">Confirma tu nueva contraseña</string>
     <string name="change_password_button">Cambiar contraseña</string>
-    <string name="change_password_confirm_message">¡Copia de seguridad recomendada!<br /> ¡Cambiar tu contraseña requiere que todos tus archivos se vuelvan a cifrar! ¿Estás seguro de que quieres continuar?</string>
-    <string name="change_password_reencrypting">Cifrando archivo(s)…</string>
     <string name="change_password_done">Tu contraseña ha sido cambiada</string>
     <string name="change_password_recovery_phrase_used">Se usó la frase de recuperación — no es necesario verificar la contraseña anterior</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verificar contraseña</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Ocultar Photok</string>
@@ -252,42 +248,97 @@
     <string name="hide_app_hint">Una vez oculto, Photok solo podrá ser lanzado desde el teclado de la app de teléfono, con tu pin secreto.</string>
     <string name="hide_app_hint_current_code">Código de lanzamiento actual:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Siguiente</string>
-    <string name="onboarding_finish">Terminar</string>
-    <string name="onboarding_skip"><u>Saltar</u></string>
-
-    <string name="onboarding_slide1_title">Bienvenido a</string>
-    <string name="onboarding_slide1_description">Un lugar seguro para guardar tus fotos.</string>
-    <string name="onboarding_slide2_title">Crea una contraseña</string>
-    <string name="onboarding_slide2_description">Crea una contraseña segura. Tu contraseña se usa para cifrar las fotos directamente en tu teléfono.</string>
-    <string name="onboarding_slide3_title">Empieza a importar</string>
-    <string name="onboarding_slide3_description">Comienza a importar tus fotos y mantenlas a salvo de los demás.\nPodrás eliminarlas después en tu galería.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Creando copia de seguridad…</string>
-    <string name="backup_restore_title">Restaurar copia de seguridad</string>
-    <string name="backup_restore_validating">Validando copia de seguridad…</string>
-    <string name="backup_restore_details_created_at">Creado el:</string>
-    <string name="backup_restore_details_photos_contained">Archivos incluidos:</string>
-    <string name="backup_restore_details_compatible">Compatible:</string>
-    <string name="backup_restore_details_size">Tamaño:</string>
-    <string name="backup_restore_button">Desbloquear y Restaurar</string>
-    <string name="backup_restore_invalid_file">\u26A0 Fichero Inválido</string>
-    <string name="backup_restore_processing">Restaurando copia de seguridad…</string>
-    <string name="backup_unlock_title">Desbloquear copia de seguridad</string>
     <string name="backup_confirm_password">Introduce tu contraseña para crear una copia de seguridad.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Restaurar copia de seguridad</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Validando…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Copia de seguridad no válida</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Estadísticas</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Fotos</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Vídeos</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Álbumes</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Tamaño</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Archivo</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Creado</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Cifrado</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Compatibilidad</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Actualizado (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Compatible con versiones anteriores (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Desbloquear copia de seguridad</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Desbloquear y restaurar</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Introduce la contraseña de la copia de seguridad</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">La copia de seguridad está cifrada y hay que desbloquearla con la contraseña que se usó para crearla.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Esta contraseña solo se usará para desbloquear la copia de seguridad y no se guardará en ningún sitio.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Restaurando copia de seguridad</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Restaurando…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s de %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d archivos</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Calculando…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">%1$s restantes</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">Esto puede tardar un rato. Mantén la app abierta.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Cancelar restauración</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">Indexando…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Todos los archivos restaurados, indexando tus fotos y álbumes.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">Restauración cancelada</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">No se ha añadido nada de %1$s a tu baúl. Todos los archivos ya restaurados se han vuelto a eliminar.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">Restaurado correctamente</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Restaurado con 1 problema</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Restaurado con %1$d problemas</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">Elementos fallidos</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Error desconocido</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">No se puede abrir la copia de seguridad</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">No se ha podido abrir este archivo. Asegúrate de que es una copia de seguridad de Photok y de que sigue disponible en este dispositivo.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">No hay fotos en esta copia de seguridad</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Este archivo comprimido no contiene ningún archivo de Photok, así que no hay nada que restaurar.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">La copia de seguridad está incompleta</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Esta copia de seguridad no tiene metadatos, así que Photok no puede saber qué contiene.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">No se puede leer la copia de seguridad</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Algo ha salido mal al leer esta copia de seguridad.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Fotos que ya están en tu baúl</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Omitirlas</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Conserva la copia que ya está en tu baúl.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">Importarlas de nuevo</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Añade la versión de esta copia de seguridad junto a la que ya está en tu baúl.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">Esta copia de seguridad necesita %1$s pero solo hay %2$s libres. Libera espacio antes de restaurar.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">El archivo de copia de seguridad está incompleto</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Este archivo se ha quedado cortado, seguramente por una descarga o copia interrumpida. Vuelve a transferirlo.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">La copia de seguridad es demasiado nueva</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Esta copia de seguridad se creó con una versión más reciente de Photok (formato %1$d). Actualiza Photok para restaurarla.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">%1$d archivo añadido en %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d archivos añadidos en %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d álbum restaurado.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d álbumes restaurados.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d duplicado omitido.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d duplicados omitidos.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Novedades en</string>
     <string name="news_view_changelog">Ver registro de cambios</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Menú de Recuperación</string>
-    <string name="recovery_menu_item_open_photok">Abrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Restablecer la configuración de ocultar aplicación</string>
-
+    <string name="news_change_kind_new">Nuevo</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Mejorado</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Corregido</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Copias de seguridad totalmente nuevas</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">Restaurar una copia de seguridad ahora es un proceso guiado a pantalla completa. Las copias y restauraciones son también más fiables que nunca.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Progreso en vivo, velocidad y tiempo restante</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Omite o reemplaza los archivos que ya tienes</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Errores claros en lugar de un fallo genérico</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% compatible con todas tus copias antiguas</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">Varias correcciones y mejoras</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Desbloqueo y configuración más fluidos, los teclados ya no aprenden tu contraseña y la app se bloquea de forma fiable en segundo plano.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Bienvenido a</string>
@@ -316,9 +367,6 @@
     <string name="migration_error_button">Enviar informe de error</string>
 
     <string name="notification_channel_background_tasks">Tareas en segundo plano</string>
-    <string name="migration_error_extract_data">Extraer datos</string>
-    <string name="migration_error_extract_confirmation_text">¿Estás seguro de que quieres extraer todos tus archivos SIN CIFRAR a un archivo ZIP?</string>
-    <string name="migration_error_extracting_title">Descifrando a ZIP…</string>
 
 
     <!-- Biometric -->
@@ -361,42 +409,80 @@
     <string name="telemetry_choice_yes">Compartir datos anónimos de uso</string>
     <string name="telemetry_toggle">Permitir la recopilación de datos de uso</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Empezar</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Un lugar seguro para tus fotos</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Cifradas en tu teléfono con tu contraseña</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Ocultas de tu galería y de otras apps</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Sin cuenta, sin nube. Tus datos nunca salen de este teléfono</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Tu contraseña</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Recuerda tu contraseña y guárdala en un lugar seguro. No se puede restablecer.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Confirmar contraseña</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Desbloquea con un toque</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Desbloquea Photok con tu huella en lugar de escribir tu contraseña.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">Activar desbloqueo biométrico</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Ahora no</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Usar 12 palabras</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Usar 24 palabras</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">Protege tus primeras fotos</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">Todo lo que importas se cifra al instante. Añade más cuando quieras.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Importar fotos</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Todo listo</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Tu baúl está sellado. Todo lo que añadas se cifra directamente en este teléfono.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Abrir mi baúl</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Frase de recuperación</string>
     <string name="recovery_phrase_title">Tu frase de recuperación</string>
     <string name="recovery_phrase_description">Anota estas palabras en orden y guárdalas en un lugar seguro. Puedes usar esta frase para recuperar el acceso a tu baúl.</string>
-    <string name="recovery_phrase_confirm">Frase guardada</string>
     <string name="recovery_phrase_save_warning">Guarda tu frase de recuperación</string>
-    <string name="recovery_phrase_create_new">Crear nueva frase</string>
     <string name="recovery_phrase_create_new_confirm">Crear una nueva frase reemplazará permanentemente la actual. Tu frase existente ya no funcionará para restaurar tu baúl.</string>
-    <string name="recovery_phrase_saved_to_file">Guardado en %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Número de palabras</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Guardar como imagen</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Olvidé mi contraseña</string>
     <string name="recovery_phrase_restore_button">Restaurar</string>
-    <string name="recovery_phrase_restore_word_placeholder">Palabra %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Introduce la frase de recuperación</string>
-    <string name="recovery_phrase_restore_choose_option">Elige cómo introducir tu frase.</string>
-    <string name="recovery_phrase_restore_option_type">Escribir a mano</string>
     <string name="recovery_phrase_restore_option_open_file">Cargar desde archivo</string>
     <string name="recovery_phrase_restore_option_scan_qr">Escanear código QR</string>
     <string name="recovery_phrase_restore_option_paste">Pegar desde el portapapeles</string>
-    <string name="recovery_phrase_restore_input_placeholder">Escribe tu frase de recuperación palabra por palabra</string>
     <string name="recovery_phrase_restore_unlocked">Desbloqueado</string>
-    <string name="recovery_phrase_restore_unlocking">Desbloqueando&#x2026;</string>
     <string name="recovery_phrase_restore_error_generic">No se pudo restaurar el baúl. Comprueba tu frase e inténtalo de nuevo.</string>
     <string name="recovery_phrase_restore_error_invalid">Frase de recuperación no válida. Por favor, comprueba las palabras.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">El código QR no contiene una frase de recuperación válida.</string>
     <string name="recovery_phrase_restore_source_qr">Escaneado de código QR</string>
     <string name="recovery_phrase_restore_source_file">Cargado desde %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Pegado desde el portapapeles</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Solicitar permiso de cámara</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">Se requiere permiso de cámara para escanear códigos QR.</string>
-    <string name="permission_gate_change_in_settings">Cambiar en los ajustes</string>
+    <string name="recovery_phrase_restore_subtitle">Introduce las palabras de tu frase de recuperación para desbloquear tu baúl.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Escribir palabras</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">FRASE</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">CÓDIGO QR</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">BAÚL DESBLOQUEADO</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d palabras</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Toca la tarjeta para ver las palabras</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">Toca la tarjeta para ver el código QR</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">También puedes hacer una captura de pantalla del código QR</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Abriendo tu baúl</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Guardar en la galería</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">Guardar como imagen</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Más opciones</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Compartir como imagen</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Guardar como archivo de texto</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Copiar al portapapeles</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">Nueva frase de 12 palabras</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">Nueva frase de 24 palabras</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Guardada en la galería</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">Búscala en Pictures/Photok. Si tu galería hace copia de seguridad en la nube, la imagen también se sube</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">Guardada en %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Guardada como archivo</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Búscala en la carpeta que elegiste</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">Compartida con %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Compartida</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Comprueba que llegó a donde la enviaste</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Copiada al portapapeles</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Pégala en un lugar seguro fuera de este teléfono</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Captura de pantalla hecha</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Búscala en tu álbum de capturas de pantalla</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

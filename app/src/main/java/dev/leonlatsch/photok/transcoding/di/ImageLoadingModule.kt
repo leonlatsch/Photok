@@ -30,30 +30,43 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.transcoding.data.EncryptedImageFetcherFactory
+import dev.leonlatsch.photok.transcoding.data.EncryptedImageKeyer
 import dev.leonlatsch.photok.transcoding.data.ImageStorageImpl
+import dev.leonlatsch.photok.transcoding.data.SessionBoundMemoryCacheInterceptor
 import dev.leonlatsch.photok.transcoding.domain.ImageStorage
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ImageLoadingModule {
 
     @Provides
+    @Singleton
+    @EncryptedImageMemoryCache
+    fun provideEncryptedImageMemoryCache(
+        @ApplicationContext context: Context,
+    ): MemoryCache = MemoryCache.Builder(context)
+        .maxSizePercent(0.25)
+        .build()
+
+    @Provides
+    @Singleton
     @EncryptedImageLoader
     fun provideEncryptedImageLoader(
         @ApplicationContext context: Context,
-        encryptedImageFetcherFactory: EncryptedImageFetcherFactory
+        encryptedImageFetcherFactory: EncryptedImageFetcherFactory,
+        encryptedImageKeyer: EncryptedImageKeyer,
+        sessionBoundMemoryCacheInterceptor: SessionBoundMemoryCacheInterceptor,
+        @EncryptedImageMemoryCache memoryCache: MemoryCache,
     ): ImageLoader = ImageLoader.Builder(context)
         .components {
             add(encryptedImageFetcherFactory)
+            add(encryptedImageKeyer)
+            add(sessionBoundMemoryCacheInterceptor)
         }
         .diskCachePolicy(CachePolicy.DISABLED)
         .diskCache(null)
-        .memoryCachePolicy(CachePolicy.READ_ONLY)
-        .memoryCache {
-            MemoryCache.Builder(context)
-                .maxSizePercent(0.25)
-                .build()
-        }
+        .memoryCache(memoryCache)
         .apply {
             if (BuildConfig.DEBUG) {
                 logger(DebugLogger())

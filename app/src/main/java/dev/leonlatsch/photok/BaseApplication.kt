@@ -21,17 +21,22 @@ import android.content.Intent
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import coil.memory.MemoryCache
 import dagger.hilt.android.HiltAndroidApp
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.main.ui.MainActivity
+import dev.leonlatsch.photok.model.io.ThumbnailMaintainer
 import dev.leonlatsch.photok.model.repositories.CleanupDeadFilesUseCase
 import dev.leonlatsch.photok.other.setAppDesign
 import dev.leonlatsch.photok.pro.ProFeaturesLifecycle
 import dev.leonlatsch.photok.pro.purchases.PurchaseService
+import dev.leonlatsch.photok.recovery.ui.RecoveryPhraseExporter
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.settings.domain.models.SystemDesignEnum
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageMemoryCache
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -63,10 +68,20 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
     lateinit var cleanupDeadFilesUseCase: CleanupDeadFilesUseCase
 
     @Inject
+    lateinit var thumbnailMaintainer: ThumbnailMaintainer
+
+    @Inject
     lateinit var telemetryService: TelemetryService
 
     @Inject
     lateinit var proFeaturesLifecycle: ProFeaturesLifecycle
+
+    @Inject
+    lateinit var recoveryPhraseExporter: RecoveryPhraseExporter
+
+    @EncryptedImageMemoryCache
+    @Inject
+    lateinit var encryptedImageMemoryCache: MemoryCache
 
 
     private var wentToBackgroundAt = 0L
@@ -84,8 +99,17 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
             Timber.plant(Timber.DebugTree())
         }
 
+        if (config.systemInstallDate == null) {
+            config.systemInstallDate = System.currentTimeMillis()
+        }
+        if (config.systemInstallVersionCode == null) {
+            config.systemInstallVersionCode = BuildConfig.VERSION_CODE
+        }
+
         setAppDesign(SystemDesignEnum.fromValue(config.systemDesign))
         cleanupDeadFilesUseCase()
+        thumbnailMaintainer.start()
+        appScope.launch(Dispatchers.IO) { recoveryPhraseExporter.clearShareCache() }
 
         appScope.launch {
             var session = sessionRepository.get()
@@ -96,6 +120,10 @@ class BaseApplication : Application(), DefaultLifecycleObserver {
                 }
 
                 session = newSession
+
+                if (newSession == null) {
+                    encryptedImageMemoryCache.clear()
+                }
             }
         }
     }

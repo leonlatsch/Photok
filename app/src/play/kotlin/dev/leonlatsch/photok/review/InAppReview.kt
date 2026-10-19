@@ -31,6 +31,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class InAppReviewImpl @Inject constructor(
@@ -45,7 +46,7 @@ class InAppReviewImpl @Inject constructor(
         trigger: ReviewTrigger,
         onFinished: () -> Unit,
     ) {
-        if (config.inAppReviewRequested) {
+        if (isInCooldown()) {
             onFinished()
             return
         }
@@ -60,7 +61,6 @@ class InAppReviewImpl @Inject constructor(
             withContext(Dispatchers.Main) {
                 if (BuildConfig.DEBUG) {
                     Toast.makeText(activity, "DEBUG Review Request", Toast.LENGTH_LONG).show()
-                    config.inAppReviewRequested = true
                     onFinished()
                     return@withContext
                 }
@@ -75,9 +75,11 @@ class InAppReviewImpl @Inject constructor(
                     )
 
                     if (task.isSuccessful) {
-                        config.inAppReviewRequested = true
                         manager.launchReviewFlow(activity, task.result)
-                            .addOnCompleteListener { onFinished() }
+                            .addOnCompleteListener {
+                                config.inAppReviewLastRequestedAt = System.currentTimeMillis()
+                                onFinished()
+                            }
                     } else {
                         onFinished()
                     }
@@ -86,4 +88,9 @@ class InAppReviewImpl @Inject constructor(
         }
     }
 
+    private fun isInCooldown(): Boolean {
+        val lastRequestedAt = config.inAppReviewLastRequestedAt ?: return false
+        val elapsed = (System.currentTimeMillis() - lastRequestedAt).milliseconds
+        return elapsed.isPositive() && elapsed < Config.IN_APP_REVIEW_COOLDOWN
+    }
 }

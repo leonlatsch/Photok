@@ -20,6 +20,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,8 +28,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -58,10 +61,14 @@ fun AlbumsGrid(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        state = gridState,
+        contentPadding = contentPadding,
     ) {
         items(albums, key = { it.id }) { album ->
             AlbumTile(
@@ -104,15 +111,15 @@ fun AlbumTile(
                 }
             } else {
                 val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
+                    EncryptedImageRequestData.Thumbnail(
+                        uuid = album.albumCover.uuid,
+                        type = album.albumCover.type,
                     )
                 }
 
                 Image(
                     painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
+                    contentDescription = album.name,
                     modifier = contentModifier,
                     contentScale = ContentScale.Crop,
                 )

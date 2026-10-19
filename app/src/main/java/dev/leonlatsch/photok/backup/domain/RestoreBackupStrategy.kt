@@ -18,12 +18,13 @@ package dev.leonlatsch.photok.backup.domain
 
 import dev.leonlatsch.photok.backup.data.BackupMetaData
 import dev.leonlatsch.photok.encryption.domain.models.Session
-import java.util.zip.ZipInputStream
+import java.io.InputStream
 
 interface RestoreBackupStrategy<T : BackupMetaData> {
-    suspend fun restore(
-        metaData: T,
-        stream: ZipInputStream,
-        session: Session,
-    ): RestoreResult
+
+    /** Opens the decrypted view of one zip entry. `null` when it can not be read. */
+    fun decrypt(input: InputStream, session: Session): InputStream?
+
+    /** The name this entry gets inside the vault. */
+    fun internalFileName(entryName: String): String
 }

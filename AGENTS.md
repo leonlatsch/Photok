@@ -44,7 +44,7 @@ Each feature follows the same internal structure:
 - **`data/`** — Room DAOs, table entities, repository implementations.
 - **`domain/`** — pure Kotlin interfaces, models, use cases. No Android imports.
 - **`di/`** — Hilt modules that bind `data` implementations to `domain` interfaces.
-- **`ui/`** — ViewModels, Fragments, Compose screens, navigator classes.
+- **`ui/`** — ViewModels, Compose screens, navigator classes.
   - **`ui/compose/`** — screen-level and sub-composables.
 
 Shared UI components, the theme, core models, encryption, persistence, and shared interfaces belong in `core/`. App-specific UI and Android entry points belong in `app/`. Legacy base classes (`Bindable*`, `Base*`) live in `app/.../uicomponnets/`. Extensions and misc utilities live in the owning module's `other/` package.
@@ -83,17 +83,29 @@ The codebase follows a **feature-first layered architecture** within the module 
 - **`domain`** — pure Kotlin. Interfaces, models, use cases. No Android imports.
 - **`data`** — Room tables, DAOs, repository implementations. Implements `domain` interfaces.
 - **`di`** — Hilt modules that bind `data` implementations to `domain` interfaces.
-- **`ui`** — ViewModels + Compose screens + Fragments + Navigator classes. App entry points and navigation remain in `:app`.
+- **`ui`** — ViewModels + Compose screens + Navigator classes. App entry points and navigation remain in `:app`.
 
 ### Single Activity
 
-The installable `:app` module has a single `MainActivity` (with `DataBinding`). All screens are **Fragments** navigated via `app/src/main/res/navigation/main_nav_graph.xml`. Fragments host Compose UIs via `ComposeView`.
+The installable `:app` module has a single `MainActivity`. It calls `setContent` with `AppNavHost`, which hosts all Compose screens through Navigation 3. There are no navigation fragments.
 
 ### Navigation
 
-- Declared in `main_nav_graph.xml` with Safe Args.
-- Bottom-tab navigation (`MainMenu`, a Compose component) connects to top-level destinations: Gallery, Albums, Settings.
-- Fragment-level navigation uses typed `Navigator` classes injected via Hilt.
+- **Root stack.** `AppNavHost` (`main/ui/navigation/`) owns the root back stack and `NavDisplay`. It holds the pre-unlock flow (`Onboarding`, `Unlock`, `RecoveryPhraseRestore`, `EncryptionMigration`) and `Main`. These are the cases of `sealed interface RootRoute : NavKey`. Once the vault is unlocked, call `replaceAll(RootRoute.Main)`.
+- **Tabs, one stack each (iOS style).** `RootRoute.Main` renders `MainTabsScreen`, which owns one back stack per `MainTab` (Gallery, Albums, Settings; each starts at `MainTab.rootRoute`) and registers every in-app route in `tabEntryProvider`. Each stack is decorated with `rememberDecoratedNavEntries` on every composition, so hidden tabs keep their entries, ViewModels and scroll state. Only the selected tab's entries go into the `NavDisplay`. Tapping the selected tab pops it to its root. Back at the root of a non-home tab goes to the home tab (the start page from `GetStartTab`).
+- **Routes are typed objects, never strings.** In-app routes are `@Serializable` cases of `sealed interface AppRoute : NavKey`, shared by all tabs, so any tab can push any of them. Routes with arguments are data classes, for example `AppRoute.AlbumDetail(albumUuid)`. Non-serializable args such as `Uri` are stored as `String`. New in-app screens go into `AppRoute` and `tabEntryProvider`; only pre-unlock screens go into `RootRoute` and `AppNavHost`. Tab selection (`MainMenu`, `GetStartTab`) uses the `MainTab` enum, never routes.
+- **Navigating.** Always use `LocalNavigator.current` (the `Navigator` interface in `core/.../navigation/`: `navigate`, `goBack`, `replaceAll`). In the root stack it is a `RootNavigator`. Inside a tab it is a `TabNavigator`, which pushes and pops on that tab's stack; its `replaceAll` replaces the whole root stack. Without a provider, for example in a `@Preview`, it defaults to a no-op navigator, so composables can read it anywhere.
+- **Onboarding.** `RootRoute.Onboarding` renders `OnboardingScreen`, which owns a nested stack of `OnboardingRoute` steps plus `ProRoute.OnboardingOffer`. Its `OnboardingNavigator` keeps only the current step (`navigate` replaces the stack, `goBack` does nothing) and delegates `replaceAll` to the root. The current step is persisted in `Config.systemOnboardingStep` so a restarted app resumes there. Steps report to the shared `OnboardingViewModel` through a `handleUiEvent` parameter.
+- **Bottom menu.** `MainMenu` is drawn by `MainTabsScreen` on tab roots, `AlbumDetail` and `DevSettings`; it is hidden on every other route. Screens under it read `LocalMainMenuPadding`.
+- **Transitions.** The default is the core `slideForward()` / `slideBackward()`. Switching tabs swaps the stack without animation.
+- **Feature navigators.** Classes such as `GalleryNavigator` and `PhotoActionsNavigator` are plain `object`s that take the `Navigator`, plus the host `FragmentActivity` for showing `DialogFragment`s.
+
+### Pro-only screens
+
+- Pro routes are cases of `sealed interface ProRoute : NavKey` in `core/.../pro/navigation/`, because `:app` `src/main` cannot see `:pro` types.
+- `:pro` registers their entries in `fun EntryProviderScope<NavKey>.proEntries()` (`pro/.../pro/navigation/ProEntries.kt`). Onboarding-only pro steps are registered in `proOnboardingEntries(onContinue)`. `app/src/foss` has empty stubs with the same package and names.
+- Navigate with `LocalNavigator.current.navigate(ProRoute.X)`, and close a pro screen with `goBack()` rather than `activity.finish()`.
+- The paywall is `ProRoute.Paywall(source)` and slides up through its entry metadata. A purchase replaces it with `ProRoute.PaywallSuccess`. Onboarding shows it as `ProRoute.OnboardingOffer`, which continues to the onboarding done screen instead.
 
 ---
 
@@ -111,29 +123,30 @@ Every screen follows a **simple, flat MVI**. There is no dedicated MVI framework
 
 | File | Role |
 |------|------|
-| `XyzFragment.kt` | `@AndroidEntryPoint Fragment`. Creates a `ComposeView`, provides `CompositionLocal`s, collects navigation event flows. |
 | `XyzViewModel.kt` | `@HiltViewModel`. Exposes `val uiState: StateFlow<XyzUiState>`. Accepts events via `fun handleUiEvent(event: XyzUiEvent)`. |
 | `XyzUiState.kt` | `sealed interface XyzUiState`. Common states: `Empty`, `Loading`, `Content(...)`. |
 | `XyzUiEvent.kt` | `sealed interface XyzUiEvent`. One `data class`/`data object` per user action. |
-| `XyzScreen.kt` | Top-level `@Composable` that takes the `ViewModel`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
+| `XyzScreen.kt` | Top-level `@Composable`, registered as an `entry<AppRoute.Xyz>` in `AppNavHost`. It gets the `ViewModel` via `hiltViewModel()`, collects state with `collectAsStateWithLifecycle()`, and branches on the sealed state. |
 
-Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>` and collected in the Fragment.
+Screens no longer have a Fragment. Navigation events that must leave the ViewModel are sent via a `Channel<XyzNavigationEvent>`. The screen collects them with `ObserveAsEvents(flow) { }` (`app/.../ui/ObserveAsEvents.kt`) and navigates with `LocalNavigator.current`. Do not pass navigation actions down as `onClose`/`onBack`/`onContinue` lambdas; any composable, including sub-composables and scaffolds, calls `LocalNavigator.current` itself. Previews need no lambdas for navigation because the default navigator does nothing. Callbacks from the host are only for actions that differ per route (for example `proOnboardingEntries(onContinue)`). Some older screens still have navigation lambdas only for previews; remove them when you touch those screens.
 
-**Canonical example** — `GalleryFragment` / `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
+**Canonical example** — `GalleryViewModel` / `GalleryUiState` / `GalleryUiEvent` / `GalleryScreen`.
 
 ### Legacy DataBinding Screens
 
-Still used in `unlock` and a few others. They extend `BindableFragment<ViewDataBinding>` / `BindableActivity<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
+Still used by some dialogs. They extend `BindableDialogFragment<ViewDataBinding>` / `BindableBottomSheetDialogFragment<ViewDataBinding>`. ViewModels can extend `ObservableViewModel` for two-way bindings. **Do not create new DataBinding screens.**
 
 ### Theme
 
-`AppTheme` (in `core/.../ui/theme/Theme.kt`) wraps every Compose entry point. It respects the system dark/light setting. Always call `AppTheme { ... }` at the root of a Fragment's `ComposeView.setContent { }`.
+`AppTheme` (in `core/.../ui/theme/Theme.kt`) respects the system dark/light setting.
+- `MainActivity` applies it once for all Navigation 3 screens, so do not wrap screens or in-tree sheets/dialogs in `AppTheme` again.
+- Only standalone roots apply it themselves: other activities, `DialogFragment`s with their own `ComposeView`, and `@Preview`s.
 
 ### CompositionLocals
 
 Shared objects are injected into the Compose tree via `CompositionLocal`. Check the relevant module's UI package and feature-specific files (for example, `app/.../transcoding/compose/LocalEncryptedImageLoader.kt`) for the current set.
 
-Provide them in the Fragment's `setContent { }` block using `CompositionLocalProvider`.
+They are provided once in `MainActivity` (`LocalConfig`, `LocalEncryptedImageLoader`) and `AppNavHost` / `MainTabsScreen` (`LocalNavigator`, `LocalMainMenuPadding`). To show `DialogFragment`s from Compose or for APIs that need a `FragmentActivity`, such as `BiometricPrompt`, use `LocalActivity.current as? FragmentActivity` and its `supportFragmentManager`.
 
 ### Compose Components
 
@@ -155,14 +168,14 @@ Reusable composables belong in `core/.../ui/components/` when they are module-ne
 
 ### Key Classes
 
-Encryption classes live in `core/src/main/kotlin/dev/leonlatsch/photok/encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (in `core/.../io/`) is the only place that opens encrypted file streams. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
+Encryption classes live in `core/src/main/kotlin/dev/leonlatsch/photok/encryption/`. Start with `VaultService` (in `encryption/domain/`) to understand the entry point — it orchestrates unlock, create, and reset for all protection types. `VaultProtectionHandler` (in `encryption/domain/handlers/`) is the strategy interface implemented for password, biometric, and recovery-phrase flows. `CryptoEngine` (in `encryption/domain/crypto/`) is the interface for all encrypt/decrypt stream operations. `VaultFileStorage` (files dir, the vault itself) and `VaultCacheStorage` (cache dir, only data that can be recreated from the vault, such as thumbnails) in `core/.../io/` are the only places that open encrypted file streams. Both implement `EncryptedStorage`. `SessionRepository` (in `encryption/domain/`) holds the active VMK in memory for the current session.
 
 ### Rules for Encryption Code
 
 - **Never** store the raw VMK to disk or shared preferences.
 - **Never** delete `legacyPasswordHash` or `legacyUserSalt` from shared preferences (migration fail-safe — see `ENCRYPTION.md`).
 - Use `CryptoEngine` interface — do not instantiate `CbcCryptoEngine` directly in UI or repository code.
-- All file I/O goes through `VaultFileStorage`.
+- All encrypted file I/O goes through `VaultFileStorage` or `VaultCacheStorage`. Never put anything in `VaultCacheStorage` that can't be recreated from the vault; the OS may clear the cache dir at any time.
 
 ---
 
@@ -173,7 +186,8 @@ Check the owning module's build file for the current library list. Key areas to 
 - **Jetpack Compose + Material3** — all new UI.
 - **Hilt / Dagger** — DI throughout.
 - **Room** — SQLite ORM with auto-migrations.
-- **Navigation Component** — single-activity fragment navigation, with Safe Args.
+- **Navigation 3** — Compose navigation for all screens.
+- **kotlinx-serialization** — `@Serializable` navigation routes.
 - **Coil** — image loading; there is a custom `EncryptedImageFetcher` in `transcoding/` that decrypts on-the-fly.
 - **ExoPlayer / Media3** — video playback.
 - **jBCrypt** — legacy password hashing, used for migration only.
@@ -207,27 +221,25 @@ The supported locales are the `values-*/` directories under `core/src/main/res/`
 
 ### Rule: Always add strings to every locale file
 
-When you add a new string to `values/strings.xml`, you **must** also add a copy of it to every other `values-*/strings.xml` file. Use the English text as the placeholder and annotate with an XML comment `<!-- TODO -->` on the same line.
+When you add a new string to `values/strings.xml`, you **must** also add it to every other `values-*/strings.xml` file — **pre-translated** into that language, not as the English text.
+
+Translate it yourself (or delegate to a per-language agent) following the translation guidelines in `CONTRIBUTING.md`, and mark the result with a machine-translation comment on the same line that carries the original English value:
 
 ```xml
-<!-- values/strings.xml (English, no TODO) -->
+<!-- values/strings.xml (English source, no comment) -->
 <string name="my_new_string">My new string</string>
 
-<!-- values-de/strings.xml (and all other locales) -->
-<string name="my_new_string">My new string</string> <!-- TODO -->
-```
-
-The `<!-- TODO -->` annotation is required: the `updateTranslations` Gradle task (in `gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `<!-- TODO` to calculate each locale's translation percentage. Lines with `<!-- TODO` are intentionally excluded so the badge reflects real human translation coverage.
-
-#### Machine-translated placeholders
-
-Some locales carry a machine-translated placeholder instead of the raw English text, so the app is usable in that language before a human translator gets to it. These keep the `<!-- TODO` marker and additionally carry the original English value in the same comment:
-
-```xml
+<!-- values-de/strings.xml (and every other locale) -->
 <string name="my_new_string">Mein neuer Text</string> <!-- TODO: machine translated | EN: My new string -->
 ```
 
-This still counts as untranslated for the badge. A human translator replaces the value and deletes the whole comment. Keep the `EN:` part verbatim so reviewers can see what the machine translated from; never write `--` inside it, since it would terminate the XML comment.
+Rules for the comment:
+
+- Keep the `<!-- TODO` prefix. The `updateTranslations` Gradle task (`gradle/updateTranslations.gradle.kts`) counts `<string>` lines that do **not** contain `<!-- TODO` to calculate each locale's translation percentage, so a machine translation correctly still counts as un-translated until a human reviews it.
+- Keep the `| EN: <original>` part verbatim so a human reviewer sees what was translated from. Never write `--` inside it — that terminates the XML comment.
+- A human translator replaces the value and deletes the whole comment.
+
+Keep the key, the section comment it belongs under, and its position in the file identical across all locales, and keep every format specifier (`%1$s`, `%1$d`, `%%`) intact.
 
 ---
 
@@ -277,7 +289,7 @@ Flavor-specific code belongs in the owning module's `src/play/` or `src/foss/` s
 | ViewModel | `<Feature>ViewModel` | `GalleryViewModel` |
 | UiState | `<Feature>UiState` (sealed interface) | `GalleryUiState` |
 | UiEvent | `<Feature>UiEvent` (sealed interface) | `GalleryUiEvent` |
-| Fragment | `<Feature>Fragment` | `GalleryFragment` |
+| Route | `AppRoute.<Feature>` / `ProRoute.<Feature>` | `AppRoute.Gallery` |
 | Composable screen | `<Feature>Screen` | `GalleryScreen` |
 | Sub-composable | `<Feature>Content`, `<Feature>Placeholder`, etc. | `GalleryContent` |
 | Navigator | `<Feature>Navigator` | `GalleryNavigator` |
@@ -300,7 +312,7 @@ Timber.w("Warning")
 
 - All database and I/O work runs on `Dispatchers.IO` inside `withContext` or repository/use-case `suspend` functions.
 - ViewModels use `viewModelScope`. App-level coroutines use the `CoroutineScope(Dispatchers.Default)` provided via Hilt.
-- Collect flows in the Fragment with `launchLifecycleAwareJob` (from `other/extensions`), never in a raw `lifecycleScope.launch` without `repeatOnLifecycle`.
+- Collect one-off event flows in Compose with `ObserveAsEvents`. In Activities, use `launchLifecycleAwareJob` (from `other/extensions`). Never use a raw `lifecycleScope.launch` without `repeatOnLifecycle`.
 
 ### Result Handling
 

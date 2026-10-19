@@ -51,6 +51,7 @@ import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -95,7 +96,7 @@ fun ImageDetailsSheet(
 
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
@@ -107,7 +108,7 @@ fun ImageDetailsSheet(
                     fontWeight = FontWeight.Medium,
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
 
 
                 Column(
@@ -149,7 +150,7 @@ fun ImageDetailsSheet(
                     }
                 }
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
             }
         }
     }

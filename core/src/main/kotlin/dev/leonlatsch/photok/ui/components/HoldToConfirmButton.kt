@@ -25,8 +25,8 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.core.R
+import dev.leonlatsch.photok.ui.theme.Dimens
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -106,7 +106,7 @@ private fun Preview() {
     Surface() {
         HoldToConfirmButton(
             onConfirmed = {},
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(Dimens.spacingLarge)
         )
     }
 }

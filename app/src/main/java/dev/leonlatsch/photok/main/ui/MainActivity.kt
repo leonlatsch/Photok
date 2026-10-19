@@ -18,75 +18,116 @@ package dev.leonlatsch.photok.main.ui
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
-import androidx.core.view.isVisible
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
+import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import dev.leonlatsch.photok.BuildConfig
-import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.databinding.ActivityMainBinding
-import dev.leonlatsch.photok.main.ui.navigation.MainMenu
+import dev.leonlatsch.photok.gallery.ui.navigation.GetStartTab
+import dev.leonlatsch.photok.main.ui.navigation.AppNavHost
+import dev.leonlatsch.photok.other.extensions.getBaseApplication
+import dev.leonlatsch.photok.other.extensions.launchLifecycleAwareJob
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.settings.domain.ScreenshotOverride
+import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
+import dev.leonlatsch.photok.transcoding.compose.LocalEncryptedImageLoader
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageLoader
+import dev.leonlatsch.photok.ui.systembars.ProvideSystemBarsController
 import dev.leonlatsch.photok.ui.theme.AppTheme
-import dev.leonlatsch.photok.uicomponnets.bindings.BindableActivity
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-
-val FragmentsWithMenu = listOf(
-    R.id.galleryFragment,
-    R.id.albumsFragment,
-    R.id.settingsFragment,
-    R.id.albumDetailFragment,
-    R.id.devSettingsFragment.takeIf { BuildConfig.DEBUG },
-)
 
 /**
  * The main Activity.
- * Holds all fragments and initializes toolbar, menu, etc.
+ * Hosts the Compose navigation.
  *
  * @since 1.0.0
  * @author Leon Latsch
  */
 @AndroidEntryPoint
-class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val appNavViewModel: AppNavViewModel by viewModels()
 
     @Inject
-    override lateinit var config: Config
+    lateinit var config: Config
+
+    @Inject
+    lateinit var getStartTab: GetStartTab
+
+    @Inject
+    lateinit var screenshotOverride: ScreenshotOverride
+
+    @EncryptedImageLoader
+    @Inject
+    lateinit var encryptedImageLoader: ImageLoader
 
     var onOrientationChanged: (Int) -> Unit = {} // Init empty
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
-        enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { appNavViewModel.startRoute.value == null }
+        }
+        enableEdgeToEdge(
+            navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
+
+        val hasSession = getBaseApplication()?.sessionRepository?.get() != null
+        super.onCreate(savedInstanceState.takeIf { hasSession })
+
+        launchLifecycleAwareJob {
+            combine(
+                config.valuesFlow.map { config.securityAllowScreenshots },
+                screenshotOverride.allowed,
+            ) { allowedInSettings, allowedByOverride ->
+                allowedInSettings || allowedByOverride || BuildConfig.DEBUG
+            }
+                .distinctUntilChanged()
+                .collect { allowScreenshots ->
+                    if (allowScreenshots) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
+        }
+
+        setContent {
+            AppTheme {
+                ProvideSystemBarsController(window) {
+                    CompositionLocalProvider(
+                        LocalConfig provides config,
+                        LocalEncryptedImageLoader provides encryptedImageLoader,
+                    ) {
+                        AppNavHost(
+                            startTab = getStartTab::invoke,
+                            viewModel = appNavViewModel,
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         dispatchIntent()
-
-        findNavController(R.id.mainNavHostFragment).let { navController ->
-            navController.addOnDestinationChangedListener { controller, destination, arguments ->
-                val showMenu = FragmentsWithMenu.contains(destination.id)
-                binding.mainMenuComposeContainer.isVisible = showMenu
-
-                WindowCompat.getInsetsController(
-                    window, window.decorView
-                ).isAppearanceLightStatusBars = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
-
-                viewModel.onDestinationChanged(destination.id)
-            }
-
-        }
     }
 
     private fun dispatchIntent() {
@@ -108,29 +149,7 @@ class MainActivity : BindableActivity<ActivityMainBinding>(R.layout.activity_mai
         onOrientationChanged(newConfig.orientation)
     }
 
-    override fun bind(binding: ActivityMainBinding) {
-        super.bind(binding)
-        binding.context = this
-
-        binding.mainMenuComposeContainer.setContent {
-            val uiState by viewModel.mainMenuUiState.collectAsStateWithLifecycle()
-
-            AppTheme {
-                MainMenu(uiState) {
-                    val navController = findNavController(R.id.mainNavHostFragment)
-                    if (navController.currentDestination?.id != it) {
-                        navController.navigate(
-                            resId = it,
-                            args = null,
-                            navOptions = NavOptions.Builder()
-                                .setLaunchSingleTop(true)
-                                .setRestoreState(true)
-                                .setPopUpTo(R.id.galleryFragment, inclusive = false, saveState = true)
-                                .build()
-                        )
-                    }
-                }
-            }
-        }
+    companion object {
+        private const val SPLASH_FADE_OUT_DURATION = 200L
     }
 }

@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Chargement…</string>
     <string name="common_password">Mot de passe</string>
     <string name="common_delete">Supprimer</string>
     <string name="common_export">Exporter</string>
@@ -29,34 +27,47 @@
     <string name="common_no">Non</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Êtes-vous sûr\u00A0?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Plus</string>
     <string name="common_cancel">Annuler</string>
+    <string name="common_canceling">Annulation…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Créer</string>
     <string name="common_empty">Vide</string>
     <string name="common_rename">Renommer</string>
     <string name="common_try_again">Réessayer</string>
     <string name="common_continue">Continuer</string>
     <string name="common_hold_to_confirm">Maintenir pour confirmer</string>
+    <string name="common_back">Retour</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Terminé</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importation de fichier(s)</string>
-    <string name="import_permission_rationale">Photok a besoin d\'accéder à votre stockage pour importer des fichiers.</string>
     <string name="import_sharted_question">Voulez-vous importer %1$d fichier(s)\u00A0?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Créez votre mot de passe</string>
     <string name="setup_enter_password">Entrez votre mot de passe</string>
     <string name="setup_confirm_password">Confirmer votre mot de passe</string>
-    <string name="setup_password_strength_label">Force du mot de passe :</string>
-    <string name="setup_button">Créer</string>
-    <string name="setup_password_strength_very_weak">Très faible</string> <!-- TODO: machine translated | EN: Very weak -->
-    <string name="setup_password_strength_weak">Faible</string>
-    <string name="setup_password_strength_moderate">Modéré</string>
-    <string name="setup_password_strength_strong">Fort</string>
-    <string name="setup_password_strength_very_strong">Très fort</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0 Les mots de passe ne correspondent pas</string>
-    <string name="setupSetup">Installation</string>
+    <string name="setup_password_strength_very_weak">Très faible</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Faible</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Moyen</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Fort</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Très fort</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Craqué en %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Plus longtemps que l\'âge de l\'univers</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Comment le temps de craquage est-il calculé ?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Analyse des motifs</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn recherche les mots de passe courants, les mots, les noms et les motifs, puis compte le nombre de tentatives nécessaires.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Lent par conception</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 ralentit chaque tentative. Nous supposons une carte graphique haut de gamme avec environ %1$s tentatives par seconde. Plusieurs cartes sont plus rapides.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Détails techniques</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Dérivation de clé</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Itérations</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Vitesse d\'attaque</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s tentatives/s</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">En savoir plus</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j sur GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn par Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Comment Photok chiffre vos fichiers</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Déverrouillez votre coffre-fort</string>
@@ -109,13 +120,10 @@
     <string name="view_photo_video_playback_speed">Vitesse de lecture</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Verrouiller</string>
     <string name="menu_main_settings">Réglages</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Tout sélectionner</string>
-    <string name="menu_ms_delete">Supprimer</string>
-    <string name="menu_ms_export">Exporter</string>
     <string name="menu_ms_info">%1$d élément(s) sélectionné(s)</string>
     <string name="menu_ms_add_to_album">Ajouter à un album</string>
     <string name="menu_ms_remove_from_album">Retirer de l\'album</string>
@@ -134,10 +142,7 @@
     <string name="export_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie\u00A0?</string>
     <string name="export_and_delete_are_you_sure">Êtes-vous sûr de vouloir <b>exporter</b> %1$d fichier(s) vers votre galerie et les supprimer\u00A0?</string>
     <string name="export_and_delete_are_you_sure_this">Êtes-vous sûr de vouloir <b>exporter</b> ce fichier vers votre galerie et le supprimer\u00A0?</string>
-    <string name="export_and_delete_finished">Exporté et supprimé</string>
     <string name="export_exporting">Exportation des fichier(s)…</string>
-    <string name="export_permission_rationale">Photok a besoin d\'accéder à votre stockage pour exporter des fichiers.</string>
-    <string name="export_finished">Exporté</string>
 
     <!-- ABOUT -->
     <string name="about_version">Version :</string>
@@ -147,7 +152,6 @@
     <string name="about_third_party">Logiciels tiers</string>
     <string name="about_privacy_policy">Politique de confidentialité</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Actualités</string>
 
 
     <!-- SETTINGS -->
@@ -164,8 +168,7 @@
 
     <string name="settings_category_security">Sécurité</string>
     <string name="settings_security_allow_screenshots_title">Autoriser les captures d\'écran</string>
-    <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran. Nécessite un redémarrage.</string>
-    <string name="settings_security_change_password_title">Changer le mot de passe</string>
+    <string name="settings_security_allow_screenshots_summary">Autoriser les captures d\'écran.</string>
     <string name="settings_security_change_password_summary">Changer votre mot de passe</string>
     <string name="settings_security_biometric_title">Déverrouillage biométrique</string>
     <string name="settings_security_biometric_summary">Déverrouiller Photok grâce à l\'authentification biométrique.</string>
@@ -173,7 +176,6 @@
     <string name="settings_security_recovery_phrase_title">Phrase de récupération</string>
     <string name="settings_security_recovery_phrase_summary">Gérez votre phrase de récupération.</string>
     <string name="settings_security_timeout_title">Délai de verrouillage automatique</string>
-    <string name="settings_security_timeout_summary">Verrouillage automatique après un certain délai en arrière-plan</string>
     <string name="settings_security_timeout_immediately">Immédiatement</string>
     <string name="settings_security_timeout_one_minute">1 minute</string>
     <string name="settings_security_timeout_two_minute">2 minutes</string>
@@ -227,18 +229,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Modifier votre mot de passe</string>
     <string name="change_password_old_password">Ancien mot de passe</string>
-    <string name="change_password_new_password">Nouveau mot de passe</string>
     <string name="change_password_check">Vérifier</string>
     <string name="change_password_enter_new_password">Entrez votre nouveau mot de passe</string>
     <string name="change_password_confirm_new_password">Confirmez votre nouveau mot de passe</string>
     <string name="change_password_button">Modifier le mot de passe</string>
-    <string name="change_password_confirm_message">Sauvegarde recommandée\u00A0!<br/> La modification de votre mot de passe nécessite le rechiffrement de tous vos fichiers\u00A0! Voulez-vous continuer\u00A0?</string>
-    <string name="change_password_reencrypting">Rechiffrement des fichier(s)…</string>
     <string name="change_password_done">Mot de passe modifié</string>
     <string name="change_password_recovery_phrase_used">La phrase de récupération a été utilisée — la vérification de l\'ancien mot de passe n\'est pas requise</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Vérifier le mot de passe</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Cacher Photok</string>
@@ -252,42 +248,97 @@
     <string name="hide_app_hint">Une fois caché, Photok ne peut être lancé qu\'à partir du clavier téléphonique avec votre code de démarrage secret.</string>
     <string name="hide_app_hint_current_code">Code de lancement actuel :</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Suivant</string>
-    <string name="onboarding_finish">Terminer</string>
-    <string name="onboarding_skip"><u>Passer</u></string>
-
-    <string name="onboarding_slide1_title">Bienvenue dans</string>
-    <string name="onboarding_slide1_description">Un endroit sûr pour vos photos.</string>
-    <string name="onboarding_slide2_title">Créez un mot de passe</string>
-    <string name="onboarding_slide2_description">Créez un mot de passe sécurisé. Votre mot de passe est utilisé pour chiffrer vos photos directement sur votre téléphone.</string>
-    <string name="onboarding_slide3_title">Commencez l\'importation</string>
-    <string name="onboarding_slide3_description">Commencez à importer vos photos et protégez-les des regards indiscrets.\nVous pourrez ensuite les supprimer de votre galerie.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Création d\'une sauvegarde…</string>
-    <string name="backup_restore_title">Restaurer la sauvegarde</string>
-    <string name="backup_restore_validating">Validation de la sauvegarde…</string>
-    <string name="backup_restore_details_created_at">Créé le :</string>
-    <string name="backup_restore_details_photos_contained">Fichiers contenus :</string>
-    <string name="backup_restore_details_compatible">Compatible :</string>
-    <string name="backup_restore_details_size">Taille :</string>
-    <string name="backup_restore_button">Déverrouiller et restaurer</string>
-    <string name="backup_restore_invalid_file">\u26A0 Fichier invalide</string>
-    <string name="backup_restore_processing">Restauration de la sauvegarde…</string>
-    <string name="backup_unlock_title">Déverrouiller la sauvegarde</string>
     <string name="backup_confirm_password">Confirmez votre mot de passe pour créer une sauvegarde.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Restaurer la sauvegarde</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Vérification…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Sauvegarde invalide</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Statistiques</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Photos</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Vidéos</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Albums</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Taille</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Archive</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Créée</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Chiffrement</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Compatibilité</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">À jour (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Rétrocompatible (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Déverrouiller la sauvegarde</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Déverrouiller &amp; restaurer</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Entrez le mot de passe de la sauvegarde</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">La sauvegarde est chiffrée et doit être déverrouillée avec le mot de passe utilisé pour la créer.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Ce mot de passe sert uniquement à déverrouiller la sauvegarde et n\'est jamais enregistré.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Restauration de la sauvegarde</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Restauration…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s sur %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d fichiers</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Estimation…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">Il reste %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">Cela peut prendre un moment. Gardez l\'application ouverte.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Annuler la restauration</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">Indexation…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Tous les fichiers ont été restaurés, indexation de vos photos et albums.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">Restauration annulée</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">Aucun élément de %1$s n\'a été ajouté à votre coffre-fort. Tous les fichiers déjà restaurés ont été supprimés.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">Restauration réussie</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Restauration terminée avec 1 problème</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Restauration terminée avec %1$d problèmes</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">Éléments en échec</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Erreur inconnue</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Impossible d\'ouvrir la sauvegarde</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">Ce fichier n\'a pas pu être ouvert. Vérifiez qu\'il s\'agit bien d\'une sauvegarde Photok et qu\'il est toujours disponible sur cet appareil.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Aucune photo dans cette sauvegarde</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Cette archive ne contient aucun fichier Photok, il n\'y a donc rien à restaurer.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Sauvegarde incomplète</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Cette sauvegarde n\'a aucune métadonnée, Photok ne peut donc pas savoir ce qu\'elle contient.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Impossible de lire la sauvegarde</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Une erreur est survenue lors de la lecture de cette sauvegarde.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Photos déjà dans votre coffre-fort</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Les ignorer</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Conserver la copie déjà présente dans votre coffre-fort.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">Les importer à nouveau</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Ajouter la copie de cette sauvegarde à côté de celle déjà présente dans votre coffre-fort.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">Cette sauvegarde nécessite %1$s, mais il ne reste que %2$s d\'espace libre. Libérez de l\'espace avant de restaurer.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">Fichier de sauvegarde incomplet</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Ce fichier est tronqué, probablement à cause d\'un téléchargement ou d\'une copie interrompue. Transférez-le à nouveau.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Sauvegarde trop récente</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Cette sauvegarde a été créée avec une version plus récente de Photok (format %1$d). Mettez Photok à jour pour la restaurer.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">%1$d fichier ajouté en %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d fichiers ajoutés en %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d album restauré.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d albums restaurés.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d doublon ignoré.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d doublons ignorés.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Nouveautés dans</string>
     <string name="news_view_changelog">Voir le journal des modifications</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Menu de récupération</string>
-    <string name="recovery_menu_item_open_photok">Ouvrir Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Réinitialiser le paramètre de visibilité de l\'application</string>
-
+    <string name="news_change_kind_new">Nouveau</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Amélioré</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Corrigé</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Des sauvegardes entièrement nouvelles</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">Restaurer une sauvegarde est désormais un parcours guidé en plein écran. Les sauvegardes et restaurations sont aussi plus fiables que jamais.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Progression en direct, vitesse et temps restant</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Ignore ou remplace les fichiers que tu as déjà</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Des erreurs claires au lieu d\'un échec générique</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% compatible avec toutes tes anciennes sauvegardes</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">Diverses corrections et améliorations</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Déverrouillage et configuration plus fluides, les claviers n\'apprennent plus ton mot de passe et l\'application se verrouille de manière fiable en arrière-plan.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Bienvenue dans</string>
@@ -316,9 +367,6 @@
     <string name="migration_error_button">Envoyer un rapport d\'erreur</string>
 
     <string name="notification_channel_background_tasks">Tâches en arrière-plan</string>
-    <string name="migration_error_extract_data">Extraire les données</string>
-    <string name="migration_error_extract_confirmation_text">Êtes-vous sûr de vouloir extraire tous vos fichiers NON CHIFFRÉS dans un fichier ZIP\u00A0?</string>
-    <string name="migration_error_extracting_title">Déchiffrement vers ZIP…</string>
 
 
     <!-- Biometric -->
@@ -361,42 +409,80 @@
     <string name="telemetry_choice_yes">Partager des données d\'utilisation anonymes</string>
     <string name="telemetry_toggle">Autoriser la collecte des données d\'utilisation</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Commencer</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Un lieu sûr pour vos photos</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Chiffrées sur votre téléphone avec votre mot de passe</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Cachées de votre galerie et des autres applis</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Pas de compte, pas de cloud. Vos données ne quittent jamais ce téléphone</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Votre mot de passe</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Retenez votre mot de passe et gardez-le en sécurité. Il ne peut pas être réinitialisé.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Confirmer le mot de passe</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Déverrouillez d\'un geste</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Déverrouillez Photok avec votre empreinte au lieu de saisir votre mot de passe.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">Activer le déverrouillage biométrique</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Pas maintenant</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Utiliser 12 mots à la place</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Utiliser 24 mots à la place</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">Protégez vos premières photos</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">Tout ce que vous importez est chiffré immédiatement. Ajoutez-en d\'autres quand vous voulez.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Importer des photos</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Tout est prêt</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Votre coffre-fort est scellé. Tout ce que vous ajoutez est chiffré directement sur ce téléphone.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Ouvrir mon coffre-fort</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Phrase de récupération</string>
     <string name="recovery_phrase_title">Votre phrase de récupération</string>
     <string name="recovery_phrase_description">Notez ces mots dans l\'ordre et conservez-les en lieu sûr. Vous pouvez utiliser cette phrase pour récupérer l\'accès à votre coffre-fort.</string>
-    <string name="recovery_phrase_confirm">Phrase enregistrée</string>
     <string name="recovery_phrase_save_warning">Veuillez enregistrer votre phrase de récupération</string>
-    <string name="recovery_phrase_create_new">Créer une nouvelle phrase</string>
     <string name="recovery_phrase_create_new_confirm">La création d\'une nouvelle phrase remplacera définitivement la précédente. Votre phrase actuelle ne fonctionnera plus pour restaurer votre coffre-fort.</string>
-    <string name="recovery_phrase_saved_to_file">Enregistré dans %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Nombre de mots</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Enregistrer en tant qu\'image</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Mot de passe oublié</string>
     <string name="recovery_phrase_restore_button">Restaurer</string>
-    <string name="recovery_phrase_restore_word_placeholder">Mot %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Saisir la phrase de récupération</string>
-    <string name="recovery_phrase_restore_choose_option">Choisissez comment saisir votre phrase.</string>
-    <string name="recovery_phrase_restore_option_type">Saisie manuelle</string>
     <string name="recovery_phrase_restore_option_open_file">Charger depuis un fichier</string>
     <string name="recovery_phrase_restore_option_scan_qr">Scanner un QR code</string>
     <string name="recovery_phrase_restore_option_paste">Coller depuis le presse-papiers</string>
-    <string name="recovery_phrase_restore_input_placeholder">Saisissez votre phrase de récupération mot par mot</string>
     <string name="recovery_phrase_restore_unlocked">Déverrouillé</string>
-    <string name="recovery_phrase_restore_unlocking">Déverrouillage en cours&#x2026;</string>
     <string name="recovery_phrase_restore_error_generic">Impossible de restaurer le coffre-fort. Veuillez vérifier votre phrase et réessayer.</string>
     <string name="recovery_phrase_restore_error_invalid">Phrase de récupération invalide. Veuillez vérifier les mots.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">Le QR code ne contient pas de phrase de récupération valide.</string>
     <string name="recovery_phrase_restore_source_qr">Scanné depuis un code QR</string>
     <string name="recovery_phrase_restore_source_file">Chargé depuis %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Collé depuis le presse-papiers</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Demander l\'autorisation d\'utiliser la caméra</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">L\'autorisation d\'utiliser la caméra est requise pour scanner les QR codes.</string>
-    <string name="permission_gate_change_in_settings">Modifier dans les Paramètres</string>
+    <string name="recovery_phrase_restore_subtitle">Saisissez les mots de votre phrase de récupération pour déverrouiller votre coffre-fort.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Saisir les mots</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">PHRASE</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">CODE QR</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">COFFRE DÉVERROUILLÉ</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d mots</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Touchez la carte pour afficher les mots</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">Touchez la carte pour afficher le code QR</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">Vous pouvez aussi faire une capture d\'écran du code QR</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Ouverture de votre coffre-fort</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Enregistrer dans la galerie</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">Enregistrer en image</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Plus d\'options</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Partager en image</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Enregistrer en fichier texte</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Copier dans le presse-papiers</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">Nouvelle phrase de 12 mots</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">Nouvelle phrase de 24 mots</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Enregistrée dans la galerie</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">Elle se trouve dans Pictures/Photok. Si votre galerie est sauvegardée dans le cloud, l\'image y est aussi envoyée</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">Enregistrée dans %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Enregistrée en fichier</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Elle se trouve dans le dossier choisi</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">Partagée avec %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Partagée</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Vérifiez qu\'elle est bien arrivée à destination</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Copiée dans le presse-papiers</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Collez-la en lieu sûr, hors de ce téléphone</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Capture d\'écran effectuée</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Elle se trouve dans votre album Captures d\'écran</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

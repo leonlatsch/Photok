@@ -25,22 +25,25 @@ import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.inject.Inject
 
+/**
+ * Encrypted files in the app's files dir. This is the vault itself.
+ */
 class VaultFileStorage @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val cryptoEngine: CryptoEngine,
     private val app: Application,
-) {
-    fun openEncryptedInput(filename: String): CipherInputStream? = try {
-        val session = sessionRepository.require()
-        val input = app.openFileInput(filename)
+) : EncryptedStorage {
+    override fun openEncryptedInput(fileName: String): CipherInputStream? = try {
+        val session = requireNotNull(sessionRepository.get())
+        val input = app.openFileInput(fileName)
         cryptoEngine.createDecryptStream(input, session)
     } catch (e: Exception) {
         Timber.e(e)
         null
     }
 
-    fun openEncryptedOutput(fileName: String): CipherOutputStream? = try {
-        val session = sessionRepository.require()
+    override fun openEncryptedOutput(fileName: String): CipherOutputStream? = try {
+        val session = requireNotNull(sessionRepository.get())
         val output = app.openFileOutput(fileName, Context.MODE_PRIVATE)
         cryptoEngine.createEncryptStream(output, session)
     } catch (e: Exception) {
@@ -48,7 +51,7 @@ class VaultFileStorage @Inject constructor(
         null
     }
 
-    fun deleteEncryptedFile(fileName: String): Boolean {
+    override fun deleteEncryptedFile(fileName: String): Boolean {
         val success = app.deleteFile(fileName)
         if (!success) {
             Timber.e("Error deleting internal file: $fileName")
@@ -57,9 +60,16 @@ class VaultFileStorage @Inject constructor(
         return success
     }
 
-    fun renameEncryptedFile(currentFileName: String, newFileName: String): Boolean {
+    override fun encryptedFileExists(fileName: String): Boolean =
+        app.getFileStreamPath(fileName).exists()
+
+    override fun renameEncryptedFile(currentFileName: String, newFileName: String): Boolean {
         val currentFile = app.getFileStreamPath(currentFileName)
         val newFile = app.getFileStreamPath(newFileName)
         return currentFile.renameTo(newFile)
     }
+
+    fun listFiles(): List<String> =
+        app.fileList().toList()
+
 }

@@ -49,7 +49,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 class EncryptedImageFetcher(
     private val vaultFileStorage: VaultFileStorage,
-    private val requestData: EncryptedImageRequestData,
+    private val requestData: EncryptedImageRequestData.VaultFile,
     private val context: Context,
 ) : Fetcher {
 

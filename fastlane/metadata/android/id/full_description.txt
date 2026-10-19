@@ -1,0 +1,31 @@
+<b>Photok – Kunci foto & brankas foto rahasia, sembunyikan foto dan video (open source)</b>
+
+Photok adalah brankas foto yang aman untuk menyembunyikan foto dan video dengan enkripsi AES-256 yang kuat. Lindungi media pribadimu, buat galeri terenkripsi, dan simpan kenangan pribadimu dengan aman di perangkatmu sendiri.
+
+Semua file dienkripsi secara lokal dan hanya didekripsi di memori saat kamu menggunakan aplikasi. Tidak perlu mengunggah ke cloud.
+
+Photok bersifat open source, bebas iklan, dan dibuat dengan mengutamakan privasi. Aplikasi ini menggunakan analitik minimal yang ramah privasi untuk meningkatkan stabilitas dan pengalaman pengguna.
+
+<b>Kenapa memilih Photok?</b>
+• Sembunyikan foto dan video dengan aman
+• Galeri rahasia terenkripsi dengan perlindungan AES-256
+• Brankas offline: file tetap di perangkatmu
+• Open source dan keamanan yang transparan
+• Bebas iklan
+• Dibuat oleh pengembang independen
+
+<b>Fitur brankas</b>
+• Impor foto & video dari galerimu
+• Atur media pribadi ke dalam album
+• Ekspor file kapan saja
+• Buat dan pulihkan cadangan terenkripsi
+• Buka kunci brankas dengan sidik jari
+• Bagikan media langsung ke brankas
+• Opsi untuk menyembunyikan ikon aplikasi
+• Hapus file asli secara otomatis setelah diimpor
+
+<b>Dirancang untuk privasimu</b>
+Photok dibuat untuk orang yang ingin benar-benar mengendalikan foto dan video pribadinya.
+Enkripsi dilakukan di perangkatmu. Analitik penggunaan yang ramah privasi hanya digunakan untuk meningkatkan aplikasi dan tidak pernah digunakan untuk iklan atau pelacakan lintas aplikasi.
+
+<a href="https://github.com/leonlatsch/Photok">Lihat proyek open source di GitHub.</a>

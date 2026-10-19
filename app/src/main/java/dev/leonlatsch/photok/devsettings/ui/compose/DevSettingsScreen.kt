@@ -16,13 +16,17 @@
 
 package dev.leonlatsch.photok.devsettings.ui.compose
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,20 +51,25 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiEvent
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsUiState
 import dev.leonlatsch.photok.devsettings.ui.DevSettingsViewModel
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
 
 @Composable
 fun DevSettingsScreen(
-    onClose: () -> Unit,
     viewModel: DevSettingsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
 
     DevSettingsContent(
         uiState = uiState,
         handleUiEvent = viewModel::handleUiEvent,
-        onClose = onClose,
+        onClose = navigator::goBack,
+        onOpenPreferencesEditor = { navigator.navigate(AppRoute.PreferencesEditor) },
     )
 }
 
@@ -70,6 +79,7 @@ private fun DevSettingsContent(
     uiState: DevSettingsUiState,
     handleUiEvent: (DevSettingsUiEvent) -> Unit,
     onClose: () -> Unit,
+    onOpenPreferencesEditor: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -92,7 +102,7 @@ private fun DevSettingsContent(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 10.dp)
+                        .padding(vertical = Dimens.spacingSmall)
                 ) {
                     AppName()
                     Text(
@@ -100,7 +110,7 @@ private fun DevSettingsContent(
                         fontFamily = FontFamily.Monospace
                     )
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingXxSmall)
                     ) {
                         Text(
                             text = BuildConfig.VERSION_NAME,
@@ -114,7 +124,13 @@ private fun DevSettingsContent(
         }
     ) { contentPadding ->
         Column(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    top = contentPadding.calculateTopPadding(),
+                    bottom = LocalMainMenuPadding.current.calculateBottomPadding(),
+                ),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -138,6 +154,23 @@ private fun DevSettingsContent(
                     onCheckedChange = { handleUiEvent(DevSettingsUiEvent.ToggleOverrideHasPro(it)) },
                 )
             }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onOpenPreferencesEditor)
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Shared preferences",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    text = "View and edit all shared preferences files.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                )
+            }
         }
     }
 }
@@ -150,6 +183,7 @@ private fun DevSettingsScreenPreview() {
             uiState = DevSettingsUiState(overrideHasPro = true),
             handleUiEvent = {},
             onClose = {},
+            onOpenPreferencesEditor = {},
         )
     }
 }

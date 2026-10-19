@@ -72,6 +72,10 @@ The table below provides a high-level comparison of the architectural and crypto
 
 **Extensions:** `.crypt`, `.crypt.tn`, `.crypt.vp`
 
+**Thumbnails:** Thumbnails are not vault files. They live in `cacheDir/thumbnails/v<N>/<uuid>.jpg`,
+encrypted with the VMK like every other file, and are not part of backups. A missing thumbnail is
+created again from the original (or the `.crypt.vp` of a video).
+
 Version 3.x.x decouples file encryption keys from user passwords using a **Vault Master Key (VMK)** pattern.
 
 **Architecture:**
@@ -236,7 +240,7 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 ├─────────────────────────────────────────1
 │ meta.json                               │
 │   {                                     │
-│     "wrappedVmk": String,               │  ← the wrapped vault master key
+│     "wrappedVMK": String,               │  ← the wrapped vault master key
 │     "params": [VaultProtectionParams],  │  ← the vault protection parameters needed to decrypt the vmk
 │     "photos": [PhotoBackup],            │  ← list of photo uuids with file metadata
 │     "albums": [AlbumBackup],            │  ← list of albums with title, etc.
@@ -252,3 +256,57 @@ Modern backup implementation built around the Version 3.x.x decoupled Vault Mast
 │ ...                                     │
 └─────────────────────────────────────────┘
 ```
+
+## Backup Format V6
+Same `meta.json` as V5, but thumbnails are no longer part of the archive. They are derived data and
+are created in the cache dir when needed. The version is bumped so app versions that expect a
+`.crypt.tn` for every photo request an app update instead of restoring it without thumbnails.
+
+### Archive Structure
+```
+┌─────────────────────────────────────────┐
+│               backup.zip                │
+├─────────────────────────────────────────1
+│ meta.json                               │
+│   {                                     │
+│     "wrappedVMK": String,               │  ← the wrapped vault master key
+│     "params": [VaultProtectionParams],  │  ← the vault protection parameters needed to decrypt the vmk
+│     "photos": [PhotoBackup],            │  ← list of photo uuids with file metadata
+│     "albums": [AlbumBackup],            │  ← list of albums with title, etc.
+│     "albumPhotoRefs":                   │  ← list of album-photo references. uuid to uuid.
+│        [AlbumPhotoRefBackup],           │
+│     "createdAt": Long,                  │  ← timestamp of backup creation
+│     "backupVersion": Int                │  ← backup version (6)
+│   }                                     │
+│                                         │    3.x.x format. CBC - PKCS7 Padding. Header (V2) + ciphertext
+│ <uuid>.crypt                            │  ← Encrypted original file
+│ <uuid>.crypt.vp                         │  ← Encrypted video preview
+│ ...                                     │
+└─────────────────────────────────────────┘
+```
+
+### Notes on reading and writing V5+
+
+* **`meta.json` is written first.** It carries the wrapped VMK, so an archive that ends before it
+  is written can never be opened again. Everything after it is optional in the sense that a photo
+  which failed is still listed in `meta.json` and is reported as missing when restoring.
+* **Media entries are stored without compression.** They are already ciphertext and do not
+  compress, so the deflate level is set to `NO_COMPRESSION`.
+* **Restoring re-encrypts.** Files are decrypted with the key derived from the backup password and
+  written back out with the *current* vault's VMK, so a restored vault is always sealed with the
+  password that is set on the device now.
+* **Restoring is additive.** Photos already in the vault are either skipped or replaced, whichever
+  the user chose on the restore overview. A restored photo keeps its original `importedAt`, so it
+  lands back in the position it had in the gallery.
+* **Only what landed is indexed.** Database rows are written for photos whose bytes made it onto
+  disk, inside a single transaction, and album-photo references pointing at a photo that did not
+  make it are dropped.
+* **`meta.json` is not encrypted.** File names, album names, sizes and dates are therefore readable
+  by anyone holding the backup file. Closing that gap requires a new archive format.
+
+### Reading a backup written by a newer Photok
+
+`backupVersion` is the first thing read. A value above the highest version this app knows is
+reported as its own error, so the user is told to update the app rather than being shown a generic
+"this backup is broken" message. A missing `backupVersion` is treated as version 1, which is what
+the very first backups wrote.

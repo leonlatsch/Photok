@@ -42,6 +42,18 @@ platform :android do
   end
 
   #
+  # ---- Local --------------------------------------------------------------
+  #
+
+  desc "Build playRelease signed with the local debug key and install it on the connected device (needs :pro submodule)"
+  lane :install_play_release do
+    gradle(
+      task: "installPlayRelease",
+      properties: debug_signing_properties
+    )
+  end
+
+  #
   # ---- Release ------------------------------------------------------------
   #
 
@@ -108,16 +120,16 @@ platform :android do
     )
   end
 
-  desc "Upload only the Play Store screenshots/graphics from fastlane/metadata (no build, no :pro submodule needed)"
-  lane :upload_screenshots do
-    UI.message("Uploading Play Store images from fastlane/metadata/android")
+  desc "Upload the Play Store listing (title, descriptions, screenshots/graphics) from fastlane/metadata (no build, no :pro submodule needed)"
+  lane :upload_metadata do
+    UI.message("Uploading Play Store listing from fastlane/metadata/android")
 
     upload_to_play_store(
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_changelogs: true,
-      skip_upload_metadata: true,   # don't overwrite store title/description
 
+      skip_upload_metadata: false,  # title, short_description, full_description
       skip_upload_images: false,    # icon, featureGraphic
       skip_upload_screenshots: false
     )
@@ -197,6 +209,15 @@ def signing_properties
     "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
     "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
     "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
+  }
+end
+
+def debug_signing_properties
+  {
+    "android.injected.signing.store.file" => File.expand_path("~/.android/debug.keystore"),
+    "android.injected.signing.store.password" => "android",
+    "android.injected.signing.key.alias" => "androiddebugkey",
+    "android.injected.signing.key.password" => "android"
   }
 end
 

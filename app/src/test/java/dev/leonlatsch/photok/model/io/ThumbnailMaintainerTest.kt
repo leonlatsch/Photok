@@ -1,0 +1,197 @@
+/*
+ *   Copyright 2020–2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package dev.leonlatsch.photok.model.io
+
+import android.app.Application
+import dev.leonlatsch.photok.encryption.domain.crypto.CbcCryptoEngine
+import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
+import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
+import dev.leonlatsch.photok.io.VaultCacheStorage
+import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.settings.data.Config
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import java.io.File
+
+@RunWith(RobolectricTestRunner::class)
+class ThumbnailMaintainerTest {
+
+    private val app: Application = RuntimeEnvironment.getApplication()
+
+    private val vaultCacheStorage = VaultCacheStorage(
+        sessionRepository = mockk { every { get() } returns VaultSession(KeyGen().generateVaultMasterKey()) },
+        cryptoEngine = CbcCryptoEngine(),
+        app = app,
+    )
+
+    private val vaultFileStorage = VaultFileStorage(
+        sessionRepository = mockk(),
+        cryptoEngine = CbcCryptoEngine(),
+        app = app,
+    )
+
+    private val legacyEncryptionMigrator = mockk<LegacyEncryptionMigrator> {
+        every { migrationNeeded() } returns false
+    }
+
+    private val config = mockk<Config> {
+        every { legacyCurrentlyMigrating } returns false
+    }
+
+    private val created = photo("created")
+    private val failing = photo("failing")
+
+    private val photoRepository = mockk<PhotoRepository>()
+
+    private val thumbnailGenerator = mockk<ThumbnailGenerator> {
+        coEvery { createFromVault(created.uuid, any()) } answers {
+            writeCacheFile(ThumbnailFiles.path(created.uuid))
+            Result.success(CreatedThumbnail.Existing)
+        }
+        coEvery { createFromVault(failing.uuid, any()) } returns Result.failure(Exception("broken"))
+    }
+
+    private val maintenance = ThumbnailMaintainer(
+        sessionRepository = mockk(),
+        photoRepository = photoRepository,
+        vaultCacheStorage = vaultCacheStorage,
+        vaultFileStorage = vaultFileStorage,
+        thumbnailGenerator = thumbnailGenerator,
+        legacyEncryptionMigrator = legacyEncryptionMigrator,
+        config = config,
+    )
+
+    @After
+    fun tearDown() {
+        File(app.cacheDir, ThumbnailFiles.DIR).deleteRecursively()
+        app.fileList().forEach { app.deleteFile(it) }
+    }
+
+    @Test
+    fun `files dir thumbnails are deleted, other vault files are kept`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+        val original = writeFilesDirFile("photo.crypt")
+        val videoPreview = writeFilesDirFile("photo.crypt.vp")
+
+        maintenance.run()
+
+        assertFalse(thumbnail.exists())
+        assertTrue(original.exists())
+        assertTrue(videoPreview.exists())
+    }
+
+    @Test
+    fun `files dir thumbnails are kept while a legacy migration is needed`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        every { legacyEncryptionMigrator.migrationNeeded() } returns true
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+
+        maintenance.run()
+
+        assertTrue(thumbnail.exists())
+    }
+
+    @Test
+    fun `files dir thumbnails are kept while a legacy migration is running`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        every { config.legacyCurrentlyMigrating } returns true
+        val thumbnail = writeFilesDirFile("photo.crypt.tn")
+
+        maintenance.run()
+
+        assertTrue(thumbnail.exists())
+    }
+
+    @Test
+    fun `outdated thumbnail versions are deleted`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        writeCacheFile("${ThumbnailFiles.DIR}/v0/old.jpg")
+
+        maintenance.run()
+
+        assertFalse(vaultCacheStorage.encryptedFileExists("${ThumbnailFiles.DIR}/v0"))
+    }
+
+    @Test
+    fun `dead thumbnails are deleted, unless they are newer than the pass`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns emptyList()
+        val dead = writeCacheFile(ThumbnailFiles.path("dead"))
+        dead.setLastModified(System.currentTimeMillis() - 60_000)
+        val importing = writeCacheFile(ThumbnailFiles.path("importing"))
+        importing.setLastModified(System.currentTimeMillis() + 60_000)
+
+        maintenance.run()
+
+        assertFalse(dead.exists())
+        assertTrue(importing.exists())
+    }
+
+    @Test
+    fun `stale tmp files of existing photos are deleted, unless they are newer than the pass`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(created)
+        val stale = writeCacheFile(ThumbnailFiles.tmpPath(created.uuid))
+        stale.setLastModified(System.currentTimeMillis() - 60_000)
+        val writing = writeCacheFile(ThumbnailFiles.tmpPath("writing"))
+        writing.setLastModified(System.currentTimeMillis() + 60_000)
+
+        maintenance.run()
+
+        assertFalse(stale.exists())
+        assertTrue(writing.exists())
+    }
+
+    @Test
+    fun `a failing thumbnail does not stop the others`() = runTest {
+        coEvery { photoRepository.findAllPhotosByImportDateDesc() } returns listOf(failing, created)
+
+        maintenance.run()
+
+        assertTrue(vaultCacheStorage.encryptedFileExists(ThumbnailFiles.path(created.uuid)))
+    }
+
+    private fun writeCacheFile(path: String): File {
+        vaultCacheStorage.openEncryptedOutput(path)!!.use { it.write(byteArrayOf(1)) }
+        return File(app.cacheDir, path)
+    }
+
+    private fun writeFilesDirFile(name: String): File {
+        app.openFileOutput(name, 0).use { it.write(byteArrayOf(1)) }
+        return app.getFileStreamPath(name)
+    }
+
+    private fun photo(uuid: String) = Photo(
+        fileName = "$uuid.jpg",
+        importedAt = 0L,
+        type = PhotoType.JPEG,
+        lastModified = null,
+        uuid = uuid,
+    )
+}

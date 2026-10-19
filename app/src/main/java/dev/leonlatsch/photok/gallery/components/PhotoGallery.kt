@@ -34,12 +34,14 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -65,6 +67,7 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -73,9 +76,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
+import dev.leonlatsch.photok.pro.paywall.ui.components.ProGalleryBanner
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
@@ -83,9 +89,11 @@ import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 private const val PORTRAIT_COLUMN_COUNT = 3
 private const val LANDSCAPE_COLUMN_COUNT = 6
+private const val PRO_BANNER_KEY = "pro_banner"
 
 @Composable
 fun PhotoGallery(
@@ -98,6 +106,8 @@ fun PhotoGallery(
     onImportChoice: (ImportChoice) -> Unit,
     additionalMultiSelectionActions: @Composable (ColumnScope.() -> Unit),
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
+    gridState: LazyGridState = rememberLazyGridState(),
 ) {
     val activity = LocalActivity.current
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
@@ -115,6 +125,8 @@ fun PhotoGallery(
             photos = photos,
             multiSelectionState = multiSelectionState,
             openPhoto = onOpenPhoto,
+            contentPadding = contentPadding,
+            gridState = gridState,
         )
 
         AnimatedVisibility(
@@ -123,6 +135,7 @@ fun PhotoGallery(
             exit = slideOutVertically { it },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
+                .padding(bottom = contentPadding.calculateBottomPadding())
         ) {
             MagicFab(
                 label = stringResource(R.string.import_menu_fab_label),
@@ -189,7 +202,9 @@ fun PhotoGallery(
         )
 
         MultiSelectionMenu(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = contentPadding.calculateBottomPadding()),
             multiSelectionState = multiSelectionState,
         ) {
             DropdownMenuItem(
@@ -245,9 +260,11 @@ private fun PhotoGrid(
     photos: List<PhotoTile>,
     multiSelectionState: MultiSelectionState,
     openPhoto: (PhotoTile) -> Unit,
+    contentPadding: PaddingValues,
+    gridState: LazyGridState,
     modifier: Modifier = Modifier,
 ) {
-    val gridState: LazyGridState = rememberLazyGridState()
+    val isPreview = LocalInspectionMode.current
 
     val columnCount = when (LocalConfiguration.current.orientation) {
         Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_COLUMN_COUNT
@@ -257,11 +274,42 @@ private fun PhotoGrid(
 
     val haptic = LocalHapticFeedback.current
 
+    val proBannerViewModel: ProGalleryBannerViewModel? = if (isPreview) null else hiltViewModel()
+    val showProBanner = proBannerViewModel?.uiState?.collectAsStateWithLifecycle()?.value == true
+
+    LaunchedEffect(showProBanner) {
+        val wasAtTop = gridState.firstVisibleItemIndex <= 1 &&
+                gridState.firstVisibleItemScrollOffset == 0
+
+        if (showProBanner && wasAtTop) {
+            gridState.requestScrollToItem(0)
+        }
+    }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(columnCount),
         modifier = modifier.fillMaxWidth(),
-        state = gridState
+        state = gridState,
+        contentPadding = contentPadding,
     ) {
+        if (isPreview || showProBanner) {
+            item(
+                key = PRO_BANNER_KEY,
+                span = {
+                    GridItemSpan(maxLineSpan)
+                }
+            ) {
+                ProGalleryBanner(
+                    onDismiss = {
+                        proBannerViewModel?.handleUiEvent(ProGalleryBannerUiEvent.OnDismiss)
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .animateItem()
+                )
+            }
+        }
+
         items(photos, key = { it.uuid }) {
             GalleryPhotoTile(
                 photoTile = it,
@@ -294,7 +342,7 @@ private fun PhotoGrid(
 }
 
 private val VideoIconSize = 20.dp
-private val SelectedPadding = 15.dp
+private val SelectedPadding = Dimens.spacingMedium
 private val CheckmarkPadding = SelectedPadding - 9.dp
 
 @Composable
@@ -343,16 +391,17 @@ private fun GalleryPhotoTile(
             )
         } else {
             val requestData = remember(photoTile) {
-                EncryptedImageRequestData(
-                    internalFileName = photoTile.internalThumbnailFileName,
-                    mimeType = photoTile.type.mimeType
+                EncryptedImageRequestData.Thumbnail(
+                    uuid = photoTile.uuid,
+                    type = photoTile.type,
                 )
             }
 
             Image(
                 painter = rememberEncryptedImagePainter(requestData),
                 contentDescription = photoTile.fileName,
-                modifier = contentModifier
+                modifier = contentModifier,
+                contentScale = ContentScale.Crop,
             )
         }
 
@@ -361,12 +410,12 @@ private fun GalleryPhotoTile(
             enter = scaleIn(),
             exit = scaleOut(),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(Dimens.spacingXxSmall)
                 .size(VideoIconSize)
                 .align(Alignment.BottomStart)
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_videocam),
+                painter = painterResource(R.drawable.ic_videocam_filled),
                 contentDescription = null,
                 tint = Color.White,
                 modifier = Modifier
@@ -385,7 +434,7 @@ private fun GalleryPhotoTile(
             enter = scaleIn(),
             exit = scaleOut(),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(Dimens.spacingXxSmall)
                 .size(VideoIconSize)
                 .align(Alignment.TopEnd)
         ) {

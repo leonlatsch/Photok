@@ -1,0 +1,7 @@
+- Fotos öffnen sich deutlich schneller und die Galerie scrollt flüssiger
+- Kleinere Backups. Vorschaubilder sind nicht mehr enthalten und werden automatisch neu erstellt
+- Jeder Tab merkt sich jetzt, wo du aufgehört hast
+- Neu: Schwedische Übersetzung
+- Fix: Absturz beim Öffnen des Fake-Telefons ohne installierte Telefon-App
+- Fix: Beim Zurücksetzen des Tresors wird jetzt auch die Wiederherstellungsphrase entfernt
+- Fehlerbehebungen und Verbesserungen

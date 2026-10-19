@@ -1,0 +1,7 @@
+- Neu: Ganz neue Backups. Wiederherstellen ist jetzt ein geführter Ablauf mit Live-Fortschritt und Restzeit
+- Neu: Vorhandene Dateien beim Wiederherstellen überspringen oder ersetzen
+- Zuverlässigere Backups mit klaren Fehlermeldungen, kompatibel mit allen alten Backups
+- Screenshot-Einstellung ohne Neustart ändern
+- Flüssigeres Entsperren und Einrichten
+- Tastaturen lernen dein Passwort nicht mehr, die App sperrt sich zuverlässig im Hintergrund
+- Übersetzungen verbessert

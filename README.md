@@ -65,22 +65,26 @@ Photok can use minimal privacy-friendly analytics to improve stability and user 
 These analytics are never used for advertising or cross-app tracking.
 
 ## Translations
-Indicates how much of a language was translated by a human. The rest in machine translated.
+Photok is available in the following languages.
 <!-- BEGIN-TRANSLATIONS -->
-![English](https://img.shields.io/badge/English-100%25-brightgreen)
-![Arabic](https://img.shields.io/badge/Arabic-54%25-orange)
-![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-98%25-yellow)
-![Dutch](https://img.shields.io/badge/Dutch-54%25-orange)
-![French](https://img.shields.io/badge/French-97%25-yellow)
-![German](https://img.shields.io/badge/German-100%25-brightgreen)
-![Indonesian](https://img.shields.io/badge/Indonesian-98%25-yellow)
-![Italian](https://img.shields.io/badge/Italian-74%25-orange)
-![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-97%25-yellow)
-![Russian](https://img.shields.io/badge/Russian-61%25-orange)
-![Spanish](https://img.shields.io/badge/Spanish-98%25-yellow)
-![Turkish](https://img.shields.io/badge/Turkish-98%25-yellow)
-![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-78%25-yellow)
+![English](https://img.shields.io/badge/English-blue)
+![Arabic](https://img.shields.io/badge/Arabic-blue)
+![Chinese (China)](https://img.shields.io/badge/Chinese%20(China)-blue)
+![Dutch](https://img.shields.io/badge/Dutch-blue)
+![French](https://img.shields.io/badge/French-blue)
+![German](https://img.shields.io/badge/German-blue)
+![Indonesian](https://img.shields.io/badge/Indonesian-blue)
+![Italian](https://img.shields.io/badge/Italian-blue)
+![Portuguese (Brazil)](https://img.shields.io/badge/Portuguese%20(Brazil)-blue)
+![Russian](https://img.shields.io/badge/Russian-blue)
+![Spanish](https://img.shields.io/badge/Spanish-blue)
+![Swedish](https://img.shields.io/badge/Swedish-blue)
+![Turkish](https://img.shields.io/badge/Turkish-blue)
+![Urdu (India)](https://img.shields.io/badge/Urdu%20(India)-blue)
 <!-- END-TRANSLATIONS -->
+
+Initial texts are hand picked for English and German. The rest is machine translated.
+Contributors from the community then review and fix these machine translations on demand.
 
 > You want to help translating Photok? See [CONTRIBUTING](CONTRIBUTING.md#Translations)
 

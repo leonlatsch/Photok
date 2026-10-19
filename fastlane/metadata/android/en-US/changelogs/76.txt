@@ -1,0 +1,7 @@
+- New: All new backups. Restoring is now a guided flow with live progress and time left
+- New: Skip or replace files you already have when restoring
+- More reliable backups with clear error messages, compatible with all your old backups
+- Change the screenshot setting without a restart
+- Smoother unlock and setup
+- Keyboards no longer learn your password, the app locks reliably in the background
+- Improve translations

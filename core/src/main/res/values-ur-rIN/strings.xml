@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">کاپی رائٹ \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">کام ہو رہا ہے …</string>
     <string name="common_password">پاس ورڈ</string>
     <string name="common_delete">مٹائیں</string>
     <string name="common_export">باہر نکالیں</string>
@@ -29,34 +27,47 @@
     <string name="common_no">نہیں</string>
     <string name="common_ok">ٹھیک ہے</string>
     <string name="common_are_you_sure">کیا آپ کو یقین ہے؟</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">مزید</string>
     <string name="common_cancel">کینسل کریں</string>
+    <string name="common_canceling">روکا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">بنائیں</string>
     <string name="common_empty">خالی</string>
     <string name="common_rename">نام بدلیں</string>
     <string name="common_try_again">دوبارہ کوشش کریں</string>
     <string name="common_continue">جاری رکھیں</string>
     <string name="common_hold_to_confirm">تصدیق کے لیے دبائے رکھیں</string>
+    <string name="common_back">واپس</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">ہو گیا</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>
-    <string name="import_permission_rationale">فائلیں لانے کے لیے Photok کو آپ کے فون کی اسٹوریج استعمال کرنے کی اجازت چاہیے۔</string>
     <string name="import_sharted_question">کیا آپ %1$d فائلیں لانا چاہتے ہیں؟</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">اپنا پاس ورڈ بنائیں</string>
     <string name="setup_enter_password">پاس ورڈ لکھیں</string>
     <string name="setup_confirm_password">پاس ورڈ دوبارہ لکھیں</string>
-    <string name="setup_password_strength_label">پاس ورڈ کتنا مضبوط ہے:</string>
-    <string name="setup_button">بنائیں</string>
-    <string name="setup_password_strength_very_weak">بہت کمزور</string> <!-- TODO: machine translated | EN: Very weak -->
-    <string name="setup_password_strength_weak">کمزور</string>
-    <string name="setup_password_strength_moderate">درمیانہ</string>
-    <string name="setup_password_strength_strong">بہت مضبوط</string>
-    <string name="setup_password_strength_very_strong">انتہائی مضبوط</string> <!-- TODO: machine translated | EN: Very strong -->
     <string name="setup_password_match_warning">\u26A0۰ پاس ورڈ ایک جیسے نہیں ہیں</string>
-    <string name="setupSetup">تیاری</string>
+    <string name="setup_password_strength_very_weak">بہت کمزور</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">کمزور</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">درمیانہ</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">مضبوط</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">بہت مضبوط</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">%1$s میں توڑا جا سکتا ہے</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">کائنات کی عمر سے بھی زیادہ وقت</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">توڑنے کا وقت کیسے نکالا جاتا ہے؟</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">پیٹرن کی جانچ</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn عام پاس ورڈ، الفاظ، نام اور پیٹرن تلاش کرتا ہے اور گنتا ہے کہ کتنے اندازے لگانے پڑیں گے۔</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">جان بوجھ کر سست</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 ہر اندازے کو سست بنا دیتا ہے۔ ہم ایک طاقتور گرافکس کارڈ مانتے ہیں جو ہر سیکنڈ میں تقریباً %1$s اندازے لگاتا ہے۔ کئی کارڈ مل کر اس سے تیز ہوتے ہیں۔</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">تکنیکی تفصیلات</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">کی ڈیریویشن</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">دہرائی کی تعداد</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">حملے کی رفتار</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s اندازے/سیکنڈ</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">مزید جانیں</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">GitHub پر zxcvbn4j</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">Dropbox کا zxcvbn</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Photok آپ کی فائلوں کو کیسے خفیہ کرتا ہے</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">اپنا سیف کھولیں</string>
@@ -104,16 +115,15 @@
     <string name="view_photo_detail_file_type_label">فائل کی قسم:</string>
     <string name="view_photo_detail_size_label">سائز:</string>
     <string name="view_photo_detail_last_modified">آخری تبدیلی:</string>
+    <string name="view_photo_loop_video_disabled">دہرانا بند ہے</string> <!-- TODO: machine translated | EN: Looping disabled -->
+    <string name="view_photo_loop_video_enabled">دہرانا چالو ہے</string> <!-- TODO: machine translated | EN: Looping enabled -->
     <string name="view_photo_video_playback_speed">چلنے کی رفتار</string> <!-- TODO: machine translated | EN: Playback speed -->
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">لاک کریں</string>
     <string name="menu_main_settings">سیٹنگز</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">سب منتخب کریں</string>
-    <string name="menu_ms_delete">مٹائیں</string>
-    <string name="menu_ms_export">باہر نکالیں</string>
     <string name="menu_ms_info">%1$d چیزیں منتخب کر لیں</string>
     <string name="menu_ms_add_to_album">البم میں ڈالیں</string>
     <string name="menu_ms_remove_from_album">البم سے نکالیں</string>
@@ -133,9 +143,6 @@
     <string name="export_are_you_sure_this">کیا آپ یہ فائل واپس گیلری میں بھیجنا چاہتے ہیں؟</string>
     <string name="export_and_delete_are_you_sure_this">کیا آپ یہ فائل گیلری میں بھیج کر یہاں سے مٹانا چاہتے ہیں؟</string>
     <string name="export_exporting">فائلیں باہر نکالی جا رہی ہیں…</string>
-    <string name="export_permission_rationale">باہر بھیجنے کے لیے Photok کو اسٹوریج کی اجازت چاہیے۔</string>
-    <string name="export_finished">باہر بھیج دی گئیں</string>
-    <string name="export_and_delete_finished">باہر بھیج کر مٹا دی گئیں</string>
 
     <!-- ABOUT -->
     <string name="about_version">ورژن:</string>
@@ -145,7 +152,6 @@
     <string name="about_third_party">دیگر سافٹ ویئر</string>
     <string name="about_privacy_policy">رازداری کی پالیسی</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">نئی خبریں</string>
 
   <!-- SETTINGS -->
     <string name="settings_title">سیٹنگز</string>
@@ -161,8 +167,7 @@
 
     <string name="settings_category_security">حفاظت</string>
     <string name="settings_security_allow_screenshots_title">اسکرین شاٹ کی اجازت</string>
-    <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔ ایپ بند کر کے دوبارہ کھولنی پڑے گی۔</string>
-    <string name="settings_security_change_password_title">پاس ورڈ بدلیں</string>
+    <string name="settings_security_allow_screenshots_summary">اسکرین شاٹ لینے دیں۔</string>
     <string name="settings_security_change_password_summary">اپنا نیا پاس ورڈ سیٹ کریں</string>
     <string name="settings_security_biometric_title">فنگر پرنٹ یا چہرہ</string>
     <string name="settings_security_biometric_summary">Photok کو فون کے لاک سے کھولیں۔</string>
@@ -170,7 +175,6 @@
     <string name="settings_security_recovery_phrase_title">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="settings_security_recovery_phrase_summary">اپنی ریکوری فریز کا انتظام کریں۔</string> <!-- TODO: machine translated | EN: Manage your recovery phrase. -->
     <string name="settings_security_timeout_title">خودکار لاک کا وقت</string>
-    <string name="settings_security_timeout_summary">بیک گراؤنڈ میں جانے کے کتنی دیر بعد لاک ہو</string>
     <string name="settings_security_timeout_immediately">فوراً</string>
     <string name="settings_security_timeout_one_minute">۱ منٹ</string>
     <string name="settings_security_timeout_two_minute">۲ منٹ</string>
@@ -224,18 +228,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">پاس ورڈ بدلیں</string>
     <string name="change_password_old_password">پرانا پاس ورڈ</string>
-    <string name="change_password_new_password">نیا پاس ورڈ</string>
     <string name="change_password_check">چیک کریں</string>
     <string name="change_password_enter_new_password">نیا پاس ورڈ لکھیں</string>
     <string name="change_password_confirm_new_password">نئے پاس ورڈ کی تصدیق کریں</string>
     <string name="change_password_button">پاس ورڈ بدل دیں</string>
-    <string name="change_password_confirm_message">بیک اپ بنانا بہتر ہے!<br /> پاس ورڈ بدلنے سے تمام فائلوں کو دوبارہ لاک کیا جائے گا۔ کیا آپ تیار ہیں؟</string>
-    <string name="change_password_reencrypting">فائلیں دوبارہ لاک کی جا رہی ہیں…</string>
     <string name="change_password_done">پاس ورڈ بدل دیا گیا</string> <!-- TODO: machine translated | EN: Password has been changed -->
     <string name="change_password_recovery_phrase_used">ریکوری فریز استعمال کی گئی — پرانے پاس ورڈ کی جانچ ضروری نہیں</string> <!-- TODO: machine translated | EN: Recovery phrase was used — old password check not required -->
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">پاس ورڈ چیک کریں</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok چھپائیں</string>
@@ -249,41 +247,97 @@
     <string name="hide_app_hint">چھپانے کے بعد ایپ صرف ڈائلر سے خفیہ کوڈ کے ذریعے کھلے گی۔</string>
     <string name="hide_app_hint_current_code">موجودہ خفیہ کوڈ:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">اگلا</string>
-    <string name="onboarding_finish">شروع کریں</string>
-    <string name="onboarding_skip"><u>چھوڑ دیں</u></string>
-
-    <string name="onboarding_slide1_title">خوش آمدید</string>
-    <string name="onboarding_slide1_description">آپ کی تصاویر کے لیے محفوظ جگہ۔</string>
-    <string name="onboarding_slide2_title">پاس ورڈ بنائیں</string>
-    <string name="onboarding_slide2_description">ایک اچھا پاس ورڈ بنائیں جو آپ کی تصاویر کو فون میں لاک کر دے گا۔</string>
-    <string name="onboarding_slide3_title">فائلیں لانا شروع کریں</string>
-    <string name="onboarding_slide3_description">تصویریں یہاں لائیں اور دوسروں سے محفوظ رکھیں۔\nاس کے بعد آپ انہیں گیلری سے مٹا سکتے ہیں۔</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">بیک اپ بن رہا ہے…</string>
-    <string name="backup_restore_title">بیک اپ واپس لائیں</string>
-    <string name="backup_restore_validating">بیک اپ چیک ہو رہا ہے…</string>
-    <string name="backup_restore_details_created_at">بنایا گیا:</string>
-    <string name="backup_restore_details_photos_contained">موجود فائلیں:</string>
-    <string name="backup_restore_details_compatible">صحیح ہے:</string>
-    <string name="backup_restore_details_size">سائز:</string>
-    <string name="backup_restore_button">کھولیں اور واپس لائیں</string>
-    <string name="backup_restore_invalid_file">\u26A0۰ یہ فائل صحیح نہیں ہے</string>
-    <string name="backup_restore_processing">بیک اپ واپس لایا جا رہا ہے…</string>
-    <string name="backup_unlock_title">بیک اپ کھولیں</string>
     <string name="backup_confirm_password">بیک اپ بنانے کے لیے اپنے پاس ورڈ کی تصدیق کریں۔</string> <!-- TODO: machine translated | EN: Confirm your password to create a backup. -->
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">بیک اپ واپس لائیں</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">جانچا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">بیک اپ درست نہیں</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">اعداد و شمار</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">تصاویر</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">ویڈیوز</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">البمز</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">سائز</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">آرکائیو</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">بنایا گیا</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">خفیہ کاری</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">مطابقت</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">تازہ ترین (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">پرانے ورژن سے مطابقت (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">بیک اپ کھولیں</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">کھولیں اور واپس لائیں</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">بیک اپ کا پاس ورڈ لکھیں</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">یہ بیک اپ لاک ہے اور اسے اسی پاس ورڈ سے کھولنا ہوگا جو اسے بناتے وقت استعمال ہوا تھا۔</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">یہ پاس ورڈ صرف بیک اپ کھولنے کے لیے استعمال ہوگا اور کہیں محفوظ نہیں کیا جائے گا۔</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">بیک اپ واپس لایا جا رہا ہے</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">واپس لایا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%2$s میں سے %1$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/s</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%2$d میں سے %1$d فائلیں</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">اندازہ لگایا جا رہا ہے…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">%1$s باقی</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">اس میں کچھ وقت لگ سکتا ہے۔ ایپ کھلی رکھیں۔</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">واپس لانا روک دیں</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">فہرست بنائی جا رہی ہے…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">تمام فائلیں واپس آ گئیں، اب آپ کی تصاویر اور البمز کی فہرست بنائی جا رہی ہے۔</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">واپس لانا روک دیا گیا</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s سے کچھ بھی آپ کے سیف میں شامل نہیں ہوا۔ جو فائلیں پہلے واپس آ چکی تھیں وہ دوبارہ مٹا دی گئی ہیں۔</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">کامیابی سے واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">۱ مسئلے کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">%1$d مسئلوں کے ساتھ واپس آ گیا</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">ناکام چیزیں</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">نامعلوم مسئلہ</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">بیک اپ کھل نہیں سکا</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">یہ فائل نہیں کھل سکی۔ چیک کریں کہ یہ Photok کا بیک اپ ہے اور اب بھی اس فون میں موجود ہے۔</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">اس بیک اپ میں کوئی تصویر نہیں</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">اس آرکائیو میں Photok کی کوئی فائل نہیں ہے، اس لیے واپس لانے کو کچھ نہیں ہے۔</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">بیک اپ ادھورا ہے</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">اس بیک اپ میں کوئی میٹا ڈیٹا نہیں ہے، اس لیے Photok بتا نہیں سکتا کہ اس میں کیا ہے۔</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">بیک اپ پڑھا نہیں جا سکا</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">اس بیک اپ کو پڑھتے ہوئے کچھ غلط ہو گیا۔</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">وہ تصاویر جو پہلے سے آپ کے سیف میں ہیں</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">انہیں چھوڑ دیں</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">جو کاپی پہلے سے آپ کے سیف میں ہے وہی رکھیں۔</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">انہیں دوبارہ امپورٹ کریں</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">اس بیک اپ والی کاپی کو اپنے سیف میں پہلے سے موجود کاپی کے ساتھ شامل کریں۔</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">اس بیک اپ کے لیے %1$s چاہیے مگر صرف %2$s خالی ہے۔ واپس لانے سے پہلے کچھ جگہ خالی کریں۔</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">بیک اپ فائل ادھوری ہے</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">یہ فائل ادھوری رہ گئی، شاید ڈاؤن لوڈ یا کاپی بیچ میں رک گئی تھی۔ اسے دوبارہ منتقل کریں۔</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">بیک اپ بہت نیا ہے</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">یہ بیک اپ Photok کے نئے ورژن سے بنایا گیا ہے (فارمیٹ %1$d)۔ اسے واپس لانے کے لیے Photok اپ ڈیٹ کریں۔</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">%1$d فائل %2$s میں شامل کی گئی۔</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d فائلیں %2$s میں شامل کی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d البم بحال ہوا۔</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d البمز بحال ہوئے۔</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d نقل چھوڑ دی گئی۔</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d نقول چھوڑ دی گئیں۔</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">نیا کیا ہے</string>
     <string name="news_view_changelog">تبدیلیوں کی لسٹ دیکھیں</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">واپسی کا مینو</string>
-    <string name="recovery_menu_item_open_photok">Photok کھولیں</string>
-    <string name="recovery_subtitle_reset_hide_app">ایپ چھپانے کی سیٹنگ ختم کریں</string>
+    <string name="news_change_kind_new">نیا</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">بہتر</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">درست کیا گیا</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">بالکل نئے بیک اپ</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">بیک اپ بحال کرنا اب ایک رہنمائی والا فل اسکرین عمل ہے۔ بیک اپ اور بحالی پہلے سے کہیں زیادہ قابل اعتماد بھی ہیں۔</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">لائیو پیش رفت، رفتار اور باقی وقت</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">پہلے سے موجود فائلیں چھوڑیں یا بدلیں</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">عام ناکامی کے بجائے واضح خرابیاں</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">آپ کے تمام پرانے بیک اپ کے ساتھ 100% مطابقت</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">مختلف اصلاحات اور بہتریاں</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">زیادہ ہموار ان لاک اور سیٹ اپ، کی بورڈ اب آپ کا پاس ورڈ نہیں سیکھتے اور ایپ پس منظر میں قابل اعتماد طریقے سے لاک ہو جاتی ہے۔</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">خوش آمدید</string>
@@ -312,9 +366,6 @@
     <string name="migration_error_button">رپورٹ بھیجیں</string>
 
     <string name="notification_channel_background_tasks">بیک گراؤنڈ کام</string>
-    <string name="migration_error_extract_data">ڈیٹا نکالیں</string>
-    <string name="migration_error_extract_confirmation_text">کیا آپ واقعی اپنا سارا ڈیٹا بغیر لاک کے ایک ZIP فائل میں نکالنا چاہتے ہیں؟</string>
-    <string name="migration_error_extracting_title">ZIP میں نکالا جا رہا ہے…</string>
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Photok کھولیں</string>
@@ -357,42 +408,80 @@
     <string name="telemetry_choice_yes">گمنام استعمال کا ڈیٹا شیئر کریں</string> <!-- TODO: machine translated | EN: Share anonymous usage data -->
     <string name="telemetry_toggle">استعمال کے ڈیٹا کے اکٹھا ہونے کی اجازت دیں</string> <!-- TODO: machine translated | EN: Allow collection of usage data -->
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">شروع کریں</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">آپ کی تصاویر کے لیے ایک محفوظ جگہ</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">آپ کے فون پر آپ کے پاس ورڈ سے خفیہ</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">آپ کی گیلری اور دوسری ایپس سے چھپی ہوئی</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">نہ کوئی اکاؤنٹ، نہ کلاؤڈ۔ آپ کا ڈیٹا کبھی اس فون سے باہر نہیں جاتا</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">آپ کا پاس ورڈ</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">اپنا پاس ورڈ یاد رکھیں اور محفوظ رکھیں۔ اسے ری سیٹ نہیں کیا جا سکتا۔</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">پاس ورڈ کی تصدیق کریں</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">ایک چھونے سے کھولیں</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">پاس ورڈ لکھنے کے بجائے Photok کو اپنے فنگر پرنٹ سے کھولیں۔</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">فنگر پرنٹ یا چہرے سے کھولنا آن کریں</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">ابھی نہیں</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">اس کے بجائے 12 الفاظ استعمال کریں</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">اس کے بجائے 24 الفاظ استعمال کریں</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">اپنی پہلی تصاویر محفوظ کریں</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">جو کچھ بھی آپ یہاں لاتے ہیں وہ فوراً خفیہ ہو جاتا ہے۔ جب چاہیں مزید شامل کریں۔</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">تصاویر لائیں</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">سب تیار ہے</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">آپ کا سیف بند ہو گیا ہے۔ آپ جو کچھ شامل کریں گے وہ اسی فون پر خفیہ ہو جائے گا۔</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">میرا سیف کھولیں</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">ریکوری فریز</string> <!-- TODO: machine translated | EN: Recovery Phrase -->
     <string name="recovery_phrase_title">آپ کی ریکوری فریز</string> <!-- TODO: machine translated | EN: Your Recovery Phrase -->
     <string name="recovery_phrase_description">یہ الفاظ ترتیب سے لکھ لیں اور کسی محفوظ جگہ رکھیں۔ آپ اس فریز سے اپنے سیف تک دوبارہ رسائی حاصل کر سکتے ہیں۔</string> <!-- TODO: machine translated | EN: Write down these words in order and store them somewhere safe. You can use this phrase to recover access to your vault. -->
-    <string name="recovery_phrase_confirm">فریز محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Phrase saved -->
     <string name="recovery_phrase_save_warning">براہ کرم اپنی ریکوری فریز محفوظ کریں</string> <!-- TODO: machine translated | EN: Please save your recovery phrase -->
-    <string name="recovery_phrase_create_new">نئی فریز بنائیں</string> <!-- TODO: machine translated | EN: Create New Phrase -->
     <string name="recovery_phrase_create_new_confirm">نئی فریز بنانے سے آپ کی موجودہ فریز ہمیشہ کے لیے بدل جائے گی۔ پرانی فریز سے آپ کا سیف واپس نہیں لایا جا سکے گا۔</string> <!-- TODO: machine translated | EN: Creating a new phrase will permanently replace your current one. Your existing phrase will no longer work to restore your vault. -->
-    <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">الفاظ کی تعداد</string> <!-- TODO: machine translated | EN: Word Count -->
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as Image -->
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">پاس ورڈ بھول گئے؟</string> <!-- TODO: machine translated | EN: Forgot password -->
     <string name="recovery_phrase_restore_button">واپس لائیں</string> <!-- TODO: machine translated | EN: Restore -->
-    <string name="recovery_phrase_restore_word_placeholder">لفظ %1$d</string> <!-- TODO: machine translated | EN: Word %1$d -->
-    <string name="recovery_phrase_restore_enter_title">ریکوری فریز لکھیں</string> <!-- TODO: machine translated | EN: Enter Recovery Phrase -->
-    <string name="recovery_phrase_restore_choose_option">اپنی فریز لکھنے کا طریقہ منتخب کریں۔</string> <!-- TODO: machine translated | EN: Choose how to enter your phrase. -->
-    <string name="recovery_phrase_restore_option_type">ہاتھ سے لکھیں</string> <!-- TODO: machine translated | EN: Type by hand -->
     <string name="recovery_phrase_restore_option_open_file">فائل سے لائیں</string> <!-- TODO: machine translated | EN: Load from file -->
     <string name="recovery_phrase_restore_option_scan_qr">QR کوڈ اسکین کریں</string> <!-- TODO: machine translated | EN: Scan QR Code -->
     <string name="recovery_phrase_restore_option_paste">کلپ بورڈ سے پیسٹ کریں</string> <!-- TODO: machine translated | EN: Paste from Clipboard -->
-    <string name="recovery_phrase_restore_input_placeholder">اپنی ریکوری فریز لفظ بہ لفظ لکھیں</string> <!-- TODO: machine translated | EN: Type your recovery phrase word by word -->
     <string name="recovery_phrase_restore_unlocked">کھل گیا</string> <!-- TODO: machine translated | EN: Unlocked -->
-    <string name="recovery_phrase_restore_unlocking">کھل رہا ہے&#x2026;</string> <!-- TODO: machine translated | EN: Unlocking&#x2026; -->
     <string name="recovery_phrase_restore_error_generic">سیف واپس نہیں لایا جا سکا۔ اپنی فریز چیک کریں اور دوبارہ کوشش کریں۔</string> <!-- TODO: machine translated | EN: Could not restore vault. Please check your phrase and try again. -->
     <string name="recovery_phrase_restore_error_invalid">غلط ریکوری فریز۔ الفاظ دوبارہ چیک کریں۔</string> <!-- TODO: machine translated | EN: Invalid recovery phrase. Please double-check the words. -->
     <string name="recovery_phrase_restore_error_invalid_qr">اس QR کوڈ میں صحیح ریکوری فریز موجود نہیں ہے۔</string> <!-- TODO: machine translated | EN: The QR code does not contain a valid recovery phrase. -->
     <string name="recovery_phrase_restore_source_qr">QR کوڈ سے اسکین کی گئی</string> <!-- TODO: machine translated | EN: Scanned from QR code -->
     <string name="recovery_phrase_restore_source_file">%1$s سے لائی گئی</string> <!-- TODO: machine translated | EN: Loaded from %1$s -->
     <string name="recovery_phrase_restore_source_clipboard">کلپ بورڈ سے پیسٹ کی گئی</string> <!-- TODO: machine translated | EN: Pasted from clipboard -->
-    <string name="recovery_phrase_restore_camera_permission_button">کیمرے کی اجازت مانگیں</string> <!-- TODO: machine translated | EN: Request camera permission -->
-    <string name="recovery_phrase_restore_camera_permission_rationale">QR کوڈ اسکین کرنے کے لیے کیمرے کی اجازت درکار ہے۔</string> <!-- TODO: machine translated | EN: Camera permission is required to scan QR codes. -->
-    <string name="permission_gate_change_in_settings">سیٹنگز میں بدلیں</string> <!-- TODO: machine translated | EN: Change in Settings -->
+    <string name="recovery_phrase_restore_subtitle">اپنا سیف کھولنے کے لیے اپنی ریکوری فریز کے الفاظ لکھیں۔</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">الفاظ لکھیں</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">فریز</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">QR کوڈ</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">سیف کھل گیا</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d الفاظ</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">الفاظ دیکھنے کے لیے کارڈ پر ٹیپ کریں</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">QR کوڈ دیکھنے کے لیے کارڈ پر ٹیپ کریں</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">آپ QR کوڈ کا اسکرین شاٹ بھی لے سکتے ہیں</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">آپ کا سیف کھل رہا ہے</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">گیلری میں محفوظ کریں</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">تصویر کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">مزید آپشنز</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">تصویر کے طور پر شیئر کریں</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">ٹیکسٹ فائل کے طور پر محفوظ کریں</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">کلپ بورڈ پر کاپی کریں</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">12 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">24 الفاظ والی نئی فریز</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">گیلری میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">اسے Pictures/Photok میں دیکھیں۔ اگر آپ کی گیلری کا بیک اپ کلاؤڈ پر جاتا ہے تو یہ تصویر بھی اپ لوڈ ہو جائے گی</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">%1$s میں محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">فائل کے طور پر محفوظ ہو گئی</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">اسے اپنے چنے ہوئے فولڈر میں دیکھیں</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">%1$s کے ساتھ شیئر ہو گئی</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">شیئر ہو گئی</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">یقینی بنائیں کہ یہ وہاں پہنچ گئی جہاں آپ نے بھیجی تھی</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">کلپ بورڈ پر کاپی ہو گئی</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">اسے اس فون کے باہر کسی محفوظ جگہ پیسٹ کریں</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">اسکرین شاٹ لے لیا گیا</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">اسے اپنے اسکرین شاٹس البم میں دیکھیں</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

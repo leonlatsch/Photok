@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Telif Hakkı \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Yükleniyor…</string>
     <string name="common_password">Şifre</string>
     <string name="common_delete">Sil</string>
     <string name="common_export">Dışa Aktar</string>
@@ -29,34 +27,47 @@
     <string name="common_no">Hayır</string>
     <string name="common_ok">Tamam</string>
     <string name="common_are_you_sure">Emin misiniz?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Daha Fazla</string>
     <string name="common_cancel">İptal</string>
+    <string name="common_canceling">İptal ediliyor…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Oluştur</string>
     <string name="common_empty">Boş</string>
     <string name="common_rename">Yeniden Adlandır</string>
     <string name="common_try_again">Tekrar deneyin</string>
     <string name="common_continue">Devam Et</string>
     <string name="common_hold_to_confirm">Onaylamak için basılı tutun</string>
+    <string name="common_back">Geri</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Bitti</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>
-    <string name="import_permission_rationale">Photok\'un dosyalarınızı içe aktarmak için depolama alanınıza erişmesi gerekiyor.</string>
     <string name="import_sharted_question">%1$d dosya(ları) içe aktarmak istiyor musunuz?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Şifrenizi oluşturun</string>
     <string name="setup_enter_password">Şifrenizi girin</string>
     <string name="setup_confirm_password">Şifrenizi onaylayın</string>
-    <string name="setup_password_strength_label">Şifre Gücü:</string>
-    <string name="setup_button">Oluştur</string>
-    <string name="setup_password_strength_very_weak">Çok zayıf</string>
-    <string name="setup_password_strength_weak">Zayıf</string>
-    <string name="setup_password_strength_moderate">Orta</string>
-    <string name="setup_password_strength_strong">Güçlü</string>
-    <string name="setup_password_strength_very_strong">Çok güçlü</string>
     <string name="setup_password_match_warning">\u26A0 Şifreler eşleşmiyor</string>
-    <string name="setupSetup">Kurulum</string>
+    <string name="setup_password_strength_very_weak">Çok zayıf</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Zayıf</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Orta</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Güçlü</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Çok güçlü</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Kırılma süresi: %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Evrenin yaşından daha uzun</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Kırılma süresi nasıl hesaplanır?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Örüntü analizi</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn yaygın şifreleri, kelimeleri, isimleri ve örüntüleri kontrol eder ve gereken tahmin sayısını hesaplar.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Bilerek yavaş</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 her tahmini yavaşlatır. Saniyede yaklaşık %1$s tahmin yapan tek bir üst düzey ekran kartı varsayıyoruz. Birden fazla kart daha hızlıdır.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Teknik ayrıntılar</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Anahtar türetme</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Yineleme</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Saldırı hızı</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s tahmin/sn</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">Daha fazla bilgi</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">GitHub\'da zxcvbn4j</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">Dropbox\'tan zxcvbn</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Photok dosyalarını nasıl şifreler</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Kasayı Aç</string>
@@ -75,9 +86,9 @@
     <string name="gallery_albums_select_title">Bir Albüm Seçin</string>
     <string name="gallery_albums_deleted">Albüm silindi</string>
     <string name="gallery_albums_photos_added">%1$d öğe eklendi</string>
-    <string name="gallery_albums_show_as_grid">Albümleri ızgara olarak göster</string> <!-- TODO: machine translated | EN: Show albums as grid -->
-    <string name="gallery_albums_show_as_list">Albümleri liste olarak göster</string> <!-- TODO: machine translated | EN: Show albums as list -->
-    <string name="gallery_albums_empty_album">Boş albüm</string> <!-- TODO: machine translated | EN: Empty album -->
+    <string name="gallery_albums_show_as_grid">Albümleri ızgara olarak göster</string>
+    <string name="gallery_albums_show_as_list">Albümleri liste olarak göster</string>
+    <string name="gallery_albums_empty_album">Boş albüm</string>
     <string name="magic_fab_new_album_label">Yeni Albüm</string>
 
     <!-- IMPORT MENU -->
@@ -108,13 +119,10 @@
     <string name="view_photo_loop_video_enabled">Döngü açık</string>
     <string name="view_photo_video_playback_speed">Oynatma hızı</string>
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Kilitle</string>
     <string name="menu_main_settings">Ayarlar</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Tümünü Seç</string>
-    <string name="menu_ms_delete">Sil</string>
-    <string name="menu_ms_export">Dışa Aktar</string>
     <string name="menu_ms_info">%1$d öğe seçildi</string>
     <string name="menu_ms_add_to_album">Albüme Ekle</string>
     <string name="menu_ms_remove_from_album">Albümden Kaldır</string>
@@ -134,9 +142,6 @@
     <string name="export_are_you_sure_this">Emin misiniz, bu <b>dosyayı</b> galerinizde dışa aktarmak istiyor musunuz?</string>
     <string name="export_and_delete_are_you_sure_this">Emin misiniz, bu <b>dosyayı</b> galerinizde dışa aktarmak ve silmek istiyor musunuz?</string>
     <string name="export_exporting">Dosya(lar) dışa aktarılıyor…</string>
-    <string name="export_permission_rationale">Photok\'un dosyalarınızı dışa aktarmak için depolama alanınıza erişmesi gerekiyor.</string>
-    <string name="export_finished">Dışa aktarıldı</string>
-    <string name="export_and_delete_finished">Dışa aktarıldı ve silindi</string>
 
     <!-- ABOUT -->
     <string name="about_version">Sürüm:</string>
@@ -146,7 +151,6 @@
     <string name="about_third_party">Üçüncü Parti Yazılımlar</string>
     <string name="about_privacy_policy">Gizlilik Politikası</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Haberler</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Ayarlar</string>
@@ -157,13 +161,12 @@
     <string name="settings_app_design_system_light">Açık</string>
     <string name="settings_app_design_system_dark">Koyu</string>
     <string name="settings_gallery_start_page_title">Başlangıç Sayfası</string>
-    <string name="settings_app_language_title">Dil</string> <!-- TODO: machine translated | EN: Language -->
-    <string name="settings_app_language_summary">Uygulamanın dilini değiştir</string> <!-- TODO: machine translated | EN: Change the language of the app -->
+    <string name="settings_app_language_title">Dil</string>
+    <string name="settings_app_language_summary">Uygulamanın dilini değiştir</string>
 
     <string name="settings_category_security">Güvenlik</string>
     <string name="settings_security_allow_screenshots_title">Ekran Görüntülerine İzin Ver</string>
-    <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver. Yeniden başlatma gerektirir.</string>
-    <string name="settings_security_change_password_title">Şifreyi Değiştir</string>
+    <string name="settings_security_allow_screenshots_summary">Ekran görüntüsü alınmasına izin ver.</string>
     <string name="settings_security_change_password_summary">Şifrenizi değiştirin</string>
     <string name="settings_security_biometric_title">Biyometrik Kilit Açma</string>
     <string name="settings_security_biometric_summary">Biyometrik kimlik doğrulama ile Photok\'un kilidini açın.</string>
@@ -171,7 +174,6 @@
     <string name="settings_security_recovery_phrase_title">Kurtarma Kelimeleri</string>
     <string name="settings_security_recovery_phrase_summary">Kurtalma kelimelerini yönetin.</string>
     <string name="settings_security_timeout_title">Otomatik Kilit Zaman Aşımı</string>
-    <string name="settings_security_timeout_summary">Belirtilen süre sonunda otomatik kilitle</string>
     <string name="settings_security_timeout_immediately">Hemen</string>
     <string name="settings_security_timeout_one_minute">1 Dakika</string>
     <string name="settings_security_timeout_two_minute">2 Dakika</string>
@@ -225,18 +227,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Şifrenizi Değiştirin</string>
     <string name="change_password_old_password">Eski Şifre</string>
-    <string name="change_password_new_password">Yeni Şifre</string>
     <string name="change_password_check">Kontrol Et</string>
     <string name="change_password_enter_new_password">Yeni şifrenizi girin</string>
     <string name="change_password_confirm_new_password">Yeni şifrenizi onaylayın</string>
     <string name="change_password_button">Şifreyi Değiştir</string>
-    <string name="change_password_confirm_message">Yedekleme önerilir!<br /> Şifrenizi değiştirmek, tüm dosyalarınızı yeniden şifrelemeyi gerektirir! Devam etmek istiyor musunuz?</string>
-    <string name="change_password_reencrypting">Dosya(lar) yeniden şifreleniyor…</string>
     <string name="change_password_done">Şifre değiştirildi</string>
     <string name="change_password_recovery_phrase_used">Kurtarma kelimeleri kullanıldı — eski şifre kontrolü gerekmiyor</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Şifreyi Doğrula</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Photok\'u Gizle</string>
@@ -250,42 +246,97 @@
     <string name="hide_app_hint">Gizlendikten sonra, Photok yalnızca telefon çeviricisinden gizli başlatma kodunuz ile açılabilir.</string>
     <string name="hide_app_hint_current_code">Mevcut başlatma kodu:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">İleri</string>
-    <string name="onboarding_finish">Bitir</string>
-    <string name="onboarding_skip"><u>Atla</u></string>
-
-    <string name="onboarding_slide1_title">Hoş geldiniz</string>
-    <string name="onboarding_slide1_description">Fotoğraflarınız için güvenli bir alan.</string>
-    <string name="onboarding_slide2_title">Bir şifre oluşturun</string>
-    <string name="onboarding_slide2_description">Güvenli bir şifre oluşturun. Şifreniz, fotoğraflarınızı doğrudan telefonunuzda şifrelemek için kullanılır.</string>
-    <string name="onboarding_slide3_title">İçe Aktarmaya Başlayın</string>
-    <string name="onboarding_slide3_description">Fotoğraflarınızı içe aktarmaya başlayın ve başkalarından koruyun.\nDaha sonra bunları galerinizden silebilirsiniz.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Yedekleme oluşturuluyor…</string>
-    <string name="backup_restore_title">Yedeği Geri Yükle</string>
-    <string name="backup_restore_validating">Yedek doğrulanıyor…</string>
-    <string name="backup_restore_details_created_at">Oluşturulma tarihi:</string>
-    <string name="backup_restore_details_photos_contained">İçerilen Dosyalar:</string>
-    <string name="backup_restore_details_compatible">Uyumluluk:</string>
-    <string name="backup_restore_details_size">Boyut:</string>
-    <string name="backup_restore_button">Kilidi Aç ve Geri Yükle</string>
-    <string name="backup_restore_invalid_file">\u26A0 Geçersiz Dosya</string>
-    <string name="backup_restore_processing">Yedek geri yükleniyor…</string>
-    <string name="backup_unlock_title">Yedeğin Kilidini Aç</string>
     <string name="backup_confirm_password">Yedekleme oluşturmak için şifrenizi onaylayın.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Yedeklemeyi Geri Yükle</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Doğrulanıyor…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Geçersiz yedekleme</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">İstatistikler</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Fotoğraflar</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Videolar</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Albümler</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Boyut</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Arşiv</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Oluşturulma</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Şifreleme</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Uyumluluk</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Güncel (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Geriye dönük uyumlu (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Yedeklemenin Kilidini Aç</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Kilidi Aç &amp; Geri Yükle</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Yedekleme Şifresini Girin</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">Yedekleme şifrelenmiştir ve oluşturulurken kullanılan şifre ile açılması gerekir.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Bu şifre yalnızca yedeklemenin kilidini açmak için kullanılır ve hiçbir yerde saklanmaz.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Yedekleme Geri Yükleniyor</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Geri yükleniyor…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s / %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/sn</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d dosya</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Hesaplanıyor…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">%1$s kaldı</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">Bu işlem biraz zaman alabilir. Uygulamayı açık tutun.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Geri yüklemeyi iptal et</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">Dizinleniyor…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Tüm dosyalar geri yüklendi, fotoğraflarınız ve albümleriniz dizinleniyor.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">Geri yükleme iptal edildi</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">%1$s içeriğinden kasanıza hiçbir şey eklenmedi. Daha önce geri yüklenen tüm dosyalar tekrar silindi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">Başarıyla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">1 sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">%1$d sorunla geri yüklendi</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">Başarısız öğeler</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Bilinmeyen hata</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Yedekleme açılamıyor</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">Bu dosya açılamadı. Bir Photok yedeklemesi olduğundan ve bu cihazda hâlâ mevcut olduğundan emin olun.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Bu yedeklemede fotoğraf yok</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Bu arşiv hiçbir Photok dosyası içermiyor, bu yüzden geri yüklenecek bir şey yok.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Yedekleme eksik</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Bu yedeklemede meta veri yok, bu yüzden Photok içinde ne olduğunu belirleyemiyor.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Yedekleme okunamıyor</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Bu yedekleme okunurken bir şeyler ters gitti.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Kasanızda zaten bulunan fotoğraflar</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Atla</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Kasanızda zaten bulunan kopyayı koru.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">Yeniden içe aktar</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Bu yedeklemedeki kopyayı kasanızda zaten bulunan kopyanın yanına ekle.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">Bu yedekleme %1$s alan gerektiriyor ancak yalnızca %2$s boş. Geri yüklemeden önce yer açın.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">Yedekleme dosyası eksik</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">Bu dosya yarıda kesilmiş, büyük olasılıkla indirme veya kopyalama işlemi yarım kalmış. Dosyayı tekrar aktarmayı deneyin.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Yedekleme çok yeni</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Bu yedekleme Photok\'un daha yeni bir sürümüyle oluşturulmuş (format %1$d). Geri yüklemek için Photok\'u güncelleyin.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">%1$d dosya %2$s içinde eklendi.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d dosya %2$s içinde eklendi.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d albüm geri yüklendi.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d albüm geri yüklendi.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d kopya atlandı.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d kopya atlandı.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Yenilikler</string>
     <string name="news_view_changelog">Değişiklik Günlüğünü Görüntüle</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Kurtarma Menüsü</string>
-    <string name="recovery_menu_item_open_photok">Photok\'u Aç</string>
-    <string name="recovery_subtitle_reset_hide_app">Uygulamayı Gizleme Ayarını Sıfırla</string>
-
+    <string name="news_change_kind_new">Yeni</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">İyileştirildi</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Düzeltildi</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Yepyeni Yedekler</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">Yedeği geri yüklemek artık rehberli, tam ekran bir akış. Yedekleme ve geri yükleme de hiç olmadığı kadar güvenilir.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Canlı ilerleme, hız ve kalan süre</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Zaten sahip olduğun dosyaları atla veya değiştir</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Genel bir hata yerine anlaşılır hatalar</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">Tüm eski yedeklerinle %100 uyumlu</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">Çeşitli Düzeltmeler ve İyileştirmeler</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Daha akıcı kilit açma ve kurulum, klavyeler artık şifreni öğrenmiyor ve uygulama arka planda güvenilir şekilde kilitleniyor.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Hoşgeldiniz</string>
@@ -314,10 +365,7 @@
     <string name="migration_error_button">Hata raporu gönder</string>
 
     <string name="notification_channel_background_tasks">Arka Plan İşlemleri</string>
-    <string name="migration_error_extract_data">Verileri dışa aktar</string>
-    <string name="migration_error_extract_confirmation_text">Tüm dosyalarınızı ŞİFRESİZ olarak bir ZIP dosyasına dışa aktarmak istediğinizden emin misiniz?</string>
 
-    <string name="migration_error_extracting_title">ZIP dosyası oluşturuluyor (Şifre çözülüyor)…</string>
 
 
 
@@ -361,42 +409,80 @@
     <string name="telemetry_choice_yes">Anonim kullanım verilerini paylaş</string>
     <string name="telemetry_toggle">Kullanım verilerinin toplanmasına izin ver</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Başla</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Fotoğrafların için güvenli bir yer</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Telefonunda şifrenle şifrelenir</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Galerinden ve diğer uygulamalardan gizlenir</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Hesap yok, bulut yok. Verilerin bu telefondan asla çıkmaz</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Şifren</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Şifreni unutma ve güvenli bir yerde sakla. Sıfırlanamaz.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Şifreyi onayla</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Tek dokunuşla kilidi aç</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Şifreni yazmak yerine parmak izinle Photok\'un kilidini aç.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">Biyometrik kilit açmayı etkinleştir</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Şimdi değil</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Bunun yerine 12 kelime kullan</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Bunun yerine 24 kelime kullan</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">İlk fotoğraflarını koru</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">İçe aktardığın her şey hemen şifrelenir. İstediğin zaman daha fazlasını ekle.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Fotoğrafları içe aktar</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Her şey hazır</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Kasan mühürlendi. Eklediğin her şey doğrudan bu telefonda şifrelenir.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Kasamı aç</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Kurtarma Kelimeleri</string>
     <string name="recovery_phrase_title">Kurtarma Kelimeleri</string>
     <string name="recovery_phrase_description">Bu kelimeleri sırayla yazın ve güvenli bir yerde saklayın. Bu ifadeyi, kasanıza yeniden erişim sağlamak için kullanabilirsiniz.</string>
-    <string name="recovery_phrase_confirm">Kelimeler kaydedildi</string>
     <string name="recovery_phrase_save_warning">Lütfen kurtarma kelimelerinizi not alın</string>
-    <string name="recovery_phrase_create_new">Yeni Kurtarma Kelimeleri Oluşturun</string>
     <string name="recovery_phrase_create_new_confirm">Yeni bir kurtarma kelimeleri oluşturmak, mevcut kelimelerinizin kalıcı olarak yerine geçecektir. Eski kelimeleriniz artık kasanızı kurtarmak için kullanılamaz</string>
-    <string name="recovery_phrase_saved_to_file">%1$s\'e kaydedildi</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Kelime Sayısı</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Görsel Olarak Kaydet</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Şifremi Unuttum</string>
     <string name="recovery_phrase_restore_button">Kurtar</string>
-    <string name="recovery_phrase_restore_word_placeholder">Kelime %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Kurtarma Kelimelerinizi Girin</string>
-    <string name="recovery_phrase_restore_choose_option">Kelimelerinizi nasıl gireceğinizi seçin</string>
-    <string name="recovery_phrase_restore_option_type">Elle gir</string>
     <string name="recovery_phrase_restore_option_open_file">Dosyadan yükle</string>
     <string name="recovery_phrase_restore_option_scan_qr">QR Kod Tarat</string>
     <string name="recovery_phrase_restore_option_paste">Panodan Yapıştır</string>
-    <string name="recovery_phrase_restore_input_placeholder">Kurtarma Kelimelerinizi kelime kelime girin</string>
     <string name="recovery_phrase_restore_unlocked">Kilit Açıldı</string>
-    <string name="recovery_phrase_restore_unlocking">Kilit Açılıyor&#x2026;</string>
     <string name="recovery_phrase_restore_error_generic">Kasa kurtalılamadı. Lütfen kelimelerinizi kontrol edin ve tekrar deneyin.</string>
     <string name="recovery_phrase_restore_error_invalid">Geçersiz kurtrma kelimeleri. Lütfen kelimeleri tekrar kontrol edin.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">QR Kod, kurtarma kelimeleri içermiyor.</string>
     <string name="recovery_phrase_restore_source_qr">QR Kodundan Taratıldı</string>
     <string name="recovery_phrase_restore_source_file">%1$s Adlı Dosyadan Yüklendi</string>
     <string name="recovery_phrase_restore_source_clipboard">Panodan Yapıştırıldı</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Kamera İzni Gerekli</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">QR Kod taratmak için kamera izni gereklidir.</string>
-    <string name="permission_gate_change_in_settings">Ayarlardan Değiştirin</string>
+    <string name="recovery_phrase_restore_subtitle">Kasanın kilidini açmak için kurtarma kelimelerini gir.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Kelimeleri yaz</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">KELİMELER</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">QR KOD</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">KASA AÇILDI</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d kelime</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Kelimeleri göstermek için karta dokun</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">QR kodu göstermek için karta dokun</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">QR kodun ekran görüntüsünü de alabilirsin</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Kasan açılıyor</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Galeriye kaydet</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">Görsel olarak kaydet</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Diğer seçenekler</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Görsel olarak paylaş</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Metin dosyası olarak kaydet</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Panoya kopyala</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">12 kelimelik yeni kurtarma kelimeleri</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">24 kelimelik yeni kurtarma kelimeleri</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Galeriye kaydedildi</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">Pictures/Photok klasörüne bak. Galerin buluta yedekleniyorsa görsel de yüklenir</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">%1$s konumuna kaydedildi</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Dosya olarak kaydedildi</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Seçtiğin klasörde bulabilirsin</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">%1$s ile paylaşıldı</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Paylaşıldı</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Gönderdiğin yere ulaştığından emin ol</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Panoya kopyalandı</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Bu telefonun dışında güvenli bir yere yapıştır</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Ekran görüntüsü alındı</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Ekran görüntüleri albümünde bulabilirsin</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

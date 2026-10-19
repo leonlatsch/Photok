@@ -16,10 +16,9 @@
 
 package dev.leonlatsch.photok.gallery.ui
 
-import dev.leonlatsch.photok.sort.domain.Sort
-import android.net.Uri
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.sort.domain.Sort
 import javax.inject.Inject
 
 class GalleryUiStateFactory @Inject constructor() {
@@ -36,7 +35,7 @@ class GalleryUiStateFactory @Inject constructor() {
                     PhotoTile(
                         fileName = it.fileName,
                         type = it.type,
-                        uuid = it.uuid
+                        uuid = it.uuid,
                     )
                 },
                 showAlbumSelectionDialog = showAlbumSelectionDialog,

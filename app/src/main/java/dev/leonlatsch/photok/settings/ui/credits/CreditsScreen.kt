@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.settings.ui.credits
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -62,28 +61,28 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun CreditsScreen(
-    onClose: () -> Unit,
     viewModel: CreditsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
 
-    AppTheme {
-        CreditsContent(
-            uiState = uiState,
-            handleUiEvent = { event ->
-                when (event) {
-                    CreditsUiEvent.Close -> onClose()
-                    is CreditsUiEvent.OpenWebsite -> context.openUrl(event.url)
-                }
-            },
-        )
-    }
+    CreditsContent(
+        uiState = uiState,
+        handleUiEvent = { event ->
+            when (event) {
+                CreditsUiEvent.Close -> navigator.goBack()
+                is CreditsUiEvent.OpenWebsite -> context.openUrl(event.url)
+            }
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,12 +112,12 @@ private fun CreditsContent(
         },
     ) { contentPadding ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(Dimens.spacingLarge),
             modifier = Modifier
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(vertical = 20.dp)
+                .padding(vertical = Dimens.spacingLarge)
                 .navigationBarsPadding()
         ) {
             ContributorsSection(
@@ -151,7 +150,7 @@ private fun ContributorsSection(
             Surface(
                 shape = shape,
                 color = MaterialTheme.colorScheme.surfaceContainerLow,
-                modifier = Modifier.padding(bottom = 2.dp),
+                modifier = Modifier.padding(bottom = Dimens.spacingXxSmall),
             ) {
                 ContributorView(
                     contributor = contributor,
@@ -182,7 +181,7 @@ private fun IconCreditsSection(iconCreditsHtml: String) {
                 ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 15.dp, vertical = 12.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingMedium, vertical = 12.dp)
             )
         }
     }
@@ -202,7 +201,7 @@ private fun CreditsSection(
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(horizontal = 30.dp)
+            modifier = Modifier.padding(horizontal = Dimens.spacingXxLarge)
         )
 
         if (summary != null) {
@@ -210,14 +209,14 @@ private fun CreditsSection(
                 text = summary,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(horizontal = 30.dp)
+                modifier = Modifier.padding(horizontal = Dimens.spacingXxLarge)
             )
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(Dimens.spacingSmall))
 
         Column(
-            modifier = Modifier.padding(horizontal = 15.dp),
+            modifier = Modifier.padding(horizontal = Dimens.spacingMedium),
             content = content,
         )
     }
@@ -229,11 +228,11 @@ private fun ContributorView(
     onClick: () -> Unit,
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
         modifier = Modifier
             .clickable(role = Role.Button, onClick = onClick)
             .fillMaxWidth()
-            .padding(horizontal = 15.dp, vertical = 12.dp)
+            .padding(horizontal = Dimens.spacingMedium, vertical = 12.dp)
     ) {
         Surface(
             shape = CircleShape,

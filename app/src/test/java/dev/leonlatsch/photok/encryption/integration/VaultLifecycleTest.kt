@@ -117,7 +117,7 @@ class VaultLifecycleTest {
 
         val capturedProtection = slot<VaultProtection>()
         coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns initialProtection
-        coEvery { mockSessionRepository.require() } returns VaultSession(initialVmk)
+        coEvery { mockSessionRepository.get() } returns VaultSession(initialVmk)
         coEvery { mockProtectionRepository.updateProtection(capture(capturedProtection)) } returns Unit
 
         changePasswordUseCase(newPassword)

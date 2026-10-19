@@ -1,0 +1,7 @@
+- Photos open much faster and the gallery scrolls smoother
+- Smaller backups. Thumbnails are no longer included and get recreated automatically
+- Each tab now remembers where you left off
+- New: Swedish translation
+- Fix: Crash when opening the fake phone without a phone app installed
+- Fix: Resetting the vault now also removes the recovery phrase
+- Bug fixes and improvements

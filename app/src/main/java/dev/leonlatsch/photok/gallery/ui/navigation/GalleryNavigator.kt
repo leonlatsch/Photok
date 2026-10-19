@@ -18,31 +18,30 @@ package dev.leonlatsch.photok.gallery.ui.navigation
 
 import android.net.Uri
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import dev.leonlatsch.photok.backup.ui.RestoreBackupDialogFragment
 import dev.leonlatsch.photok.gallery.ui.importing.ImportBottomSheetDialogFragment
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.repositories.ImportSource
+import dev.leonlatsch.photok.navigation.Navigator
 import dev.leonlatsch.photok.other.extensions.show
-import javax.inject.Inject
 
-class GalleryNavigator @Inject constructor() {
+object GalleryNavigator {
 
     fun navigate(
         event: GalleryNavigationEvent,
-        fragment: Fragment,
+        activity: FragmentActivity,
+        navigator: Navigator,
     ) {
         when (event) {
-            is GalleryNavigationEvent.ShowToast -> showToast(event, fragment)
-            is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, fragment.childFragmentManager, event.importSource)
-            is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, fragment.childFragmentManager)
+            is GalleryNavigationEvent.ShowToast -> showToast(event, activity)
+            is GalleryNavigationEvent.StartImport -> startImport(event.fileUris, activity.supportFragmentManager, event.importSource)
+            is GalleryNavigationEvent.StartRestoreBackup -> startRestoreBackup(event.backupUri, navigator)
         }
     }
 
-    private fun startRestoreBackup(backupUri: Uri, fragmentManager: FragmentManager) {
-        RestoreBackupDialogFragment.newInstance(
-            uri = backupUri
-        ).show(fragmentManager)
+    private fun startRestoreBackup(backupUri: Uri, navigator: Navigator) {
+        navigator.navigate(AppRoute.RestoreBackup(backupUri.toString()))
     }
 
     private fun startImport(fileUris: List<Uri>, fragmentManager: FragmentManager, importSource: ImportSource) {
@@ -53,9 +52,7 @@ class GalleryNavigator @Inject constructor() {
         ).show(fragmentManager)
     }
 
-    private fun showToast(event: GalleryNavigationEvent.ShowToast, fragment: Fragment) {
-        fragment.context?.let { context ->
-            Toast.makeText(context, event.text, Toast.LENGTH_LONG).show()
-        }
+    private fun showToast(event: GalleryNavigationEvent.ShowToast, activity: FragmentActivity) {
+        Toast.makeText(activity, event.text, Toast.LENGTH_LONG).show()
     }
 }

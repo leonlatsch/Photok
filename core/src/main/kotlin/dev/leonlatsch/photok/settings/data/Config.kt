@@ -27,6 +27,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.days
 
 
 /**
@@ -65,12 +66,33 @@ class Config(context: Context) {
         set(value) = putBoolean(SYSTEM_FIRST_START, value)
 
     /**
+     * The onboarding step to resume at. Null if no onboarding is in progress.
+     */
+    var systemOnboardingStep: String?
+        get() = getString(SYSTEM_ONBOARDING_STEP, null)
+        set(value) = putString(SYSTEM_ONBOARDING_STEP, value)
+
+    /**
      * The version code of the last app version.
      * Updates after showing new features.
      */
     var systemLastFeatureVersionCode: Int
         get() = getInt(SYSTEM_LAST_FEATURE_VERSION_CODE, SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT)
         set(value) = putInt(SYSTEM_LAST_FEATURE_VERSION_CODE, value)
+
+    /**
+     * Timestamp of the first app start. Null if not set yet.
+     */
+    var systemInstallDate: Long?
+        get() = getLongOrNull(SYSTEM_INSTALL_DATE)
+        set(value) = putLongOrNull(SYSTEM_INSTALL_DATE, value)
+
+    /**
+     * Version code of the app at the first app start. Null if not set yet.
+     */
+    var systemInstallVersionCode: Int?
+        get() = getIntOrNull(SYSTEM_INSTALL_VERSION_CODE)
+        set(value) = putIntOrNull(SYSTEM_INSTALL_VERSION_CODE, value)
 
     /*
      * Sets the app design to "light", "dark" or "system"
@@ -160,9 +182,23 @@ class Config(context: Context) {
         get() = getBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT)
         set(value) = putBoolean(TELEMETRY_ASSSKED_FOR_OPT_IN, value)
 
-    var inAppReviewRequested: Boolean
-        get() = getBoolean(IN_APP_REVIEW_REQUESTED, false)
-        set(value) = putBoolean(IN_APP_REVIEW_REQUESTED, value)
+    var inAppReviewLastRequestedAt: Long?
+        get() {
+            val lastRequestedAt = getLongOrNull(IN_APP_REVIEW_LAST_REQUESTED_AT)
+            if (lastRequestedAt != null || !getBoolean(LEGACY_IN_APP_REVIEW_REQUESTED, false)) {
+                return lastRequestedAt
+            }
+
+            val migratedLastRequestedAt = System.currentTimeMillis() -
+                (IN_APP_REVIEW_COOLDOWN - 30.days).inWholeMilliseconds
+            putLong(IN_APP_REVIEW_LAST_REQUESTED_AT, migratedLastRequestedAt)
+            return migratedLastRequestedAt
+        }
+        set(value) = putLongOrNull(IN_APP_REVIEW_LAST_REQUESTED_AT, value)
+
+    var proBannerDismissed: Boolean
+        get() = getBoolean(PRO_BANNER_DISMISSED, PRO_BANNER_DISMISSED_DEFAULT)
+        set(value) = putBoolean(PRO_BANNER_DISMISSED, value)
 
     // In memory flags
     var justFinishedSetup: Boolean = false
@@ -200,7 +236,13 @@ class Config(context: Context) {
         return stringValue?.toInt() ?: default
     }
 
+    fun getIntOrNull(key: String): Int? =
+        if (preferences.contains(key)) preferences.getInt(key, 0) else null
+
     fun getLong(key: String, default: Long): Long = preferences.getLong(key, default)
+
+    fun getLongOrNull(key: String): Long? =
+        if (preferences.contains(key)) preferences.getLong(key, 0L) else null
 
     fun getBoolean(key: String, default: Boolean) = preferences.getBoolean(key, default)
 
@@ -218,6 +260,12 @@ class Config(context: Context) {
         }
     }
 
+    fun putIntOrNull(key: String, value: Int?) {
+        preferences.edit {
+            if (value == null) remove(key) else putInt(key, value)
+        }
+    }
+
     fun putBoolean(key: String, value: Boolean) {
         preferences.edit {
             putBoolean(key, value)
@@ -227,6 +275,12 @@ class Config(context: Context) {
     fun putLong(key: String, value: Long) {
         preferences.edit {
             putLong(key, value)
+        }
+    }
+
+    fun putLongOrNull(key: String, value: Long?) {
+        preferences.edit {
+            if (value == null) remove(key) else putLong(key, value)
         }
     }
 
@@ -251,8 +305,14 @@ class Config(context: Context) {
         const val SYSTEM_FIRST_START = "system^firstStart"
         const val SYSTEM_FIRST_START_DEFAULT = true
 
+        const val SYSTEM_ONBOARDING_STEP = "system^onboardingStep"
+
         const val SYSTEM_LAST_FEATURE_VERSION_CODE = "system^lastFeatureVersionCode"
         const val SYSTEM_LAST_FEATURE_VERSION_CODE_DEFAULT = 0
+
+        const val SYSTEM_INSTALL_DATE = "system^installDate"
+
+        const val SYSTEM_INSTALL_VERSION_CODE = "system^installVersionCode"
 
         const val SYSTEM_DESIGN = "system^design"
         const val SYSTEM_DESIGN_DEFAULT = "system"
@@ -305,6 +365,11 @@ class Config(context: Context) {
         const val TELEMETRY_ASSSKED_FOR_OPT_IN = "telemetry^askedForOptIn"
         const val TELEMETRY_ASKED_FOR_OPT_IN_DEFAULT = false
 
-        const val IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
+        const val LEGACY_IN_APP_REVIEW_REQUESTED = "internal^inAppReviewRequested"
+        const val IN_APP_REVIEW_LAST_REQUESTED_AT = "internal^inAppReviewLastRequestedAt"
+        val IN_APP_REVIEW_COOLDOWN = 90.days
+
+        const val PRO_BANNER_DISMISSED = "internal^proBannerDismissed"
+        const val PRO_BANNER_DISMISSED_DEFAULT = false
     }
 }

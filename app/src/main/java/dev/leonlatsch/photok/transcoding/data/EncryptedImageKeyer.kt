@@ -1,0 +1,29 @@
+/*
+ *   Copyright 2020-2026 Leon Latsch
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package dev.leonlatsch.photok.transcoding.data
+
+import coil.key.Keyer
+import coil.request.Options
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import javax.inject.Inject
+
+class EncryptedImageKeyer @Inject constructor() : Keyer<EncryptedImageRequestData> {
+    override fun key(data: EncryptedImageRequestData, options: Options): String? = when (data) {
+        is EncryptedImageRequestData.VaultFile -> null
+        is EncryptedImageRequestData.Thumbnail -> data.memoryCacheKey
+    }
+}

@@ -27,9 +27,6 @@ interface BackupStrategy {
         Legacy(R.string.backup_processing_title),
     }
 
-    suspend fun preBackup() {}
-    suspend fun postBackup() {}
-
     suspend fun writePhotoToBackup(
         photo: Photo,
         zipOutputStream: ZipOutputStream,

@@ -34,6 +34,9 @@ interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(photo: Photo): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(photos: List<Photo>)
+
     @Delete
     suspend fun delete(photo: Photo): Int
 
@@ -54,6 +57,12 @@ interface PhotoDao {
 
     @Query("SELECT COUNT(*) FROM photo")
     suspend fun countAll(): Int
+
+    @Query("SELECT COUNT(*) FROM photo")
+    fun observeCount(): Flow<Int>
+
+    @Query("SELECT photo_uuid FROM photo")
+    suspend fun getAllUuids(): List<String>
 
     fun observeAllSorted(sort: Sort): Flow<List<Photo>> {
         val query = SimpleSQLiteQuery("SELECT * FROM photo ORDER BY ${sort.field.columnName} ${sort.order.sql}")

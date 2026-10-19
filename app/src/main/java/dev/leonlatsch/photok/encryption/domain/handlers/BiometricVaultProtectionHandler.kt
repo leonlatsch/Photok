@@ -36,7 +36,6 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
@@ -67,7 +66,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         }
 
         val unlockedCipher = unlockCipher(
-            fragment = request.fragment,
+            activity = request.activity,
             cipher = cipher,
             title = resources.getString(R.string.biometric_unlock_title),
             subtitle = resources.getString(R.string.biometric_unlock_subtitle),
@@ -75,7 +74,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         ).getOrThrow()
 
         val vmkBytes = unlockedCipher.doFinal(protection.wrappedVMK)
-        return SecretKeySpec(vmkBytes, "AES")
+        return toVaultMasterKey(vmkBytes)
     }
 
     override suspend fun create(request: CreateRequest.Biometric): VaultProtection {
@@ -94,7 +93,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
         }
 
         val unlockedCipher = unlockCipher(
-            fragment = request.fragment,
+            activity = request.activity,
             cipher = cipher,
             title = resources.getString(R.string.biometric_unlock_setup_title),
             subtitle = resources.getString(R.string.biometric_unlock_setup_subtitle),

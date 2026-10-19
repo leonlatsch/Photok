@@ -5,6 +5,7 @@ plugins {
     id("com.jaredsburrows.license")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.20"
 }
 
 val isReleaseBuildInvocation: Boolean = gradle.startParameter.taskNames.any { it.contains("Release", ignoreCase = true) }
@@ -13,7 +14,6 @@ val appVersionName: String by project
 val appVersionCode: String by project
 
 apply(plugin = "com.android.legacy-kapt")
-apply(plugin = "androidx.navigation.safeargs.kotlin")
 apply(plugin = "dagger.hilt.android.plugin")
 
 android {
@@ -81,6 +81,13 @@ android {
         generateLocaleConfig = true
     }
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
+        includeInApk = false
+        // Keep when building Android App Bundles (for Google Play)
+        includeInBundle = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -127,6 +134,9 @@ dependencies {
     // Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // Room
@@ -140,6 +150,12 @@ dependencies {
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
+    // Material Components (legacy BottomSheetDialogFragment + XML themes)
+    implementation("com.google.android.material:material:1.14.0")
+
+    // DocumentFile
+    implementation("androidx.documentfile:documentfile:1.1.0")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
@@ -148,9 +164,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
 
-    // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.10.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.10.1")
+    // Navigation 3
+    implementation("androidx.navigation3:navigation3-ui:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3:2.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -188,6 +205,9 @@ dependencies {
     // jBCrypt for Password Hashing
     implementation("org.mindrot", "jbcrypt", "0.4")
 
+    // zxcvbn4j - password strength estimation
+    implementation("com.nulab-inc:zxcvbn:1.9.0")
+
     // Gson
     implementation("com.google.code.gson", "gson", "2.13.2")
 
@@ -204,16 +224,16 @@ dependencies {
     implementation("io.coil-kt:coil-video:$coilVersion")
 
     // Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.9.2")
-    implementation("androidx.media3:media3-ui:1.9.2")
-    implementation("androidx.media3:media3-ui-compose:1.9.2")
-    implementation("androidx.media3:media3-ui-compose-material3:1.9.2")
+    implementation("androidx.media3:media3-exoplayer:1.11.1")
+    implementation("androidx.media3:media3-ui:1.11.1")
+    implementation("androidx.media3:media3-ui-compose:1.11.1")
+    implementation("androidx.media3:media3-ui-compose-material3:1.11.1")
 
     implementation(fileTree("libs").matching {
         include("*.jar")
     })
-    implementation("androidx.core:core-ktx:1.19.0")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-ktx:1.19.1")
+    implementation("androidx.core:core-splashscreen:1.2.0")
     implementation("androidx.appcompat:appcompat:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.2")
     implementation("androidx.activity:activity:1.12.4")
@@ -224,7 +244,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // 4.15.1+ required: it ships ASM 9.8, which can read the Java 25 bytecode of the JBR
     // that Android Studio runs the test JVM on. 4.14.1 fails with "class file major version 69".
-    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("org.robolectric:robolectric:4.17")
     testImplementation("io.mockk:mockk:1.14.11")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
     testImplementation("com.google.dagger:hilt-android-testing:2.60.1")

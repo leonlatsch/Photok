@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.unlock.ui
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -49,31 +50,70 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
-import dev.leonlatsch.photok.ui.LocalFragment
+import dev.leonlatsch.photok.main.ui.navigation.RootRoute
+import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.other.extensions.hideKeyboard
+import dev.leonlatsch.photok.ui.ObserveAsEvents
 import dev.leonlatsch.photok.ui.components.PasswordField
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.uicomponents.AppName
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun UnlockScreen(viewModel: UnlockViewModel) {
+fun UnlockScreen(viewModel: UnlockViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val navigator = LocalNavigator.current
+    val activity = LocalActivity.current
+    val context = LocalContext.current
+    val resources = LocalResources.current
 
-    AppTheme {
-        UnlockScreenContent(
-            uiState = uiState,
-            handleUiEvent = viewModel::handleUiEvent,
-        )
+    ObserveAsEvents(viewModel.navigationEvents) { event ->
+        when (event) {
+            UnlockNavigationEvent.Unlocked -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.Main)
+            }
+
+            UnlockNavigationEvent.ContinueOnboarding -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.Onboarding)
+            }
+
+            UnlockNavigationEvent.StartLegacyMigration -> {
+                activity?.hideKeyboard()
+                navigator.replaceAll(RootRoute.EncryptionMigration)
+            }
+
+            UnlockNavigationEvent.ShowRecoveryPhraseRestore -> {
+                activity?.hideKeyboard()
+                navigator.navigate(RootRoute.RecoveryPhraseRestore)
+            }
+
+            UnlockNavigationEvent.ShowError -> {
+                Dialogs.showLongToast(context, resources.getString(R.string.common_error))
+            }
+        }
     }
+
+    UnlockScreenContent(
+        uiState = uiState,
+        handleUiEvent = viewModel::handleUiEvent,
+    )
 }
 
 @Composable
@@ -81,7 +121,7 @@ private fun UnlockScreenContent(
     uiState: UnlockUiState,
     handleUiEvent: (UnlockUiEvent) -> Unit,
 ) {
-    val fragment = LocalFragment.current
+    val fragmentActivity = LocalActivity.current as? FragmentActivity
     val focusManager = LocalFocusManager.current
 
     fun unlockWithPassword() {
@@ -95,14 +135,15 @@ private fun UnlockScreenContent(
         if (biometricPromptShown || !uiState.biometricAvailable || uiState.lockedUntil != null) {
             return@LaunchedEffect
         }
-        fragment ?: return@LaunchedEffect
+        fragmentActivity ?: return@LaunchedEffect
 
         biometricPromptShown = true
         delay(0.5.seconds)
-        handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragment))
+        handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragmentActivity))
     }
 
     Scaffold(
+        modifier = Modifier.imePadding(),
         bottomBar = {
             Box(
                 contentAlignment = Alignment.Center,
@@ -110,11 +151,11 @@ private fun UnlockScreenContent(
                     .fillMaxWidth()
                     .navigationBarsPadding()
             ) {
-                AnimatedVisibility(uiState.biometricAvailable) {
+                AnimatedVisibility(uiState.biometricAvailable && uiState.lockedUntil == null) {
                     TextButton(
                         onClick = {
-                            fragment ?: return@TextButton
-                            handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragment))
+                            fragmentActivity ?: return@TextButton
+                            handleUiEvent(UnlockUiEvent.UnlockWithBiometric(fragmentActivity))
                         },
                     ) {
                         Row(
@@ -138,9 +179,8 @@ private fun UnlockScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(contentPadding)
-                    .imePadding()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = Dimens.spacingLarge)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -149,7 +189,7 @@ private fun UnlockScreenContent(
                     AppName(
                         fontSize = 62.sp,
                         modifier = Modifier
-                            .padding(top = 20.dp, bottom = 40.dp)
+                            .padding(top = Dimens.spacingLarge, bottom = 40.dp)
                     )
                 }
 
@@ -159,7 +199,7 @@ private fun UnlockScreenContent(
                     modifier = Modifier.width(280.dp)
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
 
                 PasswordField(
                     value = uiState.password,
@@ -169,7 +209,7 @@ private fun UnlockScreenContent(
                     onDone = { unlockWithPassword() },
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
 
                 Button(
                     onClick = { unlockWithPassword() },
@@ -202,7 +242,7 @@ private fun UnlockScreenContent(
                     }
                 }
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(Dimens.spacingLarge))
             }
 
             if (uiState.lockedUntil != null) {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,18 +38,23 @@ import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.AppTheme
+import dev.leonlatsch.photok.ui.theme.Dimens
 
 @Composable
 fun AlbumsList(
     albums: List<AlbumItem>,
     onAlbumClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
+    listState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        state = listState,
+        contentPadding = contentPadding,
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = Dimens.spacingLarge)
 
     ) {
         items(albums, key = { it.id }) { album ->
@@ -67,7 +75,7 @@ fun AlbumListItem(
     trailingContent: @Composable () -> Unit = {},
 ) {
     val cornerRadius = 18.dp
-    val contentPadding = 10.dp
+    val contentPadding = Dimens.spacingSmall
     val imageCornerRadius = cornerRadius - contentPadding // Keep image concentric to the surface
 
     val shape = RoundedCornerShape(cornerRadius)
@@ -104,15 +112,15 @@ fun AlbumListItem(
                 }
             } else {
                 val requestData = remember(album) {
-                    EncryptedImageRequestData(
-                        internalFileName = album.albumCover.filename,
-                        mimeType = album.albumCover.mimeType
+                    EncryptedImageRequestData.Thumbnail(
+                        uuid = album.albumCover.uuid,
+                        type = album.albumCover.type,
                     )
                 }
 
                 Image(
                     painter = rememberEncryptedImagePainter(requestData),
-                    contentDescription = album.albumCover.filename,
+                    contentDescription = album.name,
                     modifier = contentModifier,
                     contentScale = ContentScale.Crop,
                 )

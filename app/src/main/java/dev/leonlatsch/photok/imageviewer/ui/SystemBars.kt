@@ -16,38 +16,19 @@
 
 package dev.leonlatsch.photok.imageviewer.ui
 
-import android.os.Build
-import android.view.View
 import android.view.Window
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 @Composable
-fun ImageViewerSystemBarsController(
-    visible: Boolean
-) {
-    val activity = LocalActivity.current ?: return
-    val window = activity.window
+fun ImageViewerSystemBarsVisibility(visible: Boolean) {
+    val window = LocalActivity.current?.window ?: return
 
-    DisposableEffect(visible) {
-        val previousStatusColor = window.statusBarColor
-        val previousNavColor = window.navigationBarColor
-        val previousVisibility = window.decorView.systemUiVisibility
-        val previousAppearance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.systemBarsAppearance ?: 0
-        } else {
-            0
-        }
-
-        window.forceLightSystemBarIcons()
-
-        // OEM / edge-to-edge safety net
-        window.statusBarColor = android.graphics.Color.TRANSPARENT
-        window.navigationBarColor = android.graphics.Color.TRANSPARENT
-
+    DisposableEffect(window, visible) {
         if (visible) {
             window.showSystemBars()
         } else {
@@ -56,63 +37,24 @@ fun ImageViewerSystemBarsController(
 
         onDispose {
             window.showSystemBars()
-
-            // restore colors
-            window.statusBarColor = previousStatusColor
-            window.navigationBarColor = previousNavColor
-
-            // restore appearance
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                window.insetsController?.setSystemBarsAppearance(
-                    previousAppearance,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                window.decorView.systemUiVisibility = previousVisibility
-            }
         }
     }
 }
 
-
 fun Window.forceLightSystemBarIcons() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        insetsController?.setSystemBarsAppearance(
-            0,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
-                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-        )
-    } else {
-        @Suppress("DEPRECATION")
-        decorView.systemUiVisibility =
-            decorView.systemUiVisibility and
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() and
-                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+    WindowCompat.getInsetsController(this, decorView).apply {
+        isAppearanceLightStatusBars = false
+        isAppearanceLightNavigationBars = false
     }
 }
 
 private fun Window.showSystemBars() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        insetsController?.show(WindowInsets.Type.systemBars())
-    } else {
-        @Suppress("DEPRECATION")
-        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-    }
+    WindowCompat.getInsetsController(this, decorView).show(WindowInsetsCompat.Type.systemBars())
 }
 
 private fun Window.hideSystemBars() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        insetsController?.let {
-            it.systemBarsBehavior =
-                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            it.hide(WindowInsets.Type.systemBars())
-        }
-    } else {
-        @Suppress("DEPRECATION")
-        decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    WindowCompat.getInsetsController(this, decorView).apply {
+        systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        hide(WindowInsetsCompat.Type.systemBars())
     }
 }
-

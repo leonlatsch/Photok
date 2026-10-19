@@ -19,8 +19,6 @@
     <string name="common_copyright_notice">Copyright \u00A9 2020–2026 Leon Latsch</string>
     <string name="common_slash">/</string>
     <string name="common_percent">%</string>
-    <string name="common_pipe">|</string>
-    <string name="common_loading">Memuat …</string>
     <string name="common_password">Kata sandi</string>
     <string name="common_delete">Hapus</string>
     <string name="common_export">Ekspor</string>
@@ -29,34 +27,47 @@
     <string name="common_no">Tidak</string>
     <string name="common_ok">OK</string>
     <string name="common_are_you_sure">Kamu yakin?</string>
-    <string name="common_bullet">•</string>
     <string name="common_more">Lainnya</string>
     <string name="common_cancel">Batal</string>
+    <string name="common_canceling">Membatalkan…</string> <!-- TODO: machine translated | EN: Canceling… -->
     <string name="common_create">Buat</string>
     <string name="common_empty">Kosong</string>
     <string name="common_rename">Ganti nama</string>
     <string name="common_try_again">Coba lagi</string>
     <string name="common_continue">Lanjutkan</string>
     <string name="common_hold_to_confirm">Tahan untuk mengonfirmasi</string>
+    <string name="common_back">Kembali</string> <!-- TODO: machine translated | EN: Back -->
+    <string name="common_done">Selesai</string> <!-- TODO: machine translated | EN: Done -->
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>
-    <string name="import_permission_rationale">Photok perlu akses ke penyimpanan kamu untuk mengimpor file.</string>
     <string name="import_sharted_question">Kamu ingin mengimpor %1$d file?</string>
 
     <!-- SETUP -->
-    <string name="setup_create_your_password">Buat kata sandimu</string>
     <string name="setup_enter_password">Masukkan kata sandimu</string>
     <string name="setup_confirm_password">Konfirmasi kata sandimu</string>
-    <string name="setup_password_strength_label">Kekuatan kata sandimu:</string>
-    <string name="setup_button">Buat</string>
-    <string name="setup_password_strength_very_weak">Sangat lemah</string>
-    <string name="setup_password_strength_weak">Lemah</string>
-    <string name="setup_password_strength_moderate">Sedang</string>
-    <string name="setup_password_strength_strong">Kuat</string>
-    <string name="setup_password_strength_very_strong">Sangat kuat</string>
     <string name="setup_password_match_warning">\u26A0 Kata sandi tidak sama</string>
-    <string name="setupSetup">Pengaturan Awal</string>
+    <string name="setup_password_strength_very_weak">Sangat lemah</string> <!-- TODO: machine translated | EN: Very weak -->
+    <string name="setup_password_strength_weak">Lemah</string> <!-- TODO: machine translated | EN: Weak -->
+    <string name="setup_password_strength_moderate">Sedang</string> <!-- TODO: machine translated | EN: Moderate -->
+    <string name="setup_password_strength_strong">Kuat</string> <!-- TODO: machine translated | EN: Strong -->
+    <string name="setup_password_strength_very_strong">Sangat kuat</string> <!-- TODO: machine translated | EN: Very strong -->
+    <string name="setup_password_strength_crack_time">Dibobol dalam %1$s</string> <!-- TODO: machine translated | EN: Cracked in %1$s -->
+    <string name="setup_password_strength_crack_time_universe">Lebih lama dari usia alam semesta</string> <!-- TODO: machine translated | EN: Longer than the universe has existed -->
+    <string name="setup_password_crack_time_info_title">Bagaimana waktu pembobolan dihitung?</string> <!-- TODO: machine translated | EN: How is time to crack calculated? -->
+    <string name="setup_password_crack_time_info_patterns_title">Analisis pola</string> <!-- TODO: machine translated | EN: Pattern analysis -->
+    <string name="setup_password_crack_time_info_patterns_body">zxcvbn memeriksa kata sandi umum, kata, nama, dan pola, lalu menghitung jumlah tebakan yang dibutuhkan.</string> <!-- TODO: machine translated | EN: zxcvbn checks for common passwords, words, names and patterns and counts the guesses needed. -->
+    <string name="setup_password_crack_time_info_attack_title">Sengaja dibuat lambat</string> <!-- TODO: machine translated | EN: Slow by design -->
+    <string name="setup_password_crack_time_info_attack_body">PBKDF2 membuat setiap tebakan menjadi lambat. Kami mengasumsikan satu kartu grafis kelas atas dengan sekitar %1$s tebakan per detik. Beberapa kartu sekaligus lebih cepat.</string> <!-- TODO: machine translated | EN: PBKDF2 makes every guess slow. We assume one high-end graphics card with about %1$s guesses per second. Several cards are faster. -->
+    <string name="setup_password_crack_time_info_details_title">Detail teknis</string> <!-- TODO: machine translated | EN: Technical details -->
+    <string name="setup_password_crack_time_info_kdf">Derivasi kunci</string> <!-- TODO: machine translated | EN: Key derivation -->
+    <string name="setup_password_crack_time_info_iterations">Iterasi</string> <!-- TODO: machine translated | EN: Iterations -->
+    <string name="setup_password_crack_time_info_attack_speed">Kecepatan serangan</string> <!-- TODO: machine translated | EN: Attack speed -->
+    <string name="setup_password_crack_time_info_attack_speed_value">%1$s tebakan/dtk</string> <!-- TODO: machine translated | EN: %1$s guesses/s -->
+    <string name="setup_password_crack_time_info_learn_more">Pelajari lebih lanjut</string> <!-- TODO: machine translated | EN: Learn more -->
+    <string name="setup_password_crack_time_info_link_zxcvbn4j">zxcvbn4j di GitHub</string> <!-- TODO: machine translated | EN: zxcvbn4j on GitHub -->
+    <string name="setup_password_crack_time_info_link_zxcvbn">zxcvbn oleh Dropbox</string> <!-- TODO: machine translated | EN: zxcvbn by Dropbox -->
+    <string name="setup_password_crack_time_info_link_encryption">Cara Photok mengenkripsi filemu</string> <!-- TODO: machine translated | EN: How Photok encrypts your files -->
 
     <!-- UNLOCK -->
     <string name="unlock_title">Buka kunci brankasmu</string>
@@ -109,13 +120,10 @@
     <string name="view_photo_video_playback_speed">Kecepatan pemutaran</string>
 
     <!-- MAIN MENU -->
-    <string name="menu_main_lock">Kunci</string>
     <string name="menu_main_settings">Pengaturan</string>
 
     <!-- MULTI SELECT MENU -->
     <string name="menu_ms_select_all">Pilih Semua</string>
-    <string name="menu_ms_delete">Hapus</string>
-    <string name="menu_ms_export">Ekspor</string>
     <string name="menu_ms_info">%1$d item dipilih</string>
     <string name="menu_ms_add_to_album">Tambahkan ke album</string>
     <string name="menu_ms_remove_from_album">Keluarkan dari album</string>
@@ -135,9 +143,6 @@
     <string name="export_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu?</string>
     <string name="export_and_delete_are_you_sure_this">Kamu yakin ingin <b>mengekspor</b> file ini ke galerimu dan menghapusnya setelah itu?</string>
     <string name="export_exporting">Mengekspor file…</string>
-    <string name="export_permission_rationale">Photok perlu akses ke penyimpanan kamu untuk mengekspor file.</string>
-    <string name="export_finished">Telah diekspor</string>
-    <string name="export_and_delete_finished">Telah diekspor dan dihapus</string>
 
     <!-- ABOUT -->
     <string name="about_version">Versi:</string>
@@ -147,7 +152,6 @@
     <string name="about_third_party">Perangkat Lunak Pihak Ketiga</string>
     <string name="about_privacy_policy">Kebijakan Privasi</string>
     <string name="about_privacy_policy_url">https://photok.app/privacy</string>
-    <string name="about_menu_news">Berita</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Pengaturan</string>
@@ -163,8 +167,7 @@
 
     <string name="settings_category_security">Keamanan</string>
     <string name="settings_security_allow_screenshots_title">Izinkan Tangkapan Layar</string>
-    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar. Perlu memulai ulang aplikasi.</string>
-    <string name="settings_security_change_password_title">Ubah Kata Sandi</string>
+    <string name="settings_security_allow_screenshots_summary">Izinkan pengambilan tangkapan layar.</string>
     <string name="settings_security_change_password_summary">Ubah kata sandimu</string>
     <string name="settings_security_biometric_title">Buka Kunci Biometrik</string>
     <string name="settings_security_biometric_summary">Buka kunci Photok dengan autentikasi biometrik.</string>
@@ -172,7 +175,6 @@
     <string name="settings_security_recovery_phrase_title">Frasa Pemulihan</string>
     <string name="settings_security_recovery_phrase_summary">Kelola frasa pemulihanmu.</string>
     <string name="settings_security_timeout_title">Waktu Kunci Otomatis</string>
-    <string name="settings_security_timeout_summary">Kunci otomatis setelah aplikasi berada di latar belakang selama waktu tertentu</string>
     <string name="settings_security_timeout_immediately">Segera</string>
     <string name="settings_security_timeout_one_minute">1 Menit</string>
     <string name="settings_security_timeout_two_minute">2 Menit</string>
@@ -226,18 +228,12 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_password_title">Ubah Kata Sandimu</string>
     <string name="change_password_old_password">Kata sandi lama</string>
-    <string name="change_password_new_password">Kata sandi baru</string>
     <string name="change_password_check">Periksa</string>
     <string name="change_password_enter_new_password">Masukkan kata sandi barumu</string>
     <string name="change_password_confirm_new_password">Konfirmasi kata sandi barumu</string>
     <string name="change_password_button">Ubah Kata Sandi</string>
-    <string name="change_password_confirm_message">Sebaiknya buat cadangan dulu!<br /> Mengubah kata sandimu akan memerlukan enkripsi ulang semua file kamu! Lanjutkan?</string>
-    <string name="change_password_reencrypting">Mengenkripsi ulang file…</string>
     <string name="change_password_done">Kata sandi telah diubah</string>
     <string name="change_password_recovery_phrase_used">Frasa pemulihan telah dipakai — kata sandi lama tidak perlu diperiksa</string>
-
-    <!-- CHECK PASSWORD -->
-    <string name="settings_security_check_password_title">Verifikasi Kata Sandi</string>
 
     <!-- HIDE APP -->
     <string name="hide_app_title_hide">Sembunyikan Photok</string>
@@ -251,41 +247,97 @@
     <string name="hide_app_hint">Setelah disembunyikan, Photok hanya bisa dijalankan dari dial pad di aplikasi dialer pada ponselmu, dengan kode rahasia peluncuranmu.</string>
     <string name="hide_app_hint_current_code">Kode peluncuran saat ini:</string>
 
-    <!-- ON BOARDING -->
-    <string name="onboarding_next">Berikutnya</string>
-    <string name="onboarding_finish">Selesai</string>
-    <string name="onboarding_skip"><u>Lewati</u></string>
-
-    <string name="onboarding_slide1_title">Selamat datang di</string>
-    <string name="onboarding_slide1_description">Tempat aman untuk foto dan video kamu.</string>
-    <string name="onboarding_slide2_title">Buat kata sandi</string>
-    <string name="onboarding_slide2_description">Buat kata sandi yang aman. Kata sandimu dipakai untuk mengenkripsi foto dan video kamu secara langsung di ponselmu.</string>
-    <string name="onboarding_slide3_title">Mulai Mengimpor</string>
-    <string name="onboarding_slide3_description">Mulai impor foto dan video kamu untuk menjaga keamanannya dari orang lain.\nSetelah itu kamu bisa menghapusnya dari galerimu.</string>
-
     <!-- BACKUP -->
     <string name="backup_processing_title">Membuat cadangan…</string>
-    <string name="backup_restore_title">Pulihkan Cadangan</string>
-    <string name="backup_restore_validating">Memvalidasi cadangan…</string>
-    <string name="backup_restore_details_created_at">Dibuat pada:</string>
-    <string name="backup_restore_details_photos_contained">Jumlah File:</string>
-    <string name="backup_restore_details_compatible">Kompatibel:</string>
-    <string name="backup_restore_details_size">Ukuran:</string>
-    <string name="backup_restore_button">Buka Kunci dan Pulihkan</string>
-    <string name="backup_restore_invalid_file">\u26A0 File Tidak Valid</string>
-    <string name="backup_restore_processing">Memulihkan Cadangan…</string>
-    <string name="backup_unlock_title">Buka Kunci Cadangan</string>
     <string name="backup_confirm_password">Konfirmasi kata sandimu untuk membuat cadangan.</string>
+
+    <!-- BACKUP RESTORE -->
+    <string name="backup_restore_title">Pulihkan Cadangan</string> <!-- TODO: machine translated | EN: Restore Backup -->
+    <string name="backup_restore_validating">Memvalidasi…</string> <!-- TODO: machine translated | EN: Validating… -->
+    <string name="backup_restore_invalid">Cadangan tidak valid</string> <!-- TODO: machine translated | EN: Invalid backup -->
+
+    <string name="backup_restore_stats">Statistik</string> <!-- TODO: machine translated | EN: Stats -->
+    <string name="backup_restore_stats_photos">Foto</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="backup_restore_stats_videos">Video</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="backup_restore_stats_albums">Album</string> <!-- TODO: machine translated | EN: Albums -->
+    <string name="backup_restore_stats_size">Ukuran</string> <!-- TODO: machine translated | EN: Size -->
+
+    <string name="backup_restore_archive">Arsip</string> <!-- TODO: machine translated | EN: Archive -->
+    <string name="backup_restore_archive_created">Dibuat</string> <!-- TODO: machine translated | EN: Created -->
+    <string name="backup_restore_archive_encryption">Enkripsi</string> <!-- TODO: machine translated | EN: Encryption -->
+    <string name="backup_restore_archive_compatibility">Kompatibilitas</string> <!-- TODO: machine translated | EN: Compatibility -->
+    <string name="backup_restore_compatibility_up_to_date">Terbaru (V%1$d)</string> <!-- TODO: machine translated | EN: Up to date (V%1$d) -->
+    <string name="backup_restore_compatibility_backwards">Kompatibel mundur (V%1$d)</string> <!-- TODO: machine translated | EN: Backwards compatible (V%1$d) -->
+
+    <string name="backup_restore_unlock_title">Buka Kunci Cadangan</string> <!-- TODO: machine translated | EN: Unlock Backup -->
+    <string name="backup_restore_unlock_button">Buka Kunci &amp; Pulihkan</string> <!-- TODO: machine translated | EN: Unlock & Restore -->
+    <string name="backup_restore_unlock_headline">Masukkan Kata Sandi Cadangan</string> <!-- TODO: machine translated | EN: Enter Backup Password -->
+    <string name="backup_restore_unlock_explanation">Cadangan ini terenkripsi dan perlu dibuka dengan kata sandi yang dipakai saat membuatnya.</string> <!-- TODO: machine translated | EN: The backup is encrypted and needs to be unlocked with the password that was used to create it. -->
+    <string name="backup_restore_unlock_password_notice">Kata sandi ini hanya dipakai untuk membuka cadangan dan tidak disimpan di mana pun.</string> <!-- TODO: machine translated | EN: This password will only be used to unlock the backup and never be stored anywhere. -->
+
+    <string name="backup_restore_restoring_title">Memulihkan Cadangan</string> <!-- TODO: machine translated | EN: Restoring Backup -->
+    <string name="backup_restore_restoring_subtitle">Memulihkan…</string> <!-- TODO: machine translated | EN: Restoring… -->
+    <string name="backup_restore_restoring_percent">%1$d%%</string> <!-- TODO: machine translated | EN: %1$d%% -->
+    <string name="backup_restore_restoring_bytes">%1$s dari %2$s</string> <!-- TODO: machine translated | EN: %1$s of %2$s -->
+    <string name="backup_restore_restoring_speed">%1$s/dtk</string> <!-- TODO: machine translated | EN: %1$s/s -->
+    <string name="backup_restore_restoring_files">%1$d / %2$d file</string> <!-- TODO: machine translated | EN: %1$d / %2$d files -->
+    <string name="backup_restore_restoring_estimating">Memperkirakan…</string> <!-- TODO: machine translated | EN: Estimating… -->
+    <string name="backup_restore_restoring_time_left">Sisa %1$s</string> <!-- TODO: machine translated | EN: %1$s left -->
+    <string name="backup_restore_restoring_keep_open">Ini bisa memakan waktu. Biarkan aplikasi tetap terbuka.</string> <!-- TODO: machine translated | EN: This can take a while. Please keep the app open. -->
+    <string name="backup_restore_cancel">Batalkan pemulihan</string> <!-- TODO: machine translated | EN: Cancel restore -->
+
+    <string name="backup_restore_indexing_title">Mengindeks…</string> <!-- TODO: machine translated | EN: Indexing… -->
+    <string name="backup_restore_indexing_description">Semua file telah dipulihkan, sedang mengindeks foto dan albummu.</string> <!-- TODO: machine translated | EN: All files restored, indexing your photos and albums. -->
+
+    <string name="backup_restore_canceled_headline">Pemulihan dibatalkan</string> <!-- TODO: machine translated | EN: Restore canceled -->
+    <string name="backup_restore_canceled_description">Tidak ada apa pun dari %1$s yang ditambahkan ke brankasmu. Semua file yang sudah dipulihkan telah dihapus lagi.</string> <!-- TODO: machine translated | EN: Nothing from %1$s was added to your vault. All files that were already restored have been deleted again. -->
+
+    <string name="backup_restore_finished_headline">Berhasil dipulihkan</string> <!-- TODO: machine translated | EN: Restored successfully -->
+    <string name="backup_restore_finished_headline_one_issue">Dipulihkan dengan 1 masalah</string> <!-- TODO: machine translated | EN: Restored with 1 issue -->
+    <string name="backup_restore_finished_headline_issues">Dipulihkan dengan %1$d masalah</string> <!-- TODO: machine translated | EN: Restored with %1$d issues -->
+    <string name="backup_restore_finished_failed_items">Item yang gagal</string> <!-- TODO: machine translated | EN: Failed items -->
+    <string name="backup_restore_finished_unknown_error">Kesalahan tidak diketahui</string> <!-- TODO: machine translated | EN: Unknown error -->
+
+    <string name="backup_restore_error_cannot_open_title">Cadangan tidak bisa dibuka</string> <!-- TODO: machine translated | EN: Backup can not be opened -->
+    <string name="backup_restore_error_cannot_open_description">File ini tidak bisa dibuka. Pastikan ini cadangan Photok dan masih tersedia di perangkat ini.</string> <!-- TODO: machine translated | EN: This file could not be opened. Make sure it is a Photok backup and still available on this device. -->
+    <string name="backup_restore_error_no_files_title">Tidak ada foto di cadangan ini</string> <!-- TODO: machine translated | EN: No photos in this backup -->
+    <string name="backup_restore_error_no_files_description">Arsip ini tidak berisi file Photok, jadi tidak ada yang bisa dipulihkan.</string> <!-- TODO: machine translated | EN: This archive does not contain any Photok files, so there is nothing to restore. -->
+    <string name="backup_restore_error_no_metadata_title">Cadangan tidak lengkap</string> <!-- TODO: machine translated | EN: Backup is incomplete -->
+    <string name="backup_restore_error_no_metadata_description">Cadangan ini tidak punya metadata, jadi Photok tidak bisa mengetahui isinya.</string> <!-- TODO: machine translated | EN: This backup has no metadata, so Photok can not tell what is inside it. -->
+    <string name="backup_restore_error_unknown_title">Cadangan tidak bisa dibaca</string> <!-- TODO: machine translated | EN: Backup can not be read -->
+    <string name="backup_restore_error_unknown_description">Terjadi kesalahan saat membaca cadangan ini.</string> <!-- TODO: machine translated | EN: Something went wrong while reading this backup. -->
+    <string name="backup_restore_duplicates">Foto yang sudah ada di brankasmu</string> <!-- TODO: machine translated | EN: Photos already in your Vault -->
+    <string name="backup_restore_duplicates_skip">Lewati</string> <!-- TODO: machine translated | EN: Skip them -->
+    <string name="backup_restore_duplicates_skip_description">Pertahankan salinan yang sudah ada di brankasmu.</string> <!-- TODO: machine translated | EN: Keep the copy that is already in your Vault. -->
+    <string name="backup_restore_duplicates_import_again">Impor lagi</string> <!-- TODO: machine translated | EN: Import them again -->
+    <string name="backup_restore_duplicates_import_again_description">Tambahkan salinan dari cadangan ini di samping yang sudah ada di brankasmu.</string> <!-- TODO: machine translated | EN: Add the copy from this backup next to the one already in your Vault. -->
+    <string name="backup_restore_not_enough_space">Cadangan ini butuh %1$s, tapi hanya %2$s yang tersedia. Kosongkan ruang sebelum memulihkan.</string> <!-- TODO: machine translated | EN: This backup needs %1$s but only %2$s is free. Free up some space before restoring. -->
+    <string name="backup_restore_error_incomplete_title">File cadangan tidak lengkap</string> <!-- TODO: machine translated | EN: Backup file is incomplete -->
+    <string name="backup_restore_error_incomplete_description">File ini terpotong, kemungkinan besar karena unduhan atau penyalinan yang terputus. Coba transfer ulang.</string> <!-- TODO: machine translated | EN: This file was cut short, most likely by an interrupted download or copy. Try transferring it again. -->
+    <string name="backup_restore_error_unsupported_version_title">Cadangan terlalu baru</string> <!-- TODO: machine translated | EN: Backup is too new -->
+    <string name="backup_restore_error_unsupported_version_description">Cadangan ini dibuat dengan Photok versi lebih baru (format %1$d). Perbarui Photok untuk memulihkannya.</string> <!-- TODO: machine translated | EN: This backup was created with a newer version of Photok (format %1$d). Update Photok to restore it. -->
+    <string name="backup_restore_finished_added_one">%1$d berkas ditambahkan dalam %2$s.</string> <!-- TODO: machine translated | EN: %1$d file added in %2$s. -->
+    <string name="backup_restore_finished_added">%1$d berkas ditambahkan dalam %2$s.</string> <!-- TODO: machine translated | EN: %1$d files added in %2$s. -->
+    <string name="backup_restore_finished_albums_one">%1$d album dipulihkan.</string> <!-- TODO: machine translated | EN: %1$d album restored. -->
+    <string name="backup_restore_finished_albums">%1$d album dipulihkan.</string> <!-- TODO: machine translated | EN: %1$d albums restored. -->
+    <string name="backup_restore_finished_duplicates_one">%1$d duplikat dilewati.</string> <!-- TODO: machine translated | EN: %1$d duplicate skipped. -->
+    <string name="backup_restore_finished_duplicates">%1$d duplikat dilewati.</string> <!-- TODO: machine translated | EN: %1$d duplicates skipped. -->
 
     <!-- NEWS -->
     <string name="news_new_in_title">Baru di</string>
     <string name="news_view_changelog">Lihat Riwayat Perubahan</string>
     <string name="news_changelog_url">https://github.com/leonlatsch/Photok/releases</string>
-
-    <!-- Recovery Menu -->
-    <string name="recovery_subtitle">Menu Pemulihan</string>
-    <string name="recovery_menu_item_open_photok">Buka Photok</string>
-    <string name="recovery_subtitle_reset_hide_app">Atur Ulang Pengaturan Sembunyikan Aplikasi</string>
+    <string name="news_change_kind_new">Baru</string> <!-- TODO: machine translated | EN: New -->
+    <string name="news_change_kind_improved">Ditingkatkan</string> <!-- TODO: machine translated | EN: Improved -->
+    <string name="news_change_kind_fixed">Diperbaiki</string> <!-- TODO: machine translated | EN: Fixed -->
+    <string name="release_highlight_title">Pencadangan Serba Baru</string> <!-- TODO: machine translated | EN: All New Backups -->
+    <string name="release_highlight_summary">Memulihkan cadangan kini menjadi alur layar penuh yang terpandu. Pencadangan dan pemulihan juga lebih andal dari sebelumnya.</string> <!-- TODO: machine translated | EN: Restoring a backup is now a guided full screen flow. Backups and restores are also more reliable than ever. -->
+    <string name="release_highlight_point_1">Progres langsung, kecepatan, dan sisa waktu</string> <!-- TODO: machine translated | EN: Live progress, speed and time left -->
+    <string name="release_highlight_point_2">Lewati atau ganti file yang sudah kamu miliki</string> <!-- TODO: machine translated | EN: Skip or replace files you already have -->
+    <string name="release_highlight_point_3">Pesan kesalahan yang jelas, bukan kegagalan umum</string> <!-- TODO: machine translated | EN: Clear errors instead of a generic failure -->
+    <string name="release_highlight_point_4" formatted="false">100% kompatibel dengan semua cadangan lamamu</string> <!-- TODO: machine translated | EN: 100% backwards compatible with all your old backups -->
+    <string name="release_change_title_2">Berbagai Perbaikan dan Peningkatan</string> <!-- TODO: machine translated | EN: Various Fixes and Improvements -->
+    <string name="release_change_summary_2">Buka kunci dan penyiapan lebih lancar, keyboard tidak lagi mempelajari kata sandimu, dan aplikasi terkunci dengan andal di latar belakang.</string> <!-- TODO: machine translated | EN: Smoother unlock and setup, keyboards no longer learn your password and the app locks reliably in the background. -->
 
     <!-- Migration -->
     <string name="migration_initial_title_welcome">Selamat datang di</string>
@@ -314,9 +366,6 @@
     <string name="migration_error_button">Kirim laporan kesalahan</string>
 
     <string name="notification_channel_background_tasks">Tugas Latar Belakang</string>
-    <string name="migration_error_extract_data">Ekstrak data</string>
-    <string name="migration_error_extract_confirmation_text">Kamu yakin ingin mengekstrak semua file kamu TANPA ENKRIPSI ke dalam file ZIP?</string>
-    <string name="migration_error_extracting_title">Mendekripsi ke ZIP…</string>
 
     <!-- Biometric -->
     <string name="biometric_unlock_title">Buka Kunci Photok</string>
@@ -359,42 +408,80 @@
     <string name="telemetry_choice_yes">Bagikan data penggunaan anonim</string>
     <string name="telemetry_toggle">Izinkan pengumpulan data penggunaan</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_get_started">Mulai</string> <!-- TODO: machine translated | EN: Get started -->
+    <string name="onboarding_welcome_tagline">Tempat aman untuk foto-fotomu</string> <!-- TODO: machine translated | EN: A safe place for your photos -->
+    <string name="onboarding_welcome_feature_encrypted">Dienkripsi di ponselmu dengan kata sandimu</string> <!-- TODO: machine translated | EN: Encrypted on your phone with your password -->
+    <string name="onboarding_welcome_feature_hidden">Tersembunyi dari galerimu dan aplikasi lain</string> <!-- TODO: machine translated | EN: Hidden from your gallery and other apps -->
+    <string name="onboarding_welcome_feature_offline">Tanpa akun, tanpa cloud. Datamu tidak pernah meninggalkan ponsel ini</string> <!-- TODO: machine translated | EN: No account, no cloud. Your data never leaves this phone -->
+    <string name="onboarding_password_title">Kata sandimu</string> <!-- TODO: machine translated | EN: Your password -->
+    <string name="onboarding_password_subtitle">Ingat kata sandimu dan simpan dengan aman. Kata sandi tidak bisa diatur ulang.</string> <!-- TODO: machine translated | EN: Remember your password and keep it safe. It cannot be reset. -->
+    <string name="onboarding_password_confirm_label">Konfirmasi kata sandi</string> <!-- TODO: machine translated | EN: Confirm password -->
+    <string name="onboarding_biometric_title">Buka kunci dengan sentuhan</string> <!-- TODO: machine translated | EN: Unlock with a touch -->
+    <string name="onboarding_biometric_subtitle">Buka kunci Photok dengan sidik jarimu tanpa mengetik kata sandi.</string> <!-- TODO: machine translated | EN: Unlock Photok with your fingerprint instead of typing your password. -->
+    <string name="onboarding_biometric_enable">Aktifkan buka kunci biometrik</string> <!-- TODO: machine translated | EN: Enable biometric unlock -->
+    <string name="onboarding_not_now">Nanti saja</string> <!-- TODO: machine translated | EN: Not now -->
+    <string name="onboarding_recovery_phrase_use_12_words">Gunakan 12 kata</string> <!-- TODO: machine translated | EN: Use 12 words instead -->
+    <string name="onboarding_recovery_phrase_use_24_words">Gunakan 24 kata</string> <!-- TODO: machine translated | EN: Use 24 words instead -->
+    <string name="onboarding_add_photos_title">Amankan foto pertamamu</string> <!-- TODO: machine translated | EN: Secure your first photos -->
+    <string name="onboarding_add_photos_subtitle">Semua yang kamu impor langsung dienkripsi. Tambahkan lagi kapan pun kamu mau.</string> <!-- TODO: machine translated | EN: Everything you import is encrypted right away. Add more whenever you like. -->
+    <string name="onboarding_add_photos_import">Impor foto</string> <!-- TODO: machine translated | EN: Import photos -->
+    <string name="onboarding_done_title">Semua siap</string> <!-- TODO: machine translated | EN: You\'re all set -->
+    <string name="onboarding_done_subtitle">Brankasmu sudah tersegel. Semua yang kamu tambahkan dienkripsi langsung di ponsel ini.</string> <!-- TODO: machine translated | EN: Your vault is sealed. Everything you add is encrypted right on this phone. -->
+    <string name="onboarding_done_open_vault">Buka brankasku</string> <!-- TODO: machine translated | EN: Open my vault -->
+
     <!-- Recovery Phrase — General -->
     <string name="recovery_phrase_label">Frasa Pemulihan</string>
     <string name="recovery_phrase_title">Frasa Pemulihanmu</string>
     <string name="recovery_phrase_description">Tulis kata-kata ini secara berurutan dan simpan di tempat yang aman. Kamu bisa memakai frasa ini untuk memulihkan akses ke brankasmu.</string>
-    <string name="recovery_phrase_confirm">Frasa telah disimpan</string>
     <string name="recovery_phrase_save_warning">Simpan frasa pemulihanmu</string>
-    <string name="recovery_phrase_create_new">Buat Frasa Baru</string>
     <string name="recovery_phrase_create_new_confirm">Membuat frasa baru akan menggantikan frasa kamu saat ini secara permanen. Frasa lamamu tidak akan berfungsi lagi untuk memulihkan brankasmu.</string>
-    <string name="recovery_phrase_saved_to_file">Disimpan ke %1$s</string>
-
-    <!-- Recovery Phrase — Setup -->
-    <string name="recovery_phrase_select_word_count">Jumlah Kata</string>
-
-    <!-- Recovery Phrase — QR Code -->
-    <string name="recovery_phrase_qr_save_as_image">Simpan sebagai Gambar</string>
 
     <!-- Recovery Phrase — Restore -->
     <string name="recovery_phrase_forgot_password">Lupa kata sandi</string>
     <string name="recovery_phrase_restore_button">Pulihkan</string>
-    <string name="recovery_phrase_restore_word_placeholder">Kata %1$d</string>
-    <string name="recovery_phrase_restore_enter_title">Masukkan Frasa Pemulihan</string>
-    <string name="recovery_phrase_restore_choose_option">Pilih cara memasukkan frasamu.</string>
-    <string name="recovery_phrase_restore_option_type">Ketik manual</string>
     <string name="recovery_phrase_restore_option_open_file">Muat dari file</string>
     <string name="recovery_phrase_restore_option_scan_qr">Pindai Kode QR</string>
     <string name="recovery_phrase_restore_option_paste">Tempel dari Papan Klip</string>
-    <string name="recovery_phrase_restore_input_placeholder">Ketik frasa pemulihanmu kata demi kata</string>
     <string name="recovery_phrase_restore_unlocked">Terbuka</string>
-    <string name="recovery_phrase_restore_unlocking">Membuka kunci…</string>
     <string name="recovery_phrase_restore_error_generic">Brankas tidak bisa dipulihkan. Periksa frasamu dan coba lagi.</string>
     <string name="recovery_phrase_restore_error_invalid">Frasa pemulihan tidak valid. Periksa lagi kata-katanya.</string>
     <string name="recovery_phrase_restore_error_invalid_qr">Kode QR ini tidak berisi frasa pemulihan yang valid.</string>
     <string name="recovery_phrase_restore_source_qr">Dipindai dari kode QR</string>
     <string name="recovery_phrase_restore_source_file">Dimuat dari %1$s</string>
     <string name="recovery_phrase_restore_source_clipboard">Ditempel dari papan klip</string>
-    <string name="recovery_phrase_restore_camera_permission_button">Minta izin kamera</string>
-    <string name="recovery_phrase_restore_camera_permission_rationale">Izin kamera diperlukan untuk memindai kode QR.</string>
-    <string name="permission_gate_change_in_settings">Ubah di Pengaturan</string>
+    <string name="recovery_phrase_restore_subtitle">Masukkan kata-kata frasa pemulihanmu untuk membuka kunci brankasmu.</string> <!-- TODO: machine translated | EN: Enter the words of your recovery phrase to unlock your vault. -->
+    <string name="recovery_phrase_restore_option_type">Ketik kata</string> <!-- TODO: machine translated | EN: Type words -->
+
+    <!-- Recovery Phrase — Card -->
+    <string name="recovery_key_card_label">FRASA</string> <!-- TODO: machine translated | EN: PHRASE -->
+    <string name="recovery_key_card_scan_label">KODE QR</string> <!-- TODO: machine translated | EN: QR CODE -->
+    <string name="recovery_key_card_unlocked_label">BRANKAS TERBUKA</string> <!-- TODO: machine translated | EN: VAULT UNLOCKED -->
+    <string name="recovery_key_card_word_count">%1$d kata</string> <!-- TODO: machine translated | EN: %1$d words -->
+    <string name="recovery_key_card_hint_show_words">Ketuk kartu untuk menampilkan sebagai kata</string> <!-- TODO: machine translated | EN: Tap the card to show as words -->
+    <string name="recovery_key_card_hint_show_qr">Ketuk kartu untuk menampilkan sebagai kode QR</string> <!-- TODO: machine translated | EN: Tap the card to show as QR code -->
+    <string name="recovery_key_card_screenshot_hint">Kamu juga bisa mengambil tangkapan layar kode QR</string> <!-- TODO: machine translated | EN: You can also take a screenshot of the QR code -->
+    <string name="recovery_key_card_opening_vault">Membuka brankasmu</string> <!-- TODO: machine translated | EN: Opening your vault -->
+
+    <!-- Recovery Phrase — Save -->
+    <string name="recovery_phrase_save_to_photos">Simpan ke galeri</string> <!-- TODO: machine translated | EN: Save to gallery -->
+    <string name="recovery_phrase_qr_save_as_image">Simpan sebagai gambar</string> <!-- TODO: machine translated | EN: Save as image -->
+    <string name="recovery_phrase_more_options">Opsi lainnya</string> <!-- TODO: machine translated | EN: More options -->
+    <string name="recovery_phrase_share_as_image">Bagikan sebagai gambar</string> <!-- TODO: machine translated | EN: Share as image -->
+    <string name="recovery_phrase_save_as_text_file">Simpan sebagai file teks</string> <!-- TODO: machine translated | EN: Save as text file -->
+    <string name="recovery_phrase_copy_to_clipboard">Salin ke papan klip</string> <!-- TODO: machine translated | EN: Copy to clipboard -->
+    <string name="recovery_phrase_new_12_words">Frasa baru dengan 12 kata</string> <!-- TODO: machine translated | EN: New phrase with 12 words -->
+    <string name="recovery_phrase_new_24_words">Frasa baru dengan 24 kata</string> <!-- TODO: machine translated | EN: New phrase with 24 words -->
+    <string name="recovery_phrase_saved_photos_title">Disimpan ke galeri</string> <!-- TODO: machine translated | EN: Saved to gallery -->
+    <string name="recovery_phrase_saved_photos_description">Cari di Pictures/Photok. Jika galerimu dicadangkan ke cloud, gambar ini juga ikut diunggah</string> <!-- TODO: machine translated | EN: Look for it in Pictures/Photok. If your gallery backs up to the cloud, the image is uploaded too -->
+    <string name="recovery_phrase_saved_to_file">Disimpan ke %1$s</string> <!-- TODO: machine translated | EN: Saved to %1$s -->
+    <string name="recovery_phrase_saved_as_file">Disimpan sebagai file</string> <!-- TODO: machine translated | EN: Saved as file -->
+    <string name="recovery_phrase_saved_file_description">Temukan di folder yang kamu pilih</string> <!-- TODO: machine translated | EN: Find it in the folder you picked -->
+    <string name="recovery_phrase_shared_with">Dibagikan dengan %1$s</string> <!-- TODO: machine translated | EN: Shared with %1$s -->
+    <string name="recovery_phrase_shared">Dibagikan</string> <!-- TODO: machine translated | EN: Shared -->
+    <string name="recovery_phrase_shared_description">Pastikan sudah sampai di tempat tujuan</string> <!-- TODO: machine translated | EN: Make sure it arrived where you sent it -->
+    <string name="recovery_phrase_copied_title">Disalin ke papan klip</string> <!-- TODO: machine translated | EN: Copied to clipboard -->
+    <string name="recovery_phrase_copied_description">Tempel di tempat aman di luar ponsel ini</string> <!-- TODO: machine translated | EN: Paste it somewhere safe outside this phone -->
+    <string name="recovery_phrase_screenshot_title">Tangkapan layar diambil</string> <!-- TODO: machine translated | EN: Screenshot taken -->
+    <string name="recovery_phrase_screenshot_description">Cari di album Tangkapan Layar</string> <!-- TODO: machine translated | EN: Look for it in your Screenshots album -->
 </resources>

@@ -49,9 +49,6 @@ data class Photo(
     val internalFileName: String
         get() = internalFileName(uuid)
 
-    val internalThumbnailFileName: String
-        get() = internalThumbnailFileName(uuid)
-
     val internalVideoPreviewFileName: String
         get() = internalVideoPreviewFileName(uuid)
 
@@ -62,5 +59,6 @@ data class Photo(
         const val DATE_TAKEN = "dateTaken"
         const val COL_SIZE = "size"
         const val TABLE_NAME = "photo"
+        const val MAX_FILENAME_LENGTH = 255
     }
 }

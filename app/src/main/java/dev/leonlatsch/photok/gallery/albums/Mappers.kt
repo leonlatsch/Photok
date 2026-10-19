@@ -53,8 +53,8 @@ fun Album.toUi(): AlbumItem = AlbumItem(
     itemCount = files.size,
     albumCover = files.firstOrNull()?.let { firstPhoto ->
         AlbumCover(
-            filename = firstPhoto.internalThumbnailFileName,
-            mimeType = firstPhoto.type.mimeType
+            uuid = firstPhoto.uuid,
+            type = firstPhoto.type,
         )
     }
 )

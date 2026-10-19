@@ -66,7 +66,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.components.ChangeAlbumSheet
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
@@ -76,6 +75,7 @@ import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.RoundedDropdownMenu
+import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.uicomponnets.Dialogs
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -85,7 +85,7 @@ fun ImageViewerControls(
     currentItem: ImageViewerItem?,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
-    navController: NavController,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
@@ -148,7 +148,7 @@ fun ImageViewerControls(
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = { navController.navigateUp() }
+                            onClick = onBack
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back),
@@ -295,7 +295,7 @@ fun ImageViewerControls(
                     )
 
                     if (itemCount <= 1) {
-                        navController.navigateUp()
+                        onBack()
                     }
                 }
             }
@@ -536,7 +536,7 @@ fun BottomActionItem(
             modifier = modifier
                 .clip(CircleShape)
                 .clickable(role = Role.Button, onClick = action)
-                .padding(10.dp)
+                .padding(Dimens.spacingSmall)
         ) {
             Icon(
                 painter = painterResource(icon),

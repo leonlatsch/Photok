@@ -16,20 +16,17 @@
 
 package dev.leonlatsch.photok.gallery.albums.ui.navigation
 
-import androidx.navigation.NavController
-import dev.leonlatsch.photok.gallery.albums.ui.AlbumsFragmentDirections
-import javax.inject.Inject
+import dev.leonlatsch.photok.main.ui.navigation.AppRoute
+import dev.leonlatsch.photok.navigation.Navigator
 
-class AlbumsNavigator @Inject constructor() {
+object AlbumsNavigator {
 
     fun navigate(
         event: AlbumsNavigationEvent,
-        navController: NavController,
+        navigator: Navigator,
     ) {
         when (event) {
-            is AlbumsNavigationEvent.OpenAlbumDetail -> navController.navigate(
-                AlbumsFragmentDirections.actionGlobalAlbumDetailFragment(albumUuid = event.uuid)
-            )
+            is AlbumsNavigationEvent.OpenAlbumDetail -> navigator.navigate(AppRoute.AlbumDetail(albumUuid = event.uuid))
         }
     }
 }

@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.20"
 }
 
 android {
@@ -77,13 +78,17 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // SharedPreferences edit extension
-    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.core:core-ktx:1.19.1")
 
     // AppCompat (drawables in res/drawable reference ?attr/colorControlNormal)
     implementation("androidx.appcompat:appcompat:1.8.0")
 
     // Timber Logging
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Navigation 3
+    api("androidx.navigation3:navigation3-runtime:1.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
 
     // Compose (AppTheme lives here so it can be shared across modules for previews)
     api(platform("androidx.compose:compose-bom:2026.09.00"))

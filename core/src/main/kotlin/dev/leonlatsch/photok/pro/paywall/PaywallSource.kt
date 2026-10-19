@@ -21,8 +21,10 @@ package dev.leonlatsch.photok.pro.paywall
  * telemetry signal so the purchase funnel can be broken down by entry point.
  */
 enum class PaywallSource {
+    GalleryHeader,
     SettingsHeader,
     PanicLock,
     BruteforceProtection,
     IntruderWarnings,
+    Onboarding,
 }

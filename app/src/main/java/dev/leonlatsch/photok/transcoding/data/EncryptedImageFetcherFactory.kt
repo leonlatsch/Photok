@@ -21,19 +21,30 @@ import coil.ImageLoader
 import coil.fetch.Fetcher
 import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
+import dev.leonlatsch.photok.model.io.ThumbnailGenerator
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import javax.inject.Inject
 
 class EncryptedImageFetcherFactory @Inject constructor(
     private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
+    private val thumbnailGenerator: ThumbnailGenerator,
     @ApplicationContext private val context: Context,
 ) : Fetcher.Factory<EncryptedImageRequestData> {
     override fun create(data: EncryptedImageRequestData, options: Options, imageLoader: ImageLoader): Fetcher =
-        EncryptedImageFetcher(
-            vaultFileStorage = vaultFileStorage,
-            requestData = data,
-            context = context,
-        )
-
+        when (data) {
+            is EncryptedImageRequestData.VaultFile -> EncryptedImageFetcher(
+                vaultFileStorage = vaultFileStorage,
+                requestData = data,
+                context = context,
+            )
+            is EncryptedImageRequestData.Thumbnail -> ThumbnailFetcher(
+                vaultCacheStorage = vaultCacheStorage,
+                thumbnailGenerator = thumbnailGenerator,
+                requestData = data,
+                context = context,
+            )
+        }
 }

@@ -19,12 +19,14 @@ package dev.leonlatsch.photok.model.repositories
 import android.app.Application
 import android.net.Uri
 import dev.leonlatsch.photok.io.IO
+import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.dao.AlbumDao
 import dev.leonlatsch.photok.model.database.dao.PhotoDao
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.model.io.CreateThumbnailsUseCase
+import dev.leonlatsch.photok.model.io.ThumbnailFiles
 import dev.leonlatsch.photok.other.extensions.empty
 import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getMetadataFor
@@ -54,6 +56,7 @@ class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao,
     private val albumDao: AlbumDao,
     private val vaultFileStorage: VaultFileStorage,
+    private val vaultCacheStorage: VaultCacheStorage,
     private val createThumbnail: CreateThumbnailsUseCase,
     private val app: Application,
     private val config: Config,
@@ -65,7 +68,11 @@ class PhotoRepository @Inject constructor(
     /**
      * @see PhotoDao.insert
      */
-    suspend fun insert(photo: Photo) = photoDao.insert(photo)
+    suspend fun insert(photo: Photo) = photoDao.insert(photo.withCappedFileName())
+
+    suspend fun insertAll(photos: List<Photo>) = photoDao.insertAll(
+        photos.map { it.withCappedFileName() }
+    )
 
     /**
      * @see PhotoDao.delete
@@ -100,6 +107,10 @@ class PhotoRepository @Inject constructor(
      * @see PhotoDao.countAll
      */
     suspend fun countAll() = photoDao.countAll()
+
+    fun observeCount() = photoDao.observeCount()
+
+    suspend fun getAllUuids() = photoDao.getAllUuids()
 
     // endregion
 
@@ -251,16 +262,18 @@ class PhotoRepository @Inject constructor(
     }
 
     /**
-     * Delete a photos bytes and thumbnail bytes on the filesystem.
+     * Delete a photos bytes, video preview and thumbnail on the filesystem.
      *
      * @param photo the photo to delete
      *
-     * @return true, if photo and thumbnail could be deleted
+     * @return true, if photo and video preview could be deleted
      */
-    fun deleteInternalPhotoData(photo: Photo): Boolean =
-        vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
-                && vaultFileStorage.deleteEncryptedFile(photo.internalThumbnailFileName)
+    fun deleteInternalPhotoData(photo: Photo): Boolean {
+        vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.path(photo.uuid))
+
+        return vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
                 && (!photo.type.isVideo || vaultFileStorage.deleteEncryptedFile(photo.internalVideoPreviewFileName))
+    }
 
 
     // endregion
@@ -315,3 +328,5 @@ class PhotoRepository @Inject constructor(
     // endregion
     // endregion
 }
+
+private fun Photo.withCappedFileName() = copy(fileName = fileName.take(Photo.MAX_FILENAME_LENGTH))
