@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,6 +27,7 @@ import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
 import dev.leonlatsch.photok.telemetry.domain.TelemetryService
@@ -117,11 +119,11 @@ class SetupViewModel @Inject constructor(
                 it.copy(confirmPassword = event.confirmPassword)
             }
 
-            SetupUiEvent.Setup -> setup()
+            is SetupUiEvent.Setup -> setup(event.activity)
         }
     }
 
-    private fun setup() {
+    private fun setup(activity: Activity) {
         val password = inputs.value.password
         if (!PasswordUtils.validatePasswords(password, inputs.value.confirmPassword)) return
 
@@ -145,11 +147,17 @@ class SetupViewModel @Inject constructor(
                             )
                         )
 
-                        config.systemOnboardingStep = OnboardingRoute.BiometricUnlock.stepKey()
                         config.justFinishedSetup = true
 
+                        if (activity.areBiometricsAvailable()) {
+                            config.systemOnboardingStep = OnboardingRoute.BiometricUnlock.stepKey()
+                            navigationEventsChannel.trySend(SetupNavigationEvent.SetupBiometricUnlock)
+                        } else {
+                            config.systemOnboardingStep = OnboardingRoute.RecoveryPhraseSetup.stepKey()
+                            navigationEventsChannel.trySend(SetupNavigationEvent.SetupRecoveryPhrase)
+                        }
+
                         inputs.update { it.copy(loading = false) }
-                        navigationEventsChannel.trySend(SetupNavigationEvent.ShowBiometricUnlock)
                     }
                     .onFailure {
                         Timber.e(it)

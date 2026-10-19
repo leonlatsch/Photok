@@ -42,6 +42,18 @@ platform :android do
   end
 
   #
+  # ---- Local --------------------------------------------------------------
+  #
+
+  desc "Build playRelease signed with the local debug key and install it on the connected device (needs :pro submodule)"
+  lane :install_play_release do
+    gradle(
+      task: "installPlayRelease",
+      properties: debug_signing_properties
+    )
+  end
+
+  #
   # ---- Release ------------------------------------------------------------
   #
 
@@ -197,6 +209,15 @@ def signing_properties
     "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
     "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
     "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
+  }
+end
+
+def debug_signing_properties
+  {
+    "android.injected.signing.store.file" => File.expand_path("~/.android/debug.keystore"),
+    "android.injected.signing.store.password" => "android",
+    "android.injected.signing.key.alias" => "androiddebugkey",
+    "android.injected.signing.key.password" => "android"
   }
 end
 

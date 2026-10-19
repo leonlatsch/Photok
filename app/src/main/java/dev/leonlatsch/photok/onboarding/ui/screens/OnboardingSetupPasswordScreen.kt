@@ -85,7 +85,12 @@ fun OnboardingSetupPasswordScreen(
 
     ObserveAsEvents(viewModel.navigationEvents) { event ->
         when (event) {
-            SetupNavigationEvent.ShowBiometricUnlock -> {
+            SetupNavigationEvent.SetupRecoveryPhrase -> {
+                activity?.hideKeyboard()
+                navigator.navigate(OnboardingRoute.RecoveryPhraseSetup)
+            }
+
+            SetupNavigationEvent.SetupBiometricUnlock -> {
                 activity?.hideKeyboard()
                 navigator.navigate(OnboardingRoute.BiometricUnlock)
             }
@@ -107,6 +112,7 @@ private fun OnboardingSetupPasswordContent(
     uiState: SetupUiState,
     handleUiEvent: (SetupUiEvent) -> Unit,
 ) {
+    val activity = LocalActivity.current
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -125,7 +131,9 @@ private fun OnboardingSetupPasswordContent(
                 loading = uiState.loading,
             ) {
                 focusManager.clearFocus()
-                handleUiEvent(SetupUiEvent.Setup)
+                activity?.let {
+                    handleUiEvent(SetupUiEvent.Setup(it))
+                }
             }
         }
     ) { contentPadding ->

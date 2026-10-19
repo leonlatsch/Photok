@@ -31,6 +31,7 @@ import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.encryption.migration.LegacyEncryptionMigrator
 import dev.leonlatsch.photok.encryption.ui.BiometricAuthenticationFailedException
 import dev.leonlatsch.photok.encryption.ui.UserCanceledBiometricsException
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -161,9 +163,7 @@ class UnlockViewModel @Inject constructor(
                             _uiState.update { it.copy(loading = false) }
                             navigationEventsChannel.trySend(UnlockNavigationEvent.StartLegacyMigration)
                         } else {
-                            if (!vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) {
-                                vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
-                            }
+                            createMissingRecoveryPhrase(session)
 
                             _uiState.update { it.copy(loading = false) }
                             sendUnlockedEvent()
@@ -208,6 +208,7 @@ class UnlockViewModel @Inject constructor(
                 .onSuccess { session ->
                     passwordAttemptsUseCase.onSuccessfulUnlock()
                     sessionRepository.set(session)
+                    createMissingRecoveryPhrase(session)
                     sendUnlockedEvent()
                 }
                 .onFailure {
@@ -224,6 +225,17 @@ class UnlockViewModel @Inject constructor(
                         )
                     }
                 }
+        }
+    }
+
+    private suspend fun createMissingRecoveryPhrase(session: VaultSession) = withContext(Dispatchers.IO) {
+        if (vaultService.isSetup(VaultProtectionType.RecoveryPhrase)) return@withContext
+
+        vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
+
+        // Show sheet if we already done with onboarding
+        if (config.systemOnboardingStep == null) {
+            config.systemShowRecoveryPhraseSheet = true
         }
     }
 

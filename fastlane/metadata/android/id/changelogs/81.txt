@@ -1,0 +1,5 @@
+- Pengaturan baru: Memulai Photok kini terasa lebih menyenangkan. Siapkan brankasmu, lindungi dengan caramu sendiri, dan amankan foto pertamamu dalam sekejap
+- Lihat kekuatan kata sandimu secara langsung dan berapa lama waktu untuk membobolnya
+- Desain baru frasa pemulihan: Tampilkan sebagai kata atau kode QR, lalu simpan ke galeri, file, papan klip, atau bagikan
+- Pemulihan dengan frasa pemulihan kini lebih mudah
+- Perbaikan bug dan peningkatan

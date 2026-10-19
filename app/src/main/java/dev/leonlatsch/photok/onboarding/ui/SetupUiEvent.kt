@@ -16,13 +16,16 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
+import android.app.Activity
+
 sealed interface SetupUiEvent {
     data class PasswordChanged(val password: String) : SetupUiEvent
     data class ConfirmPasswordChanged(val confirmPassword: String) : SetupUiEvent
-    data object Setup : SetupUiEvent
+    data class Setup(val activity: Activity) : SetupUiEvent
 }
 
 sealed interface SetupNavigationEvent {
-    data object ShowBiometricUnlock : SetupNavigationEvent
+    data object SetupBiometricUnlock : SetupNavigationEvent
+    data object SetupRecoveryPhrase : SetupNavigationEvent
     data object ShowError : SetupNavigationEvent
 }

@@ -1,0 +1,5 @@
+- Configuração totalmente nova: Começar a usar o Photok nunca foi tão bom. Configure seu cofre, proteja do seu jeito e guarde suas primeiras fotos com segurança em instantes
+- Veja a força da sua senha em tempo real e quanto tempo levaria para quebrá-la
+- Novo design da frase de recuperação: Veja como palavras ou código QR e salve na galeria, em um arquivo, na área de transferência ou compartilhe
+- Restaurar com a frase de recuperação ficou mais fácil
+- Correções e melhorias

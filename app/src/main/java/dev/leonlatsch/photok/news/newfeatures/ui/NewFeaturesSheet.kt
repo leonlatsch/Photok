@@ -51,11 +51,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -74,7 +71,6 @@ import androidx.compose.ui.unit.sp
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.other.openUrl
-import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 import dev.leonlatsch.photok.ui.theme.Gradients
@@ -140,56 +136,32 @@ const val FEATURE_VERSION_CODE = 15
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewFeaturesSheet(overrideShow: Boolean = false, onDismissOverride: () -> Unit = {}) {
-    val config = LocalConfig.current
+fun NewFeaturesSheet(onDismissRequest: () -> Unit) {
+    val state = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
 
-    var visible by remember { mutableStateOf(false) }
+    ModalBottomSheet(
+        sheetState = state,
+        onDismissRequest = onDismissRequest,
+        dragHandle = null,
+        sheetGesturesEnabled = false,
+        containerColor = Color.Transparent,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        contentWindowInsets = { WindowInsets() }
+    ) {
+        val scope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit) {
-        config ?: return@LaunchedEffect
-
-        if (config.systemLastFeatureVersionCode < FEATURE_VERSION_CODE) {
-
-            if (config.systemLastFeatureVersionCode != 0) {
-                delay(300.milliseconds)
-                visible = true
-            }
-
-            config.systemLastFeatureVersionCode = FEATURE_VERSION_CODE
-        }
-    }
-
-    if (visible || overrideShow) {
-        val state = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true,
-        )
-
-        ModalBottomSheet(
-            sheetState = state,
-            onDismissRequest = {
-                visible = false
-                onDismissOverride()
+        NewFeaturesContent(
+            onContinueClick = {
+                scope.launch {
+                    state.hide()
+                }.invokeOnCompletion {
+                    onDismissRequest()
+                }
             },
-            dragHandle = null,
-            sheetGesturesEnabled = false,
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            contentWindowInsets = { WindowInsets() }
-        ) {
-            val scope = rememberCoroutineScope()
-
-            NewFeaturesContent(
-                onContinueClick = {
-                    scope.launch {
-                        state.hide()
-                    }.invokeOnCompletion {
-                        visible = false
-                        onDismissOverride()
-                    }
-                },
-                modifier = Modifier.statusBarsPadding(),
-            )
-        }
+            modifier = Modifier.statusBarsPadding(),
+        )
     }
 }
 
