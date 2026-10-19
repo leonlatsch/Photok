@@ -23,7 +23,7 @@ sealed interface ChangeAlbumUiState {
     data object Loading : ChangeAlbumUiState
 
     data class Content(
-        val thumbnail: EncryptedImageRequestData,
+        val thumbnail: EncryptedImageRequestData.Thumbnail,
         val albums: List<ChangeAlbumItem>,
         val hasChanges: Boolean,
     ) : ChangeAlbumUiState

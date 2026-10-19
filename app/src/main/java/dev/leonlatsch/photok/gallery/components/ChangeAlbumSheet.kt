@@ -34,7 +34,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,11 +41,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -68,6 +65,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
+import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.components.DialogViewModelStoreOwner
@@ -237,7 +235,7 @@ private fun ChangeAlbumContent(
 
 @Composable
 private fun FileThumbnail(
-    thumbnail: EncryptedImageRequestData,
+    thumbnail: EncryptedImageRequestData.Thumbnail,
 ) {
     val modifier = Modifier
         .width(80.dp)
@@ -249,7 +247,7 @@ private fun FileThumbnail(
     } else {
         Image(
             painter = rememberEncryptedImagePainter(thumbnail),
-            contentDescription = thumbnail.internalFileName,
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = modifier,
         )
@@ -266,9 +264,9 @@ private fun ChangeAlbumPreview() {
         ) {
             ChangeAlbumContent(
                 uiState = ChangeAlbumUiState.Content(
-                    thumbnail = EncryptedImageRequestData(
-                        internalFileName = "preview",
-                        mimeType = "image/jpeg",
+                    thumbnail = EncryptedImageRequestData.Thumbnail(
+                        uuid = "preview",
+                        type = PhotoType.JPEG,
                     ),
                     albums = listOf(
                         ChangeAlbumItem(

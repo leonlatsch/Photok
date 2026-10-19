@@ -37,7 +37,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 sealed interface ChangeAlbumUiEvent {
     data class ToggleAlbum(val albumUuid: String) : ChangeAlbumUiEvent
@@ -113,9 +112,9 @@ class ChangeAlbumViewModel @AssistedInject constructor(
         }
     }
 
-    private fun Photo.toThumbnailRequestData() = EncryptedImageRequestData(
-        internalFileName = internalThumbnailFileName,
-        mimeType = type.mimeType,
+    private fun Photo.toThumbnailRequestData() = EncryptedImageRequestData.Thumbnail(
+        uuid = uuid,
+        type = type,
     )
 
     @AssistedFactory
