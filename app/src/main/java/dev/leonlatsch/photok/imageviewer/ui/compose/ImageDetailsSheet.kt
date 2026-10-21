@@ -177,7 +177,7 @@ private fun DetailsRow(
             Text(
                 text = text,
                 fontWeight = FontWeight.Medium,
-                maxLines = 1,
+                maxLines = 10,
                 overflow = TextOverflow.MiddleEllipsis,
             )
             Text(
