@@ -16,12 +16,16 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
+import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.settings.data.Config
+import timber.log.Timber
+import javax.crypto.SecretKey
 import javax.inject.Inject
 
 class VaultService @Inject constructor(
@@ -29,6 +33,7 @@ class VaultService @Inject constructor(
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
     private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>,
     private val recoveryPhraseProtectionHandler: VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase>,
+    private val passwordVmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) {
     suspend fun unlock(request: UnlockRequest): Result<VaultSession> {
@@ -44,7 +49,9 @@ class VaultService @Inject constructor(
                         passwordProtectionHandler.onMigrationPersisted()
                     }
 
-                    passwordProtectionHandler.unlock(request, protection)
+                    val vmk = passwordProtectionHandler.unlock(request, protection)
+                    upgradePasswordProtectionIfOutdated(request.password, vmk, protection)
+                    vmk
                 }
                 is UnlockRequest.Biometric -> {
                     if (protection == null) {
@@ -66,6 +73,28 @@ class VaultService @Inject constructor(
             VaultSession(
                 vmk = vmk,
             )
+        }
+    }
+
+    private suspend fun upgradePasswordProtectionIfOutdated(
+        password: String,
+        vmk: SecretKey,
+        protection: VaultProtection,
+    ) {
+        if (!passwordVmkWrapper.isOutdated(protection.params)) return
+
+        runCatching {
+            val wrapped = passwordVmkWrapper.wrap(password, vmk)
+            vaultProtectionRepository.updateProtection(
+                protection.copy(
+                    wrappedVMK = wrapped.wrappedVMK,
+                    params = wrapped.params,
+                )
+            )
+        }.onSuccess {
+            Timber.i("Upgraded password protection to current KDF params")
+        }.onFailure {
+            Timber.w(it, "Failed to upgrade password protection, keeping old params")
         }
     }
 

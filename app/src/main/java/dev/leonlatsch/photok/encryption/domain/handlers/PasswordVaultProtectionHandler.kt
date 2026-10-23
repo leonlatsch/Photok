@@ -16,18 +16,13 @@
 
 package dev.leonlatsch.photok.encryption.domain.handlers
 
-import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
-import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
-import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.settings.data.Config
 import org.mindrot.jbcrypt.BCrypt
-import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -35,12 +30,12 @@ import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
-private const val KEK_SIZE = 256
-const val PASSWORD_KEK_ITERATIONS = 300_000
+private const val LEGACY_V2_KEY_SIZE = 256
 private const val LEGACY_V2_KDF_ITERATIONS = 100_000
 
 class PasswordVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
+    private val vmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) : VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password> {
 
@@ -72,42 +67,13 @@ class PasswordVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun create(request: CreateRequest.Password): VaultProtection {
-
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val kdf = Kdf.PBKDF2WithHmacSHA256
-
-        val params = VaultProtectionParams(
-            salt = Base64.encode(salt),
-            iv = Base64.encode(iv),
-            kdf = kdf,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
-        )
-
-        val vmk = keyGen.generateVaultMasterKey()
-
-        val kek = keyGen.derivePasswordKeyEncryptionKey(
-            password = request.password,
-            salt = salt,
-            kdf = kdf,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            keySize = params.keySize,
-        )
-
-        val cipher = Cipher.getInstance(params.algorithm.value).apply {
-            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
-        }
-
-        val wrappedVmk = cipher.doFinal(vmk.encoded)
+        val wrapped = vmkWrapper.wrap(request.password, keyGen.generateVaultMasterKey())
 
         return VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
-            wrappedVMK = wrappedVmk,
-            params = params,
+            wrappedVMK = wrapped.wrappedVMK,
+            params = wrapped.params,
         )
     }
 
@@ -132,41 +98,17 @@ class PasswordVaultProtectionHandler @Inject constructor(
                 salt = vmkSalt,
                 kdf = Kdf.PBKDF2WithHmacSHA256,
                 kdfIterations = LEGACY_V2_KDF_ITERATIONS,
-                keySize = KEK_SIZE,
+                keySize = LEGACY_V2_KEY_SIZE,
             )
         }
 
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val params = VaultProtectionParams(
-            salt = Base64.encode(salt),
-            iv = Base64.encode(iv),
-            kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
-        )
-
-        val kek = keyGen.derivePasswordKeyEncryptionKey(
-            password = request.password,
-            salt = salt,
-            kdf = params.kdf!!,
-            kdfIterations = params.kdfIterations!!,
-            keySize = params.keySize,
-        )
-
-        val cipher = Cipher.getInstance(params.algorithm.value).apply {
-            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
-        }
-
-        val wrappedVmk = cipher.doFinal(vmk.encoded)
+        val wrapped = vmkWrapper.wrap(request.password, vmk)
 
         return VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
-            wrappedVMK = wrappedVmk,
-            params = params,
+            wrappedVMK = wrapped.wrappedVMK,
+            params = wrapped.params,
         )
     }
 
