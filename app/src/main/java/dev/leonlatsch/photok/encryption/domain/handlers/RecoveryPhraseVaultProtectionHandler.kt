@@ -36,7 +36,7 @@ import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
 private const val KEK_SIZE = 256
-private const val KEK_ITERATIONS = 300_000
+private const val KEK_ITERATIONS = 100_000 //  a BIP39 phrase has at least 128 bits of entropy, so brute force isn't realistic at any iteration count.
 
 class RecoveryPhraseVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
