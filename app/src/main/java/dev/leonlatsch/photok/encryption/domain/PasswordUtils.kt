@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.encryption.domain
 import androidx.lifecycle.LiveData
 import com.nulabinc.zxcvbn.Zxcvbn
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils.PASSWORD_MIN_LENGTH
+import dev.leonlatsch.photok.encryption.domain.handlers.PASSWORD_KEK_ITERATIONS
 import dev.leonlatsch.photok.encryption.domain.models.PasswordStrength
 import java.util.Locale
 
@@ -58,7 +59,8 @@ object PasswordUtils {
 
     private val zxcvbn by lazy { Zxcvbn() }
 
-    const val CRACK_TIME_GUESSES_PER_SECOND = 100_000
+    private const val GPU_GUESSES_PER_SECOND_AT_ONE_ITERATION = 10_000_000_000L
+    const val CRACK_TIME_GUESSES_PER_SECOND = GPU_GUESSES_PER_SECOND_AT_ONE_ITERATION / PASSWORD_KEK_ITERATIONS
 
     /**
      * Estimates the strength of [password] with zxcvbn. Blocking and possibly slow, call it off the main thread.
