@@ -36,7 +36,7 @@ import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
 private const val KEK_SIZE = 256
-private const val KEK_ITERATIONS = 600_000
+private const val KEK_ITERATIONS = 300_000
 
 class RecoveryPhraseVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
