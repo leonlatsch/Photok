@@ -19,20 +19,25 @@ package dev.leonlatsch.photok.encryption.integration
 import dev.leonlatsch.photok.encryption.domain.ChangePasswordUseCase
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
+import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -41,6 +46,9 @@ import org.junit.runner.RunWith
 import org.mindrot.jbcrypt.BCrypt
 import org.robolectric.RobolectricTestRunner
 import java.util.Base64
+import javax.crypto.Cipher
+import javax.crypto.SecretKey
+import javax.crypto.spec.IvParameterSpec
 import dev.leonlatsch.photok.settings.data.Config as AppConfig
 
 /**
@@ -53,14 +61,23 @@ class VaultLifecycleTest {
 
     private val keyGen = KeyGen()
     private val mockConfig = mockk<AppConfig>(relaxed = true)
-    private val handler = PasswordVaultProtectionHandler(keyGen, mockConfig)
+    private val vmkWrapper = PasswordVmkWrapper(keyGen)
+    private val handler = PasswordVaultProtectionHandler(keyGen, vmkWrapper, mockConfig)
 
     private val mockProtectionRepository = mockk<VaultProtectionRepository>()
     private val mockSessionRepository = mockk<SessionRepository>()
     private val changePasswordUseCase = ChangePasswordUseCase(
         vaultProtectionRepository = mockProtectionRepository,
         sessionRepository = mockSessionRepository,
-        keyGen = keyGen,
+        vmkWrapper = vmkWrapper,
+        config = mockConfig,
+    )
+    private val vaultService = VaultService(
+        vaultProtectionRepository = mockProtectionRepository,
+        passwordProtectionHandler = handler,
+        biometricProtectionHandler = mockk(),
+        recoveryPhraseProtectionHandler = mockk(),
+        passwordVmkWrapper = vmkWrapper,
         config = mockConfig,
     )
 
@@ -133,6 +150,135 @@ class VaultLifecycleTest {
 
         val oldPasswordResult = runCatching { handler.unlock(UnlockRequest.Password(password), newProtection) }
         assertTrue("Old password must no longer unlock the vault", oldPasswordResult.isFailure)
+    }
+
+    /**
+     * Vaults created before the iteration bump store 100K iterations. Unlock must use the stored
+     * count, not the current constant, or those users are locked out.
+     */
+    @Test
+    fun `vault created with 100K iterations still unlocks`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        val unlockedVmk = handler.unlock(UnlockRequest.Password(password), legacyProtection)
+
+        assertArrayEquals("100K vault must unlock with the same VMK", vmk.encoded, unlockedVmk.encoded)
+    }
+
+    /**
+     * Changing the password of a 100K vault must upgrade it to [KekSpec.Password].
+     */
+    @Test
+    fun `change password upgrades 100K vault to current iterations`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        val capturedProtection = slot<VaultProtection>()
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+        coEvery { mockSessionRepository.get() } returns VaultSession(vmk)
+        coEvery { mockProtectionRepository.updateProtection(capture(capturedProtection)) } returns Unit
+
+        changePasswordUseCase("brand-new-password")
+
+        val newProtection = capturedProtection.captured
+        assertEquals(KekSpec.Password.kdfIterations, newProtection.params.kdfIterations)
+        assertEquals(Kdf.PBKDF2WithHmacSHA256, newProtection.params.kdf)
+
+        val unlockedVmk = handler.unlock(UnlockRequest.Password("brand-new-password"), newProtection)
+        assertArrayEquals("Upgraded vault must recover the same VMK", vmk.encoded, unlockedVmk.encoded)
+    }
+
+    /**
+     * Unlocking a 100K vault must upgrade it to [KekSpec.Password] with the same password
+     * and the same VMK, so existing users get the hardening without changing their password.
+     */
+    @Test
+    fun `unlock upgrades 100K vault to current iterations`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        val capturedProtection = slot<VaultProtection>()
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+        coEvery { mockProtectionRepository.updateProtection(capture(capturedProtection)) } returns Unit
+
+        val session = vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+        assertArrayEquals("Unlock must return the original VMK", vmk.encoded, session.vmk.encoded)
+
+        val upgradedProtection = capturedProtection.captured
+        assertEquals(legacyProtection.id, upgradedProtection.id)
+        assertEquals(KekSpec.Password.kdfIterations, upgradedProtection.params.kdfIterations)
+        assertFalse(
+            "Upgrade must use a fresh salt",
+            legacyProtection.params.salt == upgradedProtection.params.salt,
+        )
+
+        val unlockedVmk = handler.unlock(UnlockRequest.Password(password), upgradedProtection)
+        assertArrayEquals("Upgraded vault must recover the same VMK", vmk.encoded, unlockedVmk.encoded)
+    }
+
+    /**
+     * A failed upgrade must not block the unlock; the old protection stays valid.
+     */
+    @Test
+    fun `unlock succeeds when upgrade of 100K vault fails`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+        coEvery { mockProtectionRepository.updateProtection(any()) } throws IllegalStateException("disk full")
+
+        val session = vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+
+        assertArrayEquals("Unlock must still return the original VMK", vmk.encoded, session.vmk.encoded)
+    }
+
+    /**
+     * A wrong password on a 100K vault must fail and never rewrite the protection,
+     * or the user is locked out of their vault.
+     */
+    @Test
+    fun `wrong password does not upgrade 100K vault`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+
+        val result = vaultService.unlock(UnlockRequest.Password("wrong-password"))
+
+        assertTrue("Wrong password must not unlock the vault", result.isFailure)
+        coVerify(exactly = 0) { mockProtectionRepository.updateProtection(any()) }
+    }
+
+    /**
+     * A vault already on the current params must not be rewritten on every unlock.
+     */
+    @Test
+    fun `unlock does not rewrite current vault`() = runTest {
+        val protection = handler.create(CreateRequest.Password(password))
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns protection
+
+        vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+
+        coVerify(exactly = 0) { mockProtectionRepository.updateProtection(any()) }
+    }
+
+    private suspend fun createProtectionWith100KIterations(vmk: SecretKey): VaultProtection {
+        val template = handler.create(CreateRequest.Password(password))
+        val params = template.params.copy(kdfIterations = 100_000)
+
+        val kek = keyGen.derivePasswordKeyEncryptionKey(
+            password = password,
+            salt = Base64.getDecoder().decode(params.salt),
+            kdf = Kdf.PBKDF2WithHmacSHA256,
+            kdfIterations = 100_000,
+            keySize = params.keySize,
+        )
+        val cipher = Cipher.getInstance(params.algorithm.value).apply {
+            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(Base64.getDecoder().decode(params.iv)))
+        }
+
+        return template.copy(wrappedVMK = cipher.doFinal(vmk.encoded), params = params)
     }
 
     /**

@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.encryption.handlers
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.VAULT_MASTER_KEY_SIZE
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
+import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.handlers.toVaultMasterKey
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
@@ -44,7 +45,7 @@ class VaultMasterKeysTest {
         every { legacyPasswordHash } returns null
         every { legacyUserSalt } returns null
     }
-    private val handler = PasswordVaultProtectionHandler(keyGen, mockConfig)
+    private val handler = PasswordVaultProtectionHandler(keyGen, PasswordVmkWrapper(keyGen), mockConfig)
 
     private val password = "correct-horse-battery-staple"
 

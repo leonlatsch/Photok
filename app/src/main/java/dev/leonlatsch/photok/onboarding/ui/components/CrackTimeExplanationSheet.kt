@@ -57,8 +57,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.PasswordUtils
-import dev.leonlatsch.photok.encryption.domain.handlers.PASSWORD_KEK_ITERATIONS
-import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.other.openUrl
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
 import dev.leonlatsch.photok.ui.theme.AppTheme
@@ -116,7 +115,7 @@ private fun CrackTimeExplanationContent() {
         }
 
         TechnicalDetails(
-            iterations = numberFormat.format(PASSWORD_KEK_ITERATIONS),
+            iterations = numberFormat.format(KekSpec.Password.kdfIterations),
             guessesPerSecond = guessesPerSecond,
         )
 
@@ -205,7 +204,7 @@ private fun TechnicalDetails(
             Column(modifier = Modifier.padding(vertical = Dimens.spacingXSmall)) {
                 DetailRow(
                     label = stringResource(R.string.setup_password_crack_time_info_kdf),
-                    value = Kdf.PBKDF2WithHmacSHA256.value,
+                    value = KekSpec.Password.kdf.value,
                 )
                 HorizontalDivider(
                     color = colorScheme.outlineVariant,

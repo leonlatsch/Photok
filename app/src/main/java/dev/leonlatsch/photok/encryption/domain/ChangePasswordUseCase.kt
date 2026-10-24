@@ -16,21 +16,15 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
-import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
-import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
-import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
+import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.data.Config
-import java.security.SecureRandom
-import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
-import kotlin.io.encoding.Base64
 
 class ChangePasswordUseCase @Inject constructor(
     private val vaultProtectionRepository: VaultProtectionRepository,
     private val sessionRepository: SessionRepository,
-    private val keyGen: KeyGen,
+    private val vmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) {
     suspend operator fun invoke(newPassword: String) = runCatching {
@@ -39,31 +33,11 @@ class ChangePasswordUseCase @Inject constructor(
 
         val session = requireNotNull(sessionRepository.get()) { "Vault is locked" }
 
-        val newSalt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-        val newIv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val newKek = keyGen.derivePasswordKeyEncryptionKey(
-            password = newPassword,
-            salt = newSalt,
-            kdf = requireNotNull(currentProtection.params.kdf) { "Password protection is missing KDF" },
-            kdfIterations = requireNotNull(currentProtection.params.kdfIterations) { "Password protection is missing KDF iterations" },
-            keySize = currentProtection.params.keySize,
-        )
-
-        val cipher = Cipher.getInstance(currentProtection.params.algorithm.value).apply {
-            init(Cipher.ENCRYPT_MODE, newKek, IvParameterSpec(newIv))
-        }
-
-        val newWrappedVmk = cipher.doFinal(session.vmk.encoded)
-
-        val newParams = currentProtection.params.copy(
-            salt = Base64.encode(newSalt),
-            iv = Base64.encode(newIv),
-        )
+        val wrapped = vmkWrapper.wrap(newPassword, session.vmk)
 
         val newProtection = currentProtection.copy(
-            wrappedVMK = newWrappedVmk,
-            params = newParams,
+            wrappedVMK = wrapped.wrappedVMK,
+            params = wrapped.params,
         )
 
         vaultProtectionRepository.updateProtection(newProtection)
