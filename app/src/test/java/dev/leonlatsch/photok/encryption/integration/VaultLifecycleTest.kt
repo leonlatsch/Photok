@@ -234,6 +234,23 @@ class VaultLifecycleTest {
     }
 
     /**
+     * A wrong password on a 100K vault must fail and never rewrite the protection,
+     * or the user is locked out of their vault.
+     */
+    @Test
+    fun `wrong password does not upgrade 100K vault`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+
+        val result = vaultService.unlock(UnlockRequest.Password("wrong-password"))
+
+        assertTrue("Wrong password must not unlock the vault", result.isFailure)
+        coVerify(exactly = 0) { mockProtectionRepository.updateProtection(any()) }
+    }
+
+    /**
      * A vault already on the current params must not be rewritten on every unlock.
      */
     @Test
