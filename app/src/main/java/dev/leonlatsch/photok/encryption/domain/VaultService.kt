@@ -83,7 +83,7 @@ class VaultService @Inject constructor(
     ) {
         if (!passwordVmkWrapper.isOutdated(protection.params)) return
 
-        runCatching {
+        try {
             val wrapped = passwordVmkWrapper.wrap(password, vmk)
             vaultProtectionRepository.updateProtection(
                 protection.copy(
@@ -91,10 +91,9 @@ class VaultService @Inject constructor(
                     params = wrapped.params,
                 )
             )
-        }.onSuccess {
             Timber.i("Upgraded password protection to current KDF params")
-        }.onFailure {
-            Timber.w(it, "Failed to upgrade password protection, keeping old params")
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to upgrade password protection, keeping old params")
         }
     }
 
