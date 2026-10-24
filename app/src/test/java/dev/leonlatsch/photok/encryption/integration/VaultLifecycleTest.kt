@@ -21,11 +21,11 @@ import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
-import dev.leonlatsch.photok.encryption.domain.handlers.PASSWORD_KEK_ITERATIONS
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
@@ -167,7 +167,7 @@ class VaultLifecycleTest {
     }
 
     /**
-     * Changing the password of a 100K vault must upgrade it to [PASSWORD_KEK_ITERATIONS].
+     * Changing the password of a 100K vault must upgrade it to [KekSpec.Password].
      */
     @Test
     fun `change password upgrades 100K vault to current iterations`() = runTest {
@@ -182,7 +182,7 @@ class VaultLifecycleTest {
         changePasswordUseCase("brand-new-password")
 
         val newProtection = capturedProtection.captured
-        assertEquals(PASSWORD_KEK_ITERATIONS, newProtection.params.kdfIterations)
+        assertEquals(KekSpec.Password.kdfIterations, newProtection.params.kdfIterations)
         assertEquals(Kdf.PBKDF2WithHmacSHA256, newProtection.params.kdf)
 
         val unlockedVmk = handler.unlock(UnlockRequest.Password("brand-new-password"), newProtection)
@@ -190,7 +190,7 @@ class VaultLifecycleTest {
     }
 
     /**
-     * Unlocking a 100K vault must upgrade it to [PASSWORD_KEK_ITERATIONS] with the same password
+     * Unlocking a 100K vault must upgrade it to [KekSpec.Password] with the same password
      * and the same VMK, so existing users get the hardening without changing their password.
      */
     @Test
@@ -207,7 +207,7 @@ class VaultLifecycleTest {
 
         val upgradedProtection = capturedProtection.captured
         assertEquals(legacyProtection.id, upgradedProtection.id)
-        assertEquals(PASSWORD_KEK_ITERATIONS, upgradedProtection.params.kdfIterations)
+        assertEquals(KekSpec.Password.kdfIterations, upgradedProtection.params.kdfIterations)
         assertFalse(
             "Upgrade must use a fresh salt",
             legacyProtection.params.salt == upgradedProtection.params.salt,

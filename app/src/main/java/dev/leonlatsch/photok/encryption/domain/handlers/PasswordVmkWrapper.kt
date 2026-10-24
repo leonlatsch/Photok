@@ -19,8 +19,7 @@ package dev.leonlatsch.photok.encryption.domain.handlers
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
-import dev.leonlatsch.photok.encryption.domain.models.Algorithm
-import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -28,9 +27,6 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
-
-private const val KEK_SIZE = 256
-const val PASSWORD_KEK_ITERATIONS = 300_000
 
 class WrappedVmk(
     val params: VaultProtectionParams,
@@ -44,22 +40,23 @@ class PasswordVmkWrapper @Inject constructor(
     fun wrap(password: String, vmk: SecretKey): WrappedVmk {
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
+        val spec = KekSpec.Password
 
         val params = VaultProtectionParams(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
-            kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            algorithm = spec.algorithm,
+            keySize = spec.keySize,
         )
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(
             password = password,
             salt = salt,
-            kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            keySize = KEK_SIZE,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            keySize = spec.keySize,
         )
 
         val cipher = Cipher.getInstance(params.algorithm.value).apply {
@@ -73,9 +70,6 @@ class PasswordVmkWrapper @Inject constructor(
     }
 
     fun isOutdated(params: VaultProtectionParams): Boolean {
-        return params.kdf != Kdf.PBKDF2WithHmacSHA256
-            || (params.kdfIterations ?: 0) < PASSWORD_KEK_ITERATIONS
-            || params.keySize != KEK_SIZE
-            || params.algorithm != Algorithm.AesCbcPkcs7Padding
+        return !KekSpec.Password.matches(params)
     }
 }

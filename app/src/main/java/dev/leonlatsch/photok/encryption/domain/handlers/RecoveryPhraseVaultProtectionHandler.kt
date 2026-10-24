@@ -21,9 +21,8 @@ import dev.leonlatsch.photok.encryption.domain.crypto.Bip39MnemonicGenerator
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
-import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
-import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
@@ -34,9 +33,6 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
-
-private const val KEK_SIZE = 256
-private const val KEK_ITERATIONS = 100_000 //  a BIP39 phrase has at least 128 bits of entropy, so brute force isn't realistic at any iteration count.
 
 class RecoveryPhraseVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
@@ -76,23 +72,23 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
 
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-        val kdf = Kdf.PBKDF2WithHmacSHA256
+        val spec = KekSpec.RecoveryPhrase
 
         val params = VaultProtectionParams(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
-            kdf = kdf,
-            kdfIterations = KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            algorithm = spec.algorithm,
+            keySize = spec.keySize,
         )
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(
             password = phrase.toMnemonicString(),
             salt = salt,
-            kdf = kdf,
-            kdfIterations = KEK_ITERATIONS,
-            keySize = KEK_SIZE,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            keySize = spec.keySize,
         )
 
         val cipher = Cipher.getInstance(params.algorithm.value).apply {
