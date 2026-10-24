@@ -21,17 +21,13 @@ import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
+import dev.leonlatsch.photok.encryption.domain.models.WrappedVmk
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
-
-class WrappedVmk(
-    val params: VaultProtectionParams,
-    val wrappedVMK: ByteArray,
-)
 
 class PasswordVmkWrapper @Inject constructor(
     private val keyGen: KeyGen,
