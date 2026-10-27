@@ -103,7 +103,7 @@ class ChangePasswordViewModel @Inject constructor(
     private fun checkOld() {
         val password = _uiState.value.oldPassword
         _uiState.update { it.copy(loading = true, oldPasswordError = null) }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             vaultService.unlock(UnlockRequest.Password(password))
                 .onSuccess {
                     _uiState.update { it.copy(loading = false, step = ChangePasswordUiState.Step.SetNew) }

@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -90,7 +91,7 @@ class ConfirmpasswordViewModel @Inject constructor(
                     )
                 }
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     vaultService.unlock(UnlockRequest.Password(password))
                         .onSuccess {
                             inputs.update {
