@@ -20,7 +20,6 @@ import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
-import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.settings.data.Config
@@ -49,9 +48,7 @@ class VaultService @Inject constructor(
                         passwordProtectionHandler.onMigrationPersisted()
                     }
 
-                    val vmk = passwordProtectionHandler.unlock(request, protection)
-                    upgradePasswordProtectionIfOutdated(request.password, vmk, protection)
-                    vmk
+                    passwordProtectionHandler.unlock(request, protection)
                 }
                 is UnlockRequest.Biometric -> {
                     if (protection == null) {
@@ -76,11 +73,13 @@ class VaultService @Inject constructor(
         }
     }
 
-    private suspend fun upgradePasswordProtectionIfOutdated(
+    suspend fun upgradePasswordProtectionIfOutdated(
         password: String,
         vmk: SecretKey,
-        protection: VaultProtection,
     ) {
+        val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
+        protection ?: return
+
         if (!passwordVmkWrapper.isOutdated(protection.params)) return
 
         try {

@@ -156,6 +156,8 @@ class UnlockViewModel @Inject constructor(
                         passwordAttemptsUseCase.onSuccessfulUnlock()
                         sessionRepository.set(session)
 
+                        vaultService.upgradePasswordProtectionIfOutdated(password, session.vmk)
+
                         if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) {
                             val legacySession = legacyEncryption.obtainSession(password)
                             legacyEncryptionMigrator.initialize(legacySession)
