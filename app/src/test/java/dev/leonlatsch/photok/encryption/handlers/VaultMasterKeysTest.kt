@@ -76,7 +76,7 @@ class VaultMasterKeysTest {
      */
     @Test
     fun `unlock fails when the unwrapped key has the wrong length`() = runTest {
-        val protection = handler.create(CreateRequest.Password(password))
+        val protection = handler.create(CreateRequest.Password.NewVault(password))
         val params = protection.params
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(

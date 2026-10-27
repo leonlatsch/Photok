@@ -164,6 +164,7 @@ class UnlockViewModel @Inject constructor(
                             navigationEventsChannel.trySend(UnlockNavigationEvent.StartLegacyMigration)
                         } else {
                             createMissingRecoveryPhrase(session)
+                            vaultService.upgradePasswordProtectionIfOutdated(password, session.vmk)
 
                             _uiState.update { it.copy(loading = false) }
                             sendUnlockedEvent()

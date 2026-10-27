@@ -136,7 +136,7 @@ class SetupViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                vaultService.create(CreateRequest.Password(password))
+                vaultService.create(CreateRequest.Password.NewVault(password))
                 vaultService.unlock(UnlockRequest.Password(password))
                     .onSuccess { session ->
                         sessionRepository.set(session)

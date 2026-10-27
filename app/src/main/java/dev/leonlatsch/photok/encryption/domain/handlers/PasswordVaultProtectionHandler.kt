@@ -19,12 +19,13 @@ package dev.leonlatsch.photok.encryption.domain.handlers
 import dev.leonlatsch.photok.encryption.domain.crypto.IV_SIZE
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
-import dev.leonlatsch.photok.encryption.domain.models.Algorithm
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
+import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.settings.data.Config
 import org.mindrot.jbcrypt.BCrypt
 import java.security.SecureRandom
@@ -35,8 +36,8 @@ import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 
-private const val KEK_SIZE = 256
-const val PASSWORD_KEK_ITERATIONS = 100_000
+private const val LEGACY_V2_KEY_SIZE = 256
+private const val LEGACY_V2_KDF_ITERATIONS = 100_000
 
 class PasswordVaultProtectionHandler @Inject constructor(
     private val keyGen: KeyGen,
@@ -71,41 +72,42 @@ class PasswordVaultProtectionHandler @Inject constructor(
     }
 
     override suspend fun create(request: CreateRequest.Password): VaultProtection {
+        val vmk = when (request) {
+            is CreateRequest.Password.NewVault -> keyGen.generateVaultMasterKey()
+            is CreateRequest.Password.ExistingVault -> request.session.vmk
+        }
 
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val kdf = Kdf.PBKDF2WithHmacSHA256
+        val spec = KekSpec.Password
 
         val params = VaultProtectionParams(
             salt = Base64.encode(salt),
             iv = Base64.encode(iv),
-            kdf = kdf,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            algorithm = spec.algorithm,
+            keySize = spec.keySize,
         )
-
-        val vmk = keyGen.generateVaultMasterKey()
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(
             password = request.password,
             salt = salt,
-            kdf = kdf,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            keySize = params.keySize,
+            kdf = spec.kdf,
+            kdfIterations = spec.kdfIterations,
+            keySize = spec.keySize,
         )
 
         val cipher = Cipher.getInstance(params.algorithm.value).apply {
             init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
         }
 
-        val wrappedVmk = cipher.doFinal(vmk.encoded)
+        val wrappedVMK = cipher.doFinal(vmk.encoded)
 
         return VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
-            wrappedVMK = wrappedVmk,
+            wrappedVMK = wrappedVMK,
             params = params,
         )
     }
@@ -130,43 +132,12 @@ class PasswordVaultProtectionHandler @Inject constructor(
                 password = request.password,
                 salt = vmkSalt,
                 kdf = Kdf.PBKDF2WithHmacSHA256,
-                kdfIterations = PASSWORD_KEK_ITERATIONS,
-                keySize = KEK_SIZE,
+                kdfIterations = LEGACY_V2_KDF_ITERATIONS,
+                keySize = LEGACY_V2_KEY_SIZE,
             )
         }
 
-        val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
-        val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
-
-        val params = VaultProtectionParams(
-            salt = Base64.encode(salt),
-            iv = Base64.encode(iv),
-            kdf = Kdf.PBKDF2WithHmacSHA256,
-            kdfIterations = PASSWORD_KEK_ITERATIONS,
-            algorithm = Algorithm.AesCbcPkcs7Padding,
-            keySize = KEK_SIZE,
-        )
-
-        val kek = keyGen.derivePasswordKeyEncryptionKey(
-            password = request.password,
-            salt = salt,
-            kdf = params.kdf!!,
-            kdfIterations = params.kdfIterations!!,
-            keySize = params.keySize,
-        )
-
-        val cipher = Cipher.getInstance(params.algorithm.value).apply {
-            init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
-        }
-
-        val wrappedVmk = cipher.doFinal(vmk.encoded)
-
-        return VaultProtection(
-            id = UUID.randomUUID().toString(),
-            type = request.protectionType,
-            wrappedVMK = wrappedVmk,
-            params = params,
-        )
+        return create(CreateRequest.Password.ExistingVault(request.password, VaultSession(vmk)))
     }
 
     override suspend fun reset() {}
