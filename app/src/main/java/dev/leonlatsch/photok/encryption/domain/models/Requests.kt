@@ -39,8 +39,16 @@ sealed interface UnlockRequest {
 sealed interface CreateRequest {
     val protectionType: VaultProtectionType
 
-    data class Password(val password: String) : CreateRequest {
-        override val protectionType = VaultProtectionType.Password
+    sealed interface Password : CreateRequest {
+        val password: String
+        override val protectionType: VaultProtectionType get() = VaultProtectionType.Password
+
+        data class NewVault(override val password: String) : Password
+
+        data class ExistingVault(
+            override val password: String,
+            val session: VaultSession,
+        ) : Password
     }
 
     data class Biometric(

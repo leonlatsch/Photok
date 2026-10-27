@@ -16,30 +16,22 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
+import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject
 
 class ChangePasswordUseCase @Inject constructor(
-    private val vaultProtectionRepository: VaultProtectionRepository,
+    private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
-    private val vmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) {
     suspend operator fun invoke(newPassword: String) = runCatching {
-        val currentProtection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
-        requireNotNull(currentProtection)
+        require(vaultService.isSetup(VaultProtectionType.Password)) { "Password protection is missing" }
 
         val session = requireNotNull(sessionRepository.get()) { "Vault is locked" }
 
-        val wrapped = vmkWrapper.wrap(newPassword, session.vmk)
-
-        val newProtection = currentProtection.copy(
-            wrappedVMK = wrapped.wrappedVMK,
-            params = wrapped.params,
-        )
-
-        vaultProtectionRepository.updateProtection(newProtection)
-        config.lastUsedUnlockMethod = newProtection.type
+        vaultService.create(CreateRequest.Password.ExistingVault(newPassword, session))
+        config.lastUsedUnlockMethod = VaultProtectionType.Password
     }
 }

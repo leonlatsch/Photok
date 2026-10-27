@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.encryption.handlers
 
-import dev.leonlatsch.photok.encryption.domain.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.VAULT_MASTER_KEY_SIZE
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
@@ -45,7 +44,7 @@ class VaultMasterKeysTest {
         every { legacyPasswordHash } returns null
         every { legacyUserSalt } returns null
     }
-    private val handler = PasswordVaultProtectionHandler(keyGen, PasswordVmkWrapper(keyGen), mockConfig)
+    private val handler = PasswordVaultProtectionHandler(keyGen, mockConfig)
 
     private val password = "correct-horse-battery-staple"
 
@@ -77,7 +76,7 @@ class VaultMasterKeysTest {
      */
     @Test
     fun `unlock fails when the unwrapped key has the wrong length`() = runTest {
-        val protection = handler.create(CreateRequest.Password(password))
+        val protection = handler.create(CreateRequest.Password.NewVault(password))
         val params = protection.params
 
         val kek = keyGen.derivePasswordKeyEncryptionKey(

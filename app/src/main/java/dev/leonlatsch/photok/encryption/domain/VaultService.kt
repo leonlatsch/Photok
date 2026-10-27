@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.encryption.domain
 
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
+import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
@@ -34,7 +35,6 @@ class VaultService @Inject constructor(
     private val passwordProtectionHandler: VaultProtectionHandler<UnlockRequest.Password, CreateRequest.Password>,
     private val biometricProtectionHandler: VaultProtectionHandler<UnlockRequest.Biometric, CreateRequest.Biometric>,
     private val recoveryPhraseProtectionHandler: VaultProtectionHandler<UnlockRequest.RecoveryPhrase, CreateRequest.RecoveryPhrase>,
-    private val passwordVmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) {
     suspend fun unlock(request: UnlockRequest): Result<VaultSession> = withContext(Dispatchers.IO) {
@@ -79,16 +79,10 @@ class VaultService @Inject constructor(
         val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
         protection ?: return
 
-        if (!passwordVmkWrapper.isOutdated(protection.params)) return
+        if (KekSpec.Password.matches(protection.params)) return
 
         try {
-            val wrapped = passwordVmkWrapper.wrap(password, vmk)
-            vaultProtectionRepository.updateProtection(
-                protection.copy(
-                    wrappedVMK = wrapped.wrappedVMK,
-                    params = wrapped.params,
-                )
-            )
+            create(CreateRequest.Password.ExistingVault(password, VaultSession(vmk)))
             Timber.i("Upgraded password protection to current KDF params")
         } catch (e: CancellationException) {
             throw e
