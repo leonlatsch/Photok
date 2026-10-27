@@ -75,10 +75,7 @@ class VaultService @Inject constructor(
         }
     }
 
-    suspend fun upgradePasswordProtectionIfOutdated(
-        password: String,
-        vmk: SecretKey,
-    ) {
+    suspend fun upgradePasswordProtectionIfOutdated(password: String, vmk: SecretKey) {
         val protection = vaultProtectionRepository.getProtection(VaultProtectionType.Password)
         protection ?: return
 
@@ -93,10 +90,10 @@ class VaultService @Inject constructor(
                 )
             )
             Timber.i("Upgraded password protection to current KDF params")
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to upgrade password protection, keeping old params")
         } catch (e: CancellationException) {
             throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to upgrade password protection, keeping old params")
         }
     }
 

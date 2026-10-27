@@ -22,6 +22,8 @@ import dev.leonlatsch.photok.encryption.domain.crypto.SALT_SIZE
 import dev.leonlatsch.photok.encryption.domain.models.KekSpec
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.encryption.domain.models.WrappedVmk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -33,7 +35,7 @@ class PasswordVmkWrapper @Inject constructor(
     private val keyGen: KeyGen,
 ) {
 
-    fun wrap(password: String, vmk: SecretKey): WrappedVmk {
+    suspend fun wrap(password: String, vmk: SecretKey): WrappedVmk = withContext(Dispatchers.Default) {
         val salt = ByteArray(SALT_SIZE).also { SecureRandom().nextBytes(it) }
         val iv = ByteArray(IV_SIZE).also { SecureRandom().nextBytes(it) }
         val spec = KekSpec.Password
@@ -59,7 +61,7 @@ class PasswordVmkWrapper @Inject constructor(
             init(Cipher.ENCRYPT_MODE, kek, IvParameterSpec(iv))
         }
 
-        return WrappedVmk(
+        WrappedVmk(
             params = params,
             wrappedVMK = cipher.doFinal(vmk.encoded),
         )

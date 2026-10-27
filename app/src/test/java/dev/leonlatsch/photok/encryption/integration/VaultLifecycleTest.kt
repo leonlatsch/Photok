@@ -190,47 +190,73 @@ class VaultLifecycleTest {
     }
 
     /**
-     * A failed upgrade must not block the unlock; the old protection stays valid.
+     * Unlocking a 100K vault and then upgrading must store [KekSpec.Password] params that still
+     * unwrap the same VMK with the same password.
      */
     @Test
-    fun `unlock succeeds when upgrade of 100K vault fails`() = runTest {
+    fun `upgrade after unlock moves 100K vault to current iterations`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
+        val legacyProtection = createProtectionWith100KIterations(vmk)
+
+        val capturedProtection = slot<VaultProtection>()
+        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
+        coEvery { mockProtectionRepository.updateProtection(capture(capturedProtection)) } returns Unit
+
+        val session = vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+        vaultService.upgradePasswordProtectionIfOutdated(password, session.vmk)
+
+        val newProtection = capturedProtection.captured
+        assertEquals(KekSpec.Password.kdfIterations, newProtection.params.kdfIterations)
+        assertEquals(legacyProtection.id, newProtection.id)
+
+        val unlockedVmk = handler.unlock(UnlockRequest.Password(password), newProtection)
+        assertArrayEquals("Upgraded vault must recover the same VMK", vmk.encoded, unlockedVmk.encoded)
+    }
+
+    /**
+     * A failed upgrade must not throw; the old protection stays valid.
+     */
+    @Test
+    fun `failed upgrade of 100K vault does not throw`() = runTest {
         val vmk = keyGen.generateVaultMasterKey()
         val legacyProtection = createProtectionWith100KIterations(vmk)
 
         coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
         coEvery { mockProtectionRepository.updateProtection(any()) } throws IllegalStateException("disk full")
 
-        val session = vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+        vaultService.upgradePasswordProtectionIfOutdated(password, vmk)
 
-        assertArrayEquals("Unlock must still return the original VMK", vmk.encoded, session.vmk.encoded)
+        val unlockedVmk = handler.unlock(UnlockRequest.Password(password), legacyProtection)
+        assertArrayEquals("Old protection must still unlock", vmk.encoded, unlockedVmk.encoded)
     }
 
     /**
-     * A wrong password on a 100K vault must fail and never rewrite the protection,
-     * or the user is locked out of their vault.
+     * Unlock alone must never rewrite the protection, or a wrong password could lock the user out.
      */
     @Test
-    fun `wrong password does not upgrade 100K vault`() = runTest {
+    fun `unlock does not rewrite 100K vault`() = runTest {
         val vmk = keyGen.generateVaultMasterKey()
         val legacyProtection = createProtectionWith100KIterations(vmk)
 
         coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
 
-        val result = vaultService.unlock(UnlockRequest.Password("wrong-password"))
+        val wrongResult = vaultService.unlock(UnlockRequest.Password("wrong-password"))
+        vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
 
-        assertTrue("Wrong password must not unlock the vault", result.isFailure)
+        assertTrue("Wrong password must not unlock the vault", wrongResult.isFailure)
         coVerify(exactly = 0) { mockProtectionRepository.updateProtection(any()) }
     }
 
     /**
-     * A vault already on the current params must not be rewritten on every unlock.
+     * A vault already on the current params must not be rewritten.
      */
     @Test
-    fun `unlock does not rewrite current vault`() = runTest {
+    fun `upgrade is a no-op for current vault`() = runTest {
+        val vmk = keyGen.generateVaultMasterKey()
         val protection = handler.create(CreateRequest.Password(password))
         coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns protection
 
-        vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
+        vaultService.upgradePasswordProtectionIfOutdated(password, vmk)
 
         coVerify(exactly = 0) { mockProtectionRepository.updateProtection(any()) }
     }
