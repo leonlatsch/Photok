@@ -16,7 +16,6 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
-import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.settings.data.Config
 import javax.inject.Inject

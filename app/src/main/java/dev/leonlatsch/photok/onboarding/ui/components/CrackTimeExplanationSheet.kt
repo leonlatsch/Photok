@@ -84,7 +84,7 @@ fun CrackTimeExplanationSheet(onDismissRequest: () -> Unit) {
 @Composable
 private fun CrackTimeExplanationContent() {
     val numberFormat = NumberFormat.getIntegerInstance(LocalConfiguration.current.locales[0])
-    val guessesPerSecond = numberFormat.format(PasswordUtils.CRACK_TIME_GUESSES_PER_SECOND)
+    val guessesPerSecond = numberFormat.format(PasswordUtils.crackTimeGuessesPerSecond)
 
     StatusBarBackground(colorScheme.primary)
 

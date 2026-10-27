@@ -16,13 +16,15 @@
 
 package dev.leonlatsch.photok.encryption.domain
 
-import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.handlers.VaultProtectionHandler
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionType
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.crypto.SecretKey
 import javax.inject.Inject
@@ -35,11 +37,11 @@ class VaultService @Inject constructor(
     private val passwordVmkWrapper: PasswordVmkWrapper,
     private val config: Config,
 ) {
-    suspend fun unlock(request: UnlockRequest): Result<VaultSession> {
+    suspend fun unlock(request: UnlockRequest): Result<VaultSession> = withContext(Dispatchers.IO) {
         val type = request.protectionType
         var protection = vaultProtectionRepository.getProtection(type)
 
-        return runCatching {
+        runCatching {
             val vmk = when (request) {
                 is UnlockRequest.Password -> {
                     if (protection == null) {
@@ -93,10 +95,12 @@ class VaultService @Inject constructor(
             Timber.i("Upgraded password protection to current KDF params")
         } catch (e: Exception) {
             Timber.w(e, "Failed to upgrade password protection, keeping old params")
+        } catch (e: CancellationException) {
+            throw e
         }
     }
 
-    suspend fun create(request: CreateRequest) {
+    suspend fun create(request: CreateRequest) = withContext(Dispatchers.IO) {
         val protection = when (request) {
             is CreateRequest.Password -> passwordProtectionHandler.create(request)
             is CreateRequest.Biometric -> biometricProtectionHandler.create(request)

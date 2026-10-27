@@ -40,6 +40,7 @@ import dev.leonlatsch.photok.pro.domain.PasswordAttemptsUseCase
 import dev.leonlatsch.photok.pro.intruderwarnings.domain.IntruderWarningCaptureService
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.uicomponnets.Dialogs
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -73,6 +74,7 @@ class UnlockViewModel @Inject constructor(
     private val passwordAttemptsUseCase: PasswordAttemptsUseCase,
     private val intruderWarningCaptureService: IntruderWarningCaptureService,
     private val eraseVaultDataUseCase: EraseVaultDataUseCase,
+    private val appScope: CoroutineScope,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -156,7 +158,6 @@ class UnlockViewModel @Inject constructor(
                         passwordAttemptsUseCase.onSuccessfulUnlock()
                         sessionRepository.set(session)
 
-                        vaultService.upgradePasswordProtectionIfOutdated(password, session.vmk)
 
                         if (legacyEncryptionMigrator.migrationNeeded() || config.legacyCurrentlyMigrating) {
                             val legacySession = legacyEncryption.obtainSession(password)
@@ -169,6 +170,10 @@ class UnlockViewModel @Inject constructor(
 
                             _uiState.update { it.copy(loading = false) }
                             sendUnlockedEvent()
+
+                            appScope.launch {
+                                vaultService.upgradePasswordProtectionIfOutdated(password, session.vmk)
+                            }
                         }
                     }
                     .onFailure {

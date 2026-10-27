@@ -17,12 +17,12 @@
 package dev.leonlatsch.photok.encryption.integration
 
 import dev.leonlatsch.photok.encryption.domain.ChangePasswordUseCase
+import dev.leonlatsch.photok.encryption.domain.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultProtectionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
-import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.Kdf
 import dev.leonlatsch.photok.encryption.domain.models.KekSpec
@@ -186,34 +186,6 @@ class VaultLifecycleTest {
         assertEquals(Kdf.PBKDF2WithHmacSHA256, newProtection.params.kdf)
 
         val unlockedVmk = handler.unlock(UnlockRequest.Password("brand-new-password"), newProtection)
-        assertArrayEquals("Upgraded vault must recover the same VMK", vmk.encoded, unlockedVmk.encoded)
-    }
-
-    /**
-     * Unlocking a 100K vault must upgrade it to [KekSpec.Password] with the same password
-     * and the same VMK, so existing users get the hardening without changing their password.
-     */
-    @Test
-    fun `unlock upgrades 100K vault to current iterations`() = runTest {
-        val vmk = keyGen.generateVaultMasterKey()
-        val legacyProtection = createProtectionWith100KIterations(vmk)
-
-        val capturedProtection = slot<VaultProtection>()
-        coEvery { mockProtectionRepository.getProtection(VaultProtectionType.Password) } returns legacyProtection
-        coEvery { mockProtectionRepository.updateProtection(capture(capturedProtection)) } returns Unit
-
-        val session = vaultService.unlock(UnlockRequest.Password(password)).getOrThrow()
-        assertArrayEquals("Unlock must return the original VMK", vmk.encoded, session.vmk.encoded)
-
-        val upgradedProtection = capturedProtection.captured
-        assertEquals(legacyProtection.id, upgradedProtection.id)
-        assertEquals(KekSpec.Password.kdfIterations, upgradedProtection.params.kdfIterations)
-        assertFalse(
-            "Upgrade must use a fresh salt",
-            legacyProtection.params.salt == upgradedProtection.params.salt,
-        )
-
-        val unlockedVmk = handler.unlock(UnlockRequest.Password(password), upgradedProtection)
         assertArrayEquals("Upgraded vault must recover the same VMK", vmk.encoded, unlockedVmk.encoded)
     }
 

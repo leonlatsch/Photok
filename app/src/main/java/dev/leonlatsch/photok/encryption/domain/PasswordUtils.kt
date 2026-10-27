@@ -60,7 +60,7 @@ object PasswordUtils {
     private val zxcvbn by lazy { Zxcvbn() }
 
     private const val GPU_GUESSES_PER_SECOND_AT_ONE_ITERATION = 10_000_000_000L
-    val CRACK_TIME_GUESSES_PER_SECOND = GPU_GUESSES_PER_SECOND_AT_ONE_ITERATION / KekSpec.Password.kdfIterations
+    val crackTimeGuessesPerSecond = GPU_GUESSES_PER_SECOND_AT_ONE_ITERATION / KekSpec.Password.kdfIterations
 
     /**
      * Estimates the strength of [password] with zxcvbn. Blocking and possibly slow, call it off the main thread.
@@ -70,7 +70,7 @@ object PasswordUtils {
         val strength = zxcvbn.measure(password)
         val result = PasswordStrength(
             score = strength.score,
-            crackTimeSeconds = strength.guesses / CRACK_TIME_GUESSES_PER_SECOND,
+            crackTimeSeconds = strength.guesses / crackTimeGuessesPerSecond,
             warning = strength.feedback.getWarning(locale)?.takeIf { it.isNotBlank() },
             suggestions = strength.feedback.getSuggestions(locale),
         )

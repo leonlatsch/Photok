@@ -16,10 +16,10 @@
 
 package dev.leonlatsch.photok.encryption.handlers
 
+import dev.leonlatsch.photok.encryption.domain.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.crypto.KeyGen
 import dev.leonlatsch.photok.encryption.domain.crypto.VAULT_MASTER_KEY_SIZE
 import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVaultProtectionHandler
-import dev.leonlatsch.photok.encryption.domain.handlers.PasswordVmkWrapper
 import dev.leonlatsch.photok.encryption.domain.handlers.toVaultMasterKey
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
