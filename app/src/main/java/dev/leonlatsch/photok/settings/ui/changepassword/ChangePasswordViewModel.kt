@@ -127,7 +127,10 @@ class ChangePasswordViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             changePasswordUseCase(state.newPassword)
                 .onSuccess { _uiState.update { it.copy(done = true, loading = false) } }
-                .onFailure { Timber.e(it) }
+                .onFailure { error ->
+                    Timber.e(error)
+                    _uiState.update { it.copy(loading = false) }
+                }
         }
     }
 }

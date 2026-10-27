@@ -24,6 +24,7 @@ import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.LEGACY_PHOTOK_FILE_EXTENSION
 import dev.leonlatsch.photok.model.database.entity.PHOTOK_FILE_EXTENSION
+import dev.leonlatsch.photok.model.io.ThumbnailGenerator
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
@@ -59,6 +60,7 @@ class LegacyEncryptionMigrator @Inject constructor(
     private val io: IO,
     private val photoRepository: PhotoRepository,
     private val telemetryService: TelemetryService,
+    private val thumbnailGenerator: ThumbnailGenerator,
 ) {
 
     val state = MutableStateFlow<LegacyEncryptionState>(LegacyEncryptionState.Initial)
@@ -97,8 +99,8 @@ class LegacyEncryptionMigrator @Inject constructor(
             }
 
             if (legacyFiles.isEmpty() || allPhotos.isEmpty()) {
-                state.update { LegacyEncryptionState.Success }
                 postMigrate()
+                state.update { LegacyEncryptionState.Success }
                 return@withLock
             }
 
@@ -155,6 +157,8 @@ class LegacyEncryptionMigrator @Inject constructor(
 
             vaultFileStorage.renameEncryptedFile(file, targetFileName)
         }
+
+        thumbnailGenerator.forgetFailures()
 
         config.legacyCurrentlyMigrating = false
         telemetryService.signal(Signal.MigratedFromAesGcm)

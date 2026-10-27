@@ -146,7 +146,7 @@ class SetupViewModelTest {
             viewModel.navigationEvents.first(),
         )
         coVerify {
-            vaultService.create(CreateRequest.Password(PASSWORD))
+            vaultService.create(CreateRequest.Password.NewVault(PASSWORD))
             vaultService.create(CreateRequest.RecoveryPhrase(session, Bip39WordCount.Twelve))
         }
         verify { sessionRepository.set(session) }

@@ -168,7 +168,7 @@ class OnboardingViewModel @Inject constructor(
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            vaultService.create(CreateRequest.Password("abc123"))
+            vaultService.create(CreateRequest.Password.NewVault("abc123"))
 
             val result = vaultService.unlock(UnlockRequest.Password("abc123"))
             val session = result.getOrElse { return@launch }
