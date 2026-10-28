@@ -16,6 +16,7 @@
 
 package dev.leonlatsch.photok.gallery.components
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +24,14 @@ import androidx.compose.runtime.remember
 @Composable
 fun rememberMultiSelectionState(items: List<String>) = remember(items) {
     MultiSelectionState(items)
+}
+
+@Composable
+internal fun MultiSelectionBackHandler(state: MultiSelectionState) {
+    BackHandler(enabled = state.isActive.value) {
+        state.dismissMore()
+        state.cancelSelection()
+    }
 }
 
 class MultiSelectionState(

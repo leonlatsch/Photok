@@ -77,6 +77,10 @@ android {
         buildConfig = true
     }
 
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
+
     androidResources {
         generateLocaleConfig = true
     }
@@ -245,6 +249,8 @@ dependencies {
     // 4.15.1+ required: it ships ASM 9.8, which can read the Java 25 bytecode of the JBR
     // that Android Studio runs the test JVM on. 4.14.1 fails with "class file major version 69".
     testImplementation("org.robolectric:robolectric:4.17")
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("io.mockk:mockk:1.14.11")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
     testImplementation("com.google.dagger:hilt-android-testing:2.60.1")
