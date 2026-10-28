@@ -113,8 +113,6 @@ fun PhotoGallery(
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    MultiSelectionBackHandler(multiSelectionState)
-
     // Hide magic fab menu when multi selection active
     LaunchedEffect(multiSelectionState.isActive.value) {
         if (multiSelectionState.isActive.value) {

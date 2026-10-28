@@ -18,10 +18,8 @@ package dev.leonlatsch.photok.gallery.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import dev.leonlatsch.photok.main.ui.navigation.LocalResetExitConfirmation
 
 @Composable
 fun rememberMultiSelectionState(items: List<String>) = remember(items) {
@@ -29,16 +27,8 @@ fun rememberMultiSelectionState(items: List<String>) = remember(items) {
 }
 
 @Composable
-internal fun MultiSelectionBackHandler(state: MultiSelectionState) {
-    val resetExitConfirmation = LocalResetExitConfirmation.current
-    LaunchedEffect(state.isActive.value, resetExitConfirmation) {
-        if (state.isActive.value) {
-            resetExitConfirmation()
-        }
-    }
-
+fun MultiSelectionBackHandler(state: MultiSelectionState) {
     BackHandler(enabled = state.isActive.value) {
-        state.dismissMore()
         state.cancelSelection()
     }
 }

@@ -18,55 +18,34 @@ package dev.leonlatsch.photok.main.ui.navigation
 
 import android.os.SystemClock
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 
-internal val LocalResetExitConfirmation = staticCompositionLocalOf<() -> Unit> { {} }
-
-internal class ExitConfirmation(
-    private val elapsedRealtime: () -> Long = SystemClock::elapsedRealtime,
-) {
-    private var lastBackPress: Long? = null
-
-    fun onBack(): Boolean {
-        val now = elapsedRealtime()
-        val previous = lastBackPress
-        if (previous != null && now - previous in 0L until 2_000L) {
-            reset()
-            return true
-        }
-        lastBackPress = now
-        return false
-    }
-
-    fun reset() {
-        lastBackPress = null
-    }
-}
+private const val EXIT_CONFIRMATION_TIMEOUT_MS = 2_000L
 
 @Composable
-internal fun ExitConfirmationBackHandler(
-    enabled: Boolean,
-    confirmation: ExitConfirmation,
-    onShowHint: () -> Unit,
-    onExit: () -> Unit,
-) {
-    val orientation = LocalConfiguration.current.orientation
-    DisposableEffect(enabled, confirmation, orientation) {
-        confirmation.reset()
-        onDispose { confirmation.reset() }
-    }
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { confirmation.reset() }
+fun ExitConfirmationBackHandler(enabled: Boolean) {
+    val activity = LocalActivity.current
+    val context = LocalContext.current
+    val exitHint = stringResource(R.string.common_press_back_again_to_exit)
+    var lastBackPress by remember { mutableStateOf<Long?>(null) }
 
     BackHandler(enabled = enabled) {
-        if (confirmation.onBack()) {
-            onExit()
+        val now = SystemClock.elapsedRealtime()
+        val previous = lastBackPress
+        if (previous != null && now - previous < EXIT_CONFIRMATION_TIMEOUT_MS) {
+            activity?.finish()
         } else {
-            onShowHint()
+            lastBackPress = now
+            Dialogs.showShortToast(context, exitHint)
         }
     }
 }

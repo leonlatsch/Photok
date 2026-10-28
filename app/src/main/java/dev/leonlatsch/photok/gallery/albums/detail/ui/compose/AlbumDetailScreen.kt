@@ -51,6 +51,7 @@ import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailNavigator
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailUiEvent
 import dev.leonlatsch.photok.gallery.albums.detail.ui.AlbumDetailViewModel
 import dev.leonlatsch.photok.gallery.albums.ui.compose.RenameAlbumDialog
+import dev.leonlatsch.photok.gallery.components.MultiSelectionBackHandler
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
@@ -97,6 +98,8 @@ private fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
     val multiSelectionState = rememberMultiSelectionState(
         items = uiState.photos.map { it.uuid }
     )
+
+    MultiSelectionBackHandler(multiSelectionState)
 
     Scaffold(
         topBar = {

@@ -37,6 +37,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.gallery.components.ImportSharedDialog
+import dev.leonlatsch.photok.gallery.components.MultiSelectionBackHandler
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
@@ -126,6 +127,8 @@ fun GalleryScreen(
                 val multiSelectionState = rememberMultiSelectionState(
                     items = contentUiState.photos.map { it.uuid }
                 )
+
+                MultiSelectionBackHandler(multiSelectionState)
 
                 GalleryContent(
                     uiState = contentUiState,
