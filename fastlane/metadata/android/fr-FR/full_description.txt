@@ -29,3 +29,5 @@ Photok est conçu pour celles et ceux qui veulent un vrai contrôle sur leurs ph
 Le chiffrement a lieu sur votre appareil. Les statistiques d'utilisation respectueuses de la vie privée servent uniquement à améliorer l'application et ne sont jamais utilisées pour la publicité ni pour le suivi entre applications.
 
 <a href="https://github.com/leonlatsch/Photok">Voir le projet open source sur GitHub.</a>
+
+Installez Photok dès maintenant et enfermez vos photos et vidéos privées dans un coffre-fort photo sécurisé.

@@ -1,1 +1,1 @@
-Private Photo Vault, Hide Photos & Videos.
+Private photo vault: hide photos & videos in an encrypted gallery. Open source.

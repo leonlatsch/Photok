@@ -29,3 +29,5 @@ Photok è pensata per chi vuole un vero controllo sulle proprie foto e video pri
 La crittografia avviene sul tuo dispositivo. Le analisi d'uso rispettose della privacy servono solo a migliorare l'app e non vengono mai usate per pubblicità o tracciamento tra app.
 
 <a href="https://github.com/leonlatsch/Photok">Scopri il progetto open source su GitHub.</a>
+
+Installa Photok ora e chiudi le tue foto e i tuoi video privati in una cassaforte per foto sicura.

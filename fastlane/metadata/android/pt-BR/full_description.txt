@@ -29,3 +29,5 @@ Photok foi criado para quem quer ter controle real sobre suas fotos e vídeos pr
 A criptografia acontece no seu aparelho. As análises de uso respeitosas à privacidade servem apenas para melhorar o app e nunca são usadas para publicidade ou rastreamento entre apps.
 
 <a href="https://github.com/leonlatsch/Photok">Veja o projeto de código aberto no GitHub.</a>
+
+Instale o Photok agora e guarde suas fotos e vídeos privados em um cofre de fotos seguro.
