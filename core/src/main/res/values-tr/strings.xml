@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Onaylamak için basılı tutun</string>
     <string name="common_back">Geri</string>
     <string name="common_done">Bitti</string>
+    <string name="common_press_back_again_to_exit">Çıkmak için Geri tuşuna tekrar bas</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Dosya(lar) İçe Aktarılıyor</string>

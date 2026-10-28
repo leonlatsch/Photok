@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Hold to confirm</string>
     <string name="common_back">Back</string>
     <string name="common_done">Done</string>
+    <string name="common_press_back_again_to_exit">Press back again to exit</string>
 
     <!-- IMPORT -->
     <string name="import_importing">Importing File(s)</string>

@@ -34,7 +34,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -47,6 +49,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import dev.leonlatsch.photok.BuildConfig
+import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.backup.ui.restore.RestoreBackupScreen
 import dev.leonlatsch.photok.devsettings.ui.compose.DevSettingsScreen
 import dev.leonlatsch.photok.devsettings.ui.compose.PreferencesEditorScreen
@@ -62,6 +65,7 @@ import dev.leonlatsch.photok.settings.ui.credits.CreditsScreen
 import dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesScreen
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
+import dev.leonlatsch.photok.uicomponnets.Dialogs
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 private val RoutesWithMenu = listOfNotNull(
@@ -75,6 +79,9 @@ private val RoutesWithMenu = listOfNotNull(
 fun MainTabsScreen(homeTab: MainTab) {
     val rootNavigator = LocalNavigator.current
     val activity = LocalActivity.current
+    val context = LocalContext.current
+    val exitHint = stringResource(R.string.common_press_back_again_to_exit)
+    val exitConfirmation = remember { ExitConfirmation() }
 
     var selectedTab by rememberSaveable { mutableStateOf(homeTab) }
 
@@ -126,15 +133,19 @@ fun MainTabsScreen(homeTab: MainTab) {
         selectedTab = homeTab
     }
 
-    BackHandler(enabled = selectedTab == homeTab && selectedBackStack.size == 1) {
-        activity?.finish()
-    }
+    ExitConfirmationBackHandler(
+        enabled = selectedTab == homeTab && selectedBackStack.size == 1,
+        confirmation = exitConfirmation,
+        onShowHint = { Dialogs.showShortToast(context, exitHint) },
+        onExit = { activity?.finish() },
+    )
 
     val density = LocalDensity.current
     var mainMenuHeight by remember { mutableStateOf(0.dp) }
     val scrollToTopRequests = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
 
     CompositionLocalProvider(
+        LocalResetExitConfirmation provides exitConfirmation::reset,
         LocalNavigator provides tabNavigator,
         LocalMainMenuPadding provides PaddingValues(bottom = mainMenuHeight),
         LocalScrollToTopRequests provides scrollToTopRequests,
@@ -155,6 +166,7 @@ fun MainTabsScreen(homeTab: MainTab) {
                 MainMenu(
                     selectedTab = selectedTab,
                     onTabClicked = { tab ->
+                        exitConfirmation.reset()
                         if (tab == selectedTab && selectedBackStack.size > 1) {
                             popToRoot(selectedBackStack)
                         } else if (tab == selectedTab) {

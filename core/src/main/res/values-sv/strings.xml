@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Håll in för att bekräfta</string>
     <string name="common_back">Tillbaka</string>
     <string name="common_done">Klar</string>
+    <string name="common_press_back_again_to_exit">Tryck på Tillbaka igen för att avsluta</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importerar fil(er)</string>

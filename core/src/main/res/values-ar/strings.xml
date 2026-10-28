@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">اضغط مطولاً للتأكيد</string>
     <string name="common_back">رجوع</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">تم</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">اضغط على رجوع مرة أخرى للخروج</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">استيراد ملف (ملفات) </string>
