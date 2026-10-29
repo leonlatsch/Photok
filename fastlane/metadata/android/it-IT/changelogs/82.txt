@@ -1,0 +1,6 @@
+- Protezione ancora più forte per la tua cassaforte e la tua password
+- Niente più chiusure accidentali di Photok: Premi indietro due volte per uscire
+- Impostazioni più ordinate: Nascondi App e Codice segreto di lancio ora si trovano nella sezione Avanzato
+- Visualizza il nome completo dei tuoi file nei dettagli
+- Traduzione turca aggiornata
+- Correzioni e miglioramenti

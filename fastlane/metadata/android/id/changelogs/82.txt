@@ -1,0 +1,6 @@
+- Perlindungan yang lebih kuat untuk brankas dan kata sandimu
+- Tak ada lagi Photok tertutup tanpa sengaja: Tekan kembali dua kali untuk keluar
+- Pengaturan lebih rapi: Sembunyikan Aplikasi dan Kode Rahasia Peluncuran kini ada di bagian Lanjutan
+- Lihat nama lengkap file-mu di detail
+- Terjemahan bahasa Turki diperbarui
+- Perbaikan bug dan peningkatan
