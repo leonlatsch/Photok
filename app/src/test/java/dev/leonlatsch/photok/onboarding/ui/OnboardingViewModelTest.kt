@@ -95,36 +95,6 @@ class OnboardingViewModelTest {
     }
 
     @Test
-    fun `signals a step only once when it is reported again`() {
-        val viewModel = createViewModel()
-
-        viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(OnboardingRoute.SetupPassword))
-        viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(OnboardingRoute.SetupPassword))
-
-        verify(exactly = 1) { telemetryService.signal(Signal.OnboardingPasswordShown, any()) }
-    }
-
-    @Test
-    fun `marks only the resumed step as resumed`() {
-        config.systemOnboardingStep = OnboardingRoute.RecoveryPhraseSetup.stepKey()
-        val viewModel = createViewModel()
-
-        viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(OnboardingRoute.RecoveryPhraseSetup))
-        viewModel.handleUiEvent(OnboardingUiEvent.StepChanged(OnboardingRoute.AddFirstPhotos))
-
-        verify {
-            telemetryService.signal(
-                Signal.OnboardingRecoveryPhraseShown,
-                mapOf("resumed" to "true"),
-            )
-            telemetryService.signal(
-                Signal.OnboardingAddPhotosShown,
-                mapOf("resumed" to "false"),
-            )
-        }
-    }
-
-    @Test
     fun `finish completes the onboarding`() = runTest {
         config.systemFirstStart = true
         config.systemOnboardingStep = OnboardingRoute.Done.stepKey()
@@ -143,6 +113,5 @@ class OnboardingViewModelTest {
         vaultService = mockk(relaxed = true),
         sessionRepository = mockk(relaxed = true),
         telemetryService = telemetryService,
-        context = context,
     )
 }

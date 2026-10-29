@@ -16,19 +16,16 @@
 
 package dev.leonlatsch.photok.onboarding.ui
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.leonlatsch.photok.BuildConfig
 import dev.leonlatsch.photok.encryption.domain.SessionRepository
 import dev.leonlatsch.photok.encryption.domain.VaultService
 import dev.leonlatsch.photok.encryption.domain.crypto.Bip39WordCount
 import dev.leonlatsch.photok.encryption.domain.models.CreateRequest
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
-import dev.leonlatsch.photok.other.extensions.areBiometricsAvailable
 import dev.leonlatsch.photok.pro.navigation.ProRoute
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.telemetry.domain.Signal
@@ -47,7 +44,6 @@ class OnboardingViewModel @Inject constructor(
     private val vaultService: VaultService,
     private val sessionRepository: SessionRepository,
     private val telemetryService: TelemetryService,
-    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     val initialBackStack: List<NavKey> = when (config.systemOnboardingStep) {
@@ -78,11 +74,6 @@ class OnboardingViewModel @Inject constructor(
         else -> listOf(OnboardingRoute.Welcome)
     }
 
-    private val resumedRoute: NavKey? = initialBackStack.first()
-        .takeIf { config.systemOnboardingStep != null }
-
-    private var lastShownRoute: NavKey? = null
-
     val preferencesValues = config.valuesFlow
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), config.values)
 
@@ -93,7 +84,6 @@ class OnboardingViewModel @Inject constructor(
         when (event) {
             is OnboardingUiEvent.StepChanged -> {
                 config.systemOnboardingStep = event.route.stepKey()
-                signalStepShown(event.route)
             }
 
             OnboardingUiEvent.GetStartedClicked -> {
@@ -114,51 +104,6 @@ class OnboardingViewModel @Inject constructor(
                 telemetryService.signal(Signal.OnboardingFinished)
                 finish()
             }
-        }
-    }
-
-    private fun signalStepShown(route: NavKey) {
-        // The step is reported again whenever the composition is recreated, e.g. on a theme change.
-        if (route == lastShownRoute) return
-        lastShownRoute = route
-
-        val resumed = "resumed" to (route == resumedRoute).toString()
-
-        when (route) {
-            OnboardingRoute.Welcome -> telemetryService.signal(
-                Signal.OnboardingWelcomeShown,
-                mapOf(resumed),
-            )
-
-            OnboardingRoute.SetupPassword -> telemetryService.signal(
-                Signal.OnboardingPasswordShown,
-                mapOf(resumed),
-            )
-
-            OnboardingRoute.BiometricUnlock -> telemetryService.signal(
-                Signal.OnboardingBiometricShown,
-                mapOf(
-                    resumed,
-                    "biometricsAvailable" to context.areBiometricsAvailable().toString(),
-                ),
-            )
-
-            OnboardingRoute.RecoveryPhraseSetup -> telemetryService.signal(
-                Signal.OnboardingRecoveryPhraseShown,
-                mapOf(resumed),
-            )
-
-            OnboardingRoute.AddFirstPhotos -> telemetryService.signal(
-                Signal.OnboardingAddPhotosShown,
-                mapOf(resumed),
-            )
-
-            OnboardingRoute.Done -> telemetryService.signal(
-                Signal.OnboardingDoneShown,
-                mapOf(resumed),
-            )
-
-            else -> Unit
         }
     }
 
