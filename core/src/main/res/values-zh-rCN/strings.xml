@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">长按确认</string>
     <string name="common_back">返回</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">完成</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">再按一次返回键退出</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">正在导入文件</string>

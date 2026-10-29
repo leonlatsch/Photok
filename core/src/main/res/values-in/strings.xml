@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Tahan untuk mengonfirmasi</string>
     <string name="common_back">Kembali</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">Selesai</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">Tekan Kembali sekali lagi untuk keluar</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Mengimpor File</string>

@@ -17,7 +17,6 @@
 package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -74,7 +73,6 @@ private val RoutesWithMenu = listOfNotNull(
 @Composable
 fun MainTabsScreen(homeTab: MainTab) {
     val rootNavigator = LocalNavigator.current
-    val activity = LocalActivity.current
 
     var selectedTab by rememberSaveable { mutableStateOf(homeTab) }
 
@@ -126,9 +124,7 @@ fun MainTabsScreen(homeTab: MainTab) {
         selectedTab = homeTab
     }
 
-    BackHandler(enabled = selectedTab == homeTab && selectedBackStack.size == 1) {
-        activity?.finish()
-    }
+    ExitConfirmationBackHandler(enabled = selectedTab == homeTab && selectedBackStack.size == 1)
 
     val density = LocalDensity.current
     var mainMenuHeight by remember { mutableStateOf(0.dp) }

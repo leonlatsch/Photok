@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Mantenha pressionado para confirmar</string>
     <string name="common_back">Voltar</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">Concluído</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">Toque em Voltar novamente para sair</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importando arquivo(s)</string>

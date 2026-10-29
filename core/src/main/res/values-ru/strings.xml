@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Удерживайте для подтверждения</string>
     <string name="common_back">Назад</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">Готово</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">Нажми «Назад» ещё раз, чтобы выйти</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Импортирование файла(ов)</string>

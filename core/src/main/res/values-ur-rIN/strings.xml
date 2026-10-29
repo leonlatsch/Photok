@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">تصدیق کے لیے دبائے رکھیں</string>
     <string name="common_back">واپس</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">ہو گیا</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">باہر نکلنے کے لیے دوبارہ واپس دباؤ</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">فائلیں لائی جا رہی ہیں</string>

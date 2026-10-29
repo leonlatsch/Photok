@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Tieni premuto per confermare</string>
     <string name="common_back">Indietro</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">Fatto</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">Premi di nuovo Indietro per uscire</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Importazione file in corso</string>
