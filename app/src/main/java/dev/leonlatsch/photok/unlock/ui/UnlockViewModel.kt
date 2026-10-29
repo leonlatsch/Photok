@@ -214,12 +214,15 @@ class UnlockViewModel @Inject constructor(
                 }
                 .onFailure {
                     if (it !is UserCanceledBiometricsException) {
+                        Timber.e(it)
+
                         if (it is BiometricAuthenticationFailedException) {
                             intruderWarningCaptureService.captureWrongBiometrics()
                                 .onFailure { error ->
                                     Timber.e(error, "Failed to capture intruder warning")
                                 }
                         }
+
                         Dialogs.showLongToast(
                             context = activity,
                             message = resources.getString(R.string.biometric_unlock_error),

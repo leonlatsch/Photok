@@ -27,6 +27,8 @@ import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.encryption.domain.models.VaultSession
 import dev.leonlatsch.photok.settings.data.Config
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.mindrot.jbcrypt.BCrypt
 import java.security.SecureRandom
 import java.util.UUID
@@ -47,7 +49,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
     override suspend fun unlock(
         request: UnlockRequest.Password,
         protection: VaultProtection
-    ): SecretKey {
+    ): SecretKey = withContext(Dispatchers.Default) {
         val params = protection.params
 
         val salt = requireNotNull(params.salt)
@@ -68,10 +70,10 @@ class PasswordVaultProtectionHandler @Inject constructor(
         }
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
-        return toVaultMasterKey(vmkBytes)
+        toVaultMasterKey(vmkBytes)
     }
 
-    override suspend fun create(request: CreateRequest.Password): VaultProtection {
+    override suspend fun create(request: CreateRequest.Password): VaultProtection = withContext(Dispatchers.Default) {
         val vmk = when (request) {
             is CreateRequest.Password.NewVault -> keyGen.generateVaultMasterKey()
             is CreateRequest.Password.ExistingVault -> request.session.vmk
@@ -104,7 +106,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
 
         val wrappedVMK = cipher.doFinal(vmk.encoded)
 
-        return VaultProtection(
+        VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
             wrappedVMK = wrappedVMK,
@@ -118,7 +120,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
         return config.legacyPasswordHash.orEmpty().isNotEmpty()
     }
 
-    override suspend fun migrate(request: UnlockRequest.Password): VaultProtection {
+    override suspend fun migrate(request: UnlockRequest.Password): VaultProtection = withContext(Dispatchers.Default) {
         require(BCrypt.checkpw(request.password, config.legacyPasswordHash))
 
         val vmk = if (config.legacyUserSalt.isNullOrEmpty()) {
@@ -137,7 +139,7 @@ class PasswordVaultProtectionHandler @Inject constructor(
             )
         }
 
-        return create(CreateRequest.Password.ExistingVault(request.password, VaultSession(vmk)))
+        create(CreateRequest.Password.ExistingVault(request.password, VaultSession(vmk)))
     }
 
     override suspend fun reset() {}
