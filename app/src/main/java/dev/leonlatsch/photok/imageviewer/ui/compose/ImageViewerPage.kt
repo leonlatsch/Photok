@@ -178,52 +178,68 @@ fun BoxScope.ImageViewerVideoPage(
     player: Player,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    onZoomedChange: (Boolean) -> Unit,
+    hideVideoSurface: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    ContentFrame(
-        player = if (isCurrentItem) player else null,
-        shutter = {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .background(Color.Black) // Important! Otherwise last frame is background
-                    .fillMaxSize()
-            ) {
-                val photo = item.photo
+    val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
 
-                val requestData = remember(photo) {
+    LaunchedEffect(zoomableState) {
+        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
+            .collect(onZoomedChange)
+    }
 
-                    EncryptedImageRequestData.VaultFile(
-                        internalFileName = photo.internalVideoPreviewFileName,
-                        mimeType = photo.type.mimeType,
-                        playAnimation = false,
+    DisposableEffect(Unit) {
+        onDispose { onZoomedChange(false) }
+    }
+
+    // The SurfaceView of the player ignores alpha and would show through the navigation transition
+    if (!hideVideoSurface) {
+        ContentFrame(
+            player = if (isCurrentItem) player else null,
+            shutter = {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .background(Color.Black) // Important! Otherwise last frame is background
+                        .fillMaxSize()
+                ) {
+                    val photo = item.photo
+
+                    val requestData = remember(photo) {
+
+                        EncryptedImageRequestData.VaultFile(
+                            internalFileName = photo.internalVideoPreviewFileName,
+                            mimeType = photo.type.mimeType,
+                            playAnimation = false,
+                        )
+                    }
+
+                    Image(
+                        painter = rememberEncryptedImagePainter(
+                            data = requestData,
+                            placeholder = android.R.color.black,
+                        ),
+                        contentDescription = photo.fileName,
+                        modifier = modifier.fillMaxSize()
+                    )
+
+                    CircularProgressIndicator(
+                        color = LocalContentColor.current,
                     )
                 }
-
-                Image(
-                    painter = rememberEncryptedImagePainter(
-                        data = requestData,
-                        placeholder = android.R.color.black,
-                    ),
-                    contentDescription = photo.fileName,
-                    modifier = modifier.fillMaxSize()
-                )
-
-                CircularProgressIndicator(
-                    color = LocalContentColor.current,
-                )
-            }
-        },
-        modifier = modifier
-            .fillMaxSize()
-            .zoomable(
-                onClick = {
-                    handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
-                },
-                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
-                gestures = EnabledZoomGestures.ZoomAndPan,
-            ),
-    )
+            },
+            modifier = modifier
+                .fillMaxSize()
+                .zoomable(
+                    onClick = {
+                        handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
+                    },
+                    state = zoomableState,
+                    gestures = EnabledZoomGestures.ZoomAndPan,
+                ),
+        )
+    }
 
     TopGradient(visible = uiState.inputs.showControls)
     BottomVideoGradient(visible = uiState.inputs.showControls)

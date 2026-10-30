@@ -279,9 +279,8 @@ fun ImageViewerScreen(
                 navTransition.currentState != EnterExitState.Visible
 
         val transitionThumbnail = cachedThumbnail(anchoredPhotoUuid)
-        val showTransitionImage = transitionThumbnail != null && (
-                isEntering || (currentItem is ImageViewerItem.Image && anchoredPhotoUuid !in zoomedPhotoUuids)
-        )
+        val showTransitionImage = transitionThumbnail != null &&
+                (isEntering || anchoredPhotoUuid !in zoomedPhotoUuids)
         val drawTransitionImage = showTransitionImage && isNavigating
 
         HorizontalPager(
@@ -313,6 +312,14 @@ fun ImageViewerScreen(
                         player = player,
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
+                        onZoomedChange = { zoomed ->
+                            if (zoomed) {
+                                zoomedPhotoUuids += item.photo.uuid
+                            } else {
+                                zoomedPhotoUuids -= item.photo.uuid
+                            }
+                        },
+                        hideVideoSurface = drawTransitionImage,
                     )
                 }
             }
