@@ -29,3 +29,5 @@ Photok wurde für Menschen entwickelt, die echte Kontrolle über ihre privaten F
 Die Verschlüsselung erfolgt vollständig auf deinem Gerät. Datenschutzfreundliche Nutzungsanalysen dienen ausschließlich der Verbesserung der App und werden niemals für Werbung oder app-übergreifendes Tracking verwendet.
 
 <a href="https://github.com/leonlatsch/Photok">Zum Open-Source-Projekt auf GitHub.</a>
+
+Installiere Photok jetzt und verstecke deine privaten Fotos und Videos sicher in deinem Foto-Tresor.

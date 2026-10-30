@@ -38,6 +38,7 @@
     <string name="common_hold_to_confirm">Houd ingedrukt om te bevestigen</string>
     <string name="common_back">Terug</string> <!-- TODO: machine translated | EN: Back -->
     <string name="common_done">Klaar</string> <!-- TODO: machine translated | EN: Done -->
+    <string name="common_press_back_again_to_exit">Druk nogmaals op Terug om af te sluiten</string> <!-- TODO: machine translated | EN: Press back again to exit -->
 
     <!-- IMPORT -->
     <string name="import_importing">Bestand(en) importeren</string>

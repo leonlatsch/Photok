@@ -29,3 +29,5 @@ Photok está pensado para quienes quieren tener control real sobre sus fotos y v
 El cifrado se realiza en tu dispositivo. Los análisis de uso respetuosos con la privacidad solo sirven para mejorar la app y nunca se usan para publicidad ni para seguimiento entre apps.
 
 <a href="https://github.com/leonlatsch/Photok">Ver el proyecto de código abierto en GitHub.</a>
+
+Instala Photok ahora y guarda tus fotos y videos privados en una bóveda de fotos segura.

@@ -29,8 +29,6 @@ val PrefsScreenConfig = PreferenceScreenConfig(
                 AppPreferences.GalleryStartPage,
                 AppPreferences.Language.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU },
                 AppPreferences.Screenshots,
-                AppPreferences.HideApp,
-                AppPreferences.LaunchCode,
                 ProPreferences.PanicLock,
             ),
         ),
@@ -51,6 +49,8 @@ val PrefsScreenConfig = PreferenceScreenConfig(
             summary = R.string.settings_category_advanced_summary,
             preferences = listOf(
                 AppPreferences.Backup,
+                AppPreferences.HideApp,
+                AppPreferences.LaunchCode,
                 AppPreferences.DeleteImportedFiles,
                 AppPreferences.DeleteExportedFiles,
                 AppPreferences.Reset,

@@ -29,3 +29,5 @@ Photok, özel fotoğraf ve videoları üzerinde gerçek kontrol isteyenler için
 Şifreleme tamamen cihazında gerçekleşir. Gizlilik dostu kullanım analizleri yalnızca uygulamayı iyileştirmek için kullanılır; asla reklam veya uygulamalar arası izleme için kullanılmaz.
 
 <a href="https://github.com/leonlatsch/Photok">GitHub'daki açık kaynak projeyi incele.</a>
+
+Photok'u hemen yükle, özel fotoğraf ve videolarını güvenli fotoğraf kasasına kilitle.

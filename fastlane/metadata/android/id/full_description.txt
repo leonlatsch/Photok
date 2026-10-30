@@ -29,3 +29,5 @@ Photok dibuat untuk orang yang ingin benar-benar mengendalikan foto dan video pr
 Enkripsi dilakukan di perangkatmu. Analitik penggunaan yang ramah privasi hanya digunakan untuk meningkatkan aplikasi dan tidak pernah digunakan untuk iklan atau pelacakan lintas aplikasi.
 
 <a href="https://github.com/leonlatsch/Photok">Lihat proyek open source di GitHub.</a>
+
+Instal Photok sekarang dan kunci foto serta video pribadimu di brankas foto yang aman.

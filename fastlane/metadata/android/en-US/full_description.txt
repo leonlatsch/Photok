@@ -1,22 +1,22 @@
-<b>Photok – Private Photo Vault, Hide Photos & Videos (Open Source)</b>
+<b>Photok – Private Photo Vault App to Hide Photos & Videos (Open Source)</b>
 
-Photok is a secure private photo vault that helps you hide photos and videos using strong AES-256 encryption. Protect your sensitive media, create an encrypted gallery, and keep your private memories safe on your own device.
+Photok is a secure photo vault app that hides your photos and videos in an encrypted gallery protected by strong AES-256 encryption. Keep your sensitive media and private memories safe on your own device.
 
 All files are encrypted locally and only decrypted in memory while you use the app. No cloud upload is required.
 
-Photok is open source, ad-free, and built with a privacy-first philosophy. The app uses minimal privacy-friendly analytics to improve stability and user experience.
+Photok is an open source, ad-free photo vault app built with a privacy-first philosophy. The app uses minimal privacy-friendly analytics to improve stability and user experience.
 
 <b>Why Choose Photok?</b>
-• Hide photos and videos securely
+• Hide photos and videos in a secure photo vault
 • Private encrypted gallery with AES-256 protection
 • Offline vault — your files stay on your device
-• Open source and transparent security
+• Open source and transparent security, publicly reviewable on GitHub
 • Ad-free user experience
 • Built by an independent developer
 
 <b>Vault Features</b>
 • Import photos & videos from your gallery
-• Organize private media into albums
+• Organize private media into albums inside your encrypted gallery
 • Export files anytime
 • Create and restore encrypted backups
 • Unlock your vault with fingerprint authentication
@@ -25,7 +25,9 @@ Photok is open source, ad-free, and built with a privacy-first philosophy. The a
 • Automatically delete original files after import
 
 <b>Privacy-Focused Design</b>
-Photok is designed for people who want real control over their private photos and videos.
+Photok is a private photo vault app designed for people who want real control over their private photos and videos.
 Encryption happens on your device. Privacy-friendly usage analytics are limited to improving the app and are never used for advertising or cross-app tracking.
 
 <a href="https://github.com/leonlatsch/Photok">View the open-source project on GitHub.</a>
+
+Install Photok now and lock your private photos and videos away in a secure photo vault.

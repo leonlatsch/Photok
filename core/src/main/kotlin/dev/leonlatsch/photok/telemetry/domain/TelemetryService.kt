@@ -39,13 +39,7 @@ enum class Signal {
     PaywallPurchaseFailed,
     PaywallDismissed,
 
-    // Onboarding funnel. All OnboardingXShown signals carry the "resumed" param.
-    OnboardingWelcomeShown,
-    OnboardingPasswordShown,
-    OnboardingBiometricShown,
-    OnboardingRecoveryPhraseShown,
-    OnboardingAddPhotosShown,
-    OnboardingDoneShown,
+    // Onboarding funnel
     OnboardingWelcomeGetStartedClicked,
     OnboardingPasswordContinueClicked,
     OnboardingBiometricEnableClicked,
