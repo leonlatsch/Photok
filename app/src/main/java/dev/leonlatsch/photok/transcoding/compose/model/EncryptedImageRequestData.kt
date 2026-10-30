@@ -30,6 +30,10 @@ sealed interface EncryptedImageRequestData {
         val type: PhotoType,
     ) : EncryptedImageRequestData {
         val memoryCacheKey: String
-            get() = "thumbnail#$uuid"
+            get() = memoryCacheKey(uuid)
+
+        companion object {
+            fun memoryCacheKey(uuid: String): String = "thumbnail#$uuid"
+        }
     }
 }

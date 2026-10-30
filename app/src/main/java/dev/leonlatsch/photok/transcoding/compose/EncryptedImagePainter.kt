@@ -18,10 +18,14 @@ package dev.leonlatsch.photok.transcoding.compose
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.imageLoader
+import coil.memory.MemoryCache
 import coil.request.ImageRequest
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
@@ -47,4 +51,15 @@ fun rememberEncryptedImagePainter(
             .build(),
         imageLoader = LocalEncryptedImageLoader.current ?: LocalContext.current.imageLoader
     )
+}
+
+@Composable
+fun cachedThumbnail(uuid: String): ImageBitmap? {
+    val imageLoader = LocalEncryptedImageLoader.current ?: LocalContext.current.imageLoader
+    val bitmap = imageLoader.memoryCache
+        ?.get(MemoryCache.Key(EncryptedImageRequestData.Thumbnail.memoryCacheKey(uuid)))
+        ?.bitmap
+        ?: return null
+
+    return remember(bitmap) { bitmap.asImageBitmap() }
 }

@@ -53,11 +53,14 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -93,9 +96,21 @@ fun BoxScope.ImageViewerImagePage(
     item: ImageViewerItem.Image,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    onZoomedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val photo = item.photo
+
+    val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+
+    LaunchedEffect(zoomableState) {
+        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
+            .collect(onZoomedChange)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { onZoomedChange(false) }
+    }
 
     val requestData = remember(photo) {
         EncryptedImageRequestData.VaultFile(
@@ -121,7 +136,7 @@ fun BoxScope.ImageViewerImagePage(
                         ImageViewerUiEvent.ToggleShowControls
                     )
                 },
-                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                state = zoomableState,
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     ) {

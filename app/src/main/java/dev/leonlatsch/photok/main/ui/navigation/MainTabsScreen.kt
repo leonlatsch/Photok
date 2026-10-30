@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -59,6 +60,8 @@ import dev.leonlatsch.photok.settings.ui.AboutScreen
 import dev.leonlatsch.photok.settings.ui.compose.SettingsScreen
 import dev.leonlatsch.photok.settings.ui.credits.CreditsScreen
 import dev.leonlatsch.photok.settings.ui.thirdparty.OssLicensesScreen
+import dev.leonlatsch.photok.ui.animation.fadeInOver
+import dev.leonlatsch.photok.ui.animation.fadeOutReveal
 import dev.leonlatsch.photok.ui.animation.slideBackward
 import dev.leonlatsch.photok.ui.animation.slideForward
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -137,14 +140,18 @@ fun MainTabsScreen(homeTab: MainTab) {
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             key(selectedTab) {
-                NavDisplay(
-                    entries = selectedEntries,
-                    onBack = tabNavigator::goBack,
-                    modifier = Modifier.fillMaxSize(),
-                    transitionSpec = { slideForward() },
-                    popTransitionSpec = { slideBackward() },
-                    predictivePopTransitionSpec = { slideBackward() },
-                )
+                SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
+                    CompositionLocalProvider(LocalSharedTransitionScope provides this) {
+                        NavDisplay(
+                            entries = selectedEntries,
+                            onBack = tabNavigator::goBack,
+                            modifier = Modifier.fillMaxSize(),
+                            transitionSpec = { slideForward() },
+                            popTransitionSpec = { slideBackward() },
+                            predictivePopTransitionSpec = { slideBackward() },
+                        )
+                    }
+                }
             }
 
             if (currentRoute in RoutesWithMenu || currentRoute is AppRoute.AlbumDetail) {
@@ -196,7 +203,11 @@ private val tabEntryProvider = entryProvider<NavKey> {
     entry<AppRoute.AlbumDetail> { route ->
         AlbumDetailScreen(albumUuid = route.albumUuid)
     }
-    entry<AppRoute.ImageViewer> { route ->
+    entry<AppRoute.ImageViewer>(
+        metadata = NavDisplay.transitionSpec { fadeInOver() } +
+            NavDisplay.popTransitionSpec { fadeOutReveal() } +
+            NavDisplay.predictivePopTransitionSpec { fadeOutReveal() },
+    ) { route ->
         Box(
             modifier = Modifier
                 .fillMaxSize()

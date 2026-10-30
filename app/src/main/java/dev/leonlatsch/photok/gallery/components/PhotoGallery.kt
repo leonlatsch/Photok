@@ -79,6 +79,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.imageviewer.ui.compose.photoSharedElement
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.pro.paywall.ui.components.ProGalleryBanner
@@ -400,7 +401,7 @@ private fun GalleryPhotoTile(
             Image(
                 painter = rememberEncryptedImagePainter(requestData),
                 contentDescription = photoTile.fileName,
-                modifier = contentModifier,
+                modifier = contentModifier.photoSharedElement(photoTile.uuid),
                 contentScale = ContentScale.Crop,
             )
         }
