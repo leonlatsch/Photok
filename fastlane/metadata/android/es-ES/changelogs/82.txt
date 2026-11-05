@@ -1,0 +1,6 @@
+- Protección aún más fuerte para tu bóveda y tu contraseña
+- Se acabó cerrar Photok sin querer: Pulsa atrás dos veces para salir
+- Ajustes más ordenados: Ocultar aplicación y Código secreto de lanzamiento ahora están en la sección Avanzado
+- Consulta el nombre completo de tus archivos en los detalles
+- Traducción al turco actualizada
+- Correcciones y mejoras

@@ -1,0 +1,6 @@
+- Even stronger protection for your vault and your password
+- No more closing Photok by accident: Press back twice to exit
+- Tidier settings: Hide app and secret launch code now live in the advanced section
+- See the full name of your files in the details
+- Updated Turkish translation
+- Bug fixes and improvements

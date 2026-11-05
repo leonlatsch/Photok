@@ -27,6 +27,8 @@ import dev.leonlatsch.photok.encryption.domain.models.RecoveryPhrase
 import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.security.SecureRandom
 import java.util.UUID
 import javax.crypto.Cipher
@@ -43,7 +45,7 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
     override suspend fun unlock(
         request: UnlockRequest.RecoveryPhrase,
         protection: VaultProtection,
-    ): javax.crypto.SecretKey {
+    ): javax.crypto.SecretKey = withContext(Dispatchers.Default) {
         val params = protection.params
 
         val salt = requireNotNull(params.salt)
@@ -63,10 +65,10 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
         }
 
         val vmkBytes = cipher.doFinal(protection.wrappedVMK)
-        return toVaultMasterKey(vmkBytes)
+        toVaultMasterKey(vmkBytes)
     }
 
-    override suspend fun create(request: CreateRequest.RecoveryPhrase): VaultProtection {
+    override suspend fun create(request: CreateRequest.RecoveryPhrase): VaultProtection = withContext(Dispatchers.Default) {
         val vmk = request.session.vmk
         val phrase = RecoveryPhrase(mnemonicGenerator.generate(request.wordCount))
 
@@ -99,7 +101,7 @@ class RecoveryPhraseVaultProtectionHandler @Inject constructor(
 
         recoveryPhraseStore.store(phrase, request.session)
 
-        return VaultProtection(
+        VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
             wrappedVMK = wrappedVmk,

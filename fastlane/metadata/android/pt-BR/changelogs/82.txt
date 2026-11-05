@@ -1,0 +1,6 @@
+- Proteção ainda mais forte para seu cofre e sua senha
+- Chega de fechar o Photok sem querer: Toque em voltar duas vezes para sair
+- Configurações mais organizadas: Ocultar o App e Código de iniciação secreta agora ficam na seção Avançado
+- Veja o nome completo dos seus arquivos nos detalhes
+- Tradução para turco atualizada
+- Correções e melhorias

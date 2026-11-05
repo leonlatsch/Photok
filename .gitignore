@@ -19,4 +19,5 @@ kls_database.db
 *.jks
 /fastlane/report.xml
 /fastlane/Preview.html
+/fastlane/README.md
 /vendor/bundle
