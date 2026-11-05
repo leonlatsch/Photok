@@ -1,0 +1,6 @@
+- Kasan ve şifren için çok daha güçlü koruma
+- Photok'u yanlışlıkla kapatmaya son: Çıkmak için geri tuşuna iki kez bas
+- Daha düzenli ayarlar: Uygulamayı Gizle ve Gizli Başlatma Kodu artık Gelişmiş bölümünde
+- Dosyalarının tam adını ayrıntılarda gör
+- Türkçe çeviri güncellendi
+- Hata düzeltmeleri ve iyileştirmeler

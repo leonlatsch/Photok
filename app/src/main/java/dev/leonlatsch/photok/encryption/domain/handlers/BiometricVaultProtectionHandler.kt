@@ -30,6 +30,8 @@ import dev.leonlatsch.photok.encryption.domain.models.UnlockRequest
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtection
 import dev.leonlatsch.photok.encryption.domain.models.VaultProtectionParams
 import dev.leonlatsch.photok.encryption.ui.UnlockBiometricCipherPrompt
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.security.KeyStore
 import java.util.UUID
 import javax.crypto.Cipher
@@ -53,7 +55,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
     override suspend fun unlock(
         request: UnlockRequest.Biometric,
         protection: VaultProtection
-    ): SecretKey {
+    ): SecretKey = withContext(Dispatchers.Main) {
         val kek = getOrCreateBiometricKek(
             algorithm = protection.params.algorithm,
             keySize = protection.params.keySize,
@@ -74,10 +76,10 @@ class BiometricVaultProtectionHandler @Inject constructor(
         ).getOrThrow()
 
         val vmkBytes = unlockedCipher.doFinal(protection.wrappedVMK)
-        return toVaultMasterKey(vmkBytes)
+        toVaultMasterKey(vmkBytes)
     }
 
-    override suspend fun create(request: CreateRequest.Biometric): VaultProtection {
+    override suspend fun create(request: CreateRequest.Biometric): VaultProtection = withContext(Dispatchers.Main) {
         val vmk = request.session.vmk
 
         val algorithm = Algorithm.AesCbcPkcs7Padding
@@ -111,7 +113,7 @@ class BiometricVaultProtectionHandler @Inject constructor(
 
         val wrappedVmk = unlockedCipher.doFinal(vmk.encoded)
 
-        return VaultProtection(
+        VaultProtection(
             id = UUID.randomUUID().toString(),
             type = request.protectionType,
             wrappedVMK = wrappedVmk,

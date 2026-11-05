@@ -1,0 +1,6 @@
+- Protection encore renforcée pour votre coffre et votre mot de passe
+- Fini les fermetures accidentelles de Photok : Appuyez deux fois sur retour pour quitter
+- Paramètres mieux rangés : Masquer l'application et Code de démarrage secret se trouvent désormais dans la section Avancé
+- Le nom complet de vos fichiers s'affiche dans les détails
+- Traduction turque mise à jour
+- Corrections et améliorations

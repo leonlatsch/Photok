@@ -1,0 +1,6 @@
+- Noch stärkerer Schutz für deinen Tresor und dein Passwort
+- Kein versehentliches Schließen mehr: Drücke zweimal Zurück, um Photok zu beenden
+- Aufgeräumte Einstellungen: „App verstecken“ und „Geheimer Start-Code“ findest du jetzt unter „Erweitert“
+- Sieh dir in den Details den vollständigen Namen deiner Dateien an
+- Aktualisierte türkische Übersetzung
+- Fehlerbehebungen und Verbesserungen
