@@ -28,21 +28,21 @@ class MediaFilterTest {
     private val allTypes = PhotoType.entries.toList()
 
     @Test
-    fun `All keeps every type and returns the same list`() {
+    fun `all keeps every type and returns the same list`() {
         val result = allTypes.filterByMediaType(MediaFilter.All) { it }
 
         assertSame(allTypes, result)
     }
 
     @Test
-    fun `Photos keeps only non video types`() {
+    fun `photos keeps only non video types`() {
         val result = allTypes.filterByMediaType(MediaFilter.Photos) { it }
 
         assertEquals(allTypes.filterNot { it.isVideo }, result)
     }
 
     @Test
-    fun `Videos keeps only video types`() {
+    fun `videos keeps only video types`() {
         val result = allTypes.filterByMediaType(MediaFilter.Videos) { it }
 
         assertEquals(

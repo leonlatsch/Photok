@@ -108,7 +108,7 @@ fun PhotoGallery(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     gridState: LazyGridState = rememberLazyGridState(),
-    emptyHint: (@Composable () -> Unit)? = null,
+    placeholder: @Composable () -> Unit = {},
 ) {
     val activity = LocalActivity.current
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
@@ -122,14 +122,9 @@ fun PhotoGallery(
     }
 
     Box(modifier = modifier.fillMaxSize()) {
-        if (photos.isEmpty() && emptyHint != null) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding),
-            ) {
-                emptyHint()
+        if (photos.isEmpty()) {
+            Box(modifier = Modifier.padding(contentPadding)) {
+                placeholder()
             }
         }
 

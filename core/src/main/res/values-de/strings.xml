@@ -400,11 +400,11 @@
     <!-- Filter -->
     <string name="filter_filter">Filter</string> <!-- TODO: machine translated | EN: Filter -->
 
-    <string name="filter_all">Alle</string> <!-- TODO: machine translated | EN: All -->
-    <string name="filter_photos">Fotos</string> <!-- TODO: machine translated | EN: Photos -->
-    <string name="filter_videos">Videos</string> <!-- TODO: machine translated | EN: Videos -->
+    <string name="filter_all_label">Alle</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">Fotos</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">Videos</string> <!-- TODO: machine translated | EN: Videos -->
 
-    <string name="filter_no_results">Keine Dateien entsprechen diesem Filter</string> <!-- TODO: machine translated | EN: No files match this filter -->
+    <string name="filter_placeholder">Keine Dateien entsprechen diesem Filter</string> <!-- TODO: machine translated | EN: No files match this filter -->
 
     <!-- Video Player -->
     <string name="video_player_play">Play</string>
