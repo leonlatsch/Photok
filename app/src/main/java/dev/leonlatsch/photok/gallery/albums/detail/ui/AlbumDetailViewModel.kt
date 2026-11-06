@@ -33,11 +33,14 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.DeletePhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.ExportPhotos
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction.OpenPhoto
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
+import dev.leonlatsch.photok.sort.domain.filterByMediaType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -65,6 +68,8 @@ class AlbumDetailViewModel @AssistedInject constructor(
     private val pinnedPhotoIdsFlow = albumsRepository.observePinnedPhotoUUIDs(albumUUID)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
+    private val filterFlow = MutableStateFlow(MediaFilter.All)
+
     private val photoActionsChannel = Channel<PhotoAction>(Channel.UNLIMITED)
     val photoActions = photoActionsChannel.receiveAsFlow()
 
@@ -72,11 +77,12 @@ class AlbumDetailViewModel @AssistedInject constructor(
         albumFlow,
         sortFlow,
         pinnedPhotoIdsFlow,
-    ) { album, sort, pinnedIds ->
+        filterFlow,
+    ) { album, sort, pinnedIds, filter ->
         AlbumDetailUiState(
             albumId = album.uuid,
             albumName = album.name,
-            photos = album.files.map {
+            photos = album.files.filterByMediaType(filter) { it.type }.map {
                 PhotoTile(
                     it.fileName,
                     it.type,
@@ -86,6 +92,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
             },
             sort = sort,
             pinnedPhotoIds = pinnedIds,
+            filter = filter,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), AlbumDetailUiState())
 
@@ -111,7 +118,8 @@ class AlbumDetailViewModel @AssistedInject constructor(
                 photoActionsChannel.trySend(
                     OpenPhoto(
                         event.item.uuid,
-                        albumFlow.value.uuid
+                        albumFlow.value.uuid,
+                        filterFlow.value,
                     )
                 )
             }
@@ -153,6 +161,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
             is AlbumDetailUiEvent.SortChanged -> viewModelScope.launch {
                 sortRepository.updateSortFor(albumUuid = albumUUID, sort = event.sort)
             }
+            is AlbumDetailUiEvent.FilterChanged -> filterFlow.value = event.filter
             is AlbumDetailUiEvent.SetPinned -> viewModelScope.launch {
                 albumsRepository.setPinned(event.items, albumFlow.value.uuid, event.pinned)
             }

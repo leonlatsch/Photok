@@ -38,6 +38,7 @@ import dev.leonlatsch.photok.gallery.ui.GalleryUiEvent
 import dev.leonlatsch.photok.gallery.ui.GalleryUiState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.ui.filterEmptyHint
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import java.util.UUID
 
@@ -56,6 +57,7 @@ fun GalleryContent(
         modifier = modifier.fillMaxSize(),
         photos = uiState.photos,
         albumName = null,
+        emptyHint = filterEmptyHint(uiState.filter),
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(GalleryUiEvent.OpenPhoto(it)) },
         onExport = { targetUri ->

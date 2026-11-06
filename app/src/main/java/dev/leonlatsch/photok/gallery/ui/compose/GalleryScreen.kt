@@ -49,6 +49,8 @@ import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.main.ui.navigation.ScrollToTopEffect
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.ui.FilterMenu
+import dev.leonlatsch.photok.sort.ui.FilterMenuIconButton
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.ObserveAsEvents
@@ -89,6 +91,23 @@ fun GalleryScreen(
                 actions = {
                     if (uiState is GalleryUiState.Content) {
                         val sort = (uiState as GalleryUiState.Content).sort
+                        val filter = (uiState as GalleryUiState.Content).filter
+
+                        var showFilterMenu by remember { mutableStateOf(false) }
+
+                        FilterMenuIconButton(
+                            filter = filter,
+                            onClick = { showFilterMenu = true },
+                        )
+
+                        FilterMenu(
+                            expanded = showFilterMenu,
+                            onDismissRequest = { showFilterMenu = false },
+                            filter = filter,
+                            onFilterChanged = { newFilter ->
+                                viewModel.handleUiEvent(GalleryUiEvent.FilterChanged(newFilter))
+                            }
+                        )
 
                         var showSortMenu by remember { mutableStateOf(false) }
 

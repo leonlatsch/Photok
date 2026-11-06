@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.main.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -32,7 +33,11 @@ sealed interface AppRoute : NavKey {
     data class AlbumDetail(val albumUuid: String) : AppRoute
 
     @Serializable
-    data class ImageViewer(val photoUuid: String, val albumUuid: String?) : AppRoute
+    data class ImageViewer(
+        val photoUuid: String,
+        val albumUuid: String?,
+        val filter: MediaFilter = MediaFilter.All,
+    ) : AppRoute
 
     @Serializable
     data object Settings : AppRoute

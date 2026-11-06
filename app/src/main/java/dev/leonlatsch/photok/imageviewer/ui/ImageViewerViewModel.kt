@@ -34,8 +34,10 @@ import dev.leonlatsch.photok.gallery.albums.domain.AlbumRepository
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
 import dev.leonlatsch.photok.settings.data.Config
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
+import dev.leonlatsch.photok.sort.domain.filterByMediaType
 import dev.leonlatsch.photok.transcoding.data.AesCbcRandomAccessDataSource
 import dev.leonlatsch.photok.uicomponnets.bindings.ObservableViewModel
 import kotlinx.coroutines.flow.Flow
@@ -91,11 +93,13 @@ data class ImageViewerUiState(
 }
 
 const val ALBUM_UUID = "albumUuid"
+const val MEDIA_FILTER = "mediaFilter"
 
 @OptIn(UnstableApi::class)
 @HiltViewModel(assistedFactory = ImageViewerViewModel.Factory::class)
 class ImageViewerViewModel @AssistedInject constructor(
     @Assisted(ALBUM_UUID) private val albumUuid: String?,
+    @Assisted(MEDIA_FILTER) private val filter: MediaFilter,
     private val app: Application,
     private val photoRepository: PhotoRepository,
     private val albumRepository: AlbumRepository,
@@ -203,7 +207,7 @@ class ImageViewerViewModel @AssistedInject constructor(
             sortRepository.getSortForAlbum(albumUuid) ?: SortConfig.defaultFor(albumUuid)
         }
 
-        return if (albumUuid == null) {
+        val photosFlow = if (albumUuid == null) {
             photoRepository.observeAll(sort)
         } else {
             albumRepository.observeAlbumWithPhotos(
@@ -211,6 +215,8 @@ class ImageViewerViewModel @AssistedInject constructor(
                 sort = sort
             ).map { it.files }
         }
+
+        return photosFlow.map { photos -> photos.filterByMediaType(filter) { it.type } }
     }
 
     private fun createPinnedPhotoIdsFlow(): Flow<Set<String>> =
@@ -219,7 +225,8 @@ class ImageViewerViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted(ALBUM_UUID) albumUuid: String?
+            @Assisted(ALBUM_UUID) albumUuid: String?,
+            @Assisted(MEDIA_FILTER) filter: MediaFilter,
         ): ImageViewerViewModel
     }
 }

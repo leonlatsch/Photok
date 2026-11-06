@@ -39,6 +39,7 @@ import dev.leonlatsch.photok.gallery.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.sort.ui.filterEmptyHint
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -57,6 +58,7 @@ fun AlbumDetailContent(
         contentPadding = contentPadding,
         photos = uiState.photos,
         albumName = uiState.albumName,
+        emptyHint = filterEmptyHint(uiState.filter),
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(AlbumDetailUiEvent.OpenPhoto(it)) },
         onExport = { targetUri ->

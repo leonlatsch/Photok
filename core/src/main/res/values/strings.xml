@@ -394,6 +394,15 @@
 
     <string name="sorting_restore_default">Restore Default</string>
 
+    <!-- Filter -->
+    <string name="filter_filter">Filter</string>
+
+    <string name="filter_all">All</string>
+    <string name="filter_photos">Photos</string>
+    <string name="filter_videos">Videos</string>
+
+    <string name="filter_no_results">No files match this filter</string>
+
     <!-- Video Player -->
     <string name="video_player_play">Play</string>
     <string name="video_player_pause">Pause</string>

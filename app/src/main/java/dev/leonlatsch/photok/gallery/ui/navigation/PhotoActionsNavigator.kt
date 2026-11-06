@@ -25,6 +25,7 @@ import dev.leonlatsch.photok.main.ui.navigation.AppRoute
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.navigation.Navigator
 import dev.leonlatsch.photok.other.extensions.show
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 
 object PhotoActionsNavigator {
     fun navigate(action: PhotoAction, activity: FragmentActivity, navigator: Navigator) {
@@ -40,7 +41,7 @@ object PhotoActionsNavigator {
                 activity.supportFragmentManager
             )
 
-            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, navigator)
+            is PhotoAction.OpenPhoto -> navigateOpenPhoto(action.photoUUID, action.albumUUID, action.filter, navigator)
         }
     }
 
@@ -59,13 +60,23 @@ object PhotoActionsNavigator {
         DeleteBottomSheetDialogFragment.newInstance(photos).show(fragmentManager)
     }
 
-    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, navigator: Navigator) {
-        navigator.navigate(AppRoute.ImageViewer(photoUuid = photoUUID, albumUuid = albumUUID.takeIf { it.isNotEmpty() }))
+    private fun navigateOpenPhoto(photoUUID: String, albumUUID: String, filter: MediaFilter, navigator: Navigator) {
+        navigator.navigate(
+            AppRoute.ImageViewer(
+                photoUuid = photoUUID,
+                albumUuid = albumUUID.takeIf { it.isNotEmpty() },
+                filter = filter,
+            )
+        )
     }
 }
 
 sealed interface PhotoAction {
-    data class OpenPhoto(val photoUUID: String, val albumUUID: String = "") : PhotoAction
+    data class OpenPhoto(
+        val photoUUID: String,
+        val albumUUID: String = "",
+        val filter: MediaFilter = MediaFilter.All,
+    ) : PhotoAction
     data class DeletePhotos(val photos: List<Photo>) : PhotoAction
     data class ExportPhotos(val photos: List<Photo>, val target: Uri) : PhotoAction
 }
