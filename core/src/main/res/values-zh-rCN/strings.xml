@@ -393,6 +393,15 @@
 
     <string name="sorting_restore_default">恢复默认</string>
 
+    <!-- Filter -->
+    <string name="filter_filter">筛选</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">全部</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">照片</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">视频</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">没有符合此筛选条件的文件</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">播放</string>
     <string name="video_player_pause">暂停</string>

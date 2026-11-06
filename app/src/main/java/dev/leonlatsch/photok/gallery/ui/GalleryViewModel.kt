@@ -30,6 +30,7 @@ import dev.leonlatsch.photok.gallery.ui.navigation.GalleryNavigationEvent
 import dev.leonlatsch.photok.gallery.ui.navigation.PhotoAction
 import dev.leonlatsch.photok.model.repositories.ImportSource
 import dev.leonlatsch.photok.model.repositories.PhotoRepository
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.SortConfig
 import dev.leonlatsch.photok.sort.domain.SortRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -60,12 +61,15 @@ class GalleryViewModel @Inject constructor(
 
     private val showAlbumSelectionDialog = MutableStateFlow(false)
 
+    private val filterFlow = MutableStateFlow(MediaFilter.All)
+
     val uiState: StateFlow<GalleryUiState> = combine(
         photosFlow,
         showAlbumSelectionDialog,
         sortFlow,
-    ) { photos, showAlbumSelection, sort ->
-        galleryUiStateFactory.create(photos, showAlbumSelection, sort)
+        filterFlow,
+    ) { photos, showAlbumSelection, sort, filter ->
+        galleryUiStateFactory.create(photos, showAlbumSelection, sort, filter)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), GalleryUiState.Empty)
 
     private val eventsChannel = Channel<GalleryNavigationEvent>(Channel.UNLIMITED)
@@ -85,6 +89,7 @@ class GalleryViewModel @Inject constructor(
             is GalleryUiEvent.SortChanged -> viewModelScope.launch {
                 sortRepository.updateSortFor(albumUuid = null, sort = event.sort)
             }
+            is GalleryUiEvent.FilterChanged -> filterFlow.value = event.filter
         }
     }
 
@@ -119,7 +124,7 @@ class GalleryViewModel @Inject constructor(
     }
 
     private fun navigateToPhoto(item: PhotoTile) {
-        photoActionsChannel.trySend(PhotoAction.OpenPhoto(item.uuid))
+        photoActionsChannel.trySend(PhotoAction.OpenPhoto(item.uuid, filter = filterFlow.value))
     }
 }
 

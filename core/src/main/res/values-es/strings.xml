@@ -394,6 +394,15 @@
 
     <string name="sorting_restore_default">Restaurar a los valores predeterminados</string>
 
+    <!-- Filter -->
+    <string name="filter_filter">Filtrar</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">Todos</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">Fotos</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">Vídeos</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">Ningún archivo coincide con este filtro</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">Reproducir</string>
     <string name="video_player_pause">Pausar</string>

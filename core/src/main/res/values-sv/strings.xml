@@ -394,6 +394,15 @@
 
     <string name="sorting_restore_default">Återställ standard</string>
 
+    <!-- Filter -->
+    <string name="filter_filter">Filtrera</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">Alla</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">Foton</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">Videor</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">Inga filer matchar det här filtret</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">Spela</string>
     <string name="video_player_pause">Pausa</string>

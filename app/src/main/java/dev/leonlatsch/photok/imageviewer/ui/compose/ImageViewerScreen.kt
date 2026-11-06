@@ -55,6 +55,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.systembars.NavigationBarBackground
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
@@ -67,6 +68,7 @@ import kotlinx.coroutines.isActive
 fun ImageViewerScreen(
     photoUuid: String,
     albumUuid: String?,
+    filter: MediaFilter = MediaFilter.All,
 ) {
     val window = findWindow()
     val navigator = LocalNavigator.current
@@ -77,7 +79,7 @@ fun ImageViewerScreen(
         val viewModel: ImageViewerViewModel =
             hiltViewModel<ImageViewerViewModel, ImageViewerViewModel.Factory>(
                 creationCallback = { factory ->
-                    factory.create(albumUuid)
+                    factory.create(albumUuid, filter)
                 }
             )
 

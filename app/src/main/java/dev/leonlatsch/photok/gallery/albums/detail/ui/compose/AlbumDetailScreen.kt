@@ -57,6 +57,8 @@ import dev.leonlatsch.photok.gallery.ui.navigation.PhotoActionsNavigator
 import dev.leonlatsch.photok.main.ui.navigation.LocalMainMenuPadding
 import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.sort.domain.SortConfig
+import dev.leonlatsch.photok.sort.ui.FilterMenu
+import dev.leonlatsch.photok.sort.ui.FilterMenuIconButton
 import dev.leonlatsch.photok.sort.ui.SortingMenu
 import dev.leonlatsch.photok.sort.ui.SortingMenuIconButton
 import dev.leonlatsch.photok.ui.ObserveAsEvents
@@ -126,6 +128,20 @@ private fun AlbumDetailScreen(viewModel: AlbumDetailViewModel) {
                         exit = fadeOut(),
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
+                            var showFilterMenu by remember { mutableStateOf(false) }
+
+                            FilterMenuIconButton(
+                                filter = uiState.filter,
+                                onClick = { showFilterMenu = true },
+                            )
+
+                            FilterMenu(
+                                expanded = showFilterMenu,
+                                onDismissRequest = { showFilterMenu = false },
+                                filter = uiState.filter,
+                                onFilterChanged = { viewModel.handleUiEvent(AlbumDetailUiEvent.FilterChanged(it)) },
+                            )
+
                             var showSortMenu by remember { mutableStateOf(false) }
 
                             SortingMenuIconButton(

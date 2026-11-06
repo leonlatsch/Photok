@@ -108,6 +108,7 @@ fun PhotoGallery(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     gridState: LazyGridState = rememberLazyGridState(),
+    placeholder: @Composable () -> Unit = {},
 ) {
     val activity = LocalActivity.current
     var importMenuBottomSheetVisible by remember { mutableStateOf(false) }
@@ -121,6 +122,12 @@ fun PhotoGallery(
     }
 
     Box(modifier = modifier.fillMaxSize()) {
+        if (photos.isEmpty()) {
+            Box(modifier = Modifier.padding(contentPadding)) {
+                placeholder()
+            }
+        }
+
         PhotoGrid(
             photos = photos,
             multiSelectionState = multiSelectionState,
