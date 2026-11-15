@@ -399,7 +399,10 @@ private fun GalleryPhotoTile(
             }
 
             Image(
-                painter = rememberEncryptedImagePainter(requestData),
+                painter = rememberEncryptedImagePainter(
+                    data = requestData,
+                    placeholderMemoryCacheKey = requestData.memoryCacheKey,
+                ),
                 contentDescription = photoTile.fileName,
                 modifier = contentModifier.photoSharedElement(photoTile.uuid),
                 contentScale = ContentScale.Crop,

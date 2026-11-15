@@ -78,6 +78,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
+import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import coil.compose.AsyncImagePainter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
@@ -190,59 +191,56 @@ fun BoxScope.ImageViewerVideoPage(
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
     onZoomedChange: (Boolean) -> Unit,
-    hideVideoSurface: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
     ReportZoomed(zoomableState, onZoomedChange)
 
-    // The SurfaceView of the player ignores alpha and would show through the navigation transition
-    if (!hideVideoSurface) {
-        ContentFrame(
-            player = if (isCurrentItem) player else null,
-            shutter = {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .background(Color.Black) // Important! Otherwise last frame is background
-                        .fillMaxSize()
-                ) {
-                    val photo = item.photo
+    ContentFrame(
+        player = if (isCurrentItem) player else null,
+        surfaceType = SURFACE_TYPE_TEXTURE_VIEW,
+        shutter = {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .background(Color.Black) // Important! Otherwise last frame is background
+                    .fillMaxSize()
+            ) {
+                val photo = item.photo
 
-                    val requestData = remember(photo) {
+                val requestData = remember(photo) {
 
-                        EncryptedImageRequestData.VaultFile(
-                            internalFileName = photo.internalVideoPreviewFileName,
-                            mimeType = photo.type.mimeType,
-                            playAnimation = false,
-                        )
-                    }
-
-                    Image(
-                        painter = rememberEncryptedImagePainter(
-                            data = requestData,
-                            placeholder = android.R.color.black,
-                        ),
-                        contentDescription = photo.fileName,
-                        modifier = modifier.fillMaxSize()
-                    )
-
-                    CircularProgressIndicator(
-                        color = LocalContentColor.current,
+                    EncryptedImageRequestData.VaultFile(
+                        internalFileName = photo.internalVideoPreviewFileName,
+                        mimeType = photo.type.mimeType,
+                        playAnimation = false,
                     )
                 }
-            },
-            modifier = modifier
-                .fillMaxSize()
-                .zoomable(
-                    onClick = {
-                        handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
-                    },
-                    state = zoomableState,
-                    gestures = EnabledZoomGestures.ZoomAndPan,
-                ),
-        )
-    }
+
+                Image(
+                    painter = rememberEncryptedImagePainter(
+                        data = requestData,
+                        placeholder = android.R.color.black,
+                    ),
+                    contentDescription = photo.fileName,
+                    modifier = modifier.fillMaxSize()
+                )
+
+                CircularProgressIndicator(
+                    color = LocalContentColor.current,
+                )
+            }
+        },
+        modifier = modifier
+            .fillMaxSize()
+            .zoomable(
+                onClick = {
+                    handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
+                },
+                state = zoomableState,
+                gestures = EnabledZoomGestures.ZoomAndPan,
+            ),
+    )
 
     TopGradient(visible = uiState.inputs.showControls)
     BottomVideoGradient(visible = uiState.inputs.showControls)

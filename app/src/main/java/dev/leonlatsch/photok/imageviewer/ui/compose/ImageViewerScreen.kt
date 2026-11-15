@@ -312,7 +312,6 @@ fun ImageViewerScreen(
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
                         onZoomedChange = { updateZoomed(item.photo.uuid, it) },
-                        hideVideoSurface = drawTransitionImage,
                     )
                 }
             }
