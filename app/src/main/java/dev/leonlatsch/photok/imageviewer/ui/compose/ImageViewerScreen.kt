@@ -272,16 +272,21 @@ fun ImageViewerScreen(
 
         val zoomedPhotoUuids = remember { mutableStateSetOf<String>() }
 
+        fun updateZoomed(photoUuid: String, zoomed: Boolean) {
+            if (zoomed) {
+                zoomedPhotoUuids += photoUuid
+            } else {
+                zoomedPhotoUuids -= photoUuid
+            }
+        }
+
         val navTransition = LocalNavAnimatedContentScope.current.transition
-        val isEntering = navTransition.targetState == EnterExitState.Visible &&
-                navTransition.currentState != EnterExitState.Visible
-        val isNavigating = navTransition.targetState != EnterExitState.Visible ||
-                navTransition.currentState != EnterExitState.Visible
+        val isNavigating = navTransition.currentState != EnterExitState.Visible ||
+                navTransition.targetState != EnterExitState.Visible
 
         val transitionThumbnail = cachedThumbnail(anchoredPhotoUuid)
-        val showTransitionImage = transitionThumbnail != null &&
-                (isEntering || anchoredPhotoUuid !in zoomedPhotoUuids)
-        val drawTransitionImage = showTransitionImage && isNavigating
+            ?.takeIf { anchoredPhotoUuid !in zoomedPhotoUuids }
+        val drawTransitionImage = transitionThumbnail != null && isNavigating
 
         HorizontalPager(
             state = pagerState,
@@ -296,13 +301,7 @@ fun ImageViewerScreen(
                         item = item,
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
-                        onZoomedChange = { zoomed ->
-                            if (zoomed) {
-                                zoomedPhotoUuids += item.photo.uuid
-                            } else {
-                                zoomedPhotoUuids -= item.photo.uuid
-                            }
-                        },
+                        onZoomedChange = { updateZoomed(item.photo.uuid, it) },
                     )
 
                     is ImageViewerItem.Video -> ImageViewerVideoPage(
@@ -312,20 +311,14 @@ fun ImageViewerScreen(
                         player = player,
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
-                        onZoomedChange = { zoomed ->
-                            if (zoomed) {
-                                zoomedPhotoUuids += item.photo.uuid
-                            } else {
-                                zoomedPhotoUuids -= item.photo.uuid
-                            }
-                        },
+                        onZoomedChange = { updateZoomed(item.photo.uuid, it) },
                         hideVideoSurface = drawTransitionImage,
                     )
                 }
             }
         }
 
-        if (showTransitionImage && transitionThumbnail != null) {
+        if (transitionThumbnail != null) {
             ImageViewerTransitionImage(
                 photoUuid = anchoredPhotoUuid,
                 thumbnail = transitionThumbnail,

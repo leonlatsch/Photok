@@ -59,6 +59,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -87,6 +88,7 @@ import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.Dimens
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
+import me.saket.telephoto.zoomable.ZoomableState
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import java.util.Locale
@@ -102,15 +104,7 @@ fun BoxScope.ImageViewerImagePage(
     val photo = item.photo
 
     val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
-
-    LaunchedEffect(zoomableState) {
-        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
-            .collect(onZoomedChange)
-    }
-
-    DisposableEffect(Unit) {
-        onDispose { onZoomedChange(false) }
-    }
+    ReportZoomed(zoomableState, onZoomedChange)
 
     val requestData = remember(photo) {
         EncryptedImageRequestData.VaultFile(
@@ -168,6 +162,23 @@ fun BoxScope.ImageViewerImagePage(
     BottomGradient(visible = uiState.inputs.showControls)
 }
 
+@Composable
+private fun ReportZoomed(
+    zoomableState: ZoomableState,
+    onZoomedChange: (Boolean) -> Unit,
+) {
+    val currentOnZoomedChange by rememberUpdatedState(onZoomedChange)
+
+    LaunchedEffect(zoomableState) {
+        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
+            .collect { currentOnZoomedChange(it) }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { currentOnZoomedChange(false) }
+    }
+}
+
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
@@ -183,15 +194,7 @@ fun BoxScope.ImageViewerVideoPage(
     modifier: Modifier = Modifier,
 ) {
     val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
-
-    LaunchedEffect(zoomableState) {
-        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
-            .collect(onZoomedChange)
-    }
-
-    DisposableEffect(Unit) {
-        onDispose { onZoomedChange(false) }
-    }
+    ReportZoomed(zoomableState, onZoomedChange)
 
     // The SurfaceView of the player ignores alpha and would show through the navigation transition
     if (!hideVideoSurface) {
