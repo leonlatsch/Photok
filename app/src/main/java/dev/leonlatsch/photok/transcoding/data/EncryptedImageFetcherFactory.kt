@@ -38,6 +38,7 @@ class EncryptedImageFetcherFactory @Inject constructor(
             is EncryptedImageRequestData.VaultFile -> EncryptedImageFetcher(
                 vaultFileStorage = vaultFileStorage,
                 requestData = data,
+                options = options,
                 context = context,
             )
             is EncryptedImageRequestData.Thumbnail -> ThumbnailFetcher(

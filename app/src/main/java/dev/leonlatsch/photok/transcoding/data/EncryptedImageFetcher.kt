@@ -22,12 +22,15 @@ import android.graphics.Movie
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import coil.decode.DataSource
+import coil.decode.DecodeUtils
 import coil.decode.ImageSource
 import coil.drawable.MovieDrawable
 import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
 import coil.fetch.SourceResult
+import coil.request.Options
+import coil.size.pxOrElse
 import dev.leonlatsch.photok.io.VaultFileStorage
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
@@ -50,6 +53,7 @@ import kotlin.coroutines.suspendCoroutine
 class EncryptedImageFetcher(
     private val vaultFileStorage: VaultFileStorage,
     private val requestData: EncryptedImageRequestData.VaultFile,
+    private val options: Options,
     private val context: Context,
 ) : Fetcher {
 
@@ -68,7 +72,7 @@ class EncryptedImageFetcher(
             val drawable = decodeAnimatedImage(inputStream)
             DrawableResult(
                 drawable = drawable,
-                isSampled = false,
+                isSampled = true,
                 dataSource = DataSource.MEMORY,
             )
         } else {
@@ -94,12 +98,23 @@ class EncryptedImageFetcher(
         if (Build.VERSION.SDK_INT >= VERSION_CODES.S) {
             val bytes = inputStream.use { it.readBytesSuspending() }
             val source = ImageDecoder.createSource(bytes)
-            ImageDecoder.decodeDrawable(source)
+            ImageDecoder.decodeDrawable(source) { decoder, info, _ ->
+                decoder.setTargetSampleSize(sampleSizeFor(info.size))
+            }
         } else {
             @Suppress("DEPRECATION")
             val movie = Movie.decodeStream(inputStream)
             MovieDrawable(movie)
         }
+
+    private fun sampleSizeFor(sourceSize: android.util.Size): Int =
+        DecodeUtils.calculateInSampleSize(
+            srcWidth = sourceSize.width,
+            srcHeight = sourceSize.height,
+            dstWidth = options.size.width.pxOrElse { sourceSize.width },
+            dstHeight = options.size.height.pxOrElse { sourceSize.height },
+            scale = options.scale,
+        )
 }
 
 suspend fun InputStream.readBytesSuspending(): ByteArray = suspendCoroutine { continuation ->
