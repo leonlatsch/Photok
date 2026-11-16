@@ -53,11 +53,15 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -74,6 +78,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
+import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import coil.compose.AsyncImagePainter
 import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
@@ -84,6 +89,7 @@ import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.theme.Dimens
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
+import me.saket.telephoto.zoomable.ZoomableState
 import me.saket.telephoto.zoomable.rememberZoomableState
 import me.saket.telephoto.zoomable.zoomable
 import java.util.Locale
@@ -93,9 +99,13 @@ fun BoxScope.ImageViewerImagePage(
     item: ImageViewerItem.Image,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    onZoomedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val photo = item.photo
+
+    val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+    ReportZoomed(zoomableState, onZoomedChange)
 
     val requestData = remember(photo) {
         EncryptedImageRequestData.VaultFile(
@@ -121,7 +131,7 @@ fun BoxScope.ImageViewerImagePage(
                         ImageViewerUiEvent.ToggleShowControls
                     )
                 },
-                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                state = zoomableState,
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     ) {
@@ -153,6 +163,23 @@ fun BoxScope.ImageViewerImagePage(
     BottomGradient(visible = uiState.inputs.showControls)
 }
 
+@Composable
+private fun ReportZoomed(
+    zoomableState: ZoomableState,
+    onZoomedChange: (Boolean) -> Unit,
+) {
+    val currentOnZoomedChange by rememberUpdatedState(onZoomedChange)
+
+    LaunchedEffect(zoomableState) {
+        snapshotFlow { (zoomableState.zoomFraction ?: 0f) > 0.01f }
+            .collect { currentOnZoomedChange(it) }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { currentOnZoomedChange(false) }
+    }
+}
+
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
@@ -163,10 +190,15 @@ fun BoxScope.ImageViewerVideoPage(
     player: Player,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
+    onZoomedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val zoomableState = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+    ReportZoomed(zoomableState, onZoomedChange)
+
     ContentFrame(
         player = if (isCurrentItem) player else null,
+        surfaceType = SURFACE_TYPE_TEXTURE_VIEW,
         shutter = {
             Box(
                 contentAlignment = Alignment.Center,
@@ -205,7 +237,7 @@ fun BoxScope.ImageViewerVideoPage(
                 onClick = {
                     handleUiEvent(ImageViewerUiEvent.ToggleShowControls)
                 },
-                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                state = zoomableState,
                 gestures = EnabledZoomGestures.ZoomAndPan,
             ),
     )

@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.imageviewer.ui.compose
 
 import android.view.WindowManager
 import androidx.annotation.OptIn
+import androidx.compose.animation.EnterExitState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,10 +32,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -47,6 +50,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.Player.COMMAND_SET_SPEED_AND_PITCH
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerSystemBarsVisibility
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
@@ -55,6 +59,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
 import dev.leonlatsch.photok.navigation.LocalNavigator
+import dev.leonlatsch.photok.transcoding.compose.cachedThumbnail
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.systembars.NavigationBarBackground
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
@@ -265,9 +270,28 @@ fun ImageViewerScreen(
             }
         }
 
+        val zoomedPhotoUuids = remember { mutableStateSetOf<String>() }
+
+        fun updateZoomed(photoUuid: String, zoomed: Boolean) {
+            if (zoomed) {
+                zoomedPhotoUuids += photoUuid
+            } else {
+                zoomedPhotoUuids -= photoUuid
+            }
+        }
+
+        val navTransition = LocalNavAnimatedContentScope.current.transition
+        val isNavigating = navTransition.currentState != EnterExitState.Visible ||
+                navTransition.targetState != EnterExitState.Visible
+
+        val transitionThumbnail = cachedThumbnail(anchoredPhotoUuid)
+            ?.takeIf { anchoredPhotoUuid !in zoomedPhotoUuids }
+        val drawTransitionImage = transitionThumbnail != null && isNavigating
+
         HorizontalPager(
             state = pagerState,
             beyondViewportPageCount = 1,
+            modifier = Modifier.alpha(if (drawTransitionImage) 0f else 1f),
         ) { pageIndex ->
             val item = uiState.items[pageIndex]
 
@@ -277,6 +301,7 @@ fun ImageViewerScreen(
                         item = item,
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
+                        onZoomedChange = { updateZoomed(item.photo.uuid, it) },
                     )
 
                     is ImageViewerItem.Video -> ImageViewerVideoPage(
@@ -286,11 +311,19 @@ fun ImageViewerScreen(
                         player = player,
                         uiState = uiState,
                         handleUiEvent = handleUiEvent,
+                        onZoomedChange = { updateZoomed(item.photo.uuid, it) },
                     )
                 }
             }
         }
 
+        if (transitionThumbnail != null) {
+            ImageViewerTransitionImage(
+                photoUuid = anchoredPhotoUuid,
+                thumbnail = transitionThumbnail,
+                visible = drawTransitionImage,
+            )
+        }
 
         ImageViewerControls(
             showControls = uiState.inputs.showControls,
