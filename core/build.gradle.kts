@@ -4,8 +4,8 @@ plugins {
     id("com.android.library")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.20"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.4.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.21"
 }
 
 android {
@@ -62,17 +62,17 @@ dependencies {
     ksp("androidx.room:room-compiler:2.8.5")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.12.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.60.1")
     ksp("com.google.dagger:hilt-android-compiler:2.60.1")
 
     // Gson (for Converters)
-    implementation("com.google.code.gson:gson:2.14.0")
+    implementation("com.google.code.gson:gson:2.15.0")
 
     // Telemetry (TelemetryService lives here so :app and :pro can both signal)
-    implementation("com.telemetrydeck:kotlin-sdk:7.2.0")
+    implementation("com.telemetrydeck:kotlin-sdk:7.3.0")
 
     // Timber (for VaultFileStorage)
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -88,7 +88,7 @@ dependencies {
 
     // Navigation 3
     api("androidx.navigation3:navigation3-runtime:1.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.12.0")
 
     // Compose (AppTheme lives here so it can be shared across modules for previews)
     api(platform("androidx.compose:compose-bom:2026.09.00"))
