@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.ui
 
 import android.net.Uri
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 
@@ -28,5 +29,6 @@ sealed interface GalleryUiState {
         val photos: List<PhotoTile> = emptyList(),
         val showAlbumSelectionDialog: Boolean = false,
         val sort: Sort,
+        val filter: MediaFilter = MediaFilter.All,
     ) : GalleryUiState
 }

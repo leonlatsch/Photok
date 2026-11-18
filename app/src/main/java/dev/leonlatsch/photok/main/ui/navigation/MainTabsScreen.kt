@@ -205,6 +205,7 @@ private val tabEntryProvider = entryProvider<NavKey> {
             ImageViewerScreen(
                 photoUuid = route.photoUuid,
                 albumUuid = route.albumUuid,
+                filter = route.filter,
             )
         }
     }

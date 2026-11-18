@@ -19,6 +19,7 @@ package dev.leonlatsch.photok.sort.ui
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import dev.leonlatsch.photok.R
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.Sort
 
 val Sort.Order.icon: Int @DrawableRes get() = when (this) {
@@ -45,4 +46,16 @@ val Sort.Field.label: Int @StringRes get() = when (this) {
     Sort.Field.Size -> R.string.sorting_field_size_label
     Sort.Field.LinkedAt -> R.string.sorting_field_added_to_album_label
     Sort.Field.LastModified -> R.string.sorting_field_last_modified
+}
+
+val MediaFilter.icon: Int @DrawableRes get() = when (this) {
+    MediaFilter.All -> R.drawable.ic_select_all
+    MediaFilter.Photos -> R.drawable.ic_image
+    MediaFilter.Videos -> R.drawable.ic_videocam_outline
+}
+
+val MediaFilter.label: Int @StringRes get() = when (this) {
+    MediaFilter.All -> R.string.filter_all_label
+    MediaFilter.Photos -> R.string.filter_photos_label
+    MediaFilter.Videos -> R.string.filter_videos_label
 }

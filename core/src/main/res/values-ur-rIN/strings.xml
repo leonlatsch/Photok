@@ -393,6 +393,15 @@
 
     <string name="sorting_restore_default">پہلے جیسا کریں</string>
 
+    <!-- Filter -->
+    <string name="filter_filter">فلٹر</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">سب</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">تصاویر</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">ویڈیوز</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">اس فلٹر سے کوئی فائل مماثل نہیں</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">چلائیں</string> <!-- TODO: machine translated | EN: Play -->
     <string name="video_player_pause">روکیں</string> <!-- TODO: machine translated | EN: Pause -->

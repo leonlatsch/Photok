@@ -18,7 +18,9 @@ package dev.leonlatsch.photok.gallery.ui
 
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.model.database.entity.Photo
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.sort.domain.filterByMediaType
 import javax.inject.Inject
 
 class GalleryUiStateFactory @Inject constructor() {
@@ -26,12 +28,13 @@ class GalleryUiStateFactory @Inject constructor() {
         photos: List<Photo>,
         showAlbumSelectionDialog: Boolean,
         sort: Sort,
+        filter: MediaFilter,
     ): GalleryUiState {
         return if (photos.isEmpty()) {
             GalleryUiState.Empty
         } else {
             GalleryUiState.Content(
-                photos = photos.map {
+                photos = photos.filterByMediaType(filter) { it.type }.map {
                     PhotoTile(
                         fileName = it.fileName,
                         type = it.type,
@@ -40,6 +43,7 @@ class GalleryUiStateFactory @Inject constructor() {
                 },
                 showAlbumSelectionDialog = showAlbumSelectionDialog,
                 sort = sort,
+                filter = filter,
             )
         }
     }
