@@ -18,6 +18,7 @@ package dev.leonlatsch.photok.model.repositories
 
 import android.app.Application
 import android.net.Uri
+import coil.memory.MemoryCache
 import dev.leonlatsch.photok.io.IO
 import dev.leonlatsch.photok.io.VaultCacheStorage
 import dev.leonlatsch.photok.io.VaultFileStorage
@@ -32,6 +33,8 @@ import dev.leonlatsch.photok.other.extensions.lazyClose
 import dev.leonlatsch.photok.other.getMetadataFor
 import dev.leonlatsch.photok.settings.data.Config
 import dev.leonlatsch.photok.sort.domain.Sort
+import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
+import dev.leonlatsch.photok.transcoding.di.EncryptedImageMemoryCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -61,6 +64,7 @@ class PhotoRepository @Inject constructor(
     private val app: Application,
     private val config: Config,
     private val io: IO,
+    @EncryptedImageMemoryCache private val encryptedImageMemoryCache: MemoryCache,
 ) {
 
     // region DATABASE
@@ -270,11 +274,19 @@ class PhotoRepository @Inject constructor(
      */
     fun deleteInternalPhotoData(photo: Photo): Boolean {
         vaultCacheStorage.deleteEncryptedFile(ThumbnailFiles.path(photo.uuid))
+        removeThumbnailFromMemoryCache(photo)
 
         return vaultFileStorage.deleteEncryptedFile(photo.internalFileName)
                 && (!photo.type.isVideo || vaultFileStorage.deleteEncryptedFile(photo.internalVideoPreviewFileName))
     }
 
+
+    private fun removeThumbnailFromMemoryCache(photo: Photo) {
+        val key = EncryptedImageRequestData.Thumbnail(photo.uuid, photo.type).memoryCacheKey
+        encryptedImageMemoryCache.keys
+            .filter { it.key == key }
+            .forEach { encryptedImageMemoryCache.remove(it) }
+    }
 
     // endregion
 
