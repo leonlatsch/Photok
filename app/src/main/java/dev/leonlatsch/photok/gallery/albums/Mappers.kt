@@ -55,6 +55,7 @@ fun Album.toUi(): AlbumItem = AlbumItem(
         AlbumCover(
             uuid = firstPhoto.uuid,
             type = firstPhoto.type,
+            rotationDegrees = firstPhoto.rotationDegrees,
         )
     }
 )

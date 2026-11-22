@@ -35,7 +35,7 @@ import dev.leonlatsch.photok.pro.intruderwarnings.data.IntruderWarningTable
 import dev.leonlatsch.photok.sort.data.db.SortDao
 import dev.leonlatsch.photok.sort.data.db.model.SortTable
 
-private const val DATABASE_VERSION = 7
+private const val DATABASE_VERSION = 8
 const val DATABASE_NAME = "photok.db"
 
 @Database(
@@ -73,6 +73,10 @@ const val DATABASE_NAME = "photok.db"
         AutoMigration(
             from = 6,
             to = 7,
+        ),
+        AutoMigration(
+            from = 7,
+            to = 8,
         ),
     ]
 )

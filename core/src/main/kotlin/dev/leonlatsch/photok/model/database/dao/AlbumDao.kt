@@ -54,8 +54,11 @@ abstract class AlbumDao {
     @Query(SELECT_ALL_ALBUMS_QUERY)
     abstract suspend fun getAllAlbums(): List<AlbumTable>
 
-    @Query(SELECT_ALL_ALBUMS_QUERY)
-    abstract fun observeAllAlbums(): Flow<List<AlbumTable>>
+    // Album previews also depend on the cover photo and album membership.
+    @RawQuery(observedEntities = [AlbumTable::class, Photo::class, AlbumPhotoCrossRefTable::class])
+    abstract fun observeAllAlbums(
+        query: SupportSQLiteQuery = SimpleSQLiteQuery(SELECT_ALL_ALBUMS_QUERY),
+    ): Flow<List<AlbumTable>>
 
     @Query("SELECT * FROM album WHERE album_uuid = :uuid")
     abstract fun observeAlbum(uuid: String): Flow<AlbumTable?>

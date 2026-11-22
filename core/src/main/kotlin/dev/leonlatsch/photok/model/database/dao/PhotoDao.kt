@@ -46,6 +46,9 @@ interface PhotoDao {
     @Query("SELECT * FROM photo WHERE photo_uuid = :uuid")
     suspend fun get(uuid: String): Photo
 
+    @Query("UPDATE photo SET rotationDegrees = (rotationDegrees + 90) % 360 WHERE photo_uuid = :uuid")
+    suspend fun rotateClockwise(uuid: String)
+
     @Query("SELECT * FROM photo WHERE photo_uuid IN (:uuids)")
     suspend fun get(uuids: List<String>): List<Photo>
 

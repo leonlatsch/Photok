@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">Looping desativado</string>
     <string name="view_photo_loop_video_enabled">Looping ativado</string>
     <string name="view_photo_video_playback_speed">Velocidade de reprodução</string>
+    <string name="image_view_rotate_clockwise">Girar no sentido horário</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">Configurações</string>

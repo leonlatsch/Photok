@@ -54,7 +54,6 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerViewModel
 import dev.leonlatsch.photok.model.database.entity.Photo
 import dev.leonlatsch.photok.model.database.entity.PhotoType
-import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.ui.findWindow
 import dev.leonlatsch.photok.ui.systembars.NavigationBarBackground
 import dev.leonlatsch.photok.ui.systembars.StatusBarBackground
@@ -69,7 +68,6 @@ fun ImageViewerScreen(
     albumUuid: String?,
 ) {
     val window = findWindow()
-    val navigator = LocalNavigator.current
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White
@@ -297,7 +295,6 @@ fun ImageViewerScreen(
             currentItem = currentItem,
             handleUiEvent = handleUiEvent,
             uiState = uiState,
-            onBack = navigator::goBack,
         )
 
         StatusBarBackground(Color.Black)
@@ -328,7 +325,6 @@ private fun ControlsPreview() {
                 ),
                 uiState = ImageViewerUiState(),
                 handleUiEvent = {},
-                onBack = {},
             )
         }
     }

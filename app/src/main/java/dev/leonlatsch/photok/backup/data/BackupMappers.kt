@@ -28,6 +28,7 @@ fun Photo.toBackup(): PhotoBackup =
         type = type,
         size = size,
         uuid = uuid,
+        rotationDegrees = rotationDegrees,
     )
 
 fun PhotoBackup.toDomain(): Photo =
@@ -38,6 +39,7 @@ fun PhotoBackup.toDomain(): Photo =
         type = type,
         size = size,
         uuid = uuid,
+        rotationDegrees = rotationDegrees,
     )
 
 fun Album.toBackup(): AlbumBackup =

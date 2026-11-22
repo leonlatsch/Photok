@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">دہرانا بند ہے</string> <!-- TODO: machine translated | EN: Looping disabled -->
     <string name="view_photo_loop_video_enabled">دہرانا چالو ہے</string> <!-- TODO: machine translated | EN: Looping enabled -->
     <string name="view_photo_video_playback_speed">چلنے کی رفتار</string> <!-- TODO: machine translated | EN: Playback speed -->
+    <string name="image_view_rotate_clockwise">گھڑی کی سوئیوں کی سمت گھمائیں</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">سیٹنگز</string>

@@ -45,7 +45,7 @@ class ReadBackupMetadataUseCaseTest {
               "backupVersion": 6,
               "createdAt": 1700000000000,
               "wrappedVMK": "dmtr",
-              "photos": [],
+              "photos": [{"uuid": "p", "fileName": "p.jpg", "type": "JPEG", "importedAt": 1, "size": 2}],
               "albums": [],
               "albumPhotoRefs": []
             }
@@ -54,6 +54,7 @@ class ReadBackupMetadataUseCaseTest {
 
         assertTrue(metaData is BackupMetaData.V6)
         assertEquals(6, metaData.backupVersion)
+        assertEquals(0, metaData.photos.single().toDomain().rotationDegrees)
     }
 
     @Test

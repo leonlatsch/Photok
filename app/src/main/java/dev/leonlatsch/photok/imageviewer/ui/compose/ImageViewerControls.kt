@@ -71,6 +71,7 @@ import dev.leonlatsch.photok.gallery.components.AlbumPickerDialog
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerItem
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
+import dev.leonlatsch.photok.navigation.LocalNavigator
 import dev.leonlatsch.photok.other.extensions.launchAndIgnoreTimer
 import dev.leonlatsch.photok.settings.ui.compose.LocalConfig
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
@@ -85,9 +86,9 @@ fun ImageViewerControls(
     currentItem: ImageViewerItem?,
     uiState: ImageViewerUiState,
     handleUiEvent: (ImageViewerUiEvent) -> Unit,
-    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val navigator = LocalNavigator.current
     var exportDirectoryUri by remember { mutableStateOf<Uri?>(null) }
     val isPinned = currentItem?.photo?.uuid in uiState.pinnedPhotoIds
     val showPinnedIndicator = uiState.albumUuid != null && isPinned
@@ -148,7 +149,7 @@ fun ImageViewerControls(
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = onBack
+                            onClick = navigator::goBack
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_back),
@@ -157,6 +158,19 @@ fun ImageViewerControls(
                         }
                     },
                     actions = {
+                        if (currentItem is ImageViewerItem.Image) {
+                            IconButton(
+                                onClick = {
+                                    handleUiEvent(ImageViewerUiEvent.RotateClockwise(currentItem.photo.uuid))
+                                },
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_rotate_right),
+                                    contentDescription = stringResource(R.string.image_view_rotate_clockwise),
+                                )
+                            }
+                        }
+
                         IconButton(
                             onClick = {
                                 handleUiEvent(
@@ -295,7 +309,7 @@ fun ImageViewerControls(
                     )
 
                     if (itemCount <= 1) {
-                        onBack()
+                        navigator.goBack()
                     }
                 }
             }
