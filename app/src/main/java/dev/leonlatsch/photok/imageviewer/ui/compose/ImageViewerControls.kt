@@ -151,7 +151,7 @@ fun ImageViewerControls(
                             onClick = onBack
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.ic_back),
+                                painter = painterResource(R.drawable.ic_close),
                                 contentDescription = stringResource(R.string.common_cancel)
                             )
                         }
