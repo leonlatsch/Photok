@@ -112,6 +112,7 @@ data class PhotoBackup(
     val type: PhotoType,
     val size: Long,
     val uuid: String,
+    val rotationDegrees: Int = 0,
 )
 
 data class AlbumBackup(

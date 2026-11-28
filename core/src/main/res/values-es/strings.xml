@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">Bucle desactivado</string>
     <string name="view_photo_loop_video_enabled">Bucle activado</string>
     <string name="view_photo_video_playback_speed">Velocidad de reproducción</string>
+    <string name="image_view_rotate_clockwise">Girar en sentido horario</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">Ajustes</string>

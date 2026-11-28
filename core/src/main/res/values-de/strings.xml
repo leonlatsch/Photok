@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">Wiederholung deaktiviert</string>
     <string name="view_photo_loop_video_enabled">Wiederholdung aktiviert</string>
     <string name="view_photo_video_playback_speed">Wiedergabegeschwindigkeit</string>
+    <string name="image_view_rotate_clockwise">Im Uhrzeigersinn drehen</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">Einstellungen</string>

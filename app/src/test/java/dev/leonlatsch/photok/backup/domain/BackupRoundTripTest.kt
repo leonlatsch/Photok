@@ -80,7 +80,7 @@ class BackupRoundTripTest {
     private val targetSession = VaultSession(keyGen.generateVaultMasterKey())
 
     private val photos = listOf(
-        photo("holiday.jpg", PhotoType.JPEG),
+        photo("holiday.jpg", PhotoType.JPEG).copy(rotationDegrees = 90),
         photo("clip.mp4", PhotoType.MP4),
     )
 
@@ -146,15 +146,12 @@ class BackupRoundTripTest {
     }
 
     @Test
-    fun `the restore keeps the original import dates`() = runTest {
+    fun `the restore keeps each photo's metadata including its viewer rotation`() = runTest {
         val archive = createBackup()
 
         restoreBackup(archive, RestoreDuplicates.Skip(emptySet()))
 
-        assertEquals(
-            photos.associate { it.uuid to it.importedAt },
-            insertedPhotos.associate { it.uuid to it.importedAt },
-        )
+        assertEquals(photos.associateBy { it.uuid }, insertedPhotos.associateBy { it.uuid })
     }
 
     @Test

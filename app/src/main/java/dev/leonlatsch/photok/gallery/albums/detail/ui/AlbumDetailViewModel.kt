@@ -82,6 +82,7 @@ class AlbumDetailViewModel @AssistedInject constructor(
                     it.type,
                     it.uuid,
                     pinned = it.uuid in pinnedIds,
+                    rotationDegrees = it.rotationDegrees,
                 )
             },
             sort = sort,

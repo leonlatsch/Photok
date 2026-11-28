@@ -55,6 +55,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,6 +82,7 @@ import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiEvent
 import dev.leonlatsch.photok.imageviewer.ui.ImageViewerUiState
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.ui.rotatePhoto
 import dev.leonlatsch.photok.ui.theme.Dimens
 import me.saket.telephoto.zoomable.EnabledZoomGestures
 import me.saket.telephoto.zoomable.ZoomSpec
@@ -121,9 +123,12 @@ fun BoxScope.ImageViewerImagePage(
                         ImageViewerUiEvent.ToggleShowControls
                     )
                 },
-                state = rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f)),
+                state = key(photo.uuid, photo.rotationDegrees) {
+                    rememberZoomableState(zoomSpec = ZoomSpec(maxZoomFactor = 4f))
+                },
                 gestures = EnabledZoomGestures.ZoomAndPan,
-            ),
+            )
+            .rotatePhoto(photo.rotationDegrees),
     ) {
         val painter = rememberEncryptedImagePainter(
             data = requestData,

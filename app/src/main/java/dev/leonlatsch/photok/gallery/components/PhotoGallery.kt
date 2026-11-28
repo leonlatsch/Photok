@@ -88,6 +88,7 @@ import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
 import dev.leonlatsch.photok.ui.components.ConfirmationDialog
 import dev.leonlatsch.photok.ui.components.MagicFab
 import dev.leonlatsch.photok.ui.components.MultiSelectionMenu
+import dev.leonlatsch.photok.ui.rotatePhoto
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
@@ -400,7 +401,7 @@ private fun GalleryPhotoTile(
             Image(
                 painter = rememberEncryptedImagePainter(requestData),
                 contentDescription = photoTile.fileName,
-                modifier = contentModifier,
+                modifier = contentModifier.rotatePhoto(photoTile.rotationDegrees),
                 contentScale = ContentScale.Crop,
             )
         }

@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">Herhalen uitgeschakeld</string> <!-- TODO: machine translated | EN: Looping disabled -->
     <string name="view_photo_loop_video_enabled">Herhalen ingeschakeld</string> <!-- TODO: machine translated | EN: Looping enabled -->
     <string name="view_photo_video_playback_speed">Afspeelsnelheid</string> <!-- TODO: machine translated | EN: Playback speed -->
+    <string name="image_view_rotate_clockwise">Met de klok mee draaien</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">Instellingen</string>

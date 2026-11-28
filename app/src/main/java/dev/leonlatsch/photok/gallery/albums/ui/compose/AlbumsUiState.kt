@@ -42,5 +42,6 @@ data class AlbumItem(
 data class AlbumCover(
     val uuid: String,
     val type: PhotoType,
+    val rotationDegrees: Int,
 )
 

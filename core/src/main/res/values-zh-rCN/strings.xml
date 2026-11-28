@@ -119,6 +119,7 @@
     <string name="view_photo_loop_video_disabled">禁用了循环播放</string>
     <string name="view_photo_loop_video_enabled">启用了循环播放</string>
     <string name="view_photo_video_playback_speed">播放速度</string>
+    <string name="image_view_rotate_clockwise">顺时针旋转</string> <!-- TODO: machine translated | EN: Rotate clockwise -->
 
     <!-- MAIN MENU -->
     <string name="menu_main_settings">设置</string>

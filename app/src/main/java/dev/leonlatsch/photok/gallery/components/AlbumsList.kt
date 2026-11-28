@@ -37,6 +37,7 @@ import dev.leonlatsch.photok.R
 import dev.leonlatsch.photok.gallery.albums.ui.compose.AlbumItem
 import dev.leonlatsch.photok.transcoding.compose.model.EncryptedImageRequestData
 import dev.leonlatsch.photok.transcoding.compose.rememberEncryptedImagePainter
+import dev.leonlatsch.photok.ui.rotatePhoto
 import dev.leonlatsch.photok.ui.theme.AppTheme
 import dev.leonlatsch.photok.ui.theme.Dimens
 
@@ -120,7 +121,7 @@ private fun AlbumListItem(
                 Image(
                     painter = rememberEncryptedImagePainter(requestData),
                     contentDescription = album.name,
-                    modifier = contentModifier,
+                    modifier = contentModifier.rotatePhoto(album.albumCover.rotationDegrees),
                     contentScale = ContentScale.Crop,
                 )
             }

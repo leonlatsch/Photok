@@ -90,6 +90,8 @@ class PhotoRepository @Inject constructor(
 
     suspend fun get(uuid: String) = photoDao.get(uuid)
 
+    suspend fun rotateClockwise(uuid: String) = photoDao.rotateClockwise(uuid)
+
     suspend fun get(uuids: List<String>): List<Photo> {
         val photos = mutableListOf<Photo>()
 

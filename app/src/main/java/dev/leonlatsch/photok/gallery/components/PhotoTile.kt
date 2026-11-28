@@ -23,4 +23,5 @@ data class PhotoTile(
     val type: PhotoType,
     val uuid: String,
     val pinned: Boolean = false,
+    val rotationDegrees: Int = 0,
 )

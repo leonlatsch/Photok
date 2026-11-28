@@ -51,6 +51,7 @@ import kotlinx.coroutines.runBlocking
 
 sealed interface ImageViewerUiEvent {
     data class ConfirmDelete(val item: ImageViewerItem) : ImageViewerUiEvent
+    data class RotateClockwise(val photoUuid: String) : ImageViewerUiEvent
     data class ConfirmExport(
         val item: ImageViewerItem,
         val target: Uri,
@@ -138,6 +139,10 @@ class ImageViewerViewModel @AssistedInject constructor(
         when (event) {
             is ImageViewerUiEvent.ConfirmDelete -> viewModelScope.launch {
                 photoRepository.safeDeletePhoto(event.item.photo)
+            }
+
+            is ImageViewerUiEvent.RotateClockwise -> viewModelScope.launch {
+                photoRepository.rotateClockwise(event.photoUuid)
             }
 
             is ImageViewerUiEvent.ConfirmExport -> viewModelScope.launch {

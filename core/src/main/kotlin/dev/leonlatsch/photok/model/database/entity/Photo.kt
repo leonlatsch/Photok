@@ -44,6 +44,10 @@ data class Photo(
     @PrimaryKey
     @ColumnInfo(name = "photo_uuid")
     val uuid: String = UUID.randomUUID().toString(),
+
+    @Expose
+    @ColumnInfo(defaultValue = "0")
+    val rotationDegrees: Int = 0,
 ) {
 
     val internalFileName: String
