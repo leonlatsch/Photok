@@ -393,6 +393,15 @@
 
     <string name="sorting_restore_default">Восстановить по умолчанию</string> <!-- TODO: machine translated | EN: Restore Default -->
 
+    <!-- Filter -->
+    <string name="filter_filter">Фильтр</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">Все</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">Фото</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">Видео</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">Нет файлов, соответствующих этому фильтру</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">Воспроизвести</string> <!-- TODO: machine translated | EN: Play -->
     <string name="video_player_pause">Пауза</string> <!-- TODO: machine translated | EN: Pause -->

@@ -39,6 +39,8 @@ import dev.leonlatsch.photok.gallery.components.PhotoGallery
 import dev.leonlatsch.photok.gallery.components.PhotoTile
 import dev.leonlatsch.photok.gallery.components.rememberMultiSelectionState
 import dev.leonlatsch.photok.model.database.entity.PhotoType
+import dev.leonlatsch.photok.sort.domain.MediaFilter
+import dev.leonlatsch.photok.sort.ui.FilterPlaceholder
 import dev.leonlatsch.photok.ui.theme.AppTheme
 
 @Composable
@@ -57,6 +59,11 @@ fun AlbumDetailContent(
         contentPadding = contentPadding,
         photos = uiState.photos,
         albumName = uiState.albumName,
+        placeholder = {
+            if (uiState.filter != MediaFilter.All) {
+                FilterPlaceholder()
+            }
+        },
         multiSelectionState = multiSelectionState,
         onOpenPhoto = { handleUiEvent(AlbumDetailUiEvent.OpenPhoto(it)) },
         onExport = { targetUri ->

@@ -391,6 +391,15 @@
 
     <string name="sorting_restore_default">Standaard herstellen</string> <!-- TODO: machine translated | EN: Restore Default -->
 
+    <!-- Filter -->
+    <string name="filter_filter">Filteren</string> <!-- TODO: machine translated | EN: Filter -->
+
+    <string name="filter_all_label">Alles</string> <!-- TODO: machine translated | EN: All -->
+    <string name="filter_photos_label">Foto\'s</string> <!-- TODO: machine translated | EN: Photos -->
+    <string name="filter_videos_label">Video\'s</string> <!-- TODO: machine translated | EN: Videos -->
+
+    <string name="filter_placeholder">Geen bestanden komen overeen met dit filter</string> <!-- TODO: machine translated | EN: No files match this filter -->
+
     <!-- Video Player -->
     <string name="video_player_play">Afspelen</string> <!-- TODO: machine translated | EN: Play -->
     <string name="video_player_pause">Pauzeren</string> <!-- TODO: machine translated | EN: Pause -->

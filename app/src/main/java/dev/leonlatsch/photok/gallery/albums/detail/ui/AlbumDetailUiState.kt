@@ -17,6 +17,7 @@
 package dev.leonlatsch.photok.gallery.albums.detail.ui
 
 import dev.leonlatsch.photok.gallery.components.PhotoTile
+import dev.leonlatsch.photok.sort.domain.MediaFilter
 import dev.leonlatsch.photok.sort.domain.Sort
 import dev.leonlatsch.photok.sort.domain.SortConfig
 
@@ -26,4 +27,5 @@ data class AlbumDetailUiState(
     val photos: List<PhotoTile> = emptyList(),
     val sort: Sort = SortConfig.Album.default,
     val pinnedPhotoIds: Set<String> = emptySet(),
+    val filter: MediaFilter = MediaFilter.All,
 )
